@@ -1,9 +1,19 @@
-# anyCreature 1.2.0 — text → game-ready 3D creature, one shot
+# anyCreature 1.3.1 — text → game-ready 3D creature, one shot
+
+> **STOP — read this before you write a single line of code.**
+> You do not need to build a GLB writer, a renderer, a screenshot tool, a
+> measuring script or a modelling script. They are all in this folder, they work,
+> and they are the product. If you find yourself starting one, you have already
+> left the pipeline: the quality gates you would be skipping are the entire
+> reason this harness exists, and delivery REFUSES any file this engine did not
+> build. Two field runs were lost to exactly this. The whole interface is:
+> write one JSON spec → `node engine/cli.js spec.json out/creature.glb` → follow
+> the cards in `cards/`. Nothing else needs writing.
 
 Author: **Ariescar**. The engine and the harness scripts are original work. One third-party component IS bundled: `harness/assets/three-bundle.js` is a build of three.js (MIT, © 2010-2025 Three.js Authors) used by the render tools and the delivered showroom — its licence notice travels in the file and in `THIRD-PARTY-NOTICES.md`. Everything else npm installs at setup time. Licence: MIT (`LICENSE`); third-party attributions in `THIRD-PARTY-NOTICES.md`.
 
-A session receives an order like "make me a menacing mountain giant", asks at most
-2 questions, and delivers a skinned, animated, vertex-coloured, **AO-baked GLB**
+A session receives an order like "make me a menacing mountain giant", asks exactly
+ONE question (card 01), and delivers a skinned, animated, vertex-coloured, **AO-baked GLB**
 plus an offline showroom viewer — and, with the user's explicit yes, publishes it
 to the Gobkit community under CC0.
 
@@ -39,7 +49,7 @@ README.md            repository front page (humans)
 LICENSE              MIT
 THIRD-PARTY-NOTICES.md  bundled + installed dependency licences
 SECURITY.md          local servers, the public key, untrusted input
-VERSION              1.2.0
+VERSION              1.3.1
 setup.sh             deps + calibration self-check
 cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTAX.md
 engine/              cli.js + core/ — the ACS engine v2
@@ -54,7 +64,10 @@ harness/
                      ALWAYS attempt the upload; the drag-and-drop page is the
                      fallback for a `blocked` result, never the opening move
   gobkit.json        endpoint + release key for publish.mjs
-  presets/           role QC presets (minion/npc/boss)
+  claims.json        the one claims sheet (boss standard for every creature)
+  gates.json/.py     the map: every check tagged block-or-advise and
+                     allocate-or-verify. `python3 harness/gates.py [STAGE]`
+  roundcheck.py      counts repair rounds and refuses the third tweak (iron law 3)
   assets/            three-bundle.js for the render tools
 calibration/         wolf_green (must build) · wolf_red + red_5050 (must be blocked)
 example/             wolf.json + wolf.glb — a bred, approved light quadruped
@@ -83,6 +96,9 @@ example/             wolf.json + wolf.glb — a bred, approved light quadruped
   how far a plate conformed. Free QC; read it.
 - Shipped GLBs: primitives merged per material, public bone names (`LArm1Sh`
   convention), mesh `creature` / skin `creature_rig`, harness stamp in `asset`.
+- Every GLB embeds its authored spec + parts manifest (`extras.source_spec`) —
+  extract, edit, recompile; `harness/graft.py` transplants parts between
+  creatures and the normal gates judge the transplant. `embed_spec: false` opts out.
 - `node engine/cli.js spec.json out.glb` — that's the whole interface.
 
 ## Scale discipline
@@ -93,7 +109,7 @@ features (four wings) still stagger. Model-level looks are the final judge.
 
 ## Delivery & publish
 
-Card 04 is the whole flow: gate stamp → name + signature questions (once;
+Card 04 is the whole flow, now ONE command (`harness/ship.py`): gate stamp → name + signature questions (once;
 `~/.anyCreature.json` remembers the signature) → `deliver.py` (stamped GLB,
 offline showroom viewer, hero shots, backup upload pack) → the share ask LAST →
 `publish.mjs` only on an explicit yes — and then RUN it, never assume the
@@ -103,5 +119,5 @@ human reviewer. CC0 is stamped at consent time, not before.
 ## Versioning
 
 Semver; old zips never change; every release adds a CHANGELOG entry and a README
-row. (1.2.0 is the first public release — earlier development history was
+row. (1.2.0 was the first public release — earlier development history was
 renumbered 0.3.0–0.12.0; the mapping lives in the version-library README.)

@@ -1,5 +1,115 @@
 # CHANGELOG
 
+## 1.3.1 — reads are scored, the brief is checked, and everything computable is computed
+
+**Publishing hands back two links, and the second one is checked (2026-09-03)**
+
+- The server answers a successful upload with a claim link as well as the one-time
+  takedown code. This build matched exactly one field name, `manage_token`, so the claim
+  link never reached anyone using it. `harness/publish.mjs` now reads a family of names,
+  classifies each value by shape, and keeps the first link AND the first code — neither
+  may shadow the other: the link lists the model under your account (Google sign-in, dies
+  once used), the code removes it (one-time, cannot be re-issued, no sign-in).
+- The claim link is GETted before it is handed over. `claim_link_live` is `true`, `false`
+  or `null` (could not ask — which changes nothing, since the upload just succeeded through
+  the same network). On `false`, `harness/ship.py` gives `claim_fallback_url` instead: the
+  standing claim page, which takes the same key. Nobody is ever sent to a 404.
+- `cards/04_SHIP.md` has a row for `manage_kind: both`, which is the normal case.
+- Behaviour is verified against all four shapes the server can answer with.
+
+**The blind read**
+
+- Gate 1 is SCORED by rank and view count (`harness/identity.py`) instead of demanding one exact word: rank R passes if the noun reached R in at least R views, and the requirement loosens by one view per repair round. 3 of 4 views, the brief's identity view among them.
+- A round builds TWO OPPOSITE POLES of one named axis, not one attempt and not three near-copies. `round.py` measures how far apart they sit on the mass-layout ruler and refuses to spend a reader on one design built twice (floor 0.25).
+- ONE reader does a whole gate — choosing the winner AND confirming 3-of-4 — in a single batch.
+- On an identity FAIL, `identity.py` names the views not yet read and requires them to be tried before a rebuild.
+- The "wider or taller?" binding question is retired; the bump count and the canary remain.
+- Thumbnails are letterboxed, not squashed, so the proportion the reader sees is the proportion the file records.
+
+**Computed instead of read**
+
+- `harness/outline.py` produces silhouettes from the GEOMETRY — no browser in the LOW loop. Same camera, same masks, same measures, plus `iou_vs_prev` and mass-layout thirds.
+- `value_order` sorts every material by OKLab lightness on each build; whatever is brightest owns the eye, and anything within 0.05 L competes.
+- `contrast_adjacent` compares every part against the material of the thing it sits on; under 0.10 OKLab they read as one mass.
+- `thinnest_px48` is information only and no longer blocks.
+- MID spends NO reader: both the isolated part read and the colour read are deleted, replaced by the two checks above.
+
+**The brief**
+
+- `harness/brief.py` checks the brief for PRESENCE, never content, and runs inside `round.py` at r1. Five slots plus the one exaggeration block when blank; the other four are noted.
+- Slots that name parts also name their CHAINS, and the r1 spec must contain them.
+- Material is not judged anywhere: no "what is it made of", no roughness words in the value plan.
+
+**The engine**
+
+- `soft_mass` — a volume that cannot break anywhere renders as a bean, and that is the DEFAULT. Blocked, with the fix in numbers; `"soft": true` opts a mass out.
+- `gait_direction` — a planted foot must sweep BACKWARD; a forward sweep is a walk cycle playing in reverse.
+- `root_drive` — a lunge must be driven on the skeleton ROOT, or the creature is nailed down by the end that did not move.
+- The L1–L8 shading stack moved into the engine (`engine/core/shade.js`) and runs on every build.
+- Every blocking message states the FIX with the number to apply, not just the fault.
+- `<out>.checks.json` is written on refused builds too.
+
+**The harness**
+
+- `harness/fit.py` makes a spec LEGAL before a round is spent on it. A refused build is refused for two different reasons: DESIGN (the shape does not read) and ARITHMETIC (a root ring is not buried, two bones came out the same length, the height is off). The engine already prints the exact correction for the arithmetic ones; `fit.py` reads them back, applies them, rebuilds and repeats. It never touches `balance`, `mesh_integrity`, `touch`, `part_seat` or any style threshold — those need a decision.
+- `root_containment` now names the CHAIN'S OWN root joint instead of the host joint it hangs from. Moving the host drags the chain with it, so the old advice could not converge; applying it repeatedly just walked the pair across the model.
+- One command per round (`harness/round.py`): build, render, measure, pre-check, one report.
+- `harness/gates.json` maps all 35 checks on five axes — enforce, when, by, kind, dept — and `gates.py` prints them. `stage` is a field: LOW/MID/HIGH are levels of refinement, not a fixed department order. `by` is A/B/C: which source produces the verdict.
+- `pwlaunch.mjs` finds a cached browser under `PLAYWRIGHT_BROWSERS_PATH` before any download; a build-number mismatch is not a missing browser.
+- `synccheck.py` guards the version strings, the promised features, the required files, duplicate measure definitions and the public/private boundary. Its site-specific leak words moved OUT of the script into `harness/leakwords.local.txt` (git-ignored, never packed) — a list of names you refuse to publish, written into a public file, publishes them. It also refuses a tree in which any shipped file points at a `docs/` page that stayed home: a dangling filename names the private document and no one can open it. And it refuses a tree that describes a version which is not out yet: saying a file behaves "identically to" an unreleased build announces that build, its feature set, and that it has users.
+- Iron law 3 is counted by `roundcheck.py`, not self-applied; iron law 9 — one creature, one agent, the reader is the only subagent.
+
+## 1.3.0 — the first-users release: joins verified, fresh installs survive
+
+Field reports (first two public days) split into two classes; both are closed here.
+
+Install class — "setup said OK, then everything broke"
+- **`setup.sh` now installs the browser** (`npx playwright install chromium`; skipped when `PW_CHROMIUM_PATH` is set) **and probes a real launch** (`harness/pwprobe.mjs`) before printing "calibrate OK". The npm package alone ships no browser, calibration never needed one, so 1.2.0's setup passed on a fresh machine and the FIRST silhouette died with a Playwright stack trace.
+- **All render tools share one launcher** (`harness/pwlaunch.mjs`): a missing browser now prints one actionable line — `run npx playwright install chromium` — never a stack.
+- **A hero failure no longer kills the delivery**: the GLB and viewer are the deliverable; heroes degrade to a warning with the fix printed.
+- `playwright` pinned (1.62.1); `setup.ps1` for Windows PowerShell; CI smoke workflow runs the whole fresh-user path (setup → build → silhouettes → delivery) on every push.
+- **`harness/synccheck.py` — the ship gatekeeper**: verifies VERSION == CHANGELOG, every promised feature is present in the shipping code, every file the cards point at exists, and no forbidden string leaks. Born from a real leak: two finished features existed in one working copy but not the one that got pushed. Run it before every push; CI runs it first.
+
+Field-report class — the first outside user, verbatim
+- **`hand` part type**: palm + four fingers + an opposable thumb from one `size` number (`curl`, `spread`, `fist: true` with the thumb wrapped across); built in ONE authoritative hand frame — "issues with hands, palms, fingers and especially thumb placement" was the top quality report, and improvised sphere-and-stick hands always shipped mittens. `paw` gains `"toes": 2..5`.
+- **Declared-height gate**: the spec carries `"height"` (metres); the build must land within ±15% or BLOCK, and the CLI now prints the built dimensions — "correct scaling is a skill completely missing".
+- **README gains the copy-paste agent prompt** — "how do u prompt the agent to use it in his VM exactly? thats missing in your readme". Verbatim block + three field-learned rules: don't invent a workflow prompt (it skips every gate), let the agent run setup itself (don't pre-bundle node_modules), image orders become a text brief first.
+- **Multi-leg gait doctrine** in HIGH: diagonal pairs for quadrupeds, alternating tripods/tetrapods for 6-8 legs, adjacent legs never in sync.
+- **The output contract is ENFORCED, not documented**: every GLB is checked against it the moment the engine writes it (a violating file is deleted, never left on disk), `deliver.py` re-checks the stamped bytes, and `publish.mjs` refuses to upload a file that fails — no card instruction, no human step. The contract: two chunks, zero trailing bytes, one embedded buffer, no URIs, no images at all, no compression extensions, semantic material names, convention bone names, metres/+Z, sane accessors, no paths or markup in any string. Creature names and signatures typed by a person are CLEANED at stamping (control characters, angle brackets, 80/60 caps) rather than failing a delivery. One implementation (`harness/glbcheck.mjs`, zero-dependency `checkGLB(bytes)`, ~1.4 ms) mirrored into the engine as `engine/core/contract.js` by `tools/sync-contract.mjs`; synccheck fails the build if the two drift. Verified against five hostile fixtures — ZIP tail, extra chunk, external URI, path leak, duplicate JSON keys — plus an end-to-end hostile spec whose build is refused. `docs/OUTPUT_CONTRACT.md` writes the same rules down for the community server, which rebuilds submissions independently (`docs/HANDOVER_sanitize.md`).
+- **Every GLB carries its birth certificate**: `asset.extras.source_spec` (the pristine authored spec — a second parse, since the in-memory spec is mutated by resolution) + `extras.parts` manifest (kind/type/name/material/host/join per piece). Extract → edit → recompile round-trips green. `embed_spec: false` opts out. On the CC0 community wall this makes every creature REMIXABLE by design.
+- **`harness/graft.py` — spec-level organ transplant**: takes two GLBs, copies a named part (plus its palette, and for membranes the rib chains, joints, attach/mirror entries and matching animation tracks, rebased onto the new host), rescales by the two declared heights, writes a fused spec. The normal gates judge the transplant — a graft that does not seat is BLOCKED, not shipped. Never touches meshes, so AO and whole-body shading re-bake coherently on the fused creature.
+- example/wolf.json now declares `"height": 1.45` (models best practice; enables graft auto-scaling).
+- **Reader verification — assume every reader is lazy**: every blind read (both LOW gates, every MID part read) now carries three traps — per-image binding questions checked against measured aspect/bump counts, one known-answer canary from `harness/canary/` shuffled into every batch, and shuffled neutral image labels. Any tripped trap voids the whole read. A reader that glances at one image and confabulates the rest can no longer pass.
+
+Colour portability (a creature published to a gallery came back white-and-black)
+- **The hue now lives in the material, not only in the vertices.** Until now every material shipped `baseColorFactor` white with the entire palette in COLOR_0, so any viewer that does not apply vertex colours rendered the creature pure white — reproduced here by stripping COLOR_0 from a build. The engine now splits the baked colour: `baseColorFactor` takes the per-channel MAXIMUM (the unoccluded colour) and COLOR_0 keeps the ratio (≤ 1, the AO and banding multiplier). Where COLOR_0 IS applied the result is identical — a controlled A/B measured a maximum per-channel difference of 5e-08 — and where it is not, the creature keeps its hues and loses only the shading.
+- Found while implementing it: dividing the colours in place corrupted them, because one vertex-colour array can be referenced from several vertices (flat fills, crease splits) and was scaled twice. The pass now builds new arrays; the A/B above is the proof.
+- **The colour ruler was blinded by the split, and is now calibrated.** The judge's albedo pass forced `baseColorFactor` to white whenever `COLOR_0` was present — correct only while the whole palette lived in the vertices. After the split it therefore measured the near-grey shading ratio alone: the wolf read 26.0% saturated before and **0.0% after**, so the standard claims sheet would have failed EVERY creature at HIGH with "the creature reads as a grey mass". Albedo is now `baseColorFactor` x `COLOR_0`, always both. The reason nothing caught it is the deeper fault: `calibrate.py` had never run the judge at all, so five colour norms shipped with no sample proving they separate anything. It now runs the colour ruler in both directions — the shipped example wolf must land inside the 10%-34% band (measured 26.3%), and a desaturated copy of that same file, meshes and vertex colours untouched, must be BLOCKED by `saturation_area`. The colour sample is `example/wolf.json`, not `calibration/wolf_green.json`: wolf_green still carries the pre-1.2.0 beige palette (0.2% saturated) and exists to exercise engine blocks, where palette is irrelevant.
+- **`glbcheck` gains two portability warnings**: `flat_white_base` (a material with a white base carrying vertex colours) and `high_metal` (metalness above 0.3 — with no environment map, which is the default in most galleries and engines, metal renders near-black; this is the second half of the same field failure). Card 03 states the material limits: no textures, hue in the material, metal ≤ 0.2, roughness free.
+
+Bypass
+- **MANUAL.md opens with a stop sign**: you do not need to build a GLB writer, a renderer, a screenshot tool or a modelling script — they are all here, they work, and starting one means you have already left the pipeline. Also corrects the header (1.3.0) and the interview line (exactly ONE question, not two).
+- **Delivery refuses a GLB this engine did not build.** Observed twice in the field (an outside user on Reddit, then a 1.3.0 test run): an agent given the package skips the cards, writes its own GLB generator and its own render pipeline, and arrives at delivery with a file that passed no gate — no blind reads, no `attack_reach`, no `part_seat`, no output contract. `deliver.py` now checks `asset.extras.harness` and stops there: the gates ARE the product, and a file that skipped them cannot carry the stamp. The refusal names the two commands that constitute the real pipeline.
+
+Thin orders
+- **The customer is asked exactly ONE question, and asking it is MANDATORY** (skipping it is as wrong as asking five: picking a direction is what makes the creature theirs — one that simply arrived never gets shown to anyone) (report: a test run stopped to ask which delivery format to use and whether to add the result to a local gallery — both are the harness's decisions, and both read as incompetence to a non-designer). Card 01 branches on the order instead of interrogating: a thin order gets three directions to point at (diverging on mass / weaponised part / broken anatomy — never three colours of one idea, no answer = take the first), a specific order gets "which of the things you named should people notice first?" (that answer becomes the signature part, and with no answer the most unusual one wins). Size, temperament, proportion, palette and animations are decided silently. Card 00 adds the forbidden-question list: never ask about delivery format, file type, triangle count, folders, whether to run a check, whether to list the result anywhere, or whether the expansion is acceptable.
+- **A recoloured example is refused (`example_copy`)**: a thin order tempts the shortest path — open `example/wolf.json`, change the colours, ship it — and the customer who asked for a dragon receives a wolf that reads as a fox. The engine BLOCKs any build whose joints are a shipped reference spec's with the numbers barely moved (≥90% of joints identical in name AND position within 2% of height); building the reference specs themselves is exempt, so calibration is untouched. Templates were deleted from this harness for this exact disease; this stops the example becoming the last template. Card 01 also makes the identity verdict explicit: the blind reader's noun must BE the brief's noun — "a fox" when the order said dragon is a failed gate, not a near miss.
+- **The brief is now derived from the rulers, and expanded without asking.** A thin order ("a dragon") is an UNDECLARED order: every empty slot is one no gate can test, so it drifts to the trope. Card 01 lists the nine slots that downstream machinery actually reads — identity, feel, height, signature part + carrying view, mass hierarchy, the two focals, stance, the attack, the value plan — each traced to the check or claim that consumes it. The session fills them itself, in one pass, and never shows the expansion for approval (a confirmation step is a lost customer, and the gates already catch a wrong guess). Two rules keep the expansion from converging: discard the first three ideas (they are the tropes), and commit to ONE exaggeration that distorts every other slot.
+
+Closing & community (server contract re-checked against gobkit.com/docs)
+- **One command closes the job — `harness/ship.py`**: package, or package AND publish with `--publish`. The old flow was two commands taking the same arguments twice, so the signature drifted between the file and the listing and the upload got skipped when the second command was forgotten. Ask the person once (name / signature / share?), run one command, read one JSON line back. The signature is remembered in `~/.anyCreature.json`.
+- **Uploads survive a flaky network**: the publisher retries twice with a backoff on transport errors and 5xx before declaring the network blocked — a submission lost to one cold start is a creature that never reaches the wall. Verified against a server that fails the first attempt.
+- **`--upload-only`**: publish an already-packaged creature without rebuilding or re-stamping it — for the person who said no and changed their mind, or whose upload failed. Card 04 requires offering it in one line.
+- **The server's one-time `manage_token` is no longer discarded** — it is the only way a person can ever take their own model down, and the API issues it exactly once. `publish.mjs` now saves it to `delivery/manage_token.txt` and returns it; card 04 requires it to be read out in the same message as the share link. Also accepts a bare `slug` (the server no longer always sends `share_url`) and builds the URL from it.
+- **A successful upload is no longer reported as an error.** The server renamed its own success state (`published` → `visible`) and `publish.mjs`, which matched the literal word, printed `{"status":"error"}` on a HTTP 201 and dropped the one-time `manage_token` on the floor — the user was told their upload failed and lost the only takedown key they will ever be issued. Success is no longer a magic word: any 2xx the server acknowledges (`ok !== false`) that carries a `share_url`, `slug` or `url` and does not name a review state IS published; a review state (`/pending|review|queue/i`) is `pending_review`; an acknowledged response with nothing to link to is also treated as uploaded, not refused. `manage_token` is now saved and returned on EVERY branch, refusals included, because a refusal can still carry the token for an earlier upload. Verified against a mock server across six responses (`visible`, `pending_review`, `queued_for_moderation`, a 400 refusal carrying a token, a relative `share_url`, and a bare `{"ok":true}`).
+- **`KHR_materials_anisotropy` on a mesh with no UVs or tangents is a BLOCK** (`anisotropy_without_direction`). Reported from the server side: a brushed-metal attempt came out a flat white smear, and dropping the strength from 0.9 to 0.15 changed nothing — anisotropy stretches the highlight ALONG THE TANGENT, so what was missing is a direction, not an amount. With no `TANGENT` and no `TEXCOORD_0` to derive one from, every renderer invents its own and the model is correct in none. Untunable by definition, therefore refused rather than warned; a primitive that has one of the two gets `anisotropy_derived_tangent` (viewers will disagree on the direction). The fix is to unwrap first (`"keep_uv": true`) or to get the look from geometry and vertex colour.
+- **Role presets removed — every creature is judged at boss standard.** `harness/presets/{minion,npc,boss}.json` collapse into one `harness/claims.json`; a cheaper creature is not a different ruler, it is the same ruler with a smaller `tri_budget`. Interview Q2 changes from "which role?" to "how big is it in the real world?", which feeds the height gate and graft scaling.
+
+Quality class — "parts don't stick to the body"
+- **`part_seat` check + declared joins**: every hosted `curve`/`spike` carries its base ring; the spec declares HOW the part meets the body — `"join":"insert"` (base ring ≥60% buried or BLOCK), `"extrude"` (base centre inside a body or BLOCK), `"snap"` (must ride an anchor or BLOCK), `"place"` (deliberately free). Undeclared roots under 50% buried warn. Kills the exposed-root class: tusks starting in mid-air, beaks hovering off the face, trunks reading as bolted-on objects.
+- Card 02 adds the four join verbs and the colour-continuity rule (flesh parts continue the host colour at the base); card 01's pit-map gains the join line; SYNTAX shows `"join"` on the curve example.
+
+
 > **Version renumber (at 1.2.0).** 1.2.0 is the FIRST PUBLIC RELEASE. All
 > earlier development versions were renumbered to 0.3.0–0.12.0 in release order
 > (old 0.1.0→0.3.0 … old 1.7.0→0.12.0); the full mapping lives in the
@@ -9,7 +119,7 @@
 ## 1.2.0 — smooth bodies, one shading pass, saturation measured
 
 Stage cards
-- **HIGH gains a fifth colour norm — `saturation_area`, band 10%–34%**: the share of the view whose colour carries HSV saturation ≥ 0.50, measured on the UNLIT baked vertex colour so brightness, AO and lighting cannot skew it. Below the floor the creature reads as a grey mass; above the ceiling saturation stops working as a spotlight. It rules AMOUNT, never LOCATION — the designer picks which surfaces carry the colour. The reshipped wolf measures 26.0%; the previous wolf measured 0.2% and would fail. The accent norm now reads as a cap on the ACCENT alone (<5%), not on total saturated area.
+- **HIGH gains a fifth colour norm — `saturation_area`, band 10%–34%**: the share of the view whose colour carries HSV saturation ≥ 0.50, Verified: the UNLIT baked vertex colour so brightness, AO and lighting cannot skew it. Below the floor the creature reads as a grey mass; above the ceiling saturation stops working as a spotlight. It rules AMOUNT, never LOCATION — the designer picks which surfaces carry the colour. The reshipped wolf measures 26.0%; the previous wolf measured 0.2% and would fail. The accent norm now reads as a cap on the ACCENT alone (<5%), not on total saturated area.
 - **MID's fold-and-carve vocabulary no longer offers `faceted` for masses**: concave sections, `sharp` profile rows and a lower per-volume `smooth_angle` instead; parts may still be faceted freely.
 - SYNTAX.md gains `shading`, `smooth_angle` and `build`, marks `faceted` parts-only, and drops `colors.gradient`/`colors.noise` from the volume example. 04_SHIP's gate.json example lists `faceted_body` and `saturation_area`.
 
@@ -30,7 +140,7 @@ Harness & fixes
 
 Stage cards
 - **MID = whitelist part blind-reads, identity only**: face (always) + signature part + order-named parts are rendered ALONE (`qa_isolate` builds) and shown 4-view to a context-free reader with one question — "what is this?" A face that reads as "a ball" fails. Edit vocabulary: swap local shapes / fold-carve / bend the pose (elbows are MID); no naked sphere/cube/cone on whitelisted parts. Silhouette share demoted to a budget check.
-- **HIGH = free colour under four norms** (one high-sat main on the signature, one secondary, accent <5%, brightness floor measured on the render) + three animations always (idle/move/attack).
+- **HIGH = free colour under four norms** (one high-sat main on the signature, one secondary, accent <5%, brightness floor Verified: the render) + three animations always (idle/move/attack).
 - **04_SHIP (new card)**: gate stamp (real results only) → name + signature questions (ownership first; signature remembered in ~/.anyCreature.json) → scripted delivery → the share ask LAST, CC0 in one sentence → publish only on an explicit yes. Never auto-upload, never background, ask every time.
 
 Engine
@@ -59,7 +169,7 @@ Engine correctness — the "invisible until a human looks" class
 - **`mirror_distortion` (new BLOCK + warn): `joints_R` shears the twin instead of
   posing it.** The mirrored mesh is grown along the LEFT bone path and then dragged
   onto the right joints by weighted TRANSLATION, so a large offset squashes the
-  volume. Measured on the wolf: offsets up to 10% of limb length are clean, 16%
+  volume. Verified: the wolf: offsets up to 10% of limb length are clean, 16%
   costs 12% of a dimension, 24% costs 19%, 39% costs 31% and blocks. A reported
   case had a right thigh 0.152 deep against 0.381 on the left with its width intact
   — invisible from the left, invisible in the log. Warn past 12% deviation, BLOCK
@@ -81,7 +191,7 @@ Engine correctness — the "invisible until a human looks" class
   instead of letting it surface later as flipped tris during an animation.
 - **Anchored parts narrate the world direction they actually face.** `around` is
   read in the host section's frame; the documented 0=spine / 90=side / 180=belly is
-  the BODY chain's frame. Measured on a leg: 0=inner, 90=FRONT, 180=OUTER, 270=back
+  the BODY chain's frame. On a leg: 0=inner, 90=FRONT, 180=OUTER, 270=back
   — so a plate aimed at the outside of a thigh with 90 silently lands on its front.
 - **`deliver.py` refuses a self-contradicting gate stamp.** A delivered model was
   found carrying `"passed": true` with `mid_face_blindread` failed in the same
@@ -151,7 +261,7 @@ Delivery & publish
 
 ## 0.12.0 (was 1.7.0) — clean painter, strict inspector (validated by 7 head-to-head experiments)
 
-Architecture (from the harness-vs-native duels and the 2x2/gryphon experiments)
+Architecture
 - **Creation side stripped to a pit-map**: no design doctrine upfront — free design won or tied every duel where part character mattered; doctrine text taxed boldness. Design knowledge now lives in gates and rulers only.
 - **Two gates, four views each, read by context-free agents** (self-grading shipped the worst failure in project history): Gate 1 RECOGNISED — any stick/slab view kills; Gate 2 PUNCHIER — after identity passes, rounds may only exaggerate, judged prev-vs-curr; compliance-only edits forbidden. LOW's deliverable is an exaggerated silhouette.
 - **Stop-loss**: same symptom failed twice → concept restart, never a third tweak (verdict-driven micro-repair oscillated: human→bell, trousers→rooster).

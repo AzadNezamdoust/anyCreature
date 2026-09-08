@@ -23,6 +23,10 @@ gate.json
 # the operator's saved signature (personal data — never commit)
 .anyCreature.json
 
+# synccheck's site-specific leak words: the names of whatever else lives on
+# this disk. They belong in the scanner, never in the tree it scans.
+harness/leakwords.local.txt
+
 # scratch / editor / OS
 *.log
 *.bak

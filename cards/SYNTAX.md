@@ -2,15 +2,33 @@
 
 ```jsonc
 {
+ "height": 1.85,        // real-world metres, ground to crown — the engine verifies ±15%
  "palette": { "skin_torso": {"color":"#8a8a80","rough":0.95}, ... },  // one material PER PART
  "sections": { "flute": [[1,0],[0.6,0.4],...] },   // named 2D outlines, CONCAVE allowed (bark, crescents)
 
  "smooth_angle": 50,    // default: faces meeting at a vertex average when their normals sit within
                         // this many degrees; the vertex splits only at a REAL crease. Override per
                         // volume and per part. "faceted":true == smooth_angle 0.
- "shading": { "gradient":{"top":0.30,"bottom":-0.88},   // THE DEFAULTS. ONE value ramp over the
-              "noise":{"size":0.018,"amount":0.26} },   // WHOLE body's Y range, on EVERY mesh,
-                        // parts included; noise.size = FRACTION OF THE MODEL DIAGONAL, not metres.
+ "shading": {           // THE L1-L8 STACK. Every field below is optional and every
+                        // default is the settled value — you normally write NOTHING
+                        // here except `pattern.color`, which is a MID decision.
+   "pattern": {"color":"#ffffff","sharpness":0.45,"amount":1.0,"scale":0.06},
+                        // L2. Omit `color` and there is no pattern. Flesh only.
+   "ramp":   {"bottom":"#001370","mid":"#cfcfcf","top":"#fffcf0","pm":0.31,"wm":0.08},
+                        // L3. Top-to-bottom, multiplied over everything but features.
+   "boost":  {"y0":0.00,"y1":0.40,"gamma":0.30,"dL":0.03,"dC":1.50},
+                        // L4. Brighter AND more saturated up top, EXACTLY nothing below
+                        // y0 (identity, not "almost"). Chroma walks back to the sRGB
+                        // edge instead of clamping — clamping turns the hue.
+   "bleed":  {"radius":0.025,"sharpness":0.35,"amount":0.45},   // L5 hardware into flesh
+   "hardsh": {"amount":0.54,"gamma":0.70},                      // L6 shadow on hardware
+   "bodysh": {"lights":4,"rot":4,"elev":17,"amount":0.20,"gamma":1.95},  // L7 on flesh
+   "normals":{"flesh":0.90},   // L8 — the ONLY layer that leaves COLOR_0 and goes into
+                        // the file's NORMAL, so the user's lighting reacts to it.
+   "stack": true },     // false = the 1.2.0 ramp-and-grain instead (gradient/noise below)
+                        // legacy, only read when stack:false:
+                        // "gradient":{"top":0.30,"bottom":-0.88}, "noise":{"size":0.018,"amount":0.26}
+                        // noise.size = FRACTION OF THE MODEL DIAGONAL, not metres.
  "build": "rigid",      // robots/constructs/golems/vehicles ONLY — lifts the faceted_body BLOCK
 
  "joints": {
@@ -37,8 +55,23 @@
    "chain":"torso", "material":"skin_torso", "sides":14, "frame":"up",
    "profile":[[0,0.3,0.35], [0.6,0.42,0.5,{"bias":-0.1,"sharp":true}], [1,0.2,0.22]],
      // rows [t, half-width, half-height, opts]; exp 2.5-4=boxy slab; bias<0 belly-full;
-     // sharp = hard silhouette break; "section":"flute" = use a named outline
-   "smooth_angle": 30,                             // optional per-volume override, crisper creases
+     // sharp = hard SILHOUETTE break, and it only bites when the radius STEPS
+     //   across it (>=15%). The flag between two rings of the same radius is a
+     //   no-op. It changes nothing.
+   "smooth_angle": 30,     // per-volume override, and the SHADING lever. The wall
+     //   angle is 360/sides; smooth_angle welds every edge under it, so 9 sides
+     //   (40 deg) or 16 sides (22 deg) at the default 50 is welded perfectly
+     //   smooth. A volume that can break NOWHERE — no facets, no radius step —
+     //   is a bean, and the engine BLOCKs it (soft_mass). Lowering it hardens the
+     //   shading and leaves the outline untouched.
+   "soft": true,           // OPT-OUT for soft_mass: this mass really is meant to be
+     //   a smooth organic lump (a slug, a bladder, a droplet). Deliberate, not default.
+   "shade": "flesh",                               // OPTIONAL. flesh | hard | fx — which shading
+     // class this piece belongs to. The default is right almost always: volumes, hands and paws
+     // are flesh; spikes, curves, membranes and fins are hard; eyes are fx (no layer, no shadow).
+     // Write it when the default is wrong for THIS creature: a trunk is a `curve` that is flesh;
+     // an armour plate grown as a volume is a volume that is hard. The build prints which pieces
+     // landed in which class ("info: shade class ..."), so check that line rather than guessing.
      // "faceted":true on a VOLUME is a BLOCK (faceted_body) — an 800-tri torso becomes 800 shards
      // and AO bakes the mess into COLOR_0. Break a body with "sharp" rows or a lower smooth_angle.
    "caps":["dome","dome"], "ring_step":0.05,
@@ -48,6 +81,9 @@
 
  "parts": [
   { "type":"curve", "host":"Head", "material":"tusk", "mirrored":true,   // CURVED horn/tusk/trunk
+    "join":"insert",                 // how it meets the body: insert (base buried, verified) /
+                                     // extrude (grows out of the skin) / snap (rides an anchor) /
+                                     // place (deliberately free) — undeclared floating roots warn
     "offset":[0.06,0,0.1], "dir":[0.3,-0.6,0.7], "sides":8,
     "segments":[ {"len":0.1,"r":0.035,"ahead":20}, {"len":0.1,"r":0.028,"rise":35},
                  {"len":0.08,"r":0.015,"rise":30,"taper":true} ] },
@@ -83,7 +119,13 @@
   { "type":"eye", "host":"Brow", "material":"eye", "size":0.028,
     "anchor":{"chain":"head","t":0.4,"around":62} },  // both eyes from one entry; side of head ≈55-70
 
-  { "type":"paw", "host":"LToe", "material":"skin_fist", "size":[0.3,0.25,0.2], "mirrored":true }
+  { "type":"hand", "host":"LWrist", "material":"skin_hand", "mirrored":true,  // palm + 4 fingers + OPPOSABLE thumb
+    "size":0.17,                          // palm length — the whole hand scales from it
+    "dir":[0.1,-0.9,0.35], "up":[0,0,1],  // dir = where the knuckles point; up = back of the hand
+    "curl":0.35, "spread":0.5,            // relaxed curl / finger fan; "fist":true = folded, thumb wrapped
+    "join":"extrude" },
+
+  { "type":"paw", "toes":3, "host":"LToe", "material":"skin_fist", "size":[0.3,0.25,0.2], "mirrored":true }
  ],
 
  "animations": {
@@ -99,6 +141,7 @@
  },
  "style": "heavy",     // ONLY if 1:1 segment rhythm is the design (relaxes the 50:50 gate)
  "ao": false,          // debug only — vertex AO bakes automatically otherwise
+ "embed_spec": false,  // opt OUT of the embedded birth certificate (default: the GLB carries its own spec)
  "keep_uv": true,      // opt-in UV atlas (TEXCOORD_0) for downstream texture bakes
  "qa_isolate": true    // MID part-isolation builds only: skips whole-body checks
 }

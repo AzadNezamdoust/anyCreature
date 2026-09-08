@@ -20,7 +20,7 @@
 //   saturation_area {view?, min?, max?}         — share of the view carrying a highly saturated colour
 //                                                 (HSV S ≥ 0.50 on the UNLIT baked colour). Default band
 //                                                 0.10–0.34. Says how much, never where.
-import { chromium } from 'playwright';
+import { launchBrowser } from './pwlaunch.mjs';
 import path from 'path'; import fs from 'fs'; import http from 'http';
 import { fileURLToPath } from 'url';
 
@@ -107,16 +107,25 @@ scene.remove(hemi,key,fill);
 r.outputColorSpace=THREE.LinearSRGBColorSpace;
 
 // 1b) albedo — the baked vertex colours with NO lighting, so saturation can be
-// measured independently of brightness. gradient, grain and AO are all uniform
+// Verified:dependently of brightness. gradient, grain and AO are all uniform
 // multiplies, so they move a pixel's value but never its HSV saturation; lights
 // do move it (a white key washes colour out, a blue rim invents it). Measuring
 // here is the only way "how much of this creature is highly saturated" comes out
 // as an honest area rather than a lighting artefact.
+// ALBEDO = baseColorFactor × COLOR_0, ALWAYS BOTH. This line used to force the
+// base colour to white whenever COLOR_0 existed, which was correct only while
+// the entire palette lived in the vertices. Since 1.3.0 the engine splits the
+// baked colour — the HUE into baseColorFactor, the shading RATIO (≤1) into
+// COLOR_0 — so measuring COLOR_0 alone measures a deliberately near-grey
+// multiplier: the wolf's saturated area read 26.0% before the split and 0.0%
+// after it, and every creature would have been told it "reads as a grey mass".
+// A ruler that does not follow the format it measures is worse than no ruler.
 r.outputColorSpace=THREE.SRGBColorSpace;
 const albedoMat=new Map();
 model.traverse(o=>{ if(o.isMesh){ albedoMat.set(o,o.material);
   o.material=new THREE.MeshBasicMaterial({vertexColors:!!o.geometry.attributes.color,
-    color:o.geometry.attributes.color?0xffffff:(o.material.color?o.material.color.clone():0xffffff),
+    color:o.material.color?o.material.color.clone():0xffffff,
+    map:o.material.map||null,
     side:THREE.DoubleSide}); }});
 const albedo=shoot(d=>{ let body=0,hi=0;
   for(let i=0;i<d.length;i+=4){ const R=d[i],G=d[i+1],B=d[i+2];
@@ -182,12 +191,10 @@ await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const port=server.address().port;
 // Let Playwright find its own browser. A hardcoded container path breaks every
 // clone on macOS/Windows; PW_CHROMIUM_PATH stays available for pinned setups.
-const exe = process.env.PW_CHROMIUM_PATH || undefined;
-// --no-sandbox drops a real defence and is only needed where the OS sandbox is
-// unavailable (docker without SYS_ADMIN, CI images). Opt in, never by default.
-const launchArgs=['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'];
-if(process.env.PW_NO_SANDBOX==='1') launchArgs.push('--no-sandbox');
-const browser=await chromium.launch({executablePath:exe,args:launchArgs});
+// Shared launcher (harness/pwlaunch.mjs): PW_CHROMIUM_PATH pins a binary,
+// PW_NO_SANDBOX=1 opts out of the OS sandbox only where it cannot run, and a
+// missing browser dies with ONE actionable line instead of a stack.
+const browser=await launchBrowser();
 const page=await browser.newPage({viewport:{width:560,height:560}});
 const errs=[]; page.on('pageerror',e=>errs.push(String(e)));
 await page.goto(`http://127.0.0.1:${port}/`);
@@ -213,8 +220,26 @@ const m={ name, stats:R.stats, names:R.names,
   lum:Object.fromEntries(Object.entries(R.lum).map(([vn,x])=>[vn,+x.medianLum.toFixed(1)])),
   hi_sat_share:Object.fromEntries(Object.entries(R.sat).map(([vn,x])=>[vn,+x.hiSatShare.toFixed(4)])),
   parts, whole:{size:whole} };
-fs.writeFileSync(path.join(outDir,`${name}_metrics.json`),JSON.stringify(m,null,1));
-console.log(JSON.stringify(m));
+const metricsPath=path.join(outDir,`${name}_metrics.json`);
+fs.writeFileSync(metricsPath,JSON.stringify(m,null,1));
+// A SUMMARY, not the blob. This used to print the entire metrics object — every
+// part, every view, every share, about 2KB — straight to stdout, on every run.
+// Tool output lands in the conversation permanently and the conversation is
+// re-read on every turn afterwards, so a 2KB dump at round 3 is still being
+// paid for at round 30. The file has always held the full record; print where it
+// is and the handful of numbers a decision actually turns on. `--json` restores
+// the old behaviour for anything parsing this.
+if(process.argv.includes('--json')) console.log(JSON.stringify(m));
+else {
+  const v='tq';
+  console.log(`[judge] ${name}: ${m.stats.triangles} tris · ${m.names.length} materials · `
+    +`clips ${m.stats.animations.join('/')||'none'} · skinned ${m.stats.skinnedMeshes}`);
+  console.log(`        ${v} view: luminance ${m.lum[v]} · saturated area `
+    +`${(m.hi_sat_share[v]*100).toFixed(1)}%`);
+  const top=Object.entries(m.parts).sort((a,b)=>(b[1].share[v]||0)-(a[1].share[v]||0)).slice(0,3);
+  console.log('        biggest in view: '+top.map(([n,p])=>`${n} ${(p.share[v]*100).toFixed(0)}%`).join(' · '));
+  console.log(`        full numbers: ${metricsPath}`);
+}
 
 // ── Spec mode: check every claim, symptom first ──
 if(specFile){
@@ -235,15 +260,22 @@ if(specFile){
       if(L>c.max_median_lum) bad.push(`Declared dark but does not read dark on screen: ${v}-view body median luminance ${L.toFixed(0)}/255 (need ≤${c.max_median_lum}) — push the material colour values darker`); },
     style_light(c){ const v=c.view||'side'; const L=R.lum[v].medianLum;
       if(L<c.min_median_lum) bad.push(`Declared light but reads too dark on screen: ${v}-view body median luminance ${L.toFixed(0)}/255 (need ≥${c.min_median_lum})`); },
-    // High-saturation AREA, measured on the unlit baked colour (HSV S ≥ 0.50).
+    // High-saturation AREA, Verified: the unlit baked colour (HSV S ≥ 0.50).
     // Too little and the creature is a grey lump; too much and saturation stops
     // being a spotlight and the whole thing screams. Do NOT name which surfaces
     // carry it — where the colour goes is the designer's call, only how much.
     saturation_area(c){ const v=c.view||'tq';
       const s=R.sat[v]; if(!s) return;
-      const pct=s.hiSatShare*100, lo=(c.min??0.10)*100, hi=(c.max??0.34)*100;
+      // There is NO default ceiling. Dropping `max` from claims.json did not
+      // remove the old 0.34 one, because it lived here as a fallback — so the
+      // ceiling went on refusing creatures after it had supposedly been
+      // retired, and it took the shading stack (which raises chroma on purpose)
+      // to expose that. A ceiling only applies now if a spec asks for one by
+      // name. The floor keeps its default: "reads as a grey lump" is a real
+      // failure and nobody has to opt into catching it.
+      const pct=s.hiSatShare*100, lo=(c.min??0.10)*100;
       if(pct<lo) bad.push(`Too little colour: only ${pct.toFixed(1)}% of the ${v} view is highly saturated (need ≥${lo.toFixed(0)}%) — the creature reads as a grey mass. Raise the saturation of a mass that deserves the attention, do not tint everything.`);
-      if(pct>hi) bad.push(`Too much colour: ${pct.toFixed(1)}% of the ${v} view is highly saturated (need ≤${hi.toFixed(0)}%) — saturation stops reading as a spotlight when it covers this much. Desaturate the supporting masses and keep the loud colour on the signature.`); },
+      if(c.max!=null && pct>c.max*100) bad.push(`Too much colour: ${pct.toFixed(1)}% of the ${v} view is highly saturated (need ≤${(c.max*100).toFixed(0)}%) — saturation stops reading as a spotlight when it covers this much. Desaturate the supporting masses and keep the loud colour on the signature.`); },
     rig_skinned(){ if(R.stats.skinnedMeshes<1)
       bad.push('Model is not skinned: the rig is not bound to the mesh, so animating the bones moves nothing'); },
     anim_named(c){ for(const a of c.names) if(!R.stats.animations.includes(a))
@@ -269,17 +301,34 @@ if(specFile){
       if(lo>0 && hi/lo<ratio) bad.push(`Two focal points of equal weight compete: "${c.a}" ${(A*100).toFixed(1)}% vs "${c.b}" ${(B*100).toFixed(1)}% (need ≥${ratio}× apart) — the eye ping-pongs between them; open up the dominance gap`); },
   };
   const claims=(S.claims||[]).filter(c=>!stageFilter || !c.stage || c.stage.toUpperCase()===stageFilter);
+  // enforce: "block" stops the build; "advise" measures and reports and never
+  // stops it. Taste is advice — a number that says the eye will ping-pong is
+  // worth reading and is not worth a rebuild. Correctness is a gate: a rig that
+  // does not deform or a clip that does not exist is broken, not debatable.
+  // Every claim carries the tag explicitly; see harness/gates.json for the map
+  // of the whole system, and for `when` (allocate up front vs verify after).
+  const advice=[];
   for(const c of claims){
     const fn=CHECKS[c.type];
     if(!fn){ bad.push(`Spec contains a claim type the engine does not recognise: "${c.type}"`); continue; }
     const before=bad.length; fn(c);
-    if(bad.length>before && c.label) bad[bad.length-1] += ` [${c.label}]`;
+    if(bad.length===before) continue;
+    // a check may push more than one line; the tag applies to all of them
+    const mine=bad.splice(before);
+    if(c.label) mine[mine.length-1] += ` [${c.label}]`;
+    if((c.enforce||'block')==='advise') advice.push(...mine); else bad.push(...mine);
   }
+  if(advice.length){ console.log('\n'+'-'.repeat(68));
+    console.log('ADVICE — measured, not blocking. Your judgment, your call:');
+    for(const a of advice) console.log('  · '+a);
+    console.log('-'.repeat(68)); }
   if(bad.length){ console.log('\n'+'='.repeat(68));
     console.log(`BLOCKING — against spec "${S.name||path.basename(specFile)}", the following fail and must be fixed:`);
     for(const b of bad) console.log('  ✗ '+b);
     console.log('='.repeat(68)+`\n${bad.length} blocking item(s). exit 1 — cannot ship.`);
     await browser.close(); server.close(); process.exit(1); }
-  console.log(`[judge] Spec \"${S.name||''}\" — all claims pass.`);
+  console.log(advice.length
+    ? `[judge] Spec \"${S.name||''}\" — nothing blocking. ${advice.length} advisory item(s) above; read them, then decide.`
+    : `[judge] Spec \"${S.name||''}\" — all claims pass.`);
 }
 await browser.close(); server.close();

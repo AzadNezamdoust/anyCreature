@@ -49,8 +49,19 @@ for p in sys.argv[2:]:
         ys2, xs2 = np.where(blob)
         ext = max(ys2.max()-ys2.min(), xs2.max()-xs2.min()) + 1
         thin = ext*ext / max(s, 1)   # higher = longer/thinner = sharper read
-        protr.append({'dir_deg': round(ang), 'size': round(s/area, 3), 'thinness': round(thin, 1)})
+        # WIDTH AT READING SIZE. The blind read happens on a 48px thumbnail, so
+        # an arm two pixels across is not a thin arm, it is an invisible one —
+        # and no amount of repositioning will make the reader see it. This is
+        # arithmetic available on the FIRST build; a run that discovers it at
+        # round 22 has spent sixteen rounds moving something nobody could see.
+        # Twice the max inscribed radius = the blob's own thickness, scaled to 48.
+        dt = ndimage.distance_transform_edt(blob)
+        px48 = round(2 * float(dt.max()) * 48.0 / max(H, W), 1)
+        protr.append({'dir_deg': round(ang), 'size': round(s/area, 3),
+                      'thinness': round(thin, 1), 'px48': px48})
     protr.sort(key=lambda x: -x['size'])
+    # the thinnest thing that is still trying to be a feature
+    thinnest = min([p['px48'] for p in protr], default=None)
     # ── dullness flags (MEASURES ONLY, the reader/LLM judges) ──
     # 1:1-frame fill: the silhouette in a square frame must carry real volume
     Ssq = max(H, W)
@@ -88,13 +99,27 @@ for p in sys.argv[2:]:
         'neg_pockets': pockets[:6],
         'com': [round(float(cx)/W, 2), round(float(cy)/H, 2)],
         'protrusions': protr[:8],
+        'thinnest_px48': thinnest,
         'sq_fill': round(sq_fill, 3),
         'mirror_sym': round(mirror_sym, 2),
         'straight_max': round(float(straight), 2),
     }
     sil = Image.fromarray((~m*255).astype(np.uint8))
+    # ASPECT IS THE BINDING QUESTION. Card 01 §4 asks every reader "wider or
+    # taller?" and voids the whole read when the answer disagrees with
+    # W_over_H in metrics.json. A hard resize((px,px)) makes every thumbnail
+    # square, so the honest answer is always "square-ish" and no read can ever
+    # bind — measured cost: 21 of 52 reads in the 1.3.0 three-creature batch
+    # were re-runs, ~40% of the blind-read budget, for a trap that was
+    # mechanically unanswerable. Fit inside the box instead and pad with the
+    # background, so the shape keeps the proportion the reader is asked about.
     for px in (24, 48):
-        sil.resize((px, px), Image.LANCZOS).resize((240, 240), Image.NEAREST)\
+        w = max(1, round(px * W / H)) if W < H else px
+        h = px if W < H else max(1, round(px * H / W))
+        small = sil.resize((w, h), Image.LANCZOS)
+        box = Image.new('L', (px, px), 255)
+        box.paste(small, ((px - w) // 2, (px - h) // 2))
+        box.resize((240, 240), Image.NEAREST)\
            .save(os.path.join(outdir, f'{name}_thumb{px}.png'))
     sheets.append((name, sil))
 if sheets:
@@ -108,6 +133,23 @@ if sheets:
     for n, t in tiles:
         sheet.paste(t, (x, 30)); d.text((x, 8), n, fill=0); x += t.width + 10
     sheet.save(os.path.join(outdir, 'sheet.png'))
-with open(os.path.join(outdir, 'metrics.json'), 'w') as f:
-    json.dump(report, f, indent=1)
+# MERGE, never overwrite. silmetrics writes its own report to this same file in
+# this same round directory — including iou_vs_prev, the regression guard — and
+# card 01 runs silmetrics first, then this. A plain write therefore deleted the
+# guard a second after it was computed, in every round of every run since it was
+# added. Our keys are image names, silmetrics' are flat scalars, so they merge
+# without collision; a stale key from a re-run is harmless and worth keeping.
+mpath = os.path.join(outdir, 'metrics.json')
+merged = {}
+if os.path.exists(mpath):
+    try:
+        with open(mpath, encoding='utf-8') as f:
+            prev = json.load(f)
+        if isinstance(prev, dict):
+            merged = prev
+    except Exception:
+        pass
+merged.update(report)
+with open(mpath, 'w') as f:
+    json.dump(merged, f, indent=1)
 print(json.dumps(report))

@@ -267,7 +267,8 @@ function buildSpike(spec, p) {
   for (const s of p.segments) { pts.push(G.add(pts[pts.length - 1], G.mul(dir, s.len))); radii.push(Math.max(s.r * 0.35, 0.004)); }
   const rings = G.chainRings(pts, radii, p.sides || 6, false);
   const part = G.partFromRings(rings, p.sides || 6, 'ngon', 'fan', pts);
-  return { material: p.material, V: part.v, F: part.fq,
+  return { material: p.material, V: part.v, F: part.fq, join: p.join,
+    _seatIdx: Array.from({ length: p.sides || 6 }, (_, i) => i),  // base ring = the part's socket
     skin: part.v.map(() => [[p.host, 1]]) };
 }
 
@@ -351,7 +352,8 @@ function buildCurve(spec, p) {
   const bend = Math.acos(Math.max(-1, Math.min(1, G.dot(d0, t)))) * 180 / Math.PI;
   const dy = pts[pts.length - 1][1] - pts[0][1];
   if (bend > 15) INFO.push(`curve '${p.name || p.host}': steering accumulated to ${bend.toFixed(0)}° — starts ${dirName(d0)}, finishes ${dirName(t)}, far end ${dy >= 0 ? '+' : ''}${dy.toFixed(2)} in y`);
-  return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted,
+  return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted, join: p.join,
+    _seatIdx: Array.from({ length: sides }, (_, i) => i),  // base ring = the part's socket
     skin: part.v.map(() => [[p.host, 1]]) };
 }
 
@@ -427,6 +429,129 @@ function buildMembrane(spec, p) {
   return { material: p.material, V, F, skin, doubleSided: true, faceted: p.faceted };
 }
 
+
+function buildHand(spec, p) {
+  // A REAL hand: palm slab + four fingers + an OPPOSABLE thumb — the anatomy
+  // the field kept failing to improvise from spheres and sticks. Everything
+  // scales from `size` (palm length, wrist to knuckles). Build the LEFT hand;
+  // `mirrored: true` makes the right one (the thumb lands correctly by the
+  // mirror). All verts ride the host joint; `curl` 0..1 relaxes/folds the
+  // fingers, `fist: true` is a full fold with the thumb wrapped across.
+  //
+  // ONE frame rules everything. The palm slab is hand-rolled IN THE HAND'S
+  // LOCAL FRAME (fingers +z, width x, thickness y) and only then mapped to
+  // world — an auto-framed tube would pick its own ring orientation and the
+  // thumb, placed in the hand frame, would miss the palm it belongs to.
+  const host = spec.joints[p.host];
+  if (!host) throw new Error(`hand host joint "${p.host}" missing`);
+  const S = p.size ?? 0.16;                       // palm length
+  const fist = !!p.fist;
+  const curl = fist ? 1.0 : (p.curl ?? 0.35);
+  const spread = p.spread ?? 0.5;
+  const F = G.nrm(p.dir || [0, -0.35, 1]);        // knuckle direction
+  let U = p.up || [0, 1, 0];
+  U = G.nrm(G.sub(U, G.mul(F, G.dot(U, F))));
+  const Sx = G.cross(U, F);
+  const o = G.add(host, p.offset || [0, 0, 0]);
+  const toW = (q) => [o[0] + Sx[0]*q[0] + U[0]*q[1] + F[0]*q[2],
+                      o[1] + Sx[1]*q[0] + U[1]*q[1] + F[1]*q[2],
+                      o[2] + Sx[2]*q[0] + U[2]*q[1] + F[2]*q[2]];
+  const V = [], Fq = [];
+
+  // ── palm: boxy elliptical slab, rings authored in the LOCAL frame ──
+  const halfW = S * 0.44, thick = S * 0.17, PS = 10;
+  {
+    // stations: [z, widthScale, thickScale, yDrop]
+    const st = [[-0.22, 0.86, 0.88, 0], [0.10, 1.0, 1.0, 0], [0.45, 1.04, 0.98, -0.01],
+                [0.75, 1.0, 0.92, -0.03], [0.98, 0.92, 0.82, -0.05]];
+    const ring0 = V.length;
+    for (const [z, ws, ts, yd] of st) {
+      for (let k = 0; k < PS; k++) {
+        const a = (k / PS) * Math.PI * 2;
+        const cs = Math.cos(a), sn = Math.sin(a);
+        const bx = Math.sign(cs) * Math.pow(Math.abs(cs), 0.55);  // superellipse: boxy
+        const by = Math.sign(sn) * Math.pow(Math.abs(sn), 0.55);
+        V.push(toW([bx * halfW * ws, by * thick * ts + yd * S, z * S]));
+      }
+    }
+    for (let r = 0; r < st.length - 1; r++)
+      for (let k = 0; k < PS; k++)
+        Fq.push([ring0 + r*PS + k, ring0 + r*PS + (k+1)%PS,
+                 ring0 + (r+1)*PS + (k+1)%PS, ring0 + (r+1)*PS + k]);
+    const c0 = V.length; V.push(toW([0, 0, -0.22 * S]));
+    for (let k = 0; k < PS; k++) Fq.push([ring0 + (k+1)%PS, ring0 + k, c0]);
+    const c1 = V.length; V.push(toW([0, -0.05 * S, 0.98 * S]));
+    const last = ring0 + (st.length - 1) * PS;
+    for (let k = 0; k < PS; k++) Fq.push([last + k, last + (k+1)%PS, c1]);
+  }
+
+  // local circular tube (fingers/thumb) — rings framed in the LOCAL space too
+  const tube = (pts, radii, sides) => {
+    const base = V.length;
+    for (let i = 0; i < pts.length; i++) {
+      const q = pts[i];
+      const tn = i === 0 ? G.nrm(G.sub(pts[1], pts[0]))
+        : i === pts.length - 1 ? G.nrm(G.sub(pts[i], pts[i-1]))
+        : G.nrm(G.add(G.nrm(G.sub(pts[i], pts[i-1])), G.nrm(G.sub(pts[i+1], pts[i]))));
+      let ax = Math.abs(tn[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+      let u1 = G.nrm(G.cross(tn, ax));
+      const u2 = G.cross(tn, u1);
+      for (let k = 0; k < sides; k++) {
+        const a = (k / sides) * Math.PI * 2;
+        const r = radii[i];
+        V.push(toW([q[0] + (u1[0]*Math.cos(a) + u2[0]*Math.sin(a)) * r,
+                    q[1] + (u1[1]*Math.cos(a) + u2[1]*Math.sin(a)) * r,
+                    q[2] + (u1[2]*Math.cos(a) + u2[2]*Math.sin(a)) * r]));
+      }
+    }
+    for (let i = 0; i < pts.length - 1; i++)
+      for (let k = 0; k < sides; k++)
+        Fq.push([base + i*sides + k, base + i*sides + (k+1)%sides,
+                 base + (i+1)*sides + (k+1)%sides, base + (i+1)*sides + k]);
+    const cb = V.length; V.push(toW(pts[0]));
+    for (let k = 0; k < sides; k++) Fq.push([base + (k+1)%sides, base + k, cb]);
+    const ct = V.length; V.push(toW(pts[pts.length - 1]));
+    const lastR = base + (pts.length - 1) * sides;
+    for (let k = 0; k < sides; k++) Fq.push([lastR + k, lastR + (k+1)%sides, ct]);
+  };
+
+  // ── four fingers off the knuckle edge (roots sunk INTO the palm) ──
+  const lens = [0.78, 0.94, 1.0, 0.90];            // pinky → index
+  const nf = p.fingers ?? 4;
+  for (let i = 0; i < nf; i++) {
+    const t = nf === 1 ? 0 : (i / (nf - 1)) * 2 - 1;
+    const x0 = -t * halfW * 0.72;                  // pinky at -x … index at +x (left hand)
+    const L = S * 0.80 * lens[Math.min(i, 3)];
+    const r = Math.min(S * 0.088, halfW * 0.72 / Math.max(nf - 1, 1) * 0.95);
+    const fan = t * spread * 0.20;
+    const segA = [0.42, 0.33, 0.25];
+    const pts = [[x0, -S*0.02, S*0.80]];           // root buried in the palm
+    let ang = curl * 0.5;
+    for (const sa of segA) {
+      const q = pts[pts.length - 1];
+      const d = G.nrm([fan, -Math.sin(ang) - 0.10, Math.cos(ang)]);
+      pts.push([q[0] + d[0]*L*sa, q[1] + d[1]*L*sa, q[2] + d[2]*L*sa]);
+      ang += curl * 0.85;
+    }
+    tube(pts, [r, r*0.92, r*0.78, r*0.5], 7);
+  }
+
+  // ── the thumb: root INSIDE the index-side palm edge, opposed, lower ──
+  if (p.thumb !== false) {
+    const L = S * 0.66, r = S * 0.105;
+    const root = [halfW * 0.62, -thick * 0.35, S * 0.30];     // sunk into the slab
+    const d1 = G.nrm(fist ? [0.55, -0.42, 0.72] : [0.66, -0.48, 0.58]);
+    const mid = [root[0] + d1[0]*L*0.55, root[1] + d1[1]*L*0.55, root[2] + d1[2]*L*0.55];
+    const d2 = G.nrm(fist ? [-0.80, -0.30, 0.52] : [0.28, -0.22, 0.93]);  // fist: folds across
+    const tip = [mid[0] + d2[0]*L*0.5, mid[1] + d2[1]*L*0.5, mid[2] + d2[2]*L*0.5];
+    tube([root, mid, tip], [r, r*0.88, r*0.58], 7);
+  }
+
+  return { material: p.material, V, F: Fq, join: p.join,
+    _seatIdx: Array.from({ length: PS }, (_, i) => i),        // palm base ring = the wrist socket
+    skin: V.map(() => [[p.host, 1]]) };
+}
+
 function buildPaw(spec, p) {
   // Independent paw object: flattened ellipsoid pad with a FLAT sole,
   // snapped under the leg-end joint. size = [length(fwd), width, height].
@@ -450,6 +575,23 @@ function buildPaw(spec, p) {
   // flat sole: ngon fan on bottom ring (faces down)
   const ci = V.length; V.push([c[0], c[1], c[2]]);
   for (let k = 0; k < N1; k++) F.push([k, (k + 1) % N1, ci]);
+  // optional toes: tapered nubs across the front edge ("toes": 3..5) — feet
+  // stop reading as bread loaves
+  const nt = p.toes | 0;
+  if (nt >= 2) {
+    const rt = Math.min(W2, L) * 0.16;
+    for (let k = 0; k < nt; k++) {
+      const tx = ((k / (nt - 1)) * 2 - 1) * (W2 / 2 - rt);
+      const base = [c[0] + tx, c[1] + rt * 0.9, c[2] + L * 0.42];
+      const tip  = [c[0] + tx * 1.15, c[1] + rt * 0.75, c[2] + L * 0.42 + L * 0.34];
+      const wpts = [base, tip];
+      const rings = G.chainRings(wpts, [rt, rt * 0.55], 6, false);
+      const part = G.partFromRings(rings, 6, 'ngon', 'fan', wpts);
+      const b0 = V.length;
+      V.push(...part.v);
+      for (const f of part.fq) F.push(f.map(i => i + b0));
+    }
+  }
   return { material: p.material, V, F, skin: V.map(() => [[p.host, 1]]) };
 }
 
@@ -465,7 +607,7 @@ function buildFin(spec, p, builtVols) {
   if (p.anchor) {
     const sp = surfacePoint(builtVols, p.anchor);
     o = sp.p;
-    // `around` is measured in the host section's own frame. On a body chain that
+    // `around` is expressed in the host section's own frame. On a body chain that
     // frame gives the documented 0=spine / 90=side / 180=belly. On a chain that
     // runs vertically (a leg) the same numbers point somewhere else entirely —
     // 90 comes out FRONT, 180 comes out OUTER — so a plate aimed at the outside
@@ -519,7 +661,14 @@ function mirrorMesh(m, rDelta) { // duplicate across X with flipped winding + L�
     }
     return [v[0] + dx, v[1] + dy, v[2] + dz];
   };
+  // `chain` has to come along. A mirrored VOLUME used to arrive with no chain
+  // name at all (compile() re-labels mirrored PARTS afterwards, volumes it
+  // does not), so the twin was anonymous to anything that identifies a mesh by
+  // the chain it was grown from — the shading stack read a right leg declared
+  // `"shade": "hard"` as flesh, because the declaration is keyed by chain and
+  // the twin no longer had one.
   return { material: m.material, faceted: m.faceted, smoothAngle: m.smoothAngle,
+    join: m.join, _seatIdx: m._seatIdx, chain: m.chain,
     doubleSided: m.doubleSided,
     V: m.V.map((v, i) => shift([-v[0], v[1], v[2]], m.skin && m.skin[i])),
     F: m.F.map(f => f.slice().reverse()),
@@ -558,7 +707,7 @@ function compile(spec) {
       meshes.push(t);
     }
   }
-  const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane,
+  const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane, hand: buildHand,
     paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols) };
   for (const p of spec.parts || []) {
     const label = p.name || `${p.type}@${p.host || 'ribs'}`;
@@ -589,6 +738,13 @@ function compile(spec) {
   return meshes;
 }
 
+// Which shading pass owns this build. `"shading": {"stack": false}` falls back
+// to the 1.2.0 ramp-and-grain for a spec that was tuned against it.
+function useStack(spec) {
+  const sh = spec.shading || {};
+  return sh.stack !== false;
+}
+
 // ── whole-body shading pass ────────────────────────────────────────────────
 // ONE top-to-bottom value ramp and ONE grain size across the entire creature,
 // applied to EVERY mesh — volumes, paws, ears, eyes, horns alike. Two reasons
@@ -604,6 +760,11 @@ function compile(spec) {
 // spec on a giant produced grain finer than the vertex spacing and aliased.
 function applyShading(spec, meshes) {
   const sh = spec.shading || {};
+  // The L1-L8 stack supersedes this pass and runs LATER (it needs AO and vertex
+  // normals as inputs, and those do not exist until ao.js has run). When it is
+  // active this whole function is a no-op — running both would apply two
+  // top-to-bottom ramps to the same vertices.
+  if (useStack(spec)) return;
   const grad = sh.gradient === undefined ? { top: 0.30, bottom: -0.88 } : sh.gradient;
   const nz = sh.noise === undefined ? { size: 0.018, amount: 0.26 } : sh.noise;
   if (!meshes.length) return;
@@ -639,4 +800,4 @@ function applyShading(spec, meshes) {
     + ` — applied to all ${meshes.length} meshes`);
 }
 
-module.exports = { compile, drainInfo };
+module.exports = { compile, drainInfo, useStack };

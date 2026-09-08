@@ -4,34 +4,66 @@ Output: every part — ears, horns, claws, eyes, fins, shell spikes, paws — ri
 bones LOW already placed, or anchored to volume surfaces. No material detail, no
 animation. MID's question is: **do the key parts READ as what they are?**
 
-## The part gate — whitelist blind-reads, identity only
+## Author the WHOLE part set in one pass. Build once. Fix everything at once.
 
-Not every part gets examined. The whitelist:
+This is the single most expensive habit in the pipeline, so it gets the top of
+the card. Do not add parts one at a time and rebuild after each. Write every
+part, run one build, read the whole BLOCK list — the engine reports **all**
+failures at once, it does not stop at the first — fix them all in one edit, and
+build again.
 
-1. **the face — always** (if the creature has one),
-2. **the signature part** (from the brief),
-3. **any part the order names** ("scissor hands" → the hands).
+The arithmetic: writing the spec is not the cost. Touching the same forty
+elements three times each is, because a turn re-reads the whole conversation and
+the conversation only grows. Two passes is the target: **author everything, then
+repair everything.**
 
-For each whitelisted part, render it ALONE and blind-read it:
+Mirrored structure is not authored twice, either. `"mirror": ["LArm"]` generates
+the right side; hand-writing `RArm` alongside `LArm` doubles the work and the
+chance of the two drifting apart. Use `mirror` for anything symmetric, and
+`joints_R` when the pose (not the shape) differs.
 
-```bash
-# temp spec: copy the real spec, keep only this part (+ its host chain volume
-# if the part is meaningless without it), add "qa_isolate": true
-node engine/cli.js out/qa_face.json out/qa_face.glb
-node harness/silmetrics.mjs out/qa_face.glb out/qa_face
-```
+## MID SPENDS NO READER AT ALL
 
-Show the four thumb48s to a context-free reader with EXACTLY this and no more:
+Both reads that used to live here are gone, and neither was replaced by a
+cheaper read — they were replaced by arithmetic that runs at build time.
 
-> What is this? Answer with the name of the thing or body part you see.
+**The isolated part read is deleted.** It failed every time it was tried: a
+crown reads as "a blob", a face as "a stone", an armoured basket as "a fist" —
+while the whole-body read names all three without being asked twice. A part cut
+away from the body has lost the only context that told the reader what it was,
+so reading it there measures the crop, not the part.
 
-Judge the verbatim answer: the part's name (or an unmistakable synonym) = pass.
-**"a ball", "a blob", "an egg", "nothing" = fail** — a siren's face that reads
-as a sphere has no face. Identity is the only question at MID; feel and beauty
-were LOW's business, colour is HIGH's.
+**The colour read is deleted too.** It asked three things, and a machine answers
+all three off the palette in microseconds:
 
-Two repair rounds per failed part, then iron law 3 (different concept for that
-part, not a third tweak).
+| the question | who answers it now |
+|---|---|
+| what colour is this creature | the palette. You wrote it. |
+| which part draws the eye | `value_order` — every material sorted by OKLab lightness, brightest first, printed on every build. Whatever is at the top owns the eye. |
+| which parts can you make out | `contrast_adjacent` — every part compared against the material of the thing it SITS ON. Under 0.10 OKLab they read as one mass. |
+
+Both answers sit in the palette the whole time. Two masses at the same
+lightness compete and neither owns the eye; a part wearing its host's colour is
+not a part. Rendering a hero and squinting at it is guessing at numbers you
+already have.
+
+Both checks are ADVICE with numbers, not blocks: camouflage and deliberately
+subtle detail are real choices. What is not acceptable is paying a subagent to
+learn them.
+
+**`part_exists` still BLOCKS**, and it costs nobody — it is a machine check on
+the spec. If the brief named a chain and the spec has no such chain, the order
+was not filled, and `harness/brief.py` says so at r1.
+
+**What a reader is still for**, anywhere in this pipeline: *what does this look
+like*, *which of these is punchier*, and *is this form legible*. Those are
+judgments about resemblance and impact, and no amount of coordinate data
+performs them. Colour distance, value order, silhouette aspect, feature
+thickness and animation momentum are all arithmetic — none of them gets a
+reader again.
+
+`harness/partreads.py` stays for a deliberate manual look at one part. No card
+calls it.
 
 ## Edit vocabulary (what a MID repair is allowed to be)
 
@@ -55,6 +87,41 @@ part, not a third tweak).
   the limb's length it starts squashing and `mirror_distortion` warns; past ~35%
   it BLOCKs. For a genuinely different pose, take that limb OUT of `mirror` and
   author it as its own chain.
+
+## Hands and feet — use the vocabulary, never improvise from spheres
+
+Anything with hands gets `"type":"hand"` — palm, four fingers and an opposable
+thumb, scaled from one `size` number; `curl` for relaxed/gripping, `"fist":
+true` for the folded fist with the thumb wrapped across. Field truth: every
+attempt to improvise a hand from spheres and sticks shipped a mitten. Feet:
+`paw` with `"toes": 3..5` so they stop reading as bread loaves. Both take
+`mirrored: true`, and the blind-read applies — a hand that reads as "a blob"
+fails like any whitelisted part.
+
+## Joins — decide HOW every part meets the body, before placing it
+
+A tusk that starts in mid-air, a beak hovering off the face, a trunk that reads
+as a bolted-on object: all one disease — the part was placed, but its RELATION
+to the body was never decided. For every hosted part, pick the join first:
+
+- **insert** — the part SINKS into the mass (tusks into the jaw, horns into the
+  skull). Declare `"join":"insert"`; the engine BLOCKs unless the base ring is
+  ≥60% buried. Aim the `offset` back INTO the host volume, not at its surface.
+- **extrude** — the part GROWS out of the skin (a trunk from the face, a tail
+  spike from the tail). Declare `"join":"extrude"`; the base centre must sit
+  inside a body. Match the base radius to the local host radius so the skin
+  flows into the part instead of stepping.
+- **snap** — the part LIES ON the surface (plates, scutes, brows). That is what
+  `anchor` + conform already do; declare `"join":"snap"` and the engine insists
+  the anchor exists.
+- **place** — deliberately detached (a floating rune, an orbiting shard). Rare;
+  say why in the spec `_notes`.
+
+Undeclared parts still get measured — a `part_seat` warn means a root may show.
+And the join is also a COLOUR decision: a part that is FLESH of its host (trunk,
+tail, brow) continues the host's material colour at its base; a hard colour
+break at the junction reads as equipment, not anatomy. Check the junction in the
+hero render, not just the part in isolation.
 
 ## Do (layout)
 

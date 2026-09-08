@@ -25,6 +25,7 @@ function bakeAO(meshes, cfg) {
   const opt = typeof cfg === 'object' && cfg ? cfg : {};
   const SAMPLES = opt.samples ?? 16;
   const STRENGTH = opt.strength ?? 0.59;
+  const MULT = opt.multiply !== false;   // false = record it, let the stack apply it
 
   // ── triangle soup + bounds ──
   const tris = [];  // [a,b,c] as vec3s
@@ -127,8 +128,14 @@ function bakeAO(meshes, cfg) {
       }
       const occ = hits / SAMPLES;
       const ao = 1 - STRENGTH * occ;
-      const c = m.C[vi];
-      m.C[vi] = [c[0] * ao, c[1] * ao, c[2] * ao];
+      // Keep AO as its own factor, and keep the normal that produced it. The
+      // L1-L8 stack needs both as INPUTS — its flesh and hardware shading each
+      // apply AO with their own amount and gamma — and it cannot recover either
+      // one once they have been multiplied into the colour. Storing them costs
+      // two arrays and lets `multiply:false` hand the decision downstream.
+      (m.AO || (m.AO = []))[vi] = ao;
+      (m.N || (m.N = []))[vi] = n;
+      if (MULT) { const c = m.C[vi]; m.C[vi] = [c[0] * ao, c[1] * ao, c[2] * ao]; }
       vcount++; occSum += occ;
     });
   }

@@ -1,0 +1,86 @@
+{
+  "name": "<creature name>",
+  "_role": "The one claims sheet. Every creature is judged at boss standard: viewed close up, exaggerated, signature thresholds high. Role tiers (minion/NPC/boss) were removed — a cheaper creature is not a different ruler, it is the same ruler with a smaller triangle budget, so adjust tri_budget here if you need one.",
+  "claims": [
+    {
+      "type": "part_exists",
+      "part": "<signature part>",
+      "stage": "MID",
+      "label": "signature part must exist",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "part_signature",
+      "part": "<signature part>",
+      "view": "side",
+      "min_share": 0.16,
+      "or_min_span": 0.12,
+      "stage": "MID",
+      "label": "signature presence",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "focal_contrast",
+      "a": "<primary focal>",
+      "b": "<secondary focal>",
+      "min_ratio": 2,
+      "stage": "MID",
+      "label": "focal points must not be equal weight",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "share_hierarchy",
+      "primary": [
+        "<primary mass…>"
+      ],
+      "secondary": [
+        "<secondary mass…>"
+      ],
+      "tertiary": [
+        "<detail part…>"
+      ],
+      "stage": "MID",
+      "label": "631 hierarchy",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "rig_skinned",
+      "stage": "HIGH",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "anim_named",
+      "names": [
+        "idle",
+        "move",
+        "attack"
+      ],
+      "stage": "HIGH",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "saturation_area",
+      "view": "tq",
+      "min": 0.1,
+      "stage": "HIGH",
+      "label": "reference only: below ~10% the creature reads as a grey lump. The upper end is the shading layer’s job, not a gate.",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "tri_budget",
+      "min": 4000,
+      "max": 9000,
+      "stage": "LOW",
+      "label": "triangle budget band",
+      "enforce": "advise",
+      "when": "allocate"
+    }
+  ]
+}

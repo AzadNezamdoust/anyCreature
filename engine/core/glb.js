@@ -24,7 +24,44 @@ function hex2rgb(h) {
 //   meshes: [{material,color,rough,metal,V,F, skin?: [ [[jointName,w],...] per vertex ]}]
 //   skeleton: { joints:[{name,pos,parent}], index:{} }  ibm: Float32Array(16*n)
 //   anims: [{name,duration,channels:[{joint,path,times,values}]}]
+// ── L8: soften the shipped NORMAL toward the bone field ───────────────────
+// The other seven layers bake into COLOR_0, which a viewer is free to ignore.
+// This one is different: NORMAL is part of the file and the user's lighting
+// cannot opt out of it. Verified in the lab against a blank viewer — one
+// directional light, stock material, none of our vertex colours — the shape
+// visibly softened, at 29-43° median from the mesh normals.
+//
+// FLESH ONLY, and that is a deliberate departure from the lab's settled value
+// of "hardware 50%". The lab needed a fake normal on hardware because its
+// smooth-normal path did not compute hardware at all — it substituted raw mesh
+// normals, so the only way to soften a plate was the bone field. This engine
+// does not have that hole: `smoothSplit` gives every piece angle-weighted
+// normals with real creases. Importing the workaround would import the cost
+// the lab measured with it — on hardware the bone field pointed at the BACK of
+// the surface for 28-44% of vertices, because a plate's facing has nothing to
+// do with where the nearest bone is. Flesh has no such problem: skin wraps
+// bone, so the direction from bone to vertex IS roughly the surface normal.
+function boneField(V, skin, sk) {
+  return V.map((v, i) => {
+    const infl = skin && skin[i];
+    if (!infl || !infl.length) return null;
+    let px = 0, py = 0, pz = 0, w = 0;
+    for (const [j, wt] of infl) {
+      const k = sk.index ? sk.index[j] : undefined;
+      if (k == null) continue;
+      const q = sk.joints[k].pos;
+      px += q[0] * wt; py += q[1] * wt; pz += q[2] * wt; w += wt;
+    }
+    if (!w) return null;
+    const d = [v[0] - px / w, v[1] - py / w, v[2] - pz / w];
+    const L = Math.hypot(d[0], d[1], d[2]);
+    return L > 1e-9 ? [d[0] / L, d[1] / L, d[2] / L] : null;
+  });
+}
+
+const L8_MOVED = [];
 function writeGLB(build, outPath, opts = {}) {
+  L8_MOVED.length = 0;
   const { meshes, skeleton, ibm, anims } = build;
   const names = opts.names || {};   // internal joint name → public export name
   const bufs = []; let byteLen = 0;
@@ -95,7 +132,27 @@ function writeGLB(build, outPath, opts = {}) {
     const r = smoothSplit(m.V, tris, deg, { C: m.C, skin: m.skin, UV: m.UV });
     m.V = r.V; if (m.C) m.C = r.C; if (m.skin) m.skin = r.skin; if (m.UV) m.UV = r.UV;
     tris = r.tris;
-    const N = r.N;
+    let N = r.N;
+    // L8, after the crease split so the blend lands on the shipped vertices
+    const l8 = opts.boneNormals;
+    if (l8 && m._cls === 'flesh' && skeleton && m.skin) {
+      const F = boneField(m.V, m.skin, skeleton);
+      let moved = 0;
+      N = N.map((n, i) => {
+        const f = F[i];
+        if (!f) return n;
+        // never let the blend cross to the back of the surface — a normal that
+        // has flipped is worse than one that was never softened
+        if (n[0] * f[0] + n[1] * f[1] + n[2] * f[2] <= 0) return n;
+        const a = l8;
+        const b = [n[0] * (1 - a) + f[0] * a, n[1] * (1 - a) + f[1] * a, n[2] * (1 - a) + f[2] * a];
+        const L = Math.hypot(b[0], b[1], b[2]);
+        if (L < 1e-9) return n;
+        moved++;
+        return [b[0] / L, b[1] / L, b[2] / L];
+      });
+      if (moved) L8_MOVED.push([m.material, moved, N.length]);
+    }
     const key = [m.material, m.color, m.rough ?? 0.9, m.metal ?? 0, !!m.doubleSided, !!m.C, !!m.UV].join('|');
     let g = groups.get(key);
     if (!g) groups.set(key, g = { m, V: [], N: [], C: m.C ? [] : null, UV: m.UV ? [] : null,
@@ -109,6 +166,24 @@ function writeGLB(build, outPath, opts = {}) {
   }
   for (const g of groups.values()) {
     const { m } = g;
+    // Portability: the hue lives in baseColorFactor, COLOR_0 carries only the
+    // shading multiplier. With baseColorFactor white (the old way) EVERY colour
+    // in the file lived in vertex colours, so any viewer that does not apply
+    // COLOR_0 — and there are many — rendered the creature pure white. Splitting
+    // it is lossless where COLOR_0 IS applied (base × vertex reproduces the same
+    // value per channel, since base is the per-channel MAXIMUM and the vertex
+    // ratios are therefore ≤ 1) and degrades to "right hue, flat shading" where
+    // it is not. Observed in the field: a creature published to a gallery came
+    // back white-and-black.
+    let base = [1, 1, 1, 1];
+    if (g.C) {
+      // NEW arrays, never in place: a vertex-colour array can be referenced from
+      // more than one vertex (flat fills, crease splits), and dividing in place
+      // would scale a shared object twice and shift the colour.
+      const mx = [0, 1, 2].map(k => Math.max(1e-4, ...g.C.map(c => c[k])));
+      g.C = g.C.map(c => [Math.min(1, c[0] / mx[0]), Math.min(1, c[1] / mx[1]), Math.min(1, c[2] / mx[2])]);
+      base = [mx[0], mx[1], mx[2], 1];
+    }
     const mins = [0,1,2].map(k => Math.min(...g.V.map(v => v[k])));
     const maxs = [0,1,2].map(k => Math.max(...g.V.map(v => v[k])));
     const attrs = {
@@ -133,7 +208,7 @@ function writeGLB(build, outPath, opts = {}) {
     const idxAcc = addAccessor(new Uint32Array(g.tris.flat()), 5125, 'SCALAR', 34963);
     const mi = gltf.materials.length;
     const mat = { name: m.material, pbrMetallicRoughness: {
-      baseColorFactor: g.C ? [1, 1, 1, 1] : [...hex2rgb(m.color), 1],
+      baseColorFactor: g.C ? base : [...hex2rgb(m.color), 1],
       metallicFactor: m.metal ?? 0, roughnessFactor: m.rough ?? 0.9 } };
     if (m.doubleSided) mat.doubleSided = true;   // zero-thickness membranes
     gltf.materials.push(mat);
@@ -173,4 +248,4 @@ function writeGLB(build, outPath, opts = {}) {
   return total;
 }
 
-module.exports = { writeGLB, triangulate };
+module.exports = { writeGLB, triangulate, L8_MOVED };

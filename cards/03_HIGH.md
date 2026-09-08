@@ -11,7 +11,7 @@ Pick the palette yourself, from the creature's story. The norms:
    — the memory spark. One accent temperature, not two. The 5% caps the ACCENT
    alone; it is not a cap on how much of the creature carries saturated colour —
    norm 4 sets that, and its floor sits well above 5%.
-4. **Saturated area: 10%–34% — measured, not judged by eye.** The
+4. **Saturated area: 10%–34% — computed, not judged by eye.** The
    `saturation_area` claim counts the share of the view carrying HSV saturation
    ≥ 0.50, read on the UNLIT baked vertex colour, so brightness, AO and lighting
    cannot skew it. Below the floor the creature reads as a grey mass; above the
@@ -26,24 +26,83 @@ Pick the palette yourself, from the creature's story. The norms:
    floor, lift the mid masses, keep the darks only where a step needs them.
 
 The engine bakes **per-vertex AO at compile** (crevices, pits, undersides
-darken automatically — that's the "solid" look). The floor is measured AFTER
+darken automatically — that's the "solid" look). The floor is computed AFTER
 AO; never fight AO by flattening your colours, and never disable it to pass
 (`"ao": false` exists only for debug builds).
 
 Vertex colours come from two places. Per volume, `colors.arcs` bands the
 section over that material's base colour (0°=spine, 180°=belly) — bands must
 follow the form, spine band darkening the top plane, belly band lifting the
-underside. Spec-level, ONE `shading` block ramps value over the WHOLE body's Y
-range and lays one grain, on EVERY mesh — volumes, paws, ears, eyes, horns —
-so the same numbers mean the same thing on an upright leg and a horizontal
-torso, and no part reads as a sticker. Defaults: `gradient {top 0.30, bottom
--0.88}`, `noise {size 0.018, amount 0.26}`; `noise.size` is a fraction of the
-model diagonal, so the grain scales with the creature. `colors.gradient` and
-`colors.noise` are ignored now — the compiler says so in an `info:` line.
+underside. Everything after that is the **L1–L8 stack**, and it is a FORMULA:
+it runs on every build, it takes no decisions, and there is nothing here for
+you to judge. That is the whole reason HIGH has no visual gate.
+
+What it does, in order: smooths the flesh colour across part boundaries so
+junctions cannot show a seam (a colour field that is a function of POSITION
+gives two coincident points the same value, by construction); lays the pattern
+if the spec named one; multiplies a top-to-bottom three-colour ramp over
+everything; brightens **and** saturates the upper region while leaving the
+lower region exactly untouched; bleeds hardware colour into the flesh around
+it; shades hardware and flesh separately; and finally softens the shipped
+NORMAL on flesh toward the bone field, which is the one layer the viewer's own
+lighting reacts to.
+
+**The only field you normally write is `shading.pattern.color`, and you decided
+it at MID.** Everything else is settled — see `cards/SYNTAX.md` for the full
+block for the settled values.
+Two things worth knowing: brighter-and-more-saturated is impossible with any
+blend mode (every mode that brightens moves toward white, and white has chroma
+zero), which is why that layer works in OKLab; and pushing chroma walks back to
+the sRGB boundary by bisection rather than clamping, because clamping per
+channel turns the hue instead of capping the saturation.
+
+The build prints one `info: shade class ...` line naming which pieces are
+flesh, which are hardware and which are features. **Read it.** A trunk is a
+`curve`, so it defaults to hardware and will not take the flesh treatment until
+the spec says `"shade": "flesh"`. `"shading": {"stack": false}` falls back to
+the 1.2.0 ramp-and-grain for a spec that was tuned against it.
 UV atlas is opt-in (`"keep_uv": true`) for downstream texture bakes; by default
 the shipped file carries colour in vertices and stays lean.
 
+## Materials — what the format can and cannot carry
+
+- **No textures at all.** Colour is per-vertex; the whole palette ships in the
+  file. Do not plan for a texture, an emissive map or a normal map — there are
+  none, and the contract refuses images.
+- **Every material carries its own hue** in `baseColorFactor`; the engine does
+  this for you by splitting the baked colour (hue into the material, shading
+  into COLOR_0). Never hand-write a pure-white base colour with the colour in
+  vertices only: a viewer that ignores vertex colours then shows a white
+  creature. That happened to a published creature on a public gallery.
+- **Keep `metal` low — 0.2 at most, and only where it earns it.** Metal without
+  an environment map renders NEAR-BLACK, and most galleries, engines and preview
+  tools default to no environment. A brass creature should be a bright warm
+  colour with low metalness, not a metallic material hoping for reflections.
+  The checker warns above 0.3.
+- Roughness is free: use it to separate surfaces (wet, chalky, polished).
+- **No anisotropy, no brushed metal, no hair sheen.** `KHR_materials_anisotropy`
+  stretches the specular highlight ALONG THE TANGENT, and these meshes carry no
+  tangents and (by default) no UVs — so the extension has no direction to work
+  with and every renderer invents its own. The result is a flat white smear, and
+  turning the strength DOWN does not help: what is missing is *which way*, not
+  *how much*. The checker BLOCKS it (`anisotropy_without_direction`). If you
+  want a directional look, get it from GEOMETRY — grooves, plates, aligned
+  spikes, a darker vertex band along the axis — or unwrap first with
+  `"keep_uv": true` and accept that the palette is still vertex colour.
+
 ## Animation — three, always: `idle`, `move`, `attack`
+
+**Write all three, then build ONCE.** Not one clip, build, look, next clip. The
+three share a skeleton, a stance and a weight story — the same hips that bob in
+`move` are the hips that wind back in `attack` — so authoring them together is
+easier as well as cheaper, and it is the same rule card 02 applies to parts. The
+engine checks every clip in one pass (`anim_integrity`, `attack_reach`,
+`limb_clearance`) and reports all of their failures at once, so a build per clip
+buys nothing but round-trips at the most expensive point in the run.
+
+Tracks are cheap to write and expensive to iterate: three whole clips are a
+few thousand characters. The characters were never the
+problem. Three builds instead of one were.
 
 - The bar for idle/move: skinned, actually moving, no clipping, no explosions.
 - **`attack` must COMMIT FORWARD — but it does not have to lunge.** The engine
@@ -54,6 +113,13 @@ the shipped file carries colour in vertices and stays lean.
   planted on the spot, winding a foreleg, a tail or a weapon BACK and sweeping it
   FORWARD, passes. A ±20° twitch does not, and neither does a sideways sweep that
   never crosses toward the front. Wind up BACK first, then strike FORWARD.
+- **Gait for many legs.** Two legs: opposite phase (`mirror_phase: 0.5`).
+  Four legs: DIAGONAL pairs — front-left moves with back-right; offset the
+  back pair's keys by half a cycle relative to the front pair, then
+  `mirror_phase: 0.5` staggers left/right. Six or eight (spiders): alternating
+  tripods/tetrapods — two leg groups, one group's keys offset half a cycle;
+  adjacent legs must never move in sync or the creature skates instead of
+  walking.
 - Channels stack: several tracks bending one segment = keep total bend modest,
   or `anim_integrity` blocks (folds / >3× edge stretch). Reduce bend or add a
   joint; don't fight the check.

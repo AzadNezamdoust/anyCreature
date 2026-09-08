@@ -1,0 +1,41 @@
+{
+ "_readme": "Known-answer decoys for blind reads. Shuffle ONE into every batch under a neutral name; wrong canary answer = the reader was not looking = the whole read is void.",
+ "ball.png": {
+  "aspect": "square",
+  "bumps": 0,
+  "identity": [
+   "ball",
+   "sphere",
+   "circle",
+   "egg",
+   "blob"
+  ]
+ },
+ "spike.png": {
+  "aspect": "tall",
+  "bumps": 1,
+  "identity": [
+   "spike",
+   "cone",
+   "tooth",
+   "horn",
+   "triangle",
+   "obelisk"
+  ]
+ },
+ "wolf_side.png": {
+  "aspect": "wide",
+  "bumps": [
+   3,
+   7
+  ],
+  "identity": [
+   "wolf",
+   "dog",
+   "fox",
+   "quadruped",
+   "animal",
+   "canine"
+  ]
+ }
+}

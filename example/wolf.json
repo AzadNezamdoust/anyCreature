@@ -1,4 +1,5 @@
 {
+ "height": 1.45,
  "name": "quadruped_light",
  "_template": "ANCHOR, not target. A validated light quadruped (wolf lineage, bred against the approved 1.2 reference over 3 measured rounds). Start here, then DEVIATE: declare your exaggeration vector (which 1-2 numbers you push past this anchor, and how far) in the design card. Converging back to these numbers means you designed nothing.",
  "_anchor_numbers": {
@@ -300,7 +301,8 @@
       "color": "#c9c1ae"
      }
     ]
-   }
+   },
+   "smooth_angle": 17
   },
   {
    "chain": "head",
@@ -367,7 +369,8 @@
       "color": "#e08a3c"
      }
     ]
-   }
+   },
+   "smooth_angle": 20
   },
   {
    "chain": "tail",
@@ -407,7 +410,8 @@
       "color": "#8a3d14"
      }
     ]
-   }
+   },
+   "smooth_angle": 31
   },
   {
    "chain": "LFront",
@@ -439,7 +443,8 @@
     "none",
     "dome"
    ],
-   "ring_step": 0.055
+   "ring_step": 0.055,
+   "smooth_angle": 35
   },
   {
    "chain": "LBack",
@@ -482,7 +487,8 @@
     "none",
     "dome"
    ],
-   "ring_step": 0.055
+   "ring_step": 0.055,
+   "smooth_angle": 35
   }
  ],
  "parts": [

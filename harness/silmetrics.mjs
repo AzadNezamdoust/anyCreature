@@ -28,7 +28,7 @@
 //
 // These are not pass/fail thresholds. The design card DECLARES a position per
 // axis (tension targets); this tool verifies the declared position was reached.
-import { chromium } from 'playwright';
+import { launchBrowser } from './pwlaunch.mjs';
 import fs from 'fs'; import path from 'path'; import http from 'http';
 import { fileURLToPath } from 'url';
 
@@ -79,10 +79,9 @@ const srv = http.createServer((q, res) => {
 // whenever two runs overlapped.
 await new Promise(r => srv.listen(0, '127.0.0.1', r));
 const port = srv.address().port;
-// Let Playwright locate its own browser; PW_CHROMIUM_PATH pins it if needed.
-const br = await chromium.launch({ executablePath: process.env.PW_CHROMIUM_PATH || undefined,
-  args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader']
-    .concat(process.env.PW_NO_SANDBOX === '1' ? ['--no-sandbox'] : []) });
+// Shared launcher: PW_CHROMIUM_PATH pins a binary; a missing browser dies with
+// ONE actionable line ("run npx playwright install chromium"), never a stack.
+const br = await launchBrowser();
 const pg = await br.newPage({ viewport: { width: 660, height: 660 } });
 await pg.goto(`http://127.0.0.1:${port}/`);
 await pg.evaluate(() => window.load('/model.glb'));

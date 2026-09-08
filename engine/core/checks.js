@@ -91,6 +91,53 @@ function foldCount(V, F, minArea2 = 0) {
   return folds;
 }
 
+
+// How much of one mesh's skin can show an edge: the share of interior edges
+// whose dihedral angle reaches the smoothing angle, i.e. exactly the edges
+// smoothSplit() will crease. Computed here rather than after the fact because
+// checks run before the GLB is assembled.
+
+// A correct walk still drifts forward a little across the contact frames as the
+// foot rolls through heel-strike and toe-off, so the bar is a share of stride,
+// not zero.
+const GAIT_FWD_MAX = 0.15;
+
+const SOFT_FLOOR = 10;   // percent of volume edges that must be able to crease
+
+function creaseShare(V, F, deg) {
+  const tri = [];
+  for (const f of F) {
+    if (f.length === 3) tri.push(f);
+    else if (f.length === 4) { tri.push([f[0], f[1], f[2]]); tri.push([f[0], f[2], f[3]]); }
+  }
+  const fn = [];
+  for (const [a, b, c] of tri) {
+    const A = V[a], B = V[b], C = V[c];
+    const u = [B[0]-A[0], B[1]-A[1], B[2]-A[2]], w = [C[0]-A[0], C[1]-A[1], C[2]-A[2]];
+    const n = [u[1]*w[2]-u[2]*w[1], u[2]*w[0]-u[0]*w[2], u[0]*w[1]-u[1]*w[0]];
+    const l = Math.hypot(n[0], n[1], n[2]);
+    fn.push(l > 1e-12 ? [n[0]/l, n[1]/l, n[2]/l] : null);
+  }
+  const key = new Map();
+  const at = i => V[i].map(x => Math.round(x * 1e4)).join(',');
+  tri.forEach((f, i) => {
+    for (const [u, v] of [[f[0], f[1]], [f[1], f[2]], [f[2], f[0]]]) {
+      const a = at(u), b = at(v), k = a < b ? a + '|' + b : b + '|' + a;
+      (key.get(k) || key.set(k, []).get(k)).push(i);
+    }
+  });
+  const cos = Math.cos(deg * Math.PI / 180);
+  let hard = 0, tot = 0;
+  for (const fs of key.values()) {
+    if (fs.length !== 2) continue;
+    const p = fn[fs[0]], q = fn[fs[1]];
+    if (!p || !q) continue;
+    tot++;
+    if (p[0]*q[0] + p[1]*q[1] + p[2]*q[2] < cos) hard++;
+  }
+  return { hard, tot };
+}
+
 function runChecks(spec, sk, meshes, animsCompiled) {
   const fails = [];
   const warns = [];   // hoisted: checks above the part_overlap block also report measures
@@ -100,8 +147,8 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   // `faceted: true` on a VOLUME shatters the mass into one independent facet per
   // triangle — an 800-triangle torso becomes 800 shards — and because AO bakes
   // from those normals the mess ships inside COLOR_0, where no relighting can
-  // reach it. Two real runs (gryphon, mammoth) came back 89% and 93% hard-edged
-  // this way. Bodies are smooth-shaded. Parts — plates, spikes, claws, crystal,
+  // reach it — a faceted body comes back ~90% hard-edged. Bodies are
+  // smooth-shaded. Parts — plates, spikes, claws, crystal,
   // armour — may still face freely; only volumes are covered.
   if (spec.build !== 'rigid') {
     const bad = (spec.volumes || []).filter(v => v.faceted).map(v => `"${v.chain}"`);
@@ -110,6 +157,48 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         + 'smooth-shaded. Put "sharp": true on the profile rows where the silhouette should break, '
         + 'or lower "smooth_angle" on that volume. If the creature really is a machine, declare '
         + '"build": "rigid" at spec level.');
+  }
+
+  // soft_mass — THE ROUNDED SAUSAGE. The opposite failure to `faceted`, and far
+  // more common, because it is what you get by DEFAULT.
+  //
+  // A volume is a tube of `sides` walls, so the angle between neighbouring walls
+  // is 360/sides, and `smooth_angle` (default 50) welds every edge under it: 9
+  // sides is 40 degrees, 16 is 22. Nothing on that mass can then break — not the
+  // shading, not the outline — and it renders as a smooth bean. The ruler is the
+  // share of VOLUME edges that reach their own smoothing angle.
+  if (spec.build !== 'rigid' && !spec.qa_isolate) {
+    const per = [];
+    let hard = 0, tot = 0;
+    for (const m of meshes) {
+      if (m.part) continue;                       // parts may be any shape they like
+      const vol = (spec.volumes || []).find(v => v.chain === m.chain);
+      if (vol && vol.soft) continue;              // declared a soft organic lump
+      const deg = m.faceted ? 0 : (m.smoothAngle ?? 50);
+      const r = creaseShare(m.V, m.F, deg);
+      if (!r.tot) continue;
+      hard += r.hard; tot += r.tot;
+      per.push({ chain: m.chain, pct: 100 * r.hard / r.tot, edges: r.tot, deg });
+    }
+    if (tot) {
+      const pct = 100 * hard / tot;
+      if (pct < SOFT_FLOOR) {
+        per.sort((a, b) => (a.pct - b.pct) || (b.edges - a.edges));
+        const worst = per.slice(0, 3).map(p =>
+          `"${p.chain}" ${p.pct.toFixed(0)}% (smooth_angle ${p.deg})`).join(', ');
+        fails.push(`soft_mass: only ${pct.toFixed(0)}% of this creature's skin can show an edge `
+          + `at all (the floor is ${SOFT_FLOOR}%). Nothing breaks, so every mass renders as a smooth `
+          + `bean. Softest first: ${worst}. The lever that works is smooth_angle ON THE VOLUME: a volume's wall `
+          + `angle is 360/sides, so 9 sides is 40° and 16 sides is 22°, and the default 50° welds `
+          + `both perfectly smooth. Drop it under the wall angle on the masses named above — `
+          + `applying exactly this number to every volume of the creature that was `
+          + `rejected took it from 29% to 69% and left the side silhouette at IoU 1.000 — the FORM `
+          + `is untouched, only the shading hardens. Fewer "sides" works too and thins the outline a little. A "sharp" row `
+          + `is the SILHOUETTE lever, not this one, and it does nothing unless the radius steps `
+          + `across it. A mass that is genuinely meant to be a smooth lump — a slug, a bladder, a `
+          + `droplet — declares "soft": true and drops out of this count.`);
+      }
+    }
   }
 
   // QA isolation builds ("qa_isolate": true): a lone part rendered for the MID
@@ -145,6 +234,17 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   const ys0 = allV0.map(v => v[1]);
   const modelH = Math.max(...ys0) - Math.min(...ys0) || 1;
   const edgeFloor = 0.015 * modelH;          // edges shorter than 1.5% of height don't vote
+
+  // 0. declared size — "height" (metres, ground to crown). Size is identity:
+  //    a 1.7 m "giant" is just a man. The build must land within ±15%.
+  if (spec.height) {
+    const err = Math.abs(modelH - spec.height) / spec.height;
+    if (err > 0.15)
+      fails.push(`size: spec declares height ${spec.height} m but the build stands `
+        + `${modelH.toFixed(2)} m (${Math.round(err * 100)}% off) — multiply every joint coordinate `
+        + `by ${(spec.height / modelH).toFixed(4)} to land on the declaration, or change the `
+        + `declaration to ${modelH.toFixed(2)}.`);
+  }
   const areaFloor2 = Math.pow(0.0004 * modelH * modelH, 2); // ~sliver faces don't vote
 
   // 1. anim_integrity
@@ -249,19 +349,47 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const host = volsByChain[hostChain];
     const rootRing = v._rings[0];
     let inside = 0;
+    // Keep how far past the surface each ring point sits, and which host centre
+    // it is nearest. The check already computes both; throwing them away and
+    // saying only "deeper" makes the reader re-derive the geometry the engine
+    // just did — the same work, done twice, once in code and once by hand.
+    const over = []; let nearC = null, nearD = Infinity;
     for (const p of rootRing) {
       let best = Infinity, bs = 0;
       host._pts.forEach((c2, si) => { const d = G.len(G.sub(p, c2)); if (d < best) { best = d; bs = si; } });
       const ring = host._rings[bs]; const c2 = host._pts[bs];
       const rad = Math.max(...ring.map(q => G.len(G.sub(q, c2))));
+      over.push(best - rad * 0.98);
+      if (best < nearD) { nearD = best; nearC = c2; }
       if (best < rad * 0.98) inside++;
     }
-    if (inside < rootRing.length * 0.8)
-      fails.push(`root_containment: chain "${cn}" root ring is ${Math.round(100 * (1 - inside / rootRing.length))}% outside its host "${hostChain}" — the open ring will show on the surface; bury the root joint deeper`);
+    if (inside < rootRing.length * 0.8) {
+      // 80% of the ring has to end up inside, so the move that fixes it is the
+      // 80th-percentile overshoot — not the worst point, which would bury it
+      // further than the rule asks for.
+      const sorted = over.slice().sort((a, b) => a - b);
+      const need = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.8))];
+      // Name the CHAIN'S OWN first joint, not the host joint it hangs from.
+      // Moving the host drags this chain along with it, so that correction can
+      // never converge — applying it repeatedly just walks the pair across the
+      // model. The thing sitting outside the host is this chain's root ring.
+      const ownRoot = (spec.chains[cn] || [])[0] || hostJoint;
+      const jp = sk.joints[sk.index[ownRoot]] && sk.joints[sk.index[ownRoot]].pos;
+      let dirTxt = '';
+      if (nearC && jp) {
+        const d = G.sub(nearC, jp), L = G.len(d) || 1;
+        dirTxt = ` toward [${d.map(x => (x / L).toFixed(2)).join(', ')}]`;
+      }
+      fails.push(`root_containment: chain "${cn}" root ring is `
+        + `${Math.round(100 * (1 - inside / rootRing.length))}% outside its host "${hostChain}" `
+        + `— the open ring will show on the surface. Move joint "${ownRoot}" about `
+        + `${Math.max(0, need).toFixed(3)}m${dirTxt} (into the host), or widen "${hostChain}" `
+        + `there by the same amount.`);
+    }
   }
 
   // 5. limb clearance — mirrored volumes must not touch across the centreline
-  //    (measured only on exposed verts below the torso)
+  //    (Verified:ly on exposed verts below the torso)
   {
     const hostOf = cn => {
       const hj = (spec.attach || {})[cn]; if (!hj) return null;
@@ -286,7 +414,10 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       const minX = Math.min(...exposed.map(p => Math.abs(p[0])));
       const clearance = 2 * minX;
       if (clearance < 0.03 * modelH)
-        fails.push(`limb_clearance: "${cn}" and its mirror are ${clearance.toFixed(3)} apart at the centreline (need ≥ ${(0.03 * modelH).toFixed(3)}) — legs will interpenetrate in motion`);
+        fails.push(`limb_clearance: "${cn}" and its mirror are ${clearance.toFixed(3)} apart at the `
+          + `centreline (need ≥ ${(0.03 * modelH).toFixed(3)}) — legs will interpenetrate in motion. `
+          + `Move "${cn}" ${(((0.03 * modelH) - clearance) / 2).toFixed(3)} further out in x `
+          + `(the mirror follows), or narrow the limb by the same amount.`);
     }
   }
 
@@ -309,6 +440,10 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       // host would measure the width of the creature. The source carries the
       // verdict for both; any twin-only deformation is mirror_distortion's job.
       if (m._mirrorSrc) continue;
+      // "join":"place" is the designer DECLARING deliberate detachment (a
+      // floating rune, an orbiting shard) — the strict law yields to it;
+      // part_seat still reports the measured burial for the record.
+      if (m.join === 'place') continue;
       const host = volsByChain[m.hostChain];
       if (!host || !host._rings) continue;
       let nearest = Infinity;
@@ -320,11 +455,17 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         if (outside < nearest) nearest = outside;
       }
       if (nearest > gap)
+        // Say the MOVE, not just the gap. The engine measured the distance; a
+        // message that reports it and stops makes the reader work the
+        // subtraction back out of the prose. The first third of a root is meant
+        // to be embedded, so the useful number is the one that buries it, not
+        // the one that merely touches: gap + a third of the part's own reach.
         fails.push(`part_attachment: "${m.part}" never meets its host "${m.hostChain}" — its closest `
           + `point still stands ${nearest.toFixed(3)} clear of the surface (tolerance ${gap.toFixed(3)}). `
-          + `It is floating: it will read as a detached sticker and drift the moment the host animates. `
-          + `Bury the root inside the host (the first third of a root is meant to be embedded — that is `
-          + `what hides the seam), or move its anchor onto the surface.`);
+          + `Move it ${(nearest + gap).toFixed(3)} INTO the host along its own axis — touching is the `
+          + `floor, and the first third of a root is meant to be embedded, which is what hides the seam. `
+          + `Or move its anchor onto the surface. `
+          + `Floating, it reads as a detached sticker and drifts the moment the host animates.`);
     }
   }
 
@@ -435,6 +576,167 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     }
   }
 
+  // 7b. gait_direction — A PLANTED FOOT MUST TRAVEL BACKWARD.
+  //
+  // The clips loop in place, so the ground does the moving: while a foot is on
+  // the ground it must sweep BACKWARD under the body, and that is what pushes
+  // the creature forward. Swing it backward and sweep it forward instead and you
+  // have a perfectly smooth walk cycle that plays in reverse — invisible in every
+  // still frame, obvious the moment it moves.
+  {
+    const mv = animsResolved.find(a => a.name === 'move');
+    if (mv) {
+      const feet = [];
+      for (const [cn, js] of Object.entries(spec.chains || {})) {
+        if (!/leg|foot|paw/i.test(cn)) continue;
+        const last = js[js.length - 1];
+        if (last && sk.index[last] != null) feet.push(last);
+      }
+      for (const jn of feet) {
+        const N = 24, path = [];
+        for (let s = 0; s <= N; s++) {
+          const w = jointWorlds(sk, locals, mv, s / N);
+          path.push(matVec(w[sk.index[jn]], [0, 0, 0]));
+        }
+        const ys = path.map(p => p[1]), zs = path.map(p => p[2]);
+        const ymin = Math.min(...ys), ymax = Math.max(...ys);
+        const stride = Math.max(...zs) - Math.min(...zs);
+        if (stride < 1e-3 || ymax - ymin < 1e-4) continue;   // not a stepping leg
+        // Sum the per-step forward travel over contact frames, rather than
+        // (last - first): a contact phase that straddles the loop point would
+        // otherwise subtract two frames that are the same frame and read 0.
+        const low = path.map(p => p[1] < ymin + (ymax - ymin) * 0.30);
+        let net = 0, contact = 0;
+        for (let s = 0; s < path.length - 1; s++) {
+          if (!(low[s] && low[s + 1])) continue;
+          net += path[s + 1][2] - path[s][2];
+          contact++;
+        }
+        if (contact < 2) continue;
+        if (net > stride * GAIT_FWD_MAX) {
+          fails.push(`gait_direction: "${jn}" travels ${net.toFixed(3)} m FORWARD while it is on `
+            + `the ground — ${(100 * net / stride).toFixed(0)}% of its own ${stride.toFixed(2)} m `
+            + `stride, in the wrong direction. A planted foot must sweep BACKWARD under the body; `
+            + `that is what makes the creature look like it is going somewhere. This clip swings `
+            + `the leg back through the air and pushes it forward on the ground, which is a walk `
+            + `cycle playing in reverse — smooth, correct-looking in every still, and visibly `
+            + `backwards the moment it moves. THE FIX: write ONE leg correctly (negate its hip/knee/hock rx `
+            + `tracks so it reaches forward through the air and sweeps back on the ground), `
+            + `DELETE the hand-written opposite leg, and set "mirror_phase": 0.5 on the clip so `
+            + `the engine generates it half a cycle out. Hand-writing the second leg is where the `
+            + `phase error comes from and it is twice the authoring for a worse result.`);
+        }
+      }
+    }
+  }
+
+  // 7c. root_drive — DO NOT NAIL THE CREATURE DOWN BY ITS ROOT.
+  //
+  // A lunge written on a joint that is not the skeleton root moves everything
+  // BELOW that joint and leaves the root exactly where it was. On a creature
+  // whose root is the rump, the body lunges and the backside stays pinned to the
+  // floor, which reads as being nailed down.
+  {
+    const root = sk.joints.find(j => j.parent < 0);
+    for (const anim of animsResolved) {
+      const moved = Object.entries(anim.tracksResolved || {})
+        .filter(([, tr]) => tr.tz).map(([jn]) => jn);
+      if (!moved.length || !root) continue;
+      const bind = jointWorlds(sk, locals, null, 0);
+      let peak = 0, pu = 0;
+      for (let s = 0; s <= 20; s++) {
+        const w = jointWorlds(sk, locals, anim, s / 20);
+        for (const jn of moved) {
+          const d = matVec(w[sk.index[jn]], [0, 0, 0])[2] - matVec(bind[sk.index[jn]], [0, 0, 0])[2];
+          if (Math.abs(d) > Math.abs(peak)) { peak = d; pu = s / 20; }
+        }
+      }
+      if (Math.abs(peak) < 0.05) continue;               // not really a lunge
+      const w = jointWorlds(sk, locals, anim, pu);
+      const rd = matVec(w[sk.index[root.name]], [0, 0, 0])[2]
+               - matVec(bind[sk.index[root.name]], [0, 0, 0])[2];
+      if (Math.abs(rd) < Math.abs(peak) * 0.6) {
+        fails.push(`root_drive: "${anim.name}" drives ${moved.map(m => `"${m}"`).join(', ')} `
+          + `${peak.toFixed(2)} m forward, but the skeleton ROOT "${root.name}" moves `
+          + `${rd.toFixed(3)} m. Everything below the driven joint lunges and the root stays where `
+          + `it was, so the creature reads as nailed to the floor by that end of itself. Put the `
+          + `"tz" track on "${root.name}" instead — it is the root, so the whole body follows it. `
+          + `Card 03's own example does exactly that.`);
+      }
+    }
+  }
+
+  // 7d. THE COLOUR QUESTIONS A READER WAS BEING PAID TO ANSWER.
+  //
+  // Both are arithmetic on the palette — microseconds, no render, no subagent.
+  //
+  // These are ADVICE. A number saying the eye will not separate two masses is
+  // worth reading and is not worth refusing a build over — camouflage and
+  // deliberately subtle detail are real design choices. What is NOT acceptable
+  // is spending a reader to learn them.
+  {
+    let hex2lab = null;
+    try { hex2lab = require('./shade.js').hex2lab; } catch { /* no stack, skip */ }
+    const pal = spec.palette || {};
+    const lab = {};
+    if (hex2lab) for (const [k, v] of Object.entries(pal)) {
+      const c = (v && v.color) || (typeof v === 'string' ? v : null);
+      if (typeof c === 'string' && /^#[0-9a-f]{6}$/i.test(c)) lab[k] = hex2lab(c.slice(1));
+    }
+    const dist = (a, b) => Math.hypot(lab[a][0]-lab[b][0], lab[a][1]-lab[b][1], lab[a][2]-lab[b][2]);
+
+    // value_order — the whole value plan, sorted, so nobody squints at a render.
+    const byL = Object.keys(lab).sort((a, b) => lab[b][0] - lab[a][0]);
+    if (byL.length > 1) {
+      warns.push('value_order: materials by lightness, brightest first — '
+        + byL.map(k => `${k} ${lab[k][0].toFixed(2)}`).join(' · '));
+      // whatever is brightest OWNS the eye. If something else is within 0.05 of
+      // it, they compete and neither wins.
+      const top = byL[0];
+      const tied = byL.slice(1).filter(k => lab[top][0] - lab[k][0] < 0.05);
+      if (tied.length)
+        warns.push(`value_order: "${top}" (L ${lab[top][0].toFixed(2)}) is tied for brightest with `
+          + tied.map(k => `"${k}" (${lab[k][0].toFixed(2)})`).join(', ')
+          + ' — nothing owns the eye when two masses sit at the same value. Drop the one that is '
+          + 'NOT the brief\'s dominant focal by at least 0.08 L, or accept that the eye will '
+          + 'ping-pong.');
+    }
+
+    // contrast_adjacent — a part must separate from what it SITS ON. Materials
+    // inside one visual mass are deliberately close (three shades of black
+    // quill are one mass), so this only compares a part to its host.
+    const volMat = {};
+    for (const m of meshes) if (!m.part && m.chain) volMat[m.chain] = m.material;
+    const seen = new Set();
+    for (const m of meshes) {
+      if (!m.part || !m.hostChain) continue;
+      const a = m.material, b = volMat[m.hostChain];
+      if (!a || !b || a === b) {
+        if (a && a === b) {
+          const k = `${m.part}|${a}`;
+          if (!seen.has(k)) {
+            seen.add(k);
+            warns.push(`contrast_adjacent: part "${m.part}" wears the SAME material "${a}" as the `
+              + `"${m.hostChain}" it sits on — at reading size it is not a part, it is a bump. `
+              + `Give it its own entry in the palette.`);
+          }
+        }
+        continue;
+      }
+      if (!lab[a] || !lab[b]) continue;
+      const d = dist(a, b);
+      if (d < 0.10) {
+        const k = `${a}|${b}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        warns.push(`contrast_adjacent: part "${m.part}" (${a}, L ${lab[a][0].toFixed(2)}) against its `
+          + `host "${m.hostChain}" (${b}, L ${lab[b][0].toFixed(2)}) — OKLab distance ${d.toFixed(3)}, `
+          + `under 0.10. They will read as one mass at thumbnail size. Move one of them in `
+          + `LIGHTNESS, which is what survives shrinking; hue alone does not.`);
+      }
+    }
+  }
+
   // 8. declared adjacency — "touch": [["chainA","chainB"], ...]. Declared-
   //    connected chains must actually meet; a gap reads as floating bodyparts.
   {
@@ -457,7 +759,10 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         if (d < eps) { met = true; break outer; }
       }
       if (!met)
-        fails.push(`touch: "${ca}" and "${cb}" are declared connected but their surfaces stay ${best.toFixed(3)} apart — overlap the volumes so the join is buried`);
+        fails.push(`touch: "${ca}" and "${cb}" are declared connected but their surfaces stay `
+          + `${best.toFixed(3)} apart. Close the gap by at least ${best.toFixed(3)} and then keep `
+          + `going — move one chain's end joint ${(best * 1.5).toFixed(3)} toward the other, so the `
+          + `join is BURIED rather than merely touching; a seam that only kisses still shows.`);
     }
   }
 
@@ -484,6 +789,55 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       const frac = inside / A.V.length;
       if (frac > 0.45)
         warns.push(`part_overlap: '${A.part}' sits ${Math.round(frac * 100)}% inside '${B.part}' — check for interpenetration`);
+    }
+  }
+
+  // 10. part_seat — is the part's base ring actually buried in a body?
+  //     The exposed-root class: tusks starting in mid-air, beaks hovering off
+  //     the face, a trunk that reads as a bolted-on object. Every hosted
+  //     curve/spike carries its base ring (`_seatIdx`); how it is ALLOWED to
+  //     meet the body is the declared "join":
+  //       "insert"  → base ring ≥60% inside a volume, or BLOCK
+  //       "extrude" → base ring CENTRE inside a volume (grows out of the skin), or BLOCK
+  //       "snap"    → the part must ride an anchor (surface conform), or BLOCK
+  //       "place"   → deliberately free-floating — no test (rare; justify it)
+  //     Undeclared parts are measured anyway: a base ring under 50% buried is
+  //     a warn — look at the junction and either sink it or declare the join.
+  {
+    const vols = Object.values(volsByChain);
+    const insideAnyVol = (q) => {
+      for (const vol of vols) {
+        let best = Infinity, bs = 0;
+        vol._pts.forEach((c2, si) => { const d = G.len(G.sub(q, c2)); if (d < best) { best = d; bs = si; } });
+        const c2 = vol._pts[bs];
+        const rad = Math.max(...vol._rings[bs].map(r2 => G.len(G.sub(r2, c2))));
+        if (best < rad * 0.98) return true;
+      }
+      return false;
+    };
+    const JOINS = new Set(['insert', 'extrude', 'snap', 'place', undefined]);
+    for (const pt of spec.parts || []) {
+      if (!JOINS.has(pt.join))
+        fails.push(`part_seat: unknown join "${pt.join}" on '${pt.name || pt.type}' — use insert / extrude / snap / place`);
+      if (pt.join === 'snap' && !pt.anchor)
+        fails.push(`part_seat: '${pt.name || pt.type}' declares join "snap" but has no "anchor" — snap means riding the surface`);
+    }
+    if (vols.length) for (const m of meshes) {
+      if (!m._seatIdx) continue;
+      let seat = m._seatIdx.map(i => m.V[i]).filter(Boolean);
+      if (!seat.length) continue;
+      // mirrored twins: the vols list holds the LEFT/axis volumes, so test the
+      // twin's seat in mirror space (x-flipped) — symmetric by construction
+      if (m.part && m.part.endsWith('.R')) seat = seat.map(q => [-q[0], q[1], q[2]]);
+      const buried = seat.filter(insideAnyVol).length / seat.length;
+      const centre = seat.reduce((a, q) => G.add(a, q), [0, 0, 0]).map(x => x / seat.length);
+      const label = m.part || 'part';
+      if (m.join === 'insert' && buried < 0.6)
+        fails.push(`part_seat: '${label}' declares join "insert" but its base ring is only ${Math.round(buried * 100)}% inside a body (need ≥60%) — sink the root deeper or thicken the host`);
+      else if (m.join === 'extrude' && !insideAnyVol(centre))
+        fails.push(`part_seat: '${label}' declares join "extrude" but its base centre sits outside every body — the part does not grow out of a surface`);
+      else if (!m.join && buried < 0.5)
+        warns.push(`part_seat: '${label}' base ring is ${Math.round(buried * 100)}% buried — the root may show; sink it, or declare the join (insert/extrude/snap/place)`);
     }
   }
 

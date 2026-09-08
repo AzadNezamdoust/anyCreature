@@ -1,0 +1,26 @@
+# Fresh-machine smoke test: exactly what a new user runs, on a machine that has
+# nothing. Catches the "works on the author's machine" class — the missing
+# Playwright browser shipped in 1.2.0 because no fresh environment ever ran
+# setup before push.
+name: smoke
+on: [push, pull_request]
+jobs:
+  fresh-install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: sync check (versions agree, promised features present, no leaks)
+        run: python3 harness/synccheck.py
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: setup.sh (deps + calibration + browser probe)
+        run: bash setup.sh
+      - name: engine builds the example
+        run: node engine/cli.js example/wolf.json /tmp/wolf.glb
+      - name: render tools run (silhouettes)
+        run: node harness/silmetrics.mjs /tmp/wolf.glb /tmp/sil
+      - name: delivery packs (viewer + heroes)
+        run: python3 harness/deliver.py /tmp/wolf.glb /tmp/del wolf --title "CI Wolf"
