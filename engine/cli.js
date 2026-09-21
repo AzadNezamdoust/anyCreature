@@ -151,7 +151,7 @@ const L8 = STACK
   ? (((spec.shading || {}).normals || {}).flesh ?? 0.90)
   : 0;
 const bytes = writeGLB({ meshes, skeleton: sk, ibm: inverseBindMatrices(sk), anims }, outPath,
-  { asset, names, boneNormals: L8 });
+  { asset, names, boneNormals: L8, spans: spec.embed_spec !== false });
 if (L8) {
   const moved = require('./core/glb.js').L8_MOVED;
   const tot = moved.reduce((a, r) => a + r[1], 0), all = moved.reduce((a, r) => a + r[2], 0);

@@ -49,7 +49,7 @@ lighting reacts to.
 
 **The only field you normally write is `shading.pattern.color`, and you decided
 it at MID.** Everything else is settled — see `cards/SYNTAX.md` for the full
-block for the settled values.
+block; the settled values themselves are `DEFAULTS` in `engine/core/shade.js`.
 Two things worth knowing: brighter-and-more-saturated is impossible with any
 blend mode (every mode that brightens moves toward white, and white has chroma
 zero), which is why that layer works in OKLab; and pushing chroma walks back to
@@ -100,9 +100,9 @@ engine checks every clip in one pass (`anim_integrity`, `attack_reach`,
 `limb_clearance`) and reports all of their failures at once, so a build per clip
 buys nothing but round-trips at the most expensive point in the run.
 
-Tracks are cheap to write and expensive to iterate: three whole clips are a
-few thousand characters. The characters were never the
-problem. Three builds instead of one were.
+Tracks are cheap to write and expensive to iterate: three clips of a big
+creature come to a few dozen tracks and a couple of thousand characters. The
+characters were never the problem. Three builds instead of one were.
 
 - The bar for idle/move: skinned, actually moving, no clipping, no explosions.
 - **`attack` must COMMIT FORWARD — but it does not have to lunge.** The engine

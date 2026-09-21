@@ -12,9 +12,17 @@ part, run one build, read the whole BLOCK list — the engine reports **all**
 failures at once, it does not stop at the first — fix them all in one edit, and
 build again.
 
-The arithmetic: writing the spec is not the cost. Touching the same forty
-elements three times each is, because a turn re-reads the whole conversation and
-the conversation only grows. Two passes is the target: **author everything, then
+The arithmetic on a 28-part body:
+
+- the entire spec is a **few percent** of one build's output. The spec would have
+  to be written **dozens of times over** to account for the run. Writing the spec
+  is not the cost.
+- MID takes ~130 turns for 40 elements — **every part and volume touched 3.2
+  times on average.** That is the cost.
+
+A turn re-reads the whole conversation, which only grows. Touching 40 elements
+three times each is 120 round-trips over material that could have been written
+once and corrected once. Two passes is the target: **author everything, then
 repair everything.**
 
 Mirrored structure is not authored twice, either. `"mirror": ["LArm"]` generates
@@ -27,11 +35,11 @@ chance of the two drifting apart. Use `mirror` for anything symmetric, and
 Both reads that used to live here are gone, and neither was replaced by a
 cheaper read — they were replaced by arithmetic that runs at build time.
 
-**The isolated part read is deleted.** It failed every time it was tried: a
-crown reads as "a blob", a face as "a stone", an armoured basket as "a fist" —
-while the whole-body read names all three without being asked twice. A part cut
-away from the body has lost the only context that told the reader what it was,
-so reading it there measures the crop, not the part.
+**The isolated part read is deleted.** It failed every time it was tried — a part
+cut out of the body comes back as "a blob", "a stone", "a fist" — while the
+whole-body read of the same body had already named the parts. A part cut away
+from the body has lost the only context that told the reader what it was, so
+reading it there measures the crop, not the part.
 
 **The colour read is deleted too.** It asked three things, and a machine answers
 all three off the palette in microseconds:
@@ -40,12 +48,12 @@ all three off the palette in microseconds:
 |---|---|
 | what colour is this creature | the palette. You wrote it. |
 | which part draws the eye | `value_order` — every material sorted by OKLab lightness, brightest first, printed on every build. Whatever is at the top owns the eye. |
-| which parts can you make out | `contrast_adjacent` — every part compared against the material of the thing it SITS ON. Under 0.10 OKLab they read as one mass. |
+| which parts can you make out | `contrast_adjacent` — every part measured against the material of the thing it SITS ON. Under 0.10 OKLab they read as one mass. |
 
-Both answers sit in the palette the whole time. Two masses at the same
-lightness compete and neither owns the eye; a part wearing its host's colour is
-not a part. Rendering a hero and squinting at it is guessing at numbers you
-already have.
+Eyeballing "value readability" costs hero renders and then a MID reader, to be
+told that a shin blade is the same colour as the leg under it. Both answers sit
+in the palette the whole time — a declared focal at L 0.975 tied for brightest
+with a claw at L 0.973 is exactly what those renders are being used to guess.
 
 Both checks are ADVICE with numbers, not blocks: camouflage and deliberately
 subtle detail are real choices. What is not acceptable is paying a subagent to

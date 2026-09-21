@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Delivery packer (L1, zero handwork): stamped GLB + showroom viewer + hero shots + upload pack.
+"""Delivery packer (L1, zero handwork): stamped GLB + showroom viewer + hero + upload pack.
 
 usage: python3 deliver.py <model.glb> <delivery_dir> <name>
                           [--title "Monster Name"] [--author "Signature"] [--gate gate.json]
@@ -7,7 +7,6 @@ usage: python3 deliver.py <model.glb> <delivery_dir> <name>
 outputs in <delivery_dir>:
   <name>.glb           final stamped model (identity written INTO the file)
   <name>_viewer.html   offline showroom (open by double-click, no server)
-  hero.png / hero.jpg  1024² hero shots (transparent / studio grey)
   upload/              ready-to-drag backup pack for gobkit.com/community/upload
 
 stamping (asset block):
@@ -18,7 +17,7 @@ stamping (asset block):
   extras.gate          --gate JSON, ONLY if it holds really-run check results
 CC0 licence is NOT stamped here — publish.mjs adds it at upload, after consent.
 """
-import sys, os, json, base64, struct, shutil, subprocess, html, re
+import sys, os, json, base64, struct, shutil, subprocess, html, re, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -172,13 +171,15 @@ def main():
                   .replace('__B64__', base64.b64encode(glb).decode()))
     open(os.path.join(outdir, f'{name}_viewer.html'), 'w', encoding='utf-8').write(page)
 
-    # hero shots (transparent + studio) — the hero NEVER shows the label card.
-    # A hero failure (usually: no browser installed) must NOT kill the delivery:
-    # the GLB and the viewer are the deliverable; heroes degrade to a warning.
-    hero_ok = subprocess.run(['node', os.path.join(HERE, 'hero.mjs'), glb_path, outdir]).returncode == 0
-    if not hero_ok:
-        print('[deliver] WARN: hero shots failed — delivery continues without hero.png/jpg.')
-        print('[deliver]       fix: npx playwright install chromium   (then rerun deliver.py)')
+    # hero.png — rasterised, not rendered. This was the last thing in the harness
+    # that launched a browser, and it did not need one: the whole shading stack is
+    # baked into the vertex colours at build time, so lighting it again in three.js
+    # was lighting a photograph. outline.py projects it with the same z-buffer every
+    # other measure uses, over a transparent background.
+    with tempfile.TemporaryDirectory() as scratch:
+        subprocess.run(['python3', os.path.join(HERE, 'outline.py'), glb_path, scratch,
+                        '--hero', os.path.join(outdir, 'hero.png'),
+                        '--views', 'hero'], check=False)
 
     # backup upload pack (web drag path)
     up = os.path.join(outdir, 'upload'); os.makedirs(up, exist_ok=True)
@@ -187,10 +188,9 @@ def main():
         shutil.copy(os.path.join(outdir, 'hero.png'), os.path.join(up, 'hero.png'))
     open(os.path.join(up, 'README.txt'), 'w').write(UPLOAD_README)
 
-    heroes = 'hero.png/jpg' if hero_ok else 'NO heroes (see warning)'
-    print(f'[deliver] done: {name}.glb · {name}_viewer.html · {heroes} · upload/'
+    print(f'[deliver] done: {name}.glb · {name}_viewer.html · hero.png · upload/'
           f'\n[deliver] stamped: {disp}{" " + byline if byline else ""} · gate={"yes" if gate else "no"}'
-          f'\n[deliver] checklist: glb, viewer, heroes, spec JSON, DEVLOG one-liner')
+          f'\n[deliver] checklist: glb, viewer, hero, spec JSON, DEVLOG one-liner')
 
 if __name__ == '__main__':
     main()

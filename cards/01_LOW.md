@@ -285,13 +285,22 @@ Spawn a context-free reader agent (a fresh subagent given NOTHING but the images
 >    this is, most likely first.** Then: what parts can you make out, and does this
 >    view read as a build or as an abstract shape/nothing?
 
-**The verdict is SCORED, not argued.** Note where the brief's noun landed in each
-view's ranked guesses, then run:
+**The verdict is SCORED, not argued — and you do not do the scoring.** Hand over
+the reader's words, verbatim and in order. The tool matches them against the
+accepted list your brief wrote down before any geometry existed:
 
 ```bash
-python3 harness/identity.py --round N --noun scorpion \
-        --ranks front=none side=2 top=2 hero=1
+python3 harness/identity.py --brief brief.md --round N \
+        --guesses side="t-rex,dinosaur,velociraptor,dragon,lizard" \
+                  hero="four-legged animal,dog,goat,boar,bear"
 ```
+
+**You may not decide that "hound" counts as "wolf" here.** That judgment is real
+and it is yours — but it belongs in the brief, in writing, before the rounds are
+paid for. If a reader keeps saying a word you think IS the creature, go and add
+it to the identity slot and say why in the closing DEVLOG. Adding it at r3, with
+a shape you have already built and want to keep, is grading your own thumbnails,
+which iron law 2 forbids and which this tool no longer lets you do.
 
 The rule it applies — **rank R passes if the noun reached R in at least R
 views**:
@@ -313,12 +322,12 @@ is yours; it is the only one the tool leaves you.
 
 Why scored rather than exact. A 48px silhouette is a genuinely ambiguous object,
 and a one-word bar measures the reader's confidence as much as the creature's
-clarity. Two shipped logs make the case. One boss's first read came back *"a
-generic bat/moth/gargoyle silhouette"* — the ordered noun is IN that sentence.
-And a creature failed on one view while three readers named it first on the
-others will run round after round and revert to a shape whose read is identical
-to the one that was refused — because a one-word bar cannot express "three
-readers said it first".
+clarity. Two shapes of read make the case. A first read can come back as *"a
+generic bat/moth/gargoyle silhouette"* — the ordered noun IS in that sentence.
+And a read of `front=Rabbit, side/top/hero=Scorpion` under an exact-match rule
+fails on the front view alone, sending the creature back for round after round
+that cannot improve the verdict, because the rule cannot express "three of four
+views named it first".
 
 Every view answering "abstract / nothing / a stick" scores nothing and fails.
 "A fox" plus four other canines when the order said dragon is still a failed

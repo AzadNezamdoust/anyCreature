@@ -58,7 +58,9 @@ A receiving system can treat a file that satisfies this contract as
     "license": "CC0-1.0",          // written ONLY at publish, after consent
     "source_spec": { /* the pristine authored spec — see below */ },
     "parts": [ { "kind": "volume|part", "type": "...", "name": "...",
-                 "material": "...", "host": "...", "join": "..." } ]
+                 "material": "...", "host": "...", "join": "..." } ],
+    "part_spans": [ { "id": "nose_leaf", "material": "paw",
+                      "primitive": 7, "first": 1204, "count": 376 } ]
   }
 }
 ```
@@ -72,6 +74,20 @@ creature (`harness/graft.py`). `embed_spec: false` in the spec opts out.
 
 `parts` is a flat manifest of what the creature is made of, so a receiver can
 list its pieces without parsing the whole spec.
+
+`part_spans` (1.3.2) says WHERE each of those pieces is in the geometry: one row
+per part, giving the primitive it landed in and the `[first, count]` range of
+vertices it owns inside that primitive's `POSITION` accessor.
+
+It exists because a **material name cannot identify a part**. A material is a
+class — "this is horn" — and primitives are merged one per material precisely so
+a body with forty plates does not ship forty draw calls. The same `paw` material
+can therefore sit on a foot pad and on a nose-leaf, and anything that aggregates
+by material silently adds the two together. `part_spans` is the identity channel:
+every `id` is unique within the creature, mirrored twins carry `.R`, an eye pair
+carries `.L`/`.R`, and nothing about the rendering changes — no extra material,
+no extra primitive, no extra byte of geometry. A receiver that wants "the claw"
+reads the span and slices the buffer.
 
 ## Error vocabulary
 

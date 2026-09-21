@@ -2,7 +2,7 @@
 """Every MID part read, ONE command — build, render, and hand back one batch.
 
     python3 harness/partreads.py <outdir> --spec face.json claw.json tail.json
-                                 [--colour hero.png]
+                                 [--colour]
 
 The MID whitelist reads used to be two commands PER PART — a compile and a
 silhouette render — issued one at a time, and then one reader per part. Card 02
@@ -10,8 +10,8 @@ already merged the reads into a single batch; this merges the building too, so
 four parts cost one turn instead of eight.
 
 The turn is the unit that costs. A compile is 1.4 seconds and a view is half a
-second; a round-trip re-reads the entire conversation so far. A measured a run
-build spent 150-odd turns on tool calls that could have been a handful.
+second; a round-trip re-reads the entire conversation so far. A build can
+spend 150-odd turns on tool calls that could have been a handful.
 
 Prints the shuffled batch the reader should see, and the answer key you keep to
 yourself. Python and stdlib only — the harness ships to other people.
@@ -60,15 +60,13 @@ def main():
                 print('      ' + b[:140])
             continue
         # ONE tool reads geometry and produces measures, and it is outline.py.
-        # This used to be silmetrics.mjs (launch a browser, render, read pixels)
-        # followed by maskmetrics.py (letterbox and measure) — two commands, a
-        # browser dependency, and a SECOND definition of every number outline.py
-        # already computes. Two implementations of one measure have to be kept
-        # in agreement by hand, and they were not: outline.py's first
-        # thinnest_px48 took the global minimum of the distance transform and
-        # read ~0.25px on every creature, because it was re-derived instead of
-        # shared. Departments share their tools; synccheck.py lists any measure
-        # that still has more than one definition.
+        # This used to be two commands — a browser render, then a letterbox and
+        # measure pass — with a browser dependency and a SECOND definition of every
+        # number outline.py already computes. Two implementations of one measure have
+        # to be kept in agreement by hand, and they were not: one of them took the
+        # global minimum of the distance transform for thinnest_px48 and read ~0.25px
+        # on every creature, because it was re-derived instead of shared. Departments
+        # share their tools; synccheck.py lists any measure that still has more than one definition.
         rc2, out2 = run(['python3', os.path.join('harness', 'outline.py'), glb, dest])
         if rc2 != 0:
             print(f'  {name:<22} silhouette failed: '
@@ -78,7 +76,7 @@ def main():
         thumbs = [f'sil_{v}_thumb48.png' for v in ('hero', 'side', 'front', 'top')]
         pick = next((t for t in thumbs if os.path.exists(os.path.join(dest, t))), None)
         if not pick:
-            print(f'  {name:<22} no thumb48 produced (maskmetrics did not run?)')
+            print(f'  {name:<22} no thumb48 produced (outline.py did not run?)')
             continue
         p = os.path.join(dest, pick)
         images.append(p)

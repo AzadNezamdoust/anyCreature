@@ -20,7 +20,7 @@ session says it did:
     the round did not happen and the next check refuses to pass it)
   · whether the round was a TWEAK or a real restart, from iou_vs_prev in
     out/rN/metrics.json — a nudged silhouette stays >0.85 similar to the last
-    one no matter what the session calls it. Run silmetrics with
+    one no matter what the session calls it. Run outline.py with
     `--prev out/r<N-1>` or this number is null and the guard is blind.
   · whether the feature being argued about is even visible at reading size,
     from thinnest_px48 — the blind read happens on a 48px thumbnail.
@@ -44,7 +44,8 @@ MAX_FAILS_TOTAL = 5   # hard ceiling per gate, counted regardless of iou
 # differ: "a fox, not a dragon" is not a fine-tuning verdict. Nothing between
 # 0.70 and 0.85 — a moved ear, a longer tail — changes what a stranger calls the
 # animal, so a repair in that band is a round spent to be told the same noun
-# again.
+# again. Field evidence: one creature was read 13 times with barely a change
+# between rounds, some rounds changing nothing at all.
 #
 # The number is enforceable now because `outline.py` computes iou from the
 # geometry rather than from a rasterised picture, so it is exact and free.
@@ -84,8 +85,8 @@ def rounds(outdir):
 
 
 def iou_of(m):
-    """metrics.json is either the silmetrics shape (flat) or the maskmetrics
-    shape (keyed by image name). Only silmetrics computes iou_vs_prev."""
+    """metrics.json is either the flat shape or one keyed by image name.
+    Only a run given --prev computes iou_vs_prev."""
     if not isinstance(m, dict):
         return None
     if 'iou_vs_prev' in m:
@@ -226,7 +227,7 @@ def preflight(outdir, rn, gate):
             f'this number; do NOT thicken a feature whose thinness is the design.')
 
     if iou is None and cur['n'] > 1:
-        print('[roundcheck] iou_vs_prev is null — run silmetrics with `--prev out/r<N-1>` '
+        print('[roundcheck] iou_vs_prev is null — run outline.py with `--prev out/r<N-1>` '
               'or this pre-check is blind and every round pays for its reader.')
 
     for n in notes_thin:
@@ -325,7 +326,7 @@ def check(outdir, gate):
         notes.append(f'{gate} has failed {fails} time(s) in a row: {shown}')
 
     if blind:
-        problems.append('iou_vs_prev is null — silmetrics was run without `--prev out/r<N-1>`, '
+        problems.append('iou_vs_prev is null — outline.py was run without `--prev out/r<N-1>`, '
                         'so the tweak detector is switched off and law 3 cannot be enforced. '
                         'Re-run the measure step with --prev.')
 

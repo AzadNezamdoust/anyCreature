@@ -157,4 +157,59 @@ function exportNames(spec, sk) {
   return map;
 }
 
-module.exports = { buildSkeleton, localTranslations, inverseBindMatrices, mirrorName, exportNames };
+// ── joint_range — how far each joint is allowed to turn ──────────────────────
+//
+// Degrees, per axis, in the joint's OWN frame: the same frame and the same axis
+// names (rx/ry/rz) the animation tracks already use, so a limit and a track are
+// directly comparable and no second coordinate convention exists to get wrong.
+//
+// The numbers are AUTHORED, not discovered. Whoever writes the spec already
+// knows a knee bends one way, an elbow does not twist and a jaw opens further
+// than a wrist bends — that knowledge is free to write down and impossible to
+// compute from geometry. What the author does NOT know is how thick THIS
+// creature's thigh is, so the declared limit is treated as a claim about the
+// body and checks.js sweeps it against the body.
+//
+// An axis a joint declares nothing for is LOCKED at 0, not free. A limit table
+// with holes in it is a table that checks nothing, and the common case is one
+// axis per joint anyway. "free" opts an axis out explicitly (a wheel, a rotor).
+//
+// The R side is GENERATED and must never be authored. Mirroring negates ry and
+// rz — the same rule compileAnim applies to tracks — and negating an interval
+// swaps its ends, so [-10, 90] becomes [-90, 10]. An author writing both sides
+// by hand is the exact shape of the mirror bug this release fixed.
+const RANGE_AXES = ['rx', 'ry', 'rz'];
+
+function jointRanges(spec, sk) {
+  const out = {};
+  const norm = (jn, r) => {
+    const o = {};
+    for (const ax of RANGE_AXES) {
+      const v = r[ax];
+      if (v === undefined) { o[ax] = [0, 0]; continue; }   // unwritten = locked
+      if (v === 'free') { o[ax] = null; continue; }        // explicitly unbounded
+      if (!Array.isArray(v) || v.length !== 2 || !v.every(x => Number.isFinite(x)))
+        throw new Error(`joint_range "${jn}".${ax}: expected [min, max] in degrees, or "free"`);
+      o[ax] = [Math.min(v[0], v[1]), Math.max(v[0], v[1])];
+    }
+    return o;
+  };
+  for (const [jn, r] of Object.entries(spec.joint_range || {})) {
+    if (!r || typeof r !== 'object') throw new Error(`joint_range "${jn}": expected an object of axes`);
+    out[jn] = norm(jn, r);
+  }
+  // generate the R side for every declared L joint whose twin exists
+  for (const jn of Object.keys(spec.joint_range || {})) {
+    const rj = mirrorName(jn);
+    if (rj === jn || out[rj]) continue;                       // not mirrored, or overridden
+    if (sk && sk.index && sk.index[rj] === undefined) continue; // no such twin on this body
+    const s = out[jn];
+    out[rj] = { rx: s.rx && s.rx.slice(),
+                ry: s.ry && [-s.ry[1], -s.ry[0]],
+                rz: s.rz && [-s.rz[1], -s.rz[0]] };
+  }
+  return out;
+}
+
+module.exports = { buildSkeleton, localTranslations, inverseBindMatrices, mirrorName, exportNames,
+                  jointRanges, RANGE_AXES };

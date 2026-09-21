@@ -309,7 +309,7 @@ function buildEye(spec, p, builtVols) {
     }
     for (const v of V) allV.push(v);
     const Vw = allV.map(v => G.add(c, G.mul(G.nrm(v), r)));
-    out.push({ material: p.material || 'eye', V: Vw, F: tris,
+    out.push({ material: p.material || 'eye', V: Vw, F: tris, side: sx > 0 ? 'L' : 'R',
       skin: Vw.map(() => [[p.host, 1]]) });
   }
   return out;
@@ -601,6 +601,25 @@ function buildFin(spec, p, builtVols) {
   // plane axes given by udir/vdir (world), extruded ±thickness/2 along normal.
   const host = spec.joints[p.host];
   if (!host) throw new Error(`fin host joint "${p.host}" missing`);
+  // TWO NEARLY-COINCIDENT OUTLINE POINTS make a degenerate sliver, which extrudes
+  // into flipped triangles. The build then fails on mesh_integrity, which counts
+  // flipped tris across the WHOLE model and cannot say which part made them — so
+  // the author bisects by hand for a round. It is visible right here, before a
+  // single triangle exists, so it is said right here.
+  if (Array.isArray(p.points) && p.points.length > 2) {
+    const span = Math.max(...p.points.map(a =>
+      Math.max(...p.points.map(b => Math.hypot(a[0] - b[0], a[1] - b[1])))));
+    for (let i = 0; i < p.points.length; i++) {
+      const j = (i + 1) % p.points.length;
+      const d = Math.hypot(p.points[i][0] - p.points[j][0], p.points[i][1] - p.points[j][1]);
+      if (span > 0 && d < span * 0.02)
+        throw new Error(`fin "${p.name || p.host}": outline points ${i} and ${j} are `
+          + `${d.toFixed(4)} apart, under 2% of the shape's own size (${span.toFixed(3)}). Two points `
+          + `that close make a sliver, and extruding a sliver makes flipped triangles that show up `
+          + `later as a mesh_integrity count with no address. Merge them, or move one; 5-6 `
+          + `well-separated points is the shape this builder wants.`);
+    }
+  }
   let U = G.nrm(p.udir || [0, 0, 1]), Vv = G.nrm(p.vdir || [0, 1, 0]);
   let Nn = G.nrm(G.cross(U, Vv));
   let o = G.add(host, p.offset || [0, 0, 0]);
@@ -719,8 +738,10 @@ function compile(spec) {
       || (p.host && Object.keys(spec.chains || {}).find(c => (spec.chains[c] || []).includes(p.host)))
       || null;
     if (p.type === 'eye') {
+      // an eye part is a PAIR of meshes; they are two objects and get two names
       for (const m of buildEye(spec, p, builtVols)) {
-        m.part = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m); }
+        m.part = label + '.' + m.side; m.smoothAngle = sa; m.partType = p.type;
+        m.hostChain = hostChain; meshes.push(m); }
     } else if (BUILDERS[p.type]) {
       const m = BUILDERS[p.type](spec, p);
       m.part = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);

@@ -71,7 +71,7 @@ python3 harness/ship.py out/<name>.glb --name "<their name>" --author "<signatur
 ```
 
 `ship.py` stamps the name and signature INTO the GLB (they travel with the file
-forever), packs the viewer, hero shots and the backup upload pack, and — only
+forever), packs the viewer, `hero.png` and the backup upload pack, and — only
 with `--publish` — uploads and prints the result. Never pass `--publish` without
 an explicit yes in this session.
 
@@ -144,7 +144,7 @@ it. It says how the gates landed and what did not get solved, and stops.
 
 This is the most expensive moment in the entire run to write prose: the
 conversation is at its longest, so every token here costs several times what the
-same cost early in the run. A boss build writes a few thousand characters of session
-narrative here — tables, verbatim reader quotes, per-round analysis — all of it
-duplicating `log.md`, all of it at maximum context price. One line was the rule
-the whole time.
+same token cost at round 3. It is easy to write **thousands of characters** of
+session narrative here — tables, verbatim reader quotes, per-round analysis —
+all of it duplicating `log.md`, all of it at maximum context price. One line is
+the rule.

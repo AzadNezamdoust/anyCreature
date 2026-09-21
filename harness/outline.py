@@ -10,7 +10,7 @@ back. That is a lot of machinery to answer a question the vertices already
 contain: this is low-poly, a few thousand triangles, and the outline of a solid
 under a known camera is arithmetic.
 
-So this projects the triangles and fills them. Same camera as silmetrics.mjs
+So this projects the triangles and fills them. Same camera the renderer used
 (perspective, 30 degrees, distance = longest dimension x 2.4, 640x640, same view
 directions and up vectors), same mask convention, same metrics. The point is not
 only speed — it is that the numbers stop being *estimates read off a picture*
@@ -61,11 +61,19 @@ def accessor(g, b, base, idx):
     return out
 
 
-def triangles_by_material(path):
-    """Triangles grouped by material name, so a share can be attributed."""
+def triangles_by_material(path, want_colour=False):
+    """Triangles grouped by material name, so a share can be attributed.
+
+    With want_colour, also returns the baked albedo: per-vertex COLOR_0 and the
+    per-material baseColorFactor. ALBEDO = baseColorFactor x COLOR_0, ALWAYS
+    BOTH — the engine splits the baked colour, the hue into baseColorFactor and
+    the shading ratio (<=1) into COLOR_0, so reading either alone measures half
+    a colour. Both are linear; the sRGB encode happens at measurement time."""
     g, b, base = read_glb(path)
     mats = [m.get('name', f'mat{i}') for i, m in enumerate(g.get('materials', []))]
-    V, F, MID = [], [], []
+    basecol = np.array([(m.get('pbrMetallicRoughness', {}) or {}).get('baseColorFactor', [1, 1, 1, 1])[:3]
+                        for m in g.get('materials', [])], dtype=np.float64) if g.get('materials') else np.zeros((0, 3))
+    V, F, MID, C, N = [], [], [], [], []
     for mesh in g.get('meshes', []):
         for pr in mesh.get('primitives', []):
             at = pr.get('attributes', {})
@@ -74,6 +82,19 @@ def triangles_by_material(path):
             off = sum(len(x) for x in V)
             pos = accessor(g, b, base, at['POSITION'])
             V.append(pos)
+            if want_colour:
+                N.append(accessor(g, b, base, at['NORMAL']).astype(np.float64)
+                         if 'NORMAL' in at else np.zeros((len(pos), 3)))
+                if 'COLOR_0' in at:
+                    c = accessor(g, b, base, at['COLOR_0'])[:, :3].astype(np.float64)
+                    a0 = g['accessors'][at['COLOR_0']]
+                    if a0['componentType'] == 5123:      # normalised ushort
+                        c = c / 65535.0
+                    elif a0['componentType'] == 5121:    # normalised ubyte
+                        c = c / 255.0
+                else:
+                    c = np.ones((len(pos), 3))
+                C.append(c)
             if 'indices' in pr:
                 f = accessor(g, b, base, pr['indices']).reshape(-1, 3) + off
             else:
@@ -84,7 +105,53 @@ def triangles_by_material(path):
             MID.append(np.full(len(f), mi, dtype=np.int64))
     if not V:
         raise ValueError('no geometry in the file')
+    if want_colour:
+        return np.vstack(V), np.vstack(F), np.concatenate(MID), mats, np.vstack(C), basecol, np.vstack(N)
     return np.vstack(V), np.vstack(F), np.concatenate(MID), mats
+
+
+def structure(path):
+    """What the file IS, from the JSON chunk: clips, skins, triangle count.
+
+    This used to come from loading the model into three.js inside a headless
+    browser and traversing the scene graph. It is written in the glTF header."""
+    g, b, base = read_glb(path)
+    tris = 0
+    skinned = 0
+    for mesh in g.get('meshes', []):
+        for pr in mesh.get('primitives', []):
+            at = pr.get('attributes', {})
+            if 'indices' in pr:
+                tris += g['accessors'][pr['indices']]['count'] // 3
+            elif 'POSITION' in at:
+                tris += g['accessors'][at['POSITION']]['count'] // 3
+    for nd in g.get('nodes', []):
+        if 'skin' in nd and 'mesh' in nd:
+            skinned += 1
+    return {'triangles': int(tris), 'skinnedMeshes': int(skinned),
+            'animations': [a.get('name', f'anim{i}') for i, a in enumerate(g.get('animations', []))]}
+
+
+def part_boxes(V, F, MID, mats):
+    """Per-material bounding box, from the vertices its own triangles reference.
+
+    Measure only the referenced vertices: glTF primitives routinely share one
+    POSITION accessor, so scanning the attribute gives every material the bbox
+    of the whole body."""
+    whole = [float(V[:, k].max() - V[:, k].min()) for k in range(3)]
+    dxz = lambda s: math.hypot(s[0], s[2])
+    out = {}
+    for mi in np.unique(MID):
+        if mi < 0:
+            continue
+        idx = np.unique(F[MID == mi].reshape(-1))
+        sub_v = V[idx]
+        s = [float(sub_v[:, k].max() - sub_v[:, k].min()) for k in range(3)]
+        name = mats[mi] if 0 <= mi < len(mats) else f'mat{mi}'
+        out[name] = {'size': [round(x, 4) for x in s],
+                     'span_ratio': round(dxz(s) / (dxz(whole) or 1), 4),
+                     'height_ratio': round(s[1] / (whole[1] or 1), 4)}
+    return out, [round(x, 4) for x in whole]
 
 
 def triangles(path):
@@ -114,7 +181,7 @@ def triangles(path):
     return np.vstack(V), np.vstack(F)
 
 
-# ── camera, matching silmetrics.mjs exactly ────────────────────────────────
+# ── camera, matching the renderer this replaced, exactly ───────────────────
 def view_dir(view, size):
     long_axis = 'x' if size[0] > size[2] else 'z'
     if view == 'top':
@@ -179,7 +246,7 @@ def measures(mask):
         'px': [w, h],
     }
     # WHERE THE MASS SITS, in thirds of its own bounding box. Same definition as
-    # maskmetrics.py, on the cropped mask, so the two agree to the decimal.
+    # the measure pass it replaced, on the cropped mask, to the decimal.
     #
     # This is the number that tells two DESIGNS apart, which iou_vs_prev does
     # not: iou counts overlapping pixels, so a proportion change moves it a lot
@@ -194,8 +261,14 @@ def measures(mask):
     try:
         from scipy import ndimage
     except ImportError:
+        # Silence here is dangerous: thinnest_px48 gates legibility and protrusions
+        # gates boldness, so a missing dependency would drop two BLOCKING measures and
+        # every build would pass them by not having them. Say so, once, loudly.
+        print('WARN: scipy missing — protrusions, thinnest_px48, convexity and mirror_sym '
+              'are NOT computed, so the legibility and boldness gates have nothing to read. '
+              'Run setup.sh.', file=sys.stderr)
         return m
-    # Protrusions and thinnest_px48 use maskmetrics.py's definitions EXACTLY —
+    # Protrusions and thinnest_px48 keep the original definitions EXACTLY —
     # erode hard to get a core, subtract to get appendages, and measure each
     # appendage's own thickness as twice its maximum inscribed radius, scaled to
     # the 48px thumbnail the reader actually sees. Two implementations of the
@@ -243,7 +316,7 @@ def project(V, view):
     return px, py, z
 
 
-def material_shares(V, F, MID, mats, view):
+def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
     """Which material OWNS each silhouette pixel, with a depth test.
 
     The share of the frame a part holds is a geometry question, and it was being
@@ -255,6 +328,11 @@ def material_shares(V, F, MID, mats, view):
     px, py, z = project(V, view)
     depth = np.full((RES, RES), np.inf)
     owner = np.full((RES, RES), -1, dtype=np.int64)
+    # The colour buffer rides along in the SAME rasteriser. A second pass would be
+    # a second definition of "which pixel does this triangle win", and two of those
+    # have to be kept in agreement by hand.
+    colour = np.zeros((RES, RES, 3)) if C is not None else None
+    normal = np.zeros((RES, RES, 3)) if N is not None else None
     for tri, mi in zip(F, MID):
         a, b, c = tri
         xs = np.array([px[a], px[b], px[c]])
@@ -274,12 +352,35 @@ def material_shares(V, F, MID, mats, view):
         inside = (l0 >= 0) & (l1 >= 0) & (l2 >= 0)
         if not inside.any():
             continue
-        zz = l0 * z[a] + l1 * z[b] + l2 * z[c]
+        # PERSPECTIVE-CORRECT interpolation, not affine. l0/l1/l2 are barycentric
+        # in SCREEN space, and screen space is already divided by depth — so
+        # blending a per-vertex quantity with them directly is only right for an
+        # orthographic camera. This one is a pinhole at 30 degrees. The textbook
+        # correction: blend 1/z, take the reciprocal for depth, and divide any
+        # other attribute back out by it.
+        #
+        # It matters most exactly where it is hardest to see: a long triangle
+        # running away from the camera, where the affine version puts the middle
+        # of the surface at the wrong depth and can lose a depth test against
+        # something genuinely behind it.
+        iz = l0 / z[a] + l1 / z[b] + l2 / z[c]
+        iz = np.where(np.abs(iz) < 1e-12, 1e-12, iz)
+        zz = 1.0 / iz
         sub = depth[y0:y1 + 1, x0:x1 + 1]
         win = inside & (zz < sub)
         if win.any():
             sub[win] = zz[win]
             owner[y0:y1 + 1, x0:x1 + 1][win] = mi
+            if colour is not None:
+                cc = ((l0 / z[a])[..., None] * C[a] + (l1 / z[b])[..., None] * C[b]
+                      + (l2 / z[c])[..., None] * C[c]) * zz[..., None]
+                if basecol is not None and 0 <= mi < len(basecol):
+                    cc = cc * basecol[mi]
+                colour[y0:y1 + 1, x0:x1 + 1][win] = cc[win]
+            if normal is not None:
+                nn = ((l0 / z[a])[..., None] * N[a] + (l1 / z[b])[..., None] * N[b]
+                      + (l2 / z[c])[..., None] * N[c]) * zz[..., None]
+                normal[y0:y1 + 1, x0:x1 + 1][win] = nn[win]
     total = int((owner >= 0).sum())
     out = {}
     if total:
@@ -288,7 +389,100 @@ def material_shares(V, F, MID, mats, view):
                 continue
             name = mats[mi] if 0 <= mi < len(mats) else f'mat{mi}'
             out[name] = round(float((owner == mi).sum()) / total, 5)
+    if colour is not None and normal is not None:
+        return out, owner >= 0, colour, normal
+    if colour is not None:
+        return out, owner >= 0, colour
     return out, owner >= 0
+
+
+def hero_png(model, out_png, view='hero', res=1024):
+    """The delivery's hero shot, rasterised — no browser, no renderer, no lights.
+
+    This is the last thing Chromium was kept alive for, and it did not need to be
+    alive for it: the whole L1-L8 shading stack is BAKED into COLOR_0 at build
+    time, so the flat albedo already carries the gradient, the seams, the ambient
+    occlusion and the rim. Rendering it again with three-point studio lighting was
+    lighting a photograph. The z-buffer here decides occlusion exactly as it does
+    for every other measure, and the background is alpha rather than a grey card.
+
+    Resolution is raised for this one pass because a thumbnail is looked at by a
+    person, not measured; every gate keeps reading the 640 grid."""
+    global RES
+    keep = RES
+    try:
+        RES = res
+        V, F, MID, mats, C, basecol, Nv = triangles_by_material(model, want_colour=True)
+        _, mask, colour, nrm = material_shares(V, F, MID, mats, view, C, basecol, Nv)
+        # The same rig the retired renderer used: a warm-over-cool hemisphere, a
+        # key, a cool fill and a cool rim. Lambert only — these are matte low-poly
+        # surfaces with the specular story already painted into the vertex colour,
+        # so a full PBR evaluation would be re-deriving what is baked.
+        ln = np.linalg.norm(nrm, axis=2, keepdims=True)
+        n = np.divide(nrm, np.where(ln > 1e-9, ln, 1.0))
+        up = n[:, :, 1:2]
+        sky, ground = np.array([1.0, 1.0, 1.0]), np.array([0.541, 0.522, 0.471])
+        irr = 1.5 * (sky * (0.5 + 0.5 * up) + ground * (0.5 - 0.5 * up))
+        for pos, col, amp in ((( 3.0, 4.0,  2.5), (1.0, 1.0, 1.0), 2.4),
+                              ((-4.0, 1.5,  2.0), (0.812, 0.847, 1.0), 1.0),
+                              ((-2.5, 2.5, -4.0), (0.667, 0.769, 1.0), 1.6)):
+            d = np.array(pos, dtype=np.float64); d /= np.linalg.norm(d)
+            lam = np.clip((n * d).sum(axis=2, keepdims=True), 0.0, 1.0)
+            irr = irr + np.array(col) * amp * lam
+        # Exposure. The Lambert sum above is not the renderer's shader, so it lands
+        # near but not on the old brightness: checked against the renderer this
+        # replaces, across the reference shelf, the ratio ran 0.91 median. 1.1 puts
+        # it back. This constant touches the PICTURE only — no gate reads the hero.
+        lin = np.clip(colour * irr * (1.1 / np.pi), 0.0, 1.0)
+        srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
+        rgb = np.clip(srgb * 255.0, 0, 255).astype(np.uint8)
+        rgba = np.dstack([rgb, np.where(mask, 255, 0).astype(np.uint8)])
+        # Frame it. The measuring camera fits the whole bounding sphere so that a
+        # silhouette is comparable between rounds; a thumbnail has no such duty and
+        # a creature sitting in a third of the frame reads as a small creature.
+        # Crop to what is actually drawn, keep it square, leave a margin.
+        ys, xs = np.nonzero(mask)
+        if len(xs):
+            cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
+            half = max(xs.max() - xs.min(), ys.max() - ys.min()) / 2 * 1.12
+            x0, y0 = int(round(cx - half)), int(round(cy - half))
+            side = int(round(half * 2))
+            pad = np.zeros((side, side, 4), dtype=np.uint8)
+            sx0, sy0 = max(0, x0), max(0, y0)
+            sx1, sy1 = min(res, x0 + side), min(res, y0 + side)
+            pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = rgba[sy0:sy1, sx0:sx1]
+            rgba = pad
+        Image.fromarray(rgba, 'RGBA').resize((res, res), Image.LANCZOS).save(out_png)
+    finally:
+        RES = keep
+    return out_png
+
+
+def colour_measures(body, colour):
+    """The two colour numbers, off the UNLIT baked albedo.
+
+    They used to come from a headless browser: render the model, read the pixels,
+    count. Rendering was never what made them true — the baked colour IS the
+    answer, and the z-buffer above already decides which surface each pixel sees.
+
+    median_lum      how bright the creature's own colour is, 0-255 sRGB
+    saturated_area  the share of it carrying a strong colour (HSV S >= 0.50)
+
+    Unlit on purpose. Gradient, grain and AO are uniform multiplies, so they move
+    a pixel's value but never its saturation; LIGHTS do move it — a white key
+    washes colour out, a blue rim invents it. Measuring the lit render made the
+    answer a property of the lighting rig, which nobody ships."""
+    if not body.any():
+        return {}
+    lin = np.clip(colour[body], 0.0, 1.0)
+    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
+    d = np.clip(srgb * 255.0, 0, 255)
+    lum = 0.2126 * d[:, 0] + 0.7152 * d[:, 1] + 0.0722 * d[:, 2]
+    mx = d.max(axis=1)
+    mn = d.min(axis=1)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+    return {'median_lum': round(float(np.median(lum)), 1),
+            'saturated_area': round(float((sat >= 0.50).mean()), 4)}
 
 
 def exaggeration(mask):
@@ -336,7 +530,7 @@ def iou(a, b):
 
 
 def thumb(mask, px, path):
-    """Letterboxed, exactly like maskmetrics: the proportion the reader sees is
+    """Letterboxed, as the measure pass always was: the proportion the reader sees is
     the proportion the file records."""
     ys, xs = np.nonzero(mask)
     if len(xs) == 0:
@@ -359,16 +553,22 @@ def main():
         return 2
     model, outdir = a[0], a[1]
     prev = a[a.index('--prev') + 1] if '--prev' in a else None
+    hero_out = a[a.index('--hero') + 1] if '--hero' in a else None
     views = (a[a.index('--views') + 1].split(',') if '--views' in a
              else ['front', 'side', 'top', 'hero'])
     os.makedirs(outdir, exist_ok=True)
 
-    V, F, MID, mats = triangles_by_material(model)
+    if hero_out:
+        hero_png(model, hero_out)
+        print(f'hero: {hero_out}')
+    V, F, MID, mats, C, basecol, _N = triangles_by_material(model, want_colour=True)
+    boxes, whole = part_boxes(V, F, MID, mats)
     report = {'vertices': int(len(V)), 'triangles': int(len(F)),
-              'materials': mats, 'views': {}}
+              'materials': mats, 'stats': structure(model),
+              'parts': boxes, 'whole': {'size': whole}, 'views': {}}
     thin_all = []
     for v in views:
-        shares, mask = material_shares(V, F, MID, mats, v)
+        shares, mask, colour = material_shares(V, F, MID, mats, v, C, basecol)
         np.save(os.path.join(outdir, f'mask_{v}.npy'), mask)
         Image.fromarray(np.where(mask, 0, 255).astype(np.uint8), 'L').save(
             os.path.join(outdir, f'sil_{v}.png'))
@@ -376,6 +576,7 @@ def main():
             thumb(mask, px, os.path.join(outdir, f'sil_{v}_thumb{px}.png'))
         mm = measures(mask)
         mm.update(exaggeration(mask))
+        mm.update(colour_measures(mask, colour))
         mm['share'] = shares
         if mm.get('thinnest_px48') is not None:
             thin_all.append(mm['thinnest_px48'])
@@ -383,6 +584,9 @@ def main():
             p = os.path.join(prev, f'mask_{v}.npy')
             if os.path.exists(p):
                 mm['iou_vs_prev'] = iou(mask, np.load(p))
+        for name, sh in shares.items():
+            if name in report['parts']:
+                report['parts'][name].setdefault('share', {})[v] = sh
         report['views'][v] = mm
 
     if thin_all:

@@ -56,7 +56,22 @@ function resolveJoints(spec) {
         if (d.ground !== undefined) p[1] = d.ground;
         R[name] = p;
       }
-      if (next.length === pend.length) throw new Error(`joints_R dependency cycle: ${next.join(', ')}`);
+      if (next.length === pend.length) {
+        // Almost always ONE mistake with one shape: an R joint written relative to
+        // ITSELF. `joints_R: { RHip: { from: "RHip", ... } }` cannot resolve and the
+        // old message said only "dependency cycle", which sends the author looking
+        // for a loop between joints that does not exist. Name it.
+        const selfRef = next.filter(n => {
+          const d = (spec.joints_R || {})[n];
+          return d && !Array.isArray(d) && d.from === n;
+        });
+        if (selfRef.length)
+          throw new Error(`joints_R: ${selfRef.join(', ')} is written relative to ITSELF `
+            + `("from": "${selfRef[0]}"). An R joint is generated from its L twin — usually the `
+            + `whole joints_R entry should just be deleted, and only kept when the right side `
+            + `genuinely sits somewhere the mirror would not put it.`);
+        throw new Error(`joints_R dependency cycle: ${next.join(', ')}`);
+      }
       pend = next;
     }
     if (pend.length) throw new Error(`unresolvable joints_R: ${pend.join(', ')}`);

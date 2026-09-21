@@ -1,4 +1,4 @@
-# anyCreature 1.3.1 — text → game-ready 3D creature, one shot
+# anyCreature 1.3.2 — text → game-ready 3D creature, one shot
 
 > **STOP — read this before you write a single line of code.**
 > You do not need to build a GLB writer, a renderer, a screenshot tool, a
@@ -49,17 +49,18 @@ README.md            repository front page (humans)
 LICENSE              MIT
 THIRD-PARTY-NOTICES.md  bundled + installed dependency licences
 SECURITY.md          local servers, the public key, untrusted input
-VERSION              1.3.1
+VERSION              1.3.2
 setup.sh             deps + calibration self-check
 cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTAX.md
 engine/              cli.js + core/ — the ACS engine v2
   core/normals.js    angle-weighted normals + `smooth_angle` creases (bodies stay smooth)
 harness/
-  silmetrics.mjs     4-view silhouettes (front/side/top/hero45) + numbers + 24/48px thumbs
-  maskmetrics.py     per-view measures + dullness flags (sq_fill / mirror_sym / straight_max)
-  judge.mjs          claims judge (part shares, focal contrast, styles, saturated area, rig/anim/tri)
-  deliver.py         stamped GLB + showroom viewer + hero shots + backup upload pack
-  hero.mjs           hero.png (1024² transparent 45°) + hero.jpg (studio grey)
+  outline.py         THE measuring tool: 4-view silhouettes + thumbs, layout and boldness
+                     measures, per-part shares off a z-buffer, colour off the baked albedo,
+                     and the hero shot. All from the vertices — no browser anywhere
+  judge.mjs          claims judge over outline.py's numbers (part shares, focal contrast,
+                     styles, saturated area, rig/anim/tri)
+  deliver.py         stamped GLB + showroom viewer + hero.png + backup upload pack
   publish.mjs        Gobkit publisher — ONLY after the user's explicit yes (card 04).
                      ALWAYS attempt the upload; the drag-and-drop page is the
                      fallback for a `blocked` result, never the opening move
@@ -111,7 +112,7 @@ features (four wings) still stagger. Model-level looks are the final judge.
 
 Card 04 is the whole flow, now ONE command (`harness/ship.py`): gate stamp → name + signature questions (once;
 `~/.anyCreature.json` remembers the signature) → `deliver.py` (stamped GLB,
-offline showroom viewer, hero shots, backup upload pack) → the share ask LAST →
+offline showroom viewer, hero.png, backup upload pack) → the share ask LAST →
 `publish.mjs` only on an explicit yes — and then RUN it, never assume the
 environment is offline. hero.png must be attached or the listing waits for a
 human reviewer. CC0 is stamped at consent time, not before.

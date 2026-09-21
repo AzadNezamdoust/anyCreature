@@ -121,6 +121,13 @@ function writeGLB(build, outPath, opts = {}) {
   // every mesh ships its own primitive+material copy (the 67-material class).
   // Semantic part names are the palette keys, so merging by material signature
   // loses nothing the judge needs.
+  // Where each PART ended up in the merged buffers. A material is a class and is
+  // shared on purpose, so the material name cannot answer "which part is this" —
+  // the same `paw` material can sit on a foot pad and on a nose-leaf. The merge
+  // knows exactly which vertices came from which part, so it writes that down
+  // instead of throwing it away: one row per part, [first, count] into its own
+  // primitive. Nothing renders differently; the identity simply survives.
+  const spans = [];
   const groups = new Map();
   for (const m of meshes) {
     let tris = triangulate(m.F);
@@ -158,13 +165,20 @@ function writeGLB(build, outPath, opts = {}) {
     if (!g) groups.set(key, g = { m, V: [], N: [], C: m.C ? [] : null, UV: m.UV ? [] : null,
       skin: m.skin ? [] : null, tris: [] });
     const off = g.V.length;
+    // a mirrored twin is a different piece of geometry and gets a different id;
+    // parts already carry ".R", volumes deliberately keep their source chain name
+    // (checks compare the twin against the original by it), so it is added here
+    spans.push({ id: (m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain) || null),
+                 material: m.material, _key: key, first: off, count: m.V.length });
     g.V.push(...m.V); g.N.push(...N);
     if (g.C && m.C) g.C.push(...m.C);
     if (g.UV && m.UV) g.UV.push(...m.UV);
     if (g.skin && m.skin) g.skin.push(...m.skin);
     for (const t of tris) g.tris.push([t[0] + off, t[1] + off, t[2] + off]);
   }
-  for (const g of groups.values()) {
+  const primOf = new Map();
+  for (const [gkey, g] of groups) {
+    primOf.set(gkey, gltf.meshes[0].primitives.length);
     const { m } = g;
     // Portability: the hue lives in baseColorFactor, COLOR_0 carries only the
     // shading multiplier. With baseColorFactor white (the old way) EVERY colour
@@ -233,6 +247,11 @@ function writeGLB(build, outPath, opts = {}) {
 
   gltf.buffers.push({ byteLength: byteLen });
   const bin = Buffer.concat(bufs);
+  if (opts.spans !== false) {
+    for (const s of spans) { s.primitive = primOf.get(s._key); delete s._key; }
+    gltf.asset.extras = Object.assign({}, gltf.asset.extras, { part_spans: spans });
+  }
+
   let js = Buffer.from(JSON.stringify(gltf)); const jpad = (4 - (js.length % 4)) % 4;
   if (jpad) js = Buffer.concat([js, Buffer.alloc(jpad, 0x20)]);
   const total = 12 + 8 + js.length + 8 + bin.length;

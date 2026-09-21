@@ -1,5 +1,214 @@
 # CHANGELOG
 
+## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
+
+**The declaration**
+
+- `function` on each chain: `axis` / `locomotion` / `effector` / `ornament`. Manufacturing
+  vocabulary only — nothing about damage, hardness or worth. A part bolted to a chain
+  inherits that chain's function, so the blade on the neck is covered without naming it.
+- Six checks make the declaration cost something. A label nobody verifies rots, and each
+  of the six blocks a defect class the engine could not see before.
+
+**Joint limits are declared, and the body is asked whether it agrees**
+
+- `joint_range` on each joint: degrees per axis, in the joint's own frame, the same axis
+  names the tracks use. An axis left out is LOCKED at 0; `"free"` opts one out. The L side
+  is authored and the R side is generated — `ry`/`rz` negate, which swaps the interval's
+  ends — because a hand-written mirror is the bug this release just finished fixing.
+- The numbers are authored because a spec writer already knows a knee is a hinge and an
+  elbow does not twist, and that is not computable from vertices. They are then CHECKED
+  because the author does not know how thick THIS body is: every declared bound is swept
+  against the geometry, and a limit the body cannot reach blocks with the angle that can.
+  A gorilla's shoulder swings 60° back; a gorilla with a wrecking ball hanging off a crane
+  on its back stops at 50°, and only the sweep knows that.
+- Three failures with three different fixes: `undeclared` (a clip turns a joint with no
+  entry), `overrun` (a track leaves its own interval), `unreachable` (the body collides
+  first).
+
+**Every part has a name, and the name reaches the file**
+
+- `name` is required on every part and must be unique. A material is a CLASS — primitives
+  merge one per material so a forty-plate body does not ship forty draw calls — so a
+  material name can never say WHICH part something is. The same `paw` material sits on a
+  foot pad and on a nose-leaf, and anything aggregating by material adds them together.
+- `asset.extras.part_spans` records, per part, the primitive and the `[first, count]`
+  vertex range it owns. Same materials, same primitives, same bytes of geometry: the
+  identity simply stops being thrown away at merge time. Mirrored twins carry `.R`, an
+  eye pair carries `.L`/`.R`.
+- This was not cosmetic. `self_clip` keyed its meshes by material and host, so thirteen
+  `steel_bolt` parts on one creature collapsed to one entry and twelve of them were never
+  narrow-phase tested. With names, the check found a real interpenetration on the first
+  rebuild.
+
+**Mirroring was truncating every mirrored limb**
+
+- `mirrorTrack` resamples instead of shifting keys. The old code mapped a key at `t=1` onto
+  `t=phase`, where it collided with the key already there and the sort dropped the rest of
+  the track — the mirrored limb froze partway through the cycle. **Every mirrored track was
+  affected.** Fixing it also cleared `root_drive` failures that were downstream of it.
+
+**Checks**
+
+- `gait_footfall` — a step must land in FRONT of where it lifts, measured against the foot's
+  own liftoff point, not the hip: a bird's hip sits inside the body and a hip-relative test
+  calls a correct walk wrong. The contact window now expands contiguously from the foot's
+  lowest frame; thresholding the whole cycle split the window the moment the pelvis bobbed.
+- `effector_leads` — at the frame the attack reaches furthest forward, the declared effector
+  must be the frontmost mesh. The frame that matters is peak reach, not the last frame.
+- `attack_windup` — 5% back, or 15% out to the side. Either route passes; a weapon that
+  cannot pull straight back without sweeping through the body goes around.
+- `self_clip` — swept self-collision. Sphere proxies bound to the dominant bone for the broad
+  phase, real mesh distance only for the pairs it names: 0.3–0.7 s for all three clips.
+  Pairs that already touch at rest are excluded — that is `part_overlap`'s question.
+- `clip_closes` — a clip that does not loop still snaps back when it ends.
+- `ground_clip` — nothing below the plane the creature stands on. The receiving physics
+  builds its collision proxy from the mesh; a hand under the floor lifts the whole body.
+
+**`harness/autofix.mjs`**
+
+- The arithmetic corrections, run before a round is spent: the ground offset onto the root's
+  `ty` (chasing it with joint angles does not converge), loop closure, and compensation for
+  joints that must hold their own aim while the body turns for some other purpose.
+- Compensation is written as the parent's inverse rotation, not solved by iterating on
+  angles — past vertical the `atan2` jumps and the correction diverges.
+- **Compensation is subordinate to the purpose.** A head aimed forward pushes its muzzle out
+  in front; if that overtakes the effector the strike reads as a head-butt. The share is
+  solved for, not assumed.
+- It never touches decisions: which way a leg swings, what the creature attacks with, how far
+  it lunges. Those stay with the designer.
+
+**The browser is gone**
+
+- Nothing in this package launches a renderer any more. `setup.sh` installs no Chromium,
+  so the class of install failures where a blocked CDN stalls setup is gone with it, and
+  the harness is `three` plus numpy/pillow/scipy.
+- Every number the renderer used to produce is arithmetic on the vertices, and now lives
+  in ONE file: `harness/outline.py` already owned the silhouettes and the z-buffer that
+  attributes part shares, so it took the rest. Part shares, the colour numbers, the clip
+  and skin list, per-part bounding boxes — all of it read from the file it was already
+  reading. `judge.mjs` stopped taking its own photograph of the same model and now checks
+  its claims against outline's numbers.
+- The colour ruler is verified, not asserted: run both ways over a reference shelf, the
+  saturated-area measure agrees with the browser's at **r=0.999** and the same thresholds
+  carry over untouched. `style_dark` / `style_light` deliberately changed meaning — they
+  now read the creature's OWN colour instead of a studio render of it, which is what the
+  designer controls; the two correlate at r≈0.96 but are not the same scale, so a
+  pre-1.3.2 threshold needs re-picking once.
+- `hero.png` is projected, not rendered. The entire L1–L8 shading stack is baked into the
+  vertex colours at build time, so lighting it again in three.js was lighting a
+  photograph. Same z-buffer, transparent background, framed to its own content.
+- Two view conventions moved to the tool that survived: `side` is the LONG profile rather
+  than a fixed +X camera (the old one showed a spread-winged creature edge-on and called
+  it a side view), and the three-quarter view is `hero` — `tq` still resolves to it.
+- Retired: `silmetrics.mjs`, `maskmetrics.py`, `hero.mjs`, `pwlaunch.mjs`, `pwprobe.mjs`,
+  `calibrate.py`. The SHARED-TOOL QUEUE that named their duplicate measures now prints
+  nothing. `synccheck.py` refuses any file that imports playwright or launches chromium.
+
+**The trap list became code where it could**
+
+- Four engine traps that were previously only written down are now the engine's own words, at the moment they happen, instead of a document
+  someone has to have read:
+  - a `fin` whose outline has two nearly-coincident points is refused BY NAME, with the
+    two indices and the distance. It used to extrude into flipped triangles and surface
+    later as a `mesh_integrity` count with no address, costing a round of bisection.
+  - a `joints_R` entry written relative to itself says so, instead of "dependency cycle",
+    which sends the author hunting for a loop between joints that does not exist.
+  - `eye_pupil` names a lone eye sphere for what it is: a flat coloured disc, which at
+    reading size is a sticker. An eye reads by the value step between iris and pupil.
+  - `part_overlap` above.
+- The rest of that list is process advice already covered by the cards, or notes that
+  belong to the operator. It does not ship as a document.
+
+**part_overlap was comparing boxes**
+
+- The check that reports one part sitting inside another tested A's vertices against B's
+  axis-aligned BOUNDING BOX. A box is not a shape: a 2.8 m spear's box contains any hand
+  gripping it, so the check reported the hand as buried in the spear. The signal was not
+  noisy, it was wrong, and acting on it removes parts that are correctly placed. Same error
+  class as the sphere below.
+- Measured against the real surfaces now. On a reference creature the count halved
+  (32 → 16) and what disappeared was box artefact.
+- Two severities, because they are different problems: COMPLETELY buried is invisible
+  geometry that still costs triangles, and partial is a seam, which is usually the point.
+
+**The signature has to say whether it is visible in black**
+
+- Gate 1 reads a 48px silhouette, which has exactly one dimension. A feature made of
+  colour, of COUNT (nine faces, one leg), of something soft, or of a face has no boundary
+  in one — so betting a creature's identity on it asks Gate 1 to measure what it cannot
+  see.
+- `brief.py` now blocks a signature slot that does not end `silhouette: yes` or
+  `silhouette: no`. It does not forbid the bet; it forbids it being an accident. "No" is
+  allowed and often right — it declares that MID or HIGH carries the feature and the body
+  has to carry the identity on its own, decided before the rounds are paid for.
+
+**The trap list ships**
+
+- `cards/PITMAP.md` — facts about this engine that are expensive to discover by trial: the
+  shapes it refuses, the fields that must be declared a particular way, the corrections
+  that never converge. Card 00 sends you there before you author anything.
+
+**A volume is not a string of spheres**
+
+- `root_containment`, `limb_clearance` and `part_attachment` all asked the same question —
+  "is this point inside that volume, and if not, how far out?" — and all three answered it
+  by finding the nearest ring CENTRE and comparing against a SPHERE of that ring's widest
+  radius. A volume is a lofted tube, and that sphere bulges past the END CAP by a whole
+  half-width. The error is therefore worst exactly where it matters most: at the end of a
+  chain, which is where the next chain attaches. A torso 0.80 m wide handed out 0.4 m of
+  phantom "inside" straight off the chest, so a head sitting 0.33 m in front of the last
+  ring centre was declared buried while its real distance to the surface was 0.24 m — a
+  floating head, attached only by two stray vertices of a foreleg.
+- `engine/core/inside.js` measures against the triangles the file will actually ship, and
+  all three checks now call it. The sign comes from the closest triangle's own normal, not
+  from a ray cast, because an attached chain leaves its root ring open on purpose and ray
+  casting needs a closed surface.
+- `root_containment` now judges by the ring's MEDIAN rather than a count of points. A ring
+  meets a CURVED host, so a few of its points always poke out; across a reference set of
+  102 joints the median sits inside on 95 of them, and the 7 it does not are the ones you
+  can see.
+- The corrected distance is stricter than the sphere was hiding: the same 1.5%-of-height
+  tolerance that `part_attachment` always had now sits on the 99th percentile of that set
+  instead of nowhere, and it catches parts standing 4–6 cm clear of their host.
+
+**One creature is one connected body**
+
+- `body_islands` walks every piece, unions the ones that share material, and refuses
+  anything that comes back as more than one object. The weld is 3% of model height at
+  three points — two stray vertices poking in is a coincidence, not an attachment.
+- It exists because the three checks above all ask a LOCAL question (is this piece seated
+  in ITS host) and the failure was global, and because a silhouette cannot see it either:
+  a head floating inside the outline is not a hole in the mask.
+- 3% is a floor, not a target. Well-built parts sit anywhere from fully embedded to ~3% of
+  height off their host and there is no gap in that distribution to put a threshold in, so
+  this takes the loosest value that is still correct. The failure it exists for is 9.3% —
+  three times the bar.
+
+**Gate 1 stopped grading itself**
+
+- `identity.py` used to ask you which rank the brief's noun reached, and one judgment
+  sat under that number: *does "hound" count as "wolf"?* The only party available to make
+  it was the party being graded. A brief can already carry an accepted list, and nothing
+  compared the reader's words against it.
+- Now you hand over the reader's words, verbatim and in order (`--guesses side="…"`), and
+  the machine matches them against the brief's accepted list. Widening the family is still
+  the designer's call — it just has to happen in the brief, before the geometry exists,
+  instead of at r3 with a shape to defend.
+- `brief.py` blocks an identity slot with no accepted list. It is one line, it costs
+  nothing to write generously, and it has to be on the record.
+
+**Housekeeping**
+
+- `synccheck.py` refuses any file named `DEVLOG*`: a lab notebook never ships, and the
+  filename is the only rule that works in every language.
+- `example/wolf.json` builds green under the 1.3.2 checks: named parts, declared joint
+  limits, and a stride that no longer walks the hind paw through the front one. The
+  shipped example is the reference the cards point at; it has to pass its own gates.
+- `outline.py` says so out loud when scipy is missing. It used to return four keys short
+  — protrusions, thinnest feature, convexity, mirror symmetry — so the legibility and
+  boldness gates had nothing to read and every build passed them by default.
+
 ## 1.3.1 — reads are scored, the brief is checked, and everything computable is computed
 
 **Publishing hands back two links, and the second one is checked (2026-09-03)**

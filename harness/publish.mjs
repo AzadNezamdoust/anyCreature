@@ -149,6 +149,10 @@ try {
 }
 
 // ── 3. one JSON line for the closing dialogue ──
+// The server hands back ONE handle that lets the person manage or take down
+// their own model. It is shown once and losing it is not recoverable, so it is
+// written next to the delivery AND printed — never swallowed.
+//
 // AND ITS NAME IS NOT OURS TO ASSUME. The comment forty lines below this one says
 // "the server's vocabulary is ITS to change ... never match a fixed word again",
 // because a status word changed once and this client called a successful upload
@@ -306,7 +310,7 @@ if (ACK && located && !REVIEW) {
     ...M,
     title: body.title ?? title, creator: body.creator ?? creator, thumb: hasThumb }));
 } else if (ACK && REVIEW) {
-  // held for a human: still a successful upload, and it can still carry a token
+  // held for a human: still a successful upload, and it can still carry a handle
   console.log(JSON.stringify({ status: 'pending_review', server_status: body.status ?? null,
     ...M, thumb: hasThumb }));
 } else if (ACK) {
@@ -314,7 +318,7 @@ if (ACK && located && !REVIEW) {
   console.log(JSON.stringify({ status: 'pending_review', server_status: body.status ?? null,
     ...M, thumb: hasThumb }));
 } else {
-  // even a refusal can carry a token for an earlier upload — never swallow it
+  // even a refusal can carry a handle for an earlier upload — never swallow it
   console.log(JSON.stringify({ status: 'error', http: res.status,
     server_status: body.status ?? null,
     error: body.error || `unexpected response: ${JSON.stringify(body).slice(0, 200)}`,

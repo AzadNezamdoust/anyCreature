@@ -9,7 +9,7 @@ two questions, and delivers a skinned, animated, vertex-coloured, AO-baked GLB p
 offline showroom viewer.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-1.3.1-green.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.3.2-green.svg)](CHANGELOG.md)
 [![Engine](https://img.shields.io/badge/engine-zero%20dependencies-brightgreen.svg)](engine)
 [![Output](https://img.shields.io/badge/output-glTF%202.0-000000.svg)](https://www.khronos.org/gltf/)
 [![Tooling](https://img.shields.io/badge/tooling-Node%2018%2B%20%C2%B7%20Python%203.9%2B-3776ab.svg)](setup.sh)
@@ -143,14 +143,17 @@ Form beats obedience, everywhere.
 - **Isolated-part blind reads misfire on dome-plus-hanging-tube heads.** Elephants and
   birds get read as something else when the head is shown alone; put the same head back
   on the body and it reads fine. Trust the whole-body read when the two disagree.
-- **Cost scales with the creature.** Treat the triangle budget in
-  `harness/claims.json` as an estimate rather than data.
-- **Splitting the modelling across subagents costs more, not less.** One agent
-  start-to-finish beats a chain of short-lived agents (skeleton → parts → anims →
-  verify) on tokens, wall clock and turns alike. Onboarding is not the cause —
-  every fresh agent reads the same ground truth. The cause is re-derivation: work
-  the previous agent had already done and could not hand over. Iron law 9 in card
-  00 states the rule.
+- **The budgets are calibrated on the heaviest class of creature only.** A simpler one
+  should cost less, but nothing lighter has been calibrated — treat the triangle budget
+  in `harness/claims.json` as an estimate rather than data.
+- **Splitting the modelling across subagents costs more, not less.** Same creature,
+  same green build, measured both ways: one agent start-to-finish against four
+  short-lived agents in a chain (skeleton → parts → anims → verify). The chain was
+  worse on every axis. Onboarding was not the cause — every fresh agent read the
+  same ground truth, a small fraction of either bill — the cause was re-derivation:
+  work the previous agent had already done and could not hand over. Iron law 9 in
+  card 00 states the rule; this is the measurement behind it. Two repetitions per arm, all four builds passed, so
+  this fixes the direction and not the distribution.
 - **`part_attachment` and `mirror_distortion` are new in 1.2.0.** Specs authored against
   an older version may now be blocked. That is usually the checker being right, but it
   is a breaking change, not a silent improvement.
@@ -160,29 +163,28 @@ Form beats obedience, everywhere.
   (`example_copy`), because a thin order is not permission to ship a recoloured
   wolf. Read it for syntax, not for
   animation coverage.
-- **The engine has zero dependencies; the tooling does not.** Every render and measure
-  tool drives headless Chromium through playwright. If playwright will not install, you
-  can still compile creatures — you just cannot measure them, and the gates are the
-  point.
+- **The engine has zero dependencies; the tooling needs numpy, pillow and scipy.**
+  Nothing here launches a browser: as of 1.3.2 every silhouette, share, colour number
+  and even the hero shot is computed from the vertices. scipy is the one that matters —
+  without it the legibility and boldness measures do not compute, and a gate with
+  nothing to read passes everything.
 
 ## Scripts
 
 | Script | Role |
 |---|---|
 | `engine/cli.js` | Spec → GLB. The whole engine interface. |
-| `harness/silmetrics.mjs` | Renders the four silhouettes and the 24px thumbnail; emits the layout metrics. |
-| `harness/maskmetrics.py` | Per-view mask measures and dullness flags (`sq_fill`, `mirror_sym`, `straight_max`). |
-| `harness/judge.mjs` | Claims judge — part shares, focal contrast, saturated area, rig/anim/triangle budgets. |
-| `harness/hero.mjs` | `hero.png` (1024² transparent, 45°) and `hero.jpg` over studio grey. |
-| `harness/deliver.py` | Stamps identity into the GLB, writes the offline showroom viewer, builds the upload pack. |
+| `harness/outline.py` | THE measuring tool. Silhouettes, thumbnails, layout and boldness measures, per-part shares, colour, and `hero.png` — all projected from the vertices. |
+| `harness/judge.mjs` | Claims judge over those numbers — part shares, focal contrast, saturated area, rig/anim/triangle budgets. |
+| `harness/deliver.py` | Stamps identity into the GLB, writes the offline showroom viewer and `hero.png`, builds the upload pack. |
 | `harness/publish.mjs` | Gobkit publisher. Only runs after an explicit yes, and always tries the upload before offering the manual page. |
-| `harness/calibrate.py` | The red/green self-check `setup.sh` runs. |
 
 ## Requirements
 
-Node 18+ and Python 3.9+. Windows: run `setup.ps1` in PowerShell (or `setup.sh` in Git Bash/WSL). `setup.sh` installs `three`, `playwright`, `numpy`, `pillow`
-and `scipy`, then runs the calibration self-check. The engine alone needs nothing but
-Node; the dependencies are for the measuring and render tools.
+Node 18+ and Python 3.9+. Windows: run `setup.ps1` in PowerShell (or `setup.sh` in Git Bash/WSL). `setup.sh` installs `three`, `numpy`, `pillow` and `scipy`,
+then builds the shipped example end to end as a self-check. No browser is installed
+or launched. The engine alone needs nothing but Node; the dependencies are for the
+measuring tools and the offline viewer.
 
 ## Output contract
 

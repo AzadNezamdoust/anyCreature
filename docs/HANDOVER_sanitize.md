@@ -146,9 +146,9 @@ Anisotropy stretches the specular highlight ALONG THE TANGENT. A primitive with
 neither `TANGENT` nor `TEXCOORD_0` gives the renderer no direction, so each one
 invents its own and the model is a flat white smear in some viewers and correct
 in none — and lowering `anisotropyStrength` does not help, because the missing
-information is *which way*, not *how much* (expressed in the field: 0.9 → 0.15,
-no change). On a submission whose primitives lack both, DROP the extension and
-keep the model — the base colour is unaffected and the creature renders
+information is *which way*, not *how much* — dropping `anisotropyStrength` from
+0.9 to 0.15 changes nothing. On a submission whose primitives lack both, DROP
+the extension and keep the model — the base colour is unaffected and the creature renders
 correctly without it. anyCreature 1.3.0 refuses to emit this case at all
 (`anisotropy_without_direction`), so any file carrying it was hand-edited or
 came from another tool.

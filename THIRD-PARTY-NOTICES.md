@@ -10,8 +10,8 @@ itself is MIT — see `LICENSE`.
 ### three.js — `harness/assets/three-bundle.js`
 
 A prebuilt bundle of three.js (core + `GLTFLoader` + `OrbitControls`), used by
-`silmetrics.mjs`, `hero.mjs` and by the offline showroom that `deliver.py`
-writes. The upstream licence banner is preserved at the end of the bundle.
+the offline showroom viewer that `deliver.py` writes — the customer's own
+browser opens it; nothing in this package launches one. The upstream licence banner is preserved at the end of the bundle.
 
 ```
 Copyright © 2010-2025 Three.js Authors
@@ -43,13 +43,12 @@ SOFTWARE.
 | Package | Licence |
 |---|---|
 | three (npm, pinned 0.180.0) | MIT |
-| playwright | Apache-2.0 |
 | numpy | BSD-3-Clause |
 | pillow | MIT-CMU |
 | scipy | BSD-3-Clause |
 
-Playwright downloads a Chromium build on install; Chromium carries its own
-licences (BSD-3-Clause and others), shown at `chrome://credits` in that build.
+Playwright and its Chromium download were dependencies until 1.3.2. Every
+measurement they served now comes from the geometry, so neither is installed.
 
 ## Output files
 

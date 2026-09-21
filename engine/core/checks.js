@@ -7,7 +7,8 @@
 //  3. balance         — mass centroid must project inside the support polygon.
 'use strict';
 const G = require('./geometry.js');
-const { sampleKeys, eulerToQuat } = require('./anim.js');
+const { sampleKeys, eulerToQuat, mirrorTrack } = require('./anim.js');
+const { signedDistance } = require('./inside.js');
 
 // ── mat helpers (column-major mat4) ──
 function quatMat(q) {
@@ -147,8 +148,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   // `faceted: true` on a VOLUME shatters the mass into one independent facet per
   // triangle — an 800-triangle torso becomes 800 shards — and because AO bakes
   // from those normals the mess ships inside COLOR_0, where no relighting can
-  // reach it — a faceted body comes back ~90% hard-edged. Bodies are
-  // smooth-shaded. Parts — plates, spikes, claws, crystal,
+  // reach it — a faceted body comes back ~90% hard-edged. Bodies are smooth-shaded. Parts — plates, spikes, claws, crystal,
   // armour — may still face freely; only volumes are covered.
   if (spec.build !== 'rigid') {
     const bad = (spec.volumes || []).filter(v => v.faceted).map(v => `"${v.chain}"`);
@@ -221,7 +221,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         const dst = {};
         for (const [axis, keys] of Object.entries(tracks[jn])) {
           const flip = (axis === 'ry' || axis === 'rz' || axis === 'tx') ? -1 : 1;
-          dst[axis] = keys.map(([t, v]) => [(t + phase) % 1, v * flip]).sort((p, q) => p[0] - q[0]);
+          dst[axis] = mirrorTrack(keys, phase, flip, a.loop !== false);   // 同一支：重新取樣，不是搬鍵
         }
         tracks[mirrorName(jn)] = dst;
       }
@@ -355,19 +355,29 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     // just did — the same work, done twice, once in code and once by hand.
     const over = []; let nearC = null, nearD = Infinity;
     for (const p of rootRing) {
-      let best = Infinity, bs = 0;
-      host._pts.forEach((c2, si) => { const d = G.len(G.sub(p, c2)); if (d < best) { best = d; bs = si; } });
-      const ring = host._rings[bs]; const c2 = host._pts[bs];
-      const rad = Math.max(...ring.map(q => G.len(G.sub(q, c2))));
-      over.push(best - rad * 0.98);
-      if (best < nearD) { nearD = best; nearC = c2; }
-      if (best < rad * 0.98) inside++;
+      // Distance to the host's actual SURFACE, signed: negative is inside. This
+      // used to compare against a sphere of the nearest ring's widest radius,
+      // which hands out a whole half-width of phantom "inside" straight off the
+      // end cap — exactly where the next chain attaches. See engine/core/inside.js.
+      const sd = signedDistance(p, host);
+      over.push(sd);
+      if (sd < nearD) { nearD = sd; nearC = p; }
+      if (sd < 0) inside++;
     }
-    if (inside < rootRing.length * 0.8) {
+    // THE STATISTIC IS THE MEDIAN, not a count of points. A root ring meets a
+    // CURVED host, so a few of its points always poke out; counting them punishes
+    // every honest quadruped. What separates a seated ring from a floating one is
+    // whether its MIDDLE is buried. Across a reference set of 102 joints the median
+    // point sits inside on 95 of them, and the 7 it does not are the ones you can
+    // see. That is a style number, not a law, and it is a tag away from being a
+    // profile.
+    const sortedSD = over.slice().sort((a, b) => a - b);
+    const medianSD = sortedSD[Math.floor(sortedSD.length / 2)];
+    if (medianSD >= 0) {
       // 80% of the ring has to end up inside, so the move that fixes it is the
       // 80th-percentile overshoot — not the worst point, which would bury it
       // further than the rule asks for.
-      const sorted = over.slice().sort((a, b) => a - b);
+      const sorted = sortedSD;
       const need = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.8))];
       // Name the CHAIN'S OWN first joint, not the host joint it hangs from.
       // Moving the host drags this chain along with it, so that correction can
@@ -398,13 +408,11 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     };
     const containedInHost = (p, host) => {
       if (!host) return false;
-      let best = Infinity, bs = 0;
-      host._pts.forEach((c2, si) => { const d = G.len(G.sub(p, c2)); if (d < best) { best = d; bs = si; } });
-      const rad = Math.max(...host._rings[bs].map(q => G.len(G.sub(q, host._pts[bs]))));
-      // 1.05: verts within 5% of the host surface are thigh-belly SEAM geometry,
-      // covered by the host silhouette — not a visible limb at the centreline.
-      // (a zero-margin binary test flags every quadruped groin seam as "exposed")
-      return best < rad * 1.05;
+      // Surface distance, not a sphere (engine/core/inside.js). The band is the
+      // same idea it always was: a vert sitting just OUTSIDE the host is seam
+      // geometry, covered by the host's own silhouette, not a limb showing at the
+      // centreline — a zero-margin test flags every quadruped groin seam.
+      return signedDistance(p, host) < 0.02 * modelH;
     };
     for (const cn of spec.mirror || []) {
       const v = volsByChain[cn]; if (!v) continue;
@@ -448,10 +456,9 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       if (!host || !host._rings) continue;
       let nearest = Infinity;
       for (const p of m.V) {
-        let best = Infinity, bs = 0;
-        host._pts.forEach((c2, si) => { const d = G.len(G.sub(p, c2)); if (d < best) { best = d; bs = si; } });
-        const rad = Math.max(...host._rings[bs].map(q => G.len(G.sub(q, host._pts[bs]))));
-        const outside = best - rad;          // <0 inside the host, >0 clear of it
+        // <0 inside the host, >0 clear of it — measured against the surface, not
+        // a sphere through the widest ring (engine/core/inside.js).
+        const outside = signedDistance(p, host);
         if (outside < nearest) nearest = outside;
       }
       if (nearest > gap)
@@ -605,7 +612,36 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         // Sum the per-step forward travel over contact frames, rather than
         // (last - first): a contact phase that straddles the loop point would
         // otherwise subtract two frames that are the same frame and read 0.
-        const low = path.map(p => p[1] < ymin + (ymax - ymin) * 0.30);
+        // Contact window: expand CONTIGUOUSLY from the foot's lowest frame.
+        // Thresholding the whole cycle breaks as soon as the pelvis bobs: the bob puts
+        // a second harmonic on the foot's Y, the window splits in two, and touchdown /
+        // liftoff land on the wrong frames. (Measured: a correct 24%-reach walk read as
+        // -17% after adding pelvis translation.) Contiguous expansion is immune to that.
+        const L = path.length, lim = ymin + (ymax - ymin) * 0.30;
+        let c0 = ys.indexOf(ymin), aI = c0, bI = c0;
+        while (ys[(aI - 1 + L) % L] < lim && (bI - aI) < L - 1) aI--;
+        while (ys[(bI + 1) % L] < lim && (bI - aI) < L - 1) bI++;
+        const ix = i => ((i % L) + L) % L;
+        const low = path.map(() => false);
+        for (let i = aI; i <= bI; i++) low[ix(i)] = true;
+        // 7c. gait_footfall — THE FOOT MUST LAND IN FRONT OF WHERE IT LEAVES.
+        // gait_direction only asks that the planted foot sweeps backward. A leg that
+        // lifts and puts itself down in the same place passes that and still is not
+        // walking; so does a leg that reaches backward and plants behind the body.
+        // The reference is the foot's own liftoff point, NOT the hip: a bird's hip sits
+        // far forward inside the body, so its foot is always ahead of the hip and a
+        // hip-relative test calls a good walk bad.
+        {
+          const reach = path[ix(aI)][2] - path[ix(bI)][2];
+          if (reach < 0.15 * stride)
+            fails.push(`gait_footfall: "${jn}" touches down ${reach >= 0 ? '' : '-'}`
+              + `${Math.abs(reach).toFixed(3)} m ${reach >= 0 ? 'in front of' : 'BEHIND'} where it lifts off `
+              + `(${(100 * reach / stride).toFixed(0)}% of its ${stride.toFixed(2)} m stride; needs >= 15% in FRONT). `
+              + `A step reaches FORWARD and DOWN, then sweeps back under the body. Lifting the foot and `
+              + `setting it down level or behind is walking backwards, or marching on the spot. `
+              + `THE FIX: shift the hip track so the leg is FORWARD when the foot comes down and BACK when it lifts `
+              + `— the phase, not the amplitude.`);
+        }
         let net = 0, contact = 0;
         for (let s = 0; s < path.length - 1; s++) {
           if (!(low[s] && low[s + 1])) continue;
@@ -766,29 +802,53 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     }
   }
 
-  // 9. part_overlap — a MEASURE, not a law: gross part-into-part interpenetration
-  //    (the self-intersecting fist class). Reported as warn; you judge.
+  // 9. part_overlap — how much of one part is actually inside another.
+  //
+  // THIS USED TO COMPARE BOUNDING BOXES, and that is not a shape. A 2.8 m spear's
+  // box contains any hand gripping it, so the check reported "the hand is 100%
+  // inside the spear" — and acting on that number removes parts that are placed
+  // correctly. The signal was not noisy, it was wrong: a box says nothing about
+  // whether two surfaces share space. Same error class as the sphere that let a
+  // head float.
+  //
+  // Measured against the real surfaces now (engine/core/inside.js), which makes
+  // most of the old false positives disappear on their own — a hand around a
+  // haft is not inside the haft. Two severities, because they are different
+  // problems: a part BURIED whole is geometry nobody will ever see that still
+  // costs triangles, and a part partly in is a seam, which is usually the point.
   {
-    const parts = meshes.filter(m => m.part);
-    for (let i = 0; i < parts.length; i++) for (let k = 0; k < parts.length; k++) {
-      if (i === k) continue;
-      const A = parts[i], B = parts[k];
-      if (A.part.replace(/\.R$/, '') === B.part.replace(/\.R$/, '')) continue; // own mirror twin
-      if (B.doubleSided) continue; // a zero-thickness membrane has a huge hollow box — it contains nothing
+    const { signedDistance } = require('./inside.js');
+    const parts = meshes.filter(m => m.part && m.V && m.V.length && m.F && m.F.length);
+    const box = m => {
       const lo = [1e9, 1e9, 1e9], hi = [-1e9, -1e9, -1e9];
-      for (const v of B.V) for (let a = 0; a < 3; a++) {
+      for (const v of m.V) for (let a = 0; a < 3; a++) {
         if (v[a] < lo[a]) lo[a] = v[a];
         if (v[a] > hi[a]) hi[a] = v[a];
       }
-      const c = [0, 1, 2].map(a => (lo[a] + hi[a]) / 2);
-      const h = [0, 1, 2].map(a => (hi[a] - lo[a]) / 2);
-      if (Math.min(...h) <= 0) continue;
-      let inside = 0;
-      for (const v of A.V)
-        if (Math.abs(v[0] - c[0]) < h[0] && Math.abs(v[1] - c[1]) < h[1] && Math.abs(v[2] - c[2]) < h[2]) inside++;
-      const frac = inside / A.V.length;
-      if (frac > 0.45)
-        warns.push(`part_overlap: '${A.part}' sits ${Math.round(frac * 100)}% inside '${B.part}' — check for interpenetration`);
+      return { lo, hi };
+    };
+    const boxes = parts.map(box);
+    const stem = s => s.replace(/\.R$/, '').replace(/[_-]?\d+$/, '');
+    for (let i = 0; i < parts.length; i++) for (let k = 0; k < parts.length; k++) {
+      if (i === k) continue;
+      const A = parts[i], B = parts[k];
+      if (stem(A.part) === stem(B.part)) continue;   // own mirror twin, or the same ring repeat
+      if (B.doubleSided) continue;                    // a membrane encloses nothing
+      let sep = false;
+      for (let a = 0; a < 3; a++) if (boxes[i].lo[a] > boxes[k].hi[a] || boxes[k].lo[a] > boxes[i].hi[a]) sep = true;
+      if (sep) continue;                              // boxes do not even touch — cheap reject only
+      const step = Math.max(1, Math.ceil(A.V.length / 160));
+      let inside = 0, tested = 0;
+      for (let v = 0; v < A.V.length; v += step) { tested++; if (signedDistance(A.V[v], B) < 0) inside++; }
+      if (!tested) continue;
+      const frac = inside / tested;
+      if (frac >= 0.995)
+        warns.push(`part_overlap: '${A.part}' is COMPLETELY buried inside '${B.part}' — invisible geometry `
+          + `that still costs triangles. Either it is meant to nest (an eye in a socket) and is fine, or it `
+          + `should be pushed out until it shows, or deleted.`);
+      else if (frac > 0.45)
+        warns.push(`part_overlap: '${A.part}' sits ${Math.round(frac * 100)}% inside '${B.part}' `
+          + `— measured surface to surface, so this is real interpenetration, not a bounding box.`);
     }
   }
 
@@ -838,6 +898,385 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         fails.push(`part_seat: '${label}' declares join "extrude" but its base centre sits outside every body — the part does not grow out of a surface`);
       else if (!m.join && buried < 0.5)
         warns.push(`part_seat: '${label}' base ring is ${Math.round(buried * 100)}% buried — the root may show; sink it, or declare the join (insert/extrude/snap/place)`);
+    }
+  }
+
+
+  // ── 7i. eye_pupil — an eye is a VALUE STEP, not a coloured dot.
+  //
+  // The engine's `eye` part is one monochrome sphere. On its own it ships a flat
+  // disc of colour, and at reading size a flat disc is a sticker, not an eye. What
+  // makes an eye read is the step between a bright iris and a near-black pupil —
+  // not the saturation of either. Faces built from a lone sphere measure as "no
+  // eyes" for exactly this, and the fix is always the same: a second, smaller,
+  // much darker sphere on the same host. `harness/pupils.py` places it by measuring where the eyeball actually
+  // landed, because guessed numbers bury it inside the iris or float it in front.
+  {
+    const eyes = (spec.parts || []).filter(p => p.type === 'eye');
+    const byHost = {};
+    for (const p of eyes) (byHost[p.host] = byHost[p.host] || []).push(p);
+    const bare = [];
+    for (const [host, ps] of Object.entries(byHost)) {
+      if (ps.length > 1) continue;              // a pair on one host IS iris + pupil
+      const L = m => {
+        const pal = (spec.palette || {})[m];
+        if (!pal || !pal.color) return null;
+        const h = pal.color.replace('#', '');
+        const [r, g, b] = [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16) / 255);
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const l = L(ps[0].material || 'eye');
+      if (l !== null && l < 0.18) continue;     // a single very dark sphere is a pupil-only eye
+      bare.push(`${ps[0].name || 'eye'}@${host}`);
+    }
+    if (bare.length)
+      warns.push(`eye_pupil: ${bare.join(', ')} — one sphere on its own is a flat coloured disc, `
+        + `and at reading size a disc is a sticker. An eye reads because of the VALUE STEP `
+        + `between a bright iris and a near-black pupil. Add the pupil with `
+        + `\`python3 harness/pupils.py <spec.json>\` — it measures where the eyeball actually `
+        + `landed before placing it, which hand-picked numbers cannot do.`);
+  }
+
+  // ── 7g. part_names — every part carries its own name, and no two share one.
+  //
+  // A material is a CLASS: "this is horn". Many parts share one on purpose, and the
+  // GLB merges by material precisely so a body with forty plates does not ship forty
+  // draw calls. That makes a material name structurally incapable of answering "which
+  // part is this" — the same `paw` material sits on a foot pad AND on a nose-leaf, and
+  // anything that aggregates by material silently adds the two together.
+  //
+  // So identity gets its own channel and the author fills it, because the generator
+  // already knows what it is emitting at the moment it emits it. `nose_leaf` is a name;
+  // `spike@Skull` is a description of where a thing was put, and two spikes on one skull
+  // share it. glb.js then records [first, count] per name, so a name reaches all the way
+  // into the file without costing a single extra material.
+  {
+    const chainNames = new Set(Object.keys(spec.chains || {}));
+    const seen = new Map();
+    const unnamed = [], dupes = [], clashes = [];
+    (spec.parts || []).forEach((p, i) => {
+      const n = (p.name || '').trim();
+      if (!n) { unnamed.push(`parts[${i}] (${p.type} on ${p.host || 'ribs'})`); return; }
+      if (seen.has(n)) dupes.push(n); else seen.set(n, i);
+      if (chainNames.has(n)) clashes.push(n);
+    });
+    if (unnamed.length)
+      fails.push(`part_names: ${unnamed.length} part(s) have no "name" — ${unnamed.slice(0, 6).join(', ')}`
+        + (unnamed.length > 6 ? `, +${unnamed.length - 6} more` : '')
+        + `. THE FIX: give every part the name of the THING it is ("nose_leaf", "left_tusk"), not its type `
+        + `and host. The material is a class shared by many parts and cannot identify one; this name is what `
+        + `checks, the Arena importer and graft.py use to point at a single piece of geometry.`);
+    if (dupes.length)
+      fails.push(`part_names: duplicated — ${[...new Set(dupes)].join(', ')}. Two parts with one name is two `
+        + `things nothing downstream can tell apart. THE FIX: name them for what they are (left_tusk / `
+        + `right_tusk), not what they are made of.`);
+    if (clashes.length)
+      fails.push(`part_names: ${[...new Set(clashes)].join(', ')} is already a chain name, and volumes are `
+        + `identified by their chain. THE FIX: pick a different name for the part.`);
+  }
+
+  // ── 7h. body_islands — a creature is ONE thing, and one thing is connected.
+  //
+  // This exists because a head shipped as a free-floating object: 0.24 m clear of
+  // the torso surface, every one of its 311 vertices outside the body mesh, held
+  // to the creature only by two stray vertices of a foreleg that happened to poke
+  // into it. Nothing caught it. root_containment, limb_clearance and
+  // part_attachment were all reading a SPHERE through the widest ring instead of
+  // the surface (fixed — see engine/core/inside.js), and even corrected, all three
+  // ask a LOCAL question: is this piece seated in ITS host. The failure was global.
+  // A silhouette cannot see it either: a head floating inside the outline is not a
+  // hole in the mask. So the global question gets asked directly.
+  //
+  // THE WELD TOLERANCE IS 3% OF MODEL HEIGHT, and it is a floor rather than a
+  // target. Well-built parts sit anywhere from fully embedded to ~3% of height
+  // off their host, because part_attachment's own bar allows a part to
+  // TOUCH rather than sink in. There is no gap in that distribution to put a
+  // threshold in, so this takes the loosest value that is still correct and calls
+  // anything looser detached. The failure it exists for is 9.3% — three times the
+  // bar — so a loose floor still catches it by a wide margin. Tightening attachment
+  // is a separate decision, and it belongs to part_attachment, not here.
+  if (!spec.qa_isolate) {
+    const groups = require('./inside.js').islands(meshes, 0.03 * modelH, 3);
+    if (groups.length > 1) {
+      const loose = groups.slice(1);
+      const shown = loose.slice(0, 6).map(g => `[${g.join(', ')}]`).join(' ');
+      fails.push(`body_islands: this is ${groups.length} separate objects, not one creature. `
+        + `Floating free of the main body: ${shown}${loose.length > 6 ? ` +${loose.length - 6} more` : ''}. `
+        + `A piece counts as attached when it shares material with something else — `
+        + `${(0.03 * modelH).toFixed(3)} m of weld, at three points. Two stray vertices `
+        + `poking in is not an attachment, it is a coincidence. THE FIX: move the floating `
+        + `piece INTO whatever it is supposed to grow out of, along its own axis; a root is `
+        + `meant to be buried, and burying it is what hides the seam as well.`);
+    }
+  }
+
+  // ── 7f. joint_range — a joint that turns declares how far it turns, the
+  //         declaration is honest about THIS body, and the clips stay inside it.
+  //
+  // The numbers are authored, because whoever writes the spec already knows a knee
+  // bends one way and an elbow does not twist, and that knowledge is impossible to
+  // compute from vertices. The numbers are then CHECKED, because the author does not
+  // know how thick this creature's thigh is — a declared limit is a claim about the
+  // body, and an unverified claim is the thing this release exists to stop.
+  //
+  // Three failures, three different fixes, so three different messages:
+  //   undeclared   a clip turns a joint that has no entry     -> write the entry
+  //   overrun      a track leaves its own declared interval   -> fix the track or the number
+  //   unreachable  the body collides before the limit         -> tighten the number
+  //
+  // The sweep costs one pass at the declared extreme per axis, which is the same
+  // order as self_clip's own broad phase. The 8-step ladder that finds the angle it
+  // ACTUALLY reaches only runs on bounds that already failed, so a clean body pays
+  // nothing for it.
+  if (!spec.qa_isolate) {
+    const SK = require('./skeleton.js');
+    const mirrorName2L = n => (n.startsWith('R') ? 'L' + n.slice(1) : n);
+    let ranges = null;
+    try { ranges = SK.jointRanges(spec, sk); }
+    catch (e) { fails.push(`joint_range: ${e.message}`); }
+    if (ranges) {
+      const AX = SK.RANGE_AXES;
+
+      // a limit on a joint that does not exist is a typo doing nothing quietly
+      const ghosts = Object.keys(spec.joint_range || {}).filter(jn => sk.index[jn] === undefined);
+      if (ghosts.length)
+        fails.push(`joint_range: no such joint — ${ghosts.join(', ')}. THE FIX: use the joint names from `
+          + `"chains"; a limit on a name nothing owns is silently doing nothing.`);
+
+      const turned = new Map();                     // joint -> Set(axis) actually animated
+      for (const a of animsResolved)
+        for (const [jn, tr] of Object.entries(a.tracksResolved))
+          for (const ax of AX) if (tr[ax]) {
+            if (!turned.has(jn)) turned.set(jn, new Set());
+            turned.get(jn).add(ax);
+          }
+
+      // (a) undeclared
+      const allUndec = [...turned.keys()].filter(jn => !ranges[jn]);
+      // a generated R joint disappears the moment its L twin is declared, so asking for it
+      // by name would send the author to a file that must not contain it
+      const undec = allUndec.filter(jn => !(jn.startsWith('R') && sk.index[mirrorName2L(jn)] !== undefined
+                                            && allUndec.includes(mirrorName2L(jn)))).sort();
+      if (undec.length) {
+        const ex = undec[0], exAx = [...turned.get(ex)][0];
+        fails.push(`joint_range: ${undec.length} joint(s) are turned by an animation with no declared limit — `
+          + undec.slice(0, 8).join(', ') + (undec.length > 8 ? `, +${undec.length - 8} more` : '')
+          + `. THE FIX: add a "joint_range" block — { "${ex}": { "${exAx}": [min, max] } } — in DEGREES, in the `
+          + `joint's own frame, using the same axis names the tracks use. Write what the ANIMAL can do; an axis `
+          + `you leave out is LOCKED at 0, and "free" opts one out. Declare the L side only: R is generated.`);
+      }
+
+      // (b) overrun — keys interpolate linearly, so the key values ARE the extremes
+      for (const a of animsResolved) {
+        for (const [jn, tr] of Object.entries(a.tracksResolved)) {
+          const lim = ranges[jn]; if (!lim) continue;
+          for (const ax of AX) {
+            if (!tr[ax] || !lim[ax]) continue;
+            const [lo, hi] = lim[ax];
+            const bad = tr[ax].find(([, v]) => v < lo - 1e-6 || v > hi + 1e-6);
+            if (!bad) continue;
+            fails.push(`joint_range: "${a.name}" turns ${jn}.${ax} to ${bad[1].toFixed(1)}° at t=${(+bad[0]).toFixed(2)}, `
+              + `outside its declared limit [${lo}, ${hi}]. THE FIX: one of the two is wrong, not both — either the `
+              + `clip overreaches and the key comes back inside, or the joint really does turn that far and the limit `
+              + `was written too tight.`
+              + (mirrorName(jn) !== jn && jn.startsWith('R')
+                 ? ` (${jn} and its limit are BOTH generated from the L side; edit the L side.)` : ''));
+          }
+        }
+      }
+
+      // (c) unreachable — sweep to the declared extreme and see whether the body arrives first
+      const bodyHJ = Math.max(...allV0.map(v => v[1])) - Math.min(...allV0.map(v => v[1])) || 1;
+      const hit = g => g != null && g < 0.006 * bodyHJ;
+      const poseAnim = (jn, ax, deg, tag) =>
+        ({ name: tag, tracksResolved: { [jn]: { [ax]: [[0, 0], [1, deg]] } } });
+      const bounds = [];
+      for (const [jn, lim] of Object.entries(ranges)) {
+        if (!turned.has(jn)) continue;              // only limits the clips actually lean on
+        for (const ax of AX) {
+          const r = lim[ax]; if (!r) continue;
+          for (const deg of r) {
+            if (Math.abs(deg) < 1e-6) continue;
+            bounds.push({ jn, ax, deg, tag: `${jn}.${ax}@${deg}` });
+          }
+        }
+      }
+      const sweepAt = list => {
+        try {
+          return require('./selfclip.js').selfClip(
+            spec, sk, locals, meshes, list.map(b => poseAnim(b.jn, b.ax, b.deg, b.tag)),
+            1, 4, 0.15 * bodyHJ);
+        } catch (e) { return []; }
+      };
+      if (bounds.length) {
+        const first = new Map();
+        for (const r of sweepAt(bounds)) if (hit(r.gap)) first.set(r.clip, r);
+        for (const b of bounds) {
+          const r = first.get(b.tag); if (!r) continue;
+          // ladder, only for the bounds that already failed: the largest fraction of the
+          // declared angle this body can actually hold.
+          let safe = 0;
+          for (let k = 7; k >= 1; k--) {
+            const frac = k / 8;
+            const res = sweepAt([{ jn: b.jn, ax: b.ax, deg: b.deg * frac, tag: 'L' }]);
+            if (!hit((res[0] || {}).gap)) { safe = b.deg * frac; break; }
+          }
+          fails.push(`joint_range: ${b.jn}.${b.ax} is declared to ${b.deg}°, but this body stops first — `
+            + `"${r.a}" reaches "${r.b}" (${r.gap.toFixed(3)} m apart, from ${r.rest.toFixed(2)} m at rest). `
+            + `A limit is a claim about THIS creature, not about the species. THE FIX: set the limit to `
+            + `${safe.toFixed(0)}°, which is the last angle that clears, or move the geometry that is in the way. `
+            + `Leaving the number means every clip authored against it interpenetrates.`);
+        }
+      }
+    }
+  }
+
+  // ── 7e. self_clip — the swept volume must not go through the creature itself.
+  // Joint limits say what one joint MAY do; they say nothing about where the chain ends up.
+  // A windup can stay inside legal angles the whole time and still swing a carried part
+  // through the creature's own leg — which is easy to miss by eye.
+  if (!spec.qa_isolate) {
+    let res = null;
+    const bodyH0 = Math.max(...allV0.map(v => v[1])) - Math.min(...allV0.map(v => v[1])) || 1;
+    try { res = require('./selfclip.js').selfClip(spec, sk, locals, meshes, animsResolved, 32, 4, 0.15 * bodyH0); }
+    catch (e) { res = null; }
+    for (const r of (res || [])) {
+      if (r.gap == null) continue;
+      const bodyH2 = Math.max(...allV0.map(v => v[1])) - Math.min(...allV0.map(v => v[1])) || 1;
+      if (r.gap < 0.006 * bodyH2)
+        fails.push(`self_clip: in "${r.clip}" at t=${r.t.toFixed(2)}, "${r.a}" comes within `
+          + `${r.gap.toFixed(3)} m of "${r.b}" — they are ${r.rest.toFixed(2)} m apart at rest, and they are `
+          + `not neighbours on the skeleton, so this is the animation driving one through the other. `
+          + `THE FIX: change the PLANE the part travels in, not the amount. A weapon that cannot wind `
+          + `straight back goes out to the side; a limb that sweeps through the body gets lifted over it `
+          + `(hoist the load above the shoulder before slewing, the way a crane actually works).`);
+    }
+  }
+
+  // ── 7d. clip_closes / ground_clip / attack_windup / effector_leads ──────────
+  //
+  // Four checks that all need the same thing: the mesh, skinned, at sampled times.
+  // They are grouped so the skinning is paid for once.
+  {
+    const groundY = Math.min(...allV0.map(v => v[1]));
+    const bodyH = Math.max(...allV0.map(v => v[1])) - groundY || 1;
+    const N = 32;
+    const declared = spec.function || {};
+    const effChains = new Set(Object.entries(declared).filter(([, v]) => v === 'effector').map(([k]) => k));
+    const labOf = m => `${m.material}@${m.chain || m.part || '?'}`;
+    // A part (a claw, a blade, a spike) carries no chain of its own — it hangs off a joint.
+    // Find that joint from the skin weights and ask which chain the joint belongs to, so
+    // "function": {"neck": "effector"} covers the blade bolted to the neck without the
+    // designer having to name every part. Declaring the part's own name works too.
+    const jointChain = {};
+    for (const [cn, js] of Object.entries(spec.chains || {})) for (const j of js) jointChain[j] = cn;
+    const chainOfMesh = m => {
+      if (m.chain) return m.chain;
+      const tally = {};
+      for (const w of (m.skin || [])) if (w && w[0]) tally[w[0][0]] = (tally[w[0][0]] || 0) + 1;
+      const bone = Object.keys(tally).sort((a, b) => tally[b] - tally[a])[0];
+      return bone ? jointChain[bone] : null;
+    };
+    const isEff = m => effChains.has(chainOfMesh(m))
+      || (m.part && effChains.has(String(m.part).split('@').pop()))
+      || effChains.has(m.material);
+
+    for (const a of animsResolved) {
+      const frames = [];
+      for (let f = 0; f <= N; f++) frames.push(jointWorlds(sk, locals, a, f / N));
+
+      // clip_closes — a clip that does not loop still SNAPS back when it ends.
+      // If the last frame is not the first frame, that snap is a visible pop.
+      {
+        let worst = 0, who = '';
+        for (const j of sk.joints) {
+          const i = sk.index[j.name]; if (i == null) continue;
+          const p0 = matVec(frames[0][i], [0, 0, 0]), p1 = matVec(frames[N][i], [0, 0, 0]);
+          const d = Math.hypot(p0[0] - p1[0], p0[1] - p1[1], p0[2] - p1[2]);
+          if (d > worst) { worst = d; who = j.name; }
+        }
+        if (worst > 0.05 * bodyH)
+          fails.push(`clip_closes: "${a.name}" ends ${worst.toFixed(2)} m away from where it starts `
+            + `(joint "${who}"; the ceiling is ${(0.05 * bodyH).toFixed(2)} m = 5% of the body). The clip does not `
+            + `loop, so when it finishes the creature TELEPORTS back to the rest pose. `
+            + `THE FIX: give every track a final key equal to its first key — the action must recover, `
+            + `not freeze mid-lunge.`);
+      }
+
+      // ground_clip — nothing may go below the plane the creature stands on.
+      // The collision proxy is built from the mesh, so a hand or a claw that spends the
+      // clip under the floor is a hand the physics engine will push the whole body up off.
+      {
+        let deep = 0, who = '';
+        for (const m of meshes) for (let f = 0; f <= N; f += 2) {
+          const V = skinVerts(m, sk, frames[f]);
+          for (const v of V) if (v[1] - groundY < deep) { deep = v[1] - groundY; who = labOf(m); }
+        }
+        if (deep < -0.02 * bodyH)
+          fails.push(`ground_clip: "${a.name}" drives "${who}" ${(-deep).toFixed(3)} m BELOW the ground plane `
+            + `(the ceiling is ${(0.02 * bodyH).toFixed(3)} m). The ground is the lowest point of the bind pose; `
+            + `anything under it is inside the floor. THE FIX: this is arithmetic, not posing — measure the `
+            + `penetration per frame and add it to the ROOT's "ty" track. Chasing it with joint angles does not `
+            + `converge, because a contact point rotating about a joint above it always dips below the tangent plane.`);
+      }
+
+      if (a.name !== 'attack') continue;
+
+      // The frame the attack reaches furthest forward. That is the frame that lands the
+      // hit, and the only frame whose silhouette anyone judges.
+      let peakF = 0, peakZ = -Infinity;
+      const frontOf = f => {
+        let z = -Infinity, who = '';
+        for (const m of meshes) { const V = skinVerts(m, sk, frames[f]); for (const v of V) if (v[2] > z) { z = v[2]; who = labOf(m); } }
+        return [z, who];
+      };
+      for (let f = 0; f <= N; f++) { const [z] = frontOf(f); if (z > peakZ) { peakZ = z; peakF = f; } }
+
+      // attack_windup — a strike winds BACK (or out to the side) before it commits.
+      // Straight-line push reads as a shove, and gives the physics nothing to load against.
+      {
+        let bestM = null, bestI = 0, best = -Infinity;
+        for (const m of meshes) {
+          if (effChains.size && !isEff(m)) continue;
+          for (let f = 0; f <= N; f++) { const V = skinVerts(m, sk, frames[f]);
+            for (let i = 0; i < V.length; i++) { const d = V[i][2] - m.V[i][2]; if (d > best) { best = d; bestM = m; bestI = i; } } }
+        }
+        if (bestM) {
+          const zs = [], xs = [];
+          for (let f = 0; f <= N; f++) { const V = skinVerts(bestM, sk, frames[f]); zs.push(V[bestI][2]); xs.push(V[bestI][0]); }
+          const zi = zs.indexOf(Math.max(...zs));
+          const back = zs[0] - Math.min(...zs.slice(0, zi + 1));
+          const lat = Math.max(...xs.slice(0, zi + 1)) - Math.min(...xs.slice(0, zi + 1));
+          const tot = Math.max(...zs) - Math.min(...zs) || 1e-6;
+          if (back < 0.05 * tot && lat < 0.15 * tot)
+            fails.push(`attack_windup: "${labOf(bestM)}" travels ${tot.toFixed(2)} m but never winds up — `
+              + `it pulls back ${(100 * back / tot).toFixed(0)}% (needs 5%) and swings sideways `
+              + `${(100 * lat / tot).toFixed(0)}% (needs 15%). A strike loads before it commits. `
+              + `If the structure cannot pull straight back — the weapon would sweep through the body — `
+              + `take it out to the SIDE and bring it round instead. Either route satisfies this.`);
+        }
+      }
+
+      // effector_leads — at the moment of furthest reach, the declared effector must be
+      // the frontmost thing on the creature. Otherwise the strike reads as whatever IS in
+      // front: a head-butt when it was meant to be a kick.
+      if (effChains.size) {
+        let effZ = -Infinity, othZ = -Infinity, othWho = '';
+        for (const m of meshes) { const V = skinVerts(m, sk, frames[peakF]);
+          let z = -Infinity; for (const v of V) if (v[2] > z) z = v[2];
+          if (isEff(m)) { if (z > effZ) effZ = z; } else if (z > othZ) { othZ = z; othWho = labOf(m); } }
+        if (effZ === -Infinity)
+          warns.push(`effector_leads: "function" declares effector chain(s) `
+            + `${[...effChains].map(c => `"${c}"`).join(', ')} but no mesh belongs to them.`);
+        else if (effZ <= othZ)
+          fails.push(`effector_leads: at the frame the attack reaches furthest (t=${(peakF / N).toFixed(2)}), `
+            + `the frontmost part is "${othWho}" at z=${othZ.toFixed(2)}, ahead of the declared effector at `
+            + `z=${effZ.toFixed(2)}. Whatever is in front is what the strike reads as. `
+            + `THE FIX: either the effector has to reach further — rotate the BASE the effector hangs off `
+            + `(pitching the whole torso back sends the legs forward far better than extending the legs does) `
+            + `— or "${othWho}" has to get out of the way. A part that keeps its own world aim while the body `
+            + `turns will stick out; aim it only as far as leaves the effector in front.`);
+      }
     }
   }
 

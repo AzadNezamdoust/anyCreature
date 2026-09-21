@@ -17,11 +17,10 @@ Measured: high-saturation area **26.0%** of the tq view, mid-band for the
 ```bash
 # rebuild
 node engine/cli.js example/wolf.json example/wolf.glb
-# silhouettes (front/side/top/hero45) + numbers + 24/48px thumbs
-node harness/silmetrics.mjs example/wolf.glb out/r1
-# per-view measures + dullness flags
-python3 harness/maskmetrics.py out/r1 out/r1/sil_front.png out/r1/sil_side.png \
-        out/r1/sil_top.png out/r1/sil_hero.png
-# metrics incl. hi_sat_share per view (add --spec <claims.json> to check claims)
+# silhouettes + thumbs + every measure (layout, boldness, part shares, colour)
+python3 harness/outline.py example/wolf.glb out/r1
+# the hero shot, projected not rendered
+python3 harness/outline.py example/wolf.glb out/r1 --hero out/r1/hero.png
+# claims judged over those numbers (add --spec <claims.json> to check claims)
 node harness/judge.mjs example/wolf.glb out/j wolf
 ```

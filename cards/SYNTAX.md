@@ -150,3 +150,108 @@
 `info:` = the compiler telling you what actually happened — always read them.
 Shipped GLBs auto-merge primitives per material and export public bone names
 (`LArm1Sh` convention) — internal spec names never leak.
+
+---
+
+## `function` — what each chain is FOR  (1.3.2)
+
+```jsonc
+"function": {
+  "body":   "axis",         // the load-bearing spine of the creature
+  "LArm":   "locomotion",   // what moves it: legs, wings, fins, wheels
+  "RArm":   "locomotion",
+  "LLeg":   "effector",     // the end that reaches out and contacts the world
+  "case":   "ornament"      // carried, not load-bearing, does no work
+}
+```
+
+Keys are chain names. A chain listed in `mirror` covers its twin automatically.
+A part bolted onto a chain inherits that chain's function, so `"neck": "effector"`
+covers the blade mounted on the neck; naming the part directly also works.
+
+Five words, all manufacturing vocabulary. Nothing here says how hard a thing hits or
+what it is worth in a fight — that is the receiving system's business.
+
+**A declaration is not a label; it is a claim the engine checks:**
+
+| check | what the declaration has to pay for |
+|---|---|
+| `effector_leads` | at the frame the attack reaches furthest, the effector is the frontmost mesh |
+| `attack_windup` | the effector winds back 5% of its travel, or swings 15% out to the side |
+| `gait_footfall` | a locomotion chain that touches ground lands in FRONT of where it lifts |
+| `self_clip` | nothing that starts far apart ends up inside something else |
+| `clip_closes` | a non-looping clip returns to its first frame |
+| `ground_clip` | nothing goes below the plane the creature stands on |
+
+`harness/autofix.mjs` fixes the arithmetic ones before a round is spent — the ground
+offset, the loop closure, and the compensation of joints that must hold their own aim
+while the body turns for some other purpose. It never touches the decisions: which way
+a leg swings, what the creature attacks with, how far it lunges.
+
+## `joint_range` — how far each joint turns  (1.3.2)
+
+```jsonc
+"joint_range": {
+  "LKnee":  { "rx": [-130, 10] },              // a knee is a hinge, one way
+  "LSh":    { "rx": [-50, 90], "ry": [-60, 60], "rz": [-70, 70] },
+  "Beak":   { "rx": [-10, 40] },               // opens, does not close past shut
+  "BallTop":{ "rx": [-35, 35], "ry": "free" }  // hangs on a chain, spins freely
+}
+```
+
+Degrees, per axis, in the joint's **own frame** — the same frame and the same axis
+names (`rx`/`ry`/`rz`) the animation tracks use, so a limit and a track compare
+directly.
+
+- **An axis you leave out is LOCKED at 0**, not free. A table with holes in it is a
+  table that checks nothing, and one axis per joint is the common case anyway.
+  `"free"` opts an axis out on purpose — a rotor, a wheel, a weight on a chain.
+- **Declare the L side only.** The R twin is generated: `ry` and `rz` negate, which
+  swaps the ends of the interval, so `[-10, 90]` becomes `[-90, 10]`. Writing both
+  sides by hand is how mirrored limbs get broken. Writing `R…` explicitly overrides,
+  for a body that really is asymmetric.
+- **Write what the ANIMAL can do**, not what your clip happens to use. A limit is a
+  fact about the body; a track is one use of it. If they are the same numbers, the
+  declaration is not saying anything.
+
+**What the declaration has to pay for:**
+
+| failure | what it means | the fix |
+|---|---|---|
+| undeclared | a clip turns a joint with no entry | write the entry |
+| overrun | a track leaves its own declared interval | fix the track, or the number — one of them, not both |
+| unreachable | the body collides before the declared limit | tighten the number to the angle the engine reports |
+
+`unreachable` is the one worth understanding. You know a gorilla's shoulder swings 60°
+back; you do not know that THIS gorilla has a wrecking ball hanging off a crane on its
+back, so its arm stops at 53°. The engine sweeps every declared bound against the actual
+geometry and reports the last angle that clears. Authored knowledge, checked arithmetic —
+neither one alone is enough.
+
+## `name` on every part — the identity channel  (1.3.2)
+
+```jsonc
+"parts": [
+  { "name": "nose_leaf",  "type": "fin",   "host": "Muzzle", "material": "paw" },
+  { "name": "foot_claws", "type": "paw",   "host": "LToe",   "material": "paw", "mirrored": true },
+  { "name": "left_tusk",  "type": "curve", "host": "Muzzle", "material": "tusk" }
+]
+```
+
+Required, and unique within the creature. It may not reuse a chain name, because
+volumes are identified by their chain.
+
+**Why it is not optional, and why the material cannot do the job.** A material is a
+CLASS — "this is horn", "this is brass pipe". Many parts share one on purpose, and the
+GLB merges primitives one per material so a body with forty plates does not ship forty
+draw calls. That makes a material name structurally unable to answer *which part is
+this*: above, `paw` names both a foot pad and a nose-leaf, and anything that groups by
+material adds the two together. Naming is the fix, and it costs nothing — you already
+know what you are building at the moment you write the part.
+
+Name the THING, not its type and host. `spike@Skull` is a description of where you put
+something, and two spikes on one skull share it; `left_horn` and `right_horn` are names.
+
+The engine writes each name into the file as `asset.extras.part_spans`, with the exact
+vertex range that part owns — so a checker, the Arena importer or `graft.py` can point
+at one piece of geometry without a single extra material.

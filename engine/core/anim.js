@@ -35,6 +35,25 @@ function sampleKeys(keys, t) { // keys [[frac, val]...] sorted; linear interp, t
 
 // Expand one animation into per-joint uniform samplers (N samples across duration).
 // Returns { name, duration, channels: [{joint, path:'rotation'|'translation', times:[], values:[]}] }
+
+// Mirroring a track is a RESAMPLE, not a key shift.
+//
+// The old code did `keys.map(([t,v]) => [(t+phase)%1, v*flip]).sort(...)`. A key at
+// t=1 lands on t=phase, collides with whatever is already there, and after the sort
+// the track simply ends early — the R-side limb freezes partway through the cycle.
+// Every mirrored track whose last key sits at t=1 — which is every looping track —
+// is truncated this way, so the mirrored limb freezes partway through the cycle.
+//
+// Resampling keeps every original key's shifted position (so the shape is exact),
+// adds the endpoints, and cannot collide because the times go through a Set.
+function mirrorTrack(keys, phase, flip, loop) {
+  const ts = new Set([0, 1]);
+  const wrap = u => loop ? ((u % 1) + 1) % 1 : Math.max(0, Math.min(1, u));
+  for (const [t] of keys) ts.add(+wrap(t + phase).toFixed(6));
+  return [...ts].sort((a, b) => a - b)
+    .map(t => [t, flip * sampleKeys(keys, wrap(t - phase))]);
+}
+
 function compileAnim(name, a, spec, sk, samples = 24) {
   const tracks = { ...a.tracks };
   // auto-mirror: for each track on a joint belonging to a mirrored chain,
@@ -48,11 +67,7 @@ function compileAnim(name, a, spec, sk, samples = 24) {
       const src = tracks[jn]; const dst = {};
       for (const [axis, keys] of Object.entries(src)) {
         const flip = (axis === 'ry' || axis === 'rz' || axis === 'tx') ? -1 : 1;
-        dst[axis] = keys.map(([t, v]) => [(t + phase) % 1, v * flip])
-                        .sort((p, q) => p[0] - q[0]);
-        // re-close the loop
-        if (dst[axis][0][0] !== 0) dst[axis].unshift([0, sampleKeys(src[axis].map(([t,v])=>[(t+phase)%1, v*flip]).sort((p,q)=>p[0]-q[0]), 0)]);
-        if (dst[axis][dst[axis].length-1][0] !== 1) dst[axis].push([1, dst[axis][0][1]]);
+        dst[axis] = mirrorTrack(keys, phase, flip, a.loop !== false);
       }
       tracks[rj] = dst;
     }
@@ -94,4 +109,4 @@ function compileAnims(spec, sk) {
   return Object.entries(spec.animations || {}).map(([n, a]) => compileAnim(n, a, spec, sk));
 }
 
-module.exports = { compileAnims, eulerToQuat, sampleKeys };
+module.exports = { compileAnims, eulerToQuat, sampleKeys, mirrorTrack };

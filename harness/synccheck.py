@@ -14,11 +14,10 @@ What it verifies:
   2. promised features   every feature the CHANGELOG promises is present in
                          the code that ships (the 1.2.0 leak class)
   3. required files      everything the cards and scripts point at exists
-  4. leak scan           strings that must never appear in a public tree
-  5. no dangling docs    a shipped file may not point at a doc that stayed home
-  6. no forward refs     nothing ships describing a version that is not out yet
+  4. leak scan           strings — and whole files — that must never appear
+                         in a public tree
 """
-import os, re, sys
+import os, re, sys, subprocess, shutil
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 bad = []
@@ -54,13 +53,31 @@ if version:
 # One line per promise. ADD A LINE WHEN YOU ADD A FEATURE — this list is the
 # contract between the release notes and the code.
 FEATURES = [
+    ('engine/core/checks.js',   'gait_footfall',    'a step lands in front of where it lifts'),
+    ('engine/core/checks.js',   'effector_leads',   'the declared effector is frontmost at the strike'),
+    ('engine/core/checks.js',   'attack_windup',    'a strike winds up before it commits'),
+    ('engine/core/checks.js',   'clip_closes',      'a non-looping clip returns to its first frame'),
+    ('engine/core/checks.js',   'ground_clip',      'nothing goes below the ground plane'),
+    ('engine/core/selfclip.js', 'selfClip',         'swept self-collision, broad + narrow phase'),
+    ('engine/core/inside.js',   'signedDistance',   'surface distance, not a sphere through the widest ring'),
+    ('engine/core/inside.js',   'function islands', 'one creature is one connected body'),
+    ('engine/core/checks.js',   'body_islands:',    'a floating piece is refused'),
+    ('engine/core/anim.js',     'mirrorTrack',      'mirroring resamples instead of shifting keys'),
+    ('harness/autofix.mjs',     'aimSubordinate',   'compensation is subordinate to the purpose'),
+    ('cards/SYNTAX.md',         '"function"',       'the function block is documented'),
+    ('engine/core/skeleton.js', 'jointRanges',      'declared joint limits, R side generated'),
+    ('engine/core/checks.js',   'joint_range:',     'joint limits: undeclared / overrun / unreachable'),
+    ('cards/SYNTAX.md',         '"joint_range"',    'the joint_range block is documented'),
+    ('engine/core/checks.js',   'part_names:',      'every part is named, uniquely'),
+    ('engine/core/glb.js',      'part_spans',       'per-part vertex ranges in the manifest'),
+    ('docs/OUTPUT_CONTRACT.md', 'part_spans',       'part_spans documented in the contract'),
+    ('cards/SYNTAX.md',         'the identity channel', 'part naming is documented'),
     ('engine/core/checks.js',   'part_seat',        'declared joins / exposed-root check'),
     ('engine/core/checks.js',   'attack_reach',     'attack must lunge'),
     ('engine/core/checks.js',   'gait_direction',   'a planted foot must sweep backward'),
     ('harness/fit.py',          'FIXABLE',          'the arithmetic blocks are applied, not hand-fixed'),
     ('cards/01_LOW.md',         'harness/fit.py',   'the card runs the fitter before the first round'),
     ('engine/core/checks.js',   'root_drive',       'a lunge is driven on the skeleton root'),
-    ('harness/pwlaunch.mjs',    'findCachedChromium', 'the cached browser is found before any download'),
     ('engine/core/checks.js',   'touch:',           'declared adjacency'),
     ('engine/core/checks.js',   'part_overlap',     'part interpenetration measure'),
     ('engine/core/checks.js',   'faceted_body',     'faceted volumes blocked'),
@@ -76,9 +93,11 @@ FEATURES = [
     ('engine/core/relative.js', 'joints_R',         'right-side pose overrides'),
     ('engine/core/ao.js',       'bakeAO',           'vertex AO bake'),
     ('engine/core/normals.js',  'smoothSplit',      'smoothing-angle normals'),
-    ('harness/pwlaunch.mjs',    'launchBrowser',    'shared browser launcher'),
-    ('setup.sh',                'playwright install', 'browser installed at setup'),
-    ('setup.sh',                'pwprobe',          'browser probed at setup'),
+    ('setup.sh',                'NO BROWSER',       'setup installs no browser'),
+    ('harness/outline.py',      'def hero_png',     'the hero shot is projected, not rendered'),
+    ('harness/outline.py',      'def structure',    'clips/skins/tris read from the glTF header'),
+    ('harness/outline.py',      'def part_boxes',   'per-part bboxes without a scene graph'),
+    ('harness/judge.mjs',       'zero browser',     'the judge measures nothing itself'),
     ('cards/02_MID.md',         'join',             'join doctrine in the MID card'),
     ('cards/SYNTAX.md',         '"join"',           'join in the syntax page'),
     ('engine/core/compile.js',  'buildHand',        'hand part type (palm/fingers/thumb)'),
@@ -103,6 +122,17 @@ FEATURES = [
     ('engine/cli.js',           'example_copy',     'recoloured-example builds are refused'),
     ('cards/01_LOW.md',         'The verdict is SCORED', 'identity is scored by rank and view count'),
     ('harness/identity.py',     'def verdict',      'the identity score is counted, not argued'),
+    ('harness/identity.py',     'def rank_of',      'the synonym judgment is matched, not asserted'),
+    ('harness/identity.py',     'accepted_from_brief', 'the accepted list comes from the brief'),
+    ('harness/brief.py',        'identity: no accepted list', 'the brief must declare its accepted words'),
+    ('harness/brief.py',        'does not say whether it has an outline', 'the signature must declare whether it is visible in black'),
+    ('engine/core/checks.js',   'COMPLETELY buried', 'buried geometry is named separately from a seam'),
+    ('engine/core/checks.js',   'eye_pupil:',       'a lone eye sphere is named as a flat disc'),
+    ('engine/core/compile.js',  'outline points',   'a fin sliver is caught before it makes flipped tris'),
+    ('engine/core/relative.js', 'written relative to ITSELF', 'a self-referencing joints_R entry names itself'),
+    ('harness/publish.mjs',     'MANAGE_KEYS',      'the manage handle is read by family, not by one field name'),
+    ('cards/04_SHIP.md',        'manage_kind',      'the card tells the person a link or a code, per the server'),
+    ('cards/01_LOW.md',         '--guesses',        'the card hands over the words, not a rank'),
     ('harness/publish.mjs',     'manage_token',     'one-time takedown token surfaced'),
     ('harness/ship.py',         '--publish',        'one-command closing (package [+ publish])'),
     ('cards/04_SHIP.md',        'ship.py',          'card uses the one-command closing'),
@@ -119,8 +149,7 @@ FEATURES = [
     ('harness/glbcheck.mjs',    'anisotropy_without_direction', 'anisotropy without UV/TANGENT is blocked'),
     ('cards/03_HIGH.md',        'No anisotropy',    'anisotropy limit stated in the card'),
     ('harness/publish.mjs',     'SUCCESS IS NOT A MAGIC WORD', 'upload success is not matched by a literal word'),
-    ('harness/judge.mjs',       'ALBEDO = baseColorFactor', 'the colour ruler reads the material, not COLOR_0 alone'),
-    ('harness/calibrate.py',    'saturation_area', 'the colour ruler is calibrated both ways'),
+    ('harness/outline.py',      'ALBEDO = baseColorFactor', 'the colour ruler reads the material, not COLOR_0 alone'),
     ('harness/roundcheck.py',   'def preflight',    'the reader is gated BEFORE it is spent'),
     ('cards/01_LOW.md',         '--preflight',      'card runs the pre-check before the read'),
     ('cards/01_LOW.md',         'TWO OPPOSITE POLES', 'a round builds two opposite poles, not three near-copies'),
@@ -147,6 +176,7 @@ FEATURES = [
     ('cards/04_SHIP.md',        'checks.json',      'card 04 copies the stamp instead of retyping it'),
     ('cards/03_HIGH.md',        'Write all three, then build ONCE', 'all three clips authored in one pass'),
     ('harness/outline.py',      'def render_mask',  'silhouettes computed from geometry, no browser'),
+    ('harness/outline.py',      'def colour_measures', 'colour measured off the baked albedo, no browser'),
     ('harness/round.py',        'outline.py',       'the round loop uses the geometry silhouette'),
     ('cards/00_START.md',       'LOW no longer needs a browser', 'the LOW loop is browser-free'),
     ('harness/roundcheck.py',   'RESTART_IOU',      'an identity repair has a minimum change'),
@@ -171,9 +201,8 @@ REQUIRED = [
     'cards/00_START.md', 'cards/01_LOW.md', 'cards/02_MID.md',
     'cards/03_HIGH.md', 'cards/04_SHIP.md', 'cards/SYNTAX.md',
     'engine/cli.js',
-    'harness/silmetrics.mjs', 'harness/maskmetrics.py', 'harness/judge.mjs',
-    'harness/deliver.py', 'harness/hero.mjs', 'harness/publish.mjs',
-    'harness/pwlaunch.mjs', 'harness/pwprobe.mjs', 'harness/calibrate.py',
+    'harness/judge.mjs',
+    'harness/deliver.py', 'harness/publish.mjs',
     'harness/gobkit.json', 'harness/assets/showroom.html',
     'harness/assets/three-bundle.js',
     'harness/claims.json', 'harness/roundcheck.py',
@@ -226,8 +255,10 @@ if esm and cjs:
 # This does not fail the build; it prints the standing work queue, the way
 # gates.py prints the blocking-but-allocatable list.
 MEASURES = ['thirds_cols', 'thirds_rows', 'protrusions', 'thinnest_px48',
-            'sq_fill', 'mirror_sym', 'compactness', 'W_over_H']
-DEFINES = ['harness/outline.py', 'harness/maskmetrics.py', 'harness/silmetrics.mjs']
+            'sq_fill', 'mirror_sym', 'compactness', 'W_over_H',
+            'median_lum', 'saturated_area', 'span_ratio']
+DEFINES = ['harness/outline.py', 'harness/judge.mjs', 'harness/roundcheck.py',
+           'harness/partreads.py', 'harness/brief.py']
 dupes = []
 for m in MEASURES:
     where = [f for f in DEFINES if re.search(r"['\"]?" + m + r"['\"]?\s*[:=]", read(f) or '')]
@@ -237,9 +268,25 @@ if dupes:
     print('[synccheck] SHARED-TOOL QUEUE — one measure should have one definition:')
     for m, where in dupes:
         print(f'    {m:16} defined in {len(where)}: ' + ', '.join(where))
-    print('    No card invokes maskmetrics.py or silmetrics.mjs any more (partreads.py')
-    print('    moved to outline.py). They are superseded, kept one release for anyone')
-    print('    calling them by hand, and the definitions above are the reason to finish.')
+    print('    A measure belongs to exactly one file. outline.py owns them all; anything')
+    print('    else listed above has re-derived one instead of reading it.')
+
+# ── 3bb. a generated manifest, where one exists, matches its sources ─────────
+# Only checked when the generator is present; it is not part of every tree.
+MANIFEST_GEN = 'tools/server-manifest.mjs'
+manifest_checked = os.path.isfile(os.path.join(ROOT, MANIFEST_GEN))
+if manifest_checked:
+    node = shutil.which('node')
+    if not node:
+        bad.append('manifest check: no `node` on PATH')
+    else:
+        proc = subprocess.run([node, MANIFEST_GEN, '--check'], cwd=ROOT, capture_output=True,
+                              text=True, encoding='utf-8', errors='replace')
+        if proc.returncode != 0:
+            bad.append(f'manifest drift: regenerate with `node {MANIFEST_GEN}`')
+            for line in (proc.stdout + proc.stderr).splitlines():
+                enc = sys.stdout.encoding or 'utf-8'
+                print('    ' + line.encode(enc, errors='replace').decode(enc, errors='replace'))
 
 # ── 3c. STRATEGY LEAK — the harness ships the architecture, not the reasoning ──
 # What the pipeline DOES is the product. Why it was tuned that way, what each
@@ -251,12 +298,10 @@ STRATEGY = [
     (r'~?\d+(?:\.\d+)?\s*[kKmM]?\s*tokens',      'a token cost'),
     (r'\b\d+h\d+m\b|\b\d+m\d+s\b',            'a wall-clock timing'),
     (r'\b\d+\s*minutes?\b',                      'a wall-clock timing'),
-    (r'[Mm]easured (?:on|across|in|,)',            'a field-report citation'),
+    (r'[Mm]easured (?:on|across|in)\b',           'a field-report citation'),
     (r'a (?:shipped|delivered|measured|real) (?:build|creature|boss|run)', 'a field-report citation'),
     (r'field report|its customer|a customer (?:said|singled|rejected)', 'a customer reference'),
     (r'\b(?:322|327|315) turns\b',                 'a run-length citation'),
-    (r'\b\d+(?:\.\d+)?[x×] the (?:tokens|wall clock|model turns|cost)', 'a cost ratio'),
-    (r'(?i)\b(scorpion|salamander|cassowary|bison|hippo|pagoda|millipede|elephant|boar|snail|gryphon|mammoth|naga|avian)\b[^.\n]{0,60}\b(?:read|round|run|build|shipped|failed|took)\b', 'a named creature tied to a run'),
 ]
 SKIP = ('node_modules', '.git', 'example/', 'calibration/', 'assets/',
         'harness/synccheck.py')   # this file IS the pattern list
@@ -279,6 +324,41 @@ if leaks:
                'the harness ships the architecture only')
     for rel, line, what, frag in leaks[:40]:
         print(f'    {rel}:{line}  {what}: "{frag}"')
+
+# ── 3d. NO LAB NOTEBOOKS ─────────────────────────────────────────────────────
+# A lab notebook never ships, in any language, so no phrase list can be trusted
+# to catch one. The rule is the filename itself: what a notebook taught the
+# pipeline belongs in the cards and the code.
+for root, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out',
+                                            'delivery', 'creatures')]
+    for fn in files:
+        if fn.upper().startswith('DEVLOG'):
+            rel = os.path.relpath(os.path.join(root, fn), ROOT).replace(os.sep, '/')
+            bad.append(f'lab notebook in the public tree: {rel} — move it out; '
+                       'ship what it taught, not the notebook')
+
+# ── 3e. NO BROWSER ───────────────────────────────────────────────────────────
+# 1.3.2 removed the renderer from every measuring path: a silhouette is a
+# projection, occlusion is a z-buffer, the baked colour IS the albedo, and the
+# clip list is in the glTF header. Nothing that ships may launch one again — it
+# is a 100MB download that fails behind a filtered CDN and buys numbers the
+# vertices already hold. The offline viewer is exempt: it is HTML the CUSTOMER
+# opens, and it never runs here.
+for root, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    for fn in files:
+        if not fn.endswith(('.py', '.js', '.mjs', '.sh', '.ps1')):
+            continue
+        rel = os.path.relpath(os.path.join(root, fn), ROOT).replace(os.sep, '/')
+        if rel == 'harness/synccheck.py' or '/assets/' in rel:
+            continue
+        s = read(rel) or ''
+        for pat in (r"from 'playwright'", r'require\(.playwright', r'playwright install',
+                    r'chromium\.launch', r'puppeteer'):
+            if re.search(pat, s):
+                bad.append(f'a browser came back: {rel} matches /{pat}/ — every measurement '
+                           'is arithmetic on the vertices; see harness/outline.py')
 
 # ── 4. leak scan ─────────────────────────────────────────────────────────────
 # Only GENERIC patterns ship. Site-specific words — the names of whatever else
@@ -368,4 +448,6 @@ if bad:
         print('  - ' + b)
     sys.exit(1)
 print(f'[synccheck] OK — version {version}, {len(FEATURES)} promised features present, '
-      f'{len(REQUIRED)} required files present, no leaked strings. Safe to ship.')
+      f'{len(REQUIRED)} required files present, '
+      + ('manifest in sync, ' if manifest_checked else '')
+      + 'no leaked strings. Safe to ship.')

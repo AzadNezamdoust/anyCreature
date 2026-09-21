@@ -44,11 +44,10 @@ THE NAMED-CHAIN CONTRACT. Slots that name PARTS may end with
 
 and those names must exist in the spec. This is still presence, not content —
 you invent the names, the check only asks that what you promised got built. It
-exists because of a measured failure: one boss brief named "the boulder in the
-iron net at the beam's tip" as its second focal in minute four, part_exists sits
-at stage MID, and nothing required that part until MID — so rounds 1 to 3 built
-an incomplete brief and the shape the customer eventually singled out did not
-appear until round 4.
+exists because of a failure mode with teeth: a brief names a part in one of its
+focal slots, part_exists sits at stage MID, and nothing requires that part until
+MID — so the early rounds build an incomplete brief, and the shape that turns
+out to carry the whole design does not appear until the round that builds it.
 
 TWO POLES, NOT THREE NEAR-COPIES (--poles). Card 01 §4b builds TWO variants that
 are opposite extremes of one declared axis, and this measures whether they
@@ -79,19 +78,19 @@ SLOTS = [
 # Slots that name parts and must therefore declare the chains they mean.
 NEEDS_CHAINS = ('signature', 'two focals')
 
-# How far apart two poles must sit on the mass-layout ruler. Measured, not
+# How far apart two poles must sit on the mass-layout ruler. Calibrated, not
 # guessed, and deliberately set as a FLOOR rather than a target:
 #
-#   0.08 0.14 0.20   the three "variants" of a build's r1-r3 — one
-#                    design adjusted three times, which is the waste this stops
-#   0.15             r3 -> r4 of the same build
-#   0.38             two poses of ONE locked spec, authored here as opposites
+#   0.08 0.14 0.20   three "variants" that are one design adjusted three times,
+#                    which is the waste this stops
+#   0.15             one more nudge along that same design
+#   0.38             two poses of ONE locked spec, authored as opposites
 #                    (tail hauled back vs tail whipped forward) and built green
-#   0.42 0.56 0.61   the same build's rounds either side of a concept restart
+#   0.42 0.56 0.61   rounds either side of a concept restart
 #
 # 0.25 clears every same-idea pair by a wide margin and passes every deliberate
-# restaging. It is a first cut off one creature's history plus one authored
-# pair; re-cut it when more runs exist, the way RESTART_IOU was.
+# restaging. It is a first cut off one history plus one authored pair; re-cut it
+# when more exists, the way RESTART_IOU was.
 POLE_MIN = 0.25
 
 # A pole can be far away on the layout ruler and still be junk — the authored
@@ -179,7 +178,43 @@ def check(brief_path, spec_path=None):
         if name == 'identity':
             m = re.search(r'reads as\s*[:：]?\s*\**([^*|(]+)', val, re.I)
             facts['noun'] = (m.group(1) if m else val).strip().strip('*` ')
+            # THE ACCEPTED LIST IS PART OF THE ORDER, and it is decided here or it
+            # is decided by whoever is being graded. A 48px silhouette is genuinely
+            # ambiguous, so a noun almost never comes back verbatim; something has
+            # to say how wide the family is. When that was left to Gate 1 it went
+            # the only way it could: the graded party decided its own substitution.
+            # One line, written before any geometry exists, and identity.py does
+            # the comparing instead of the arguing.
+            if not re.search(r'\(([^)]*)\)', val):
+                blocks.append('identity: no accepted list. Write the words a reader '
+                              'may say that still count as this creature, in brackets '
+                              'after the noun — e.g. "reads as: bison (accepted: '
+                              'buffalo, ox, bull, yak, wisent)". Gate 1 matches against '
+                              'exactly this list and nothing else, so decide the width '
+                              'now, while it is one line, and not at r3 with a shape to '
+                              'defend. Nothing stops you being generous; it has to be on '
+                              'the record.')
         if name == 'signature':
+            # DOES THE SIGNATURE HAVE AN OUTLINE? Gate 1 reads a 48px SILHOUETTE, and a
+            # silhouette has exactly one dimension: shape. A feature made of colour, of
+            # COUNT (nine faces, one leg), of something soft (fur, a hanging snake), or
+            # of a FACE has no boundary in it at all — so betting the creature's identity
+            # on one means asking Gate 1 to measure a thing it cannot see, and paying
+            # reader rounds to be told so. A signature can be real, well built, and
+            # invisible in black.
+            #
+            # This does not forbid it. It forbids it being an ACCIDENT. Say "silhouette:
+            # yes" and Gate 1 is fair game; say "silhouette: no" and you have declared,
+            # before any geometry exists, that MID or HIGH carries this and Gate 1 will be
+            # judged on the body instead.
+            if not re.search(r'silhouette\s*[:：]\s*(yes|no)', val, re.I):
+                blocks.append('signature: does not say whether it has an outline. End the '
+                              'cell with "silhouette: yes" or "silhouette: no". Gate 1 reads '
+                              'a 48px black shape — colour, counts, fur, hanging things and '
+                              'faces have no boundary in one. If the answer is no, that is '
+                              'allowed and often right, but it has to be a decision made '
+                              'here, before the rounds are paid for, and the body then has '
+                              'to carry the identity on its own.')
             v = [w for w in VIEWS if w in val.lower()]
             if not v:
                 blocks.append('signature: no view named. Gate 1 requires the '

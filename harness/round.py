@@ -5,7 +5,7 @@
                              [--prev rM] [--gate ID|PUNCH] [--brief brief.md]
 
 WHY THIS EXISTS. A round used to be five or six separate commands: build, then
-silmetrics, then maskmetrics, then roundcheck --preflight, then (after the
+a silhouette pass, then a measure pass, then roundcheck --preflight, then (after the
 read) --record and --check. Each of those is a TURN, and a turn is the unit
 that actually costs money here — every one re-reads the whole conversation so
 far, which keeps growing, so the same command issued at round 20 costs several
@@ -23,9 +23,11 @@ them. Give it one spec and it is an ordinary repair round.
 AT r1 IT ALSO CHECKS THE BRIEF, because r1 is the last moment anything there is
 cheap to change. Two things, both from harness/brief.py: every slot a later
 stage actually reads is filled in, and the two poles are really two designs
-rather than one design built twice. Three separate rounds that are all the same
-design cost three builds, three renders and three turns and produce zero
-comparisons.
+rather than one design built twice. The second one exists because of a failure
+mode with teeth — r1, r2 and r3 come out as three separate rounds of one design,
+0.08 to 0.20 apart on the mass-layout ruler when two different creatures are
+typically 0.63 apart, and nobody compares any of them until r4. Three builds,
+three renders, three turns, zero comparisons.
 
 Python and stdlib only, so it behaves the same on Windows, macOS and Linux —
 the harness ships to other people and cannot assume a shell.
