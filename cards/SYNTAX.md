@@ -25,10 +25,16 @@
    "bleed":  {"radius":0.025,"sharpness":0.35,"amount":0.45},   // L5 hardware into flesh
    "hardsh": {"amount":0.54,"gamma":0.70},                      // L6 shadow on hardware
    "bodysh": {"lights":4,"rot":4,"elev":17,"amount":0.20,"gamma":1.95},  // L7 on flesh
-   "normals":{"flesh":0.30},   // L8 — the ONLY layer that leaves COLOR_0 and goes into
+   "normals":{"flesh":0.30,    // L8 — the ONLY layer that leaves COLOR_0 and goes into
                         // the file's NORMAL, so the user's lighting reacts to it. 0.30:
                         // at 0.90 every flesh normal is a cylinder's and the profile
                         // (chest swell, thigh taper, the stop) stops shading at all.
+              "junction":1.0, "junction_band":0.06},
+                        // junction normals: every attached flesh piece — a limb on its
+                        // `attach` host, a paw / ear / tuft on the chain it grows from —
+                        // takes its HOST's normal within junction_band x model height of
+                        // the host surface, so a leg shades continuously into the torso
+                        // instead of showing a lit intersection edge. 0 turns it off.
    "stack": true },     // false = the 1.2.0 ramp-and-grain instead (gradient/noise below)
                         // legacy, only read when stack:false:
                         // "gradient":{"top":0.30,"bottom":-0.88}, "noise":{"size":0.018,"amount":0.26}
@@ -62,14 +68,15 @@
      // sharp = hard SILHOUETTE break, and it only bites when the radius STEPS
      //   across it (>=15%). The flag between two rings of the same radius is a
      //   no-op. It changes nothing.
-   "smooth_angle": 30,     // per-volume override, and the SHADING lever. The wall
-     //   angle is 360/sides; smooth_angle welds every edge under it, so 9 sides
-     //   (40 deg) or 16 sides (22 deg) at the default 50 is welded perfectly
-     //   smooth. A volume that can break NOWHERE — no facets, no radius step —
-     //   is a bean, and the engine BLOCKs it (soft_mass). Lowering it hardens the
-     //   shading and leaves the outline untouched.
+   "smooth_angle": 30,     // per-volume override of the crease angle. The wall angle
+     //   is 360/sides; smooth_angle welds every edge under it. Leave the default 50
+     //   on an organic mass — a body dropped under its wall angle facets into
+     //   planar strips. It is NOT the soft_mass lever (that is the profile).
    "soft": true,           // OPT-OUT for soft_mass: this mass really is meant to be
      //   a smooth organic lump (a slug, a bladder, a droplet). Deliberate, not default.
+     //   soft_mass measures FORM: the share of a volume's walls that lean off its
+     //   bone by 8°+. A tube of one radius scores 0 and is refused; a profile that
+     //   swells and narrows scores 30-60%. sides and smooth_angle do not move it.
    "shade": "flesh",                               // OPTIONAL. flesh | hard | fx — which shading
      // class this piece belongs to. The default is right almost always: volumes, hands and paws
      // are flesh; spikes, curves, membranes and fins are hard; eyes are fx (no layer, no shadow).
@@ -82,7 +89,16 @@
    "cap_depth":[0.9,0.6], "cap_rings":3,   // a dome is a REAL dome (1.4): cap_rings extra
      //   shrinking rings lifted along the axis, depth = cap_depth x the end ring's smaller
      //   radius (default 0.8). 0.5 is a flattened rump, 0.9 a round muzzle tip.
-   "colors": { "arcs":[{"from":0,"to":52,"color":"#57513f"}] }      // 0°=spine 180°=belly
+   "colors": { "arcs":[                                              // 0°=spine 180°=belly
+     {"from":0,"to":52,"color":"#57513f","feather":16},              // saddle, soft lower edge
+     {"from":44,"to":118,"color":"#b07a44","t":[0.05,0.75],"feather":24,"feather_t":0.08},
+     {"from":0,"to":180,"color":"#3f3e40","t":[0.75,1.0]} ] }        // dark tip, all round
+     // arcs are applied in order, later over earlier. "t":[t0,t1] limits a band ALONG the
+     // chain (default the whole of it; dome caps belong to the end row they extend).
+     // "feather" (degrees) and "feather_t" (a fraction of the chain) ramp the band's weight
+     // from 0 at its edge to 1 that far inside — a saddle that melts into the flank instead
+     // of stopping on a ring line. A feather narrower than the ring's own step (360/sides)
+     // lands between vertices and does nothing; write it wider than that step.
      // arcs ONLY — colors.gradient / colors.noise are ignored (info: line); see "shading" above
  }],
 
@@ -147,6 +163,21 @@
     // (default 4; "toes":0 for a plain pad), each half-buried so AO hides the join. Claws are a
     // second mesh (`<name>.claws`, hard-shaded, join "place") in claw_material — dark claws on a
     // light foot are what make a foot read at thumbnail size. "dir" turns it in the ground plane.
+
+  { "type":"tufts", "name":"ruff", "material":"fur_ruff", "mirrored":true,   // FUR that leaves the
+    "anchor":{"chain":"body","t":0.9,"around":[45,180]},                     // silhouette: a ruff,
+    "rows":2, "span":0.12, "count":7,                                         // a mane, a bushy
+    "length":0.17, "width":0.10, "thick":0.05,                                // tail, cheek beards
+    "sweep":-1.2, "droop":0.55, "flare":0.9, "jitter":0.3, "sides":4 }
+    // A crown of short tapered wedges seated on a volume's surface, each rooted under the
+    // skin. `around` is [from,to] in the section's frame (0 spine, 90 side, 180 belly), or one
+    // angle for a single column; `rows` rings of tufts spread over `span` along t; `count` per
+    // row. Direction = surface normal x flare + chain tangent x sweep (+1 toward the chain's
+    // end, -1 back toward its start) + world down x droop. `jitter` alternates lengths so the
+    // edge reads as fur, not a gear. Tufts are FLESH: they take the seam blend, the body light
+    // and the junction normals, so they belong to the mass they grow from. They also ride
+    // the skin of the ring they sit on (a ruff across two neck joints bends with the neck),
+    // so "host" may be left out. A lofted tube cannot make a ruff — a fatter ring is a ring.
  ],
 
  "animations": {
