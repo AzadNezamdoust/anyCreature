@@ -73,10 +73,19 @@ function hex2lab(h) {
 const DEFAULTS = {
   seam:    { radius_edges: 3, min_frac: 0.030 },
   pattern: { color: null, sharpness: 0.45, amount: 1.00, scale: 0.06 },
-  ramp:    { bottom: '#001370', mid: '#cfcfcf', top: '#fffcf0',
-             p0: 0.00, pm: 0.31, wm: 0.08, p1: 1.00,
+  // The ramp used to run from #001370 at the feet: a multiply by L 0.27 with a
+  // strong blue chroma, stepping to #cfcfcf over 8% of the height at 31%. On
+  // every quadruped that put the legs and paws in near-black navy and the belly
+  // in mud, and the step read as a waterline. A value ramp on a game asset is a
+  // GENTLE grounding: a little cooler and darker at the feet, warmer and
+  // brighter at the crown, over a band wide enough to be a gradient.
+  ramp:    { bottom: '#8f8d8f', mid: '#dcdcdc', top: '#fff8ec',
+             p0: 0.00, pm: 0.30, wm: 0.30, p1: 1.00,
              sh0: 0.0, sh1: 0.0, chroma: 1.0, amount: 1.00 },
-  boost:   { y0: 0.00, y1: 0.40, gamma: 0.30, dL: 0.03, dC: 1.50, amount: 1.00,
+  // chroma x1.25, not the lab's x1.50: with gamma 0.3 the boost is at full
+  // strength over most of the body, and x1.5 turned every warm brown orange
+  // and walked a quarter of the vertices back to the gamut edge.
+  boost:   { y0: 0.00, y1: 0.40, gamma: 0.30, dL: 0.03, dC: 1.25, amount: 1.00,
              target: 'all' },
   bleed:   { radius: 0.025, sharpness: 0.35, amount: 0.45 },
   hardsh:  { amount: 0.54, gamma: 0.70 },
@@ -89,6 +98,7 @@ const FX_MATERIAL = /^(eye|pupil|iris|sclera|nose|nostril|tooth|teeth|tongue)/i;
 
 function classOf(m, declared) {
   if (declared) return declared;                       // spec wins, always
+  if (m.shade) return m.shade;                         // a builder said what it made (claws)
   if (m.partType === 'eye' || FX_MATERIAL.test(m.material || '')) return 'fx';
   if (m.partType && HARD_TYPES.has(m.partType)) return 'hard';
   return 'flesh';                                      // volumes, hands, paws
@@ -211,6 +221,15 @@ function shadeStack(spec, meshes, INFO) {
   // diagonal the radius-to-edge ratio ran 1.1–1.7 across six creatures, and the
   // leftover seam ranked in exact inverse order of that ratio. A field must
   // vary slowly compared to the mesh that samples it; 1.1 edges is not slow.
+  //
+  // ACROSS parts, not within them. The first version of this layer averaged
+  // every flesh vertex with every flesh vertex around it, own mesh included,
+  // and at three median edges that is a blur the width of a wolf's leg: the
+  // spine saddle, the belly band and the leg/torso value step all melted into
+  // one mud. The seam it was built to kill lives only where two MESHES meet, so
+  // the field now blends a vertex toward the OTHER meshes' colour, weighted by
+  // how close the nearest foreign vertex is — a vertex deep inside its own
+  // mass is returned untouched, and the authored arcs stay crisp.
   if (on('seam') !== false) {
     const sp = P('seam');
     const edge = medianEdge(live, diag);
@@ -220,23 +239,32 @@ function shadeStack(spec, meshes, INFO) {
       const gg = grid(fleshPts, R);
       const out = new Array(fleshPts.length);
       const r2 = R * R, sig2 = (R / 2) * (R / 2);
+      let touched = 0;
       fleshPts.forEach((p, n) => {
-        let wsum = 0, acc = [0, 0, 0];
+        let wsum = 0, acc = [0, 0, 0], nearest = Infinity;
         for (const j of gg.near(p.v, R)) {
           const q = fleshPts[j];
+          if (q.m === p.m) continue;                       // own mesh: no vote
           const dx = q.v[0] - p.v[0], dy = q.v[1] - p.v[1], dz = q.v[2] - p.v[2];
           const d2 = dx * dx + dy * dy + dz * dz;
           if (d2 > r2) continue;
+          if (d2 < nearest) nearest = d2;
           const w = Math.exp(-d2 / (2 * sig2));
           const c = q.m.C[q.i];
           acc[0] += c[0] * w; acc[1] += c[1] * w; acc[2] += c[2] * w;
           wsum += w;
         }
-        out[n] = wsum > 0 ? [acc[0] / wsum, acc[1] / wsum, acc[2] / wsum] : p.m.C[p.i];
+        const own = p.m.C[p.i];
+        if (!(wsum > 0)) { out[n] = own; return; }
+        // half-way to the neighbours at contact, nothing at the radius
+        const t = 0.5 * Math.pow(1 - Math.sqrt(nearest) / R, 2);
+        out[n] = mix(own, [acc[0] / wsum, acc[1] / wsum, acc[2] / wsum], t);
+        touched++;
       });
       fleshPts.forEach((p, n) => { p.m.C[p.i] = out[n]; });
-      INFO.push(`shade L1: flesh colour smoothed across parts, r=${(R / diag * 100).toFixed(1)}% of diagonal `
-                + `(${(R / edge).toFixed(1)}x median edge) — seams cannot survive a position function`);
+      INFO.push(`shade L1: ${touched} flesh vertices blended toward the neighbouring part within `
+                + `r=${(R / diag * 100).toFixed(1)}% of diagonal (${(R / edge).toFixed(1)}x median edge) — `
+                + `seams fade, arcs inside a mass stay crisp`);
     }
   }
 

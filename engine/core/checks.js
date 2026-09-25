@@ -106,10 +106,18 @@ const GAIT_FWD_MAX = 0.15;
 const SOFT_FLOOR = 10;   // percent of volume edges that must be able to crease
 
 function creaseShare(V, F, deg) {
-  const tri = [];
+  // The loft emits QUADS. Fanning one into two triangles invents a diagonal
+  // that is not an edge of the mesh and can never crease (the two halves of a
+  // planar quad are coplanar by construction), so counting it in the total
+  // deflated every volume's share by a third and pushed authors to 17-20°
+  // smoothing angles to clear the floor — i.e. to facet the whole body. Only
+  // real edges vote.
+  const tri = [], diag = new Set();
+  const at = i => V[i].map(x => Math.round(x * 1e4)).join(',');
+  const ek = (u, v) => { const a = at(u), b = at(v); return a < b ? a + '|' + b : b + '|' + a; };
   for (const f of F) {
     if (f.length === 3) tri.push(f);
-    else if (f.length === 4) { tri.push([f[0], f[1], f[2]]); tri.push([f[0], f[2], f[3]]); }
+    else if (f.length === 4) { tri.push([f[0], f[1], f[2]]); tri.push([f[0], f[2], f[3]]); diag.add(ek(f[0], f[2])); }
   }
   const fn = [];
   for (const [a, b, c] of tri) {
@@ -120,10 +128,10 @@ function creaseShare(V, F, deg) {
     fn.push(l > 1e-12 ? [n[0]/l, n[1]/l, n[2]/l] : null);
   }
   const key = new Map();
-  const at = i => V[i].map(x => Math.round(x * 1e4)).join(',');
   tri.forEach((f, i) => {
     for (const [u, v] of [[f[0], f[1]], [f[1], f[2]], [f[2], f[0]]]) {
-      const a = at(u), b = at(v), k = a < b ? a + '|' + b : b + '|' + a;
+      const k = ek(u, v);
+      if (diag.has(k)) continue;
       (key.get(k) || key.set(k, []).get(k)).push(i);
     }
   });
@@ -918,6 +926,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const bare = [];
     for (const [host, ps] of Object.entries(byHost)) {
       if (ps.length > 1) continue;              // a pair on one host IS iris + pupil
+      if (ps[0].pupil) continue;                // the engine placed the pupil itself
       const L = m => {
         const pal = (spec.palette || {})[m];
         if (!pal || !pal.color) return null;
@@ -932,9 +941,9 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     if (bare.length)
       warns.push(`eye_pupil: ${bare.join(', ')} — one sphere on its own is a flat coloured disc, `
         + `and at reading size a disc is a sticker. An eye reads because of the VALUE STEP `
-        + `between a bright iris and a near-black pupil. Add the pupil with `
-        + `\`python3 harness/pupils.py <spec.json>\` — it measures where the eyeball actually `
-        + `landed before placing it, which hand-picked numbers cannot do.`);
+        + `between a bright iris and a near-black pupil. Add "pupil": {} to the eye entry (and a `
+        + `"pupil" material to the palette) — the engine seats it on the front of the iris where the `
+        + `eyeball actually landed, which hand-picked numbers cannot do.`);
   }
 
   // ── 7g. part_names — every part carries its own name, and no two share one.

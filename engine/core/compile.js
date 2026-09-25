@@ -193,8 +193,50 @@ function buildVolume(spec, vol) {
   const secs = prof.map(r => resolveSec(r[2] || vol.section));
   const rr = prof.map(r => [r[0], r[1]]);
   const rings = require('./section.js').chainRingsRich(pts, rr, sides, frame, secs);
-  const capMap = c => c === 'dome' ? 'fanx' : c;
-  const caps = (vol.caps || ['ngon', 'ngon']).map(capMap);
+  // ── dome caps are REAL domes ──────────────────────────────────────────────
+  // A "dome" used to be a fan cap with its centre pushed out by 15% of the ring
+  // radius: a lid, not a dome. Every tube ended in a chopped-off disc — muzzle
+  // tips, rumps, tail ends, the free end of every leg — and the lid's rim was a
+  // hard silhouette corner on an organic mass. Now the end ring is followed by
+  // `cap_rings` (default 3) shrinking rings lifted along the chain axis on a
+  // quarter-ellipse, and the fan closes only the small final ring. The dome's
+  // depth is `cap_depth` (default 0.8) times the end ring's smaller radius, so
+  // an elliptical section gets a correspondingly flattened dome. Everything
+  // downstream that walks rings — skinning, arc colours, anchors, UV islands,
+  // the containment checks — sees the extra rings as ordinary rings: same
+  // bracketing joints, t just outside [0,1] so anchor lookups are untouched.
+  const wantCaps = (vol.caps || ['ngon', 'ngon']).slice();
+  const domeD = Math.max(1, Math.min(6, vol.cap_rings ?? 3)) | 0;
+  const domeDepth = k => {
+    const d = Array.isArray(vol.cap_depth) ? vol.cap_depth[k] : vol.cap_depth;
+    return Math.max(0.05, Math.min(1.5, d ?? 0.8));
+  };
+  for (const end of [0, 1]) {
+    if (wantCaps[end] !== 'dome' || pts.length < 2) continue;
+    const s = end ? pts.length - 1 : 0;
+    const c = pts[s], nb = pts[end ? s - 1 : 1];
+    const ax = G.nrm(G.sub(c, nb));
+    const rmin = Math.min(prof[s][0], prof[s][1]);
+    const depth = domeDepth(end) * rmin;
+    const extra = [], ec = [], et = [];
+    for (let j = 1; j <= domeD; j++) {
+      const phi = (j / (domeD + 1)) * Math.PI / 2;
+      const sc = Math.cos(phi), lift = Math.sin(phi) * depth;
+      extra.push(rings[s].map(q => G.add(G.add(c, G.mul(G.sub(q, c), sc)), G.mul(ax, lift))));
+      ec.push(G.add(c, G.mul(ax, lift)));
+      et.push(ringT[s] + (end ? 1 : -1) * lift / total);
+    }
+    const sk = () => ringSkin[s].map(x => x.slice());
+    if (end) {
+      rings.push(...extra); pts.push(...ec); ringT.push(...et);
+      for (let j = 0; j < domeD; j++) { ringSkin.push(sk()); secs.push(secs[s]); prof.push(prof[s]); }
+    } else {
+      rings.unshift(...extra.reverse()); pts.unshift(...ec.reverse()); ringT.unshift(...et.reverse());
+      for (let j = 0; j < domeD; j++) { ringSkin.unshift(sk()); secs.unshift(secs[s]); prof.unshift(prof[s]); }
+    }
+    wantCaps[end] = 'fan';
+  }
+  const caps = wantCaps;
   const part = G.partFromRings(rings, sides, caps[0], caps[1], pts);
   // snap skinning: each ring blends its two bracketing joints
   const vIndex = new Map(); part.v.forEach((p, i) => vIndex.set(p, i));
@@ -284,35 +326,63 @@ function buildEye(spec, p, builtVols) {
   for (const sx of [1, -1]) {
     let c;
     if (p.anchor) { // ride ON the volume surface, bulging out
+      // "sink": how much of the radius is buried (default 0.35). A skull that
+      // narrows toward the brow lets the far eye poke out past the silhouette
+      // at 0.35; 0.5 keeps it a bulge instead of a bead.
       const sp = surfacePoint(builtVols, { ...p.anchor, around: p.anchor.around * sx });
-      c = G.add(sp.p, G.mul(sp.out, -(p.size ?? 0.05) * 0.35));
+      c = G.add(sp.p, G.mul(sp.out, -(p.size ?? 0.05) * (p.sink ?? 0.35)));
     } else {
       c = G.add(G.add(G.add(host, G.mul(fwd, p.face ?? 0.9 * (p.dist ?? 0.3))),
         G.mul(side, sx * (p.spread ?? 0.15))), G.mul(up, p.height ?? 0));
     }
-    // small icosphere-ish octahedron subdivided once is enough at these sizes
-    const r = p.size ?? 0.05; const V = []; const F = [];
-    const oct = [[0,r,0],[0,-r,0],[r,0,0],[-r,0,0],[0,0,r],[0,0,-r]];
-    const faces = [[0,4,2],[0,2,5],[0,5,3],[0,3,4],[1,2,4],[1,5,2],[1,3,5],[1,4,3]];
-    // subdivide once + project to sphere
-    const cache = new Map(); const mid = (a,b) => {
-      const k = a < b ? a + '_' + b : b + '_' + a;
-      if (cache.has(k)) return cache.get(k);
-      const m = G.mul(G.nrm(G.add(oct[a] ?? V[a], oct[b] ?? V[b])), r);
-      V.push(m); cache.set(k, oct.length + V.length - 1); return oct.length + V.length - 1;
-    };
-    const allV = oct.slice();
-    const tris = [];
-    for (const [a,b,c] of faces) {
-      const ab = mid(a,b), bc = mid(b,c), ca = mid(c,a);
-      tris.push([a,ab,ca],[ab,b,bc],[ca,bc,c],[ab,bc,ca]);
+    const r = p.size ?? 0.05;
+    const iris = sphereMesh(c, r, p.subdiv ?? 1);
+    out.push({ material: p.material || 'eye', V: iris.V, F: iris.F, side: sx > 0 ? 'L' : 'R',
+      skin: iris.V.map(() => [[p.host, 1]]) });
+    // ── the pupil, placed by the engine ─────────────────────────────────────
+    // An eye reads because of the value step between iris and pupil, not
+    // because of the iris colour; a lone sphere is a sticker. "pupil": {} on the
+    // eye entry puts a smaller, darker sphere on the FRONT of the iris — where
+    // the iris actually landed, seated so it neither buries nor floats. Options:
+    // material (default "pupil"), size (fraction of the iris, default 0.55),
+    // look ([x,y,z] world direction the pupil sits toward; default is the
+    // surface normal blended toward forward, i.e. the creature looks ahead).
+    if (p.pupil) {
+      const pp = typeof p.pupil === 'object' ? p.pupil : {};
+      const rp = r * (pp.size ?? 0.55);
+      let look;
+      if (pp.look) look = G.nrm([pp.look[0] * sx, pp.look[1], pp.look[2]]);
+      else if (p.anchor) {
+        const sp = surfacePoint(builtVols, { ...p.anchor, around: p.anchor.around * sx });
+        look = G.nrm(G.add(sp.out, G.mul(fwd, 0.9)));
+      } else look = fwd;
+      const pc = G.add(c, G.mul(look, r - rp * 0.45));
+      const pm = sphereMesh(pc, rp, 1);
+      out.push({ material: pp.material || 'pupil', V: pm.V, F: pm.F, side: sx > 0 ? 'L' : 'R',
+        sub: 'pupil', skin: pm.V.map(() => [[p.host, 1]]) });
     }
-    for (const v of V) allV.push(v);
-    const Vw = allV.map(v => G.add(c, G.mul(G.nrm(v), r)));
-    out.push({ material: p.material || 'eye', V: Vw, F: tris, side: sx > 0 ? 'L' : 'R',
-      skin: Vw.map(() => [[p.host, 1]]) });
   }
   return out;
+}
+
+// octahedron subdivided `sub` times and projected to a sphere of radius r at c
+function sphereMesh(c, r, sub) {
+  let V = [[0,1,0],[0,-1,0],[1,0,0],[-1,0,0],[0,0,1],[0,0,-1]];
+  let F = [[0,4,2],[0,2,5],[0,5,3],[0,3,4],[1,2,4],[1,5,2],[1,3,5],[1,4,3]];
+  for (let s = 0; s < Math.max(1, sub | 0); s++) {
+    const cache = new Map(); const NF = [];
+    const mid = (a, b) => {
+      const k = a < b ? a + '_' + b : b + '_' + a;
+      if (cache.has(k)) return cache.get(k);
+      V.push(G.nrm(G.add(V[a], V[b]))); cache.set(k, V.length - 1); return V.length - 1;
+    };
+    for (const [a, b, d] of F) {
+      const ab = mid(a, b), bd = mid(b, d), da = mid(d, a);
+      NF.push([a, ab, da], [ab, b, bd], [da, bd, d], [ab, bd, da]);
+    }
+    F = NF;
+  }
+  return { V: V.map(v => G.add(c, G.mul(v, r))), F };
 }
 
 function buildCurve(spec, p) {
@@ -330,7 +400,11 @@ function buildCurve(spec, p) {
   let side = Math.abs(t[1]) < 0.9 ? G.nrm(G.cross([0, 1, 0], t)) : [1, 0, 0];
   const rad = d => d * Math.PI / 180;
   const pts = [G.add(host, p.offset || [0, 0, 0])];
-  const radii = [p.segments[0].r];
+  // a segment's "r" may be [rw, rh] — an ELLIPTICAL section, which is what an
+  // ear, a flattened tail or a paddle-shaped tusk needs; "roll" (degrees) turns
+  // the section in its plane. taper pinches whichever form was given.
+  const rOf = (r, k) => Array.isArray(r) ? r.map(x => Math.max(x * k, 0.004)) : Math.max(r * k, 0.004);
+  const radii = [rOf(p.segments[0].r, 1)];
   const AX = { rise: [0, 1, 0], fall: [0, -1, 0], ahead: [0, 0, 1], behind: [0, 0, -1] };
   for (const seg of p.segments) {
     for (const [k, dv] of Object.entries(AX)) {
@@ -343,10 +417,26 @@ function buildCurve(spec, p) {
     }
     if (seg.coil) t = G.nrm(G.rod(t, side, rad(seg.coil)));
     pts.push(G.add(pts[pts.length - 1], G.mul(t, seg.len)));
-    radii.push(seg.taper ? Math.max(seg.r * 0.3, 0.004) : seg.r);
+    radii.push(rOf(seg.r, seg.taper ? 0.3 : 1));
   }
   const sides = p.sides || 8;
-  const rings = G.chainRings(pts, radii, sides, false);
+  const roll = rad(p.roll || 0);
+  const rings = roll
+    ? require('./section.js').chainRingsRich(pts, radii, sides, false, radii.map(() => ({ roll })))
+    : G.chainRings(pts, radii, sides, false);
+  // "cap": "dome" rounds the far end the way volumes do (a horn tip is sharp,
+  // an ear or a tongue is not); default stays the flat fan.
+  if (p.cap === 'dome' && pts.length >= 2) {
+    const s = pts.length - 1, c = pts[s], ax = G.nrm(G.sub(c, pts[s - 1]));
+    const rr = Array.isArray(radii[s]) ? Math.min(...radii[s]) : radii[s];
+    const D = 2;
+    for (let j = 1; j <= D; j++) {
+      const phi = (j / (D + 1)) * Math.PI / 2;
+      const sc = Math.cos(phi), lift = Math.sin(phi) * rr * (p.cap_depth ?? 0.8);
+      rings.push(rings[s].map(q => G.add(G.add(c, G.mul(G.sub(q, c), sc)), G.mul(ax, lift))));
+      pts.push(G.add(c, G.mul(ax, lift)));
+    }
+  }
   const part = G.partFromRings(rings, sides, 'ngon', 'fan', pts);
   const d0 = G.nrm(p.dir || [0, 0, 1]);
   const bend = Math.acos(Math.max(-1, Math.min(1, G.dot(d0, t)))) * 180 / Math.PI;
@@ -552,47 +642,94 @@ function buildHand(spec, p) {
     skin: V.map(() => [[p.host, 1]]) };
 }
 
+// A rounded, flat-soled half-superellipsoid: the building block of a paw. The
+// plan is a superellipse (exponent `e`, 2 = ellipse, higher = boxier), the
+// height profile is fuller at the sides than a sphere, and the sole is a fan.
+// Everything is written in a local frame (x width, y up, z forward) and mapped
+// through `toW`, so the same block makes the pad and each toe.
+function padBlock(V, F, toW, c, L, W, H, e, N1, N2) {
+  const base = V.length;
+  for (let j = 0; j < N2; j++) {                          // rings; the top is one vertex
+    const phi = (j / N2) * Math.PI / 2;
+    const plan = Math.pow(Math.cos(phi), 0.65);           // fuller than a sphere
+    const y = H * Math.pow(Math.sin(phi), 0.8);
+    for (let k = 0; k < N1; k++) {
+      const th = 2 * Math.PI * k / N1;
+      const cs = Math.cos(th), sn = Math.sin(th);
+      const x = Math.sign(cs) * Math.pow(Math.abs(cs), 2 / e) * W / 2 * plan;
+      const z = Math.sign(sn) * Math.pow(Math.abs(sn), 2 / e) * L / 2 * plan;
+      V.push(toW([c[0] + x, c[1] + y, c[2] + z]));
+    }
+  }
+  for (let j = 0; j < N2 - 1; j++) for (let k = 0; k < N1; k++)
+    F.push([base + j * N1 + k, base + (j + 1) * N1 + k,
+            base + (j + 1) * N1 + (k + 1) % N1, base + j * N1 + (k + 1) % N1]);
+  const top = V.length; V.push(toW([c[0], c[1] + H, c[2]]));
+  const last = base + (N2 - 1) * N1;
+  for (let k = 0; k < N1; k++) F.push([last + (k + 1) % N1, last + k, top]);
+  const ci = V.length; V.push(toW([c[0], c[1], c[2]]));
+  for (let k = 0; k < N1; k++) F.push([base + k, base + (k + 1) % N1, ci]);
+}
+
 function buildPaw(spec, p) {
-  // Independent paw object: flattened ellipsoid pad with a FLAT sole,
-  // snapped under the leg-end joint. size = [length(fwd), width, height].
+  // A paw with anatomy: a rounded-box pad with a FLAT sole, and toes that make
+  // the front edge (default 4 — "toes": 0 for a plain pad, 2..5 otherwise), each
+  // a smaller rounded block half-buried in the pad so the joins vanish under AO.
+  // Optional claws ("claws": true, "claw_material": a palette key, default the
+  // paw's own) are a second mesh — dark claws on a light foot are what make a
+  // foot read as a foot at thumbnail size. size = [length(fwd), width, height].
+  // "dir" (default +z) turns the whole paw in the ground plane.
   const host = spec.joints[p.host];
   if (!host) throw new Error(`paw host joint "${p.host}" missing`);
   const [L, W2, H] = p.size || [0.14, 0.10, 0.07];
-  const c = G.add(host, p.offset || [0, H * 0.45 - host[1], L * 0.18]); // sole on ground
+  const c0 = G.add(host, p.offset || [0, H * 0.45 - host[1], L * 0.18]); // sole on ground
+  // local frame: fingers +z (or `dir` flattened to the ground), width x, up y
+  let Fz = p.dir ? [p.dir[0], 0, p.dir[2]] : [0, 0, 1];
+  if (G.len(Fz) < 1e-6) Fz = [0, 0, 1];
+  Fz = G.nrm(Fz);
+  const Sx = G.cross([0, 1, 0], Fz);
+  const toW = q => [c0[0] + Sx[0] * q[0] + Fz[0] * q[2], c0[1] + q[1], c0[2] + Sx[2] * q[0] + Fz[2] * q[2]];
   const V = []; const F = [];
-  const N1 = p.sides || 10, N2 = 5; // longitude × latitude
-  for (let j = 0; j <= N2; j++) {
-    const phi = (j / N2) * Math.PI / 2;             // upper hemisphere only
-    for (let k = 0; k < N1; k++) {
-      const th = 2 * Math.PI * k / N1;
-      V.push([c[0] + Math.cos(th) * Math.cos(phi) * W2 / 2 * (1 + 0.15 * Math.sin(th)),
-              c[1] + Math.sin(phi) * H,
-              c[2] + Math.sin(th) * Math.cos(phi) * L / 2]);
-    }
-  }
-  for (let j = 0; j < N2; j++) for (let k = 0; k < N1; k++)
-    F.push([j * N1 + k, (j + 1) * N1 + k, (j + 1) * N1 + (k + 1) % N1, j * N1 + (k + 1) % N1]);
-  // flat sole: ngon fan on bottom ring (faces down)
-  const ci = V.length; V.push([c[0], c[1], c[2]]);
-  for (let k = 0; k < N1; k++) F.push([k, (k + 1) % N1, ci]);
-  // optional toes: tapered nubs across the front edge ("toes": 3..5) — feet
-  // stop reading as bread loaves
-  const nt = p.toes | 0;
+  const N1 = p.sides || 12, N2 = 4;
+  const nt = p.toes === undefined ? 4 : (p.toes | 0);
+  const e = p.exp ?? 2.6;
   if (nt >= 2) {
-    const rt = Math.min(W2, L) * 0.16;
+    // pad sits back, toes complete the front: the pad ends where the toes begin
+    const padL = L * 0.72;
+    padBlock(V, F, toW, [0, 0, -L * 0.5 + padL * 0.5], padL, W2, H, e, N1, N2);
+    const tw = W2 / nt * 1.08, tl = L * 0.46, th = H * 0.82;
     for (let k = 0; k < nt; k++) {
-      const tx = ((k / (nt - 1)) * 2 - 1) * (W2 / 2 - rt);
-      const base = [c[0] + tx, c[1] + rt * 0.9, c[2] + L * 0.42];
-      const tip  = [c[0] + tx * 1.15, c[1] + rt * 0.75, c[2] + L * 0.42 + L * 0.34];
-      const wpts = [base, tip];
-      const rings = G.chainRings(wpts, [rt, rt * 0.55], 6, false);
-      const part = G.partFromRings(rings, 6, 'ngon', 'fan', wpts);
-      const b0 = V.length;
-      V.push(...part.v);
-      for (const f of part.fq) F.push(f.map(i => i + b0));
+      const u = nt === 1 ? 0 : (k / (nt - 1)) * 2 - 1;
+      const tx = u * (W2 / 2 - tw * 0.5);
+      // outer toes sit a little further back, the way a paw print is drawn
+      const tz = L * 0.5 - tl * 0.5 - Math.abs(u) * L * 0.06;
+      padBlock(V, F, toW, [tx, 0, tz], tl, tw, th * (1 - 0.08 * Math.abs(u)), e, 8, 3);
     }
+  } else {
+    padBlock(V, F, toW, [0, 0, 0], L, W2, H, e, N1, N2);
   }
-  return { material: p.material, V, F, skin: V.map(() => [[p.host, 1]]) };
+  const paw = { material: p.material, V, F, skin: V.map(() => [[p.host, 1]]) };
+  if (!p.claws || nt < 2) return paw;
+  // claws: short tapered cones off each toe tip, angled down to the ground
+  const CV = [], CF = [];
+  const tw = W2 / nt * 1.08, tl = L * 0.46, th = H * 0.82;
+  const cr = Math.min(tw, th) * 0.22, cl = L * 0.16;
+  for (let k = 0; k < nt; k++) {
+    const u = nt === 1 ? 0 : (k / (nt - 1)) * 2 - 1;
+    const tx = u * (W2 / 2 - tw * 0.5);
+    const tz = L * 0.5 - Math.abs(u) * L * 0.06;
+    const root = toW([tx, th * 0.42, tz - tl * 0.25]);          // buried in the toe
+    const tip = toW([tx + u * cl * 0.15, th * 0.08, tz + cl]);
+    const wp = [root, tip];
+    const rings = G.chainRings(wp, [cr, cr * 0.25], 6, false);
+    const part = G.partFromRings(rings, 6, 'ngon', 'fan', wp);
+    const b0 = CV.length;
+    CV.push(...part.v);
+    for (const f of part.fq) CF.push(f.map(i => i + b0));
+  }
+  const claws = { material: p.claw_material || p.material, V: CV, F: CF, sub: 'claws',
+    join: 'place', shade: 'hard', skin: CV.map(() => [[p.host, 1]]) };
+  return [paw, claws];
 }
 
 const { mirrorName } = require('./skeleton.js');
@@ -658,10 +795,29 @@ function buildFin(spec, p, builtVols) {
   }
   const poly = area2 < 0 ? pOutline.slice().reverse() : pOutline;
   const ring = poly.map(([u, v]) => G.add(o, G.add(G.mul(U, u), G.mul(Vv, v))));
-  const V = [];
+  const n = ring.length; const V = []; const F = [];
+  // "bevel": 0..1 — the two faces shrink toward the outline's centroid by that
+  // fraction and the full outline becomes a mid rim, so the plate is a lens
+  // with a chamfered edge instead of a slab of card. Ears, scales, leaves and
+  // shields all read as having thickness; a slab reads as paper.
+  const bev = Math.max(0, Math.min(0.9, p.bevel || 0));
+  if (bev > 0) {
+    const cen = ring.reduce((a, q) => G.add(a, q), [0, 0, 0]).map(x => x / n);
+    const shrunk = ring.map(q => G.add(cen, G.mul(G.sub(q, cen), 1 - bev)));
+    for (const q of shrunk) V.push(G.add(q, G.mul(Nn, th)));          // 0..n-1  front
+    for (const q of shrunk) V.push(G.sub(q, G.mul(Nn, th)));          // n..2n-1 back
+    for (const q of ring) V.push(q);                                  // 2n..3n-1 rim
+    for (let i = 1; i < n - 1; i++) F.push([0, i, i + 1]);
+    for (let i = 1; i < n - 1; i++) F.push([n, n + i + 1, n + i]);
+    for (let i = 0; i < n; i++) {
+      const j = (i + 1) % n;
+      F.push([2 * n + i, 2 * n + j, j, i]);                           // rim → front
+      F.push([n + i, n + j, 2 * n + j, 2 * n + i]);                   // back → rim
+    }
+    return { material: p.material, V, F, skin: V.map(() => [[p.host, 1]]) };
+  }
   for (const q of ring) V.push(G.add(q, G.mul(Nn, th)));
   for (const q of ring) V.push(G.sub(q, G.mul(Nn, th)));
-  const n = ring.length; const F = [];
   for (let i = 1; i < n - 1; i++) F.push([0, i, i + 1]);            // front fan (+N)
   for (let i = 1; i < n - 1; i++) F.push([n, n + i + 1, n + i]);    // back fan (−N)
   for (let i = 0; i < n; i++) F.push([n + i, n + (i + 1) % n, (i + 1) % n, i]); // rim (outward)
@@ -740,13 +896,19 @@ function compile(spec) {
     if (p.type === 'eye') {
       // an eye part is a PAIR of meshes; they are two objects and get two names
       for (const m of buildEye(spec, p, builtVols)) {
-        m.part = label + '.' + m.side; m.smoothAngle = sa; m.partType = p.type;
+        m.part = label + (m.sub ? '.' + m.sub : '') + '.' + m.side; m.smoothAngle = sa; m.partType = p.type;
         m.hostChain = hostChain; meshes.push(m); }
     } else if (BUILDERS[p.type]) {
-      const m = BUILDERS[p.type](spec, p);
-      m.part = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
-      if (p.mirrored) { const t = mirrorMesh(m, rd); t.part = label + '.R'; t._mirrorSrc = m;
-        t.partType = p.type; t.hostChain = hostChain; meshes.push(t); }
+      // a builder may return several meshes (a paw and its claws): the first is
+      // the part itself, the rest are named `<part>.<sub>` and carry their own
+      // shade class / join when the builder says so
+      const built = BUILDERS[p.type](spec, p);
+      for (const m of Array.isArray(built) ? built : [built]) {
+        const lbl = m.sub ? label + '.' + m.sub : label;
+        m.part = lbl; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
+        if (p.mirrored) { const t = mirrorMesh(m, rd); t.part = lbl + '.R'; t._mirrorSrc = m;
+          t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade; meshes.push(t); }
+      }
     } else throw new Error(`unknown part type "${p.type}"`);
   }
   // attach material colors

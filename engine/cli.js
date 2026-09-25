@@ -147,8 +147,14 @@ if (spec.embed_spec !== false) {
 const names = require('./core/skeleton.js').exportNames(spec, sk);
 // L8: the only layer that leaves COLOR_0 and goes into the file's NORMAL, so
 // the user's own lighting reacts to it. Flesh only — see the note in glb.js.
+// 0.30, not the lab's 0.90: at 90% every flesh normal points straight out from
+// its bone, which is the normal of a CYLINDER. A chest that swells, a thigh
+// that tapers into a hock, a muzzle that steps down from the brow all shade
+// as the same uniform tube — the "blobby sausage" look — because the normal no
+// longer knows the profile exists. 30% still softens the low-poly walls
+// without erasing the form the profile rows were written for.
 const L8 = STACK
-  ? (((spec.shading || {}).normals || {}).flesh ?? 0.90)
+  ? (((spec.shading || {}).normals || {}).flesh ?? 0.30)
   : 0;
 const bytes = writeGLB({ meshes, skeleton: sk, ibm: inverseBindMatrices(sk), anims }, outPath,
   { asset, names, boneNormals: L8, spans: spec.embed_spec !== false });
