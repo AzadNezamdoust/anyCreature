@@ -1,7 +1,11 @@
 # Fresh-machine smoke test: exactly what a new user runs, on a machine that has
-# nothing. Catches the "works on the author's machine" class — the missing
-# Playwright browser shipped in 1.2.0 because no fresh environment ever ran
-# setup before push.
+# nothing, then the whole self-check suite. Catches the "works on the author's
+# machine" class — a missing dependency, a retired script still being called
+# (this workflow kept calling the silhouette script 1.3.2 deleted, and was red
+# on every push), a calibration sample the engine has started refusing.
+#
+# Everything the suite checks lives in tools/test.sh so a developer runs the
+# same thing locally: `bash setup.sh && bash tools/test.sh`.
 name: smoke
 on: [push, pull_request]
 jobs:
@@ -10,17 +14,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: sync check (versions agree, promised features present, no leaks)
-        run: python3 harness/synccheck.py
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
-      - name: setup.sh (deps + calibration + browser probe)
-        run: bash setup.sh
-      - name: engine builds the example
-        run: node engine/cli.js example/wolf.json /tmp/wolf.glb
-      - name: render tools run (silhouettes)
-        run: node harness/silmetrics.mjs /tmp/wolf.glb /tmp/sil
-      - name: delivery packs (viewer + heroes)
-        run: python3 harness/deliver.py /tmp/wolf.glb /tmp/del wolf --title "CI Wolf"
+      - name: setup.sh (deps, example self-check, red/green calibration)
+        run: |
+          bash setup.sh | tee setup.log
+          grep -q '^calibrate OK' setup.log
+      - name: self-check suite (sync check, calibration, every harness tool)
+        run: bash tools/test.sh
