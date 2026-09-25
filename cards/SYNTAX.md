@@ -14,17 +14,21 @@
                         // here except `pattern.color`, which is a MID decision.
    "pattern": {"color":"#ffffff","sharpness":0.45,"amount":1.0,"scale":0.06},
                         // L2. Omit `color` and there is no pattern. Flesh only.
-   "ramp":   {"bottom":"#001370","mid":"#cfcfcf","top":"#fffcf0","pm":0.31,"wm":0.08},
-                        // L3. Top-to-bottom, multiplied over everything but features.
-   "boost":  {"y0":0.00,"y1":0.40,"gamma":0.30,"dL":0.03,"dC":1.50},
+   "ramp":   {"bottom":"#8f8d8f","mid":"#dcdcdc","top":"#fff8ec","pm":0.30,"wm":0.30},
+                        // L3. Top-to-bottom, multiplied over everything but features. A
+                        // GENTLE grounding — a little darker at the feet, warmer at the
+                        // crown. (1.3.2 ran from #001370: navy paws and a waterline.)
+   "boost":  {"y0":0.00,"y1":0.40,"gamma":0.30,"dL":0.03,"dC":1.25},
                         // L4. Brighter AND more saturated up top, EXACTLY nothing below
                         // y0 (identity, not "almost"). Chroma walks back to the sRGB
                         // edge instead of clamping — clamping turns the hue.
    "bleed":  {"radius":0.025,"sharpness":0.35,"amount":0.45},   // L5 hardware into flesh
    "hardsh": {"amount":0.54,"gamma":0.70},                      // L6 shadow on hardware
    "bodysh": {"lights":4,"rot":4,"elev":17,"amount":0.20,"gamma":1.95},  // L7 on flesh
-   "normals":{"flesh":0.90},   // L8 — the ONLY layer that leaves COLOR_0 and goes into
-                        // the file's NORMAL, so the user's lighting reacts to it.
+   "normals":{"flesh":0.30},   // L8 — the ONLY layer that leaves COLOR_0 and goes into
+                        // the file's NORMAL, so the user's lighting reacts to it. 0.30:
+                        // at 0.90 every flesh normal is a cylinder's and the profile
+                        // (chest swell, thigh taper, the stop) stops shading at all.
    "stack": true },     // false = the 1.2.0 ramp-and-grain instead (gradient/noise below)
                         // legacy, only read when stack:false:
                         // "gradient":{"top":0.30,"bottom":-0.88}, "noise":{"size":0.018,"amount":0.26}
@@ -75,6 +79,9 @@
      // "faceted":true on a VOLUME is a BLOCK (faceted_body) — an 800-tri torso becomes 800 shards
      // and AO bakes the mess into COLOR_0. Break a body with "sharp" rows or a lower smooth_angle.
    "caps":["dome","dome"], "ring_step":0.05,
+   "cap_depth":[0.9,0.6], "cap_rings":3,   // a dome is a REAL dome (1.4): cap_rings extra
+     //   shrinking rings lifted along the axis, depth = cap_depth x the end ring's smaller
+     //   radius (default 0.8). 0.5 is a flattened rump, 0.9 a round muzzle tip.
    "colors": { "arcs":[{"from":0,"to":52,"color":"#57513f"}] }      // 0°=spine 180°=belly
      // arcs ONLY — colors.gradient / colors.noise are ignored (info: line); see "shading" above
  }],
@@ -86,7 +93,10 @@
                                      // place (deliberately free) — undeclared floating roots warn
     "offset":[0.06,0,0.1], "dir":[0.3,-0.6,0.7], "sides":8,
     "segments":[ {"len":0.1,"r":0.035,"ahead":20}, {"len":0.1,"r":0.028,"rise":35},
-                 {"len":0.08,"r":0.015,"rise":30,"taper":true} ] },
+                 {"len":0.08,"r":0.015,"rise":30,"taper":true} ],
+    "roll":0, "cap":"dome" },        // 1.4: "r":[rw,rh] makes an ELLIPTICAL section (an
+    // ear, a paddle tusk, a flattened tail); "roll" turns it in its plane (degrees);
+    // "cap":"dome" rounds the far end (a tongue, an ear) — default is the flat fan.
     // steering is per-segment and ADDS UP down the chain. rise/fall/ahead/behind
     // pull the heading that many degrees toward that world axis; coil swings it in
     // the carried plane (rings, spirals); taper pinches the far end.
@@ -111,13 +121,20 @@
     // the world direction each anchored part actually faces — read that line,
     // do not reason from this comment.
     "udir":[0,0,1], "vdir":[0,1,0], "points":[[0,0],[0.1,0.02],[0.05,0.15]],
+    "bevel":0.3,        // 1.4: the two faces shrink toward the centroid by this fraction and
+                        // the full outline becomes a mid rim — a lens with a chamfered edge
+                        // instead of a slab of card. Scales, leaves, shields, ears.
     "faceted":true },   // PARTS may face freely (or set "smooth_angle") — only VOLUMES are blocked
     // by default the host surface wins: an anchored part is snapped flat onto the
     // surface normal, and the direction you wrote survives only as a reported
     // difference. Set "conform":false when that written direction was the point.
 
   { "type":"eye", "host":"Brow", "material":"eye", "size":0.028,
-    "anchor":{"chain":"head","t":0.4,"around":62} },  // both eyes from one entry; side of head ≈55-70
+    "anchor":{"chain":"head","t":0.4,"around":62},    // both eyes from one entry; side of head ≈55-70
+    "sink":0.5,                                       // fraction of the radius buried (default 0.35)
+    "pupil":{"material":"pupil","size":0.55} },       // 1.4: the engine seats a darker sphere on the
+    // FRONT of the iris where it actually landed. An eye is a VALUE STEP, not a coloured dot —
+    // without a pupil the eye_pupil measure warns. "look":[x,y,z] aims it; default is ahead.
 
   { "type":"hand", "host":"LWrist", "material":"skin_hand", "mirrored":true,  // palm + 4 fingers + OPPOSABLE thumb
     "size":0.17,                          // palm length — the whole hand scales from it
@@ -125,7 +142,11 @@
     "curl":0.35, "spread":0.5,            // relaxed curl / finger fan; "fist":true = folded, thumb wrapped
     "join":"extrude" },
 
-  { "type":"paw", "toes":3, "host":"LToe", "material":"skin_fist", "size":[0.3,0.25,0.2], "mirrored":true }
+  { "type":"paw", "toes":4, "host":"LToe", "material":"skin_fist", "size":[0.3,0.25,0.2], "mirrored":true,
+    "claws":true, "claw_material":"claw" }   // 1.4: a rounded-box pad whose FRONT is the toes
+    // (default 4; "toes":0 for a plain pad), each half-buried so AO hides the join. Claws are a
+    // second mesh (`<name>.claws`, hard-shaded, join "place") in claw_material — dark claws on a
+    // light foot are what make a foot read at thumbnail size. "dir" turns it in the ground plane.
  ],
 
  "animations": {

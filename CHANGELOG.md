@@ -1,5 +1,56 @@
 # CHANGELOG
 
+## Unreleased — the output stops looking like blobby tubes
+
+**Why it looked crude.** Four causes, measured on the shipped wolf, none of them the
+tessellation density:
+
+- The shading stack's default ramp ran from `#001370` at the feet — a multiply by L 0.27
+  with a strong blue chroma, stepping to grey over 8% of the height. Every quadruped's
+  legs and paws shipped near-black navy, and the step read as a waterline.
+- L8 blended the shipped NORMAL 90% toward the bone field, i.e. toward a CYLINDER's
+  normal. A chest that swells, a thigh that tapers into a hock, a muzzle that steps down
+  from the brow all shaded as the same uniform tube.
+- L1 averaged every flesh vertex with everything within three median edges, own mesh
+  included — a blur the width of a leg that melted the spine saddle, the belly band and
+  every leg/torso value step into one mud.
+- `soft_mass` counted the diagonal of every loft quad as an edge. A diagonal cannot
+  crease, so the denominator was a third too big and authors cleared the floor by
+  dropping `smooth_angle` to 17–20°, which facets the entire body.
+
+**Engine (every spec)**
+
+- `ramp` default `#8f8d8f → #dcdcdc → #fff8ec`, band 0.30 wide: a gentle grounding.
+  `boost.dC` 1.25 (was 1.50, which turned every warm brown orange). `normals.flesh` 0.30.
+- L1 blends a flesh vertex toward the OTHER meshes' colour, weighted by how close the
+  nearest foreign vertex is — seams still fade, authored arcs stay crisp.
+- `soft_mass` measures real edges only. The 10% floor is unchanged.
+- `"caps": ["dome", …]` is a real dome: `cap_rings` (3) extra rings on a quarter-ellipse,
+  `cap_depth` (0.8) × the end ring's smaller radius. Muzzle tips, rumps, tail ends and
+  the free end of every leg stop being chopped-off discs.
+- `paw` rebuilt: a rounded-box pad whose front IS the toes (default 4), each half-buried
+  so AO hides the join; `"claws": true` adds a second hard-shaded mesh in `claw_material`.
+- `eye` gains `"pupil": {}` — the engine seats a darker sphere on the front of the iris
+  where it actually landed — and `"sink"` (fraction of the radius buried).
+- `curve` segments take `"r": [rw, rh]` (elliptical section), the part takes `"roll"`
+  (degrees) and `"cap": "dome"`.
+- `fin` gains `"bevel"`: faces shrink toward the centroid, the full outline becomes a
+  mid rim — a lens with a chamfered edge instead of a slab of card.
+- A part builder may return several meshes (`<name>.<sub>`), each with its own shade
+  class; `mirrorMesh` carries `shade` along.
+
+**Hero shot (`harness/outline.py --hero`)**
+
+- Rasterised at 2× and averaged down (anti-aliased edges), premultiplied through the
+  resize; a lower ambient with a wrapped warm key, cool fill and rim so the form models;
+  a blurred contact shadow from the footprint, on the alpha channel.
+
+**Example**
+
+- `example/wolf.json` re-authored as a stylised timber wolf with readable anatomy and the
+  third clip (attack: wind-up, lunge, bite) card 03 requires. `assets/hero.png` is now
+  the wolf.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**
