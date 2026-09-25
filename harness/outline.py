@@ -486,15 +486,26 @@ def hero_png(model, out_png, view='hero', res=1024):
             sx1, sy1 = min(RES, x0 + side), min(RES, y0 + side)
             pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = rgba[sy0:sy1, sx0:sx1]
             rgba = pad
-        # premultiply before the downsample so transparent pixels never bleed
-        # their (undefined) colour into the edge
-        f = rgba.astype(np.float64)
-        f[..., :3] *= f[..., 3:4] / 255.0
-        big = Image.fromarray(np.clip(f, 0, 255).astype(np.uint8), 'RGBA')
-        small = np.array(big.resize((res, res), Image.LANCZOS), dtype=np.float64)
-        a = small[..., 3:4]
-        small[..., :3] = np.where(a > 0, small[..., :3] * 255.0 / np.maximum(a, 1e-6), 0)
-        Image.fromarray(np.clip(small, 0, 255).astype(np.uint8), 'RGBA').save(out_png)
+        # Premultiply before the downsample so transparent pixels never bleed
+        # their (undefined) colour into the edge — and stay in FLOAT through
+        # it. The first version rounded the premultiplied picture to 8 bits
+        # and resized that with a Lanczos kernel: in the soft rim of the
+        # contact shadow, where alpha is 5-20, the (28,26,30) shadow colour
+        # premultiplied to 1-2 counts per channel, rounded unevenly, and came
+        # back from the un-premultiply as a pink-purple ring around the
+        # shadow. A box filter over float channels has neither the rounding
+        # nor the Lanczos overshoot on the alpha edge.
+        f = rgba.astype(np.float32)
+        a = f[..., 3] / 255.0
+        chans = [f[..., k] * a for k in range(3)] + [a]
+        small = [np.array(Image.fromarray(c, 'F').resize((res, res), Image.BOX), dtype=np.float64)
+                 for c in chans]
+        sa = small[3]
+        out = np.zeros((res, res, 4), dtype=np.float64)
+        for k in range(3):
+            out[..., k] = np.where(sa > 1e-6, small[k] / np.maximum(sa, 1e-6), 0.0)
+        out[..., 3] = sa * 255.0
+        Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8), 'RGBA').save(out_png)
     finally:
         RES = keep
     return out_png
