@@ -410,49 +410,91 @@ def hero_png(model, out_png, view='hero', res=1024):
     person, not measured; every gate keeps reading the 640 grid."""
     global RES
     keep = RES
+    # Rasterised at twice the output size and averaged down: the z-buffer has no
+    # anti-aliasing of its own, and a 1024 hero with stair-stepped edges looked
+    # like a screenshot of a bug, not a picture of a creature.
+    SS = 2
     try:
-        RES = res
+        RES = res * SS
         V, F, MID, mats, C, basecol, Nv = triangles_by_material(model, want_colour=True)
         _, mask, colour, nrm = material_shares(V, F, MID, mats, view, C, basecol, Nv)
-        # The same rig the retired renderer used: a warm-over-cool hemisphere, a
-        # key, a cool fill and a cool rim. Lambert only — these are matte low-poly
-        # surfaces with the specular story already painted into the vertex colour,
-        # so a full PBR evaluation would be re-deriving what is baked.
+        # Studio rig, Lambert only — these are matte low-poly surfaces with the
+        # specular story already painted into the vertex colour, so a full PBR
+        # evaluation would be re-deriving what is baked. The old rig summed a
+        # 1.5x hemisphere and three lamps to ~5.5 and divided by pi: everything
+        # sat near white and the form flattened out. This one keeps the ambient
+        # low so the key models the volume, and a cool rim from behind picks
+        # the silhouette off the background.
         ln = np.linalg.norm(nrm, axis=2, keepdims=True)
         n = np.divide(nrm, np.where(ln > 1e-9, ln, 1.0))
         up = n[:, :, 1:2]
-        sky, ground = np.array([1.0, 1.0, 1.0]), np.array([0.541, 0.522, 0.471])
-        irr = 1.5 * (sky * (0.5 + 0.5 * up) + ground * (0.5 - 0.5 * up))
-        for pos, col, amp in ((( 3.0, 4.0,  2.5), (1.0, 1.0, 1.0), 2.4),
-                              ((-4.0, 1.5,  2.0), (0.812, 0.847, 1.0), 1.0),
-                              ((-2.5, 2.5, -4.0), (0.667, 0.769, 1.0), 1.6)):
+        sky, ground = np.array([0.86, 0.90, 1.0]), np.array([0.46, 0.42, 0.36])
+        irr = 0.95 * (sky * (0.5 + 0.5 * up) + ground * (0.5 - 0.5 * up))
+        for pos, col, amp in ((( 2.2, 3.6,  3.0), (1.0, 0.96, 0.90), 2.5),    # warm key
+                              ((-4.0, 1.2,  1.5), (0.80, 0.86, 1.0), 0.7),    # cool fill
+                              ((-1.5, 2.5, -4.0), (0.85, 0.90, 1.0), 1.4)):   # rim
             d = np.array(pos, dtype=np.float64); d /= np.linalg.norm(d)
             lam = np.clip((n * d).sum(axis=2, keepdims=True), 0.0, 1.0)
+            if amp > 2:                       # the key wraps a little, like a soft box
+                lam = np.clip((lam + 0.15) / 1.15, 0.0, 1.0)
             irr = irr + np.array(col) * amp * lam
-        # Exposure. The Lambert sum above is not the renderer's shader, so it lands
-        # near but not on the old brightness: checked against the renderer this
-        # replaces, across the reference shelf, the ratio ran 0.91 median. 1.1 puts
-        # it back. This constant touches the PICTURE only — no gate reads the hero.
-        lin = np.clip(colour * irr * (1.1 / np.pi), 0.0, 1.0)
+        # Exposure. This constant touches the PICTURE only — no gate reads the hero.
+        lin = np.clip(colour * irr * (1.4 / np.pi), 0.0, 1.0)
         srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
-        rgb = np.clip(srgb * 255.0, 0, 255).astype(np.uint8)
-        rgba = np.dstack([rgb, np.where(mask, 255, 0).astype(np.uint8)])
+        rgb = srgb * 255.0
+        alpha = np.where(mask, 255.0, 0.0)
+        # Contact shadow. A creature floating on transparency reads as a cut-out;
+        # the same triangles squashed onto the ground plane, projected through the
+        # same camera and blurred, put it on a floor. It is drawn only where the
+        # body is not, on the alpha channel, so it costs nothing where the page
+        # background is dark.
+        try:
+            from scipy import ndimage
+            lo = V.min(axis=0)
+            Vg = V.copy(); Vg[:, 1] = lo[1]
+            # project() frames the camera from the points it is given; the
+            # squashed copy shares the model's bounds only when both are passed
+            px, py, z = project(np.vstack([V, Vg]), view)
+            px, py = px[len(V):], py[len(V):]
+            sh = Image.new('L', (RES, RES), 0)
+            drw = ImageDraw.Draw(sh)
+            # only triangles the camera can see the underside of matter; simpler
+            # to draw them all — the union is the footprint either way
+            for a, b_, c in F:
+                drw.polygon([(px[a], py[a]), (px[b_], py[b_]), (px[c], py[c])], fill=255)
+            shadow = np.array(sh, dtype=np.float64) / 255.0
+            shadow = ndimage.gaussian_filter(shadow, sigma=RES * 0.02)
+            shadow = np.clip(shadow * 1.2, 0.0, 1.0) * 0.32
+            # Note: the model's own pixels stay opaque; the shadow fills in outside.
+            alpha = np.maximum(alpha, np.where(mask, 0.0, shadow * 255.0))
+            rgb = np.where(mask[..., None], rgb, np.array([28.0, 26.0, 30.0]))
+        except Exception:
+            pass
+        rgba = np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 255)]).astype(np.uint8)
         # Frame it. The measuring camera fits the whole bounding sphere so that a
         # silhouette is comparable between rounds; a thumbnail has no such duty and
         # a creature sitting in a third of the frame reads as a small creature.
         # Crop to what is actually drawn, keep it square, leave a margin.
-        ys, xs = np.nonzero(mask)
+        ys, xs = np.nonzero(rgba[..., 3] > 8)
         if len(xs):
             cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
-            half = max(xs.max() - xs.min(), ys.max() - ys.min()) / 2 * 1.12
+            half = max(xs.max() - xs.min(), ys.max() - ys.min()) / 2 * 1.10
             x0, y0 = int(round(cx - half)), int(round(cy - half))
             side = int(round(half * 2))
             pad = np.zeros((side, side, 4), dtype=np.uint8)
             sx0, sy0 = max(0, x0), max(0, y0)
-            sx1, sy1 = min(res, x0 + side), min(res, y0 + side)
+            sx1, sy1 = min(RES, x0 + side), min(RES, y0 + side)
             pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = rgba[sy0:sy1, sx0:sx1]
             rgba = pad
-        Image.fromarray(rgba, 'RGBA').resize((res, res), Image.LANCZOS).save(out_png)
+        # premultiply before the downsample so transparent pixels never bleed
+        # their (undefined) colour into the edge
+        f = rgba.astype(np.float64)
+        f[..., :3] *= f[..., 3:4] / 255.0
+        big = Image.fromarray(np.clip(f, 0, 255).astype(np.uint8), 'RGBA')
+        small = np.array(big.resize((res, res), Image.LANCZOS), dtype=np.float64)
+        a = small[..., 3:4]
+        small[..., :3] = np.where(a > 0, small[..., :3] * 255.0 / np.maximum(a, 1e-6), 0)
+        Image.fromarray(np.clip(small, 0, 255).astype(np.uint8), 'RGBA').save(out_png)
     finally:
         RES = keep
     return out_png
