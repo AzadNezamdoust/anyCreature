@@ -24,7 +24,19 @@ import sys, os, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 G = json.load(open(os.path.join(HERE, 'gates.json'), encoding='utf-8'))
-want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
+# `--by dept|kind|by` prints only that one grouping, over every check. It used
+# to fall through into the stage filter as the stage "--BY", which matches no
+# check, so it printed empty groups and "0 of 0".
+by = None
+if len(sys.argv) > 1 and sys.argv[1] == '--by':
+    by = sys.argv[2] if len(sys.argv) > 2 else None
+    if by not in ('dept', 'kind', 'by'):
+        sys.exit('usage: python3 harness/gates.py --by dept|kind|by')
+    want = None
+else:
+    want = (sys.argv[1].upper() if len(sys.argv) > 1 else None)
+    if want and want not in ('LOW', 'MID', 'HIGH', 'SHIP', 'ANY'):
+        sys.exit(__doc__)
 
 def w(s, n):
     width = sum(2 if ord(c) > 127 else 1 for c in s)
@@ -34,16 +46,17 @@ rows = [c for c in G['checks'] if not want or c['stage'].upper() == want]
 order = {'LOW': 0, 'MID': 1, 'HIGH': 2, 'SHIP': 3, 'ANY': 4}
 rows.sort(key=lambda c: (order.get(c['stage'].upper(), 9), c['enforce'], c['id']))
 
-print()
-for k, v in G['stages'].items():
-    print(f'  {k:5} {v}')
-print()
-print(w('stage', 7) + w('enforce', 22) + w('when', 10) + w('id', 20) + 'what it is')
-print('-' * 100)
+if not by:
+    print()
+    for k, v in G['stages'].items():
+        print(f'  {k:5} {v}')
+    print()
+    print(w('stage', 7) + w('enforce', 22) + w('when', 10) + w('id', 20) + 'what it is')
+    print('-' * 100)
 # ▣ = advises the first time, blocks if the next round still has not fixed it
 MARK = {'block': '■', 'advise': '·', 'advise-then-block': '▣'}
 last = None
-for c in rows:
+for c in (rows if not by else []):
     if c['stage'] != last:
         print()
         last = c['stage']
@@ -62,14 +75,15 @@ def group(field, title, note):
         print(f'    {w(k, 11)} {len(g[k]):>2}   ' + ', '.join(sorted(g[k]))[:74])
     print(f'    {note}')
 
-if len(sys.argv) > 2 and sys.argv[1] == '--by':
-    pass
-group('kind', 'BY KIND — legality is a defect and only gets better; style is taste with a number on it',
-      'every style row is a candidate to become a swappable profile. None of them is a law.')
-group('by', 'BY SOURCE — which source produces the verdict for this check',
-      'the source is fixed per check in gates.json; changing it changes what the check costs to run.')
-group('dept', 'BY DEPARTMENT — two checks in one department should share their tools',
-      'a measure defined twice is a measure that will drift; synccheck.py lists any that are.')
+if by in (None, 'kind'):
+    group('kind', 'BY KIND — legality is a defect and only gets better; style is taste with a number on it',
+          'every style row is a candidate to become a swappable profile. None of them is a law.')
+if by in (None, 'by'):
+    group('by', 'BY SOURCE — which source produces the verdict for this check',
+          'the source is fixed per check in gates.json; changing it changes what the check costs to run.')
+if by in (None, 'dept'):
+    group('dept', 'BY DEPARTMENT — two checks in one department should share their tools',
+          'a measure defined twice is a measure that will drift; synccheck.py lists any that are.')
 
 nb = sum(1 for c in rows if c['enforce'] == 'block')
 nt = sum(1 for c in rows if c['enforce'] == 'advise-then-block')

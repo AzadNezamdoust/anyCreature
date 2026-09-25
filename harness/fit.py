@@ -38,7 +38,7 @@ WHAT IT WILL NOT DO. Anything where the correction is a design decision:
 So a clean run of this does not mean the creature is good. It means the round
 you are about to spend is about the creature, not about arithmetic.
 """
-import sys, os, json, re, subprocess, copy
+import sys, os, json, re, subprocess, copy, tempfile, shutil
 
 H = os.path.dirname(os.path.abspath(__file__))
 R = os.path.dirname(H)
@@ -50,9 +50,9 @@ FIXABLE = ('root_containment', 'proportion', 'size')
 
 def build(spec, tmp):
     json.dump(spec, open(tmp, 'w', encoding='utf-8'))
-    p = subprocess.run(['node', os.path.join('engine', 'cli.js'), tmp,
+    p = subprocess.run(['node', os.path.join(R, 'engine', 'cli.js'), tmp,
                         os.path.join(os.path.dirname(tmp), '_fit.glb')],
-                       capture_output=True, text=True, cwd=R)
+                       capture_output=True, text=True)
     out = (p.stdout or '') + (p.stderr or '')
     return [l for l in out.splitlines() if l.startswith('BLOCK:')], out
 
@@ -106,15 +106,23 @@ def apply_proportion(spec, line):
     if not m:
         return False
     _, a, b, c, ratio = m.groups()
-    j = (spec.get('joints') or {}).get(c)
+    J = spec.get('joints') or {}
+    j = J.get(c)
+    # aim for the middle of the 0.62-0.85 band rather than the edge of it, so
+    # the next pass does not land back on the boundary
+    k = 0.74
+    if isinstance(j, list) and isinstance(J.get(b), list):
+        # absolute joints: pull C toward B along the bone. This used to return
+        # False for any absolute joint, so fit.py reported the block as
+        # arithmetic and then "applied 0" to it.
+        pb = J[b]
+        J[c] = [round(pb[i] + (j[i] - pb[i]) * k, 4) for i in range(3)]
+        return True
     if not isinstance(j, dict):
         return False
     ax = joint_axes(j)
     if not ax:
         return False
-    # aim for the middle of the 0.62-0.85 band rather than the edge of it, so
-    # the next pass does not land back on the boundary
-    k = 0.74
     for a_ in ax:
         j[a_] = round(j[a_] * k, 4)
     return True
@@ -144,10 +152,17 @@ def main():
         print(__doc__)
         return 2
     src = a[0]
-    out = a[a.index('-o') + 1] if '-o' in a else None
+    out = a[a.index('-o') + 1] if '-o' in a and a.index('-o') + 1 < len(a) else None
+    if '-o' in a and not out:
+        print('[fit] -o needs a path')
+        return 2
     dry = '--dry' in a
     spec = json.load(open(src, encoding='utf-8'))
-    tmp = os.path.join(os.path.dirname(os.path.abspath(src)), '_fit_spec.json')
+    # scratch lives in its own temp dir: it used to be written next to the
+    # source spec, and the engine's checks stamp (_fit.checks.json) was left
+    # behind there after every run
+    work = tempfile.mkdtemp(prefix='fit_')
+    tmp = os.path.join(work, '_fit_spec.json')
 
     applied, history = [], []
     for p in range(1, MAX_PASSES + 1):
@@ -177,11 +192,7 @@ def main():
             break
 
     blocks, raw = build(spec, tmp)
-    try:
-        os.remove(tmp)
-        os.remove(os.path.join(os.path.dirname(tmp), '_fit.glb'))
-    except OSError:
-        pass
+    shutil.rmtree(work, ignore_errors=True)
     print()
     from collections import Counter
     if applied:

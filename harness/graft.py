@@ -60,7 +60,10 @@ def main():
     args = sys.argv[1:]
     def opt(flag, default=None):
         if flag in args:
-            i = args.index(flag); v = args[i + 1]; del args[i:i + 2]; return v
+            i = args.index(flag)
+            if i + 1 >= len(args):
+                sys.exit(f'[graft] {flag} needs a value')
+            v = args[i + 1]; del args[i:i + 2]; return v
         return default
     part_key = opt('--part'); new_host = opt('--host')
     out = opt('--out', 'fused_spec.json')
@@ -105,7 +108,7 @@ def main():
         if not new_host: sys.exit('[graft] a membrane graft needs --host <recipient joint>')
         if new_host not in rJ: sys.exit(f'[graft] recipient has no joint "{new_host}"')
         anchor_old = None
-        rename = {}
+        rename = {}          # donor JOINT name -> name in the fused spec
         for rib in part.get('ribs', []):
             cn = rib.get('chain')
             if not cn: continue
@@ -113,10 +116,10 @@ def main():
             if anchor_old is None:
                 anchor_old = dJ[names[0]]           # first rib root = old shoulder
             cn2 = cn if cn not in fused.get('chains', {}) else cn + 'G'
-            if cn2 != cn: rename[cn] = cn2
             fused.setdefault('chains', {})[cn2] = []
             for n in names:
                 n2 = n if n not in fused.get('joints', {}) else n + 'G'
+                if n2 != n: rename[n] = n2
                 p0 = dJ[n]
                 fused.setdefault('joints', {})[n2] = [
                     round(rJ[new_host][0] + (p0[0] - anchor_old[0]) * k, 5),
@@ -133,7 +136,19 @@ def main():
                 if not dst: continue
                 for jn, tr in (clip.get('tracks') or {}).items():
                     if jn in names:
-                        dst.setdefault('tracks', {})[jn if jn not in rename else rename[jn]] = copy.deepcopy(tr)
+                        # keyed by the joint's FUSED name: the old code looked the
+                        # joint up in the chain-rename table, so a renamed joint's
+                        # track landed on the recipient's own joint of that name
+                        dst.setdefault('tracks', {})[rename.get(jn, jn)] = copy.deepcopy(tr)
+            # 1.3.2: an animated joint with no joint_range is a BLOCK, so the
+            # donor's declared limits travel with its joints
+            for n in names:
+                lim = (donor.get('joint_range') or {}).get(n)
+                if lim is not None:
+                    fused.setdefault('joint_range', {})[rename.get(n, n)] = copy.deepcopy(lim)
+            fn = (donor.get('function') or {}).get(cn)
+            if fn and cn2 not in (fused.get('function') or {}):
+                fused.setdefault('function', {})[cn2] = fn
         todos.append('membrane grafted: check rib pose (the wing carries its old pose, rebased) and clearance')
     else:
         # hosted part: rescale local numbers, point it at the new host
@@ -154,6 +169,17 @@ def main():
             todos.append(f'part is anchored to donor chain "{part["anchor"].get("chain")}" — '
                          're-aim "anchor" at a recipient chain (or remove it and place by offset)')
 
+    # 1.3.2: part names are required and unique (part_names BLOCKs a clash).
+    # Grafting "ear" onto a creature that already has an "ear" must not
+    # produce a spec the engine refuses for a reason graft itself created.
+    taken = {p.get('name') for p in fused.get('parts', [])}
+    if part.get('name') in taken or not part.get('name'):
+        base = part.get('name') or part.get('material') or part.get('type') or 'part'
+        nm, i = base + '_graft', 2
+        while nm in taken:
+            nm, i = f'{base}_graft{i}', i + 1
+        todos.append(f'part name "{part.get("name")}" is taken in the recipient — grafted copy named "{nm}"')
+        part['name'] = nm
     fused.setdefault('parts', []).append(part)
     json.dump(fused, open(out, 'w'), indent=1)
     print(f'[graft] "{part_key}" → host "{new_host}" · scale ×{k:.3f} · wrote {out}')

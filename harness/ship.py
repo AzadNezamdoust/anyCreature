@@ -42,10 +42,16 @@ def remember_author(a):
 
 def main():
     args = sys.argv[1:]
+    if not args or args[0] in ('-h', '--help'):
+        print(__doc__)
+        return 0 if args else 2
 
     def opt(flag, default=None):
         if flag in args:
-            i = args.index(flag); v = args[i + 1]; del args[i:i + 2]; return v
+            i = args.index(flag)
+            if i + 1 >= len(args):
+                sys.exit(f'[ship] {flag} needs a value')
+            v = args[i + 1]; del args[i:i + 2]; return v
         return default
 
     publish = '--publish' in args
@@ -126,6 +132,9 @@ def do_publish(glb, hero, name, author, outdir):
               '(no account, no key needed).')
     else:
         print(f'[ship] the server refused: {r.get("error", line)}')
+    # the exit code tells the calling agent whether it may say "published"
+    rc = 0 if (st in ('published', 'pending_review')
+               or (r.get('share_url') and st not in ('blocked', 'error'))) else 1
 
     # 認領那條連結,publish.mjs 上傳完會實際去敲一次:
     #   claim_link_live is True  → 敲得到,直接給連結
@@ -149,7 +158,8 @@ def do_publish(glb, hero, name, author, outdir):
               f' be re-issued. it is also the key you paste at {fallback}')
     # one machine-readable line last, so the calling agent can quote it verbatim
     print(json.dumps(r, ensure_ascii=False))
+    return rc
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

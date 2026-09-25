@@ -2,7 +2,7 @@
 """Every MID part read, ONE command — build, render, and hand back one batch.
 
     python3 harness/partreads.py <outdir> --spec face.json claw.json tail.json
-                                 [--colour]
+                                 [--colour <colour_read.png>]
 
 The MID whitelist reads used to be two commands PER PART — a compile and a
 silhouette render — issued one at a time, and then one reader per part. Card 02
@@ -24,7 +24,11 @@ CANARY = os.path.join(H, 'canary')
 
 
 def run(cmd):
-    p = subprocess.run(cmd, capture_output=True, text=True, cwd=R)
+    # Run from the CALLER's directory, with the tools addressed absolutely: the
+    # spec, glb and outdir paths the user typed are relative to where they
+    # stand. This used to run with cwd=<repo root>, so any relative path from
+    # anywhere else failed with the engine's ENOENT stack trace.
+    p = subprocess.run(cmd, capture_output=True, text=True)
     return p.returncode, (p.stdout or '') + (p.stderr or '')
 
 
@@ -52,7 +56,7 @@ def main():
         dest = os.path.join(outdir, name)
         os.makedirs(dest, exist_ok=True)
         glb = os.path.join(dest, 'part.glb')
-        rc, out = run(['node', os.path.join('engine', 'cli.js'), spec, glb])
+        rc, out = run(['node', os.path.join(R, 'engine', 'cli.js'), spec, glb])
         if rc != 0:
             blocks = [l for l in out.splitlines() if l.startswith('BLOCK:')]
             print(f'  {name:<22} BUILD REFUSED')
@@ -67,7 +71,7 @@ def main():
         # global minimum of the distance transform for thinnest_px48 and read ~0.25px
         # on every creature, because it was re-derived instead of shared. Departments
         # share their tools; synccheck.py lists any measure that still has more than one definition.
-        rc2, out2 = run(['python3', os.path.join('harness', 'outline.py'), glb, dest])
+        rc2, out2 = run(['python3', os.path.join(H, 'outline.py'), glb, dest])
         if rc2 != 0:
             print(f'  {name:<22} silhouette failed: '
                   + (out2.strip().splitlines() or [''])[-1][:120])

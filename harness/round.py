@@ -42,7 +42,11 @@ R = os.path.dirname(H)
 
 
 def run(cmd):
-    p = subprocess.run(cmd, capture_output=True, text=True, cwd=R)
+    # Run from the CALLER's directory, with the tools addressed absolutely: the
+    # spec, glb and outdir paths the user typed are relative to where they
+    # stand. This used to run with cwd=<repo root>, so any relative path from
+    # anywhere else failed with the engine's ENOENT stack trace.
+    p = subprocess.run(cmd, capture_output=True, text=True)
     return p.returncode, (p.stdout or '') + (p.stderr or '')
 
 
@@ -117,7 +121,7 @@ def main():
         os.makedirs(dest, exist_ok=True)
         glb = os.path.join(dest, 'creature.glb')
 
-        rc, out = run(['node', os.path.join('engine', 'cli.js'), spec, glb])
+        rc, out = run(['node', os.path.join(R, 'engine', 'cli.js'), spec, glb])
         blocks = [l for l in out.splitlines() if l.startswith('BLOCK:')]
         if rc != 0:
             print(f'--- {tag or rn}: BUILD REFUSED ({spec})')
@@ -132,7 +136,7 @@ def main():
         # same masks (verified against the rendered ones at IoU 0.980-0.989 on
         # all four views; the remainder is the renderer's antialiased edge), and
         # no Chromium in the LOW loop at all.
-        cmd = ['python3', os.path.join('harness', 'outline.py'), glb, dest]
+        cmd = ['python3', os.path.join(H, 'outline.py'), glb, dest]
         if prev_dir:
             cmd += ['--prev', prev_dir]
         rc2, out2 = run(cmd)
@@ -216,7 +220,7 @@ def main():
                     f'onto the body is not a pose, it is a blob.', 1)
 
     print()
-    rc3, out3 = run(['python3', os.path.join('harness', 'roundcheck.py'),
+    rc3, out3 = run(['python3', os.path.join(H, 'roundcheck.py'),
                      outdir, '--preflight', rn, gate])
     print(out3.rstrip())
     if rc3 != 0:
