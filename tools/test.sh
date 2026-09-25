@@ -84,8 +84,9 @@ cat > "$T/claims.json" <<'EOF'
  {"type": "part_exists", "part": "fur_body"}, {"type": "saturation_area", "view": "hero", "min": 0.10}]}
 EOF
 prints  "judge.mjs: claims pass"          "all claims pass" node harness/judge.mjs "$T/wolf.glb" "$T/j" wolf --spec "$T/claims.json"
-refuses "judge.mjs: a missing clip blocks" "Missing named animation attack" \
-        node harness/judge.mjs "$T/wolf.glb" "$T/j" wolf --spec harness/claims.json
+sed 's/"idle", "move"/"idle", "fly"/' "$T/claims.json" > "$T/claims_fly.json"
+refuses "judge.mjs: a missing clip blocks" "Missing named animation fly" \
+        node harness/judge.mjs "$T/wolf.glb" "$T/j" wolf --spec "$T/claims_fly.json"
 prints  "deliver.py: package"             "\[deliver\] done" \
         python3 harness/deliver.py "$T/wolf.glb" "$T/del" wolf --title "Suite Wolf" --gate "$T/wolf.checks.json"
 ok      "deliver.py: stamped file conforms" node harness/glbcheck.mjs "$T/del/wolf.glb"

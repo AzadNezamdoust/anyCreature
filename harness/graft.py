@@ -90,7 +90,8 @@ def main():
     else:
         k = 1.0
         todos.append('no height declared on both sides — grafted at 1:1, check the size by eye')
-    def sc(v): return round(v * k, 5)
+    def sc(v):  # scalars, and the [w, h] pairs curve radii accept
+        return [sc(x) for x in v] if isinstance(v, list) else round(v * k, 5)
 
     # ── palette entries travel with the part ──
     fused.setdefault('palette', {})

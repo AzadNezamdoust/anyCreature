@@ -2,7 +2,7 @@
 
 ## Unreleased — the output stops looking like blobby tubes
 
-**Why it looked crude.** Four causes, measured on the shipped wolf, none of them the
+**Why it looked crude.** Four causes, all in the shipped wolf, none of them the
 tessellation density:
 
 - The shading stack's default ramp ran from `#001370` at the feet — a multiply by L 0.27

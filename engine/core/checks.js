@@ -917,8 +917,8 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   // makes an eye read is the step between a bright iris and a near-black pupil —
   // not the saturation of either. Faces built from a lone sphere measure as "no
   // eyes" for exactly this, and the fix is always the same: a second, smaller,
-  // much darker sphere on the same host. `harness/pupils.py` places it by measuring where the eyeball actually
-  // landed, because guessed numbers bury it inside the iris or float it in front.
+  // much darker sphere on the same host — or the eye part's own `pupil` field,
+  // which the engine seats against the eyeball it actually built.
   {
     const eyes = (spec.parts || []).filter(p => p.type === 'eye');
     const byHost = {};
