@@ -21,7 +21,7 @@ offline showroom viewer.
 
 *Every creature is compiled from one JSON spec. No mesh files, no downloaded art
 packs, no photogrammetry. The worked example that ships with this repo,
-[`example/wolf.json`](example/wolf.json), is 2,211 vertices and 31 joints written
+[`example/wolf.json`](example/wolf.json), is 3,970 vertices and 32 joints written
 out by the engine from plain text.*
 
 ---
@@ -157,12 +157,11 @@ Form beats obedience, everywhere.
 - **`part_attachment` and `mirror_distortion` are new in 1.2.0.** Specs authored against
   an older version may now be blocked. That is usually the checker being right, but it
   is a breaking change, not a silent improvement.
-- **The example wolf ships two animations, not three.** Card 03 asks for idle, move and
-  attack; `example/wolf.json` has idle and move. It is a SYNTAX reference, never a starting skeleton — the engine
+- **The example wolf is a SYNTAX reference, never a starting skeleton.** It ships the
+  three clips card 03 asks for (idle, move, attack), but the engine
   refuses a build whose joints are the example's with the numbers barely moved
   (`example_copy`), because a thin order is not permission to ship a recoloured
-  wolf. Read it for syntax, not for
-  animation coverage.
+  wolf. Read it for syntax.
 - **The engine has zero dependencies; the tooling needs numpy, pillow and scipy.**
   Nothing here launches a browser: as of 1.3.2 every silhouette, share, colour number
   and even the hero shot is computed from the vertices. scipy is the one that matters —

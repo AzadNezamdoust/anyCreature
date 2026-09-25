@@ -24,8 +24,7 @@
   },
   {
    "name": "size",
-   "passed": true,
-   "warned": true
+   "passed": true
   },
   {
    "name": "proportion",
@@ -53,7 +52,8 @@
   },
   {
    "name": "part_overlap",
-   "passed": true
+   "passed": true,
+   "warned": true
   },
   {
    "name": "part_seat",
@@ -62,7 +62,10 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — eye 0.78 · fur_head 0.56 · fur_tail 0.56 · fur_body 0.55 · fur_paw 0.51 · fur_leg 0.46 · ear 0.46 · nose 0.19",
-  "contrast_adjacent: part \"front_paw\" (fur_paw, L 0.51) against its host \"LFront\" (fur_leg, L 0.46) — OKLab distance 0.042, under 0.10. They will read as one mass at thumbnail size. Move one of them in LIGHTNESS, which is what survives shrinking; hue alone does not."
+  "value_order: materials by lightness, brightest first — eye 0.81 · fur_paw 0.70 · fur_head 0.67 · fur_body 0.67 · fur_tail 0.64 · fur_leg 0.59 · ear 0.44 · claw 0.25 · nose 0.19 · pupil 0.14",
+  "part_overlap: 'front_paw.claws' sits 46% inside 'front_paw' — measured surface to surface, so this is real interpenetration, not a bounding box.",
+  "part_overlap: 'front_paw.claws.R' sits 46% inside 'front_paw.R' — measured surface to surface, so this is real interpenetration, not a bounding box.",
+  "part_overlap: 'back_paw.claws' sits 46% inside 'back_paw' — measured surface to surface, so this is real interpenetration, not a bounding box.",
+  "part_overlap: 'back_paw.claws.R' sits 46% inside 'back_paw.R' — measured surface to surface, so this is real interpenetration, not a bounding box."
  ]
 }
