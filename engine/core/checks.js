@@ -93,58 +93,51 @@ function foldCount(V, F, minArea2 = 0) {
 }
 
 
-// How much of one mesh's skin can show an edge: the share of interior edges
-// whose dihedral angle reaches the smoothing angle, i.e. exactly the edges
-// smoothSplit() will crease. Computed here rather than after the fact because
-// checks run before the GLB is assembled.
-
 // A correct walk still drifts forward a little across the contact frames as the
 // foot rolls through heel-strike and toe-off, so the bar is a share of stride,
 // not zero.
 const GAIT_FWD_MAX = 0.15;
 
-const SOFT_FLOOR = 10;   // percent of volume edges that must be able to crease
+const SOFT_FLOOR = 10;   // percent of a volume's walls that must lean off its own axis
+const SOFT_LEAN = 8;     // degrees: a wall tilted less than this is "parallel to the bone"
 
-function creaseShare(V, F, deg) {
-  // The loft emits QUADS. Fanning one into two triangles invents a diagonal
-  // that is not an edge of the mesh and can never crease (the two halves of a
-  // planar quad are coplanar by construction), so counting it in the total
-  // deflated every volume's share by a third and pushed authors to 17-20°
-  // smoothing angles to clear the floor — i.e. to facet the whole body. Only
-  // real edges vote.
-  const tri = [], diag = new Set();
-  const at = i => V[i].map(x => Math.round(x * 1e4)).join(',');
-  const ek = (u, v) => { const a = at(u), b = at(v); return a < b ? a + '|' + b : b + '|' + a; };
-  for (const f of F) {
-    if (f.length === 3) tri.push(f);
-    else if (f.length === 4) { tri.push([f[0], f[1], f[2]]); tri.push([f[0], f[2], f[3]]); diag.add(ek(f[0], f[2])); }
-  }
-  const fn = [];
-  for (const [a, b, c] of tri) {
-    const A = V[a], B = V[b], C = V[c];
-    const u = [B[0]-A[0], B[1]-A[1], B[2]-A[2]], w = [C[0]-A[0], C[1]-A[1], C[2]-A[2]];
-    const n = [u[1]*w[2]-u[2]*w[1], u[2]*w[0]-u[0]*w[2], u[0]*w[1]-u[1]*w[0]];
-    const l = Math.hypot(n[0], n[1], n[2]);
-    fn.push(l > 1e-12 ? [n[0]/l, n[1]/l, n[2]/l] : null);
-  }
-  const key = new Map();
-  tri.forEach((f, i) => {
-    for (const [u, v] of [[f[0], f[1]], [f[1], f[2]], [f[2], f[0]]]) {
-      const k = ek(u, v);
-      if (diag.has(k)) continue;
-      (key.get(k) || key.set(k, []).get(k)).push(i);
+// How much of a volume has FORM: the share of its walls (the strip between two
+// consecutive rings, one per side) that lean away from the chain axis by more
+// than SOFT_LEAN degrees. A tube of constant radius has every wall parallel to
+// its bone and scores 0 whatever its tessellation; a chest that swells, a waist
+// that narrows, a muzzle that steps down from the brow, a section that turns
+// from round to boxy all tilt their walls and score.
+//
+// This replaced a crease count. The old ruler was the share of edges whose
+// dihedral reached `smooth_angle` — i.e. the edges the normals would SPLIT —
+// which does not measure the sausage at all: a sausage with 14 walls and
+// smooth_angle 20 creased on every longitudinal edge and passed, while a well
+// shaped mass at the default 50° creased nowhere and was refused. Authors
+// cleared it the only way it allowed, by dropping smooth_angle under the wall
+// angle, which facets the whole body into planar strips. On the
+// shipped wolves, the old ruler could not tell a sausage twin (every profile
+// row set to the middle row's radius) from the real thing once smooth_angle
+// was low enough; this one scores the real bodies at 30-60% and their sausage
+// twins at 2-4%, independent of `sides` and `smooth_angle`.
+//
+// Dome cap rings (t outside [0,1]) are left out: a dome on a sausage is still
+// a sausage. Computed on the ring table because checks run before the GLB is
+// assembled, and because the ring table is where the bone axis is known.
+function formShare(m) {
+  const rings = m._rings, pts = m._pts, rt = m._ringT;
+  if (!rings || !pts || !rt) return { lean: 0, tot: 0 };
+  const cos = Math.cos(SOFT_LEAN * Math.PI / 180);
+  let lean = 0, tot = 0;
+  for (let s = 0; s < rings.length - 1; s++) {
+    if (rt[s] < -1e-6 || rt[s + 1] > 1 + 1e-6) continue;
+    const ax = G.nrm(G.sub(pts[s + 1], pts[s]));
+    for (let k = 0; k < rings[s].length; k++) {
+      const w = G.nrm(G.sub(rings[s + 1][k], rings[s][k]));
+      tot++;
+      if (Math.abs(G.dot(w, ax)) < cos) lean++;
     }
-  });
-  const cos = Math.cos(deg * Math.PI / 180);
-  let hard = 0, tot = 0;
-  for (const fs of key.values()) {
-    if (fs.length !== 2) continue;
-    const p = fn[fs[0]], q = fn[fs[1]];
-    if (!p || !q) continue;
-    tot++;
-    if (p[0]*q[0] + p[1]*q[1] + p[2]*q[2] < cos) hard++;
   }
-  return { hard, tot };
+  return { lean, tot };
 }
 
 function runChecks(spec, sk, meshes, animsCompiled) {
@@ -168,43 +161,38 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   }
 
   // soft_mass — THE ROUNDED SAUSAGE. The opposite failure to `faceted`, and far
-  // more common, because it is what you get by DEFAULT.
-  //
-  // A volume is a tube of `sides` walls, so the angle between neighbouring walls
-  // is 360/sides, and `smooth_angle` (default 50) welds every edge under it: 9
-  // sides is 40 degrees, 16 is 22. Nothing on that mass can then break — not the
-  // shading, not the outline — and it renders as a smooth bean. The ruler is the
-  // share of VOLUME edges that reach their own smoothing angle.
+  // more common, because it is what you get by DEFAULT: one radius written at
+  // both ends of a chain is a tube, and a creature assembled from tubes is a
+  // balloon animal. The ruler is the share of every volume's walls that lean
+  // off the bone (formShare above); the lever is the PROFILE.
   if (spec.build !== 'rigid' && !spec.qa_isolate) {
     const per = [];
-    let hard = 0, tot = 0;
+    let lean = 0, tot = 0;
     for (const m of meshes) {
       if (m.part) continue;                       // parts may be any shape they like
       const vol = (spec.volumes || []).find(v => v.chain === m.chain);
       if (vol && vol.soft) continue;              // declared a soft organic lump
-      const deg = m.faceted ? 0 : (m.smoothAngle ?? 50);
-      const r = creaseShare(m.V, m.F, deg);
+      const r = formShare(m);
       if (!r.tot) continue;
-      hard += r.hard; tot += r.tot;
-      per.push({ chain: m.chain, pct: 100 * r.hard / r.tot, edges: r.tot, deg });
+      lean += r.lean; tot += r.tot;
+      per.push({ chain: m.chain, pct: 100 * r.lean / r.tot, walls: r.tot });
     }
     if (tot) {
-      const pct = 100 * hard / tot;
+      const pct = 100 * lean / tot;
       if (pct < SOFT_FLOOR) {
-        per.sort((a, b) => (a.pct - b.pct) || (b.edges - a.edges));
-        const worst = per.slice(0, 3).map(p =>
-          `"${p.chain}" ${p.pct.toFixed(0)}% (smooth_angle ${p.deg})`).join(', ');
-        fails.push(`soft_mass: only ${pct.toFixed(0)}% of this creature's skin can show an edge `
-          + `at all (the floor is ${SOFT_FLOOR}%). Nothing breaks, so every mass renders as a smooth `
-          + `bean. Softest first: ${worst}. The lever that works is smooth_angle ON THE VOLUME: a volume's wall `
-          + `angle is 360/sides, so 9 sides is 40° and 16 sides is 22°, and the default 50° welds `
-          + `both perfectly smooth. Drop it under the wall angle on the masses named above — `
-          + `applying exactly this number to every volume of the creature that was `
-          + `rejected took it from 29% to 69% and left the side silhouette at IoU 1.000 — the FORM `
-          + `is untouched, only the shading hardens. Fewer "sides" works too and thins the outline a little. A "sharp" row `
-          + `is the SILHOUETTE lever, not this one, and it does nothing unless the radius steps `
-          + `across it. A mass that is genuinely meant to be a smooth lump — a slug, a bladder, a `
-          + `droplet — declares "soft": true and drops out of this count.`);
+        per.sort((a, b) => (a.pct - b.pct) || (b.walls - a.walls));
+        const worst = per.slice(0, 3).map(p => `"${p.chain}" ${p.pct.toFixed(0)}%`).join(', ');
+        fails.push(`soft_mass: only ${pct.toFixed(0)}% of this creature's skin leans off its own bones `
+          + `(the floor is ${SOFT_FLOOR}%; a wall counts once it tilts ${SOFT_LEAN}° off the chain axis). `
+          + `Every mass is a tube of one radius, so it renders as a sausage. Softest first: ${worst}. `
+          + `The lever is the PROFILE on the volume: give each mass a radius that CHANGES along its `
+          + `chain — a chest that swells and a waist that narrows, a thigh that tapers into a hock, a `
+          + `muzzle that steps down from the brow — and use "exp"/"bias" so the section turns from `
+          + `round to boxy or keeled where the anatomy does. Rows 15%+ apart in radius over a fifth of `
+          + `the chain are what register. "smooth_angle" and "sides" do NOT move this number: they `
+          + `set how the walls are shaded, not whether the mass has a shape. A mass that is genuinely `
+          + `meant to be a smooth lump — a slug, a bladder, a droplet — declares "soft": true and `
+          + `drops out of this count.`);
       }
     }
   }
@@ -355,7 +343,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const hostChain = Object.keys(spec.chains).find(c => volsByChain[c] && spec.chains[c].includes(hostJoint) && c !== cn);
     if (!hostChain) continue;
     const host = volsByChain[hostChain];
-    const rootRing = v._rings[0];
+    const rootRing = v._rings[v._dome0 || 0];   // a start dome prepends rings; measure the ROOT
     let inside = 0;
     // Keep how far past the surface each ring point sits, and which host centre
     // it is nearest. The check already computes both; throwing them away and
@@ -840,7 +828,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     for (let i = 0; i < parts.length; i++) for (let k = 0; k < parts.length; k++) {
       if (i === k) continue;
       const A = parts[i], B = parts[k];
-      if (stem(A.part) === stem(B.part)) continue;   // own mirror twin, or the same ring repeat
+      if (stem(A.partName || A.part) === stem(B.partName || B.part)) continue;   // own twin, own sub-mesh (claws, pupil), or a ring repeat
       if (B.doubleSided) continue;                    // a membrane encloses nothing
       let sep = false;
       for (let a = 0; a < 3; a++) if (boxes[i].lo[a] > boxes[k].hi[a] || boxes[k].lo[a] > boxes[i].hi[a]) sep = true;
@@ -962,13 +950,18 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   {
     const chainNames = new Set(Object.keys(spec.chains || {}));
     const seen = new Map();
-    const unnamed = [], dupes = [], clashes = [];
+    const unnamed = [], dupes = [], clashes = [], dotted = [];
     (spec.parts || []).forEach((p, i) => {
       const n = (p.name || '').trim();
       if (!n) { unnamed.push(`parts[${i}] (${p.type} on ${p.host || 'ribs'})`); return; }
       if (seen.has(n)) dupes.push(n); else seen.set(n, i);
       if (chainNames.has(n)) clashes.push(n);
+      if (n.includes('.')) dotted.push(n);
     });
+    if (dotted.length)
+      fails.push(`part_names: ${[...new Set(dotted)].join(', ')} contains a "." — the dot is the engine's own `
+        + `separator (a paw's claws ship as "front_paw.claws", a twin as ".R", an eye as ".L"), so a dotted `
+        + `name can collide with a generated one in part_spans. THE FIX: use an underscore.`);
     if (unnamed.length)
       fails.push(`part_names: ${unnamed.length} part(s) have no "name" — ${unnamed.slice(0, 6).join(', ')}`
         + (unnamed.length > 6 ? `, +${unnamed.length - 6} more` : '')

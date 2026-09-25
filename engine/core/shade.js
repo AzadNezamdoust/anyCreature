@@ -180,7 +180,7 @@ function shadeStack(spec, meshes, INFO) {
   const y0 = lo[1], yr = (hi[1] - lo[1]) || 1e-6;
 
   const declared = declaredClasses(spec);
-  for (const m of live) m._cls = classOf(m, declared.get(m.part || m.chain));
+  for (const m of live) m._cls = classOf(m, declared.get(m.part ? m.part.replace(/\.[LR]$/, '') : m.chain));
   const counts = { flesh: 0, hard: 0, fx: 0 };
   const byClass = { flesh: new Set(), hard: new Set(), fx: new Set() };
   for (const m of live) {
@@ -244,20 +244,26 @@ function shadeStack(spec, meshes, INFO) {
         let wsum = 0, acc = [0, 0, 0], nearest = Infinity;
         for (const j of gg.near(p.v, R)) {
           const q = fleshPts[j];
-          if (q.m === p.m) continue;                       // own mesh: no vote
           const dx = q.v[0] - p.v[0], dy = q.v[1] - p.v[1], dz = q.v[2] - p.v[2];
           const d2 = dx * dx + dy * dy + dz * dz;
           if (d2 > r2) continue;
-          if (d2 < nearest) nearest = d2;
+          if (q.m !== p.m && d2 < nearest) nearest = d2;   // only a FOREIGN mesh opens the blend
           const w = Math.exp(-d2 / (2 * sig2));
           const c = q.m.C[q.i];
           acc[0] += c[0] * w; acc[1] += c[1] * w; acc[2] += c[2] * w;
           wsum += w;
         }
         const own = p.m.C[p.i];
-        if (!(wsum > 0)) { out[n] = own; return; }
-        // half-way to the neighbours at contact, nothing at the radius
-        const t = 0.5 * Math.pow(1 - Math.sqrt(nearest) / R, 2);
+        if (!(wsum > 0) || nearest === Infinity) { out[n] = own; return; }
+        // The target is the average over EVERY mesh (own included), so two
+        // coincident vertices on either side of a junction see the same
+        // neighbourhood and the same target; t reaches 1 at contact, so they
+        // land on the same colour — seam-free by construction. A vertex with
+        // no foreign mesh inside R is untouched, so arcs inside a mass stay crisp.
+        // full strength out to a third of R (a vertex an edge from the junction
+        // still carries the junction's colour), smoothstep to zero at R
+        const s = Math.min(1, Math.max(0, (R - Math.sqrt(nearest)) / (R * 2 / 3)));
+        const t = s * s * (3 - 2 * s);
         out[n] = mix(own, [acc[0] / wsum, acc[1] / wsum, acc[2] / wsum], t);
         touched++;
       });

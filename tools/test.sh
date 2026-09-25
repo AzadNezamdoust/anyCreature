@@ -70,6 +70,22 @@ prints  "engine builds example"           '"ok":true'   node engine/cli.js examp
 ok      "engine wrote its checks stamp"   test -s "$T/wolf.checks.json"
 refuses "engine refuses a recoloured copy (example_copy)"  "example_copy" \
         bash -c "cp example/wolf.json '$T/copy.json' && node engine/cli.js '$T/copy.json' '$T/copy.glb'"
+refuses "engine refuses a sausage (soft_mass)" "soft_mass" \
+        bash -c "python3 - '$T/sausage.json' <<'PY' && node engine/cli.js '$T/sausage.json' '$T/sausage.glb'
+import json, sys
+s = json.load(open('calibration/wolf_green.json'))
+# every profile row at the middle row's radius: tubes of one radius. Joints
+# scaled so the example_copy check does not see wolf_green with its numbers moved.
+for v in s['volumes']:
+    r = v['profile'][len(v['profile']) // 2]
+    v['profile'] = [[0, r[1], r[2]], [1, r[1], r[2]]]
+for k, j in s['joints'].items():
+    if isinstance(j, list): s['joints'][k] = [x * 1.12 for x in j]
+    else:
+        for a in ('up', 'fwd', 'side'):
+            if a in j: j[a] *= 1.12
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
 ok      "glbcheck: fresh build"           node harness/glbcheck.mjs "$T/wolf.glb"
 ok      "glbcheck: shipped example/wolf.glb" node harness/glbcheck.mjs example/wolf.glb
 # a cut file must be called CUT, not "bytes outside the declared file": that

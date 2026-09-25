@@ -19,6 +19,10 @@ const mul=(a,b)=>{const o=new Array(16).fill(0);
 const apply=(m,v)=>[m[0]*v[0]+m[4]*v[1]+m[8]*v[2]+m[12],
                     m[1]*v[0]+m[5]*v[1]+m[9]*v[2]+m[13],
                     m[2]*v[0]+m[6]*v[1]+m[10]*v[2]+m[14]];
+// One id per MESH, not per material@chain: a mirrored twin volume carries its
+// source's chain name, so keying by chain made the L and R legs one entry and
+// they were never swept against each other. Same convention as glb.js spans.
+function meshId(m) { return m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain) || m.material || '?'; }
 function inv(m){ // 剛性矩陣的反矩陣：R^T 與 -R^T·t
   const r=[m[0],m[1],m[2],m[4],m[5],m[6],m[8],m[9],m[10]];
   const t=[m[12],m[13],m[14]];
@@ -73,7 +77,7 @@ function build(spec){
       for(const B of bins.values()){ if(B.length<2) continue;
         const c=[0,0,0]; for(const p of B) for(let k=0;k<3;k++) c[k]+=p[k]/B.length;
         let r=0; for(const p of B){ const d=Math.hypot(p[0]-c[0],p[1]-c[1],p[2]-c[2]); if(d>r)r=d; }
-        balls.push({ bone:bi, mesh:`${m.material}@${m.chain||m.part||'?'}`,
+        balls.push({ bone:bi, mesh:meshId(m),
                      c:apply(restInv[bi],c), r });
       }
     }
@@ -95,7 +99,7 @@ function sweep(ctxo, frames=32, hopMin=4){
     pairs.push([i,j,d0]);
   }
   const meshByName=new Map();
-  for(const m of ctxo.meshes) meshByName.set(`${m.material}@${m.chain||m.part||'?'}`, m);
+  for(const m of ctxo.meshes) meshByName.set(meshId(m), m);
   const out=[];
   for(const a of anims){
     // ── 粗相：球體。只負責點名「這一幀這兩塊可能撞」，不下結論。
@@ -113,7 +117,7 @@ function sweep(ctxo, frames=32, hopMin=4){
     // ── 窄相：只對被點名的配對＋幀，算真正的網格最近距離。
     let worst=1e9, info=null, narrow=0;
     const cacheV=new Map();
-    const vertsAt=(m,f)=>{ const k=m.material+'|'+(m.chain||m.part)+'|'+f;
+    const vertsAt=(m,f)=>{ const k=meshId(m)+'|'+f;
       if(!cacheV.has(k)) cacheV.set(k, skinVerts(m,sk,jointWorlds(sk,locals,a,f/frames)));
       return cacheV.get(k); };
     for(const [k,fs2] of cand){
@@ -174,7 +178,7 @@ function buildProxies(sk, meshes, restWorld) {
         if (B.length < 2) continue;
         const c = [0, 0, 0]; for (const p of B) for (let k = 0; k < 3; k++) c[k] += p[k] / B.length;
         let r = 0; for (const p of B) { const d = Math.hypot(p[0] - c[0], p[1] - c[1], p[2] - c[2]); if (d > r) r = d; }
-        balls.push({ bone: bi, mesh: `${m.material}@${m.chain || m.part || '?'}`, c: apply(restInv[bi], c), r });
+        balls.push({ bone: bi, mesh: meshId(m), c: apply(restInv[bi], c), r });
       }
     }
   }
@@ -202,7 +206,7 @@ function selfClip(spec, sk, locals, meshes, anims, frames = 32, hopMin = 4, rest
     if (d0 < restMin) continue;
     pairs.push([i, j, d0]);
   }
-  const byName = new Map(); for (const m of meshes) byName.set(`${m.material}@${m.chain || m.part || '?'}`, m);
+  const byName = new Map(); for (const m of meshes) byName.set(meshId(m), m);
   const out = [];
   for (const a of anims) {
     const cand = new Map();
