@@ -156,8 +156,37 @@ const names = require('./core/skeleton.js').exportNames(spec, sk);
 const L8 = STACK
   ? (((spec.shading || {}).normals || {}).flesh ?? 0.30)
   : 0;
+// Junction normals: every attached FLESH mesh — a limb chain on its `attach`
+// host, a hosted part (paw, ear, tuft) on the chain it grows from — blends its
+// normals onto that host within `junction_band` of the host's surface (a
+// fraction of the model height, default 0.06; 0 turns it off). See glb.js.
+const junctions = [];
+if (STACK) {
+  const nsh = (spec.shading || {}).normals || {};
+  const ys = meshes.flatMap(m => m.V.map(v => v[1]));
+  const modelH = Math.max(1e-6, Math.max(...ys) - Math.min(...ys));
+  const band = (nsh.junction_band ?? 0.06) * modelH;
+  const volOf = (chain, twin) => meshes.find(x => x._rings && x.chain === chain && (twin ? x._mirrorSrc : !x._mirrorSrc))
+                              || meshes.find(x => x._rings && x.chain === chain);
+  const chainOfJoint = j => Object.keys(spec.chains || {}).find(c => (spec.chains[c] || []).includes(j));
+  if (band > 0) for (const m of meshes) {
+    if (m._cls !== 'flesh') continue;
+    let host = null;
+    if (m._rings && m.chain && (spec.attach || {})[m.chain]) {
+      const hc = chainOfJoint(spec.attach[m.chain]);
+      if (hc && hc !== m.chain) host = volOf(hc, !!m._mirrorSrc);
+    } else if (m.part && m.hostChain) host = volOf(m.hostChain, !!m._mirrorSrc);
+    if (host && host !== m) junctions.push({ m, host, band, amount: nsh.junction ?? 1 });
+  }
+}
 const bytes = writeGLB({ meshes, skeleton: sk, ibm: inverseBindMatrices(sk), anims }, outPath,
-  { asset, names, boneNormals: L8, spans: spec.embed_spec !== false });
+  { asset, names, boneNormals: L8, spans: spec.embed_spec !== false, junctions });
+if (junctions.length) {
+  const jm = require('./core/glb.js').JUNCTION_MOVED;
+  const tot = jm.reduce((a, r) => a + r[1], 0);
+  if (tot) console.log(`info: shade junction: ${tot} vertices on ${jm.length} attached pieces took their `
+    + `host's normal within the junction band (${jm.map(r => r[0]).join(', ')})`);
+}
 if (L8) {
   const moved = require('./core/glb.js').L8_MOVED;
   const tot = moved.reduce((a, r) => a + r[1], 0), all = moved.reduce((a, r) => a + r[2], 0);

@@ -59,9 +59,53 @@ function boneField(V, skin, sk) {
   });
 }
 
+// ── junction normals ────────────────────────────────────────────────────────
+// Where a limb enters the torso, a head the neck, a tuft the skin, the two
+// surfaces cross at an angle and the crossing catches the light as a hard,
+// bright edge — the "seam at the shoulder" — no matter how well the colours
+// were blended, because the NORMALS step across it. The fix every game rig
+// uses on fur cards and limb roots: within a band of the host surface the
+// attached mesh's normals are pulled onto the host's, so the lighting runs
+// continuously off the torso and onto the leg. The geometry is untouched; only
+// the shipped NORMAL changes, and only on the attached piece (pulling the torso
+// toward the leg would dent the torso).
+//
+// junctions: [{ m: attached mesh, host: mesh, band, amount }], computed by the
+// caller from the spec's attach/host declarations; each entry yields a Map from
+// vertex point object → [host normal, weight] so it survives the crease split
+// below (smoothSplit copies share the point object).
+const JUNCTION_MOVED = [];
+function junctionField(m, host, band, amount) {
+  const { nearest } = require('./inside.js');
+  const { vertexNormals } = require('./normals.js');
+  if (!host._jN) host._jN = vertexNormals(host.V, triangulate(host.F));
+  const HN = host._jN;
+  const out = new Map();
+  for (const v of m.V) {
+    const r = nearest(v, host);
+    if (!r || r.d >= band) continue;
+    // interpolate the host's smooth normal over the hit triangle by inverse
+    // distance to its corners — cheap, and exact enough for a 12-14 wall tube
+    const { a, b, c, i } = r.tri;
+    const ws = [a, b, c].map(q => 1 / (1e-6 + Math.hypot(r.q[0] - q[0], r.q[1] - q[1], r.q[2] - q[2])));
+    const n = [0, 0, 0];
+    for (let k = 0; k < 3; k++) { const hn = HN[i[k]]; n[0] += hn[0] * ws[k]; n[1] += hn[1] * ws[k]; n[2] += hn[2] * ws[k]; }
+    const L = Math.hypot(n[0], n[1], n[2]);
+    if (L < 1e-9) continue;
+    const t = r.d <= 0 ? 1 : 1 - r.d / band;     // full on the buried side, fading out over the band
+    out.set(v, [[n[0] / L, n[1] / L, n[2] / L], amount * t * t]);
+  }
+  return out;
+}
+
 const L8_MOVED = [];
 function writeGLB(build, outPath, opts = {}) {
-  L8_MOVED.length = 0;
+  L8_MOVED.length = 0; JUNCTION_MOVED.length = 0;
+  // the fields are measured before any mesh is split below (the split shares
+  // point objects, so the map still applies afterwards)
+  const jfields = new Map();
+  for (const j of opts.junctions || [])
+    jfields.set(j.m, junctionField(j.m, j.host, j.band, j.amount ?? 1));
   const { meshes, skeleton, ibm, anims } = build;
   const names = opts.names || {};   // internal joint name → public export name
   const bufs = []; let byteLen = 0;
@@ -159,6 +203,21 @@ function writeGLB(build, outPath, opts = {}) {
         return [b[0] / L, b[1] / L, b[2] / L];
       });
       if (moved) L8_MOVED.push([m.material, moved, N.length]);
+    }
+    const jf = jfields.get(m);
+    if (jf && jf.size) {
+      let moved = 0;
+      N = N.map((n, i) => {
+        const e = jf.get(m.V[i]);
+        if (!e) return n;
+        const [h, w] = e;
+        const b = [n[0] * (1 - w) + h[0] * w, n[1] * (1 - w) + h[1] * w, n[2] * (1 - w) + h[2] * w];
+        const L = Math.hypot(b[0], b[1], b[2]);
+        if (L < 1e-9) return n;
+        moved++;
+        return [b[0] / L, b[1] / L, b[2] / L];
+      });
+      if (moved) JUNCTION_MOVED.push([m.part || m.chain, moved]);
     }
     const key = [m.material, m.color, m.rough ?? 0.9, m.metal ?? 0, !!m.doubleSided, !!m.C, !!m.UV].join('|');
     let g = groups.get(key);
@@ -267,4 +326,4 @@ function writeGLB(build, outPath, opts = {}) {
   return total;
 }
 
-module.exports = { writeGLB, triangulate, L8_MOVED };
+module.exports = { writeGLB, triangulate, L8_MOVED, JUNCTION_MOVED };

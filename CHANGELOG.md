@@ -54,11 +54,70 @@ tessellation density:
   resize; a lower ambient with a wrapped warm key, cool fill and rim so the form models;
   a blurred contact shadow from the footprint, on the alpha channel.
 
+**Second visual pass — the wolf that came out was a boxy olive coyote**
+
+Reviewed against a stylised game-wolf standard: nearly monochrome olive-brown, a head
+that merged into the body, hard planar corners along the flank, legs like square posts,
+a sausage tail, no ruff, a long thin fox head, a pink ring round the hero's contact
+shadow, and a seam at every shoulder. Four causes in the engine, one in the harness, and
+the spec.
+
+- **`soft_mass` was measuring the wrong thing, and the boxiness was its doing.** The
+  ruler was the share of edges whose dihedral reached `smooth_angle` — the edges the
+  normals SPLIT — so a well shaped mass at the default 50° scored 0 and was refused,
+  while a tube of one radius with `smooth_angle` 20 creased on every longitudinal edge
+  and passed. The only way to clear it was to drop `smooth_angle` under the wall angle,
+  which facets the whole body into planar strips: the "designed creases" the reviewer
+  saw are exactly that. The ruler now measures FORM — the share of a volume's walls
+  (ring to ring, per side, dome caps excluded) that lean off the chain axis by 8° or
+  more. Measured: the shipped wolves 48-51%, wolf_red 32%, their sausage twins (every
+  profile row set to the middle row's radius) 2-4%; `sides` and `smooth_angle` do not
+  move it. The floor stays at 10%. `calibration/red_5050.json` had dodged the old ruler
+  with `smooth_angle` 20 on a near-tube; it now has a profile and is refused by
+  `proportion` and nothing else, as before. The lever named in the message is the
+  profile. The cards say the same.
+- **`tufts` part type — fur that leaves the silhouette.** A ruff, a mane, a bushy tail,
+  a cheek beard: a crown of short tapered wedges seated on a volume's surface at
+  `anchor {chain, t, around:[from,to]}`, `rows` x `count`, swept along the chain,
+  drooped toward the ground, with a deterministic length jitter. They are FLESH to the
+  shading stack and ride the skin of the ring they grow from, so a ruff across two neck
+  joints bends with the neck. A lofted tube cannot make a ruff: a fatter ring is a ring.
+- **Arcs take `t: [t0, t1]`** (a band limited along the chain: a dark tail tip, a pale
+  muzzle, a saddle that stops at the withers, a cream chest that does not run under the
+  belly) and **`feather` / `feather_t`** (the band's weight ramps in from its edges, so a
+  saddle melts into the flank instead of stopping on a ring line). Feathers narrower
+  than the ring's angular step land between vertices and do nothing; the card says so.
+- **Junction normals.** Where a limb enters the torso, a head the neck, a tuft the
+  skin, the two surfaces cross at an angle and the crossing caught the light as a hard
+  bright edge whatever the colours did, because the NORMALS stepped across it. Every
+  attached flesh piece now takes its host's normal within `shading.normals.junction_band`
+  (0.06 x model height) of the host surface; geometry untouched, only the shipped
+  NORMAL, and only on the attached piece. `inside.js` gained `nearest()` (the closest
+  surface point with its triangle) for it. The shoulder seam is gone.
+- **Hero shot: the pink ring round the contact shadow** was the premultiplied picture
+  rounded to 8 bits before a Lanczos resize — in the shadow's soft rim (alpha 5-20) the
+  dark shadow colour premultiplied to 1-2 counts per channel, rounded unevenly, and
+  came back purple from the un-premultiply. The downsample now runs in float with a box
+  filter (no rounding, no Lanczos overshoot on the alpha edge).
+- **Engine review fixes (from the concurrent code review of the first pass):**
+  `root_containment` read the start-dome's tip instead of the root ring (`_dome0`);
+  `part_overlap` warned a paw's own claws against the paw (`partName` stem); the new
+  L1 left seams of OKLab 0.10-0.15 because the blend capped at 0.5 and averaged only
+  the foreign mesh — it now averages every mesh in the radius and blends at full
+  strength out to a third of it, so two coincident vertices land on one colour; a
+  declared `shade` on an eye did not reach `eye.L` / the pupils; `part_names` refuses a
+  "." in a name (the engine's own separator, a `part_spans` collision waiting to
+  happen); `self_clip` keyed meshes by material@chain, so a mirrored twin shared its
+  source's key and the L and R legs were never swept against each other.
+
 **Example**
 
-- `example/wolf.json` re-authored as a stylised timber wolf with readable anatomy and the
-  third clip (attack: wind-up, lunge, bite) card 03 requires. `assets/hero.png` is now
-  the wolf.
+- `example/wolf.json` re-authored again: a wolf value plan (charcoal saddle, tawny
+  flank, cream chest / belly / muzzle / inner leg, light cheek mask under a dark crown,
+  dark ear backs and tail tip), a `tufts` ruff, cheek tufts and tail fringe, a broader
+  skull with a heavier muzzle and broad-based ears, a thicker neck, rounder sections
+  and the default `smooth_angle` on every volume. 6,260 triangles. The three clips are
+  unchanged. `assets/hero.png` regenerated.
 
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 

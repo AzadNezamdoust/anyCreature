@@ -24,7 +24,8 @@
   },
   {
    "name": "size",
-   "passed": true
+   "passed": true,
+   "warned": true
   },
   {
    "name": "proportion",
@@ -52,8 +53,7 @@
   },
   {
    "name": "part_overlap",
-   "passed": true,
-   "warned": true
+   "passed": true
   },
   {
    "name": "part_seat",
@@ -62,10 +62,8 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — eye 0.81 · fur_paw 0.70 · fur_head 0.67 · fur_body 0.67 · fur_tail 0.64 · fur_leg 0.59 · ear 0.44 · claw 0.25 · nose 0.19 · pupil 0.14",
-  "part_overlap: 'front_paw.claws' sits 46% inside 'front_paw' — measured surface to surface, so this is real interpenetration, not a bounding box.",
-  "part_overlap: 'front_paw.claws.R' sits 46% inside 'front_paw.R' — measured surface to surface, so this is real interpenetration, not a bounding box.",
-  "part_overlap: 'back_paw.claws' sits 46% inside 'back_paw' — measured surface to surface, so this is real interpenetration, not a bounding box.",
-  "part_overlap: 'back_paw.claws.R' sits 46% inside 'back_paw.R' — measured surface to surface, so this is real interpenetration, not a bounding box."
+  "value_order: materials by lightness, brightest first — fur_ruff 0.88 · eye 0.81 · fur_paw 0.78 · fur_leg 0.63 · fur_body 0.58 · fur_head 0.58 · fur_tail 0.58 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14",
+  "contrast_adjacent: part \"brush\" wears the SAME material \"fur_tail\" as the \"tail\" it sits on — at reading size it is not a part, it is a bump. Give it its own entry in the palette.",
+  "contrast_adjacent: part \"brush.R\" wears the SAME material \"fur_tail\" as the \"tail\" it sits on — at reading size it is not a part, it is a bump. Give it its own entry in the palette."
  ]
 }

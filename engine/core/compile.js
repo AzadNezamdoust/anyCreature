@@ -206,6 +206,7 @@ function buildVolume(spec, vol) {
   // the containment checks — sees the extra rings as ordinary rings: same
   // bracketing joints, t just outside [0,1] so anchor lookups are untouched.
   const wantCaps = (vol.caps || ['ngon', 'ngon']).slice();
+  let dome0 = 0;                     // rings a START dome prepended; rings[dome0] is the root ring
   const domeD = Math.max(1, Math.min(6, vol.cap_rings ?? 3)) | 0;
   const domeDepth = k => {
     const d = Array.isArray(vol.cap_depth) ? vol.cap_depth[k] : vol.cap_depth;
@@ -233,6 +234,7 @@ function buildVolume(spec, vol) {
     } else {
       rings.unshift(...extra.reverse()); pts.unshift(...ec.reverse()); ringT.unshift(...et.reverse());
       for (let j = 0; j < domeD; j++) { ringSkin.unshift(sk()); secs.unshift(secs[s]); prof.unshift(prof[s]); }
+      dome0 = domeD;
     }
     wantCaps[end] = 'fan';
   }
@@ -252,17 +254,50 @@ function buildVolume(spec, vol) {
   // ── vertex colours: arc bands (0°=spine, 180°=belly) + gradient + noise ──
   const colSpec = vol.colors || {};
   const base = hex2lin((spec.palette[vol.material] || {}).color || '#888888');
-  const arcs = (colSpec.arcs || []).map(a => ({ from: a.from, to: a.to, c: hex2lin(a.color) }));
+  // An arc may also be limited ALONG the chain: "t": [t0, t1] (fractions of
+  // the chain, default the whole of it). A saddle that stops at the withers,
+  // a pale muzzle on a dark head, a dark tail tip, a cream chest that does not
+  // run under the belly — none of these are a band around the whole chain, and
+  // without a t range the only way to get them was to cut the chain in two.
+  // Arcs are applied in order, later ones over earlier ones. The dome cap rings
+  // sit at t just outside [0, 1] and belong to the end row they extend.
+  // "feather" (degrees, default 0) softens the arc's angular edges and
+  // "feather_t" (a fraction of the chain, default 0) its t edges: the band's
+  // weight ramps from 0 at the edge to 1 that far inside it, so a saddle can
+  // melt into the flank instead of stopping on a ring line. Where the ramps
+  // overlap the arc is only partly applied — the seam-blend pass (L1) will not
+  // soften an edge inside one mass, so this is the only lever for that.
+  const arcs = (colSpec.arcs || []).map(a => {
+    if (a.t !== undefined && !(Array.isArray(a.t) && a.t.length === 2))
+      throw new Error(`volume "${vol.chain}": an arc's "t" is [t0, t1] along the chain, got ${JSON.stringify(a.t)}`);
+    return { from: a.from ?? 0, to: a.to ?? 180, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
+             fa: Math.max(0, a.feather || 0), ft: Math.max(0, a.feather_t || 0) };
+  });
+  const ramp = (x, lo, hi, f) => {          // 1 inside, 0 outside, linear over f inside each edge
+    if (x < lo - 1e-9 || x > hi + 1e-9) return 0;
+    if (!(f > 0)) return 1;
+    return Math.min(1, (x - lo) / f, (hi - x) / f);
+  };
   const C = part.v.map(() => null);
   const rollOf = s2 => (secs[s2] && secs[s2].roll) || 0;
   part.rings.forEach((ring, s2) => {
+    const tt = Math.min(1, Math.max(0, ringT[s2]));
     ring.forEach((pnt, k) => {
       const vi = vIndex.get(pnt);
       const aDeg = (360 * k / sides + rollOf(s2) * 180 / Math.PI) % 360;
       const fromTop = (450 - aDeg) % 360;                 // 0=top(+W), 180=bottom
       const sym = fromTop > 180 ? 360 - fromTop : fromTop; // symmetric 0..180
       let c = base;
-      for (const a of arcs) if (sym >= a.from && sym <= a.to) c = a.c;
+      for (const a of arcs) {
+        // a full-width band (0..180) has no angular edges to feather, and an
+        // arc touching the spine or belly line has only one
+        const wa = ramp(sym, a.from, a.to, a.fa) || (a.fa > 0 && sym >= a.from && sym <= a.to
+          ? Math.min(1, a.from <= 0 ? (a.to - sym) / a.fa : 1, a.to >= 180 ? (sym - a.from) / a.fa : 1) : 0);
+        const wt = ramp(tt, a.t0, a.t1, a.ft) || (a.ft > 0 && tt >= a.t0 - 1e-9 && tt <= a.t1 + 1e-9
+          ? Math.min(1, a.t0 <= 0 ? (a.t1 - tt) / a.ft : 1, a.t1 >= 1 ? (tt - a.t0) / a.ft : 1) : 0);
+        const w = Math.max(0, Math.min(1, wa * wt));
+        if (w > 0) c = [c[0] + (a.c[0] - c[0]) * w, c[1] + (a.c[1] - c[1]) * w, c[2] + (a.c[2] - c[2]) * w];
+      }
       C[vi] = c.slice();
     });
   });
@@ -274,7 +309,7 @@ function buildVolume(spec, vol) {
     INFO.push(`volume "${vol.chain}": colors.gradient/noise are ignored — shading is one spec-level pass now (see "shading")`);
   return { material: vol.material, V: part.v, F: part.fq, skin, C, chain: vol.chain,
     faceted: vol.faceted,
-    _rings: part.rings, _pts: pts, _sides: sides, _ringT: ringT.slice(),
+    _rings: part.rings, _pts: pts, _sides: sides, _ringT: ringT.slice(), _dome0: dome0,
     _ringIdx: part.rings.map(ring => ring.map(p => vIndex.get(p))) };
 }
 
@@ -732,6 +767,106 @@ function buildPaw(spec, p) {
   return [paw, claws];
 }
 
+// ── tufts: fur that leaves the silhouette ──────────────────────────────────
+// A ruff, a mane, a bushy tail, a cheek beard, a fetlock: the wolf signature is
+// a neck ruff, and a lofted tube cannot make one — a fatter ring is still a
+// ring. A "tufts" part seats a crown of short tapered wedges on a volume's
+// surface, each rooted under the skin and pointing out, swept along the chain
+// and drooped toward the ground, with a deterministic length jitter so the
+// edge reads as fur and not as a gear. It is FLESH to the shading stack (it
+// takes the seam blend and the body light), so it belongs to the mass it
+// grows from rather than sitting on it like a plate.
+//
+//   anchor:  {chain, t, around}  around is [from, to] in degrees (the section's
+//            frame: 0 spine, 90 side, 180 belly) or one angle for a single column
+//   rows     rings of tufts (default 1), spread over "span" along t (default 0)
+//   count    tufts per row across the around range (default 6)
+//   length / width / thick   the wedge (defaults 0.1 / 0.04 / 0.025)
+//   sweep    along the chain: +1 toward the chain's end, -1 back toward its start
+//   droop    toward world down (default 0.3);  flare  along the surface normal (1)
+//   jitter   ±fraction of length, alternating per tuft (default 0.3)
+//   sides    ring sides (default 4: a diamond wedge; 6 for a rounder tuft)
+function buildTufts(spec, p, builtVols) {
+  if (p.host && !spec.joints[p.host]) throw new Error(`tufts host joint "${p.host}" missing`);
+  const an = p.anchor;
+  if (!an || !an.chain) throw new Error(`tufts "${p.name || p.host}" need an "anchor": {chain, t, around}`);
+  const bv = builtVols[an.chain];
+  if (!bv) throw new Error(`tufts "${p.name || p.host}": anchor chain "${an.chain}" has no built volume`);
+  const rangeA = Array.isArray(an.around) ? an.around : [an.around ?? 90, an.around ?? 90];
+  const rows = Math.max(1, (p.rows ?? 1) | 0), count = Math.max(1, (p.count ?? 6) | 0);
+  const span = p.span ?? 0, sides = Math.max(3, (p.sides ?? 4) | 0);
+  const L0 = p.length ?? 0.1, W = p.width ?? 0.04, TH = p.thick ?? 0.025;
+  const sweep = p.sweep ?? 0, droop = p.droop ?? 0.3, flare = p.flare ?? 1, jit = p.jitter ?? 0.3;
+  const V = [], F = [], skin = [];
+  // local chain tangent at t, from the ring table (bevel-skip drops rings, so
+  // look the bracketing rings up by their true t, as surfacePoint does)
+  const ringAt = t => {
+    const rt = bv._ringT, n = rt.length;
+    let s1 = 0; while (s1 < n - 1 && rt[s1] < t) s1++;
+    return [Math.max(0, s1 - 1), s1];
+  };
+  const tangentAt = t => {
+    const [s0, s1] = ringAt(t);
+    const d = G.sub(bv._pts[Math.min(bv._pts.length - 1, s1 + (s1 === s0 ? 1 : 0))], bv._pts[s0]);
+    return G.len(d) > 1e-9 ? G.nrm(d) : [0, 0, 1];
+  };
+  // A tuft rides the SKIN it grows from: it takes the weights of the nearest
+  // vertex of the host ring, so a ruff across two neck joints bends with the
+  // neck instead of hanging off whichever single joint was named. "host" is
+  // then only the fallback for a chain with no skin (it never is), and may be
+  // left out.
+  const skinAt = (t, aroundDeg) => {
+    const [s0, s1] = ringAt(t);
+    const s = Math.abs(bv._ringT[s0] - t) < Math.abs(bv._ringT[s1] - t) ? s0 : s1;
+    const N = bv._sides, fromTop = ((aroundDeg % 360) + 360) % 360;
+    const k = Math.round(((450 - fromTop) % 360) / 360 * N) % N;
+    const vi = bv._ringIdx[s][k];
+    const w = bv.skin && bv.skin[vi];
+    return w ? w.map(x => x.slice()) : [[p.host, 1]];
+  };
+  let made = 0;
+  for (let r = 0; r < rows; r++) {
+    const t = Math.min(1, Math.max(0, (an.t ?? 0.5) + (rows > 1 ? (r / (rows - 1) - 0.5) * span : 0)));
+    const tan = tangentAt(t);
+    for (let i = 0; i < count; i++) {
+      const a = count === 1 ? (rangeA[0] + rangeA[1]) / 2
+        : rangeA[0] + (rangeA[1] - rangeA[0]) * (i + 0.5 + (r % 2) * 0.25) / count;
+      const sp = surfacePoint(builtVols, { chain: an.chain, t, around: a });
+      let d = G.add(G.add(G.mul(sp.out, flare), G.mul(tan, sweep)), [0, -droop, 0]);
+      if (G.len(d) < 1e-6) d = sp.out.slice();
+      d = G.nrm(d);
+      // width runs around the ring (perpendicular to the normal and the chain)
+      let u1 = G.cross(sp.out, tan);
+      if (G.len(u1) < 1e-6) u1 = G.cross(sp.out, [0, 1, 0]);
+      u1 = G.nrm(G.sub(u1, G.mul(d, G.dot(u1, d))));
+      const u2 = G.nrm(G.cross(d, u1));
+      const L = L0 * (1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
+      const base = G.sub(sp.p, G.mul(sp.out, TH * 0.9));            // rooted under the skin
+      const mid = G.add(base, G.mul(d, L * 0.45));
+      const tip = G.add(G.add(base, G.mul(d, L)), [0, -droop * L * 0.15, 0]);
+      const b0 = V.length;
+      for (const [c, rw, rh] of [[base, W / 2, TH / 2], [mid, W * 0.38, TH * 0.34]])
+        for (let k = 0; k < sides; k++) {
+          const th = 2 * Math.PI * k / sides;
+          V.push(G.add(c, G.add(G.mul(u1, Math.cos(th) * rw), G.mul(u2, Math.sin(th) * rh))));
+        }
+      const ti = V.length; V.push(tip);
+      const w = skinAt(t, a);
+      while (skin.length < V.length) skin.push(w.map(x => x.slice()));
+      for (let k = 0; k < sides; k++) {
+        const k1 = (k + 1) % sides;
+        F.push([b0 + k, b0 + k1, b0 + sides + k1, b0 + sides + k]);
+        F.push([b0 + sides + k, b0 + sides + k1, ti]);
+      }
+      for (let k = 1; k < sides - 1; k++) F.push([b0, b0 + k + 1, b0 + k]);   // base, buried
+      made++;
+    }
+  }
+  INFO.push(`tufts '${p.name || p.host}': ${made} tufts on "${an.chain}" at t=${(an.t ?? 0.5).toFixed(2)}`
+    + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`);
+  return { material: p.material, V, F, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
+}
+
 const { mirrorName } = require('./skeleton.js');
 function buildFin(spec, p, builtVols) {
   // Flat plate with thickness: outline points [[u,v],...] in a plane at host,
@@ -883,7 +1018,8 @@ function compile(spec) {
     }
   }
   const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane, hand: buildHand,
-    paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols) };
+    paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols),
+    tufts: (s2, p2) => buildTufts(s2, p2, builtVols) };
   for (const p of spec.parts || []) {
     const label = p.name || `${p.type}@${p.host || 'ribs'}`;
     const sa = p.smooth_angle ?? defSmooth;
@@ -896,7 +1032,7 @@ function compile(spec) {
     if (p.type === 'eye') {
       // an eye part is a PAIR of meshes; they are two objects and get two names
       for (const m of buildEye(spec, p, builtVols)) {
-        m.part = label + (m.sub ? '.' + m.sub : '') + '.' + m.side; m.smoothAngle = sa; m.partType = p.type;
+        m.part = label + (m.sub ? '.' + m.sub : '') + '.' + m.side; m.partName = label; m.smoothAngle = sa; m.partType = p.type;
         m.hostChain = hostChain; meshes.push(m); }
     } else if (BUILDERS[p.type]) {
       // a builder may return several meshes (a paw and its claws): the first is
@@ -905,8 +1041,8 @@ function compile(spec) {
       const built = BUILDERS[p.type](spec, p);
       for (const m of Array.isArray(built) ? built : [built]) {
         const lbl = m.sub ? label + '.' + m.sub : label;
-        m.part = lbl; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
-        if (p.mirrored) { const t = mirrorMesh(m, rd); t.part = lbl + '.R'; t._mirrorSrc = m;
+        m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
+        if (p.mirrored) { const t = mirrorMesh(m, rd); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
           t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade; meshes.push(t); }
       }
     } else throw new Error(`unknown part type "${p.type}"`);

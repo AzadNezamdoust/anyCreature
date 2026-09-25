@@ -48,7 +48,7 @@ function tris(mesh) {
     const rad = Math.max(Math.hypot(a[0] - cen[0], a[1] - cen[1], a[2] - cen[2]),
                          Math.hypot(b[0] - cen[0], b[1] - cen[1], b[2] - cen[2]),
                          Math.hypot(c[0] - cen[0], c[1] - cen[1], c[2] - cen[2]));
-    return { a, b, c, n: [n[0] / L, n[1] / L, n[2] / L], cen, rad };
+    return { a, b, c, n: [n[0] / L, n[1] / L, n[2] / L], cen, rad, i: t };
   });
   Object.defineProperty(mesh, '_sdT', { value: T, enumerable: false });
   return T;
@@ -90,10 +90,12 @@ function closestOnTri(p, T) {
   return [a[0] + ab[0] * v + ac[0] * w, a[1] + ab[1] * v + ac[1] * w, a[2] + ab[2] * v + ac[2] * w];
 }
 
-// Signed distance from p to the mesh surface. NEGATIVE means inside.
-function signedDistance(p, mesh) {
+// The closest point of the surface to p: { d (signed, NEGATIVE inside), q (the
+// point), tri (the triangle it lies on: a, b, c, n, i = vertex indices) }, or
+// null for an empty mesh. signedDistance is this with only the number kept.
+function nearest(p, mesh) {
   const T = tris(mesh);
-  if (!T.length) return Infinity;
+  if (!T.length) return null;
   // Cheap bound first: a triangle whose centroid is farther than (best + its own
   // radius) cannot beat the incumbent, so most of them never get the full test.
   let best = Infinity, hit = null;
@@ -105,10 +107,16 @@ function signedDistance(p, mesh) {
     const d = Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
     if (d < best) { best = d; hit = t; bound = d; }
   }
-  if (!hit) return Infinity;
+  if (!hit) return null;
   const q = closestOnTri(p, hit);
   const side = (p[0] - q[0]) * hit.n[0] + (p[1] - q[1]) * hit.n[1] + (p[2] - q[2]) * hit.n[2];
-  return side < 0 ? -best : best;
+  return { d: side < 0 ? -best : best, q, tri: hit };
+}
+
+// Signed distance from p to the mesh surface. NEGATIVE means inside.
+function signedDistance(p, mesh) {
+  const r = nearest(p, mesh);
+  return r ? r.d : Infinity;
 }
 
 const isInside = (p, mesh) => signedDistance(p, mesh) < 0;
@@ -166,4 +174,4 @@ function islands(meshes, tol, weld = 3) {
   return [...groups.values()].sort((a, b) => b.length - a.length);
 }
 
-module.exports = { signedDistance, isInside, islands };
+module.exports = { signedDistance, nearest, isInside, islands };
