@@ -39,6 +39,15 @@ tessellation density:
 - A part builder may return several meshes (`<name>.<sub>`), each with its own shade
   class; `mirrorMesh` carries `shade` along.
 
+**Output contract (`harness/glbcheck.mjs`, mirrored into `engine/core/contract.js`)**
+
+- A file SHORTER than its header declares is now `truncated` — cut off by an interrupted
+  download, upload or copy — and says which chunk the cut falls in. It used to be reported
+  as `trailing_bytes` with a negative count ("-N byte(s) live outside the declared file"),
+  which sends the reader hunting for a smuggled payload that is not there. `trailing_bytes`
+  is kept for the carrier case: bytes BEYOND the declared length. `tools/test.sh` checks
+  both codes, and a cut in the JSON and in the BIN chunk.
+
 **Hero shot (`harness/outline.py --hero`)**
 
 - Rasterised at 2× and averaged down (anti-aliased edges), premultiplied through the

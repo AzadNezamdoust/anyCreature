@@ -72,8 +72,14 @@ refuses "engine refuses a recoloured copy (example_copy)"  "example_copy" \
         bash -c "cp example/wolf.json '$T/copy.json' && node engine/cli.js '$T/copy.json' '$T/copy.glb'"
 ok      "glbcheck: fresh build"           node harness/glbcheck.mjs "$T/wolf.glb"
 ok      "glbcheck: shipped example/wolf.glb" node harness/glbcheck.mjs example/wolf.glb
-refuses "glbcheck: refuses a truncated file" "contract violation" \
+# a cut file must be called CUT, not "bytes outside the declared file": that
+# message sends the reader hunting for a smuggled payload that is not there
+refuses "glbcheck: truncated in JSON is [truncated]" "\[truncated\].*inside the JSON chunk" \
         bash -c "head -c 4000 '$T/wolf.glb' > '$T/trunc.glb' && node harness/glbcheck.mjs '$T/trunc.glb'"
+refuses "glbcheck: truncated in BIN is [truncated]" "\[truncated\].*inside the BIN chunk" \
+        bash -c "head -c \$(( \$(wc -c < '$T/wolf.glb') - 64 )) '$T/wolf.glb' > '$T/trunc2.glb' && node harness/glbcheck.mjs '$T/trunc2.glb'"
+refuses "glbcheck: appended bytes are [trailing_bytes]" "\[trailing_bytes\]" \
+        bash -c "cat '$T/wolf.glb' > '$T/trail.glb' && printf 'PK' >> '$T/trail.glb' && node harness/glbcheck.mjs '$T/trail.glb'"
 prints  "outline.py: 4 views"             "4 views"     python3 harness/outline.py "$T/wolf.glb" "$T/ol"
 ok      "outline.py: hero shot"           python3 harness/outline.py "$T/wolf.glb" "$T/ol" --hero "$T/ol/hero.png"
 ok      "outline.py wrote metrics + thumbs" test -s "$T/ol/metrics.json" -a -s "$T/ol/sil_side_thumb48.png" -a -s "$T/ol/hero.png"

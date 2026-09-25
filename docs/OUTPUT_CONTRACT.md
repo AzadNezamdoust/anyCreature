@@ -85,7 +85,9 @@ a body with forty plates does not ship forty draw calls. The same `paw` material
 can therefore sit on a foot pad and on a nose-leaf, and anything that aggregates
 by material silently adds the two together. `part_spans` is the identity channel:
 every `id` is unique within the creature, mirrored twins carry `.R`, an eye pair
-carries `.L`/`.R`, and nothing about the rendering changes — no extra material,
+carries `.L`/`.R`, and a part built as several meshes names the extra ones
+`<part>.<sub>` — a paw's claws are `front_paw.claws` (and `front_paw.claws.R`),
+an engine-placed pupil is `eye.pupil.L` / `eye.pupil.R`. Nothing about the rendering changes — no extra material,
 no extra primitive, no extra byte of geometry. A receiver that wants "the claw"
 reads the span and slices the buffer.
 
@@ -96,8 +98,9 @@ should quote the same code so an agent can tell the submitter what happened:
 
 | Code | Meaning |
 |---|---|
-| `parse_error` | not a GLB, wrong version, truncated, unparseable JSON |
-| `trailing_bytes` | bytes outside the declared file, or after the last chunk |
+| `parse_error` | not a GLB, wrong version, an inconsistent chunk table, unparseable JSON |
+| `truncated` | the file is SHORTER than its header declares — cut off by an interrupted download, upload or copy. Nothing is hidden in it; fetch or export it again |
+| `trailing_bytes` | bytes BEYOND the declared file, or after the last chunk (the carrier case) |
 | `extra_chunk` | a chunk that is neither JSON nor BIN |
 | `duplicate_keys` | a repeated key in one JSON object (a scanner and a loader would disagree) |
 | `external_uri` | a buffer or image points outside the file |
