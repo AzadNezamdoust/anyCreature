@@ -24,4 +24,11 @@ mkdir -p out
 node engine/cli.js example/wolf.json out/_setup.glb >/dev/null
 python3 harness/outline.py out/_setup.glb out/_setup >/dev/null
 node harness/judge.mjs out/_setup.glb out/_setup _setup >/dev/null
-echo "setup OK — engine builds, checks pass, measures compute. No browser required."
+
+# Then prove the RULERS separate good from bad on this machine: the known-good
+# sample must build, the two known-bad ones must be refused for their own
+# faults, and the colour ruler must tell the example from a greyed copy of it.
+# Until this line existed the docs promised "calibrate OK" and nothing printed
+# it — a ruler nobody checks is a ruler that passes everything.
+python3 harness/calibrate.py || { echo "calibrate FAILED — do not start work; report this."; exit 1; }
+echo "calibrate OK — engine builds, rulers separate good from bad. No browser required."

@@ -1,5 +1,6 @@
 {
  "name": "quadruped_light",
+ "_purpose": "calibration KNOWN-GOOD sample: must build with zero BLOCK lines (harness/calibrate.py, run by setup.sh). If a new engine check refuses it, fix THIS spec the legitimate way (as the check says) — never weaken the check. The palette is deliberately plain: this sample calibrates the engine rulers; the colour ruler is calibrated on example/wolf.json.",
  "_template": "ANCHOR, not target. A validated light quadruped (wolf lineage, bred against the approved 1.2 reference over 3 measured rounds). Start here, then DEVIATE: declare your exaggeration vector (which 1-2 numbers you push past this anchor, and how far) in the design card. Converging back to these numbers means you designed nothing.",
  "_anchor_numbers": {
   "W_over_H": 1.41,
@@ -224,7 +225,7 @@
    "sides": 16,
    "profile": [
     [
-     0.0,
+     0,
      0.14,
      0.16
     ],
@@ -267,7 +268,7 @@
      0.19
     ],
     [
-     1.0,
+     1,
      0.175,
      0.2
     ]
@@ -289,7 +290,8 @@
       "color": "#f2ead7"
      }
     ]
-   }
+   },
+   "smooth_angle": 17
   },
   {
    "chain": "head",
@@ -298,7 +300,7 @@
    "sides": 14,
    "profile": [
     [
-     0.0,
+     0,
      0.155,
      0.17
     ],
@@ -334,7 +336,7 @@
      0.072
     ],
     [
-     1.0,
+     1,
      0.06,
      0.052
     ]
@@ -356,7 +358,8 @@
       "color": "#f2ead7"
      }
     ]
-   }
+   },
+   "smooth_angle": 20
   },
   {
    "chain": "tail",
@@ -396,7 +399,8 @@
       "color": "#57513f"
      }
     ]
-   }
+   },
+   "smooth_angle": 31
   },
   {
    "chain": "LFront",
@@ -428,7 +432,8 @@
     "none",
     "dome"
    ],
-   "ring_step": 0.055
+   "ring_step": 0.055,
+   "smooth_angle": 35
   },
   {
    "chain": "LBack",
@@ -471,11 +476,13 @@
     "none",
     "dome"
    ],
-   "ring_step": 0.055
+   "ring_step": 0.055,
+   "smooth_angle": 35
   }
  ],
  "parts": [
   {
+   "name": "ear",
    "type": "fin",
    "host": "Skull",
    "material": "ear",
@@ -517,6 +524,7 @@
    "mirrored": true
   },
   {
+   "name": "eye",
    "type": "eye",
    "host": "Brow",
    "material": "eye",
@@ -528,12 +536,13 @@
    }
   },
   {
+   "name": "nose_pad",
    "type": "spike",
    "host": "Nose",
    "offset": [
     0,
     0.005,
-    0.0
+    0
    ],
    "dir": [
     0,
@@ -550,6 +559,7 @@
    "material": "nose"
   },
   {
+   "name": "front_paw",
    "type": "paw",
    "host": "LFrontToe",
    "material": "fur_paw",
@@ -561,6 +571,7 @@
    "mirrored": true
   },
   {
+   "name": "back_paw",
    "type": "paw",
    "host": "LBackToe",
    "material": "fur_paw",
@@ -672,15 +683,15 @@
      "rx": [
       [
        0,
-       -26
+       -20.8
       ],
       [
        0.5,
-       28
+       22.4
       ],
       [
        1,
-       -26
+       -20.8
       ]
      ]
     },
@@ -728,15 +739,15 @@
      "rx": [
       [
        0,
-       24
+       19.2
       ],
       [
        0.5,
-       -22
+       -17.6
       ],
       [
        1,
-       24
+       19.2
       ]
      ]
     },
@@ -835,8 +846,335 @@
        9
       ]
      ]
+    },
+    "Rump": {
+     "ty": [
+      [
+       0,
+       0.0744
+      ],
+      [
+       0.042,
+       0.0342
+      ],
+      [
+       0.083,
+       0.0369
+      ],
+      [
+       0.125,
+       0.0369
+      ],
+      [
+       0.167,
+       0.0369
+      ],
+      [
+       0.208,
+       0.0338
+      ],
+      [
+       0.25,
+       0.0246
+      ],
+      [
+       0.292,
+       0.0094
+      ],
+      [
+       0.333,
+       0.0076
+      ],
+      [
+       0.375,
+       0.0076
+      ],
+      [
+       0.417,
+       0.0137
+      ],
+      [
+       0.458,
+       0.0269
+      ],
+      [
+       0.5,
+       0.0293
+      ],
+      [
+       0.542,
+       0.0309
+      ],
+      [
+       0.583,
+       0.0315
+      ],
+      [
+       0.625,
+       0.0325
+      ],
+      [
+       0.667,
+       0.0354
+      ],
+      [
+       0.708,
+       0.0374
+      ],
+      [
+       0.75,
+       0.0464
+      ],
+      [
+       0.792,
+       0.0534
+      ],
+      [
+       0.833,
+       0.0598
+      ],
+      [
+       0.875,
+       0.0664
+      ],
+      [
+       0.917,
+       0.0704
+      ],
+      [
+       0.958,
+       0.0744
+      ],
+      [
+       1,
+       0.0744
+      ]
+     ]
     }
    }
+  }
+ },
+ "function": {
+  "body": "axis",
+  "head": "ornament",
+  "tail": "ornament",
+  "LFront": "locomotion",
+  "LBack": "locomotion"
+ },
+ "joint_range": {
+  "Rump": {
+   "rx": [
+    -20,
+    20
+   ],
+   "rz": [
+    -15,
+    15
+   ]
+  },
+  "Hips": {
+   "rx": [
+    -20,
+    20
+   ],
+   "rz": [
+    -18,
+    18
+   ]
+  },
+  "Spine": {
+   "rx": [
+    -25,
+    25
+   ],
+   "rz": [
+    -15,
+    15
+   ]
+  },
+  "Chest": {
+   "rx": [
+    -25,
+    25
+   ],
+   "rz": [
+    -15,
+    15
+   ]
+  },
+  "NeckB": {
+   "rx": [
+    -35,
+    45
+   ],
+   "ry": [
+    -45,
+    45
+   ],
+   "rz": [
+    -20,
+    20
+   ]
+  },
+  "Neck2": {
+   "rx": [
+    -30,
+    40
+   ],
+   "ry": [
+    -40,
+    40
+   ],
+   "rz": [
+    -20,
+    20
+   ]
+  },
+  "HeadRoot": {
+   "rx": [
+    -40,
+    40
+   ],
+   "ry": [
+    -60,
+    60
+   ],
+   "rz": [
+    -30,
+    30
+   ]
+  },
+  "Skull": {
+   "rx": [
+    -25,
+    25
+   ],
+   "ry": [
+    -30,
+    30
+   ],
+   "rz": [
+    -20,
+    20
+   ]
+  },
+  "Brow": {
+   "rx": [
+    -10,
+    10
+   ]
+  },
+  "Muzzle": {
+   "rx": [
+    -8,
+    35
+   ]
+  },
+  "Nose": {
+   "rx": [
+    -5,
+    5
+   ]
+  },
+  "TailRoot": {
+   "rx": [
+    -45,
+    55
+   ],
+   "ry": [
+    -40,
+    40
+   ],
+   "rz": [
+    -25,
+    25
+   ]
+  },
+  "Tail1": {
+   "rx": [
+    -40,
+    50
+   ],
+   "ry": [
+    -40,
+    40
+   ]
+  },
+  "Tail2": {
+   "rx": [
+    -40,
+    50
+   ],
+   "ry": [
+    -40,
+    40
+   ]
+  },
+  "TailTip": {
+   "rx": [
+    -35,
+    45
+   ],
+   "ry": [
+    -35,
+    35
+   ]
+  },
+  "LFrontRoot": {
+   "rx": [
+    -50,
+    60
+   ],
+   "ry": [
+    -25,
+    25
+   ]
+  },
+  "LFrontElbow": {
+   "rx": [
+    -80,
+    40
+   ]
+  },
+  "LFrontWrist": {
+   "rx": [
+    -35,
+    35
+   ]
+  },
+  "LFrontToe": {
+   "rx": [
+    -30,
+    30
+   ]
+  },
+  "LBackRoot": {
+   "rx": [
+    -55,
+    65
+   ],
+   "ry": [
+    -25,
+    25
+   ]
+  },
+  "LBackKnee": {
+   "rx": [
+    -40,
+    80
+   ]
+  },
+  "LBackHock": {
+   "rx": [
+    -70,
+    35
+   ]
+  },
+  "LBackToe": {
+   "rx": [
+    -35,
+    35
+   ]
   }
  }
 }
