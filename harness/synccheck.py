@@ -318,7 +318,7 @@ SKIP = ('node_modules', '.git', 'example/', 'calibration/', 'assets/',
         'harness/synccheck.py')   # this file IS the pattern list
 leaks = []
 for root, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git')]
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude')]
     for fn in files:
         if not fn.endswith(('.md', '.py', '.js', '.mjs', '.json', '.sh', '.ps1')):
             continue
@@ -341,7 +341,7 @@ if leaks:
 # to catch one. The rule is the filename itself: what a notebook taught the
 # pipeline belongs in the cards and the code.
 for root, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out',
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out',
                                             'delivery', 'creatures')]
     for fn in files:
         if fn.upper().startswith('DEVLOG'):
@@ -357,7 +357,7 @@ for root, dirs, files in os.walk(ROOT):
 # vertices already hold. The offline viewer is exempt: it is HTML the CUSTOMER
 # opens, and it never runs here.
 for root, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
     for fn in files:
         if not fn.endswith(('.py', '.js', '.mjs', '.sh', '.ps1')):
             continue
@@ -396,7 +396,7 @@ if _site:
 PLACEHOLDERS = ('C:\\path\\to\\', '/path/to/', 'D:\\path\\to\\')
 SCAN_EXT = ('.md', '.js', '.mjs', '.py', '.sh', '.json', '.html', '.ps1', '.yml')
 for dirpath, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
     for f in files:
         if not f.endswith(SCAN_EXT) or f in ('three-bundle.js', 'synccheck.py'):
             continue
@@ -418,7 +418,7 @@ for dirpath, dirs, files in os.walk(ROOT):
 # it is called, and then no one can open it. Four of these survived 1.3.1's
 # first pack, left behind when their targets were held back from the release.
 for dirpath, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
     for f in files:
         if not f.endswith(SCAN_EXT) or f == 'three-bundle.js':
             continue
@@ -439,7 +439,7 @@ REF_RE = re.compile(r'(?<![\w./-])(?:harness|engine|tools|calibration|example|ca
                     r'/[A-Za-z0-9_./-]*[A-Za-z0-9_]\.(?:py|mjs|js|json|md|sh|ps1|html|png|glb)\b')
 REF_EXT = SCAN_EXT + ('.yml', '.yaml', '.html')
 for dirpath, dirs, files in os.walk(ROOT):
-    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
     for f in files:
         if not f.endswith(REF_EXT) or f in ('three-bundle.js', 'synccheck.py', 'CHANGELOG.md'):
             continue
@@ -462,7 +462,7 @@ VER_RE = re.compile(r'(?<![\w@.])(\d+)\.(\d+)\.(\d+)(?![\w.])')
 here = tuple(int(x) for x in version.split('.')) if re.fullmatch(r'\d+\.\d+\.\d+', version) else None
 if here:
     for dirpath, dirs, files in os.walk(ROOT):
-        dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+        dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
         for f in files:
             if not f.endswith(SCAN_EXT) or f == 'three-bundle.js':
                 continue
