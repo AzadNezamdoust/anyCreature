@@ -10,7 +10,7 @@
 > write one JSON spec → `node engine/cli.js spec.json out/creature.glb` → follow
 > the cards in `cards/`. Nothing else needs writing.
 
-Author: **Ariescar**. The engine and the harness scripts are original work. One third-party component IS bundled: `harness/assets/three-bundle.js` is a build of three.js (MIT, © 2010-2025 Three.js Authors) used by the render tools and the delivered showroom — its licence notice travels in the file and in `THIRD-PARTY-NOTICES.md`. Everything else npm installs at setup time. Licence: MIT (`LICENSE`); third-party attributions in `THIRD-PARTY-NOTICES.md`.
+Author: **Ariescar**. The engine and the harness scripts are original work. One third-party component IS bundled: `harness/assets/three-bundle.js` is a build of three.js (MIT, © 2010-2025 Three.js Authors) used by the delivered offline showroom viewer — its licence notice travels in the file and in `THIRD-PARTY-NOTICES.md`. Everything else npm installs at setup time. Licence: MIT (`LICENSE`); third-party attributions in `THIRD-PARTY-NOTICES.md`.
 
 A session receives an order like "make me a menacing mountain giant", asks exactly
 ONE question (card 01), and delivers a skinned, animated, vertex-coloured, **AO-baked GLB**
@@ -48,9 +48,9 @@ MANUAL.md            this file
 README.md            repository front page (humans)
 LICENSE              MIT
 THIRD-PARTY-NOTICES.md  bundled + installed dependency licences
-SECURITY.md          local servers, the public key, untrusted input
+SECURITY.md          what runs locally (no sockets, no browser), the public key, untrusted input
 VERSION              1.3.2
-setup.sh             deps + calibration self-check
+setup.sh / setup.ps1 deps + example self-check + red/green calibration ("calibrate OK")
 cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTAX.md
 engine/              cli.js + core/ — the ACS engine v2
   core/normals.js    angle-weighted normals + `smooth_angle` creases (bodies stay smooth)
@@ -69,9 +69,23 @@ harness/
   gates.json/.py     the map: every check tagged block-or-advise and
                      allocate-or-verify. `python3 harness/gates.py [STAGE]`
   roundcheck.py      counts repair rounds and refuses the third tweak (iron law 3)
-  assets/            three-bundle.js for the render tools
-calibration/         wolf_green (must build) · wolf_red + red_5050 (must be blocked)
+  round.py           one round in one command: build, silhouettes, measures, pre-check
+  brief.py           the brief checked for presence (never content) + the two-pole distance
+  identity.py        Gate 1's identity verdict, counted from the reader's words
+  partreads.py       MID part reads built and batched in one command
+  fit.py             applies the engine's arithmetic fixes (root, proportion, size)
+  autofix.mjs        ground offset, loop closure, aim compensation in the clips
+  graft.py           transplants a part between creatures at spec level
+  wash.py            rewrites a GLB clean; glbcheck.mjs checks the output contract
+  ship.py            the closing in one command (package, and publish only on a yes)
+  calibrate.py       the red/green ruler calibration setup runs
+  synccheck.py       pre-push consistency check (versions, promises, dead references, leaks)
+  canary/            decoy images for the blind reads; specs/ the spec template
+  assets/            showroom.html + three-bundle.js for the delivered offline viewer
+calibration/         wolf_green (must build) · wolf_red + red_5050 (must be blocked, each for its own fault)
 example/             wolf.json + wolf.glb — a bred, approved light quadruped
+docs/                OUTPUT_CONTRACT.md — what every shipped GLB guarantees
+tools/               test.sh (the whole self-check suite, what CI runs) · sync-contract.mjs
 ```
 
 ## The engine in seven lines

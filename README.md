@@ -21,8 +21,8 @@ offline showroom viewer.
 
 *Every creature is compiled from one JSON spec. No mesh files, no downloaded art
 packs, no photogrammetry. The worked example that ships with this repo,
-[`example/wolf.json`](example/wolf.json), is 2,211 vertices and 31 joints written
-out by the engine from plain text.*
+[`example/wolf.json`](example/wolf.json), is a few thousand vertices and 31 joints
+written out by the engine from plain text.*
 
 ---
 
@@ -34,8 +34,10 @@ node engine/cli.js example/wolf.json out/wolf.glb
 ```
 
 `setup.sh` must print **`calibrate OK`** before you trust anything else: it builds one
-spec that has to pass and two that have to be blocked, so you know the rulers separate
-good from bad on your machine.
+spec that has to pass and two that have to be blocked — each for its own named fault —
+and checks the colour ruler tells the example from a greyed copy of it, so you know the
+rulers separate good from bad on your machine (`harness/calibrate.py`). Any failure
+exits non-zero. `bash tools/test.sh` runs the whole self-check suite, the same one CI runs.
 
 To run the full text-to-creature session, give your agent (Claude Code,
 Cursor, a VM agent — anything that runs shell commands) EXACTLY this:
@@ -77,7 +79,7 @@ Three things that make or break the result:
 |---|---|
 | `engine/` | The ACS engine. One JSON spec in, one skinned GLB out. Zero runtime dependencies — `node engine/cli.js spec.json out.glb` is the whole interface. |
 | `cards/` | The five stage cards the executing session reads, plus the spec syntax on one page. |
-| `harness/` | Measuring tools (silhouettes, mask metrics, claims judge), the delivery packer and the publisher. |
+| `harness/` | Measuring tools (silhouettes, layout and colour measures, claims judge), the round/brief/identity helpers, calibration, the delivery packer and the publisher. |
 | `example/` | A bred, approved light quadruped to read and copy from. |
 | `calibration/` | One sample that must build and two that must be blocked — proof the rulers separate good from bad. |
 
@@ -123,7 +125,7 @@ skull, a right thigh collapsed to 40% depth by mirrored skinning.
 
 ![four silhouette views the blind reader is shown](assets/silhouettes.png)
 
-Every round renders these four views, reduces them to masks, and computes the numbers
+Every round projects these four views from the vertices, reduces them to masks, and computes the numbers
 the design card declared a target for — width over height, mass thirds, torso depth
 contrast, leg fraction, silhouette turn count, zigzag alignment, and IoU against the
 previous round as a regression guard. The 24px thumbnail is what the blind reader
@@ -177,12 +179,14 @@ Form beats obedience, everywhere.
 | `harness/outline.py` | THE measuring tool. Silhouettes, thumbnails, layout and boldness measures, per-part shares, colour, and `hero.png` — all projected from the vertices. |
 | `harness/judge.mjs` | Claims judge over those numbers — part shares, focal contrast, saturated area, rig/anim/triangle budgets. |
 | `harness/deliver.py` | Stamps identity into the GLB, writes the offline showroom viewer and `hero.png`, builds the upload pack. |
+| `harness/calibrate.py` | The red/green ruler calibration `setup.sh` runs. |
+| `tools/test.sh` | The whole self-check suite: sync check, calibration, every harness tool on the example. CI runs exactly this. |
 | `harness/publish.mjs` | Gobkit publisher. Only runs after an explicit yes, and always tries the upload before offering the manual page. |
 
 ## Requirements
 
 Node 18+ and Python 3.9+. Windows: run `setup.ps1` in PowerShell (or `setup.sh` in Git Bash/WSL). `setup.sh` installs `three`, `numpy`, `pillow` and `scipy`,
-then builds the shipped example end to end as a self-check. No browser is installed
+then builds the shipped example end to end and runs the red/green calibration. No browser is installed
 or launched. The engine alone needs nothing but Node; the dependencies are for the
 measuring tools and the offline viewer.
 
@@ -196,8 +200,9 @@ dependency-free import inside a server or Worker.
 
 ## Security
 
-Short-lived local servers used by the render tools bind to `127.0.0.1` only, and
-Chromium runs with its OS sandbox enabled. The Gobkit submission key in
+Nothing in this package opens a socket or launches a browser: as of 1.3.2 every
+measurement is arithmetic on the vertices. The only network call is `publish.mjs`,
+and only after the user's explicit yes. The Gobkit submission key in
 `harness/gobkit.json` is **public by design** — it authorises posting to the community
 wall and nothing else. Details and reporting: [`SECURITY.md`](SECURITY.md).
 

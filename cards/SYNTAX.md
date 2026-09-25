@@ -169,8 +169,10 @@ Keys are chain names. A chain listed in `mirror` covers its twin automatically.
 A part bolted onto a chain inherits that chain's function, so `"neck": "effector"`
 covers the blade mounted on the neck; naming the part directly also works.
 
-Five words, all manufacturing vocabulary. Nothing here says how hard a thing hits or
-what it is worth in a fight — that is the receiving system's business.
+Four words, all manufacturing vocabulary. Nothing here says how hard a thing hits or
+what it is worth in a fight — that is the receiving system's business. Today only
+`effector` changes what a check does (`effector_leads`, `attack_windup`); the other
+three are recorded for the receiving system and not yet read by any check.
 
 **A declaration is not a label; it is a claim the engine checks:**
 

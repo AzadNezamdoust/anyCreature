@@ -16,6 +16,10 @@ What it verifies:
   3. required files      everything the cards and scripts point at exists
   4. leak scan           strings — and whole files — that must never appear
                          in a public tree
+  5. no dead references  every repo path named anywhere that ships (CI,
+                         setup scripts, docs, cards, harness, engine
+                         messages) exists — a retired script left in the
+                         CI workflow kept CI red while this said "Safe to ship"
 """
 import os, re, sys, subprocess, shutil
 
@@ -94,6 +98,12 @@ FEATURES = [
     ('engine/core/ao.js',       'bakeAO',           'vertex AO bake'),
     ('engine/core/normals.js',  'smoothSplit',      'smoothing-angle normals'),
     ('setup.sh',                'NO BROWSER',       'setup installs no browser'),
+    ('setup.sh',                'harness/calibrate.py', 'setup runs the red/green calibration'),
+    ('setup.sh',                'calibrate OK',     'setup prints the line the docs promise'),
+    ('setup.ps1',               'harness/calibrate.py', 'Windows setup runs the calibration too'),
+    ('setup.ps1',               'calibrate OK',     'Windows setup prints the promised line'),
+    ('harness/calibrate.py',    "RED_5050_ONLY = {'proportion'}", 'red_5050 must fail on proportion alone'),
+    ('.github/workflows/smoke.yml', 'tools/test.sh', 'CI runs the whole self-check suite'),
     ('harness/outline.py',      'def hero_png',     'the hero shot is projected, not rendered'),
     ('harness/outline.py',      'def structure',    'clips/skins/tris read from the glTF header'),
     ('harness/outline.py',      'def part_boxes',   'per-part bboxes without a scene graph'),
@@ -215,8 +225,9 @@ REQUIRED = [
     'calibration/red_5050.json',
     'example/wolf.json', 'example/wolf.glb',
     'harness/graft.py', 'harness/glbcheck.mjs', 'engine/core/contract.js',
-    'harness/ship.py',
-    'tools/sync-contract.mjs',
+    'harness/ship.py', 'harness/calibrate.py',
+    'tools/sync-contract.mjs', 'tools/test.sh',
+    '.github/workflows/smoke.yml',
     'docs/OUTPUT_CONTRACT.md', 'docs/HANDOVER_sanitize.md',
     'harness/canary/answers.json', 'harness/canary/ball.png',
     'harness/canary/spike.png', 'harness/canary/wolf_side.png',
@@ -415,6 +426,30 @@ for dirpath, dirs, files in os.walk(ROOT):
         for ref in sorted(set(re.findall(r'docs/[A-Za-z0-9_.-]+\.md', read(rel) or ''))):
             if not os.path.exists(os.path.join(ROOT, ref)):
                 bad.append(f'{rel} points at {ref}, which does not ship')
+
+# ── 5b. no shipped file names a repo path that does not ship ─────────────────
+# The docs/ rule above, for every other folder. 1.3.2 retired six scripts and
+# the CI workflow kept running one of them, so CI went red on every push while
+# this file said "Safe to ship"; setup and the cards kept promising output from
+# a calibration script that was gone. A reference is any `<folder>/<file>.<ext>`
+# for the repo's own folders, in any shipped text file. Exempt: CHANGELOG.md
+# (history names what it retired, on purpose), this file (it names the paths it
+# checks for, conditionally), and the bundled three.js.
+REF_RE = re.compile(r'(?<![\w./-])(?:harness|engine|tools|calibration|example|cards|assets)'
+                    r'/[A-Za-z0-9_./-]*[A-Za-z0-9_]\.(?:py|mjs|js|json|md|sh|ps1|html|png|glb)\b')
+REF_EXT = SCAN_EXT + ('.yml', '.yaml', '.html')
+for dirpath, dirs, files in os.walk(ROOT):
+    dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', 'out', 'delivery')]
+    for f in files:
+        if not f.endswith(REF_EXT) or f in ('three-bundle.js', 'synccheck.py', 'CHANGELOG.md'):
+            continue
+        rel = os.path.relpath(os.path.join(dirpath, f), ROOT).replace(os.sep, '/')
+        txt = read(rel) or ''
+        for mm in REF_RE.finditer(txt):
+            ref = mm.group(0)
+            if not os.path.exists(os.path.join(ROOT, ref)):
+                line = txt[:mm.start()].count('\n') + 1
+                bad.append(f'{rel}:{line} names {ref}, which does not ship')
 
 # ── 6. nothing describes a version that has not been released ────────────────
 # A public tree that says it behaves "identically to" a version that is not out

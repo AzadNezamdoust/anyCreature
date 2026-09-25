@@ -67,10 +67,10 @@ Fill all nine, in one short block, then freeze it:
 
 | Slot | What it must say | Who reads it later |
 |---|---|---|
-| identity | "reads as: X" — the noun a stranger should say | Gate 1 (3 of 4 views, identity view mandatory) |
+| identity | "reads as: X (accepted: a, b, c)" — the noun a stranger should say, and the words that still count as it | Gate 1 (3 of 4 views, identity view mandatory); `identity.py` matches against exactly this list |
 | feel | one phrase: heavy / fast / sharp / floating | the 24px read |
 | height | real-world metres | `size` gate (±15%, engine BLOCKs) |
-| signature | ONE named part, and which view carries it | `part_exists`, `part_signature`, MID whitelist, HIGH main colour |
+| signature | ONE named part, which view carries it, and "silhouette: yes" or "silhouette: no" — whether it has an outline at all | `part_exists`, `part_signature`, MID whitelist, HIGH main colour |
 | mass hierarchy | which masses are primary / secondary / detail | `share_hierarchy` (6:3:1) |
 | two focals | the dominant one and the runner-up | `focal_contrast` (≥2× apart) |
 | stance | how the weight is planted; what is asymmetric | `balance`, and the bind pose IS the pose |
@@ -95,7 +95,7 @@ rounds refine mass; they do not invent objects. Spend the thought here.
 **Two slots must also name the CHAINS they mean**, like this:
 
 ```
-| signature  | the pair of giant pincers — carried by the SIDE view  chains: LClaw, RClaw |
+| signature  | the pair of giant pincers — carried by the SIDE view, silhouette: yes  chains: LClaw, RClaw |
 | two focals | dominant = the right pincer · runner-up = the boulder in its net  chains: RClaw, net |
 ```
 

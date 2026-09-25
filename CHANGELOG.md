@@ -2,6 +2,24 @@
 
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
+**Pipeline integrity fixes (after the 1.3.2 cut)**
+
+- `setup.sh` promised "calibrate OK" and printed "setup OK" without calibrating
+  anything: `calibrate.py` had been retired with the browser. It is back as
+  `harness/calibrate.py`, browser-free, and both setup scripts run it and exit
+  non-zero when it fails. It now also requires each red sample to be refused for
+  its OWN fault (red_5050: `proportion` and nothing else), and a crash with no
+  `BLOCK:` line no longer counts as a block.
+- The calibration samples had rotted: the known-good `wolf_green` was refused by five
+  of the 1.3.2 checks. It now declares names, `joint_range`, `function` and
+  per-volume `smooth_angle`, and its gait no longer clips — no check was relaxed.
+- CI ran `harness/silmetrics.mjs`, retired above, so it failed on every push. CI now
+  runs `tools/test.sh`, the whole self-check suite, and `synccheck.py` refuses any
+  shipped file that names a repo path which does not exist.
+- Harness bugs: `gates.py --by`, `ship.py --help`, `fit.py` litter and absolute-joint
+  proportion, `round.py`/`partreads.py` from another directory, `graft.py` part-name
+  clashes and membrane track renames.
+
 **The declaration**
 
 - `function` on each chain: `axis` / `locomotion` / `effector` / `ornament`. Manufacturing
