@@ -14,7 +14,7 @@ offline showroom viewer.
 [![Output](https://img.shields.io/badge/output-glTF%202.0-000000.svg)](https://www.khronos.org/gltf/)
 [![Tooling](https://img.shields.io/badge/tooling-Node%2018%2B%20%C2%B7%20Python%203.9%2B-3776ab.svg)](setup.sh)
 
-<img src="assets/hero.png" width="560" alt="anyCreature — a winged creature compiled from a one-line order">
+<img src="assets/hero.png" width="560" alt="anyCreature — the shipped example wolf, compiled from example/wolf.json">
 
 
 </div>
