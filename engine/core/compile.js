@@ -616,7 +616,96 @@ function buildMembrane(spec, p) {
     if (gap > 0.35 * reach)
       INFO.push(`WARN membrane '${p.name || 'membrane'}': root gap ${gap.toFixed(2)} between the leading and trailing ribs, ${Math.round(100 * gap / reach)}% of this membrane's own reach. Nothing brings the trailing rib home, so the silhouette stays unenclosed and reads as spread fingers instead of one sheet — end the rib list back at the body.`);
   }
-  return { material: p.material, V, F, skin, doubleSided: true, faceted: p.faceted };
+  const Cc = p.colors ? membraneColours(spec, p, V, C, S, U, ribs.length) : undefined;
+  return { material: p.material, V, F, skin, doubleSided: true, faceted: p.faceted, C: Cc };
+}
+
+// ── membrane colours: bands in the sheet's own (u, t) frame ────────────────
+// A membrane used to ship one flat colour: `colors.arcs` is a band AROUND a
+// ring-built mesh and a sheet has no rings. What a wing wants is written in
+// the sheet's own two coordinates instead — u ACROSS the sheet, 0 at the
+// leading rib and 1 at the trailing rib; t ALONG it, 0 at the root and 1 at
+// the tip — and the compiler prints which rib is which so nobody guesses.
+//
+//   "colors": {
+//     "arcs":  [ {"u":[0,0.2], "t":[0,1], "color":"#...", "feather_u":0.2, "feather_t":0} ],
+//     "veins": {"color":"#...", "width":0.35} }
+//
+// arcs   bands, later over earlier, on the material colour: a darker leading
+//        edge is u [0, 0.2]; a pale root fading to the tip is t [0, 0.5] with
+//        feather_t 0.5; the whole sheet warmer at the tip is t [0.5, 1].
+// veins  a darkening centred on each rib column, `width` wide as a fraction of
+//        the rib-to-rib spacing (default 0.35), smoothstepped to 0 — the ribs
+//        show through the skin the way a bat's fingers do.
+//
+// Resolved by the vertices, like every arc: `across` columns sit between two
+// ribs, so a feather_u narrower than 1 / ((ribs - 1) x across) and a vein
+// narrower than 1 / across land between two vertices and ship a hard edge;
+// the compiler says so with the numbers.
+function membraneColours(spec, p, V, C, S, U, nRibs) {
+  const label = `membrane "${p.name || 'membrane'}"`;
+  const cs = p.colors || {};
+  const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
+  const uStep = 1 / Math.max(1, C - 1), tStep = 1 / Math.max(1, S);
+  const arcs = (cs.arcs || []).map(a => {
+    for (const k of ['u', 't']) if (a[k] !== undefined && !(Array.isArray(a[k]) && a[k].length === 2))
+      throw new Error(`${label}: an arc's "${k}" is [${k}0, ${k}1] across (u) or along (t) the sheet, got ${JSON.stringify(a[k])}`);
+    if (a.from !== undefined || a.to !== undefined)
+      throw new Error(`${label}: a membrane arc is written in "u" (across: 0 leading rib, 1 trailing rib) and "t" (along: 0 root, 1 tip), not in degrees — there is no ring to go around`);
+    if (!a.color) throw new Error(`${label}: an arc needs a "color"`);
+    return { u0: a.u ? a.u[0] : 0, u1: a.u ? a.u[1] : 1, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1,
+             fu: Math.max(0, a.feather_u || 0), ft: Math.max(0, a.feather_t || 0), c: hex2lin(a.color) };
+  });
+  for (const a of arcs) {
+    if ((a.u0 > 0 || a.u1 < 1) && a.fu > 0 && a.fu < uStep)
+      INFO.push(`WARN ${label}: arc u ${a.u0}..${a.u1} has "feather_u": ${a.fu} but the columns are ${uStep.toFixed(3)} apart in u `
+        + `(${nRibs} ribs x "across" ${U}) — a feather narrower than the column step lands between two vertices and does nothing. `
+        + `Write it at 2-3x the step (${(uStep * 2).toFixed(2)}-${(uStep * 3).toFixed(2)}), or raise "across".`);
+    if ((a.t0 > 0 || a.t1 < 1) && a.ft > 0 && a.ft < tStep)
+      INFO.push(`WARN ${label}: arc t ${a.t0}..${a.t1} has "feather_t": ${a.ft} but the rows are ${tStep.toFixed(3)} apart in t `
+        + `("along" ${S}) — a feather narrower than the row step lands between two vertices and does nothing. `
+        + `Write it at 2-3x the step (${(tStep * 2).toFixed(2)}-${(tStep * 3).toFixed(2)}), or raise "along".`);
+  }
+  let veins = null;
+  if (cs.veins) {
+    if (!cs.veins.color) throw new Error(`${label}: "veins" needs a "color"`);
+    veins = { c: hex2lin(cs.veins.color), w: Math.max(0.01, Math.min(0.5, cs.veins.width ?? 0.35)) };
+    if (veins.w < 1 / U)
+      INFO.push(`WARN ${label}: "veins" width ${veins.w} is under one column (1/${U} = ${(1 / U).toFixed(2)} of the rib spacing) — `
+        + `only the rib column itself takes the colour and it ships as a hard stripe. Write it at 2-3 columns `
+        + `(${(2 / U).toFixed(2)}-${(3 / U).toFixed(2)}), or raise "across".`);
+  }
+  const edgeW = (x, lo, hi, f, openLo, openHi) => {
+    if (x < lo - 1e-9 || x > hi + 1e-9) return 0;
+    if (!(f > 0)) return 1;
+    let u = 1;
+    if (!openLo) u = Math.min(u, (x - lo) / f);
+    if (!openHi) u = Math.min(u, (hi - x) / f);
+    u = Math.max(0, Math.min(1, u));
+    return u * u * (3 - 2 * u);
+  };
+  const out = V.map(() => base.slice());
+  for (let j = 0; j < C; j++) {
+    const u = j * uStep;
+    const dj = Math.abs(j / U - Math.round(j / U));          // distance to the nearest rib, in rib spacings
+    for (let sI = 0; sI <= S; sI++) {
+      const t = sI * tStep;
+      let c = base;
+      for (const a of arcs) {
+        const w = edgeW(u, a.u0, a.u1, a.fu, a.u0 <= 0, a.u1 >= 1) * edgeW(t, a.t0, a.t1, a.ft, a.t0 <= 0, a.t1 >= 1);
+        if (w > 0) c = [c[0] + (a.c[0] - c[0]) * w, c[1] + (a.c[1] - c[1]) * w, c[2] + (a.c[2] - c[2]) * w];
+      }
+      if (veins) {
+        const x = Math.min(1, dj / veins.w), w = 1 - x * x * (3 - 2 * x);
+        if (w > 0) c = [c[0] + (veins.c[0] - c[0]) * w, c[1] + (veins.c[1] - c[1]) * w, c[2] + (veins.c[2] - c[2]) * w];
+      }
+      out[j * (S + 1) + sI] = c.slice();
+    }
+  }
+  const ribName = i => p.ribs[i].chain || (p.ribs[i].joints || []).join('>');
+  INFO.push(`${label}: colours — u 0 is the leading rib (${ribName(0)}), u 1 the trailing rib (${ribName(nRibs - 1)}); `
+    + `t 0 is the root, 1 the tip; ${arcs.length} arc(s)${veins ? `, veins ${(veins.w * 100).toFixed(0)}% of the rib spacing` : ''}`);
+  return out;
 }
 
 
