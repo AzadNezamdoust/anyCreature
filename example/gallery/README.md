@@ -19,10 +19,10 @@ hallux back). A long whip tail ends in a violet feather fan.
 
 | | |
 |---|---|
-| build | 45 joints, 6,636 vertices, 8,564 triangles (claims band 4,000-9,000), all green |
+| build | 45 joints, 6,849 vertices, 8,924 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head tilt, wing settle), `move` (bipedal stride, balance flutter), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
 | declared | named parts, `function` (head = effector, legs and wings = locomotion; the toes and claws inherit the leg's), `joint_range` for every animated joint |
-| colour | hero view, on the palette: 48.2% coloured (S ≥ 0.30), 11.6% loud (S ≥ 0.50); median shipped luminance 65.7. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
+| colour | hero view, on the palette: 47.9% coloured (S ≥ 0.30), 11.1% loud (S ≥ 0.50); median shipped luminance 65.8. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
 
 What it exercises that the wolf does not:
 
@@ -41,7 +41,13 @@ What it exercises that the wolf does not:
 - **A loose joint** (`Jaw`, attached to `Skull`) that carries the lower bill, so
   the attack opens the beak.
 - **`tufts` used as feathers**: the throat bib, the feathered thighs and the
-  tail fan. **`curve` blades** make the crest.
+  tail fan. **`curve` blades** make the crest — cupped (`"section": {"cup": 0.45}`)
+  and half again as thick as the first build, so they are vanes and not card
+  stalks from the front and the back. The bills carry sections too: a keeled
+  upper bill (`exp` 1.8, `bias` 0.3) over a flatter lower one.
+- **A head built for the in-between views.** The skull rows carry `taper`, so
+  the head is a wedge toward the bill and not a ball with a beak stuck on; the
+  eyes sit under a `lid` (the raptor brow), and the neck has a throat (`bias` below).
 - **A chain that ends inside the next mass.** The neck is domed into the head
   (`"caps": ["none", "dome"]`) and the head's root ring sits inside the neck.
   The `open_end` check exists because the first build had the neck open at the
@@ -109,10 +115,10 @@ each wrist.
 
 | | |
 |---|---|
-| build | 71 joints, 5,349 vertices, 8,814 triangles (claims band 4,000-9,000), all green |
+| build | 71 joints, 5,652 vertices, 8,834 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head sway, arm settle), `move` (heavy bipedal walk with pelvis bob and sway, arms swinging opposite the legs), `attack` (both fists pull back, rise overhead, then the body pitches forward and the fists come down together in front, jaw open) |
 | declared | named parts, `function` (arms, palms, fingers and thumbs = effector, legs = locomotion), `joint_range` for every animated joint |
-| colour | hero view palette 19.3% coloured (S ≥ 0.30) and 18.2% loud (S ≥ 0.50), median shipped luminance 73.9. The fists are the brightest large mass (ochre, OKLab L 0.66); the hide is a cool slate (L 0.51) with a darker back and a pale chest; moss and rock sit on the hump; the eyes are the accent |
+| colour | hero view palette 19.0% coloured (S ≥ 0.30) and 17.8% loud (S ≥ 0.50), median shipped luminance 74.1. The fists are the brightest large mass (ochre, OKLab L 0.66); the hide is a cool slate (L 0.51) with a darker back and a pale chest; moss and rock sit on the hump; the eyes are the accent |
 
 What it exercises that the wolf and the raven do not:
 
@@ -126,6 +132,12 @@ What it exercises that the wolf and the raven do not:
   are declared hard. See the L1 note below.
 - **A two-fisted strike.** The shoulders' `ry`/`rz` bring the fists together
   at impact. `attack_windup` and `effector_leads` both pass.
+- **A head that survives 45°.** Fifth pass: the skull rows carry `taper` 0.3
+  (a wide brow over a narrow jaw) and the jaw a negative one (heavier below),
+  the eyes are hooded by a `lid`, the neck joint is lifted 0.08 m out of the
+  hump (the torso's top ring widened to keep the root ring inside) so the head
+  reads from the side. The fingers dropped to 7 sides to pay for the lids and
+  the finer irises inside the 9,000 budget.
 
 Files: `giant.json` (the spec), `giant.glb`, `giant.checks.json`,
 `giant_beauty.png` (the `outline.py --hero` shot) and `giant_silhouette.png`

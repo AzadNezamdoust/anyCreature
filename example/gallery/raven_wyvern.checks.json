@@ -52,8 +52,7 @@
   },
   {
    "name": "part_overlap",
-   "passed": true,
-   "warned": true
+   "passed": true
   },
   {
    "name": "part_seat",
@@ -66,7 +65,6 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — eye 0.82 · hackles 0.72 · beak 0.70 · leg_scale 0.63 · crest 0.59 · talon 0.52 · wing_skin 0.51 · plume_body 0.50 · plume_neck 0.50 · tail_fan 0.48 · plume_head 0.43 · plume_tail 0.42 · wing_bone 0.32 · claw 0.19 · pupil 0.10",
-  "part_overlap: 'lower_bill' sits 63% inside 'upper_bill' — measured surface to surface, so this is real interpenetration, not a bounding box."
+  "value_order: materials by lightness, brightest first — eye 0.82 · hackles 0.72 · beak 0.70 · leg_scale 0.63 · crest 0.59 · talon 0.52 · wing_skin 0.51 · plume_body 0.50 · plume_neck 0.50 · tail_fan 0.48 · plume_head 0.43 · plume_tail 0.42 · wing_bone 0.32 · claw 0.19 · pupil 0.10"
  ]
 }

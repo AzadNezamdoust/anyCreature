@@ -344,6 +344,74 @@ order, plus what the new check found.
   only, so a limit that only collides from a clip's pose is not caught there — `self_clip`
   is what catches it.
 
+**Fifth pass — the head, and the views in between**
+
+The creatures had only ever been looked at from the front, the side, the top and one
+raised three-quarter. Rendered on an 8+2 orbit (eight azimuths at 45° steps, top and
+bottom; shaded, silhouette, and head close-ups at the same eight — `out/compare/*_before_*`
+in a build) every head failed the in-between views the same way. Owner's words: "head and
+side view / front between view are not ok." What the orbit showed, before:
+
+- **Wolf.** At 45°/135°/315° the head was a cone: an ellipse has no brow, no cheek and no
+  jaw plane, so the skull read as a tapering tube with a hard step where the `sharp` row
+  sat. The muzzle was a round tube with a black ball on the end. The eyes were 32-triangle
+  octahedra — hexagonal amber beads from every angle but dead-on — half-buried at 60° on
+  the skull with nothing seating them: from above and from 135° they poked out of the
+  outline as yellow bumps, and the pupil sat on the raw surface normal, i.e. on top of the
+  bead, staring up. The cheek tufts read as shards behind the jaw at 90°.
+- **Raven-wyvern.** The head was a ball with a beak stuck on. The crest blades were
+  9 mm card seen from the front and the back — stalks. The upper bill was a plain ellipse,
+  no culmen ridge. Same bead eyes, same sky-staring pupils.
+- **Giant.** A small round head sunk into the hump, invisible from the side and every rear
+  quarter, bead eyes, a brow sausage over a blob; the arms plain tubes at 45°.
+
+Three causes were general and went into the engine; the rest were the specs.
+
+- **Sections take `taper` (a wedge) and `cup` (a crescent).** `taper` scales the
+  half-width with height: +0.3 is wider at the top than below — brow and cheekbones over
+  a jaw — and negative is heavier below (a jowl). This is the plane a head is missing when
+  it reads as a cone from 45°. `cup` bends the section along its width so one face is
+  concave: a cupped ear, a feather vane, a scooped fin. Both interpolate between profile
+  rows like `exp` and `bias`. `section.js` / `lerpProfile`.
+- **Curves take a `section`** — `{exp, bias, taper, cup}` on the part, overridable per
+  segment from that segment's far ring on. A boxy nose pad (`exp` 3), a cupped ear
+  (`cup` on the colour line's 180° face), a keeled beak (`exp` 1.8, `bias` 0.3), a flat
+  lower bill. A curve with no section is the same ellipse it always was, bit for bit.
+- **Eyes are seated: `"lid": {}`.** A cap in the host volume's material hoods the iris —
+  a shell `thick` (0.14) x r off it, closed by a rim that turns back INSIDE the iris so the
+  join is never seen, around an axis that starts on the surface normal (the one direction
+  certainly outside a half-buried sphere; the first cut used the head's up and the whole
+  hood was inside the skull) and leans `tilt` (0.45) toward up, out to polar `angle`
+  (62). `lower` adds a lower lid. It ships as `<eye>.lid.L/.R`, flesh-shaded, rides the
+  eye's joint, takes junction normals and skin like any attached piece, and is exempt
+  from `contrast_adjacent` (it is MEANT to wear the head's material). Winding is
+  self-correcting off the apex triangle: the R eye's frame is a mirror of the L eye's and
+  the first build shipped the R hood inside-out (culled, invisible). ~84 triangles a lid.
+- **Iris `subdiv` defaults to 2** (128 triangles). At 1 the one sphere the viewer stares at
+  was a hexagon. The pupil stays at 1.
+- **The pupil looks ahead.** Its default direction was the surface normal blended toward
+  forward; on the upper side of a skull the normal points up as much as out, so every
+  anchored eye looked at the sky. The normal is levelled first, then blended toward
+  forward, and dips a touch under a lid (a pupil on the rim of the hood is a pupil half
+  lost).
+- **Specs.** Wolf: `taper` 0.2-0.32 and `bias` on the skull rows (brow, cheek, jaw), the
+  muzzle `exp` 3 with `taper` 0.25 (flat bridge, narrow lower jaw), a boxy nose pad, eyes at
+  52° with a 50° lid, cupped ears, a mouth line arc under the muzzle, cheek clumps that hug
+  the jaw. 7,936 triangles (was 7,688). Raven-wyvern: skull `taper` 0.15-0.3 (a wedge
+  toward the bill), a 48° lid, keeled upper bill and flat lower bill, crest blades cupped
+  and 1.5x thicker, a throat on the neck. 8,924 (was 8,564). Giant: skull `taper` 0.3 over a
+  jaw with `taper` -0.2, a 55° lid, the neck joint lifted 0.08 m out of the hump with the
+  torso's top ring widened to keep the root ring inside, arm rows with `exp`/`bias`; the
+  fingers dropped to 7 sides to pay for the lids inside the 9,000 budget. 8,834 (was 8,814).
+  All three were checked mid-clip (`move`, `attack`) on the full orbit: the lids ride the
+  head, no tearing at the junctions, the giant's fist raise unchanged.
+- Images regenerated: `example/wolf.glb`, `wolf_beauty.png`, `wolf_silhouette.png`,
+  `wolf_thumb24.png`, both gallery builds and their beauty / silhouette shots,
+  `assets/hero.png`. Before / after orbit sheets under `out/compare/`.
+- `tools/test.sh` block 6: taper is a wedge, cup lifts the edges, lids ship as
+  `eye.lid.L/R` and are closed shells, a lid does not trip `contrast_adjacent`, a lower
+  lid / cupped crest / per-segment bill section build.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**
