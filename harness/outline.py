@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Silhouettes straight from the geometry — no browser, no renderer, no images to read.
 
-    python3 harness/outline.py <model.glb> <outdir> [--prev <dir>] [--views front,side,top,hero]
+    python3 harness/outline.py <model.glb> <outdir> [--prev <dir>] [--views orbit]
+                               [--hero hero.png] [--no-colour]
+
+    --views   orbit (default: az000 … az315 every 45°, top, bottom), legacy
+              (front, side, top, hero), azimuths, or any comma list of names
+    writes    per view: mask_<v>.npy, sil_<v>.png, sil_<v>_thumb24/48.png and a
+              colour render col_<v>.png; with the full orbit, orbit_sheet.png and
+              orbit_sil_sheet.png; and metrics.json (views, facing, orbit)
 
 WHY. The silhouette is the single most-used measurement in this harness, and
 until now getting one meant launching a headless Chromium, loading three.js,
@@ -23,11 +30,11 @@ is everything AROUND that question — aspect, protrusions, thinnest feature,
 round-to-round similarity — so the reader can be handed one picture and one
 question instead of thirteen pictures and a questionnaire.
 """
-import sys, os, json, struct, math
+import sys, os, json, struct, math, time
 
 try:
     import numpy as np
-    from PIL import Image, ImageDraw
+    from PIL import Image, ImageDraw, ImageFont
 except ImportError:
     print('BLOCK: outline.py needs numpy and pillow — run setup.sh')
     sys.exit(2)
@@ -55,6 +62,12 @@ def accessor(g, b, base, idx):
     ct = a['componentType']
     fmt, size = {5126: ('f', 4), 5125: ('I', 4), 5123: ('H', 2), 5121: ('B', 1)}[ct]
     stride = bv.get('byteStride') or size * n
+    if stride == size * n:
+        # Tightly packed (every file this engine writes): one read, not one
+        # struct.unpack per element. Same values, same dtypes as the loop below.
+        dt = np.dtype('<' + fmt)
+        raw = np.frombuffer(b, dtype=dt, count=a['count'] * n, offset=off)
+        return raw.reshape(a['count'], n).astype(np.float64 if ct == 5126 else np.int64)
     out = np.empty((a['count'], n), dtype=np.float64 if ct == 5126 else np.int64)
     for i in range(a['count']):
         out[i] = struct.unpack_from('<' + fmt * n, b, off + i * stride)
@@ -243,21 +256,219 @@ def triangles(path):
     return np.vstack(V), np.vstack(F)
 
 
+# ── the head, and which way it faces ───────────────────────────────────────
+# The owner's complaint that started the orbit was "the head is not ok", and
+# nothing measured a head: part shares are per MATERIAL, and a head is several
+# materials (skull, jaw, eyes, ears, beak, tusks). What does know where the head
+# is: the SKIN. Every vertex is bound to joints, and the joints carry the
+# spec's names. So the head is every vertex whose strongest joint is the head
+# joint or hangs below it — eyes, ears, jaw and beak included, whatever they
+# are called, and the neck excluded, because a neck is not a head.
+HEAD_NAMES = ('head', 'skull', 'cranium')
+
+
+def _node_tree(g):
+    names = [n.get('name', '') for n in g.get('nodes', [])]
+    parent = {}
+    for i, nd in enumerate(g.get('nodes', [])):
+        for ch in nd.get('children', []):
+            parent[ch] = i
+    return names, parent
+
+
+def _depth(i, parent):
+    d = 0
+    while i in parent:
+        i, d = parent[i], d + 1
+    return d
+
+
+def head_root(g):
+    """(node index, how it was found) of the head joint, or (None, reason).
+
+    First the spec's own words: a chain the spec NAMES head (or skull) — its
+    first joint called Head*/Skull*, else its first joint that exists in the
+    file. Then any joint in the file called Head*/Skull*, the one nearest the
+    root. The chain's joints are looked up by name in the glTF nodes; the
+    engine keeps spec names for the head (it renames limb joints, not heads)."""
+    names, parent = _node_tree(g)
+    idx = {n: i for i, n in enumerate(names)}
+    x = (g.get('asset', {}) or {}).get('extras', {}) or {}
+    spec = x.get('source_spec') if isinstance(x.get('source_spec'), dict) else {}
+    chains = (spec or {}).get('chains') or {}
+    if isinstance(chains, dict):
+        for cname in sorted(chains, key=lambda c: (c.lower() not in ('head', 'skull'), c)):
+            if not any(k in cname.lower() for k in HEAD_NAMES):
+                continue
+            joints = [j for j in (chains[cname] or []) if isinstance(j, str)]
+            named = [j for j in joints if j.lower().startswith(HEAD_NAMES) and j in idx]
+            present = [j for j in joints if j in idx]
+            if named:
+                return idx[named[0]], f'spec chain "{cname}", joint {named[0]}'
+            if present:
+                return idx[present[0]], f'spec chain "{cname}", joint {present[0]}'
+    cands = [i for i, n in enumerate(names) if n.lower().startswith(HEAD_NAMES)]
+    if cands:
+        i = min(cands, key=lambda k: (_depth(k, parent), k))
+        return i, f'joint {names[i]}'
+    return None, 'no chain or joint named head/skull'
+
+
+def head_vertices(path, nverts):
+    """Bool per vertex (stacked like triangles_by_material) — the head — plus a
+    note saying how it was found; (None, why) when the file cannot say."""
+    try:
+        g, b, base = read_glb(path)
+    except Exception as e:
+        return None, str(e)
+    root, how = head_root(g)
+    if root is None:
+        return None, how
+    names, parent = _node_tree(g)
+    under = set()
+    for i in range(len(names)):
+        j = i
+        while True:
+            if j == root:
+                under.add(i)
+                break
+            if j not in parent:
+                break
+            j = parent[j]
+    skin_of = {nd['mesh']: nd['skin'] for nd in g.get('nodes', [])
+               if 'mesh' in nd and 'skin' in nd}
+    out = []
+    for mi, mesh in enumerate(g.get('meshes', [])):
+        sk = skin_of.get(mi)
+        jl = g['skins'][sk]['joints'] if sk is not None and g.get('skins') else None
+        for pr in mesh.get('primitives', []):
+            at = pr.get('attributes', {})
+            if 'POSITION' not in at:
+                continue
+            n = g['accessors'][at['POSITION']]['count']
+            if jl is None or 'JOINTS_0' not in at or 'WEIGHTS_0' not in at:
+                out.append(np.zeros(n, dtype=bool))
+                continue
+            J = accessor(g, b, base, at['JOINTS_0'])
+            W = accessor(g, b, base, at['WEIGHTS_0'])
+            top = J[np.arange(n), np.argmax(W, axis=1)]
+            node = np.array([jl[int(k)] if 0 <= int(k) < len(jl) else -1 for k in top])
+            out.append(np.isin(node, list(under)))
+    if not out:
+        return None, 'no skinned geometry'
+    h = np.concatenate(out)
+    if len(h) != nverts or not h.any():
+        return None, f'{how}: no vertex is bound to it'
+    return h, how
+
+
+def facing_of(V, head):
+    """Which way the creature faces — a horizontal unit vector, and why.
+
+    NOT the longest bounding-box axis: that is how the legacy views were picked
+    and it is wrong for anything wider than it is long (an upright giant with
+    its arms out, a wyvern with its wings spread). The head says where the
+    front is: the horizontal direction from the body's centre to the head's,
+    snapped to the nearest world axis, because the engine builds along axes and
+    a head turned 30 degrees in a pose has not turned the body. With no head in
+    the file, +Z, the engine's own convention (SYNTAX: "z forward")."""
+    if head is None or not head.any():
+        return np.array([0., 0., 1.]), 'engine convention (+Z) — no head found'
+    lo, hi = V.min(axis=0), V.max(axis=0)
+    centre = (lo + hi) / 2
+    d = V[head].mean(axis=0) - centre
+    d[1] = 0.0
+    span = float(max(hi[0] - lo[0], hi[2] - lo[2]) or 1.0)
+    if float(np.linalg.norm(d)) < 0.05 * span:
+        return np.array([0., 0., 1.]), ('engine convention (+Z) — the head sits over '
+                                        'the centre and says nothing about facing')
+    k = int(np.argmax(np.abs([d[0], d[2]])))
+    f = np.zeros(3)
+    f[0 if k == 0 else 2] = math.copysign(1.0, d[0 if k == 0 else 2])
+    ang = math.degrees(math.atan2(abs(d[2 if k == 0 else 0]), abs(d[0 if k == 0 else 2])))
+    lab = ('+' if f.sum() > 0 else '-') + ('X' if k == 0 else 'Z')
+    return f, f'head ({lab}, head off-axis {ang:.0f}°)'
+
+
 # ── camera, matching the renderer this replaced, exactly ───────────────────
+#
+# THE ORBIT. Four views left the in-between angles and the head unmeasured, and
+# that is exactly where creatures went wrong: a wolf that reads from the side
+# and the front can still collapse into a lump at 45 degrees, and nothing ever
+# looked. So the default set is a CYLINDER around the creature — eight
+# horizontal azimuths at 45-degree steps, az000 on the creature's face — plus
+# the two poles, top and bottom. Same pinhole, same distance rule, same 640
+# grid as the four legacy views, so every number means what it meant.
+#
+#   az000   the camera in front of the creature, looking at its face
+#   az090   the creature's LEFT flank (the +X side, where the L chains live,
+#           when it faces +Z — the engine's convention)
+#   az180   behind it
+#   az270   its right flank
+#   top     looking down, the creature's front at the top of the image
+#   bottom  looking up at the belly, front at the top of the image
+#
+# The legacy names keep their legacy definitions EXACTLY, so every claim and
+# every calibration that names them still reads the same pixels: `side` is the
+# LONG profile and `front` the other horizontal axis (picked by the bounding
+# box, which is not always where the face is — an upright giant with its arms
+# out is wider than it is deep, so its legacy `side` looks at its chest), and
+# `hero` is the raised three-quarter shot. Only `top` changed: it used to put
+# the long axis at the top of the image and now puts the FACE there, which is
+# the same picture for every long-bodied creature.
+AZIMUTHS = [f'az{d:03d}' for d in range(0, 360, 45)]
+ORBIT = AZIMUTHS + ['top', 'bottom']
+LEGACY = ['front', 'side', 'top', 'hero']
+VIEW_SETS = {'orbit': ORBIT, 'legacy': LEGACY, 'azimuths': AZIMUTHS}
+
+# Which way the creature faces, as a horizontal unit vector. main() sets it from
+# facing_of(); until then +Z, the engine's own convention (SYNTAX: "z forward").
+FACING = np.array([0., 0., 1.])
+
+
+def expand_views(arg):
+    """'orbit,hero' -> ['az000', ..., 'bottom', 'hero'], order kept, no repeats."""
+    out = []
+    for v in arg.split(','):
+        v = v.strip()
+        for x in VIEW_SETS.get(v, [v] if v else []):
+            if x not in out:
+                out.append(x)
+    return out
+
+
+def is_azimuth(view):
+    return len(view) == 5 and view.startswith('az') and view[2:].isdigit()
+
+
 def view_dir(view, size):
     long_axis = 'x' if size[0] > size[2] else 'z'
+    fwd = np.array([FACING[0], 0., FACING[2]], dtype=np.float64)
+    fwd = fwd / (np.linalg.norm(fwd) or 1.0)
+    if is_azimuth(view):
+        # rotate the facing about +Y: az090 lands on +X for a creature facing +Z
+        t = math.radians(int(view[2:]))
+        c, s = round(math.cos(t), 12), round(math.sin(t), 12)
+        d = np.array([fwd[0] * c + fwd[2] * s, 0., -fwd[0] * s + fwd[2] * c])
+        return d, np.array([0., 1., 0.])
     if view == 'top':
-        return np.array([0., 1., 0.]), np.array([1., 0., 0.]) if long_axis == 'x' else np.array([0., 0., 1.])
+        return np.array([0., 1., 0.]), fwd
+    if view == 'bottom':
+        return np.array([0., -1., 0.]), fwd
     if view == 'hero':
         return np.array([1., 0.5, 1.]), np.array([0., 1., 0.])
     if view == 'side':
         d = [0., 0., 1.] if long_axis == 'x' else [1., 0., 0.]
-    else:                                   # front
+    elif view == 'front':
         d = [1., 0., 0.] if long_axis == 'x' else [0., 0., 1.]
+    else:
+        raise ValueError(f'unknown view "{view}" — use az000..az315, top, bottom, '
+                         f'front, side, hero, or a set: {", ".join(VIEW_SETS)}')
     return np.array(d), np.array([0., 1., 0.])
 
 
-def render_mask(V, F, view):
+def camera(V, view):
+    """(eye, right, trueup, fwd) for one view, framed on the model's bounds."""
     lo, hi = V.min(axis=0), V.max(axis=0)
     centre, size = (lo + hi) / 2, hi - lo
     d, up = view_dir(view, size)
@@ -268,8 +479,9 @@ def render_mask(V, F, view):
     # the hero camera really does sit 1.5x further out than the axis views. A
     # pixel-level comparison caught this: front/side/top matched at IoU 0.98+
     # because their directions are already unit, and hero came back at 0.39.
+    # The orbit directions are unit too, so every azimuth sits at the same
+    # distance and their areas compare directly.
     eye = centre + d * rad * 2.4
-
     fwd = centre - eye
     fwd /= np.linalg.norm(fwd)
     right = np.cross(fwd, up)
@@ -277,16 +489,11 @@ def render_mask(V, F, view):
         right = np.cross(fwd, np.array([0., 0., 1.]))
     right /= np.linalg.norm(right)
     trueup = np.cross(right, fwd)
+    return eye, right, trueup, fwd
 
-    rel = V - eye
-    cam = np.stack([rel @ right, rel @ trueup, rel @ fwd], axis=1)
-    z = np.maximum(cam[:, 2], 1e-6)
-    f = 1.0 / math.tan(math.radians(FOV) / 2)
-    sx = (cam[:, 0] / z) * f
-    sy = (cam[:, 1] / z) * f
-    px = (sx * 0.5 + 0.5) * RES
-    py = (0.5 - sy * 0.5) * RES            # image y grows downward
 
+def render_mask(V, F, view):
+    px, py, _z = project(V, view)
     img = Image.new('1', (RES, RES), 0)
     drw = ImageDraw.Draw(img)
     for a, b_, c in F:
@@ -357,18 +564,7 @@ def measures(mask):
 
 def project(V, view):
     """World vertices -> screen x, y and camera depth, for one view."""
-    lo, hi = V.min(axis=0), V.max(axis=0)
-    centre, size = (lo + hi) / 2, hi - lo
-    d, up = view_dir(view, size)
-    rad = float(size.max())
-    eye = centre + d * rad * 2.4
-    fwd = centre - eye
-    fwd /= np.linalg.norm(fwd)
-    right = np.cross(fwd, up)
-    if np.linalg.norm(right) < 1e-9:
-        right = np.cross(fwd, np.array([0., 0., 1.]))
-    right /= np.linalg.norm(right)
-    trueup = np.cross(right, fwd)
+    eye, right, trueup, fwd = camera(V, view)
     rel = V - eye
     cam = np.stack([rel @ right, rel @ trueup, rel @ fwd], axis=1)
     z = np.maximum(cam[:, 2], 1e-6)
@@ -378,7 +574,93 @@ def project(V, view):
     return px, py, z
 
 
-def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None, A=None):
+def _bary(px, py, z, a, b, c, gx, gy):
+    """Screen-space barycentrics and perspective-correct depth at (gx, gy).
+
+    Vectorised over any broadcastable shape; the arithmetic is written in the
+    same order as the per-triangle loop it replaced, so it returns the same
+    floats to the last bit."""
+    xa, xb, xc = px[a], px[b], px[c]
+    ya, yb, yc = py[a], py[b], py[c]
+    det = (yb - yc) * (xa - xc) + (xc - xb) * (ya - yc)
+    l0 = ((yb - yc) * (gx - xc) + (xc - xb) * (gy - yc)) / det
+    l1 = ((yc - ya) * (gx - xc) + (xa - xc) * (gy - yc)) / det
+    l2 = 1.0 - l0 - l1
+    iz = l0 / z[a] + l1 / z[b] + l2 / z[c]
+    iz = np.where(np.abs(iz) < 1e-12, 1e-12, iz)
+    return l0, l1, l2, 1.0 / iz
+
+
+def zbuffer(px, py, z, F):
+    """The winning triangle per pixel (-1 = background), with a depth test.
+
+    This is the rasteriser every measure shares. It used to be a Python loop,
+    one numpy call chain per triangle — 1.3s a view, fine for four views and
+    not for ten. The same test in batches: triangles are grouped by the size of
+    their pixel box, each group's boxes are evaluated at once, and the nearest
+    fragment wins, ties going to the EARLIER triangle — exactly what the loop's
+    strict `zz < depth` did. Checked pixel-for-pixel against the loop on the
+    shipped creatures (owner, colour, normal and albedo buffers identical)."""
+    n = len(F)
+    best_z = np.full(RES * RES, np.inf)
+    best_t = np.full(RES * RES, -1, dtype=np.int64)
+    if not n:
+        return best_t.reshape(RES, RES)
+    a, b, c = F[:, 0], F[:, 1], F[:, 2]
+    X = np.stack([px[a], px[b], px[c]], axis=1)
+    Y = np.stack([py[a], py[b], py[c]], axis=1)
+    x0 = np.maximum(0, np.floor(X.min(axis=1)))
+    x1 = np.minimum(RES - 1, np.ceil(X.max(axis=1)))
+    y0 = np.maximum(0, np.floor(Y.min(axis=1)))
+    y1 = np.minimum(RES - 1, np.ceil(Y.max(axis=1)))
+    det = (Y[:, 1] - Y[:, 2]) * (X[:, 0] - X[:, 2]) + (X[:, 2] - X[:, 1]) * (Y[:, 0] - Y[:, 2])
+    keep = (x1 >= x0) & (y1 >= y0) & (np.abs(det) >= 1e-12)
+    idx = np.nonzero(keep)[0]
+    if not len(idx):
+        return best_t.reshape(RES, RES)
+    x0i, y0i = x0[idx].astype(np.int64), y0[idx].astype(np.int64)
+    w = x1[idx].astype(np.int64) - x0i + 1
+    h = y1[idx].astype(np.int64) - y0i + 1
+    pw = 1 << np.ceil(np.log2(np.maximum(w, 1))).astype(np.int64)
+    ph = 1 << np.ceil(np.log2(np.maximum(h, 1))).astype(np.int64)
+    key = pw * (RES * 4) + ph
+    CELLS = 1 << 22                          # fragments evaluated per batch
+    for k in np.unique(key):
+        sel = np.nonzero(key == k)[0]
+        BW, BH = int(k // (RES * 4)), int(k % (RES * 4))
+        step = max(1, CELLS // (BW * BH))
+        for s0 in range(0, len(sel), step):
+            ss = sel[s0:s0 + step]
+            t = idx[ss]
+            ax = np.arange(BW)[None, None, :]
+            ay = np.arange(BH)[None, :, None]
+            gxi = x0i[ss][:, None, None] + ax
+            gyi = y0i[ss][:, None, None] + ay
+            valid = (ax < w[ss][:, None, None]) & (ay < h[ss][:, None, None])
+            ta, tb, tc = (a[t][:, None, None], b[t][:, None, None], c[t][:, None, None])
+            l0, l1, l2, zz = _bary(px, py, z, ta, tb, tc, gxi + 0.5, gyi + 0.5)
+            inside = valid & (l0 >= 0) & (l1 >= 0) & (l2 >= 0)
+            if not inside.any():
+                continue
+            tt = np.broadcast_to(t[:, None, None], inside.shape)[inside]
+            pix = (gyi * RES + gxi)
+            pix = np.broadcast_to(pix, inside.shape)[inside]
+            zv = zz[inside]
+            # nearest first, then the earliest triangle — one winner per pixel
+            o = np.lexsort((tt, zv, pix))
+            pix, zv, tt = pix[o], zv[o], tt[o]
+            first = np.ones(len(pix), dtype=bool)
+            first[1:] = pix[1:] != pix[:-1]
+            pix, zv, tt = pix[first], zv[first], tt[first]
+            cz, ct = best_z[pix], best_t[pix]
+            win = (zv < cz) | ((zv == cz) & (ct >= 0) & (tt < ct))
+            best_z[pix[win]] = zv[win]
+            best_t[pix[win]] = tt[win]
+    return best_t.reshape(RES, RES)
+
+
+def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None, A=None,
+                    want_tri=False):
     """Which material OWNS each silhouette pixel, with a depth test.
 
     The share of the frame a part holds is a geometry question, and it was being
@@ -389,68 +671,46 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None, A=None)
     winning material per pixel, and count.
 
     A (per-vertex LINEAR albedo, already a whole colour — no baseColorFactor)
-    rides along in the same pass when given, and is returned last."""
+    rides along in the same pass when given, and is returned last.
+
+    With want_tri, the winning TRIANGLE index per pixel (-1 = background) is
+    returned after everything else — the head measures attribute pixels by
+    triangle, not by material, because a head is several materials."""
     px, py, z = project(V, view)
-    depth = np.full((RES, RES), np.inf)
+    win_tri = zbuffer(px, py, z, F)
+    body = win_tri >= 0
     owner = np.full((RES, RES), -1, dtype=np.int64)
+    owner[body] = MID[win_tri[body]]
     # The colour buffer rides along in the SAME rasteriser. A second pass would be
     # a second definition of "which pixel does this triangle win", and two of those
     # have to be kept in agreement by hand.
     colour = np.zeros((RES, RES, 3)) if C is not None else None
     normal = np.zeros((RES, RES, 3)) if N is not None else None
     albedo = np.zeros((RES, RES, 3)) if A is not None else None
-    for tri, mi in zip(F, MID):
-        a, b, c = tri
-        xs = np.array([px[a], px[b], px[c]])
-        ys = np.array([py[a], py[b], py[c]])
-        x0, x1 = int(max(0, np.floor(xs.min()))), int(min(RES - 1, np.ceil(xs.max())))
-        y0, y1 = int(max(0, np.floor(ys.min()))), int(min(RES - 1, np.ceil(ys.max())))
-        if x1 < x0 or y1 < y0:
-            continue
-        det = (ys[1] - ys[2]) * (xs[0] - xs[2]) + (xs[2] - xs[1]) * (ys[0] - ys[2])
-        if abs(det) < 1e-12:
-            continue
-        gx, gy = np.meshgrid(np.arange(x0, x1 + 1) + 0.5,
-                             np.arange(y0, y1 + 1) + 0.5)
-        l0 = ((ys[1] - ys[2]) * (gx - xs[2]) + (xs[2] - xs[1]) * (gy - ys[2])) / det
-        l1 = ((ys[2] - ys[0]) * (gx - xs[2]) + (xs[0] - xs[2]) * (gy - ys[2])) / det
-        l2 = 1.0 - l0 - l1
-        inside = (l0 >= 0) & (l1 >= 0) & (l2 >= 0)
-        if not inside.any():
-            continue
+    if body.any() and (C is not None or N is not None or A is not None):
+        yy, xx = np.nonzero(body)
+        t = win_tri[yy, xx]
+        a, b, c = F[t, 0], F[t, 1], F[t, 2]
+        l0, l1, l2, zz = _bary(px, py, z, a, b, c, xx + 0.5, yy + 0.5)
         # PERSPECTIVE-CORRECT interpolation, not affine. l0/l1/l2 are barycentric
         # in SCREEN space, and screen space is already divided by depth — so
         # blending a per-vertex quantity with them directly is only right for an
         # orthographic camera. This one is a pinhole at 30 degrees. The textbook
         # correction: blend 1/z, take the reciprocal for depth, and divide any
         # other attribute back out by it.
-        #
-        # It matters most exactly where it is hardest to see: a long triangle
-        # running away from the camera, where the affine version puts the middle
-        # of the surface at the wrong depth and can lose a depth test against
-        # something genuinely behind it.
-        iz = l0 / z[a] + l1 / z[b] + l2 / z[c]
-        iz = np.where(np.abs(iz) < 1e-12, 1e-12, iz)
-        zz = 1.0 / iz
-        sub = depth[y0:y1 + 1, x0:x1 + 1]
-        win = inside & (zz < sub)
-        if win.any():
-            sub[win] = zz[win]
-            owner[y0:y1 + 1, x0:x1 + 1][win] = mi
-            if colour is not None:
-                cc = ((l0 / z[a])[..., None] * C[a] + (l1 / z[b])[..., None] * C[b]
-                      + (l2 / z[c])[..., None] * C[c]) * zz[..., None]
-                if basecol is not None and 0 <= mi < len(basecol):
-                    cc = cc * basecol[mi]
-                colour[y0:y1 + 1, x0:x1 + 1][win] = cc[win]
-            if normal is not None:
-                nn = ((l0 / z[a])[..., None] * N[a] + (l1 / z[b])[..., None] * N[b]
-                      + (l2 / z[c])[..., None] * N[c]) * zz[..., None]
-                normal[y0:y1 + 1, x0:x1 + 1][win] = nn[win]
-            if albedo is not None:
-                aa = ((l0 / z[a])[..., None] * A[a] + (l1 / z[b])[..., None] * A[b]
-                      + (l2 / z[c])[..., None] * A[c]) * zz[..., None]
-                albedo[y0:y1 + 1, x0:x1 + 1][win] = aa[win]
+        w0, w1, w2 = (l0 / z[a])[:, None], (l1 / z[b])[:, None], (l2 / z[c])[:, None]
+        zc = zz[:, None]
+        if colour is not None:
+            cc = (w0 * C[a] + w1 * C[b] + w2 * C[c]) * zc
+            if basecol is not None and len(basecol):
+                mi = MID[t]
+                ok = (mi >= 0) & (mi < len(basecol))
+                cc[ok] = cc[ok] * basecol[mi[ok]]
+            colour[yy, xx] = cc
+        if normal is not None:
+            normal[yy, xx] = (w0 * N[a] + w1 * N[b] + w2 * N[c]) * zc
+        if albedo is not None:
+            albedo[yy, xx] = (w0 * A[a] + w1 * A[b] + w2 * A[c]) * zc
     total = int((owner >= 0).sum())
     out = {}
     if total:
@@ -466,7 +726,140 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None, A=None)
         ret += (normal,)
     if albedo is not None:
         ret += (albedo,)
+    if want_tri:
+        ret += (win_tri,)
     return ret
+
+
+# The studio rig, as (world direction, colour, amplitude). It was placed for the
+# hero camera; every other view gets the SAME rig turned with its camera, so the
+# key always falls on the side facing the viewer. A fixed world rig lit the
+# back view with the rim alone and it came out a black cut-out — useless for
+# the one question the orbit sheet exists to answer.
+RIG = (((2.2, 3.6, 3.0), (1.0, 0.96, 0.90), 2.5),    # warm key
+       ((-4.0, 1.2, 1.5), (0.80, 0.86, 1.0), 0.7),   # cool fill
+       ((-1.5, 2.5, -4.0), (0.85, 0.90, 1.0), 1.4))  # rim
+
+
+def shade_rgba(V, F, colour, nrm, mask, view, shadow=True):
+    """Light the rasterised colour and composite it — RGBA uint8 at RES.
+
+    Studio rig, Lambert only — these are matte low-poly surfaces with the
+    specular story already painted into the vertex colour, so a full PBR
+    evaluation would be re-deriving what is baked. The old rig summed a 1.5x
+    hemisphere and three lamps to ~5.5 and divided by pi: everything sat near
+    white and the form flattened out. This one keeps the ambient low so the key
+    models the volume, and a cool rim from behind picks the silhouette off the
+    background.
+
+    Evaluated on the body's pixels only: off the body the colour buffer is
+    zero, so the lit value there is exactly zero anyway."""
+    body = np.nonzero(mask)
+    nrm_b = nrm[body]
+    ln = np.linalg.norm(nrm_b, axis=1, keepdims=True)
+    n = np.divide(nrm_b, np.where(ln > 1e-9, ln, 1.0))
+    up = n[:, 1:2]
+    sky, ground = np.array([0.86, 0.90, 1.0]), np.array([0.46, 0.42, 0.36])
+    irr = 0.95 * (sky * (0.5 + 0.5 * up) + ground * (0.5 - 0.5 * up))
+    turn = None
+    if view != 'hero':
+        _e, r1, u1, f1 = camera(V, view)
+        _e, r0, u0, f0 = camera(V, 'hero')
+        turn = np.stack([r1, u1, f1], axis=1) @ np.stack([r0, u0, f0], axis=0)
+    for pos, col, amp in RIG:
+        d = np.array(pos, dtype=np.float64); d /= np.linalg.norm(d)
+        if turn is not None:
+            d = turn @ d
+        lam = np.clip((n * d).sum(axis=1, keepdims=True), 0.0, 1.0)
+        if amp > 2:                       # the key wraps a little, like a soft box
+            lam = np.clip((lam + 0.15) / 1.15, 0.0, 1.0)
+        irr = irr + np.array(col) * amp * lam
+    # Exposure. This constant touches the PICTURE only — no gate reads it.
+    lin = np.clip(colour[body] * irr * (1.4 / np.pi), 0.0, 1.0)
+    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
+    rgb = np.zeros(mask.shape + (3,))
+    rgb[body] = srgb * 255.0
+    alpha = np.where(mask, 255.0, 0.0)
+    # Contact shadow. A creature floating on transparency reads as a cut-out;
+    # the same triangles squashed onto the ground plane, projected through the
+    # same camera and blurred, put it on a floor. It is drawn only where the
+    # body is not, on the alpha channel, so it costs nothing where the page
+    # background is dark.
+    if shadow:
+        try:
+            from scipy import ndimage
+            lo = V.min(axis=0)
+            Vg = V.copy(); Vg[:, 1] = lo[1]
+            # project() frames the camera from the points it is given; the
+            # squashed copy shares the model's bounds only when both are passed
+            px, py, z = project(np.vstack([V, Vg]), view)
+            px, py = px[len(V):], py[len(V):]
+            sh = Image.new('L', (RES, RES), 0)
+            drw = ImageDraw.Draw(sh)
+            # only triangles the camera can see the underside of matter; simpler
+            # to draw them all — the union is the footprint either way
+            for a, b_, c in F:
+                drw.polygon([(px[a], py[a]), (px[b_], py[b_]), (px[c], py[c])], fill=255)
+            shd = np.array(sh, dtype=np.float64) / 255.0
+            shd = ndimage.gaussian_filter(shd, sigma=RES * 0.02)
+            shd = np.clip(shd * 1.2, 0.0, 1.0) * 0.32
+            # Note: the model's own pixels stay opaque; the shadow fills in outside.
+            alpha = np.maximum(alpha, np.where(mask, 0.0, shd * 255.0))
+            rgb = np.where(mask[..., None], rgb, np.array([28.0, 26.0, 30.0]))
+        except Exception:
+            pass
+    return np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 255)]).astype(np.uint8)
+
+
+def square_window(mask, margin=1.10):
+    """(x0, y0, side) — a square around what is drawn, with a margin."""
+    ys, xs = np.nonzero(mask)
+    if not len(xs):
+        return 0, 0, mask.shape[0]
+    cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
+    half = max(xs.max() - xs.min(), ys.max() - ys.min()) / 2 * margin
+    return int(round(cx - half)), int(round(cy - half)), max(1, int(round(half * 2)))
+
+
+def frame_down(rgba, res, window=None):
+    """Crop RGBA to a square window and box-filter it down to res x res.
+
+    Frame it. The measuring camera fits the whole bounding sphere so that a
+    silhouette is comparable between rounds; a picture has no such duty and a
+    creature sitting in a third of the frame reads as a small creature. Crop to
+    what is drawn (or to the window given — the orbit sheet crops every
+    azimuth to ONE window, so the tiles share a scale), keep it square."""
+    if window is None:
+        window = square_window(rgba[..., 3] > 8) if (rgba[..., 3] > 8).any() else None
+    if window is not None:
+        x0, y0, side = window
+        H, W = rgba.shape[:2]
+        pad = np.zeros((side, side, 4), dtype=np.uint8)
+        sx0, sy0 = max(0, x0), max(0, y0)
+        sx1, sy1 = min(W, x0 + side), min(H, y0 + side)
+        if sx1 > sx0 and sy1 > sy0:
+            pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = rgba[sy0:sy1, sx0:sx1]
+        rgba = pad
+    # Premultiply before the downsample so transparent pixels never bleed
+    # their (undefined) colour into the edge — and stay in FLOAT through
+    # it. The first version rounded the premultiplied picture to 8 bits
+    # and resized that with a Lanczos kernel: in the soft rim of the
+    # contact shadow, where alpha is 5-20, the (28,26,30) shadow colour
+    # premultiplied to 1-2 counts per channel, rounded unevenly, and came
+    # back from the un-premultiply as a pink-purple ring around the
+    # shadow. A box filter over float channels has neither the rounding
+    # nor the Lanczos overshoot on the alpha edge.
+    f = rgba.astype(np.float32)
+    a = f[..., 3] / 255.0
+    chans = [f[..., k] * a for k in range(3)] + [a]
+    small = [np.array(Image.fromarray(c, 'F').resize((res, res), Image.BOX), dtype=np.float64)
+             for c in chans]
+    sa = small[3]
+    out = np.zeros((res, res, 4), dtype=np.float64)
+    for k in range(3):
+        out[..., k] = np.where(sa > 1e-6, small[k] / np.maximum(sa, 1e-6), 0.0)
+    out[..., 3] = sa * 255.0
+    return np.clip(out + 0.5, 0, 255).astype(np.uint8)
 
 
 def hero_png(model, out_png, view='hero', res=1024):
@@ -491,94 +884,8 @@ def hero_png(model, out_png, view='hero', res=1024):
         RES = res * SS
         V, F, MID, mats, C, basecol, Nv = triangles_by_material(model, want_colour=True)
         _, mask, colour, nrm = material_shares(V, F, MID, mats, view, C, basecol, Nv)
-        # Studio rig, Lambert only — these are matte low-poly surfaces with the
-        # specular story already painted into the vertex colour, so a full PBR
-        # evaluation would be re-deriving what is baked. The old rig summed a
-        # 1.5x hemisphere and three lamps to ~5.5 and divided by pi: everything
-        # sat near white and the form flattened out. This one keeps the ambient
-        # low so the key models the volume, and a cool rim from behind picks
-        # the silhouette off the background.
-        ln = np.linalg.norm(nrm, axis=2, keepdims=True)
-        n = np.divide(nrm, np.where(ln > 1e-9, ln, 1.0))
-        up = n[:, :, 1:2]
-        sky, ground = np.array([0.86, 0.90, 1.0]), np.array([0.46, 0.42, 0.36])
-        irr = 0.95 * (sky * (0.5 + 0.5 * up) + ground * (0.5 - 0.5 * up))
-        for pos, col, amp in ((( 2.2, 3.6,  3.0), (1.0, 0.96, 0.90), 2.5),    # warm key
-                              ((-4.0, 1.2,  1.5), (0.80, 0.86, 1.0), 0.7),    # cool fill
-                              ((-1.5, 2.5, -4.0), (0.85, 0.90, 1.0), 1.4)):   # rim
-            d = np.array(pos, dtype=np.float64); d /= np.linalg.norm(d)
-            lam = np.clip((n * d).sum(axis=2, keepdims=True), 0.0, 1.0)
-            if amp > 2:                       # the key wraps a little, like a soft box
-                lam = np.clip((lam + 0.15) / 1.15, 0.0, 1.0)
-            irr = irr + np.array(col) * amp * lam
-        # Exposure. This constant touches the PICTURE only — no gate reads the hero.
-        lin = np.clip(colour * irr * (1.4 / np.pi), 0.0, 1.0)
-        srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
-        rgb = srgb * 255.0
-        alpha = np.where(mask, 255.0, 0.0)
-        # Contact shadow. A creature floating on transparency reads as a cut-out;
-        # the same triangles squashed onto the ground plane, projected through the
-        # same camera and blurred, put it on a floor. It is drawn only where the
-        # body is not, on the alpha channel, so it costs nothing where the page
-        # background is dark.
-        try:
-            from scipy import ndimage
-            lo = V.min(axis=0)
-            Vg = V.copy(); Vg[:, 1] = lo[1]
-            # project() frames the camera from the points it is given; the
-            # squashed copy shares the model's bounds only when both are passed
-            px, py, z = project(np.vstack([V, Vg]), view)
-            px, py = px[len(V):], py[len(V):]
-            sh = Image.new('L', (RES, RES), 0)
-            drw = ImageDraw.Draw(sh)
-            # only triangles the camera can see the underside of matter; simpler
-            # to draw them all — the union is the footprint either way
-            for a, b_, c in F:
-                drw.polygon([(px[a], py[a]), (px[b_], py[b_]), (px[c], py[c])], fill=255)
-            shadow = np.array(sh, dtype=np.float64) / 255.0
-            shadow = ndimage.gaussian_filter(shadow, sigma=RES * 0.02)
-            shadow = np.clip(shadow * 1.2, 0.0, 1.0) * 0.32
-            # Note: the model's own pixels stay opaque; the shadow fills in outside.
-            alpha = np.maximum(alpha, np.where(mask, 0.0, shadow * 255.0))
-            rgb = np.where(mask[..., None], rgb, np.array([28.0, 26.0, 30.0]))
-        except Exception:
-            pass
-        rgba = np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 255)]).astype(np.uint8)
-        # Frame it. The measuring camera fits the whole bounding sphere so that a
-        # silhouette is comparable between rounds; a thumbnail has no such duty and
-        # a creature sitting in a third of the frame reads as a small creature.
-        # Crop to what is actually drawn, keep it square, leave a margin.
-        ys, xs = np.nonzero(rgba[..., 3] > 8)
-        if len(xs):
-            cx, cy = (xs.min() + xs.max()) / 2, (ys.min() + ys.max()) / 2
-            half = max(xs.max() - xs.min(), ys.max() - ys.min()) / 2 * 1.10
-            x0, y0 = int(round(cx - half)), int(round(cy - half))
-            side = int(round(half * 2))
-            pad = np.zeros((side, side, 4), dtype=np.uint8)
-            sx0, sy0 = max(0, x0), max(0, y0)
-            sx1, sy1 = min(RES, x0 + side), min(RES, y0 + side)
-            pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = rgba[sy0:sy1, sx0:sx1]
-            rgba = pad
-        # Premultiply before the downsample so transparent pixels never bleed
-        # their (undefined) colour into the edge — and stay in FLOAT through
-        # it. The first version rounded the premultiplied picture to 8 bits
-        # and resized that with a Lanczos kernel: in the soft rim of the
-        # contact shadow, where alpha is 5-20, the (28,26,30) shadow colour
-        # premultiplied to 1-2 counts per channel, rounded unevenly, and came
-        # back from the un-premultiply as a pink-purple ring around the
-        # shadow. A box filter over float channels has neither the rounding
-        # nor the Lanczos overshoot on the alpha edge.
-        f = rgba.astype(np.float32)
-        a = f[..., 3] / 255.0
-        chans = [f[..., k] * a for k in range(3)] + [a]
-        small = [np.array(Image.fromarray(c, 'F').resize((res, res), Image.BOX), dtype=np.float64)
-                 for c in chans]
-        sa = small[3]
-        out = np.zeros((res, res, 4), dtype=np.float64)
-        for k in range(3):
-            out[..., k] = np.where(sa > 1e-6, small[k] / np.maximum(sa, 1e-6), 0.0)
-        out[..., 3] = sa * 255.0
-        Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8), 'RGBA').save(out_png)
+        rgba = shade_rgba(V, F, colour, nrm, mask, view)
+        Image.fromarray(frame_down(rgba, res), 'RGBA').save(out_png)
     finally:
         RES = keep
     return out_png
@@ -714,7 +1021,229 @@ def thumb(mask, px, path):
     box.resize((240, 240), Image.NEAREST).save(path)
 
 
+def _fill(px, py, F, res):
+    """Union of the given triangles' projections — no depth test, a coverage mask."""
+    img = Image.new('1', (res, res), 0)
+    drw = ImageDraw.Draw(img)
+    for a, b_, c in F:
+        drw.polygon([(px[a], py[a]), (px[b_], py[b_]), (px[c], py[c])], fill=1)
+    return np.array(img, dtype=bool)
+
+
+# ── the head, per view ─────────────────────────────────────────────────────
+# Three numbers, because "is the head ok from here" is more than one question:
+#   head_share    share of the silhouette's pixels the head OWNS after the
+#                 depth test — is it there at all from this side
+#   head_out      share of the head's own outline that lies OUTSIDE the rest
+#                 of the body's — does it read as a separate mass, or is it
+#                 swallowed by the chest / shoulders / hump in front of it
+#                 (1.0 = clear of the body, as in a profile; 0 = inside it)
+#   head_px48     the head's size at reading size: the diameter of a disc with
+#                 its projected area, on the 48px thumbnail
+# A head can be present and still unreadable — a skull sitting inside the
+# shoulder line from the front can own a fair share of the pixels and 0% of
+# the outline.
+#
+# The bars, and where they come from — every azimuth of the three shipped
+# creatures and the calibration wolf (wolf_green):
+#   HEAD_OUT_MIN  0.15   front half of the ring: the wolves and the raven never
+#                        go under 0.18; the giant, whose skull sits inside its
+#                        shoulders, reads 0.000-0.006 at az315/az000/az045
+#   HEAD_HIDDEN   0.01   the least-visible azimuth of the wolves and the raven
+#                        is 2.8-4.5%; the giant's head is 0.0% at az135-az225
+#   HEAD_SMALL    0.05   the head's BEST azimuth: raven 9.5%, wolves 17-29%,
+#                        giant 2.5%
+HEAD_OUT_MIN = 0.15
+HEAD_HIDDEN = 0.01
+HEAD_SMALL = 0.05
+HEAD_VISIBLE = 0.02      # a head needs this much of the view to count as distinct
+
+
+def head_measures(px, py, F, headtri, win_tri, mask):
+    area = int(mask.sum())
+    if headtri is None or not area:
+        return {}
+    owned = int(headtri[win_tri[mask]].sum())
+    hp = _fill(px, py, F[headtri], mask.shape[0])
+    rp = _fill(px, py, F[~headtri], mask.shape[0])
+    hproj = int(hp.sum())
+    only = int((hp & ~rp).sum())
+    ys, xs = np.nonzero(mask)
+    span = max(xs.max() - xs.min() + 1, ys.max() - ys.min() + 1)
+    m = {'head_share': round(owned / area, 4),
+         'head_out': round(only / hproj, 3) if hproj else 0.0,
+         'head_px48': round(2 * math.sqrt(hproj / math.pi) * 48.0 / span, 1)}
+    m['head_distinct'] = bool(m['head_share'] >= HEAD_VISIBLE and m['head_out'] >= HEAD_OUT_MIN)
+    return m
+
+
+# ── the orbit, read as one object ──────────────────────────────────────────
+# Per-view numbers cannot see the failure the owner named: "the views in
+# between are not ok". A creature is not bad at 45 degrees in absolute terms,
+# it is bad when an azimuth falls apart while the views either side of it
+# hold. So the blob flag compares each azimuth with its two neighbours on the
+# ring — except az000 and az180. Looking down the body's long axis is
+# compact by nature (every wolf ever measured here is ~0.1 more convex
+# end-on than at 45 degrees), so an end-on view that is lumpier than its
+# neighbours is the form, not a fault.
+#
+#   blob         convexity (area / hull area; 1.0 = a potato) at least
+#                BLOB_JUMP above BOTH neighbours, or BLOB_DROP fewer things
+#                sticking out than both. Measured: the wolves and the raven
+#                sit at most +0.06 above a neighbour anywhere off the long
+#                axis; the giant's four obliques sit +0.08 above both of theirs
+#                (arms fold into the body, the head sinks into the hump).
+#   head_merged  front half of the ring (az270 through az000 to az090, where a
+#                viewer looks for the face): under HEAD_OUT_MIN of the head's
+#                outline clears the body
+#   head_hidden  any azimuth where the head owns under HEAD_HIDDEN of the view
+#   head_small   the head's best azimuth is under HEAD_SMALL — it is small
+#                from everywhere, not hidden from one side
+#
+# All four are ADVICE (harness/gates.json: orbit_consistent, head_reads). Four
+# creatures, one of them flagged, is enough to say where to look and not
+# enough to refuse a build over; the numbers are in the CHANGELOG.
+BLOB_JUMP = 0.07
+BLOB_DROP = 2
+END_ON = ('az000', 'az180')
+FRONT_HALF = ('az270', 'az315', 'az000', 'az045', 'az090')
+MIRRORS = (('az045', 'az315'), ('az090', 'az270'), ('az135', 'az225'))
+MIRROR_SAME = 0.90       # a pair this similar is one silhouette, shown once
+
+
+def orbit_report(views, masks):
+    if not all(v in views and not views[v].get('empty') for v in AZIMUTHS):
+        return None
+    ring = []
+    amax = max(views[v].get('area_px', 0) for v in AZIMUTHS) or 1
+    for v in AZIMUTHS:
+        d = views[v]
+        ring.append({'view': v, 'area_rel': round(d.get('area_px', 0) / amax, 3),
+                     'W_over_H': d.get('W_over_H'), 'convexity': d.get('convexity'),
+                     'protrusions': d.get('protrusions'), 'thinnest_px48': d.get('thinnest_px48'),
+                     'head_share': d.get('head_share'), 'head_out': d.get('head_out'),
+                     'head_distinct': d.get('head_distinct')})
+    flags = []
+    n = len(ring)
+    for i, r in enumerate(ring):
+        L, R = ring[i - 1], ring[(i + 1) % n]
+        if r['view'] not in END_ON:
+            cv, cl, cr = r['convexity'], L['convexity'], R['convexity']
+            if None not in (cv, cl, cr) and cv - max(cl, cr) >= BLOB_JUMP - 1e-9:
+                flags.append({'view': r['view'], 'kind': 'blob',
+                              'why': f"convexity {cv:.2f} against {cl:.2f} ({L['view']}) and "
+                                     f"{cr:.2f} ({R['view']}) — the outline closes into a lump here"})
+            pv, pl, pr = r['protrusions'], L['protrusions'], R['protrusions']
+            if None not in (pv, pl, pr) and pv <= min(pl, pr) - BLOB_DROP:
+                flags.append({'view': r['view'], 'kind': 'blob',
+                              'why': f"{pv} thing(s) stick out against {pl} ({L['view']}) and "
+                                     f"{pr} ({R['view']}) — limbs and head fold into the body"})
+        hs = r['head_share']
+        if hs is None:
+            continue
+        if hs < HEAD_HIDDEN:
+            flags.append({'view': r['view'], 'kind': 'head_hidden',
+                          'why': f"the head owns {hs * 100:.1f}% of the view — from here the "
+                                 f"creature has no head"})
+        elif r['view'] in FRONT_HALF and r['head_out'] is not None and r['head_out'] < HEAD_OUT_MIN:
+            flags.append({'view': r['view'], 'kind': 'head_merged',
+                          'why': f"only {r['head_out'] * 100:.0f}% of the head's outline clears the body "
+                                 f"(head {hs * 100:.1f}% of the view) — it does not read as its own mass"})
+    shares = [r['head_share'] for r in ring if r['head_share'] is not None]
+    if shares and max(shares) < HEAD_SMALL:
+        best = max(ring, key=lambda r: r['head_share'] or 0)
+        flags.append({'view': best['view'], 'kind': 'head_small',
+                      'why': f"the head's BEST view is {best['view']} at {max(shares) * 100:.1f}% of "
+                             f"the silhouette — it is small from everywhere"})
+    mirror = {}
+    for a, b in MIRRORS:
+        mirror[f'{a}/{b}'] = iou(masks[a], np.fliplr(masks[b]))
+    # What the blind reader is shown for Gate 1: the five azimuths from face to
+    # tail plus the top. The other three azimuths are the mirror images of three
+    # of those for a bilaterally symmetric creature — reading them is paying
+    # twice for one silhouette — so they are added only when they differ.
+    read = ['az000', 'az045', 'az090', 'az135', 'az180']
+    for a, b in MIRRORS:
+        if (mirror[f'{a}/{b}'] or 0) < MIRROR_SAME:
+            read.append(b)
+    read = [v for v in AZIMUTHS if v in read] + ['top']
+    worst = max((r for r in ring if r['view'] not in END_ON), key=lambda r: (r['convexity'] or 0))
+    return {'ring': ring, 'flags': flags, 'mirror_iou': mirror, 'read_set': read,
+            'area_rel_min': min(r['area_rel'] for r in ring),
+            'most_blobby': worst['view'],
+            'head_best': max(shares) if shares else None,
+            'head_distinct_views': [r['view'] for r in ring if r['head_distinct']]}
+
+
+# ── the contact sheets ─────────────────────────────────────────────────────
+SHEET_TILE = 256
+SHEET_LABEL = 22
+
+
+def _font(size):
+    try:
+        return ImageFont.load_default(size=size)
+    except Exception:
+        return ImageFont.load_default()
+
+
+def _group_window(masks, names, margin=1.08):
+    u = None
+    for v in names:
+        if v in masks:
+            u = masks[v] if u is None else (u | masks[v])
+    if u is None or not u.any():
+        return None
+    return square_window(u, margin)
+
+
+def orbit_windows(masks):
+    """One window for the eight azimuths (they share a camera distance, so a
+    shared crop keeps them at one scale and a view that shrinks LOOKS smaller)
+    and one for the two poles."""
+    wa = _group_window(masks, AZIMUTHS)
+    wp = _group_window(masks, ('top', 'bottom'))
+    return {v: (wa if is_azimuth(v) else wp if v in ('top', 'bottom') else None) for v in masks}
+
+
+def sheet(tiles, labels, warn, path, bg):
+    cols, rows = 5, 2
+    W = cols * SHEET_TILE
+    H = rows * (SHEET_TILE + SHEET_LABEL)
+    im = Image.new('RGB', (W, H), bg)
+    drw = ImageDraw.Draw(im)
+    font = _font(14)
+    for k, v in enumerate(ORBIT):
+        x, y = (k % cols) * SHEET_TILE, (k // cols) * (SHEET_TILE + SHEET_LABEL)
+        t = tiles.get(v)
+        if t is not None:
+            if t.mode == 'RGBA':
+                im.paste(t, (x, y + SHEET_LABEL), t)
+            else:
+                im.paste(t, (x, y + SHEET_LABEL))
+        drw.rectangle([x, y, x + SHEET_TILE - 1, y + SHEET_LABEL - 1],
+                      fill=(150, 30, 30) if warn.get(v) else (40, 40, 44))
+        drw.text((x + 6, y + 3), labels.get(v, v), fill=(255, 255, 255), font=font)
+        drw.rectangle([x, y, x + SHEET_TILE - 1, y + SHEET_TILE + SHEET_LABEL - 1],
+                      outline=(120, 120, 124))
+    im.save(path)
+    return path
+
+
+def _sil_tile(mask, window):
+    x0, y0, side = window if window else square_window(mask)
+    H, W = mask.shape
+    pad = np.zeros((side, side), dtype=bool)
+    sx0, sy0 = max(0, x0), max(0, y0)
+    sx1, sy1 = min(W, x0 + side), min(H, y0 + side)
+    if sx1 > sx0 and sy1 > sy0:
+        pad[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = mask[sy0:sy1, sx0:sx1]
+    im = Image.fromarray(np.where(pad, 0, 255).astype(np.uint8), 'L')
+    return im.resize((SHEET_TILE, SHEET_TILE), Image.BOX)
+
+
 def main():
+    global FACING
     a = sys.argv[1:]
     if len(a) < 2:
         print(__doc__)
@@ -722,31 +1251,50 @@ def main():
     model, outdir = a[0], a[1]
     prev = a[a.index('--prev') + 1] if '--prev' in a else None
     hero_out = a[a.index('--hero') + 1] if '--hero' in a else None
-    views = (a[a.index('--views') + 1].split(',') if '--views' in a
-             else ['front', 'side', 'top', 'hero'])
+    views = expand_views(a[a.index('--views') + 1] if '--views' in a else 'orbit')
+    no_colour = '--no-colour' in a
     os.makedirs(outdir, exist_ok=True)
+    t0 = time.time()
 
     if hero_out:
         hero_png(model, hero_out)
         print(f'hero: {hero_out}')
-    V, F, MID, mats, C, basecol, _N = triangles_by_material(model, want_colour=True)
+    V, F, MID, mats, C, basecol, Nv = triangles_by_material(model, want_colour=True)
     A = albedo_of(model, V)
+    head, head_how = head_vertices(model, len(V))
+    headtri = (head[F].sum(axis=1) >= 2) if head is not None else None
+    if headtri is not None and (not headtri.any() or headtri.all()):
+        headtri = None
+    FACING, facing_how = facing_of(V, head)
     boxes, whole = part_boxes(V, F, MID, mats)
     report = {'vertices': int(len(V)), 'triangles': int(len(F)),
               'materials': mats, 'stats': structure(model),
-              'parts': boxes, 'whole': {'size': whole}, 'views': {}}
+              'parts': boxes, 'whole': {'size': whole},
+              'facing': {'forward': [float(x) for x in FACING], 'from': facing_how,
+                         'head': head_how if headtri is not None else f'none — {head_how}'},
+              'views': {}}
     thin_all = []
+    masks, rgbas = {}, {}
     for v in views:
-        shares, mask, colour, *alb = material_shares(V, F, MID, mats, v, C, basecol, A=A)
+        shares, mask, colour, nrm, *rest = material_shares(
+            V, F, MID, mats, v, C, basecol, Nv, A=A, want_tri=True)
+        win_tri = rest[-1]
+        alb = rest[0] if len(rest) == 2 else None
+        masks[v] = mask
         np.save(os.path.join(outdir, f'mask_{v}.npy'), mask)
         Image.fromarray(np.where(mask, 0, 255).astype(np.uint8), 'L').save(
             os.path.join(outdir, f'sil_{v}.png'))
         for px in (24, 48):
             thumb(mask, px, os.path.join(outdir, f'sil_{v}_thumb{px}.png'))
         mm = measures(mask)
+        mm['area_px'] = int(mask.sum())
         mm.update(exaggeration(mask))
-        mm.update(colour_measures(mask, colour, alb[0] if alb else None))
+        mm.update(colour_measures(mask, colour, alb))
+        px_, py_, _z = project(V, v)
+        mm.update(head_measures(px_, py_, F, headtri, win_tri, mask))
         mm['share'] = shares
+        if not no_colour:
+            rgbas[v] = shade_rgba(V, F, colour, nrm, mask, v, shadow=(v != 'bottom'))
         if mm.get('thinnest_px48') is not None:
             thin_all.append(mm['thinnest_px48'])
         if prev:
@@ -758,13 +1306,51 @@ def main():
                 report['parts'][name].setdefault('share', {})[v] = sh
         report['views'][v] = mm
 
+    # colour per view, cropped like the sheet so a reviewer flipping through
+    # the files sees one scale
+    wins = orbit_windows(masks)
+    for v, rgba in rgbas.items():
+        Image.fromarray(frame_down(rgba, 384, wins.get(v)), 'RGBA').save(
+            os.path.join(outdir, f'col_{v}.png'))
+
+    orbit = orbit_report(report['views'], masks)
+    if orbit:
+        report['orbit'] = orbit
+        warn = {}
+        for f in orbit['flags']:
+            warn.setdefault(f['view'], []).append(f['kind'])
+        labels = {}
+        for v in ORBIT:
+            d = report['views'].get(v, {})
+            hs = d.get('head_share')
+            lab = v + (f'  head {hs * 100:.0f}%' if hs is not None else '')
+            if warn.get(v):
+                lab += '  ' + '/'.join(sorted(set(warn[v]))).upper()
+            labels[v] = lab
+        if rgbas:
+            tiles = {}
+            for v in ORBIT:
+                if v in rgbas:
+                    tiles[v] = Image.fromarray(frame_down(rgbas[v], SHEET_TILE, wins.get(v)), 'RGBA')
+            sheet(tiles, labels, warn, os.path.join(outdir, 'orbit_sheet.png'), (206, 206, 210))
+        sheet({v: _sil_tile(masks[v], wins.get(v)) for v in ORBIT}, labels, warn,
+              os.path.join(outdir, 'orbit_sil_sheet.png'), (255, 255, 255))
+
     if thin_all:
         report['thinnest_px48'] = min(thin_all)
-    ious = [d['iou_vs_prev'] for d in report['views'].values()
-            if d.get('iou_vs_prev') is not None]
+    ious = {v: d['iou_vs_prev'] for v, d in report['views'].items()
+            if d.get('iou_vs_prev') is not None}
     if ious:
-        # the round moved as much as its most-changed view says it did
-        report['iou_vs_prev'] = min(ious)
+        # The round moved as much as its most-changed view says it did — over
+        # the views the 0.85 tweak bar was calibrated on (front, side, top and
+        # the three-quarter view; on the orbit, az000, az090, top and az045).
+        # Ten views give ten chances for one small view to swing, and a bar set
+        # on four would quietly stop catching nudges.
+        core = [ious[v] for v in ('front', 'side', 'top', 'hero', 'az000', 'az045', 'az090')
+                if v in ious]
+        report['iou_vs_prev'] = min(core or ious.values())
+        report['iou_vs_prev_all'] = min(ious.values())
+    report['seconds'] = round(time.time() - t0, 2)
 
     mpath = os.path.join(outdir, 'metrics.json')
     merged = {}
@@ -776,18 +1362,32 @@ def main():
         except Exception:
             pass
     merged.update(report)
+    if not orbit:
+        merged.pop('orbit', None)
     json.dump(merged, open(mpath, 'w', encoding='utf-8'), indent=1)
 
-    print(f"{report['triangles']} triangles, {len(views)} views, no browser")
+    print(f"{report['triangles']} triangles, {len(views)} views, no browser, "
+          f"{report['seconds']}s — facing {facing_how}")
     for v, d in report['views'].items():
         bits = [f"W/H {d.get('W_over_H')}"]
         if d.get('thinnest_px48') is not None:
             bits.append(f"thinnest {d['thinnest_px48']}px")
         if d.get('protrusions') is not None:
             bits.append(f"{d['protrusions']} protrusion(s)")
+        if d.get('head_share') is not None:
+            bits.append(f"head {d['head_share'] * 100:.0f}%"
+                        + ('' if d.get('head_distinct') else ' (merged)'))
         if d.get('iou_vs_prev') is not None:
             bits.append(f"iou {d['iou_vs_prev']}")
         print(f'  {v:<6} ' + '  '.join(bits))
+    if orbit:
+        print(f"  orbit: sheets {os.path.join(outdir, 'orbit_sheet.png')} · orbit_sil_sheet.png")
+        if headtri is None:
+            print(f'  advise  no head found ({head_how}) — the head measures are off')
+        for f in orbit['flags']:
+            print(f"  advise  {f['view']}: {f['kind']} — {f['why']}")
+        if not orbit['flags']:
+            print('  orbit holds: no azimuth collapses against its neighbours, the head reads')
     return 0
 
 
