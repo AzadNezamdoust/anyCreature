@@ -96,9 +96,12 @@
      // arcs are applied in order, later over earlier. "t":[t0,t1] limits a band ALONG the
      // chain (default the whole of it; dome caps belong to the end row they extend).
      // "feather" (degrees) and "feather_t" (a fraction of the chain) ramp the band's weight
-     // from 0 at its edge to 1 that far inside — a saddle that melts into the flank instead
-     // of stopping on a ring line. A feather narrower than the ring's own step (360/sides)
-     // lands between vertices and does nothing; write it wider than that step.
+     // (smoothstep) from 0 at its edge to 1 that far inside — a saddle that melts into the
+     // flank instead of stopping on a ring line. The ramp is RESOLVED BY THE VERTICES: a
+     // feather narrower than the ring step (360/sides) lands between two vertices and does
+     // nothing (the compiler warns), one just wider puts a single kink on the ramp. A
+     // gradient needs 2-3 vertices inside it: write feathers at 2-3x the step (16 sides
+     // → 45-70°), feather_t at 2-3x the ring spacing in t (~ring_step / chain length).
      // arcs ONLY — colors.gradient / colors.noise are ignored (info: line); see "shading" above
  }],
 
@@ -118,6 +121,11 @@
     // the carried plane (rings, spirals); taper pinches the far end.
     // Four mild segments can finish somewhere you did not predict — the compiler
     // reports the accumulated total (info: ... accumulated to 123°). Read that line.
+    // "colors": { "arcs": [ {"from":95,"to":180,"color":"#cdb9a2","feather":60} ] }
+    // a curve takes colors.arcs like a volume (the pale INSIDE of an ear, the dark upper
+    // edge of a horn): t runs 0 at the root to 1 at the far end, and the angle is read in
+    // the curve's OWN frame, not the body's, so the compiler prints where 0°/90°/180° face
+    // ("info: curve 'ear': colours — 0° faces down-back-side ..."). Read that line too.
 
   { "type":"membrane", "name":"wing", "material":"wing_skin", "mirrored":true,  // skin between rib chains
     "cusp":0.25, "along":8, "across":3,
@@ -168,9 +176,16 @@
     "anchor":{"chain":"body","t":0.9,"around":[45,180]},                     // silhouette: a ruff,
     "rows":2, "span":0.12, "count":7,                                         // a mane, a bushy
     "length":0.17, "width":0.10, "thick":0.05,                                // tail, cheek beards
-    "sweep":-1.2, "droop":0.55, "flare":0.9, "jitter":0.3, "sides":4 }
-    // A crown of short tapered wedges seated on a volume's surface, each rooted under the
-    // skin. `around` is [from,to] in the section's frame (0 spine, 90 side, 180 belly), or one
+    "sweep":-1.2, "droop":0.55, "flare":0.9, "jitter":0.3, "sides":6,
+    "bulge":0.95, "tip_color":"#e2d7bd" }              // root_color overrides the root end
+    // A crown of short fur CLUMPS seated on a volume's surface, each rooted under the skin:
+    // a root ring, a full ring a third of the way out (`bulge` x width — 0.6 a blade, 1.3 a
+    // pom), a shoulder ring and a tip, so the outline is a lobe that pinches to a point, not
+    // a paper spike. Each clump carries a colour ramp: the ROOT takes the colour of the skin
+    // it grows from (it never stands off the body) and the TIP takes the material (or
+    // tip_color) — cream tips over a grey neck is what a ruff looks like. Fewer, larger
+    // clumps at 5-6 sides read as fur; many narrow 4-sided ones read as a gear.
+    // `around` is [from,to] in the section's frame (0 spine, 90 side, 180 belly), or one
     // angle for a single column; `rows` rings of tufts spread over `span` along t; `count` per
     // row. Direction = surface normal x flare + chain tangent x sweep (+1 toward the chain's
     // end, -1 back toward its start) + world down x droop. `jitter` alternates lengths so the
@@ -178,6 +193,7 @@
     // and the junction normals, so they belong to the mass they grow from. They also ride
     // the skin of the ring they sit on (a ruff across two neck joints bends with the neck),
     // so "host" may be left out. A lofted tube cannot make a ruff — a fatter ring is a ring.
+    // A tuft in its host's own material is fur, not a part: contrast_adjacent leaves it alone.
  ],
 
  "animations": {
