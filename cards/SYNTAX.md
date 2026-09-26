@@ -74,6 +74,13 @@
    // different pose, take the limb OUT of "mirror" and author it as its own chain.
  "chains": { "torso":["Hips","Spine","Chest"], "LArm":[...], ... },
  "attach": { "LArm":"Chest", "head":"Neck" },      // every non-root chain → its host joint
+   // DIGITS: chains attached to the SAME host (four fingers and a thumb on a palm, toes on
+   // a foot) are compared ring against ring over their root halves, and the build WARNS
+   // ("digits ... fuse") when two overlap by 15%+ of the thinner one's radius. Sibling
+   // digits read as separate only with daylight between them — a fist with no gaps ships
+   // as one mitten (the shipped giant's fingers were 0.29 m thick on 0.19 m centres, 83%
+   // buried in each other, and nothing said so). Space the roots or thin the profile. A
+   // warning, not a block: fur, feathers and a webbed foot fuse on purpose.
  "mirror": ["LArm","LLeg"],                        // auto right-side twins (joints, meshes, anims)
  "touch": [["torso","tail"]],                      // declared connections MUST overlap or BLOCK
 
@@ -81,6 +88,12 @@
    "chain":"torso", "material":"skin_torso", "sides":14, "frame":"up",
    "profile":[[0,0.3,0.35], [0.6,0.42,0.5,{"bias":-0.1,"sharp":true}], [1,0.2,0.22]],
      // rows [t, half-width, half-height, opts]; exp 2.5-4=boxy slab; bias<0 belly-full;
+     // seventh pass: t may be a JOINT NAME on this chain — ["LElbow", 0.3, 0.3] puts the
+     //   row exactly at the elbow. An elbow or knee dip written at a guessed t (0.45-0.52
+     //   for an elbow that sits at 0.558 of the arm's arc length) narrows the upper arm
+     //   and the joint reads as a sleeve; arc-length t is the engine's number, so name the
+     //   joint and read the "profile row at ... resolved to t" line. Rows are sorted by
+     //   their resolved t; a name not on this chain is an error.
      // 1.5: taper — a WEDGE: +0.3 = wider at the top than below (brow and cheekbones over
      //   a jaw), -0.3 = heavier below (a jowl). An ellipse has no cheek plane and no jaw,
      //   which is why a head reads as a cone or a tube from 45°: put taper 0.2-0.35 on the
@@ -291,7 +304,13 @@
     "rows":2, "span":0.12, "count":7,                                         // a mane, a bushy
     "length":0.17, "width":0.10, "thick":0.05,                                // tail, cheek beards
     "sweep":-1.2, "droop":0.55, "flare":0.9, "jitter":0.3, "sides":6,
-    "bulge":0.95, "tip_color":"#e2d7bd" }              // root_color overrides the root end
+    "bulge":0.95, "round":0.5, "tip_color":"#e2d7bd" }  // root_color overrides the root end
+    // "round" (0..1, default 0; seventh pass): a BLUNT tip. A clump used to pinch from its
+    // shoulder ring straight to a point, and a crown of those read as a broken feather
+    // duster whatever the bulge did. With round > 0 the shoulder stays wide and a fourth
+    // ring near the end holds `round` x the belly's width, so each clump ends in a LOBE and
+    // neighbouring lobes overlap into one bushy edge — a tail brush, a ruff, a mane. 0.4-0.6
+    // is fur; leave 0 for a quill or a spine. Costs 2 x sides triangles per clump.
     // A crown of short fur CLUMPS seated on a volume's surface, each rooted under the skin:
     // a root ring, a full ring a third of the way out (`bulge` x width — 0.6 a blade, 1.3 a
     // pom), a shoulder ring and a tip, so the outline is a lobe that pinches to a point, not

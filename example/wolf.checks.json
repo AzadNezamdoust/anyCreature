@@ -65,6 +65,7 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — highlight 0.96 · fur_ruff 0.88 · eye 0.81 · ear_in 0.80 · fur_paw 0.78 · fur_brush 0.69 · fur_leg 0.62 · fur_body 0.57 · fur_head 0.57 · fur_tail 0.57 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14"
+  "value_order: materials by lightness, brightest first — highlight 0.96 · fur_ruff 0.93 · ear_in 0.82 · eye 0.81 · fur_paw 0.79 · fur_brush 0.72 · fur_leg 0.63 · fur_body 0.58 · fur_head 0.58 · fur_tail 0.58 · ear 0.36 · fur_dark 0.32 · claw 0.25 · nose 0.19 · pupil 0.14",
+  "value_order: \"highlight\" (L 0.96) is tied for brightest with \"fur_ruff\" (0.93) — nothing owns the eye when two masses sit at the same value. Drop the one that is NOT the brief's dominant focal by at least 0.08 L, or accept that the eye will ping-pong."
  ]
 }

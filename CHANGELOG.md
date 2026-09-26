@@ -713,6 +713,85 @@ digits with dark claws, the tail as part of the body, wings folded at rest, the 
 in `idle` and not in the bind pose, and an avoid list for uncanny or crude results.
 Referenced from card 00 ("Art direction") and MANUAL. `synccheck.py` requires it.
 
+**Seventh pass — stylised game assets: the giant gets fingers, the wolf gets a body**
+
+Owner feedback: "they look very weird" — the art direction, the proportions and
+anatomy, the faces, and "why do hands and fingers look connected?". The target the
+owner chose is a STYLISED GAME asset: clean readable chunky shapes, slightly larger
+heads, strong big-medium-small shape language, appealing faces with clear expressive
+eyes and brows. The lead's orbit review said the same in detail: the giant's head 2-3%
+from behind and a hump with a nub, arms as sleeves with no elbow, a flat grey sack for a
+torso, moss as a green smear, back spikes as random pale shards, legs as stumps; the
+wolf's tail a broken feather duster, a flat-topped barrel with no withers or loin, legs
+as sticks, a ruff that did not read. Three causes in the engine, the rest in the specs.
+
+**Engine**
+
+- **Profile rows AT a joint.** A row's first element may be a joint name: `["LElbow",
+  0.3, 0.3]` puts that row exactly where the elbow is along the chain, and the build
+  prints the resolved t. Every elbow and knee dip in the shipped giant was written at a
+  guessed t (0.45-0.52 for an elbow that sits at 0.558 of the arm's arc length), so the
+  narrowing landed on the upper arm and the joint read as a uniform sleeve; the wolf's
+  legs had no dip at all. Arc-length t is the engine's number. A name not on the chain
+  is an error; rows are sorted by their resolved t.
+- **Tufts `round` — a blunt tip.** A clump pinched from its shoulder ring straight to a
+  point, so a crown of them read as spikes whatever `bulge` did (the wolf's tail at
+  az090/270 and from above). With `round` 0..1 the shoulder stays wide and a fourth ring
+  near the end holds `round` x the belly's width: each clump ends in a lobe and
+  neighbouring lobes overlap into one bushy edge. 0.4-0.6 is fur; 0 keeps the quill.
+  Costs 2 x sides triangles per clump; the budget warning knows.
+- **Fused digits are reported.** Chains attached to the same host joint (fingers and a
+  thumb on a palm, toes on a foot) are compared ring against ring over their root halves
+  and the build warns ("digits … fuse: their volumes overlap by N% of the thinner one's
+  radius at t …") from 15%. The shipped giant's fingers were 0.29 m thick on 0.19 m
+  centres — 83% buried in each other — and nothing said so: `part_overlap` watches parts
+  against volumes and `self_clip` watches clips. A warning, not a block: fur, feathers and
+  a webbed foot fuse on purpose. `buildVolume` keeps `_prof` (per-ring radii) for it.
+
+**Specs**
+
+- **Giant** (`example/gallery/giant.json`, regenerated). Proportions of a stylised game
+  giant: the pelvis 1.22 m up (was 1.45) on short thick legs with the knee dip at the
+  joint and the shin angled back, a wide pelvis and a gut (`bias` -0.35), a pec line
+  and a lighter chest band, the shoulder row narrowed to 0.82 so the arm-torso gap is
+  open at 45°, elbows 1.08 m out with the forearm (0.44) heavier than the upper arm
+  (0.42) and the elbow row at `"LElbow"` (0.30). The head is a 0.56 m skull (was 0.4) on
+  a bull neck, the chain split with a `NeckTop` so the skull segment runs level and the
+  eyes (0.13, around 50°, pupil 0.58 with a highlight), the angry V brow ridge, a `nose`
+  pad and the tusks land where written. Fingers 0.105 r on 0.27 m centres (the digit
+  warning is silent for the four fingers; the thumb crossing the first finger is meant
+  to), the palm sized to their span, thinner, and tilted so the knuckle row hangs proud
+  below it. The crags are three graded basalt shards leaning back (big centre, medium
+  pair, small pair; `#474542` so they clear `contrast_adjacent`), the moss a smaller dark
+  green patch with six `round` 0.6 clumps rising from it in a paler tip colour, the
+  feet 1.0 m long with three toes. `move` lifts the root by 0.04-0.09 (the longer feet
+  dipped under the floor), the attack's overhead raise is 108° (120° folded an arm ring
+  at the wider elbow). Head 10-13% of the front, oblique and side views and 3.5% from
+  behind (was 6-8% and 1.7%); orbit holds with no advisory; 8,344 triangles (was 8,506),
+  height 4.24 m against the declared 4.0.
+- **Wolf** (`example/wolf.json`, regenerated). Stylised game-wolf proportions: the body
+  0.66 m up (was 0.72) and shorter (Loin 0.22, Chest 0.31), a withers peak (rows 0.74-0.86
+  `bias` 0.25 on a Withers joint 0.10 up), a loin dip (Loin -0.035, row 0.3 at 0.15/0.16),
+  a croup (row 0.12 `bias` 0.25) over a deep keel (rh 0.265, `bias` -0.2); the skull 15%
+  bigger with a shorter, broader muzzle (Muzzle 0.08, Nose 0.12, rows 0.11/0.095) and a
+  bigger nose pad; eyes 0.042 at t 0.47 with a 0.62 pupil under a lid tilted 0.7 into a
+  brow; legs 10% shorter with the forearm / gaskin rows and the dips at `"LFElbow"`,
+  `"LFWrist"`, `"LBKnee"`, `"LBHock"`; ruff 7 x 2 clumps 0.24 long, `round` 0.5; the
+  brush 3 x 3 clumps 0.17 wide at `bulge` 1.35 `round` 0.6 with `jitter` 0.15, the tip
+  three dark `round` clumps — one bushy tapered brush with a dark tip. Palette:
+  charcoal-blue saddle `#474b54`, tawny flank `#9a7750`, cream `#ece1c8`, the same eye
+  design as the giant (`#f4b427` iris, `#121212` pupil, highlight). `LBHip.rx` limit
+  -48 (the shorter body stops the front leg there). 8,260 triangles (was 8,072).
+- Images regenerated (same derivations as before): `example/wolf.glb` + checks,
+  `wolf_beauty.png`, `wolf_silhouette.png`, `wolf_thumb24.png`, the giant build + checks,
+  `giant_beauty.png`, `giant_silhouette.png`, `assets/hero.png`, `assets/silhouettes.png`
+  (the wolf's silhouette changed). Before / after orbit sheets under `out/compare/`
+  (`*_before7_*` / `*_after7_*`). Both checked mid-clip (`move`, `attack`) on the orbit.
+  `cards/SYNTAX.md` documents the joint-named rows, `round` and the digit warning.
+- `tools/test.sh` block 9: a joint-named row lands on that joint's t and a wrong name is
+  refused, `round` adds one ring per clump, overlapping sibling digits are reported and
+  the giant's four fingers are not, the wolf's brush ships with blunt tips.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**
