@@ -112,7 +112,7 @@ each wrist.
 | build | 71 joints, 5,349 vertices, 8,814 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head sway, arm settle), `move` (heavy bipedal walk with pelvis bob and sway, arms swinging opposite the legs), `attack` (both fists pull back, rise overhead, then the body pitches forward and the fists come down together in front, jaw open) |
 | declared | named parts, `function` (arms, palms, fingers and thumbs = effector, legs = locomotion), `joint_range` for every animated joint |
-| colour | hero view saturated area 19.1%, median albedo luminance 73.9. The fists are the brightest large mass (ochre, OKLab L 0.66); the hide is a cool slate (L 0.51) with a darker back and a pale chest; moss and rock sit on the hump; the eyes are the accent |
+| colour | hero view palette 19.3% coloured (S ≥ 0.30) and 18.2% loud (S ≥ 0.50), median shipped luminance 73.9. The fists are the brightest large mass (ochre, OKLab L 0.66); the hide is a cool slate (L 0.51) with a darker back and a pale chest; moss and rock sit on the hump; the eyes are the accent |
 
 What it exercises that the wolf and the raven do not:
 

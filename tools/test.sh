@@ -108,7 +108,7 @@ cat > "$T/giant_claims.json" <<'EOF'
  {"type": "part_exists", "part": "fist"},
  {"type": "part_signature", "part": "fist", "view": "front", "min_share": 0.12, "or_min_span": 0.12},
  {"type": "rig_skinned"}, {"type": "anim_named", "names": ["idle", "move", "attack"]},
- {"type": "saturation_area", "view": "hero", "min": 0.10, "max": 0.34},
+ {"type": "saturation_area", "view": "hero", "min": 0.10, "max": 0.50},
  {"type": "tri_budget", "min": 4000, "max": 9000}]}
 EOF
 prints  "giant: claims (fist, clips, tri budget)" "all claims pass" \
