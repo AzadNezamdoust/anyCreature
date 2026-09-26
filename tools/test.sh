@@ -12,7 +12,8 @@
 #   1. the tree is consistent       synccheck.py (versions, promises, dead refs, leaks)
 #   2. the rulers separate          calibrate.py (green builds, reds refused for their
 #                                   own faults, colour ruler both ways)
-#   3. the chain works end to end   engine -> outline -> judge -> glbcheck -> deliver/ship
+#   3. the chain works end to end   engine -> outline -> judge -> glbcheck -> deliver/ship,
+#                                   and every example/gallery spec builds with no BLOCK
 #   4. every harness tool runs      on the example, with its failure paths exercised
 #                                   where a wrong exit code would hide a real problem
 set -u
@@ -86,6 +87,16 @@ for k, j in s['joints'].items():
             if a in j: j[a] *= 1.12
 json.dump(s, open(sys.argv[1], 'w'))
 PY"
+# the gallery: every showcase spec must build with no BLOCK (the engine exits
+# non-zero on one), and the GLB shipped beside it must still conform. The wolf
+# is one quadruped; these are the proof that the engine generalises past it.
+for g in example/gallery/*.json; do
+  case "$g" in *.checks.json) continue ;; esac
+  [ -e "$g" ] || continue
+  n="$(basename "$g" .json)"
+  prints "gallery builds, no BLOCK: $n"   '"ok":true'   node engine/cli.js "$g" "$T/gallery_$n.glb"
+  ok     "glbcheck: shipped gallery $n.glb" node harness/glbcheck.mjs "example/gallery/$n.glb"
+done
 ok      "glbcheck: fresh build"           node harness/glbcheck.mjs "$T/wolf.glb"
 ok      "glbcheck: shipped example/wolf.glb" node harness/glbcheck.mjs example/wolf.glb
 # a cut file must be called CUT, not "bytes outside the declared file": that

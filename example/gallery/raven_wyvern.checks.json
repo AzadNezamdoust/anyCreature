@@ -1,0 +1,70 @@
+{
+ "spec": "raven_wyvern.json",
+ "passed": true,
+ "checks": [
+  {
+   "name": "mesh_integrity",
+   "passed": true
+  },
+  {
+   "name": "root_containment",
+   "passed": true
+  },
+  {
+   "name": "part_attachment",
+   "passed": true
+  },
+  {
+   "name": "touch",
+   "passed": true
+  },
+  {
+   "name": "balance",
+   "passed": true
+  },
+  {
+   "name": "size",
+   "passed": true
+  },
+  {
+   "name": "proportion",
+   "passed": true
+  },
+  {
+   "name": "limb_clearance",
+   "passed": true
+  },
+  {
+   "name": "anim_integrity",
+   "passed": true
+  },
+  {
+   "name": "attack_reach",
+   "passed": true
+  },
+  {
+   "name": "faceted_body",
+   "passed": true
+  },
+  {
+   "name": "mirror_distortion",
+   "passed": true
+  },
+  {
+   "name": "part_overlap",
+   "passed": true,
+   "warned": true
+  },
+  {
+   "name": "part_seat",
+   "passed": true
+  }
+ ],
+ "blocking": [],
+ "measures": [
+  "value_order: materials by lightness, brightest first — eye 0.82 · hackles 0.72 · beak 0.70 · leg_scale 0.63 · crest 0.59 · wing_skin 0.51 · plume_body 0.50 · plume_neck 0.50 · tail_fan 0.48 · plume_head 0.43 · plume_tail 0.42 · wing_bone 0.32 · claw 0.19 · pupil 0.10",
+  "part_overlap: 'lower_bill' sits 63% inside 'upper_bill' — measured surface to surface, so this is real interpenetration, not a bounding box.",
+  "part_overlap: 'wing_skin' sits 96% inside 'hackles' — measured surface to surface, so this is real interpenetration, not a bounding box.",
+  "part_overlap: 'wing_skin.R' sits 96% inside 'hackles.R' — measured surface to surface, so this is real interpenetration, not a bounding box."
+ ]
+}
