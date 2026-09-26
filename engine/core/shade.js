@@ -117,6 +117,16 @@ function declaredClasses(spec) {
   return byName;
 }
 
+/** Stamp `_cls` (flesh / hard / fx) on every mesh. The stack does this itself;
+ *  the junction pass (junction.js) needs it before the checks run, so it is
+ *  callable on its own and idempotent. */
+function assignClasses(spec, meshes) {
+  const declared = declaredClasses(spec);
+  for (const m of meshes)
+    if (m.V && m.V.length)
+      m._cls = classOf(m, declared.get(m.part ? m.part.replace(/\.[LR]$/, '') : m.chain));
+}
+
 // ── spatial grid over a subset of vertices ─────────────────────────────────
 // Used twice: to smooth the flesh colour field across part boundaries (L1) and
 // to find the nearest hardware vertex to each flesh vertex (L5). One
@@ -179,8 +189,7 @@ function shadeStack(spec, meshes, INFO) {
   const diag = Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) || 1;
   const y0 = lo[1], yr = (hi[1] - lo[1]) || 1e-6;
 
-  const declared = declaredClasses(spec);
-  for (const m of live) m._cls = classOf(m, declared.get(m.part ? m.part.replace(/\.[LR]$/, '') : m.chain));
+  assignClasses(spec, live);
   const counts = { flesh: 0, hard: 0, fx: 0 };
   const byClass = { flesh: new Set(), hard: new Set(), fx: new Set() };
   for (const m of live) {
@@ -452,4 +461,4 @@ function vnoise3(p, scale) {
     w);
 }
 
-module.exports = { shadeStack, DEFAULTS, lin2oklab, oklab2lin, inGamut, hex2lab };
+module.exports = { shadeStack, DEFAULTS, lin2oklab, oklab2lin, inGamut, hex2lab, classOf, declaredClasses, assignClasses };

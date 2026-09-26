@@ -74,9 +74,15 @@ function boneField(V, skin, sk) {
 // caller from the spec's attach/host declarations; each entry yields a Map from
 // vertex point object → [host normal, weight] so it survives the crease split
 // below (smoothSplit copies share the point object).
+//
+// In MOTION the copied normal only stays continuous because junction.js has
+// also blended the piece's skin weights toward the host across the same band:
+// the vertex then moves with the bones the host's own surface moves with, and
+// so does the normal it copied. Without that, a limb swing rotated the copied
+// normals with the limb bone and the seam came back mid-clip.
 const JUNCTION_MOVED = [];
 function junctionField(m, host, band, amount, l8, skeleton) {
-  const { nearest } = require('./inside.js');
+  const { nearField } = require('./junction.js');
   const { vertexNormals } = require('./normals.js');
   if (!host._jN) {
     let HN = vertexNormals(host.V, triangulate(host.F));
@@ -96,8 +102,9 @@ function junctionField(m, host, band, amount, l8, skeleton) {
   }
   const HN = host._jN;
   const out = new Map();
+  const near = nearField(m, host, band);      // shared with the skin pass (which may have cached a wider band)
   for (const v of m.V) {
-    const r = nearest(v, host);
+    const r = near.get(v);
     if (!r || r.d >= band) continue;
     // interpolate the host's smooth normal over the hit triangle by inverse
     // distance to its corners — cheap, and exact enough for a 12-14 wall tube
