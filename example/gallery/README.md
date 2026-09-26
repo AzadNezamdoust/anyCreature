@@ -19,10 +19,10 @@ hallux back). A long whip tail ends in a violet feather fan.
 
 | | |
 |---|---|
-| build | 61 joints, 6,190 vertices, 7,944 triangles (claims band 4,000-9,000), all green |
+| build | 61 joints, 6,622 vertices, 8,520 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head tilt, wing settle), `move` (bipedal stride, balance flutter), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
 | declared | named parts, `function` (head = effector, legs, wings and toes = locomotion), `joint_range` for every animated joint |
-| colour | hero view saturated area 26.1%, median albedo luminance 69.6. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings, magenta crest and tail fan (the spotlight), gold bill |
+| colour | hero view saturated area 25.6%, median albedo luminance 71.4. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings, magenta crest and tail fan (the spotlight), gold bill |
 
 What it exercises that the wolf does not:
 
@@ -61,8 +61,8 @@ These are engine limits, not choices made for this design:
   the nearest ring centre, not the surface. A claw seated 12 mm deep inside a
   22 mm toe reads "0% inside a body", so the claws here start at the toe-tip
   ring centre.
-- **A membrane is one flat colour.** `colors.arcs` exists only on volumes, so
-  the wing has no darker leading edge or vein pattern.
+- **A membrane is one flat colour.** `colors.arcs` works on volumes and curves but
+  not on membranes, so the wing has no darker leading edge or vein pattern.
 - **With membrane wings, colour budget and spotlight pull against each other.**
   The spread membrane is about 30% of the hero view on its own, so a saturated
   membrane lands at 48-55% saturated area, far over the card's 34% ceiling. The
