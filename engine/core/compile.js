@@ -236,6 +236,27 @@ function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
   return C;
 }
 
+// ── profile rows AT a joint ────────────────────────────────────────────────
+// A row's first element may be a JOINT NAME instead of a t: ["LElbow", 0.26,
+// 0.26] puts that row exactly where the elbow is along the chain. Seventh
+// pass: every elbow and knee dip in the shipped giant was written at a guessed
+// t (0.45-0.52 for an elbow that sits at 0.558 of the arm's arc length), so the
+// narrowing landed on the upper arm and the joint read as a uniform sleeve.
+// Arc-length t is the engine's number, not the author's; let the author name
+// the joint. Rows are sorted by their resolved t, and a name that is not on
+// this chain is an error, not a silent 0.
+function resolveProfile(spec, vol, names, jArc, total) {
+  const rows = (vol.profile || []).map(r => {
+    if (typeof r[0] !== 'string') return r;
+    const i = names.indexOf(r[0]);
+    if (i < 0) throw new Error(`volume "${vol.chain}": profile row at "${r[0]}" names no joint on this chain (${names.join(' > ')})`);
+    const t = +(jArc[i] / total).toFixed(4);
+    INFO.push(`volume "${vol.chain}": profile row at "${r[0]}" resolved to t ${t}`);
+    return [t, r[1], r[2], ...(r.length > 3 ? [r[3]] : [])];
+  });
+  return rows.slice().sort((a, b) => a[0] - b[0]);
+}
+
 function buildVolume(spec, vol) {
   const sides = vol.sides || 12;
   const joints = chainPoints(spec, vol.chain);
@@ -243,6 +264,7 @@ function buildVolume(spec, vol) {
   const jArc = [0];
   for (let i = 1; i < joints.length; i++) jArc.push(jArc[i - 1] + G.len(G.sub(joints[i], joints[i - 1])));
   const total = jArc[jArc.length - 1] || 1;
+  const profile = resolveProfile(spec, vol, spec.chains[vol.chain], jArc, total);
   // DENSE resample: ring every ~step of arc, joints no longer dictate density
   const step = vol.ring_step || Math.max(0.035, total / 36);
   const M = Math.max(joints.length, Math.min(48, Math.round(total / step)));
@@ -259,7 +281,7 @@ function buildVolume(spec, vol) {
     ringSkin.push(sf < 0.001 ? [[names[i], 1]] : sf > 0.999 ? [[names[i + 1], 1]]
       : [[names[i], 1 - sf], [names[i + 1], sf]]);
   }
-  let prof = ringT.map(t => crProfile(vol.profile, t));
+  let prof = ringT.map(t => crProfile(profile, t));
   // corner bevel-skip: at sharp path corners, rings inside the compression
   // zone (r·tan(θ/2)) would interpenetrate on the inner side — drop them and
   // let one span bridge the corner. Kills the fold class at any bend.
@@ -413,6 +435,7 @@ function buildVolume(spec, vol) {
   return { material: vol.material, V: part.v, F: part.fq, skin, C, chain: vol.chain,
     faceted: vol.faceted,
     _rings: part.rings, _pts: pts, _sides: sides, _ringT: ringT.slice(), _dome0: dome0,
+    _prof: prof.map(r => [r[0], r[1]]),                 // [rw, rh] per ring, for the sibling-overlap warning
     _open: [caps[0] === 'none', caps[1] === 'none'],   // which end rings are left open (the open_end check)
     _ringIdx: part.rings.map(ring => ring.map(p => vIndex.get(p))) };
 }
@@ -1305,6 +1328,14 @@ function buildTufts(spec, p, builtVols) {
   const L0 = p.length ?? 0.1, W = p.width ?? 0.04, TH = p.thick ?? 0.025;
   const sweep = p.sweep ?? 0, droop = p.droop ?? 0.3, flare = p.flare ?? 1, jit = p.jitter ?? 0.3;
   const bulge = Math.max(0.2, p.bulge ?? 1.0);
+  // "round" (0..1, default 0): a BLUNT tip. The clump used to pinch from its
+  // shoulder ring straight to a point, and a crown of those read as a broken
+  // feather duster — every tuft ended in a spike whatever the bulge did. With
+  // round > 0 the shoulder stays wide and a fourth ring near the end holds
+  // `round` x the belly's width, so the clump ends in a lobe; neighbouring lobes
+  // overlap into one bushy edge instead of a row of spikes. 0.4-0.6 is fur;
+  // 0 keeps the old spike (a quill, a spine).
+  const rnd = Math.max(0, Math.min(1, p.round ?? 0));
   const tipC = hex2lin(p.tip_color || (spec.palette[p.material] || {}).color || '#888888');
   const rootOverride = p.root_color ? hex2lin(p.root_color) : null;
   const V = [], F = [], skin = [], C = [];
@@ -1364,11 +1395,13 @@ function buildTufts(spec, p, builtVols) {
       const cAt = f => [rootC[0] + (tipC[0] - rootC[0]) * f, rootC[1] + (tipC[1] - rootC[1]) * f,
                         rootC[2] + (tipC[2] - rootC[2]) * f];
       // stations along the tuft: [fraction of L, half-width, half-thickness, colour mix]
+      const bw = W * 0.5 * bulge, bh = TH * 0.5 * bulge;
       const stations = [
         [0.00, W * 0.32, TH * 0.36, 0.00],                 // root, under the skin
-        [0.34, W * 0.5 * bulge, TH * 0.5 * bulge, 0.45],   // the clump's belly
-        [0.74, W * 0.27, TH * 0.24, 0.85],                 // shoulder
+        [0.34, bw, bh, 0.45],                              // the clump's belly
+        [0.74, Math.max(W * 0.27, bw * 0.78 * rnd), Math.max(TH * 0.24, bh * 0.78 * rnd), 0.85],  // shoulder
       ];
+      if (rnd > 0) stations.push([0.93, bw * 0.45 * rnd, bh * 0.45 * rnd, 0.97]);   // the lobe's end ring
       const b0 = V.length;
       for (const [f, rw, rh, cf] of stations) {
         const c = G.add(base, G.mul(d, L * f));
@@ -1395,14 +1428,17 @@ function buildTufts(spec, p, builtVols) {
     }
   }
   INFO.push(`tufts '${p.name || p.host}': ${made} tufts on "${an.chain}" at t=${(an.t ?? 0.5).toFixed(2)}`
-    + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`);
-  // a clump is 6 x sides - 2 triangles (x2 when mirrored) and rows x count has no
-  // ceiling: 8 rows of 40 eight-sided tufts is 14,720 triangles in one part,
-  // past the whole creature's budget, and nothing else said so
+    + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`
+    + `${rnd > 0 ? `, blunt tips (round ${rnd})` : ''}`);
+  // a clump is 6 x sides - 2 triangles (8 x sides - 2 with a blunt tip; x2 when
+  // mirrored) and rows x count has no ceiling: 8 rows of 40 eight-sided tufts
+  // is 14,720 triangles in one part, past the whole creature's budget, and
+  // nothing else said so
+  const perTuft = (rnd > 0 ? 8 : 6) * sides - 2;
   const nTri = F.reduce((s, f) => s + f.length - 2, 0) * (p.mirrored ? 2 : 1);
   if (nTri > 2500)
     INFO.push(`WARN tufts '${p.name || p.host}': ${nTri} triangles${p.mirrored ? ' (both sides)' : ''} in one tufts `
-      + `part (${made} tufts x ${6 * sides - 2}) — most of a creature's budget. Fewer, larger clumps read as fur `
+      + `part (${made} tufts x ${perTuft}) — most of a creature's budget. Fewer, larger clumps read as fur `
       + `better anyway: lower "count"/"rows", or "sides" 4-6.`);
   return { material: p.material, V, F, C, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
 }
@@ -1534,6 +1570,46 @@ function mirrorMesh(m, rDelta, mj = mirrorName) { // duplicate across X with fli
     _pts: m._pts ? m._pts.map(p => [-p[0], p[1], p[2]]) : undefined };
 }
 
+// ── sibling digits that fuse ───────────────────────────────────────────────
+// Chains attached to the SAME host joint — four fingers and a thumb on a palm,
+// three toes on a foot, a fan of tail flukes — are digits, and digits read as
+// digits only with daylight between them. The shipped giant's fingers were
+// 0.29 m thick on 0.19 m centres: every one was buried a third of its width
+// in its neighbours and the fist shipped as one mitten, and nothing said so
+// (part_overlap watches PARTS against volumes, self_clip watches clips). This
+// walks the rings of every sibling pair over the root half of both chains (a
+// thumb crossing the fingertips in a fist is meant to) and warns with the
+// overlap and where it is worst. A warning, not a block: fur, feathers and a
+// webbed foot fuse on purpose.
+function siblingOverlap(spec, builtVols) {
+  const byHost = {};
+  for (const [cn, host] of Object.entries(spec.attach || {}))
+    if (builtVols[cn]) (byHost[host] = byHost[host] || []).push(cn);
+  for (const [host, sibs] of Object.entries(byHost)) {
+    if (sibs.length < 2) continue;
+    for (let a = 0; a < sibs.length; a++) for (let b = a + 1; b < sibs.length; b++) {
+      const A = builtVols[sibs[a]], B = builtVols[sibs[b]];
+      let worst = 0, at = 0;
+      for (let i = 0; i < A._pts.length; i++) {
+        const ta = A._ringT[i]; if (ta < 0 || ta > 0.6) continue;
+        const ra = (A._prof[i][0] + A._prof[i][1]) / 2;
+        for (let j = 0; j < B._pts.length; j++) {
+          const tb = B._ringT[j]; if (tb < 0 || tb > 0.6) continue;
+          const rb = (B._prof[j][0] + B._prof[j][1]) / 2;
+          const d = G.len(G.sub(A._pts[i], B._pts[j]));
+          const over = (ra + rb - d) / Math.max(1e-6, Math.min(ra, rb));
+          if (over > worst) { worst = over; at = ta; }
+        }
+      }
+      if (worst > 0.15)
+        INFO.push(`WARN digits "${sibs[a]}" and "${sibs[b]}" (both on "${host}") fuse: their volumes overlap by `
+          + `${Math.round(worst * 100)}% of the thinner one's radius at t ${at.toFixed(2)} — sibling digits read as `
+          + `separate only with daylight between them; a fist with no gaps ships as one mitten. Space the root `
+          + `joints wider, or thin the profile rows there.`);
+    }
+  }
+}
+
 function rPoseDeltas(spec) {   // joints_R override − default mirror = per-joint shift
   if (!spec.joints_R) return null;
   const d = {};
@@ -1570,6 +1646,7 @@ function compile(spec) {
       meshes.push(t);
     }
   }
+  siblingOverlap(spec, builtVols);
   const BUILDERS = { spike: buildSpike, curve: buildCurve, nose: buildNose, membrane: buildMembrane, hand: buildHand,
     paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols),
     tufts: (s2, p2) => buildTufts(s2, p2, builtVols) };

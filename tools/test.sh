@@ -399,6 +399,48 @@ prints  "giant: the orbit holds with no advisory" "orbit holds" \
         python3 harness/outline.py "$T/giant.glb" "$T/giant_orbit"
 # ── END sixth-pass block ──
 
+# ── BEGIN seventh-pass block (profile rows at a joint, blunt tufts, fused digits) — additive ──
+echo "== 9. seventh-pass form features"
+ok      "a profile row at a joint name lands on that joint's arc-length t" \
+        node -e "
+const {compile,drainInfo}=require('./engine/core/compile.js');
+const s={palette:{s:{color:'#888888'}},joints:{A:[0,0,0],B:[0,0,0.6],C:[0,0,1.0]},chains:{arm:['A','B','C']},
+ volumes:[{chain:'arm',material:'s',sides:8,ring_step:0.05,profile:[[0,0.1,0.1],['B',0.04,0.04],[1,0.1,0.1]]}]};
+const m=compile(s)[0]; const info=drainInfo().join('\n');
+if(!/profile row at \"B\" resolved to t 0.6/.test(info)){console.error(info);process.exit(1);}
+// the thinnest ring is the one at z=0.6, and it is the row's 0.04
+let best=null; m._rings.forEach((r,i)=>{const z=m._pts[i][2]; const rad=Math.hypot(r[0][0]-m._pts[i][0],r[0][1]-m._pts[i][1]); if(!best||rad<best.rad)best={z,rad};});
+process.exit(Math.abs(best.z-0.6)<0.03&&Math.abs(best.rad-0.04)<0.005?0:1)"
+refuses "a profile row naming a joint off the chain is refused" "names no joint on this chain" \
+        node -e "
+const {compile}=require('./engine/core/compile.js');
+compile({palette:{s:{color:'#888888'}},joints:{A:[0,0,0],B:[0,0,1]},chains:{c:['A','B']},
+ volumes:[{chain:'c',material:'s',profile:[[0,0.1,0.1],['Nope',0.1,0.1],[1,0.1,0.1]]}]})"
+ok      "tufts \"round\" ends the clump in a lobe, not a point (one more ring per tuft)" \
+        node -e "
+const {compile,drainInfo}=require('./engine/core/compile.js');
+const base={palette:{s:{color:'#888888'},f:{color:'#eeeeee'}},joints:{A:[0,0.5,0],B:[0,0.5,1]},chains:{c:['A','B']},
+ volumes:[{chain:'c',material:'s',sides:8,profile:[[0,0.2,0.2],[0.5,0.25,0.25],[1,0.2,0.2]]}]};
+const mk=r=>{const s=JSON.parse(JSON.stringify(base)); s.parts=[{name:'t',type:'tufts',material:'f',anchor:{chain:'c',t:0.5,around:[0,90]},count:3,length:0.2,width:0.08,sides:6,round:r}];
+ const ms=compile(s); const info=drainInfo().join('\n'); return {m:ms.find(m=>m.part==='t'),info};};
+const a=mk(0),b=mk(0.6);
+if(!/blunt tips \(round 0.6\)/.test(b.info))process.exit(2);
+// spike: 3 rings x 6 + tip = 19 verts per tuft; lobe: 4 rings x 6 + tip = 25
+process.exit(a.m.V.length===3*19&&b.m.V.length===3*25?0:1)"
+prints  "sibling digits that overlap are reported as fused" "fuse: their volumes overlap" \
+        node -e "
+const {compile,drainInfo}=require('./engine/core/compile.js');
+compile({palette:{s:{color:'#888888'}},joints:{P:[0,1,0],A0:[-0.05,0.9,0],A1:[-0.05,0.5,0],B0:[0.05,0.9,0],B1:[0.05,0.5,0]},
+ chains:{palm:['P','A0'],fa:['A0','A1'],fb:['B0','B1']},attach:{fa:'P',fb:'P'},
+ volumes:[{chain:'palm',material:'s',profile:[[0,0.2,0.2],[1,0.2,0.2]]},
+  {chain:'fa',material:'s',profile:[[0,0.08,0.08],[1,0.06,0.06]]},{chain:'fb',material:'s',profile:[[0,0.08,0.08],[1,0.06,0.06]]}]});
+console.log(drainInfo().join('\n'))"
+ok      "giant: the four fingers no longer fuse (the thumb crossing them is meant to)" \
+        bash -c "node engine/cli.js example/gallery/giant.json '$T/giant7.glb' 2>&1 | grep 'digits' | grep -v LThumb | grep -q . && exit 1 || exit 0"
+prints  "wolf: the brush ships with blunt tips" "brush': 9 tufts on \"tail\" at t=0.52 ±0.25, around 25..180°, blunt tips" \
+        node engine/cli.js example/wolf.json "$T/wolf7.glb"
+# ── END seventh-pass block ──
+
 echo
 echo "$PASS passed, $FAIL failed"
 if [ "$FAIL" -ne 0 ]; then

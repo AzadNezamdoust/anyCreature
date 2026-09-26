@@ -105,22 +105,25 @@ What is still true:
 
 ![beauty](giant_beauty.png)
 
-The README's canonical order, "make me a menacing mountain giant", at 4 m. A
-heavy, hunched biped whose signature is its fists: each one is about a metre
-across, built from a palm, four folded fingers and a wrapped thumb, with the
-back of the hand facing forward and the knuckle row as the striking face. A
-short thick neck lifts a heavy skull clear of the hump — a brow ridge over
-amber eyes, an underbite with two big tusks — so the head breaks the outline
-from every azimuth, behind included. Granite-grey hide with a mottled pattern,
-a moss mantle and rock crags on the hump, elbows out and the sandstone fists
-hanging forward of the legs.
+The README's canonical order, "make me a menacing mountain giant", at 4 m, in
+the owner's chosen style: a STYLISED GAME giant — clean chunky shapes, a big
+characterful head, massive shoulders and forearms tapering to short thick legs.
+The signature is its fists: each one is about a metre across, built from a palm,
+four folded fingers with daylight between them and a thumb, with the back of the
+hand facing forward and the knuckle row hanging proud below the palm. A bull neck
+lifts a 1.1 m domed skull clear of the hump — an angry V of brow over amber eyes
+with pupils and a highlight, a broad nose pad, an underbite with two big tusks —
+so the head breaks the outline from every azimuth, behind included. Slate-blue
+hide with a gut and a pec line, a moss mantle of lobed clumps and three graded
+basalt crags on the hump, elbows out with the forearms heavier than the upper
+arms, a knee that reads, big three-toed feet.
 
 | | |
 |---|---|
-| build | 71 joints, 5,684 vertices, 8,506 triangles (claims band 4,000-9,000), all green |
+| build | 72 joints, 5,450 vertices, 8,344 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head sway, arm settle), `move` (heavy bipedal walk with pelvis bob and sway, arms swinging opposite the legs), `attack` (both fists pull back, rise overhead, then the body pitches forward and the fists come down together in front, jaw open) |
 | declared | named parts, `function` (arms, palms, fingers and thumbs = effector, legs = locomotion), `joint_range` for every animated joint |
-| colour | hero view palette 15.2% coloured (S ≥ 0.30) and 0.2% loud (S ≥ 0.50), median shipped luminance 72.2. The fists are the brightest large mass (sandstone, OKLab L 0.60, a pale knuckle row over a darker palm); the hide is a cool slate (L 0.51) with a darker back and a soft pale chest; moss and rock sit on the hump; the eyes are the accent |
+| colour | hero view palette 14.1% coloured (S ≥ 0.30) and 0.3% loud (S ≥ 0.50), median shipped luminance 68.4. The fists are the brightest large mass (sandstone, a pale knuckle row over a darker palm); the hide is a slate blue-grey with a darker back and a warm grey gut; moss and dark basalt sit on the hump; the amber eyes are the accent |
 
 What it exercises that the wolf and the raven do not:
 
@@ -145,11 +148,26 @@ What it exercises that the wolf and the raven do not:
   the fists forward of the legs, so the arm-torso gap is open at 45°. Zero
   orbit advisories; the head is 6-7% of the front and side views and 1.7%
   from behind (the bar is 1%).
+- **Fingers with daylight between them.** Seventh pass: the fingers were 0.29 m
+  thick on 0.19 m centres — every one buried a third of its width in its
+  neighbours — and the fist shipped as one mitten. The engine now compares
+  sibling digits ring against ring and warns ("digits … fuse", 83% on the old
+  spec); the fingers are 0.21 m on 0.27 m centres, the palm is sized to their
+  span and tilted so the knuckle row hangs proud of its face. The thumb still
+  crosses the first finger, which a fist is meant to do, and the warning says so.
+- **Profile rows at a joint.** The elbow and knee dips are `["LElbow", …]` /
+  `["LKnee", …]` rows: the engine resolves the arc-length t, so the narrowing
+  lands on the joint (0.56 of the arm) instead of on a guessed 0.45-0.52.
+- **The stylised read, on the orbit.** Head 10-13% of the front, oblique and side
+  views and 3.5% from behind (was 2-3% and merged); a skull chain split with a
+  `NeckTop` so the skull segment runs level and the eyes, brow and nose land where
+  written; the blob rule holds at every azimuth because the head, the graded
+  crags and the moss clumps leave the outline at the rear obliques.
 
 Files: `giant.json` (the spec), `giant.glb`, `giant.checks.json`,
 `giant_beauty.png` (the `outline.py --hero` shot) and `giant_silhouette.png`
-(front view, where the fists read). `out/compare/giant_before_*` / `giant_after_*`
-hold the orbit sheets either side of the sixth pass.
+(front view, where the fists read). `out/compare/giant_before7_*` / `giant_after7_*`
+hold the orbit sheets either side of the seventh pass.
 
 ```bash
 node engine/cli.js example/gallery/giant.json example/gallery/giant.glb
