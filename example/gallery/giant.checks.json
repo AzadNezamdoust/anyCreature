@@ -1,0 +1,66 @@
+{
+ "spec": "giant.json",
+ "passed": true,
+ "checks": [
+  {
+   "name": "mesh_integrity",
+   "passed": true
+  },
+  {
+   "name": "root_containment",
+   "passed": true
+  },
+  {
+   "name": "part_attachment",
+   "passed": true
+  },
+  {
+   "name": "touch",
+   "passed": true
+  },
+  {
+   "name": "balance",
+   "passed": true
+  },
+  {
+   "name": "size",
+   "passed": true
+  },
+  {
+   "name": "proportion",
+   "passed": true
+  },
+  {
+   "name": "limb_clearance",
+   "passed": true
+  },
+  {
+   "name": "anim_integrity",
+   "passed": true
+  },
+  {
+   "name": "attack_reach",
+   "passed": true
+  },
+  {
+   "name": "faceted_body",
+   "passed": true
+  },
+  {
+   "name": "mirror_distortion",
+   "passed": true
+  },
+  {
+   "name": "part_overlap",
+   "passed": true
+  },
+  {
+   "name": "part_seat",
+   "passed": true
+  }
+ ],
+ "blocking": [],
+ "measures": [
+  "value_order: materials by lightness, brightest first — eye 0.82 · tusk 0.74 · fist 0.66 · rock 0.62 · moss 0.62 · hide_torso 0.51 · hide_arm 0.51 · hide_leg 0.51 · hide_head 0.51 · jaw 0.47 · foot 0.38 · brow 0.37 · toenail 0.20 · pupil 0.14"
+ ]
+}
