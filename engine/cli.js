@@ -64,6 +64,22 @@ const sk = buildSkeleton(spec);          // also registers mirrored chains
 const meshes = compile(spec);
 for (const line of require('./core/compile.js').drainInfo())
   console.error('info: ' + line);        // the compiler narrates what happened
+// Junctions: every attached FLESH mesh — a limb chain on its `attach` host, a
+// hosted part (paw, ear, tuft, claw) on the chain or part it grows from — is
+// paired with that host (engine/core/junction.js). Two passes share the pairs:
+// the SKIN blend here, before the checks, so anim_integrity / self_clip /
+// ground_clip sweep the weights that ship; the NORMAL blend in glb.js. Band:
+// `shading.normals.junction_band` x model height (default 0.06, 0 = off);
+// `junction` / `junction_skin` scale the two blends (default 1).
+const STACK = require('./core/compile.js').useStack(spec);
+let junctions = [];
+if (STACK) {
+  require('./core/shade.js').assignClasses(spec, meshes);
+  junctions = require('./core/junction.js').junctionPairs(spec, meshes);
+  const jInfo = [];
+  require('./core/junction.js').blendJunctionSkin(junctions, jInfo);
+  for (const line of jInfo) console.error('info: ' + line);
+}
 const { fails, warns } = runChecks(spec, sk, meshes, null);
 for (const w of warns) console.error('warn: ' + w);   // measures, not laws — you judge
 
@@ -76,7 +92,7 @@ for (const w of warns) console.error('warn: ' + w);   // measures, not laws — 
 // the checks; the engine writes them down. Roster matches harness/gates.json.
 const ENGINE_CHECKS = ['mesh_integrity', 'root_containment', 'part_attachment',
   'touch', 'balance', 'size', 'proportion', 'limb_clearance', 'anim_integrity',
-  'attack_reach', 'faceted_body', 'mirror_distortion', 'part_overlap', 'part_seat'];
+  'attack_reach', 'faceted_body', 'mirror_distortion', 'part_overlap', 'part_seat', 'open_end'];
 try {
   const said = (name, list) => list.some(m => String(m).toLowerCase().includes(name));
   const stamp = {
@@ -109,7 +125,6 @@ const uvInfo = spec.keep_uv ? require('./core/uv.js').applyUVs(meshes) : null;
 // The L1-L8 stack takes AO and the vertex normals as INPUTS — its flesh and
 // hardware shading each apply AO with their own amount and gamma — so AO is
 // recorded here and applied by the stack, not multiplied in on the way past.
-const STACK = require('./core/compile.js').useStack(spec);
 const aoCfg = STACK && spec.ao !== false
   ? Object.assign({}, (typeof spec.ao === 'object' && spec.ao) || {}, { multiply: false })
   : spec.ao;
@@ -141,7 +156,8 @@ if (spec.embed_spec !== false) {
   asset.extras.parts = [
     ...(pristine.volumes || []).map(v => ({ kind: 'volume', chain: v.chain, material: v.material })),
     ...(pristine.parts || []).map(p => ({ kind: 'part', type: p.type, name: p.name || null,
-      material: p.material, host: p.host || (p.ribs ? 'ribs' : null), join: p.join || null })),
+      material: p.material, host: p.host || (p.ribs ? 'ribs' : null), join: p.join || null,
+      ...(p.host_part ? { host_part: p.host_part } : {}) })),
   ];
 }
 const names = require('./core/skeleton.js').exportNames(spec, sk);
@@ -156,39 +172,8 @@ const names = require('./core/skeleton.js').exportNames(spec, sk);
 const L8 = STACK
   ? (((spec.shading || {}).normals || {}).flesh ?? 0.30)
   : 0;
-// Junction normals: every attached FLESH mesh — a limb chain on its `attach`
-// host, a hosted part (paw, ear, tuft) on the chain it grows from — blends its
-// normals onto that host within `junction_band` of the host's surface (a
-// fraction of the model height, default 0.06; 0 turns it off). See glb.js.
-const junctions = [];
-if (STACK) {
-  const nsh = (spec.shading || {}).normals || {};
-  const ys = meshes.flatMap(m => m.V.map(v => v[1]));
-  const modelH = Math.max(1e-6, Math.max(...ys) - Math.min(...ys));
-  const band = (nsh.junction_band ?? 0.06) * modelH;
-  // A VOLUME is any mesh grown from a chain that is not a part. Mirrored twins
-  // carry no _rings (mirrorMesh does not copy them), so testing _rings found
-  // only the left side: the right legs had no host at all, and a right paw's
-  // host fell back to the LEFT leg, 20 cm away — every right-hand junction
-  // shipped without the blend, the left-hand ones with it.
-  const isVol = x => !x.part && x.chain;
-  const volOf = (chain, twin) => meshes.find(x => isVol(x) && x.chain === chain && !!x._mirrorSrc === twin)
-                              || meshes.find(x => isVol(x) && x.chain === chain && !x._mirrorSrc);
-  // the chain that OWNS the attach joint: one with a volume, and not the piece
-  // itself (same rule as root_containment) — the first chain that merely lists
-  // the joint may be the attached chain or a volume-less guide
-  const chainOfJoint = (j, self) => Object.keys(spec.chains || {}).find(c => c !== self
-    && (spec.chains[c] || []).includes(j) && meshes.some(x => isVol(x) && x.chain === c));
-  if (band > 0) for (const m of meshes) {
-    if (m._cls !== 'flesh') continue;
-    let host = null;
-    if (isVol(m) && (spec.attach || {})[m.chain]) {
-      const hc = chainOfJoint(spec.attach[m.chain], m.chain);
-      if (hc) host = volOf(hc, !!m._mirrorSrc);
-    } else if (m.part && m.hostChain) host = volOf(m.hostChain, !!m._mirrorSrc);
-    if (host && host !== m) junctions.push({ m, host, band, amount: nsh.junction ?? 1 });
-  }
-}
+// Junction normals: the same pairs as the skin blend above, applied to the
+// shipped NORMAL inside writeGLB (see glb.js, junctionField).
 const bytes = writeGLB({ meshes, skeleton: sk, ibm: inverseBindMatrices(sk), anims }, outPath,
   { asset, names, boneNormals: L8, spans: spec.embed_spec !== false, junctions });
 if (junctions.length) {

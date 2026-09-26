@@ -219,4 +219,4 @@ function islands(meshes, tol, weld = 3) {
   return [...groups.values()].sort((a, b) => b.length - a.length);
 }
 
-module.exports = { signedDistance, nearest, isInside, islands };
+module.exports = { signedDistance, nearest, isInside, islands, joined };

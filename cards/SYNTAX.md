@@ -29,12 +29,19 @@
                         // the file's NORMAL, so the user's lighting reacts to it. 0.30:
                         // at 0.90 every flesh normal is a cylinder's and the profile
                         // (chest swell, thigh taper, the stop) stops shading at all.
-              "junction":1.0, "junction_band":0.06},
+              "junction":1.0, "junction_band":0.06,
+              "junction_skin":1.0, "junction_skin_band":0.09},
                         // junction normals: every attached flesh piece — a limb on its
                         // `attach` host, a paw / ear / tuft on the chain it grows from —
                         // takes its HOST's normal within junction_band x model height of
                         // the host surface, so a leg shades continuously into the torso
                         // instead of showing a lit intersection edge. 0 turns it off.
+                        // junction SKIN: the same pieces blend their skin WEIGHTS toward the
+                        // host's own skin, linearly over junction_skin_band (wider: a bend
+                        // needs room), so the root of a limb deforms with the body and the
+                        // seam stays gone MID-CLIP — a normal copied in bind pose used to
+                        // rotate with the limb bone and the seam came back at every step.
+                        // Runs before the checks, so anim_integrity sweeps what ships.
    "stack": true },     // false = the 1.2.0 ramp-and-grain instead (gradient/noise below)
                         // legacy, only read when stack:false:
                         // "gradient":{"top":0.30,"bottom":-0.88}, "noise":{"size":0.018,"amount":0.26}
@@ -89,6 +96,24 @@
    "cap_depth":[0.9,0.6], "cap_rings":3,   // a dome is a REAL dome (1.4): cap_rings extra
      //   shrinking rings lifted along the axis, depth = cap_depth x the end ring's smaller
      //   radius (default 0.8). 0.5 is a flattened rump, 0.9 a round muzzle tip.
+     //   "none" leaves that end ring OPEN — only right when the ring is buried inside the
+     //   mass the chain grows from or into (a limb root in the torso). An open ring that is
+     //   not inside another body shows the background through its mouth in any renderer
+     //   that culls back faces: open_end BLOCKs at a third of the ring exposed, warns at a
+     //   tenth (root_containment already owns an attached chain's root ring). A chain that
+     //   ENDS inside the next mass (neck into head) wants "dome" there, not "none" — a dome
+     //   narrows, so it also has to reach INTO that mass, and the next mass's root ring has
+     //   to sit inside this one.
+   // "frame": "up" keeps every ring's 0° on top along a chain that bends (a tail that droops,
+   // a neck that curves); the default frame starts 0° on top and carries it along the chain
+   // without twist (parallel transport). Both hold 0° = TOP on any chain that lies down,
+   // forward or backward — until the fourth pass the default frame started 0° at the
+   // BELLY on a lying chain and "up" turned it to the belly on a backward one, so every
+   // head and tail arc shipped inverted. A chain that STANDS (its overall direction within
+   // ~25° of vertical — a leg, even with a slanted thigh) keeps the X reference: 0° = inner,
+   // 90° = front, 180° = outer. 90° is +U: the +X side on a forward chain, the -X side on a
+   // backward one — a mirrored part covers both, a one-sided anchor should read the build's
+   // "faces ..." line. The compiler warns when a chain's 0° is not where these rules say.
    "colors": { "arcs":[                                              // 0°=spine 180°=belly
      {"from":0,"to":52,"color":"#57513f","feather":16},              // saddle, soft lower edge
      {"from":44,"to":118,"color":"#b07a44","t":[0.05,0.75],"feather":24,"feather_t":0.08},
@@ -127,14 +152,44 @@
     // the curve's OWN frame, not the body's, so the compiler prints where 0°/90°/180° face
     // ("info: curve 'ear': colours — 0° faces down-back-side ..."). Read that line too.
 
+  { "type":"curve", "name":"claw_mid", "host_part":"toe_mid", "at":0.88,   // A PART ON A PART
+    "material":"claw", "join":"insert", "mirrored":true, "offset":[0,0.003,0],
+    "segments":[ {"len":0.03,"r":0.0085}, {"len":0.03,"r":0.006,"fall":55,"taper":true} ] },
+    // "host_part" seats a part on an EARLIER part instead of on a joint: a claw on a curve
+    // toe, a barb on a spine, a bell on a tentacle. "at" is 0..1 along the host's centreline
+    // (a curve or a spike; default 1 = the far end); the origin lands there plus "offset",
+    // "dir" defaults to the centreline's tangent, and the skin weights are INHERITED from the
+    // host, so it moves with whatever the host moves with. part_attachment / part_seat /
+    // contrast_adjacent measure it against the host PART's own surface and material. A host
+    // with no centreline (a fin, a paw, a hand) seats it at the host's joint + offset and needs
+    // a "dir". The host must be listed BEFORE the part it carries. Not for eye / membrane /
+    // tufts, which place themselves. The build prints where the part landed ("info: part
+    // 'claw_mid': seated on part \"toe_mid\" at 0.88 of its length [...]").
+
   { "type":"membrane", "name":"wing", "material":"wing_skin", "mirrored":true,  // skin between rib chains
     "cusp":0.25, "along":8, "across":3,
-    "ribs":[ {"chain":"LArm"}, {"chain":"LFing2"}, {"chain":"LFing3"}, {"chain":"LTrail"} ] },
+    "ribs":[ {"chain":"LArm"}, {"chain":"LFing2"}, {"chain":"LFing3"}, {"chain":"LTrail"} ],
+    "colors": { "arcs":[ {"u":[0,0.22],"color":"#3a2f52","feather_u":0.22},     // darker leading edge
+                         {"t":[0.55,1],"color":"#8a74b4","feather_t":0.45} ],   // paler toward the tip
+                "veins": {"color":"#4a3b6a","width":0.4} } },                    // ribs show through
     // along = samples down each rib · across = columns between neighbouring ribs
     // cusp = how deeply the trailing edge scoops · per-rib "shorten":0.2 pulls one rib in
     // Ribs run leading→trailing and the LAST one has to come back to the body.
     // Leave it out at the far end and the silhouette never encloses — it reads as
     // spread fingers, not one sheet. The compiler measures the root gap and warns.
+    // colors: a sheet has no rings, so its bands are written in the sheet's OWN frame —
+    // "u" ACROSS (0 = the leading rib, 1 = the trailing rib) and "t" ALONG (0 root, 1 tip),
+    // later arcs over earlier, feather_u / feather_t as fractions of the sheet. "veins"
+    // darkens a band centred on each rib column, `width` as a fraction of the rib spacing.
+    // Resolved by the vertices like every arc: a feather under 1/((ribs-1) x across) or a
+    // vein under 1/across lands between two vertices and ships a hard edge (the compiler
+    // warns with the numbers). The build prints which rib is u 0 and which is u 1.
+    // COLOUR BUDGET: a spread wing is ~30% of the hero view by itself, and the saturated-
+    // area ruler reads the SHIPPED colour, which the shading stack pushes ~0.1 above the
+    // palette's HSV S on mid-saturation surfaces (a #6e5a98 wing, S 0.41, ships 64% of its
+    // vertices at S >= 0.50). Keep a supporting membrane's palette under ~S 0.35, and spend
+    // the loud colour on a smaller signature; a leading edge or veins can be darker without
+    // being louder.
 
   { "type":"fin", "host":"Skull", "material":"plate", "thickness":0.02, "mirrored":true,
     "anchor":{"chain":"head","t":0.4,"around":60},   // around: 0=spine 90=side 180=belly

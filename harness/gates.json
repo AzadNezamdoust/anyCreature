@@ -214,6 +214,17 @@
    "dept": "model"
   },
   {
+   "id": "open_end",
+   "where": "engine",
+   "stage": "any",
+   "enforce": "block",
+   "when": "allocate",
+   "plain": "an open end ring (caps \"none\") must be buried inside another body, or it shows the background",
+   "by": "A",
+   "kind": "legality",
+   "dept": "model"
+  },
+  {
    "id": "brief_slots",
    "where": "harness/brief.py",
    "stage": "LOW",

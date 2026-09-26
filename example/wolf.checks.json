@@ -57,6 +57,10 @@
   {
    "name": "part_seat",
    "passed": true
+  },
+  {
+   "name": "open_end",
+   "passed": true
   }
  ],
  "blocking": [],

@@ -117,6 +117,16 @@ function declaredClasses(spec) {
   return byName;
 }
 
+/** Stamp `_cls` (flesh / hard / fx) on every mesh. The stack does this itself;
+ *  the junction pass (junction.js) needs it before the checks run, so it is
+ *  callable on its own and idempotent. */
+function assignClasses(spec, meshes) {
+  const declared = declaredClasses(spec);
+  for (const m of meshes)
+    if (m.V && m.V.length)
+      m._cls = classOf(m, declared.get(m.part ? m.part.replace(/\.[LR]$/, '') : m.chain));
+}
+
 // ── spatial grid over a subset of vertices ─────────────────────────────────
 // Used twice: to smooth the flesh colour field across part boundaries (L1) and
 // to find the nearest hardware vertex to each flesh vertex (L5). One
@@ -179,8 +189,7 @@ function shadeStack(spec, meshes, INFO) {
   const diag = Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) || 1;
   const y0 = lo[1], yr = (hi[1] - lo[1]) || 1e-6;
 
-  const declared = declaredClasses(spec);
-  for (const m of live) m._cls = classOf(m, declared.get(m.part ? m.part.replace(/\.[LR]$/, '') : m.chain));
+  assignClasses(spec, live);
   const counts = { flesh: 0, hard: 0, fx: 0 };
   const byClass = { flesh: new Set(), hard: new Set(), fx: new Set() };
   for (const m of live) {
@@ -230,24 +239,44 @@ function shadeStack(spec, meshes, INFO) {
   // the field now blends a vertex toward the OTHER meshes' colour, weighted by
   // how close the nearest foreign vertex is — a vertex deep inside its own
   // mass is returned untouched, and the authored arcs stay crisp.
+  //
+  // JOINED meshes only. The radius is 3 median edges or 3% of the diagonal,
+  // whichever is larger — 20-25 cm on a 4 m body — and "a foreign vertex within
+  // R" is not a seam: a fist hanging 16 cm from a knee painted the knee the
+  // fist's colour, a post 16 cm from an orange block took the orange on every
+  // facing vertex. A seam is where two meshes actually share material, so the
+  // blend opens (and the target averages) only across meshes that inside.js
+  // finds joined — one has vertices inside or within a median edge of the other,
+  // at three points — the same test body_islands uses to call a piece attached.
   if (on('seam') !== false) {
     const sp = P('seam');
     const edge = medianEdge(live, diag);
     const R = Math.max(sp.min_frac * diag, edge * sp.radius_edges);
     const fleshPts = pts.filter(p => p.cls === 'flesh');
     if (fleshPts.length) {
+      const { joined } = require('./inside.js');
+      const fleshMeshes = [...new Set(fleshPts.map(p => p.m))];
+      const joinedWith = new Map(fleshMeshes.map(m => [m, new Set()]));
+      for (let i = 0; i < fleshMeshes.length; i++)
+        for (let j = i + 1; j < fleshMeshes.length; j++)
+          if (joined(fleshMeshes[i], fleshMeshes[j], edge, 3)) {
+            joinedWith.get(fleshMeshes[i]).add(fleshMeshes[j]);
+            joinedWith.get(fleshMeshes[j]).add(fleshMeshes[i]);
+          }
       const gg = grid(fleshPts, R);
       const out = new Array(fleshPts.length);
       const r2 = R * R, sig2 = (R / 2) * (R / 2);
       let touched = 0;
       fleshPts.forEach((p, n) => {
         let wsum = 0, acc = [0, 0, 0], nearest = Infinity;
+        const jw = joinedWith.get(p.m);
         for (const j of gg.near(p.v, R)) {
           const q = fleshPts[j];
+          if (q.m !== p.m && !jw.has(q.m)) continue;      // near is not joined: no seam here
           const dx = q.v[0] - p.v[0], dy = q.v[1] - p.v[1], dz = q.v[2] - p.v[2];
           const d2 = dx * dx + dy * dy + dz * dz;
           if (d2 > r2) continue;
-          if (q.m !== p.m && d2 < nearest) nearest = d2;   // only a FOREIGN mesh opens the blend
+          if (q.m !== p.m && d2 < nearest) nearest = d2;   // only a FOREIGN, JOINED mesh opens the blend
           const w = Math.exp(-d2 / (2 * sig2));
           const c = q.m.C[q.i];
           acc[0] += c[0] * w; acc[1] += c[1] * w; acc[2] += c[2] * w;
@@ -452,4 +481,4 @@ function vnoise3(p, scale) {
     w);
 }
 
-module.exports = { shadeStack, DEFAULTS, lin2oklab, oklab2lin, inGamut, hex2lab };
+module.exports = { shadeStack, DEFAULTS, lin2oklab, oklab2lin, inGamut, hex2lab, classOf, declaredClasses, assignClasses };

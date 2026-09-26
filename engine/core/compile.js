@@ -140,7 +140,26 @@ function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
     if (a.t !== undefined && !(Array.isArray(a.t) && a.t.length === 2))
       throw new Error(`${label}: an arc's "t" is [t0, t1] along the chain, got ${JSON.stringify(a.t)}`);
     if (!a.color) throw new Error(`${label}: an arc needs a "color"`);
-    return { from: a.from ?? 0, to: a.to ?? 180, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
+    let from = a.from ?? 0, to = a.to ?? 180;
+    // The angle is FOLDED (sym below: 0..180, both flanks at once), so an arc
+    // written past 180 or below 0 used to match no vertex at all and ship as a
+    // silent no-op ("270..330" for "the left flank"). Fold it the same way.
+    if (to < from) {
+      INFO.push(`WARN ${label}: arc ${from}..${to}° runs backwards ("from" > "to") and colours nothing — `
+        + `arcs are degrees from the top, 0..180, applied to both sides at once.`);
+    } else if (from < 0 || to > 180) {
+      const f = x => { x = ((x % 360) + 360) % 360; return x > 180 ? 360 - x : x; };
+      // the folded image of [from, to]: it holds 0 if the arc crosses 0 or 360,
+      // 180 if it crosses 180 or -180, and otherwise runs between its ends' images
+      const crosses = v => from <= v && to >= v;
+      const lo = (crosses(0) || crosses(360) || crosses(-360)) ? 0 : Math.min(f(from), f(to));
+      const hi = (crosses(180) || crosses(-180) || crosses(540)) ? 180 : Math.max(f(from), f(to));
+      const nf = to - from >= 360 ? [0, 180] : [lo, hi];
+      INFO.push(`${label}: arc ${from}..${to}° read as ${nf[0]}..${nf[1]}° — arcs are degrees from the top `
+        + `(0) to the bottom (180), the same on both sides of the section.`);
+      [from, to] = nf;
+    }
+    return { from, to, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
              fa: Math.max(0, a.feather || 0), ft: Math.max(0, a.feather_t || 0) };
   });
   const step = 360 / sides;
@@ -165,6 +184,22 @@ function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
         + `${tStep.toFixed(3)} apart in t — a feather narrower than the ring spacing lands between `
         + `two rings and does nothing. Write it at 2-3x the spacing (${(tStep * 2).toFixed(2)}-`
         + `${(tStep * 3).toFixed(2)}), or lower "ring_step".`);
+    // The ramps run INSIDE the band from both closed edges. When they overlap —
+    // a feather over half the band — the band never reaches its colour anywhere,
+    // and the 2-3x-step advice above lands exactly there on a narrow band (60..120
+    // with feather 60 peaks at 74%). Say how far it gets.
+    if (a.t1 < a.t0)
+      INFO.push(`WARN ${label}: arc "t": [${a.t0}, ${a.t1}] runs backwards and colours nothing — t0 is the `
+        + `end nearer the chain's start.`);
+    const sm = u => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
+    const pa = (a.from > 0 && a.to < 180 && a.fa > 0) ? sm((a.to - a.from) / 2 / a.fa) : 1;
+    const pt = (a.t0 > 0 && a.t1 < 1 && a.ft > 0) ? sm((a.t1 - a.t0) / 2 / a.ft) : 1;
+    if (pa * pt < 0.95 && a.to > a.from && a.t1 > a.t0)
+      INFO.push(`WARN ${label}: arc ${a.from}..${a.to}°${a.t0 > 0 || a.t1 < 1 ? ` t ${a.t0}..${a.t1}` : ''} `
+        + `never reaches its colour: its feathers are wider than half the band, so the ramps from the two `
+        + `edges meet before 1 and the band peaks at ${Math.round(100 * pa * pt)}%. Widen the band, or `
+        + `feather at most half its width (${((a.to - a.from) / 2).toFixed(0)}°`
+        + `${pt < 1 ? `, feather_t ${((a.t1 - a.t0) / 2).toFixed(2)}` : ''}).`);
   }
   // 1 inside, 0 outside, smoothstep over f inside each CLOSED edge. A band
   // touching 0 or 180 (or t 0 or 1) is open on that side: nothing to feather.
@@ -349,6 +384,26 @@ function buildVolume(spec, vol) {
   const base = hex2lin((spec.palette[vol.material] || {}).color || '#888888');
   const C = arcColours(`volume "${vol.chain}"`, part, sides, ringT, secs.map(s2 => (s2 && s2.roll) || 0),
     base, colSpec, vIndex);
+  // "0° = spine" holds on frame "up" only. On the default (parallel-transport)
+  // frame the height axis of a chain that runs forward or back comes out as
+  // world DOWN, so a "saddle" arc 0..60 lands on the belly and nothing says so.
+  // Say where 0° faces on a lying chain whenever it is not the top.
+  if ((colSpec.arcs || []).length && pts.length > 2) {
+    const s = Math.min(pts.length - 2, Math.max(0, ringT.findIndex(t => t >= 0.5)));
+    const tan = G.nrm(G.sub(pts[s + 1], pts[s]));
+    const rollDeg = ((secs[s] && secs[s].roll) || 0) * 180 / Math.PI;
+    const k = ((Math.round((90 - rollDeg) / 360 * sides) % sides) + sides) % sides;
+    const W0 = G.nrm(G.sub(part.rings[s][k], pts[s]));
+    // 0° pointing DOWN is wrong at any pitch short of vertical (the wolf's
+    // drooping tail shipped pale on top and dark underneath, and a "lies down"
+    // test at 0.7 let it through); 0° pointing sideways only matters on a chain
+    // that lies down, since a vertical leg has no top to speak of.
+    if (W0[1] < -0.5 || (Math.abs(tan[1]) < 0.7 && W0[1] < 0.7))
+      INFO.push(`WARN volume "${vol.chain}": its arcs are measured from 0° = ${dirName(W0)} (world `
+        + `${W0.map(x => x.toFixed(2)).join(',')}), not from the top — this chain does not stand up and its frame `
+        + `is "${vol.frame || 'default'}". A spine band written 0..60 is on the ${W0[1] < -0.5 ? 'BELLY' : 'side'}. `
+        + `"frame": "up" puts 0° on top (anchors on this volume move with it).`);
+  }
   // gradient and noise are NOT applied here any more — they are one whole-body
   // pass in applyShading() below, so every mesh (paws, ears, eyes included)
   // shares one top-to-bottom ramp and one grain size. Arc bands stay local.
@@ -357,6 +412,7 @@ function buildVolume(spec, vol) {
   return { material: vol.material, V: part.v, F: part.fq, skin, C, chain: vol.chain,
     faceted: vol.faceted,
     _rings: part.rings, _pts: pts, _sides: sides, _ringT: ringT.slice(), _dome0: dome0,
+    _open: [caps[0] === 'none', caps[1] === 'none'],   // which end rings are left open (the open_end check)
     _ringIdx: part.rings.map(ring => ring.map(p => vIndex.get(p))) };
 }
 
@@ -393,6 +449,7 @@ function buildSpike(spec, p) {
   const part = G.partFromRings(rings, p.sides || 6, 'ngon', 'fan', pts);
   return { material: p.material, V: part.v, F: part.fq, join: p.join,
     _seatIdx: Array.from({ length: p.sides || 6 }, (_, i) => i),  // base ring = the part's socket
+    _path: pts.map(q => q.slice()),                               // the centreline, for a part seated on this one
     skin: part.v.map(() => [[p.host, 1]]) };
 }
 
@@ -506,6 +563,8 @@ function buildCurve(spec, p) {
   const rings = roll
     ? require('./section.js').chainRingsRich(pts, radii, sides, false, radii.map(() => ({ roll })))
     : G.chainRings(pts, radii, sides, false);
+  const path = pts.map(q => q.slice());   // the centreline before any dome rings: what a hosted part seats on
+  const nBody = pts.length;               // rings past this index are the dome's
   // "cap": "dome" rounds the far end the way volumes do (a horn tip is sharp,
   // an ear or a tongue is not); default stays the flat fan.
   if (p.cap === 'dome' && pts.length >= 2) {
@@ -532,7 +591,10 @@ function buildCurve(spec, p) {
   let C;
   if (p.colors && p.colors.arcs && p.colors.arcs.length) {
     const arc = [0]; for (let i = 1; i < pts.length; i++) arc.push(arc[i - 1] + G.len(G.sub(pts[i], pts[i - 1])));
-    const total = arc[arc.length - 1] || 1;
+    // t = 1 is the END RING, as on a volume: the dome rings sit past it and take
+    // the end row's colour. Measured over the whole path, a domed curve put t = 1
+    // on the dome's apex and every "t" moved rootward by the dome's depth.
+    const total = arc[nBody - 1] || 1;
     const ringT = arc.map(a => a / total);
     const vIndex = new Map(); part.v.forEach((q, i) => vIndex.set(q, i));
     const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
@@ -544,7 +606,77 @@ function buildCurve(spec, p) {
   }
   return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted, join: p.join, C,
     _seatIdx: Array.from({ length: sides }, (_, i) => i),  // base ring = the part's socket
+    _path: path,
     skin: part.v.map(() => [[p.host, 1]]) };
+}
+
+// ── a part seated on a part ────────────────────────────────────────────────
+// "host_part": "<name>" seats a part on another part instead of on a joint —
+// a claw on a curve toe, a barb on a spine, a bell on a tentacle. It used to
+// be refused: part_seat and part_attachment measured only against VOLUMES, so
+// a claw seated 12 mm deep in a curve toe read as floating, and the only way
+// round it was to make every toe a chain with its own joints.
+//
+//   host_part  the name of an EARLIER part in the list (it has to exist to be
+//              seated on)
+//   at         0..1 along the host's centreline (a curve or a spike), default
+//              1 = the far end; the part's origin lands there, plus "offset"
+//   dir        defaults to the host centreline's tangent at that point
+//   host       defaults to the host part's own joint — only the fallback
+//
+// The seated part's skin weights are INHERITED from the host part (each vertex
+// takes the weights of the host's nearest vertex), so it moves with whatever
+// the host moves with, and the checks measure it against the host part's own
+// surface. A host with no centreline (a fin, a paw, a hand) seats the part at
+// its joint + offset, and "dir" is then required.
+function resolveHostPart(spec, p, byName) {
+  const hp = byName.get(p.host_part);
+  if (!hp) {
+    const later = (spec.parts || []).some(x => x.name === p.host_part);
+    throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" ${later
+      ? 'is listed AFTER this part — a part can only be seated on one that already exists; move it up the list'
+      : 'names no part in this spec'}`);
+  }
+  const { mesh: hm, spec: hs } = hp;
+  const hostJoint = p.host || hs.host;
+  if (!hostJoint || !spec.joints[hostJoint])
+    throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" has no host joint to fall back on — give this part a "host"`);
+  let seat, tangent = null;
+  if (hm._path && hm._path.length >= 2) {
+    const path = hm._path, arc = [0];
+    for (let i = 1; i < path.length; i++) arc.push(arc[i - 1] + G.len(G.sub(path[i], path[i - 1])));
+    const L = arc[arc.length - 1] || 1;
+    const at = Math.min(1, Math.max(0, p.at ?? 1)) * L;
+    let i = 0; while (i < arc.length - 2 && at > arc[i + 1]) i++;
+    const f = (at - arc[i]) / (arc[i + 1] - arc[i] || 1);
+    seat = G.add(G.mul(path[i], 1 - f), G.mul(path[i + 1], f));
+    tangent = G.nrm(G.sub(path[i + 1], path[i]));
+  } else {
+    if (p.at !== undefined)
+      INFO.push(`WARN part '${p.name}': host_part "${p.host_part}" is a ${hs.type} with no centreline, so "at" does nothing — the seat is the host's joint + "offset"`);
+    if (!p.dir) throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" is a ${hs.type} with no centreline to take a direction from — give this part a "dir"`);
+    seat = G.add(spec.joints[hs.host], hs.offset || [0, 0, 0]);
+  }
+  const origin = G.add(seat, p.offset || [0, 0, 0]);
+  const p2 = { ...p, host: hostJoint, offset: G.sub(origin, spec.joints[hostJoint]), dir: p.dir || tangent };
+  INFO.push(`part '${p.name}': seated on part "${p.host_part}"${tangent ? ` at ${(p.at ?? 1).toFixed(2)} of its length` : ''}`
+    + ` [${origin.map(x => x.toFixed(3)).join(', ')}]${p.dir ? '' : tangent ? `, pointing along it (${dirName(tangent)})` : ''}`
+    + `; skin inherited from it`);
+  return { p2, hostMesh: hm };
+}
+
+// every vertex takes the skin of the host's nearest vertex
+function inheritSkin(m, host) {
+  if (!host.skin || !host.V.length) return;
+  m.skin = m.V.map(v => {
+    let best = Infinity, bi = 0;
+    for (let i = 0; i < host.V.length; i++) {
+      const q = host.V[i];
+      const d = (v[0] - q[0]) ** 2 + (v[1] - q[1]) ** 2 + (v[2] - q[2]) ** 2;
+      if (d < best) { best = d; bi = i; }
+    }
+    return host.skin[bi].map(x => x.slice());
+  });
 }
 
 function buildMembrane(spec, p) {
@@ -616,7 +748,96 @@ function buildMembrane(spec, p) {
     if (gap > 0.35 * reach)
       INFO.push(`WARN membrane '${p.name || 'membrane'}': root gap ${gap.toFixed(2)} between the leading and trailing ribs, ${Math.round(100 * gap / reach)}% of this membrane's own reach. Nothing brings the trailing rib home, so the silhouette stays unenclosed and reads as spread fingers instead of one sheet — end the rib list back at the body.`);
   }
-  return { material: p.material, V, F, skin, doubleSided: true, faceted: p.faceted };
+  const Cc = p.colors ? membraneColours(spec, p, V, C, S, U, ribs.length) : undefined;
+  return { material: p.material, V, F, skin, doubleSided: true, faceted: p.faceted, C: Cc };
+}
+
+// ── membrane colours: bands in the sheet's own (u, t) frame ────────────────
+// A membrane used to ship one flat colour: `colors.arcs` is a band AROUND a
+// ring-built mesh and a sheet has no rings. What a wing wants is written in
+// the sheet's own two coordinates instead — u ACROSS the sheet, 0 at the
+// leading rib and 1 at the trailing rib; t ALONG it, 0 at the root and 1 at
+// the tip — and the compiler prints which rib is which so nobody guesses.
+//
+//   "colors": {
+//     "arcs":  [ {"u":[0,0.2], "t":[0,1], "color":"#...", "feather_u":0.2, "feather_t":0} ],
+//     "veins": {"color":"#...", "width":0.35} }
+//
+// arcs   bands, later over earlier, on the material colour: a darker leading
+//        edge is u [0, 0.2]; a pale root fading to the tip is t [0, 0.5] with
+//        feather_t 0.5; the whole sheet warmer at the tip is t [0.5, 1].
+// veins  a darkening centred on each rib column, `width` wide as a fraction of
+//        the rib-to-rib spacing (default 0.35), smoothstepped to 0 — the ribs
+//        show through the skin the way a bat's fingers do.
+//
+// Resolved by the vertices, like every arc: `across` columns sit between two
+// ribs, so a feather_u narrower than 1 / ((ribs - 1) x across) and a vein
+// narrower than 1 / across land between two vertices and ship a hard edge;
+// the compiler says so with the numbers.
+function membraneColours(spec, p, V, C, S, U, nRibs) {
+  const label = `membrane "${p.name || 'membrane'}"`;
+  const cs = p.colors || {};
+  const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
+  const uStep = 1 / Math.max(1, C - 1), tStep = 1 / Math.max(1, S);
+  const arcs = (cs.arcs || []).map(a => {
+    for (const k of ['u', 't']) if (a[k] !== undefined && !(Array.isArray(a[k]) && a[k].length === 2))
+      throw new Error(`${label}: an arc's "${k}" is [${k}0, ${k}1] across (u) or along (t) the sheet, got ${JSON.stringify(a[k])}`);
+    if (a.from !== undefined || a.to !== undefined)
+      throw new Error(`${label}: a membrane arc is written in "u" (across: 0 leading rib, 1 trailing rib) and "t" (along: 0 root, 1 tip), not in degrees — there is no ring to go around`);
+    if (!a.color) throw new Error(`${label}: an arc needs a "color"`);
+    return { u0: a.u ? a.u[0] : 0, u1: a.u ? a.u[1] : 1, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1,
+             fu: Math.max(0, a.feather_u || 0), ft: Math.max(0, a.feather_t || 0), c: hex2lin(a.color) };
+  });
+  for (const a of arcs) {
+    if ((a.u0 > 0 || a.u1 < 1) && a.fu > 0 && a.fu < uStep)
+      INFO.push(`WARN ${label}: arc u ${a.u0}..${a.u1} has "feather_u": ${a.fu} but the columns are ${uStep.toFixed(3)} apart in u `
+        + `(${nRibs} ribs x "across" ${U}) — a feather narrower than the column step lands between two vertices and does nothing. `
+        + `Write it at 2-3x the step (${(uStep * 2).toFixed(2)}-${(uStep * 3).toFixed(2)}), or raise "across".`);
+    if ((a.t0 > 0 || a.t1 < 1) && a.ft > 0 && a.ft < tStep)
+      INFO.push(`WARN ${label}: arc t ${a.t0}..${a.t1} has "feather_t": ${a.ft} but the rows are ${tStep.toFixed(3)} apart in t `
+        + `("along" ${S}) — a feather narrower than the row step lands between two vertices and does nothing. `
+        + `Write it at 2-3x the step (${(tStep * 2).toFixed(2)}-${(tStep * 3).toFixed(2)}), or raise "along".`);
+  }
+  let veins = null;
+  if (cs.veins) {
+    if (!cs.veins.color) throw new Error(`${label}: "veins" needs a "color"`);
+    veins = { c: hex2lin(cs.veins.color), w: Math.max(0.01, Math.min(0.5, cs.veins.width ?? 0.35)) };
+    if (veins.w < 1 / U)
+      INFO.push(`WARN ${label}: "veins" width ${veins.w} is under one column (1/${U} = ${(1 / U).toFixed(2)} of the rib spacing) — `
+        + `only the rib column itself takes the colour and it ships as a hard stripe. Write it at 2-3 columns `
+        + `(${(2 / U).toFixed(2)}-${(3 / U).toFixed(2)}), or raise "across".`);
+  }
+  const edgeW = (x, lo, hi, f, openLo, openHi) => {
+    if (x < lo - 1e-9 || x > hi + 1e-9) return 0;
+    if (!(f > 0)) return 1;
+    let u = 1;
+    if (!openLo) u = Math.min(u, (x - lo) / f);
+    if (!openHi) u = Math.min(u, (hi - x) / f);
+    u = Math.max(0, Math.min(1, u));
+    return u * u * (3 - 2 * u);
+  };
+  const out = V.map(() => base.slice());
+  for (let j = 0; j < C; j++) {
+    const u = j * uStep;
+    const dj = Math.abs(j / U - Math.round(j / U));          // distance to the nearest rib, in rib spacings
+    for (let sI = 0; sI <= S; sI++) {
+      const t = sI * tStep;
+      let c = base;
+      for (const a of arcs) {
+        const w = edgeW(u, a.u0, a.u1, a.fu, a.u0 <= 0, a.u1 >= 1) * edgeW(t, a.t0, a.t1, a.ft, a.t0 <= 0, a.t1 >= 1);
+        if (w > 0) c = [c[0] + (a.c[0] - c[0]) * w, c[1] + (a.c[1] - c[1]) * w, c[2] + (a.c[2] - c[2]) * w];
+      }
+      if (veins) {
+        const x = Math.min(1, dj / veins.w), w = 1 - x * x * (3 - 2 * x);
+        if (w > 0) c = [c[0] + (veins.c[0] - c[0]) * w, c[1] + (veins.c[1] - c[1]) * w, c[2] + (veins.c[2] - c[2]) * w];
+      }
+      out[j * (S + 1) + sI] = c.slice();
+    }
+  }
+  const ribName = i => p.ribs[i].chain || (p.ribs[i].joints || []).join('>');
+  INFO.push(`${label}: colours — u 0 is the leading rib (${ribName(0)}), u 1 the trailing rib (${ribName(nRibs - 1)}); `
+    + `t 0 is the root, 1 the tip; ${arcs.length} arc(s)${veins ? `, veins ${(veins.w * 100).toFixed(0)}% of the rib spacing` : ''}`);
+  return out;
 }
 
 
@@ -927,7 +1148,9 @@ function buildTufts(spec, p, builtVols) {
       if (G.len(u1) < 1e-6) u1 = G.cross(sp.out, [0, 1, 0]);
       u1 = G.nrm(G.sub(u1, G.mul(d, G.dot(u1, d))));
       const u2 = G.nrm(G.cross(d, u1));
-      const L = L0 * (1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
+      // a jitter near 1 or above drove the short tufts' length through zero and
+      // they grew INTO the body, tip first; the shortest tuft keeps 20%
+      const L = L0 * Math.max(0.2, 1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
       const base = G.sub(sp.p, G.mul(sp.out, TH * 0.9));            // rooted under the skin
       const tip = G.add(G.add(base, G.mul(d, L)), [0, -droop * L * 0.15, 0]);
       const rootC = rootAt(t, a);
@@ -966,6 +1189,14 @@ function buildTufts(spec, p, builtVols) {
   }
   INFO.push(`tufts '${p.name || p.host}': ${made} tufts on "${an.chain}" at t=${(an.t ?? 0.5).toFixed(2)}`
     + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`);
+  // a clump is 6 x sides - 2 triangles (x2 when mirrored) and rows x count has no
+  // ceiling: 8 rows of 40 eight-sided tufts is 14,720 triangles in one part,
+  // past the whole creature's budget, and nothing else said so
+  const nTri = F.reduce((s, f) => s + f.length - 2, 0) * (p.mirrored ? 2 : 1);
+  if (nTri > 2500)
+    INFO.push(`WARN tufts '${p.name || p.host}': ${nTri} triangles${p.mirrored ? ' (both sides)' : ''} in one tufts `
+      + `part (${made} tufts x ${6 * sides - 2}) — most of a creature's budget. Fewer, larger clumps read as fur `
+      + `better anyway: lower "count"/"rows", or "sides" 4-6.`);
   return { material: p.material, V, F, C, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
 }
 
@@ -1092,7 +1323,7 @@ function mirrorMesh(m, rDelta, mj = mirrorName) { // duplicate across X with fli
     skin: m.skin ? m.skin.map(infl => infl.map(([j, w]) => [mj(j), w])) : undefined,
     // index-based ring topology survives mirroring → mirrored volumes still get
     // proper cylindrical UVs (their own atlas island, required for AO bakes)
-    _ringIdx: m._ringIdx, _ringT: m._ringT, _sides: m._sides,
+    _ringIdx: m._ringIdx, _ringT: m._ringT, _sides: m._sides, _dome0: m._dome0, _open: m._open,
     _pts: m._pts ? m._pts.map(p => [-p[0], p[1], p[2]]) : undefined };
 }
 
@@ -1135,13 +1366,25 @@ function compile(spec) {
   const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane, hand: buildHand,
     paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols),
     tufts: (s2, p2) => buildTufts(s2, p2, builtVols) };
-  for (const p of spec.parts || []) {
-    const label = p.name || `${p.type}@${p.host || 'ribs'}`;
+  // the parts built so far, by name: what a later part may be seated on
+  // (host_part). The value is the part's PRIMARY mesh and its twin, if any.
+  const byName = new Map();
+  for (const p0 of spec.parts || []) {
+    let p = p0;
+    const label = p.name || `${p.type}@${p.host || p.host_part || 'ribs'}`;
     const sa = p.smooth_angle ?? defSmooth;
+    let hostMesh = null;
+    if (p.host_part) {
+      if (p.type === 'eye' || p.type === 'membrane' || p.type === 'tufts')
+        throw new Error(`part "${label}": a ${p.type} cannot be seated with host_part — it places itself (an eye by anchor, a membrane by its ribs, tufts by their anchor)`);
+      ({ p2: p, hostMesh } = resolveHostPart(spec, p, byName));
+    }
     // which volume is this part supposed to be growing out of? Either declared
     // via anchor.chain, or the chain that owns its host joint. checks.js needs
-    // it to tell "buried in the host" from "floating next to the host".
-    const hostChain = (p.anchor && p.anchor.chain)
+    // it to tell "buried in the host" from "floating next to the host". A part
+    // seated on a part inherits its host's chain and carries the host mesh too.
+    const hostChain = hostMesh ? (hostMesh.hostChain || null)
+      : (p.anchor && p.anchor.chain)
       || (p.host && Object.keys(spec.chains || {}).find(c => (spec.chains[c] || []).includes(p.host)))
       || null;
     if (p.type === 'eye') {
@@ -1154,11 +1397,20 @@ function compile(spec) {
       // the part itself, the rest are named `<part>.<sub>` and carry their own
       // shade class / join when the builder says so
       const built = BUILDERS[p.type](spec, p);
+      let first = true;
       for (const m of Array.isArray(built) ? built : [built]) {
         const lbl = m.sub ? label + '.' + m.sub : label;
-        m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
-        if (p.mirrored) { const t = mirrorMesh(m, rd, mj); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
-          t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade; meshes.push(t); }
+        m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain;
+        if (hostMesh) { m.hostPart = hostMesh; inheritSkin(m, hostMesh); }
+        meshes.push(m);
+        let t = null;
+        if (p.mirrored) { t = mirrorMesh(m, rd, mj); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
+          t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade;
+          // the twin sits on the host's twin when the host was mirrored too,
+          // else on the same (centre-line) host
+          if (hostMesh) t.hostPart = (byName.get(p0.host_part) || {}).twin || hostMesh;
+          meshes.push(t); }
+        if (first) { byName.set(label, { mesh: m, twin: t, spec: p0 }); first = false; }
       }
     } else throw new Error(`unknown part type "${p.type}"`);
   }
