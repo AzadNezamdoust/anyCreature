@@ -81,6 +81,12 @@
    "chain":"torso", "material":"skin_torso", "sides":14, "frame":"up",
    "profile":[[0,0.3,0.35], [0.6,0.42,0.5,{"bias":-0.1,"sharp":true}], [1,0.2,0.22]],
      // rows [t, half-width, half-height, opts]; exp 2.5-4=boxy slab; bias<0 belly-full;
+     // 1.5: taper — a WEDGE: +0.3 = wider at the top than below (brow and cheekbones over
+     //   a jaw), -0.3 = heavier below (a jowl). An ellipse has no cheek plane and no jaw,
+     //   which is why a head reads as a cone or a tube from 45°: put taper 0.2-0.35 on the
+     //   skull rows and 0.2-0.25 on a muzzle with exp 3 (flat bridge, narrow lower jaw).
+     // cup — a CRESCENT: +0.5 lifts both edges toward 0° so that face is concave (a
+     //   scooped fin); negative cups the other way. Both interpolate between rows.
      // sharp = hard SILHOUETTE break, and it only bites when the radius STEPS
      //   across it (>=15%). The flag between two rings of the same radius is a
      //   no-op. It changes nothing.
@@ -147,7 +153,13 @@
     "offset":[0.06,0,0.1], "dir":[0.3,-0.6,0.7], "sides":8,
     "segments":[ {"len":0.1,"r":0.035,"ahead":20}, {"len":0.1,"r":0.028,"rise":35},
                  {"len":0.08,"r":0.015,"rise":30,"taper":true} ],
-    "roll":0, "cap":"dome" },        // 1.4: "r":[rw,rh] makes an ELLIPTICAL section (an
+    "roll":0, "cap":"dome",
+    "section":{"exp":2.5,"bias":0,"taper":0,"cup":0} },  // 1.5: a SHAPED section on every
+    // ring — a boxy nose pad (exp 3), a cupped ear (cup -0.5 hollows the 180° face; the
+    // colour line says which face that is), a keeled beak (exp 1.8, bias 0.3), a flat
+    // lower bill (bias -0.2). A segment's own "section" overrides it from its far ring
+    // on. Axes are the curve's own. Without one the ring is the plain ellipse.
+    // 1.4: "r":[rw,rh] makes an ELLIPTICAL section (an
     // ear, a paddle tusk, a flattened tail); "roll" turns it in its plane (degrees);
     // "cap":"dome" rounds the far end (a tongue, an ear) — default is the flat fan.
     // steering is per-segment and ADDS UP down the chain. rise/fall/ahead/behind
@@ -219,9 +231,20 @@
   { "type":"eye", "host":"Brow", "material":"eye", "size":0.028,
     "anchor":{"chain":"head","t":0.4,"around":62},    // both eyes from one entry; side of head ≈55-70
     "sink":0.5,                                       // fraction of the radius buried (default 0.35)
-    "pupil":{"material":"pupil","size":0.55} },       // 1.4: the engine seats a darker sphere on the
+    "pupil":{"material":"pupil","size":0.55},         // 1.4: the engine seats a darker sphere on the
     // FRONT of the iris where it actually landed. An eye is a VALUE STEP, not a coloured dot —
-    // without a pupil the eye_pupil measure warns. "look":[x,y,z] aims it; default is ahead.
+    // without a pupil the eye_pupil measure warns. "look":[x,y,z] aims it; default is ahead
+    // (the surface normal levelled, then toward forward — a pupil on the raw normal of the
+    // upper skull stares at the sky), and a touch down under a lid.
+    "lid":{"angle":52,"tilt":0.55,"thick":0.14,"lower":0,"material":"fur_head"} },
+    // 1.5: the eye SEATED in the head. A bare sphere half-buried in a skull is a bead: from
+    // 45° and from above it pokes out of the outline in the iris colour. "lid": {} hoods it
+    // with a cap in the host volume's material (`<eye>.lid.L/.R`, flesh-shaded, exempt from
+    // contrast_adjacent): a shell `thick` x r off the iris, closed by a rim that turns back
+    // inside it, around an axis that starts on the surface normal and leans `tilt` toward
+    // up, out to polar `angle` (default 62; 48-52 reads open, 60+ reads glowering). "lower"
+    // adds a lower lid of that half-angle. ~84 triangles per lid. "subdiv" on the eye now
+    // defaults to 2 (128 triangles: a sphere; 1 was a hexagonal bead from every angle).
 
   { "type":"hand", "host":"LWrist", "material":"skin_hand", "mirrored":true,  // palm + 4 fingers + OPPOSABLE thumb
     "size":0.17,                          // palm length — the whole hand scales from it

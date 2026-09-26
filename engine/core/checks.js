@@ -844,6 +844,9 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       // sits 0.01 OKLab off its host is a part that failed to separate like any
       // other, and the distance rule below still has to see it.
       if (m.partType === 'tufts' && a === b) continue;
+      // an eyelid is the head's own skin hooding the eye: it is MEANT to wear
+      // the host's material, and its read is the eye it seats, not a step
+      if (m.sub === 'lid') continue;
       if (!a || !b || a === b) {
         if (a && a === b) {
           const k = `${m.part}|${a}`;

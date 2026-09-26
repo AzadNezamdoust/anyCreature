@@ -3,16 +3,28 @@
 //   exp  — superellipse exponent: 2 = ellipse, 3-6 = boxy slab, 1.2-1.6 = diamond-ish
 //   bias — vertical asymmetry: +0.3 = egg (fuller on top), -0.3 = keel (fuller below)
 //   roll — rotate the section in its plane (radians)
-// Per-ring overrides allowed via the profile row: [t, w, h, {exp,bias,roll}]
+//   taper — WEDGE: the half-width scales with height, +0.3 = wider at the top
+//           (brow / cheekbones) and narrower below (jaw), -0.3 the reverse (a
+//           heavy jowl). This is the plane a head is missing when it reads as
+//           a cone or a tube from 45°: an ellipse has no cheek and no jaw.
+//   cup  — CRESCENT: the section is bent along its width, +0.5 lifts both
+//           edges toward +H so the face at 0° is concave (a cupped ear, a
+//           scooped fin); negative cups the other way. The mid-line stays put.
+// Per-ring overrides allowed via the profile row: [t, w, h, {exp,bias,roll,taper,cup}]
 'use strict';
 const G = require('./geometry.js');
 
-function sectionPoint(a, rw, rh, exp, bias) {
+function sectionPoint(a, rw, rh, exp, bias, taper, cup) {
   const c = Math.cos(a), s = Math.sin(a);
   const e = 2 / (exp || 2);
   let x = Math.sign(c) * Math.pow(Math.abs(c), e) * rw;
   let y = Math.sign(s) * Math.pow(Math.abs(s), e) * rh;
   if (bias) y *= s > 0 ? (1 + bias) : (1 - bias);
+  // wedge: width follows height (y/rh in -1..1); clamped so a large taper
+  // never folds the lower edge through the centre line
+  if (taper) x *= Math.max(0.15, 1 + taper * (rh ? y / rh : 0));
+  // crescent: both edges lift with the square of the width position
+  if (cup) y += cup * rh * ((rw ? x / rw : 0) ** 2 - 0.5);
   return [x, y];
 }
 
@@ -42,7 +54,7 @@ function chainRingsRich(pts, radii, N, frame, secs) {
     for (let k = 0; k < N; k++) {
       const a = 2 * Math.PI * k / N + (sec.roll || 0);
       const [x, y] = sec.pts ? polyPoint(sec.pts, a, rw, rh)
-                             : sectionPoint(a, rw, rh, sec.exp, sec.bias);
+                             : sectionPoint(a, rw, rh, sec.exp, sec.bias, sec.taper, sec.cup);
       ring.push(G.add(pts[s], G.add(G.mul(U, x), G.mul(W, y))));
     }
     rings.push(ring);

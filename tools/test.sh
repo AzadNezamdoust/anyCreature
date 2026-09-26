@@ -270,6 +270,34 @@ PY"
 prints  "gates.py lists open_end"          "open_end"     python3 harness/gates.py
 ok      "checks stamp carries open_end"    bash -c "grep -q '\"name\": \"open_end\"' '$T/rw_hp.checks.json'"
 
+# ── fifth pass: the head from every angle (sections, eyelids, curve sections) ──
+echo "== 6. fifth-pass head features"
+ok      "section taper is a wedge (wider above than below)" \
+        node -e "const s=require('./engine/core/section.js');const a=s.sectionPoint(0.4,1,1,2,0,0.4,0)[0],b=s.sectionPoint(-0.4,1,1,2,0,0.4,0)[0];process.exit(a>b*1.2?0:1)"
+ok      "section cup lifts the edges, holds the middle" \
+        node -e "const s=require('./engine/core/section.js');const e=s.sectionPoint(0,1,1,2,0,0,0.5)[1],m=s.sectionPoint(Math.PI/2,1,1,2,0,0,0.5)[1];process.exit(e>0.2&&m<1?0:1)"
+prints  "eyelids ship as eye.lid.L / eye.lid.R" "eye.lid.L, eye.lid.R" \
+        node engine/cli.js example/wolf.json "$T/wolf_lid.glb"
+ok      "a lid in the host's material does not trip contrast_adjacent" \
+        bash -c "! grep -q 'contrast_adjacent: part \"eye.lid' '$T/wolf_lid.checks.json'"
+prints  "lower lid, cupped crest and a per-segment bill section build" '"ok":true' \
+        bash -c "python3 - '$T/lid2.json' <<'PY' && node engine/cli.js '$T/lid2.json' '$T/lid2.glb'
+import json, sys
+s = json.load(open('$RW'))
+e = [p for p in s['parts'] if p['name'] == 'eye'][0]; e['lid'] = {'angle': 50, 'lower': 30}
+[p for p in s['parts'] if p['name'] == 'crest_mid'][0]['section'] = {'cup': 0.6, 'exp': 2.5}
+[p for p in s['parts'] if p['name'] == 'upper_bill'][0]['segments'][1]['section'] = {'exp': 4, 'taper': 0.2}
+[v for v in s['volumes'] if v['chain'] == 'head'][0]['profile'][1][3]['cup'] = 0.2
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+ok      "the lids are closed shells (no open edge on the hood)" \
+        node -e "
+const {compile}=require('./engine/core/compile.js');const s=JSON.parse(require('fs').readFileSync('example/wolf.json'));
+require('./engine/core/relative.js').resolveJoints(s);
+for(const m of compile(s)){ if(m.sub!=='lid')continue; const e=new Map();
+  for(const f of m.F)for(let i=0;i<3;i++){const a=f[i],b=f[(i+1)%3];const k=a<b?a+'_'+b:b+'_'+a;e.set(k,(e.get(k)||0)+1);}
+  const open=[...e.values()].filter(n=>n!==2).length; if(open>m.F.length/3){console.error(m.part,'open edges',open);process.exit(1);} }"
+
 echo
 echo "$PASS passed, $FAIL failed"
 if [ "$FAIL" -ne 0 ]; then

@@ -60,7 +60,7 @@ function hex2lin(h) {
   return [s((x >> 16) & 255), s((x >> 8) & 255), s(x & 255)];
 }
 
-function lerpProfile(profile, t) { // rows [t, w, h, {exp,bias,roll}?]
+function lerpProfile(profile, t) { // rows [t, w, h, {exp,bias,roll,taper,cup}?]
   const row = (r) => [r[1], r[2], r[3] || null];
   if (t <= profile[0][0]) return row(profile[0]);
   for (let i = 0; i < profile.length - 1; i++) {
@@ -71,6 +71,7 @@ function lerpProfile(profile, t) { // rows [t, w, h, {exp,bias,roll}?]
       const mix = (a, b, d) => (a ?? d) + ((b ?? d) - (a ?? d)) * f;
       return [w0 + (w1 - w0) * f, h0 + (h1 - h0) * f,
         { exp: mix(s0.exp, s1.exp, 2), bias: mix(s0.bias, s1.bias, 0), roll: mix(s0.roll, s1.roll, 0),
+          taper: mix(s0.taper, s1.taper, 0), cup: mix(s0.cup, s1.cup, 0),
           section: f < 0.5 ? s0.section : s1.section }];
     }
   }
@@ -475,9 +476,44 @@ function buildEye(spec, p, builtVols) {
         G.mul(side, sx * (p.spread ?? 0.15))), G.mul(up, p.height ?? 0));
     }
     const r = p.size ?? 0.05;
-    const iris = sphereMesh(c, r, p.subdiv ?? 1);
+    // subdiv 1 (32 triangles) is a hexagonal bead from every angle but dead-on;
+    // the iris is the one sphere the viewer stares at, so it gets 2 (128).
+    const iris = sphereMesh(c, r, p.subdiv ?? 2);
     out.push({ material: p.material || 'eye', V: iris.V, F: iris.F, side: sx > 0 ? 'L' : 'R',
       skin: iris.V.map(() => [[p.host, 1]]) });
+    // ── the lid: the eye seated IN the head, not stuck on it ───────────────
+    // A bare sphere half-buried in a head is a bead: from 45° and from above
+    // it pokes out of the outline in the iris colour and nothing says "socket".
+    // "lid": {} hoods the eye with a cap in the HOST'S material — a shell a
+    // little larger than the iris, closed by a rim that dives back inside it
+    // — around an axis tilted from the head's up toward the surface normal,
+    // so the hood reads as a brow from the front and an almond from the side.
+    //   angle    polar half-angle of the cap in degrees (default 62)
+    //   thick    the shell stands off the iris by this fraction of r (0.14)
+    //   tilt     how far the axis leans from the surface normal toward up (0.45)
+    //   lower    a second cap the other way, its own half-angle (default 0 = none)
+    //   material overrides the host volume's material
+    if (p.lid) {
+      const ld = typeof p.lid === 'object' ? p.lid : {};
+      const outN = p.anchor ? surfacePoint(builtVols, { ...p.anchor, around: p.anchor.around * sx }).out
+        : G.mul(side, sx);
+      const hostChain = (p.anchor && p.anchor.chain)
+        || Object.keys(spec.chains || {}).find(cn => (spec.chains[cn] || []).includes(p.host));
+      const hostVol = (spec.volumes || []).find(v => v.chain === hostChain);
+      const mat = ld.material || (hostVol && hostVol.material);
+      if (!mat) throw new Error(`eye "${p.name || p.host}": lid needs a material — none on the host chain`);
+      // the axis starts on the surface normal (the only direction that is
+      // certainly outside the head on a half-buried eye) and leans toward up
+      const tilt = ld.tilt ?? 0.45;
+      const axis = G.nrm(G.add(G.mul(outN, 1 - tilt), G.mul(up, tilt)));
+      const caps = [[axis, ld.angle ?? 62]];
+      if (ld.lower) caps.push([G.mul(axis, -1), ld.lower]);
+      for (const [ax, ang] of caps) {
+        const lm = lidMesh(c, r, ax, fwd, ang * Math.PI / 180, ld.thick ?? 0.14);
+        out.push({ material: mat, V: lm.V, F: lm.F, side: sx > 0 ? 'L' : 'R', sub: 'lid', shade: 'flesh',
+          skin: lm.V.map(() => [[p.host, 1]]) });
+      }
+    }
     // ── the pupil, placed by the engine ─────────────────────────────────────
     // An eye reads because of the value step between iris and pupil, not
     // because of the iris colour; a lone sphere is a sticker. "pupil": {} on the
@@ -492,8 +528,14 @@ function buildEye(spec, p, builtVols) {
       let look;
       if (pp.look) look = G.nrm([pp.look[0] * sx, pp.look[1], pp.look[2]]);
       else if (p.anchor) {
+        // the surface normal on the upper side of a skull points UP as much as
+        // out, and a pupil placed on it stares at the sky; level it first
         const sp = surfacePoint(builtVols, { ...p.anchor, around: p.anchor.around * sx });
-        look = G.nrm(G.add(sp.out, G.mul(fwd, 0.9)));
+        const lvl = G.sub(sp.out, G.mul(up, G.dot(sp.out, up)));
+        // ahead and a touch down: under a lid the top of the iris is hidden,
+        // and a pupil on the rim of the hood is a pupil half lost
+        look = G.nrm(G.add(G.add(G.len(lvl) > 1e-6 ? G.nrm(lvl) : sp.out, G.mul(fwd, 0.9)),
+          G.mul(up, p.lid ? -0.25 : 0)));
       } else look = fwd;
       const pc = G.add(c, G.mul(look, r - rp * 0.45));
       const pm = sphereMesh(pc, rp, 1);
@@ -502,6 +544,35 @@ function buildEye(spec, p, builtVols) {
     }
   }
   return out;
+}
+
+// a hooded cap over a sphere: a shell of radius r(1+thick) around `axis`, out to
+// polar angle `ang`, whose rim turns back down to radius 0.93r — INSIDE the
+// iris, so the join is never seen. Outward winding on either eye.
+function lidMesh(c, r, axis, ref, ang, thick) {
+  const A = G.nrm(axis);
+  let U = G.cross(A, G.nrm(ref)); if (G.len(U) < 1e-6) U = G.cross(A, [1, 0, 0]);
+  U = G.nrm(U); const W = G.cross(A, U);
+  const RINGS = 3, SEGS = 12;
+  const at = (phi, th, rr) => G.add(c, G.mul(G.add(G.mul(A, Math.cos(phi)),
+    G.add(G.mul(U, Math.sin(phi) * Math.cos(th)), G.mul(W, Math.sin(phi) * Math.sin(th)))), rr));
+  const V = [G.add(c, G.mul(A, r * (1 + thick)))], F = [];
+  const ring = (phi, rr) => { const idx = []; for (let k = 0; k < SEGS; k++) {
+    idx.push(V.length); V.push(at(phi, 2 * Math.PI * k / SEGS, rr)); } return idx; };
+  const rings = [];
+  for (let j = 1; j <= RINGS; j++) rings.push(ring(ang * j / RINGS, r * (1 + thick)));
+  rings.push(ring(ang, r * 0.93));                       // the rim, tucked into the iris
+  // winding: whichever order puts the apex triangle's normal along the axis
+  // (the R eye's frame is a mirror of the L eye's, so the order flips with it)
+  const n0 = G.cross(G.sub(V[rings[0][0]], V[0]), G.sub(V[rings[0][1]], V[0]));
+  const ccw = G.dot(n0, A) > 0;
+  const tri = (a, b, d) => F.push(ccw ? [a, b, d] : [a, d, b]);
+  for (let k = 0; k < SEGS; k++) tri(0, rings[0][k], rings[0][(k + 1) % SEGS]);
+  for (let j = 0; j < rings.length - 1; j++) for (let k = 0; k < SEGS; k++) {
+    const a = rings[j][k], b = rings[j][(k + 1) % SEGS], d = rings[j + 1][(k + 1) % SEGS], e = rings[j + 1][k];
+    tri(a, e, d); tri(a, d, b);
+  }
+  return { V, F };
 }
 
 // octahedron subdivided `sub` times and projected to a sphere of radius r at c
@@ -560,8 +631,22 @@ function buildCurve(spec, p) {
   }
   const sides = p.sides || 8;
   const roll = rad(p.roll || 0);
-  const rings = roll
-    ? require('./section.js').chainRingsRich(pts, radii, sides, false, radii.map(() => ({ roll })))
+  // "section": {exp, bias, taper, cup} on the part gives every ring a shaped
+  // section — a boxy nose pad (exp 3), a cupped ear (cup 0.6), a beak with a
+  // flat top and a keel (bias -0.3) — and a segment's own "section" overrides
+  // it from that segment's far ring on. The axes are the curve's own: +H is
+  // the 0° side the colour line prints. Without one the ring is the plain
+  // ellipse it always was.
+  const secOf = (seg) => {
+    const a = p.section || {}, b = (seg && seg.section) || {};
+    const o = { roll };
+    for (const k of ['exp', 'bias', 'taper', 'cup']) { const v = b[k] ?? a[k]; if (v !== undefined) o[k] = v; }
+    return o;
+  };
+  const secs = [secOf(null)]; for (const seg of p.segments) secs.push(secOf(seg));
+  const shaped = roll || secs.some(o => Object.keys(o).length > 1);
+  const rings = shaped
+    ? require('./section.js').chainRingsRich(pts, radii, sides, false, secs)
     : G.chainRings(pts, radii, sides, false);
   const path = pts.map(q => q.slice());   // the centreline before any dome rings: what a hosted part seats on
   const nBody = pts.length;               // rings past this index are the dome's
