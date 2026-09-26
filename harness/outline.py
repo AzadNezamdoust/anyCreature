@@ -1087,12 +1087,28 @@ def head_measures(px, py, F, headtri, win_tri, mask):
 # end-on than at 45 degrees), so an end-on view that is lumpier than its
 # neighbours is the form, not a fault.
 #
-#   blob         convexity (area / hull area; 1.0 = a potato) at least
-#                BLOB_JUMP above BOTH neighbours, or BLOB_DROP fewer things
-#                sticking out than both. Measured: the wolves and the raven
-#                sit at most +0.06 above a neighbour anywhere off the long
-#                axis; the giant's four obliques sit +0.08 above both of theirs
-#                (arms fold into the body, the head sinks into the hump).
+#   blob         an OBLIQUE collapse that holds on a whole FLANK. Per azimuth,
+#                the convexity deficiency cd = 1 - area / hull area (the bites
+#                the limbs, head and tail take out of the outline), measured
+#                on the eight masks cut to ONE window and reduced to 96 px and
+#                to 48 px on its long side. Per oblique, the ratio of its cd to
+#                the SMALLER of its two ring neighbours', the larger of the two
+#                resolutions' ratios (the drop has to hold at both sizes). A
+#                flank (az045 + az135, or az315 + az225) is a blob when BOTH its
+#                obliques are at or under BLOB_RATIO — the front quarter and the
+#                back quarter both close up, so it is the body, not one ear, one
+#                tail brush or one wing tip landing on the outline.
+#                Why not the old rule (convexity +0.07 over both neighbours, or
+#                2 fewer protrusions than both): a protrusion COUNT jumps with
+#                incidental features — the wolf held az090 only because its
+#                ears counted as one more lump, a softer tail brush tipped it
+#                to 5 against 7 and flagged it, and a raven with a tail 25 cm
+#                shorter flagged az135/az225 on 4 against 6 and 9 while it
+#                looked the same. The count is still in the ring table as
+#                information; nothing is flagged on it. Bars and the stability
+#                table (every shipped creature, the calibration wolves, the
+#                pre-sixth-pass giant, ±20% ears / tail / brush / crest / tusks)
+#                are in the CHANGELOG ("Orbit blob rule").
 #   head_merged  front half of the ring (az270 through az000 to az090, where a
 #                viewer looks for the face): under HEAD_OUT_MIN of the head's
 #                outline clears the body
@@ -1103,17 +1119,81 @@ def head_measures(px, py, F, headtri, win_tri, mask):
 # All four are ADVICE (harness/gates.json: orbit_consistent, head_reads). Four
 # creatures, one of them flagged, is enough to say where to look and not
 # enough to refuse a build over; the numbers are in the CHANGELOG.
-BLOB_JUMP = 0.07
-BLOB_DROP = 2
+BLOB_RATIO = 0.68         # oblique cd / smaller neighbour's cd, on both obliques of a flank
+BLOB_RES = (96, 48)       # the ring window's long side, px, for the cd measure
+BLOB_FLANKS = (('az045', 'az135'), ('az315', 'az225'))
 END_ON = ('az000', 'az180')
 FRONT_HALF = ('az270', 'az315', 'az000', 'az045', 'az090')
 MIRRORS = (('az045', 'az315'), ('az090', 'az270'), ('az135', 'az225'))
 MIRROR_SAME = 0.90       # a pair this similar is one silhouette, shown once
 
 
+def ring_cd(masks, n):
+    """Convexity deficiency (1 - area / hull area) per azimuth, all eight cut to
+    ONE window (the union of their boxes, squared) and reduced to n px on its
+    long side — the same grid for every view of a creature, at a size where a
+    two-pixel ear is not a feature. None without scipy."""
+    try:
+        from scipy import ndimage
+        from scipy.spatial import ConvexHull
+    except ImportError:
+        return None
+    u = None
+    for v in AZIMUTHS:
+        u = masks[v].copy() if u is None else (u | masks[v])
+    ys, xs = np.nonzero(u)
+    if len(xs) == 0:
+        return None
+    side = int(max(ys.max() - ys.min(), xs.max() - xs.min())) + 1
+    y0 = int((ys.min() + ys.max() + 1) // 2 - side // 2)
+    x0 = int((xs.min() + xs.max() + 1) // 2 - side // 2)
+    out = {}
+    for v in AZIMUTHS:
+        m = masks[v]
+        win = np.zeros((side, side), bool)
+        sy, sx = max(y0, 0), max(x0, 0)
+        crop = m[sy:y0 + side, sx:x0 + side]
+        win[sy - y0:sy - y0 + crop.shape[0], sx - x0:sx - x0 + crop.shape[1]] = crop
+        z = ndimage.zoom(win.astype(float), n / side, order=1) > 0.5
+        py, px = np.nonzero(z)
+        if len(px) < 3:
+            out[v] = None
+            continue
+        try:
+            hull = ConvexHull(np.stack([px, py], 1).astype(float)).volume
+        except Exception:
+            out[v] = None
+            continue
+        out[v] = round(1.0 - float(z.sum()) / max(hull, 1.0), 4)
+    return out
+
+
+def blob_ratios(masks):
+    """Per oblique: its cd over the smaller of its two neighbours' cd, the larger
+    of the ratios at the BLOB_RES sizes (a drop has to hold at every size), plus
+    the cd per azimuth at each size. None without scipy."""
+    cds = {n: ring_cd(masks, n) for n in BLOB_RES}
+    if any(c is None for c in cds.values()):
+        return None, None
+    ratio = {}
+    for i, v in enumerate(AZIMUTHS):
+        if v in END_ON:
+            continue
+        L, R = AZIMUTHS[i - 1], AZIMUTHS[(i + 1) % len(AZIMUTHS)]
+        rs = []
+        for c in cds.values():
+            if None in (c[v], c[L], c[R]):
+                break
+            rs.append(c[v] / max(min(c[L], c[R]), 0.01))
+        else:
+            ratio[v] = round(max(rs), 3)
+    return ratio, cds
+
+
 def orbit_report(views, masks):
     if not all(v in views and not views[v].get('empty') for v in AZIMUTHS):
         return None
+    bratio, bcd = blob_ratios(masks)
     ring = []
     amax = max(views[v].get('area_px', 0) for v in AZIMUTHS) or 1
     for v in AZIMUTHS:
@@ -1121,23 +1201,26 @@ def orbit_report(views, masks):
         ring.append({'view': v, 'area_rel': round(d.get('area_px', 0) / amax, 3),
                      'W_over_H': d.get('W_over_H'), 'convexity': d.get('convexity'),
                      'protrusions': d.get('protrusions'), 'thinnest_px48': d.get('thinnest_px48'),
+                     'cd96': (bcd or {}).get(96, {}).get(v), 'cd48': (bcd or {}).get(48, {}).get(v),
+                     'blob_ratio': (bratio or {}).get(v),
                      'head_share': d.get('head_share'), 'head_out': d.get('head_out'),
                      'head_distinct': d.get('head_distinct')})
     flags = []
-    n = len(ring)
+    if bratio:
+        for front, back in BLOB_FLANKS:
+            rf, rb = bratio.get(front), bratio.get(back)
+            if None in (rf, rb) or max(rf, rb) > BLOB_RATIO + 1e-9:
+                continue
+            for v, rv in ((front, rf), (back, rb)):
+                i = AZIMUTHS.index(v)
+                L, R = AZIMUTHS[i - 1], AZIMUTHS[(i + 1) % len(AZIMUTHS)]
+                c = bcd[BLOB_RES[0]]
+                flags.append({'view': v, 'kind': 'blob',
+                              'why': f"the outline has {rv:.2f}x the bites of its smaller neighbour "
+                                     f"(cd {c[v]:.2f} against {c[L]:.2f} {L} / {c[R]:.2f} {R}), and "
+                                     f"the other oblique on this flank ({back if v == front else front}) "
+                                     f"closes too — limbs and head fold into the body from this side"})
     for i, r in enumerate(ring):
-        L, R = ring[i - 1], ring[(i + 1) % n]
-        if r['view'] not in END_ON:
-            cv, cl, cr = r['convexity'], L['convexity'], R['convexity']
-            if None not in (cv, cl, cr) and cv - max(cl, cr) >= BLOB_JUMP - 1e-9:
-                flags.append({'view': r['view'], 'kind': 'blob',
-                              'why': f"convexity {cv:.2f} against {cl:.2f} ({L['view']}) and "
-                                     f"{cr:.2f} ({R['view']}) — the outline closes into a lump here"})
-            pv, pl, pr = r['protrusions'], L['protrusions'], R['protrusions']
-            if None not in (pv, pl, pr) and pv <= min(pl, pr) - BLOB_DROP:
-                flags.append({'view': r['view'], 'kind': 'blob',
-                              'why': f"{pv} thing(s) stick out against {pl} ({L['view']}) and "
-                                     f"{pr} ({R['view']}) — limbs and head fold into the body"})
         hs = r['head_share']
         if hs is None:
             continue
@@ -1167,10 +1250,16 @@ def orbit_report(views, masks):
         if (mirror[f'{a}/{b}'] or 0) < MIRROR_SAME:
             read.append(b)
     read = [v for v in AZIMUTHS if v in read] + ['top']
-    worst = max((r for r in ring if r['view'] not in END_ON), key=lambda r: (r['convexity'] or 0))
+    if bratio:
+        worst = min((r for r in ring if r['blob_ratio'] is not None), key=lambda r: r['blob_ratio'])
+    else:
+        worst = max((r for r in ring if r['view'] not in END_ON), key=lambda r: (r['convexity'] or 0))
     return {'ring': ring, 'flags': flags, 'mirror_iou': mirror, 'read_set': read,
             'area_rel_min': min(r['area_rel'] for r in ring),
             'most_blobby': worst['view'],
+            'blob_flanks': {f'{a}+{b}': (max(bratio[a], bratio[b])
+                                         if bratio and a in bratio and b in bratio else None)
+                            for a, b in BLOB_FLANKS},
             'head_best': max(shares) if shares else None,
             'head_distinct_views': [r['view'] for r in ring if r['head_distinct']]}
 

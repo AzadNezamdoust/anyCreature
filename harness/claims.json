@@ -50,7 +50,7 @@
     {
       "type": "orbit_consistent",
       "stage": "LOW",
-      "label": "the 8+2 orbit: no in-between azimuth closes into a lump its neighbours are not (outline.py blob flags; see orbit_sheet.png)",
+      "label": "the 8+2 orbit: no flank (both obliques of one side) closes into a lump its neighbours are not (outline.py blob flags: convexity deficiency <=0.68x the smaller neighbour at 96 and 48 px; see orbit_sheet.png)",
       "enforce": "advise",
       "when": "verify"
     },

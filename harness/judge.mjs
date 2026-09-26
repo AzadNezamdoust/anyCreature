@@ -36,7 +36,7 @@
 //   saturation_area {view?, min?, max?}         — how much of the view carries colour, read on the PALETTE
 //                                                 (albedo before lighting): min bounds the share at HSV
 //                                                 S ≥ 0.30 (default 0.10), max the share at S ≥ 0.50.
-//   orbit_consistent {kinds?}                   — no azimuth of the 8+2 orbit collapses into a blob its
+//   orbit_consistent {kinds?}                   — no flank of the 8+2 orbit collapses into a blob its
 //                                                 neighbours are not (outline.py's `blob` flags)
 //   head_reads      {kinds?}                    — the head is visible from every azimuth, is its own mass
 //                                                 on the front half, and is not small from everywhere

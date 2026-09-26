@@ -307,7 +307,7 @@
    "stage": "LOW",
    "enforce": "advise",
    "when": "verify",
-   "plain": "around the 8+2 orbit, no in-between azimuth closes into a lump its two neighbours are not",
+   "plain": "around the 8+2 orbit, no flank closes into a lump its neighbours are not: both obliques of one side (az045+az135 or az315+az225) at <=0.68x the convexity deficiency of their smaller neighbour, at 96 and 48 px",
    "by": "A",
    "kind": "style",
    "dept": "model"

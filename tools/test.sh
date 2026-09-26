@@ -399,6 +399,61 @@ prints  "giant: the orbit holds with no advisory" "orbit holds" \
         python3 harness/outline.py "$T/giant.glb" "$T/giant_orbit"
 # ── END sixth-pass block ──
 
+# ── BEGIN orbit blob rule block (flank collapse, not a protrusion count) — additive ──
+echo "== 9. the orbit blob rule"
+# the rule, on masks built by hand: a ring whose obliques are clean ellipses while the
+# views either side of them have limbs sticking out. Both obliques of one flank closed
+# = a blob; one oblique alone closed (one ear, one tail brush) = not.
+cat > "$T/blob_ring.py" <<'PY'
+import sys; sys.path.insert(0, 'harness'); import numpy as np, outline as O
+def ell(open_limbs):
+    y, x = np.mgrid[0:640, 0:640]
+    m = ((x - 320) / 150.0) ** 2 + ((y - 320) / 110.0) ** 2 <= 1
+    if open_limbs:                      # four legs and a neck: bites in the outline
+        for cx in (200, 260, 380, 440):
+            m |= (abs(x - cx) < 14) & (y > 320) & (y < 520)
+        m |= (abs(x - 470 + (y - 200) * 0.6) < 16) & (y > 150) & (y < 260)
+    return m
+closed = {'flank': ('az045', 'az135'), 'one': ('az045',)}[sys.argv[1]]
+masks = {v: ell(v not in closed) for v in O.AZIMUTHS}
+views = {v: {'area_px': int(masks[v].sum())} for v in O.AZIMUTHS}
+flags = [f['view'] for f in O.orbit_report(views, masks)['flags'] if f['kind'] == 'blob']
+print('blob flags:', flags)
+sys.exit(0 if flags == (['az045', 'az135'] if sys.argv[1] == 'flank' else []) else 1)
+PY
+ok      "blob: a flank that closes on both obliques is flagged" python3 "$T/blob_ring.py" flank
+ok      "blob: one oblique alone (an ear, a tail brush) is not"  python3 "$T/blob_ring.py" one
+# the shipped creatures hold (the rule's "must not flag" side), checked against the builds above
+for n in raven_wyvern giant; do
+  ok    "blob: shipped $n is not flagged" bash -c "python3 harness/outline.py '$T/gallery_$n.glb' '$T/blob_$n' --no-colour >/dev/null && python3 -c \"
+import json, sys; o = json.load(open(sys.argv[1]))['orbit']
+sys.exit(any(f['kind'] == 'blob' for f in o['flags']) or min(v for v in o['blob_flanks'].values()) < 0.72)\" '$T/blob_$n/metrics.json'"
+done
+ok      "blob: shipped wolf is not flagged" python3 -c "
+import json, sys; o = json.load(open(sys.argv[1]))['orbit']
+sys.exit(any(f['kind'] == 'blob' for f in o['flags']))" "$T/orb/metrics.json"
+# stability: the wolf's tail brush 20% smaller flipped az090 under the protrusion count
+# (5 against 7). It must not move the flank measure across the bar.
+ok      "blob: wolf with a 20% smaller tail brush is not flagged" bash -c "python3 - '$T/wolf_brush.json' <<'PY' && node engine/cli.js '$T/wolf_brush.json' '$T/wolf_brush.glb' >/dev/null && python3 harness/outline.py '$T/wolf_brush.glb' '$T/wolf_brush' --no-colour | grep -q 'orbit holds'
+import json, sys
+s = json.load(open('example/wolf.json'))
+for p in s['parts']:
+    if p.get('name') in ('brush', 'tail_tip'):
+        for a in ('length', 'width'):
+            if isinstance(p.get(a), (int, float)): p[a] *= 0.8
+for j in s['joints'].values():           # a pure translation, so example_copy sees a new skeleton
+    if isinstance(j, list): j[2] += 0.12
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+# the pre-sixth-pass giant (arms folded into the torso at 45 degrees, head in the hump) is
+# the specimen the rule was cut on; checked when the history is in this clone.
+if git cat-file -e 43deb51:example/gallery/giant.glb 2>/dev/null; then
+  git show 43deb51:example/gallery/giant.glb > "$T/giant_43deb51.glb"
+  prints "blob: the pre-sixth-pass giant is flagged on a flank" "blob" \
+          python3 harness/outline.py "$T/giant_43deb51.glb" "$T/giant_old" --no-colour
+fi
+# ── END orbit blob rule block ──
+
 echo
 echo "$PASS passed, $FAIL failed"
 if [ "$FAIL" -ne 0 ]; then
