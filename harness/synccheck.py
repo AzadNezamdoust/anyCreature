@@ -444,11 +444,16 @@ for dirpath, dirs, files in os.walk(ROOT):
 # for the repo's own folders, in any shipped text file. Exempt: CHANGELOG.md
 # (history names what it retired, on purpose), this file (it names the paths it
 # checks for, conditionally), and the bundled three.js.
+# docs/research/ holds investigation notes: they name files a proposal WOULD add
+# and the versions of third-party tools, so neither scan below applies there.
+RESEARCH = lambda d: os.path.relpath(d, ROOT).replace(os.sep, '/').startswith('docs/research')
 REF_RE = re.compile(r'(?<![\w./-])(?:harness|engine|tools|calibration|example|cards|assets)'
                     r'/[A-Za-z0-9_./-]*[A-Za-z0-9_]\.(?:py|mjs|js|json|md|sh|ps1|html|png|glb)\b')
 REF_EXT = SCAN_EXT + ('.yml', '.yaml', '.html')
 for dirpath, dirs, files in os.walk(ROOT):
     dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
+    if RESEARCH(dirpath):
+        continue
     for f in files:
         if not f.endswith(REF_EXT) or f in ('three-bundle.js', 'synccheck.py', 'CHANGELOG.md'):
             continue
@@ -472,6 +477,8 @@ here = tuple(int(x) for x in version.split('.')) if re.fullmatch(r'\d+\.\d+\.\d+
 if here:
     for dirpath, dirs, files in os.walk(ROOT):
         dirs[:] = [d for d in dirs if d not in ('node_modules', '.git', '.claude', 'out', 'delivery')]
+        if RESEARCH(dirpath):
+            continue
         for f in files:
             if not f.endswith(SCAN_EXT) or f == 'three-bundle.js':
                 continue
