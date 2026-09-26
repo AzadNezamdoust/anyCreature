@@ -1,6 +1,6 @@
 {
  "name": "raven_wyvern",
- "_about": "Gallery creature: a crested raven-wyvern. Bipedal, membrane wings on the arms, hooked bill, violet crest and tail fan, gold talons. Proves the engine beyond the quadruped example.",
+ "_about": "Gallery creature: a crested raven-wyvern. Bipedal, membrane wings on the arms with a darker leading edge and rib veins, hooked bill, violet crest and tail fan, four curve toes per foot with claws seated on them (host_part). Proves the engine beyond the quadruped example.",
  "height": 1.68,
  "palette": {
   "plume_body": {
@@ -58,6 +58,10 @@
   "pupil": {
    "color": "#0c0a0e",
    "rough": 0.2
+  },
+  "talon": {
+   "color": "#7a6440",
+   "rough": 0.55
   }
  },
  "joints": {
@@ -97,13 +101,13 @@
   },
   "HeadRoot": {
    "from": "Neck3",
-   "up": 0.02,
-   "fwd": 0.03
+   "up": -0.025,
+   "fwd": -0.017
   },
   "Skull": {
    "from": "HeadRoot",
-   "up": 0.035,
-   "fwd": 0.09
+   "up": 0.08,
+   "fwd": 0.137
   },
   "Brow": {
    "from": "Skull",
@@ -226,52 +230,6 @@
    "side": 0.04,
    "up": -0.12,
    "fwd": -0.4
-  },
-  "LTMid1": {
-   "from": "LToe",
-   "fwd": 0.075,
-   "ground": 0.024
-  },
-  "LTMidTip": {
-   "from": "LTMid1",
-   "fwd": 0.06,
-   "ground": 0.02
-  },
-  "LTIn1": {
-   "from": "LToe",
-   "side": -0.0326,
-   "fwd": 0.0504,
-   "ground": 0.024
-  },
-  "LTInTip": {
-   "from": "LTIn1",
-   "side": -0.0244,
-   "fwd": 0.0378,
-   "ground": 0.02
-  },
-  "LTOut1": {
-   "from": "LToe",
-   "side": 0.039,
-   "fwd": 0.052,
-   "ground": 0.024
-  },
-  "LTOutTip": {
-   "from": "LTOut1",
-   "side": 0.03,
-   "fwd": 0.04,
-   "ground": 0.02
-  },
-  "LTBack1": {
-   "from": "LToe",
-   "side": 0.0054,
-   "fwd": -0.0447,
-   "ground": 0.024
-  },
-  "LTBackTip": {
-   "from": "LTBack1",
-   "side": 0.0042,
-   "fwd": -0.0348,
-   "ground": 0.02
   }
  },
  "chains": {
@@ -324,26 +282,6 @@
   "LTrail": [
    "LTrailRoot",
    "LTrailTip"
-  ],
-  "LTMid": [
-   "LToe",
-   "LTMid1",
-   "LTMidTip"
-  ],
-  "LTIn": [
-   "LToe",
-   "LTIn1",
-   "LTInTip"
-  ],
-  "LTOut": [
-   "LToe",
-   "LTOut1",
-   "LTOutTip"
-  ],
-  "LTBack": [
-   "LToe",
-   "LTBack1",
-   "LTBackTip"
   ]
  },
  "attach": {
@@ -355,22 +293,14 @@
   "LFing1": "LWrist",
   "LFing2": "LWrist",
   "LTrail": "Chest",
-  "Jaw": "Skull",
-  "LTMid": "LToe",
-  "LTIn": "LToe",
-  "LTOut": "LToe",
-  "LTBack": "LToe"
+  "Jaw": "Skull"
  },
  "mirror": [
   "LLeg",
   "LWing",
   "LFing1",
   "LFing2",
-  "LTrail",
-  "LTMid",
-  "LTIn",
-  "LTOut",
-  "LTBack"
+  "LTrail"
  ],
  "touch": [
   [
@@ -395,11 +325,7 @@
   "LWing": "locomotion",
   "LFing1": "locomotion",
   "LFing2": "locomotion",
-  "LTrail": "locomotion",
-  "LTMid": "locomotion",
-  "LTIn": "locomotion",
-  "LTOut": "locomotion",
-  "LTBack": "locomotion"
+  "LTrail": "locomotion"
  },
  "volumes": [
   {
@@ -488,7 +414,7 @@
    "sides": 12,
    "caps": [
     "none",
-    "none"
+    "dome"
    ],
    "profile": [
     [
@@ -527,7 +453,11 @@
       "feather": 60
      }
     ]
-   }
+   },
+   "cap_depth": [
+    0.8,
+    0.6
+   ]
   },
   {
    "chain": "head",
@@ -544,11 +474,11 @@
    "profile": [
     [
      0.0,
-     0.07,
-     0.075
+     0.055,
+     0.06
     ],
     [
-     0.35,
+     0.45,
      0.1,
      0.1,
      {
@@ -556,12 +486,12 @@
      }
     ],
     [
-     0.7,
+     0.72,
      0.088,
      0.08,
      {
       "exp": 2.5,
-      "bias": -0.1
+      "bias": 0.1
      }
     ],
     [
@@ -593,7 +523,8 @@
       "feather_t": 0.2
      }
     ]
-   }
+   },
+   "frame": "up"
   },
   {
    "chain": "tail",
@@ -645,7 +576,8 @@
       "feather": 72
      }
     ]
-   }
+   },
+   "frame": "up"
   },
   {
    "chain": "LLeg",
@@ -789,110 +721,6 @@
      0.006
     ]
    ]
-  },
-  {
-   "chain": "LTMid",
-   "material": "leg_scale",
-   "sides": 6,
-   "caps": [
-    "none",
-    "dome"
-   ],
-   "profile": [
-    [
-     0.0,
-     0.022,
-     0.02
-    ],
-    [
-     0.5,
-     0.017,
-     0.016
-    ],
-    [
-     1.0,
-     0.011,
-     0.011
-    ]
-   ]
-  },
-  {
-   "chain": "LTIn",
-   "material": "leg_scale",
-   "sides": 6,
-   "caps": [
-    "none",
-    "dome"
-   ],
-   "profile": [
-    [
-     0.0,
-     0.022,
-     0.02
-    ],
-    [
-     0.5,
-     0.017,
-     0.016
-    ],
-    [
-     1.0,
-     0.011,
-     0.011
-    ]
-   ]
-  },
-  {
-   "chain": "LTOut",
-   "material": "leg_scale",
-   "sides": 6,
-   "caps": [
-    "none",
-    "dome"
-   ],
-   "profile": [
-    [
-     0.0,
-     0.022,
-     0.02
-    ],
-    [
-     0.5,
-     0.017,
-     0.016
-    ],
-    [
-     1.0,
-     0.011,
-     0.011
-    ]
-   ]
-  },
-  {
-   "chain": "LTBack",
-   "material": "leg_scale",
-   "sides": 6,
-   "caps": [
-    "none",
-    "dome"
-   ],
-   "profile": [
-    [
-     0.0,
-     0.022,
-     0.02
-    ],
-    [
-     0.5,
-     0.017,
-     0.016
-    ],
-    [
-     1.0,
-     0.011,
-     0.011
-    ]
-   ]
   }
  ],
  "parts": [
@@ -1004,7 +832,7 @@
    "size": 0.026,
    "anchor": {
     "chain": "head",
-    "t": 0.5,
+    "t": 0.58,
     "around": 62
    },
    "pupil": {
@@ -1267,7 +1095,31 @@
     {
      "chain": "LTrail"
     }
-   ]
+   ],
+   "colors": {
+    "arcs": [
+     {
+      "u": [
+       0,
+       0.22
+      ],
+      "color": "#3a2f52",
+      "feather_u": 0.22
+     },
+     {
+      "t": [
+       0.55,
+       1
+      ],
+      "color": "#8a74b4",
+      "feather_t": 0.45
+     }
+    ],
+    "veins": {
+     "color": "#4a3b6a",
+     "width": 0.4
+    }
+   }
   },
   {
    "name": "thumb_claw",
@@ -1301,125 +1153,277 @@
    ]
   },
   {
-   "name": "tmid_claw",
+   "name": "toe_mid",
    "type": "curve",
-   "host": "LTMidTip",
-   "material": "claw",
-   "mirrored": true,
+   "host": "LToe",
+   "material": "talon",
    "join": "insert",
-   "offset": [
-    0,
-    0.001,
-    0
-   ],
+   "mirrored": true,
+   "shade": "flesh",
    "dir": [
-    0.0,
-    -0.1,
-    1.0
+    0,
+    -0.05,
+    1
    ],
    "sides": 6,
+   "cap": "dome",
+   "cap_depth": 0.6,
    "segments": [
     {
-     "len": 0.035,
-     "r": 0.0085
+     "len": 0.03,
+     "r": [
+      0.022,
+      0.02
+     ]
     },
     {
-     "len": 0.03,
-     "r": 0.006,
-     "fall": 60,
-     "taper": true
+     "len": 0.05,
+     "r": [
+      0.018,
+      0.016
+     ],
+     "fall": 6
+    },
+    {
+     "len": 0.055,
+     "r": [
+      0.012,
+      0.011
+     ],
+     "fall": 6
     }
    ]
   },
   {
-   "name": "tin_claw",
+   "name": "toe_in",
    "type": "curve",
-   "host": "LTInTip",
-   "material": "claw",
-   "mirrored": true,
+   "host": "LToe",
+   "material": "talon",
    "join": "insert",
-   "offset": [
-    0,
-    0.001,
-    0
-   ],
+   "mirrored": true,
+   "shade": "flesh",
    "dir": [
     -0.543,
-    -0.1,
+    -0.05,
     0.84
    ],
    "sides": 6,
+   "cap": "dome",
+   "cap_depth": 0.6,
    "segments": [
     {
-     "len": 0.035,
-     "r": 0.0085
+     "len": 0.03,
+     "r": [
+      0.022,
+      0.02
+     ]
     },
     {
-     "len": 0.03,
-     "r": 0.006,
-     "fall": 60,
-     "taper": true
+     "len": 0.05,
+     "r": [
+      0.018,
+      0.016
+     ],
+     "fall": 6
+    },
+    {
+     "len": 0.055,
+     "r": [
+      0.012,
+      0.011
+     ],
+     "fall": 6
     }
    ]
   },
   {
-   "name": "tout_claw",
+   "name": "toe_out",
    "type": "curve",
-   "host": "LTOutTip",
-   "material": "claw",
-   "mirrored": true,
+   "host": "LToe",
+   "material": "talon",
    "join": "insert",
-   "offset": [
-    0,
-    0.001,
-    0
-   ],
+   "mirrored": true,
+   "shade": "flesh",
    "dir": [
     0.6,
-    -0.1,
+    -0.05,
     0.8
    ],
    "sides": 6,
+   "cap": "dome",
+   "cap_depth": 0.6,
    "segments": [
     {
-     "len": 0.035,
+     "len": 0.03,
+     "r": [
+      0.022,
+      0.02
+     ]
+    },
+    {
+     "len": 0.05,
+     "r": [
+      0.018,
+      0.016
+     ],
+     "fall": 6
+    },
+    {
+     "len": 0.055,
+     "r": [
+      0.012,
+      0.011
+     ],
+     "fall": 6
+    }
+   ]
+  },
+  {
+   "name": "toe_back",
+   "type": "curve",
+   "host": "LToe",
+   "material": "talon",
+   "join": "insert",
+   "mirrored": true,
+   "shade": "flesh",
+   "dir": [
+    0.119,
+    -0.05,
+    -0.993
+   ],
+   "sides": 6,
+   "cap": "dome",
+   "cap_depth": 0.6,
+   "segments": [
+    {
+     "len": 0.03,
+     "r": [
+      0.022,
+      0.02
+     ]
+    },
+    {
+     "len": 0.05,
+     "r": [
+      0.018,
+      0.016
+     ],
+     "fall": 6
+    },
+    {
+     "len": 0.055,
+     "r": [
+      0.012,
+      0.011
+     ],
+     "fall": 6
+    }
+   ]
+  },
+  {
+   "name": "claw_mid",
+   "type": "curve",
+   "host_part": "toe_mid",
+   "at": 0.88,
+   "material": "claw",
+   "join": "insert",
+   "mirrored": true,
+   "sides": 6,
+   "offset": [
+    0,
+    0.003,
+    0
+   ],
+   "segments": [
+    {
+     "len": 0.03,
      "r": 0.0085
     },
     {
      "len": 0.03,
      "r": 0.006,
-     "fall": 60,
+     "fall": 55,
      "taper": true
     }
    ]
   },
   {
-   "name": "tback_claw",
+   "name": "claw_in",
    "type": "curve",
-   "host": "LTBackTip",
+   "host_part": "toe_in",
+   "at": 0.88,
    "material": "claw",
-   "mirrored": true,
    "join": "insert",
+   "mirrored": true,
+   "sides": 6,
    "offset": [
     0,
-    0.001,
+    0.003,
     0
    ],
-   "dir": [
-    0.119,
-    -0.1,
-    -0.993
-   ],
-   "sides": 6,
    "segments": [
     {
-     "len": 0.035,
+     "len": 0.03,
      "r": 0.0085
     },
     {
      "len": 0.03,
      "r": 0.006,
-     "fall": 60,
+     "fall": 55,
+     "taper": true
+    }
+   ]
+  },
+  {
+   "name": "claw_out",
+   "type": "curve",
+   "host_part": "toe_out",
+   "at": 0.88,
+   "material": "claw",
+   "join": "insert",
+   "mirrored": true,
+   "sides": 6,
+   "offset": [
+    0,
+    0.003,
+    0
+   ],
+   "segments": [
+    {
+     "len": 0.03,
+     "r": 0.0085
+    },
+    {
+     "len": 0.03,
+     "r": 0.006,
+     "fall": 55,
+     "taper": true
+    }
+   ]
+  },
+  {
+   "name": "claw_back",
+   "type": "curve",
+   "host_part": "toe_back",
+   "at": 0.88,
+   "material": "claw",
+   "join": "insert",
+   "mirrored": true,
+   "sides": 6,
+   "offset": [
+    0,
+    0.003,
+    0
+   ],
+   "segments": [
+    {
+     "len": 0.03,
+     "r": 0.0085
+    },
+    {
+     "len": 0.03,
+     "r": 0.006,
+     "fall": 55,
      "taper": true
     }
    ]

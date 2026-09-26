@@ -363,14 +363,14 @@
       "feather": 60
      },
      {
-      "from": 70,
-      "to": 142,
+      "from": 64,
+      "to": 148,
       "color": "#957757",
       "t": [
        0.04,
        0.82
       ],
-      "feather": 50,
+      "feather": 42,
       "feather_t": 0.16
      },
      {
@@ -492,14 +492,14 @@
       "feather_t": 0.16
      },
      {
-      "from": 45,
-      "to": 120,
+      "from": 40,
+      "to": 125,
       "color": "#957757",
       "t": [
        0.0,
        0.4
       ],
-      "feather": 60,
+      "feather": 42,
       "feather_t": 0.16
      },
      {
@@ -614,14 +614,14 @@
       "feather": 60
      },
      {
-      "from": 55,
-      "to": 130,
+      "from": 48,
+      "to": 137,
       "color": "#957757",
       "t": [
        0.0,
        0.62
       ],
-      "feather": 60,
+      "feather": 44,
       "feather_t": 0.16
      },
      {
@@ -646,7 +646,8 @@
       "feather_t": 0.14
      }
     ]
-   }
+   },
+   "frame": "up"
   },
   {
    "chain": "LFrontLeg",

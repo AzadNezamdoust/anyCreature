@@ -521,10 +521,18 @@ def colour_measures(body, colour):
     median_lum      how bright the creature's own colour is, 0-255 sRGB
     saturated_area  the share of it carrying a strong colour (HSV S >= 0.50)
 
-    Unlit on purpose. Gradient, grain and AO are uniform multiplies, so they move
-    a pixel's value but never its saturation; LIGHTS do move it — a white key
-    washes colour out, a blue rim invents it. Measuring the lit render made the
-    answer a property of the lighting rig, which nobody ships."""
+    Unlit on purpose. LIGHTS move saturation — a white key washes colour out, a
+    blue rim invents it — and measuring the lit render made the answer a property
+    of the lighting rig, which nobody ships.
+
+    What it reads is the SHIPPED colour, and that is not the palette. The shading
+    stack's L3 / L6 / L7 layers multiply OKLab L at constant a, b, which raises
+    HSV S in shadow (an RGB multiply would not): a #6e5a98 membrane (S 0.41,
+    under the bar) ships 64% of its vertices at S >= 0.50, a #9a8458 talon goes
+    0.43 -> 0.58, and with the stack changed to a true multiply the example wolf
+    measures 2.9% here instead of 20.1%. So the 10-34% band is a band on the
+    shipped colour, shadow included; budget a supporting mass's palette under
+    ~S 0.35 if it must stay under the bar."""
     if not body.any():
         return {}
     lin = np.clip(colour[body], 0.0, 1.0)

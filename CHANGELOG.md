@@ -180,6 +180,121 @@ brush. Two causes in the engine, one in the check, and the spec.
   `part_overlap` warnings at corners; `part_seat` measures burial against the surface.
 - `ground_clip` and effector reports name mirrored twins `<chain>.R`.
 
+**Fourth pass — the limits the raven-wyvern ran into**
+
+Built from the gallery README's own "where the engine got in the way" list, in that
+order, plus what the new check found.
+
+- **The junction seam came back in motion.** Junction normals were baked in bind pose,
+  and a limb's root ring was weighted 100% to the limb's own first joint: when the limb
+  swung, the rings in the band rotated rigidly with the limb bone, the copied host
+  normals rotated with them, the torso's did not, and the shoulder/hip seam reappeared
+  at every step (`out/compare/01-05` in a build). `engine/core/junction.js` now owns the
+  junction pairs and blends each attached flesh piece's SKIN WEIGHTS toward its host's
+  own skin at the closest surface point — all-host where buried, linearly to all-its-own
+  over `shading.normals.junction_skin_band` (0.09 x model height; wider than the 0.06
+  normal band because a bend needs room). The root deforms with the body, the bend is
+  spread across the band, and a normal copied from the host now travels with the same
+  bones the host's own surface travels with, so the continuity holds mid-clip. It runs
+  before the checks, so `anim_integrity`, `self_clip` and `ground_clip` sweep the weights
+  that ship. On the wolf's foreleg (26° swing) a smoothstep ramp over the 0.06 band
+  folded 3 triangles at move@0.2; linear over 0.09 folds nothing and peaks at 2.1x edge
+  stretch (2.0x with the old rigid root). `junction_skin: 0` opts out.
+- **Membranes take colours.** `colors.arcs` was a band around a ring-built mesh and a
+  sheet has no rings; a wing shipped one flat colour. A membrane now takes `"colors":
+  {"arcs": [{u, t, color, feather_u, feather_t}], "veins": {color, width}}` in the sheet's
+  own frame — u across (0 = leading rib, 1 = trailing rib), t along (0 root, 1 tip);
+  `veins` darkens a band centred on each rib column. Resolved by the vertices like every
+  arc, so a feather under the column/row step warns with the numbers, and the build
+  prints which rib is which.
+- **A part can host a part.** `"host_part": "<name>"` seats a part on an earlier part:
+  the origin lands on the host's centreline at `at` (0..1, default the far end) plus
+  `offset`, `dir` defaults to the tangent, the skin weights are inherited from the host's
+  nearest vertex, and `part_attachment` / `part_seat` / `contrast_adjacent` measure it
+  against the host part's own surface and material (`part_overlap` no longer warns about
+  a part sitting inside the part it is seated on). A claw on a curve toe used to be
+  refused as floating because only volumes were ever looked at; the workaround was a
+  chain per toe. A host listed after the part, or a host with no centreline and no
+  `dir`, is refused with the fix named.
+- **`open_end` check.** `"caps": ["none", …]` leaves a ring open to be buried; only an
+  attached chain's root ring was ever checked (`root_containment`). A body left "none"
+  at the chest passed every check and showed the background through its mouth in any
+  renderer that culls back faces — the white crescent seen on the wyvern. Every other
+  open ring is now tested against every other closed mesh: a third exposed BLOCKs, a
+  tenth is a measure. Registered in `cli.js`, `gates.json` (block / allocate / legality /
+  model) and synccheck's promise list. It found the shipped wyvern's neck 75% open at the
+  head — and, once the neck was domed, that the head's root ring had never been inside
+  the neck at all (an open tube's "inside" reached past its mouth in the distance test,
+  which is why `root_containment` had let it through).
+- **Colour budget vs membranes — measured, thresholds unchanged.** The card says the
+  saturated-area ruler reads the unlit baked colour "so brightness, AO and lighting
+  cannot skew it". They do: L6/L7 (and L3) multiply OKLab L at constant a, b, which
+  RAISES HSV S in shadow. On the wyvern the wing's palette is S 0.41 (under the 0.50
+  bar) yet 64% of its shipped vertices measure ≥ 0.50; the talons go 0.43 → 0.58. With
+  the shading changed to a true multiply (chroma scaled with L) the wolf's hero
+  saturated area falls from 20.1% to 2.9% and the calibration's colour ruler fails —
+  the shipped 10–34% band was calibrated on shadow-inflated numbers, and a saturated
+  wing at 30% of the view is the same inflation on a bigger surface, not a membrane-
+  specific unfairness. Changing the stack's look and re-authoring the wolf's palette to
+  match is a cascade for a pass of its own, so nothing moved: the wyvern lands at 24.5%
+  in band with its wing colours, `outline.py`'s docstring and the membrane card now say
+  what the ruler actually reads and how to budget for it (a supporting membrane's
+  palette under ~S 0.35).
+- **Gallery raven-wyvern rebuilt** on the fourth-pass engine: the wings carry a darker
+  leading edge, rib veins and a paler tip; the four toe chains per foot (8 chains, 16
+  joints, 8 volumes) are four `curve` toes on `LToe` in their own `talon` material with
+  the claws seated on them by `host_part`; the neck is domed into the head and the head's
+  root ring pulled back inside the neck. 45 joints (was 61), 8,564 triangles, hero
+  saturated area 24.5%, all green. `example/wolf_beauty.png`, `wolf_silhouette.png`,
+  `wolf_thumb24.png` and `assets/hero.png` regenerated on the final engine (the review
+  fixes above had changed the shipped normals without the images following).
+- `tools/test.sh` gains a fourth-pass block: the skin blend and membrane colours are
+  reported, a membrane arc written in degrees is refused, `host_part` seats a claw and
+  refuses a floating one and a host listed after its part, and `open_end` blocks the
+  chest-open body.
+
+**Review fixes, integrated (from the concurrent read-only review and the giant build)**
+
+- **Ring frames: 0° is the top.** The default (parallel-transport) frame started a lying
+  chain's height axis pointing world DOWN, and `"frame": "up"` forced the width axis toward
+  +X, which on a chain running backward (a tail) turned the height axis down as well. So
+  "0° = spine" held only for `frame: "up"` on a forward chain; the wolf's tail shipped pale
+  on top and dark underneath, the wyvern's head dark under the chin and pale on the crown,
+  its tail inverted too, and the wolf's back thigh — whose `0.165 x 0.12` row was believed
+  to be deep fore-aft — was wider side-to-side, because a slanted thigh took the "lying"
+  reference. `framesOf` now fixes the sign on W (up on every non-vertical chain, both
+  frames), decides standing-vs-lying from the chain's overall direction rather than its
+  first segment, and leaves the standing convention alone (0° = inner, 90° = front). The
+  "+X" rule served a cross-species ring-blending pipeline this engine does not have. The
+  compiler warns whenever a volume's 0° is not where the rule says. `frame: "up"` on the
+  wyvern's head and tail and the wolf's tail; the wyvern head's `bias` flipped to keep its
+  shape. ANCHORS on a default-frame lying chain and on any backward chain move with this
+  (90° is the -X side on a backward chain): re-read the build's "faces ..." line.
+- **L1 blends across JOINED meshes only.** The seam radius is 3 median edges or 3% of the
+  diagonal — 20-25 cm on a 4 m body — and "a foreign flesh vertex within R" opened the blend
+  whether or not the meshes touched: a fist hanging 16 cm from a knee painted the knee, a
+  post 16 cm from an orange block took the orange. The blend now opens (and averages) only
+  across meshes that `inside.js` finds joined — vertices inside or within a median edge of
+  the other, at three points, the same test `body_islands` uses.
+- Arcs written past 180° or below 0° are FOLDED into 0..180 with an info line (they used to
+  match nothing, silently); an arc or `t` written backwards warns. A feather wider than half
+  its band means the two ramps meet before 1 and the band never reaches its colour — the
+  compiler now says the peak (the shipped wolf's tawny bands peaked at 68-81%; they are now
+  a little wider and feathered at half the band, and reach it).
+- A `curve` with `"cap": "dome"` measured its arc `t` over the dome too, so t = 1 sat on the
+  apex and every band moved rootward by the dome's depth; t = 1 is the end ring, as on a
+  volume.
+- `contrast_adjacent` exempts a tuft only in its host's OWN material; a tuft in its own
+  palette entry 0.01 OKLab off its host is a part that failed to separate.
+- A `tufts` jitter near 1 drove short tufts' length through zero and they grew into the
+  body tip first — the shortest keeps 20% — and a tufts part over 2,500 triangles warns.
+- `effector_leads` / `attack_windup`: a mirrored effector's twin PART counts as the effector
+  (its skin joints are the R ones, so its chain came back as "RArm" and a two-fisted slam
+  was blocked on a tie with itself).
+- Not changed, noted: `joint_range`'s unreachable sweep poses one joint from the rest pose
+  only, so a limit that only collides from a clip's pose is not caught there — `self_clip`
+  is what catches it.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**

@@ -202,6 +202,57 @@ refuses "graft.py: unknown part"          "no part" \
 prints  "wash.py"                         '"ok": true'  python3 harness/wash.py "$T/wolf.glb" "$T/washed.glb"
 ok      "washed file conforms"            node harness/glbcheck.mjs "$T/washed.glb"
 
+# ── fourth pass: junction skin, membrane colours, host_part, open_end ─────────
+# (appended as one block; the fixtures are derived from the gallery raven-wyvern,
+# which example_copy does not guard, so a modified copy builds)
+echo "== 5. fourth-pass features and checks"
+RW=example/gallery/raven_wyvern.json
+prints  "junction skin blend is reported"  "junction skin: [0-9]* vertices" \
+        node engine/cli.js example/wolf.json "$T/wolf_js.glb"
+prints  "junction_skin: 0 opts out"        '"ok":true' \
+        bash -c "python3 - '$T/noskin.json' <<'PY' && node engine/cli.js '$T/noskin.json' '$T/noskin.glb' 2>&1 | grep -v 'junction skin'
+import json, sys
+s = json.load(open('$RW')); s.setdefault('shading', {}).setdefault('normals', {})['junction_skin'] = 0
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+prints  "membrane colours: gallery wing"   'membrane "wing_skin": colours' \
+        node engine/cli.js "$RW" "$T/rw_mc.glb"
+# a spec error is thrown by the compiler (no BLOCK line), so these two assert on
+# the message rather than going through `refuses`, which treats a stack as a crash
+ok      "membrane arc in degrees is refused" \
+        bash -c "python3 - '$T/mdeg.json' <<'PY' && ! node engine/cli.js '$T/mdeg.json' '$T/mdeg.glb' 2>'$T/mdeg.err'; grep -q 'not in degrees' '$T/mdeg.err'
+import json, sys
+s = json.load(open('$RW'))
+w = [p for p in s['parts'] if p['name'] == 'wing_skin'][0]
+w['colors'] = {'arcs': [{'from': 0, 'to': 90, 'color': '#000000'}]}
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+prints  "host_part: claws seated on curve toes" "seated on part \"toe_mid\"" \
+        node engine/cli.js "$RW" "$T/rw_hp.glb"
+refuses "host_part: a floating claw blocks against its host part" 'part_attachment: "claw_mid" never meets its host part "toe_mid"' \
+        bash -c "python3 - '$T/hpfloat.json' <<'PY' && node engine/cli.js '$T/hpfloat.json' '$T/hpfloat.glb'
+import json, sys
+s = json.load(open('$RW'))
+c = [p for p in s['parts'] if p['name'] == 'claw_mid'][0]; c['offset'] = [0, 0.12, 0.05]
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+ok      "host_part: a host listed after its part is refused" \
+        bash -c "python3 - '$T/hporder.json' <<'PY' && ! node engine/cli.js '$T/hporder.json' '$T/hporder.glb' 2>'$T/hporder.err'; grep -q 'is listed AFTER this part' '$T/hporder.err'
+import json, sys
+s = json.load(open('$RW')); parts = s['parts']
+i = [k for k, p in enumerate(parts) if p['name'] == 'toe_mid'][0]; parts.append(parts.pop(i))
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+refuses "open_end: a body left open at the chest blocks" "open_end: volume \"body\" is left open" \
+        bash -c "python3 - '$T/openend.json' <<'PY' && node engine/cli.js '$T/openend.json' '$T/openend.glb'
+import json, sys
+s = json.load(open('$RW'))
+b = [v for v in s['volumes'] if v['chain'] == 'body'][0]; b['caps'] = ['dome', 'none']
+json.dump(s, open(sys.argv[1], 'w'))
+PY"
+prints  "gates.py lists open_end"          "open_end"     python3 harness/gates.py
+ok      "checks stamp carries open_end"    bash -c "grep -q '\"name\": \"open_end\"' '$T/rw_hp.checks.json'"
+
 echo
 echo "$PASS passed, $FAIL failed"
 if [ "$FAIL" -ne 0 ]; then
