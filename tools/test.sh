@@ -97,6 +97,23 @@ for g in example/gallery/*.json; do
   prints "gallery builds, no BLOCK: $n"   '"ok":true'   node engine/cli.js "$g" "$T/gallery_$n.glb"
   ok     "glbcheck: shipped gallery $n.glb" node harness/glbcheck.mjs "example/gallery/$n.glb"
 done
+# ── BEGIN giant block (example/gallery/giant.*) — additive; leave the lines above alone ──
+# The loop above already builds every gallery spec; this block pins the giant by
+# name, so renaming or dropping it fails loudly, and judges it against its own
+# claims: the fist is the signature, the clips exist, and it stays in budget.
+prints  "giant: builds with no BLOCK"     '"ok":true'   node engine/cli.js example/gallery/giant.json "$T/giant.glb"
+ok      "giant: glbcheck (fresh build)"   node harness/glbcheck.mjs "$T/giant.glb"
+cat > "$T/giant_claims.json" <<'EOF'
+{"name": "giant", "claims": [
+ {"type": "part_exists", "part": "fist"},
+ {"type": "part_signature", "part": "fist", "view": "front", "min_share": 0.12, "or_min_span": 0.12},
+ {"type": "rig_skinned"}, {"type": "anim_named", "names": ["idle", "move", "attack"]},
+ {"type": "saturation_area", "view": "hero", "min": 0.10, "max": 0.34},
+ {"type": "tri_budget", "min": 4000, "max": 9000}]}
+EOF
+prints  "giant: claims (fist, clips, tri budget)" "all claims pass" \
+        node harness/judge.mjs "$T/giant.glb" "$T/giant_j" giant --spec "$T/giant_claims.json"
+# ── END giant block ──
 ok      "glbcheck: fresh build"           node harness/glbcheck.mjs "$T/wolf.glb"
 ok      "glbcheck: shipped example/wolf.glb" node harness/glbcheck.mjs example/wolf.glb
 # a cut file must be called CUT, not "bytes outside the declared file": that
