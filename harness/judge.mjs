@@ -7,8 +7,8 @@
 //
 // WHERE THE NUMBERS COME FROM. This used to launch a headless Chromium, load the
 // model into three.js, render five views, and read the pixels back. Every number
-// it wanted was already in the file: part shares are a z-buffer, the baked colour
-// IS the albedo, and the clip list and skin count are in the glTF header. So the
+// it wanted was already in the file: part shares are a z-buffer, the palette
+// and the baked colour are both in it, and the clip list and skin count are in the glTF header. So the
 // measuring moved to harness/outline.py — the tool that already owns every other
 // geometry measure in this harness — and this file does what is left: check the
 // claims. One measure, one definition, in one place.
@@ -33,8 +33,9 @@
 //   tri_budget      {min, max}                  — triangle budget band
 //   share_hierarchy {primary:[..],secondary:[..],tertiary:[..],view?,tolerance?} — primary/secondary/tertiary shares ≈6:3:1
 //   focal_contrast  {a, b, view?, min_ratio?}   — the two focal parts' shares must differ by ≥N× (default 2)
-//   saturation_area {view?, min?, max?}         — share of the view carrying a highly saturated colour
-//                                                 (HSV S ≥ 0.50 on the UNLIT baked colour). Default floor 0.10.
+//   saturation_area {view?, min?, max?}         — how much of the view carries colour, read on the PALETTE
+//                                                 (albedo before lighting): min bounds the share at HSV
+//                                                 S ≥ 0.30 (default 0.10), max the share at S ≥ 0.50.
 import path from 'path'; import fs from 'fs';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
@@ -71,6 +72,8 @@ const stats = M.stats || { triangles: M.triangles, skinnedMeshes: 0, animations:
 const m = { name, stats, names,
   lum: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.median_lum])),
   hi_sat_share: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.saturated_area])),
+  coloured_share: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.coloured_area])),
+  palette_source: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.palette_source])),
   parts, whole: M.whole };
 const metricsPath = path.join(outDir, `${name}_metrics.json`);
 fs.writeFileSync(metricsPath, JSON.stringify(m, null, 1));
@@ -83,8 +86,9 @@ else {
   const v = 'hero';
   console.log(`[judge] ${name}: ${stats.triangles} tris · ${names.length} materials · `
     + `clips ${stats.animations.join('/') || 'none'} · skinned ${stats.skinnedMeshes}`);
-  console.log(`        ${v} view: luminance ${m.lum[v]} · saturated area `
-    + `${((m.hi_sat_share[v] || 0) * 100).toFixed(1)}%`);
+  console.log(`        ${v} view: luminance ${m.lum[v]} · coloured area `
+    + `${((m.coloured_share[v] || 0) * 100).toFixed(1)}% · saturated area `
+    + `${((m.hi_sat_share[v] || 0) * 100).toFixed(1)}% (${m.palette_source[v] === 'albedo' ? 'on the palette' : 'on the baked colour — no palette record'})`);
   const top = Object.entries(parts).sort((a, b) => (share(v, b[0])) - (share(v, a[0]))).slice(0, 3);
   console.log('        biggest in view: ' + top.map(([n]) => `${n} ${(share(v, n) * 100).toFixed(0)}%`).join(' · '));
   console.log(`        full numbers: ${metricsPath}`);
@@ -108,28 +112,33 @@ if (specFile) {
     // Dark/light now read the creature's OWN colour, not a studio render of it.
     // The old number was the median luminance of a lit beauty pass, which made
     // the verdict a property of a lighting rig nobody ships. This is the unlit
-    // baked albedo: what the designer actually chose. The two correlate at
-    // r≈0.96 but are not the same scale — the albedo runs darker — so a
+    // baked colour — the palette after the shading stack, AO and shadow
+    // included, because brightness is about what ships. The two correlate at
+    // r≈0.96 but are not the same scale — the baked colour runs darker — so a
     // threshold carried over from a pre-1.3.2 spec needs re-picking once.
     style_dark(c){ const v=c.view||'side'; const L=view(v).median_lum;
       if(L>c.max_median_lum) bad.push(`Declared dark but its own colour is not dark: ${v}-view median albedo luminance ${L.toFixed(0)}/255 (need ≤${c.max_median_lum}) — push the material colour values darker`); },
     style_light(c){ const v=c.view||'side'; const L=view(v).median_lum;
       if(L<c.min_median_lum) bad.push(`Declared light but its own colour is too dark: ${v}-view median albedo luminance ${L.toFixed(0)}/255 (need ≥${c.min_median_lum})`); },
-    // High-saturation AREA, computed from the unlit baked colour (HSV S ≥ 0.50).
-    // Too little and the creature is a grey lump; too much and saturation stops
-    // being a spotlight and the whole thing screams. Do NOT name which surfaces
-    // carry it — where the colour goes is the designer's call, only how much.
+    // Colour AREA, read on the PALETTE — the albedo the engine records before
+    // any lighting (outline.py, palette_source). Two bars, two questions:
+    //   floor  share at HSV S ≥ 0.30 — is there any colour, or is this a grey mass
+    //   ceiling share at HSV S ≥ 0.50 — is the LOUD colour a spotlight or the base
+    // Not the baked colour: the shading stack ramps, boosts and shadows it, and
+    // until its shadows became a true multiply they raised S, so the old band on
+    // the baked colour was a band on the stack. Do NOT name which surfaces carry
+    // it — where the colour goes is the designer's call, only how much.
     saturation_area(c){ const v=c.view||'tq';
-      const s=view(v).saturated_area; if(s==null) return;
-      // There is NO default ceiling. Dropping `max` from claims.json did not
-      // remove the old 0.34 one, because it lived here as a fallback — so the
-      // ceiling went on refusing creatures after it had supposedly been
-      // retired. A ceiling only applies now if a spec asks for one by name. The
+      const d=view(v), s=d.saturated_area, col=d.coloured_area ?? s; if(s==null) return;
+      const src=d.palette_source==='albedo' ? 'palette' : 'baked colour (no palette record in this file)';
+      // The ceiling applies only when a spec asks for it by name. Dropping `max`
+      // from claims.json once did not remove the old 0.34, because it lived here
+      // as a fallback and went on refusing creatures after it was retired. The
       // floor keeps its default: "reads as a grey lump" is a real failure and
       // nobody has to opt into catching it.
-      const p=s*100, lo=(c.min??0.10)*100;
-      if(p<lo) bad.push(`Too little colour: only ${p.toFixed(1)}% of the ${VIEW(v)} view is highly saturated (need ≥${lo.toFixed(0)}%) — the creature reads as a grey mass. Raise the saturation of a mass that deserves the attention, do not tint everything.`);
-      if(c.max!=null && p>c.max*100) bad.push(`Too much colour: ${p.toFixed(1)}% of the ${VIEW(v)} view is highly saturated (need ≤${(c.max*100).toFixed(0)}%) — saturation stops reading as a spotlight when it covers this much. Desaturate the supporting masses and keep the loud colour on the signature.`); },
+      const lo=(c.min??0.10)*100, p=col*100, q=s*100;
+      if(p<lo) bad.push(`Too little colour: only ${p.toFixed(1)}% of the ${VIEW(v)} view carries a nameable colour (HSV S ≥ 0.30 in the ${src}; need ≥${lo.toFixed(0)}%) — the creature reads as a grey mass. Raise the saturation of a mass that deserves the attention, do not tint everything.`);
+      if(c.max!=null && q>c.max*100) bad.push(`Too much loud colour: ${q.toFixed(1)}% of the ${VIEW(v)} view is highly saturated (HSV S ≥ 0.50 in the ${src}; need ≤${(c.max*100).toFixed(0)}%) — saturation stops reading as a spotlight when it is the base colour. Quiet the supporting masses and keep the loud colour on the signature.`); },
     rig_skinned(){ if(stats.skinnedMeshes<1)
       bad.push('Model is not skinned: the rig is not bound to the mesh, so animating the bones moves nothing'); },
     anim_named(c){ for(const a of c.names) if(!stats.animations.includes(a))

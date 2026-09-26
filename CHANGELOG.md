@@ -226,26 +226,63 @@ order, plus what the new check found.
   head — and, once the neck was domed, that the head's root ring had never been inside
   the neck at all (an open tube's "inside" reached past its mouth in the distance test,
   which is why `root_containment` had let it through).
-- **Colour budget vs membranes — measured, thresholds unchanged.** The card says the
-  saturated-area ruler reads the unlit baked colour "so brightness, AO and lighting
-  cannot skew it". They do: L6/L7 (and L3) multiply OKLab L at constant a, b, which
-  RAISES HSV S in shadow. On the wyvern the wing's palette is S 0.41 (under the 0.50
-  bar) yet 64% of its shipped vertices measure ≥ 0.50; the talons go 0.43 → 0.58. With
-  the shading changed to a true multiply (chroma scaled with L) the wolf's hero
-  saturated area falls from 20.1% to 2.9% and the calibration's colour ruler fails —
-  the shipped 10–34% band was calibrated on shadow-inflated numbers, and a saturated
-  wing at 30% of the view is the same inflation on a bigger surface, not a membrane-
-  specific unfairness. Changing the stack's look and re-authoring the wolf's palette to
-  match is a cascade for a pass of its own, so nothing moved: the wyvern lands at 24.5%
-  in band with its wing colours, `outline.py`'s docstring and the membrane card now say
-  what the ruler actually reads and how to budget for it (a supporting membrane's
-  palette under ~S 0.35).
+- **Colour is honest end to end: shadows stop inflating saturation, and the colour
+  ruler reads the palette.** The card said the saturated-area ruler read the unlit
+  baked colour "so brightness, AO and lighting cannot skew it". They did. L6/L7
+  scaled OKLab L at constant a, b — chroma held while lightness fell, which RAISES
+  HSV S in every shadow (L3 was already a true multiply; the finding had it too).
+  A #6e5a98 membrane (palette S 0.41) shipped 64% of its vertices over S 0.50, a
+  #9a8458 talon went 0.43 → 0.58, and the example wolf's grey-brown legs read
+  orange: its 21.3% "highly saturated" hero area was 0.1% in its own palette.
+  - `shade.js`: L6/L7 are a true multiply (L, a, b all × the shade factor = linear
+    RGB × factor³), so a shadow is darker and never louder than the lit side. The
+    stack also keeps an ALBEDO track — the colour after L1 seam, L2 pattern and L5
+    bleed, never touched by the L3 ramp, L4 boost or L6/L7 — and `cli.js` ships it
+    as `asset.extras.albedo` (8-bit sRGB per vertex, one run per `part_spans` row,
+    ~16 KB on the wolf; `wash.py` drops it on delivery; docs/OUTPUT_CONTRACT.md).
+  - `outline.py` rasterises that palette alongside COLOR_0 and measures the colour
+    area on it (`palette_source: albedo`; a file without the record falls back to
+    the baked colour and says so). Two bars, because the norm asks two questions:
+    `coloured_area` (HSV S ≥ 0.30, "is there a colour you can name") and
+    `saturated_area` (S ≥ 0.50, "is it LOUD"). One bar could not do both: at 0.50
+    the floor refused every muted palette, at 0.30–0.35 a dusky and a vivid wing
+    measured the same. `median_lum` stays on the shipped colour — brightness is
+    about what ships. `saturated_area_shipped` is reported for comparison.
+  - `saturation_area` in judge.mjs: `min` bounds `coloured_area` (default 0.10),
+    `max` bounds `saturated_area` (no default). claims.json and _TEMPLATE carry
+    **10% coloured / 50% loud** (was 10–34% on the shadow-inflated baked colour).
+    Measured, hero view, coloured / loud on the palette (was: saturated on the baked colour):
+
+    | creature | coloured | loud | old measure |
+    |---|---|---|---|
+    | example wolf | 28.7% | 0.1% | 21.3% |
+    | gallery raven-wyvern | 48.2% | 11.6% | 25.0% |
+    | gallery giant | 19.3% | 18.2% | 19.0% |
+    | calibration wolf_green (deliberately plain) | 0.2% | 0.2% | 12.3% |
+    | the wolf, greyed | 0.0% | 0.0% | — |
+    | the wolf, every colour at S ≥ 0.80 | 95.0% | 93.6% | — |
+    | the wyvern with a vivid (S 0.80) wing | 50.6% | 41.4% | — |
+
+    The ceiling sits at half the view: a single loud signature plus accents — even
+    a spread vivid wing — stays under it, a creature loud all over does not.
+  - `calibrate.py`'s colour ruler now proves both bars both ways: the wolf and the
+    raven-wyvern pass, a greyed wolf is refused by the floor, a saturated wolf by
+    the ceiling, and a build that measured the baked colour instead of the palette
+    is a calibration failure.
+  - Images: `example/wolf.glb`, `wolf_beauty.png`, `gallery/raven_wyvern.glb`,
+    `raven_wyvern_beauty.png` and `assets/hero.png` regenerated (silhouettes are
+    unchanged — geometry did not move). The wolf's legs and hindquarters are
+    tawny rather than orange in shadow; the wyvern's wing shadows are dusky
+    rather than violet-bright. The giant's files belong to another pass.
+  - Docs: cards/03_HIGH.md norm 4 (and norm 5, which still described a beauty
+    render), SYNTAX.md's shading block and membrane colour budget, the example
+    and gallery READMEs, MANUAL.md, 00_START.md.
 - **Gallery raven-wyvern rebuilt** on the fourth-pass engine: the wings carry a darker
   leading edge, rib veins and a paler tip; the four toe chains per foot (8 chains, 16
   joints, 8 volumes) are four `curve` toes on `LToe` in their own `talon` material with
   the claws seated on them by `host_part`; the neck is domed into the head and the head's
   root ring pulled back inside the neck. 45 joints (was 61), 8,564 triangles, hero
-  saturated area 24.5%, all green. `example/wolf_beauty.png`, `wolf_silhouette.png`,
+  saturated area 24.5% on the old baked-colour measure (see the colour entry above), all green. `example/wolf_beauty.png`, `wolf_silhouette.png`,
   `wolf_thumb24.png` and `assets/hero.png` regenerated on the final engine (the review
   fixes above had changed the shipped normals without the images following).
 - `tools/test.sh` gains a fourth-pass block: the skin blend and membrane colours are

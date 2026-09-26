@@ -28,7 +28,9 @@ UV off (`"keep_uv": true` is opt-in, and this spec does not set it) —
 `wolf_beauty.png` (the projected hero shot over a studio card),
 `wolf_silhouette.png` (side view), `wolf_thumb24.png` (the blind-read image).
 
-Measured (hero view): high-saturation area **21.3%**, median luminance 91.3;
+Measured (hero view, on the palette): **28.7%** coloured (HSV S ≥ 0.30, the tawny
+legs and paws), 0.1% loud (S ≥ 0.50 — a muted natural palette); median shipped
+luminance 91.8;
 shares fur_leg 33% · fur_body 28% · fur_head 14% · fur_tail 7% · fur_ruff 7%.
 Side W/H 1.74, hero W/H 1.33. (Fourth pass: the tail's frame is `"up"` so its dark
 top and pale underside sit where the arcs say, the hind thigh is deep fore-aft as the

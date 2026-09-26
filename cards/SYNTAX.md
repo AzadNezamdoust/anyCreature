@@ -25,6 +25,9 @@
    "bleed":  {"radius":0.025,"sharpness":0.35,"amount":0.45},   // L5 hardware into flesh
    "hardsh": {"amount":0.54,"gamma":0.70},                      // L6 shadow on hardware
    "bodysh": {"lights":4,"rot":4,"elev":17,"amount":0.20,"gamma":1.95},  // L7 on flesh
+                        // L6/L7 are a TRUE multiply: lightness and chroma scale together,
+                        // so a shadow is darker, never more saturated than the lit side.
+                        // None of L3/L4/L6/L7 touch the palette the colour ruler reads.
    "normals":{"flesh":0.30,    // L8 — the ONLY layer that leaves COLOR_0 and goes into
                         // the file's NORMAL, so the user's lighting reacts to it. 0.30:
                         // at 0.90 every flesh normal is a cylinder's and the profile
@@ -184,12 +187,11 @@
     // Resolved by the vertices like every arc: a feather under 1/((ribs-1) x across) or a
     // vein under 1/across lands between two vertices and ships a hard edge (the compiler
     // warns with the numbers). The build prints which rib is u 0 and which is u 1.
-    // COLOUR BUDGET: a spread wing is ~30% of the hero view by itself, and the saturated-
-    // area ruler reads the SHIPPED colour, which the shading stack pushes ~0.1 above the
-    // palette's HSV S on mid-saturation surfaces (a #6e5a98 wing, S 0.41, ships 64% of its
-    // vertices at S >= 0.50). Keep a supporting membrane's palette under ~S 0.35, and spend
-    // the loud colour on a smaller signature; a leading edge or veins can be darker without
-    // being louder.
+    // COLOUR BUDGET: a spread wing is ~30% of the hero view by itself. The colour ruler
+    // reads your PALETTE (the albedo before lighting), so what you write is what counts:
+    // a dusky #6e5a98 wing (S 0.41) counts as coloured (S >= 0.30) but not loud; a vivid
+    // one (S >= 0.50) spends ~30 of the ceiling's 50 loud points on its own. A leading
+    // edge or veins can be darker without being louder.
 
   { "type":"fin", "host":"Skull", "material":"plate", "thickness":0.02, "mirrored":true,
     "anchor":{"chain":"head","t":0.4,"around":60},   // around: 0=spine 90=side 180=belly

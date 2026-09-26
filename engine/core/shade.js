@@ -320,6 +320,17 @@ function shadeStack(spec, meshes, INFO) {
     INFO.push(`shade L2: pattern ${pat.color} at ${(pat.amount * 100) | 0}% on flesh`);
   }
 
+  // ── the ALBEDO track ───────────────────────────────────────────────────
+  // What the designer chose, before any light touches it: the authored arcs
+  // and flat colours, seam-blended (L1), patterned (L2), and — further down —
+  // with hardware bled into the flesh around it (L5), because that is colour
+  // PLACEMENT. The layers that are lighting (the L3 ramp, the L4 top boost,
+  // L6/L7 shadow) never write here. It rides out as m.albedo and cli.js ships
+  // it in asset.extras.albedo, so harness/outline.py can measure the palette
+  // itself: the saturated-area ruler used to read the shipped colour, which
+  // made its verdict a property of this stack rather than of the design.
+  const ALB = new Map(live.map(m => [m, m.C.map(c => c.slice())]));
+
   // ── L3: top-to-bottom ramp, multiplied over everything ─────────────────
   const rp = P('ramp');
   const A = hex2lab(rp.bottom), MM = hex2lab(rp.mid), B = hex2lab(rp.top);
@@ -411,6 +422,7 @@ function shadeStack(spec, meshes, INFO) {
       const k = Math.pow(Math.max(0, 1 - bestD / R), 1 + 8 * bl.sharpness);
       const q = hardPts[best];
       p.m.C[p.i] = mix(p.m.C[p.i], q.m.C[q.i], bl.amount * k);
+      ALB.get(p.m)[p.i] = mix(ALB.get(p.m)[p.i], ALB.get(q.m)[q.i], bl.amount * k);
       hit++;
     }
     INFO.push(`shade L5: hardware bled into ${hit} flesh vertices within ${(bl.radius * 100).toFixed(1)}% of diagonal`);
@@ -445,7 +457,16 @@ function shadeStack(spec, meshes, INFO) {
         if (bs.gamma !== 1) v = Math.pow(v, bs.gamma);
         sh = 1 - bs.amount * (1 - v);
       }
-      m.C[i] = [m.C[i][0] * sh, m.C[i][1], m.C[i][2]];
+      // A TRUE multiply: L, a and b all scale by sh. OKLab is linear in the
+      // cube roots of LMS, so scaling all three is scaling linear RGB by sh^3 —
+      // hue and HSV saturation stay put and the colour simply gets darker.
+      // This used to scale L alone at constant a, b, which holds CHROMA while
+      // the lightness falls, i.e. RAISES saturation in every shadow: a #6e5a98
+      // membrane (S 0.41) shipped 64% of its vertices over S 0.50, a #9a8458
+      // talon went 0.43 -> 0.58, and the example wolf's grey-brown legs read
+      // orange. A painted shadow may cool or dull a colour; it never makes it
+      // louder than the lit side.
+      m.C[i] = [m.C[i][0] * sh, m.C[i][1] * sh, m.C[i][2] * sh];
       shaded++;
     }
   }
@@ -457,8 +478,10 @@ function shadeStack(spec, meshes, INFO) {
             + `(features take no layer and no shadow)`);
 
   // back to linear RGB for COLOR_0
-  for (const m of live)
+  for (const m of live) {
     for (let i = 0; i < m.C.length; i++) m.C[i] = oklab2lin(m.C[i]);
+    m.albedo = ALB.get(m).map(oklab2lin);
+  }
 }
 
 // deterministic value noise — same generator the compiler already uses

@@ -68,8 +68,9 @@
       "type": "saturation_area",
       "view": "tq",
       "min": 0.1,
+      "max": 0.5,
       "stage": "HIGH",
-      "label": "reference only: below ~10% the creature reads as a grey lump. The upper end is the shading layer’s job, not a gate.",
+      "label": "read on the PALETTE (albedo before lighting), so the shading stack cannot move it: at least 10% of the view carries a nameable colour (HSV S ≥ 0.30) or the creature reads as a grey mass; at most 50% is LOUD (S ≥ 0.50) or saturation is the base colour, not a spotlight.",
       "enforce": "advise",
       "when": "allocate"
     },

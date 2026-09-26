@@ -60,7 +60,8 @@ A receiving system can treat a file that satisfies this contract as
     "parts": [ { "kind": "volume|part", "type": "...", "name": "...",
                  "material": "...", "host": "...", "join": "..." } ],
     "part_spans": [ { "id": "nose_leaf", "material": "paw",
-                      "primitive": 7, "first": 1204, "count": 376 } ]
+                      "primitive": 7, "first": 1204, "count": 376 } ],
+    "albedo": { "encoding": "srgb8", "counts": [ 312, 376 ], "data": "<base64>" }
   }
 }
 ```
@@ -90,6 +91,16 @@ carries `.L`/`.R`, and a part built as several meshes names the extra ones
 an engine-placed pupil is `eye.pupil.L` / `eye.pupil.R`. Nothing about the rendering changes — no extra material,
 no extra primitive, no extra byte of geometry. A receiver that wants "the claw"
 reads the span and slices the buffer.
+
+`albedo` (Unreleased) is the PALETTE per vertex — the colour the designer chose,
+before the shading stack's ramp, top boost and shadows — as 8-bit sRGB triplets,
+base64, one run per `part_spans` row, `counts[k]` vertices long. `counts[k]` is
+the row's vertex count before the crease split: the split appends copies after a
+part's own vertices, so the row's first `counts[k]` vertices are the recorded
+ones in order and every later one sits exactly on one of them. It exists for
+measurement (the colour ruler in `harness/outline.py`), costs 4 bytes of
+base64 per vertex (~16 KB on the wolf), rides only with `part_spans`, and `wash.py` drops both
+on delivery. A viewer ignores it.
 
 ## Error vocabulary
 
