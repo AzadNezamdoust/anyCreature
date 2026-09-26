@@ -218,7 +218,7 @@ REQUIRED = [
     'MANUAL.md', 'README.md', 'CHANGELOG.md', 'LICENSE', 'SECURITY.md',
     'setup.sh', 'setup.ps1',
     'cards/00_START.md', 'cards/01_LOW.md', 'cards/02_MID.md',
-    'cards/03_HIGH.md', 'cards/04_SHIP.md', 'cards/SYNTAX.md',
+    'cards/03_HIGH.md', 'cards/04_SHIP.md', 'cards/SYNTAX.md', 'cards/STYLE.md',
     'engine/cli.js',
     'harness/judge.mjs',
     'harness/deliver.py', 'harness/publish.mjs',

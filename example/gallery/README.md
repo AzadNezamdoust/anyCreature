@@ -11,18 +11,24 @@ the design cards ask for a skeleton built from your own brief.
 
 ![beauty](raven_wyvern_beauty.png)
 
-A bipedal wyvern with a raven's head. Its forelimbs are membrane wings, raised
-in a swept-back mantle. It has a heavy hooked bill with a hinged lower mandible,
-a fan of violet crest blades, a pale shaggy throat bib, feathered thighs over
-scaled shanks, and four-toed talons with hooked claws (three toes forward and a
-hallux back). A long whip tail ends in a violet feather fan.
+A bipedal wyvern with a raven's head, built to stylised-game proportions
+(`cards/STYLE.md`): a big head on a short thick neck, a compact deep chest with a
+keel, short sturdy legs with a real drumstick thigh, and a thick tail that
+continues the body line. Its forelimbs are membrane wings folded back and down
+at rest, wrists just above the shoulders and the tips sweeping back past the
+tail root, so the membrane reads as a sail from the side and the back view is
+a creature with folded wings, not a T. It has a heavy hooked bill with a hinged
+lower mandible, a big gold eye under a dark brow ridge that dips toward the bill
+(the expression), a fan of violet crest blades, a pale shaggy throat bib,
+feathered thighs over scaled shanks, and four-toed talons with hooked claws
+(three toes forward and a hallux back). The tail ends in a violet feather fan.
 
 | | |
 |---|---|
-| build | 45 joints, 6,453 vertices, 8,156 triangles (claims band 4,000-9,000), all green; head share of the orbit 13 / 17 / 15 / 8 / 5 / 8 / 15 / 16% (az000-az315), top 14% |
-| clips | `idle` (breath, head tilt, wing settle), `move` (bipedal stride, balance flutter), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
+| build | 45 joints, 6,283 vertices, 7,690 triangles (claims band 4,000-9,000), all green; head share of the orbit 25 / 29 / 26 / 17 / 12 / 17 / 26 / 29% (az000-az315), top 35% |
+| clips | `idle` (breath, head tilt, wing settle, and the stance: the left foot 11 cm ahead of the right, held by the hips with the ankles levelling the feet), `move` (bipedal stride, balance flutter; the rest pose is symmetric, so the two feet trace the same path half a cycle apart), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
 | declared | named parts, `function` (head = effector, legs and wings = locomotion; the toes and claws inherit the leg's), `joint_range` for every animated joint |
-| colour | hero view, on the palette: 47.7% coloured (S ≥ 0.30), 13.3% loud (S ≥ 0.50); median shipped luminance 65.6. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
+| colour | hero view, on the palette: 42.0% coloured (S ≥ 0.30), 18.6% loud (S ≥ 0.50); median shipped luminance 63. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill and eye, dark brow, dark talons |
 
 What it exercises that the wolf does not:
 
@@ -49,10 +55,18 @@ What it exercises that the wolf does not:
   upper bill (`exp` 1.8, `bias` 0.3) over a flatter lower one.
 - **A head built for the in-between views.** The skull rows carry `taper`, so
   the head is a wedge toward the bill and not a ball with a beak stuck on; the
-  eyes sit under a `lid` (the raptor brow), and the neck has a throat (`bias` below).
-  The orbit pass made the head 1.3x larger with a wider bill base, and staggered
-  the legs in a stride (`joints_R` moves the whole right leg back 25 cm, a pure
-  translation, so `mirror_distortion` passes) so the side view shows two legs.
+  eyes sit under a shallow `lid` with a lower lid, and the neck has a throat
+  (`bias` below). The expression is a separate `curve` brow (`join: extrude`,
+  hard-shaded so the seam blend does not smear it into the skull) that starts
+  buried behind the eye and runs forward and down over the front of it: the
+  lid alone leans back with the skull, which reads sad.
+- **A stance that lives in a clip, not in the bind pose.** An earlier pass
+  staggered the legs with `joints_R` (the right leg 25 cm back). The move clip
+  rotates on top of the bind pose, so the left foot then led for the whole walk
+  (mean 0.25 m ahead). The rest pose is now symmetric (the move clip's feet
+  are exact mirrors half a cycle apart), and `idle` carries the stance with
+  hand-written L and R hip tracks (an explicit `RHip` overrides the automatic
+  mirror) and ankle tracks that keep both feet level on the ground.
 - **A chain that ends inside the next mass.** The neck is domed into the head
   (`"caps": ["none", "dome"]`) and the head's root ring sits inside the neck.
   The `open_end` check exists because the first build had the neck open at the

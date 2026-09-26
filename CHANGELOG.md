@@ -592,6 +592,127 @@ parallel pillars, a pale tuft dangling between the front legs, a paddle tail.
   the shine ships, no part is reported inside an open shell, and the giant's orbit holds
   with no advisory.
 
+### Orbit blob rule
+
+The `blob` advisory was fragile. It compared each off-axis azimuth with its two ring
+neighbours on raw convexity (+0.07 over both) or on a protrusion COUNT (2 fewer than
+both), and the count jumps with incidental features. The wolf passed az090 only because
+its ears counted as one more lump. A softer tail brush tipped it to 5 against 7 and
+flagged it. The raven passed az090 only because az135 counted 5. The raven built in this
+pass (below) was flagged at az135/az225 on 4 against 6 and 9 while it looked the same
+from both sides.
+
+- **The measure** (`harness/outline.py`: `ring_cd`, `blob_ratios`): the convexity
+  deficiency cd = 1 - area / hull area of each azimuth. All eight masks are cut to ONE
+  window (the union of their boxes) and reduced to 96 px and to 48 px on its long side,
+  so every view of a creature shares one grid, at a size where a two-pixel ear
+  is not a feature. Per oblique, the rule takes the ratio of its cd to the SMALLER of
+  its two neighbours' cd. The larger of the two resolutions' ratios counts, so the drop
+  has to hold at both sizes.
+- **The rule**: a FLANK is a blob when BOTH its obliques (az045 + az135, or az315 +
+  az225) are at or under **0.68**. The front quarter and the back quarter both close
+  up, so it is the body. It is not one ear, one tail brush or one wing tip landing on
+  the outline. az000/az180 are never judged. Protrusions stay in the ring table as
+  information. `metrics.json` gains `cd96`, `cd48` and `blob_ratio` per ring entry and
+  `blob_flanks` (the larger ratio of each flank); `most_blobby` is the lowest ratio.
+- **The bars, measured** (flank = the larger oblique ratio of that side; the lower flank
+  shown). Generators and the full table are in `out/blobgen/` (`gen.py`, `run.sh`,
+  `table.py`, not shipped):
+
+  | set | lower flank | new rule | old rule |
+  |---|---|---|---|
+  | giant before the sixth pass (43deb51) | **0.56** | blob (both flanks) | blob |
+  | giant (shipped) | 0.82 | - | - |
+  | giant, tusks and crags -20% / +20% | 0.78 / 0.84 | - / - | **135, 225** / - |
+  | raven-wyvern (shipped, this pass) | 1.37 | - | **135, 225** |
+  | raven, tail -20% / +20% | 1.34 / 1.42 | - / - | **135, 225** / - |
+  | raven, crest -20% / +20% | 1.24 / 1.26 | - / - | - / **135, 225** |
+  | raven-wyvern r6 (before this pass), and its tail/crest ±20% | 0.97-1.07 | - | - |
+  | raven-wyvern at 43deb51 | 0.99 | - | - |
+  | wolf (shipped) / at 43deb51 | 4.18 / 5.10 | - | - |
+  | wolf, ears -20% / +20% | 4.80 / 4.38 | - / - | - / **090, 270** |
+  | wolf, tail -20% / +20% | 2.62 / 31.2 | - / - | - / - |
+  | wolf, tail brush -20% / +20% | 2.58 / 12.3 | - / - | **090, 270** / - |
+  | wolf_green (calibration) | 2.06 | - | - |
+
+  The flagged specimen sits at 0.56-0.58 and the lowest good creature at 0.78 (the giant
+  with smaller tusks). The bar is the midpoint, 0.10 from each. ±20% on an incidental
+  feature moves a flank by at most 0.04 on the giant and 0.07 on the raven. The old rule
+  flagged six of the eighteen good or perturbed builds. The new rule flags none of them.
+- **What it does not catch, measured and left alone.** Three deliberately bad variants
+  are lumps from EVERY side, not collapsed at one flank: a giant with its arms folded
+  flat against the ribcage (lower flank 1.27), a sausage quadruped (wolf_green with
+  every volume one radius, `soft: true`; 1.36), and the wolf with its legs tucked under
+  a lowered body (8.0). A ring comparison cannot see those, and no absolute
+  cd or appendage-share bar separated them from the good giant or wolf_green (the
+  obliques overlap: giant_blob cd 0.17-0.23 against the shipped giant's 0.14-0.19).
+  The sausage is `soft_mass`'s BLOCK. The others are the reader's.
+- Still advice (`orbit_consistent`, stage LOW). `gates.json`, `claims.json`, card 01
+  and `judge.mjs` describe the flank rule.
+- `tools/test.sh` block 9: a hand-made ring with both obliques of one flank closed is
+  flagged, and one oblique alone is not. The shipped raven and giant are not flagged,
+  and nor is the wolf. The wolf with a 20% smaller tail brush holds. The pre-sixth-pass
+  giant is flagged when the clone has the history.
+
+### Raven-wyvern: stylised game proportions, a symmetric walk, folded wings
+
+Owner feedback: "they look very weird". The owner chose a stylised game asset as the
+target. The raven read as a bird on stilts, with a rod tail and a thin S-neck. The
+stride was baked into the bind pose, so the left foot led for the whole walk. The wings
+were raised, which read as a T-pose from behind, and the body was round from the front.
+Spec only (`example/gallery/raven_wyvern.json`). The engine was not touched.
+
+- **Proportions.** The body is compact and deep. The chain is 0.41 m (was 0.51). The
+  chest is 0.27 half-deep with a keel: `taper` 0.45 on the chest rows, so the section
+  is wider at the shoulders than at the breastbone, and the chest is a wedge from the
+  front. The legs are short and sturdy: the pelvis is at 0.60 (was 0.80). The thigh is
+  a drumstick, 0.10 → 0.11 → 0.065, and the shank is 0.045 (was 0.03). The neck is
+  0.20 m long (was 0.37) and 0.11-0.13 thick. The head is 1.3x larger. The tail is
+  0.48 m (was 0.96) and its root is 0.15 against the body's 0.16, so it continues the
+  body line. It has wider vanes and a bigger fan. The toes and claws are sturdier.
+  Height is 1.46 m (declared 1.5).
+- **The face.** The eye is bigger (r 0.054, was 0.034) and has a highlight. The lid is
+  shallow (38°) with a lower lid (28°). A separate `brow` curve is dark, hard-shaded
+  and `extrude`. It starts buried behind the eye and runs forward and down over the top
+  of it, so the front end is lower: a determined look. The lid alone leaned back with
+  the wedge skull and read sad. The upper bill is thicker (root 0.088 x 0.078, was
+  0.08 x 0.066) and hooks harder at the tip.
+- **Wings fold back and down at rest.** The wrist sits just above the shoulder, and the
+  tip and fingers sweep back past the tail root. The wrist knuckle is widened, so the
+  finger roots stay buried. From az180 it is a creature with folded wings. From az045
+  and az090 the membrane is a sail over the back.
+- **The walk is symmetric.** `joints_R` is gone and the bind pose is symmetric. Foot
+  trajectories were sampled from the GLB over 48 steps of `move`. Before, the left foot
+  averaged 0.25 m ahead of the right for the whole cycle: L z -0.11..+0.42, R
+  -0.36..+0.17. After, R(t) equals mirrored L(t + 0.5 cycle) to 0.0000 m on every
+  axis, and both feet run z -0.095..+0.283 with a mean offset of 0.0000 m. The
+  stance moved into `idle`. Hand-written `LHip`/`RHip` tracks (an explicit R track
+  overrides the automatic mirror) hold ±8-9°. `LAnkle`/`RAnkle` level the feet, and
+  the pelvis settles 1 cm. The left foot stands 0.106 m ahead, and both toe joints stay
+  at 0.031-0.046 m (0.040 at rest). `move`'s pelvis bob rises 1.2 cm to keep the
+  new claws out of the floor.
+- Head share of the orbit went from 13/17/15/8/5/8/15/16% to 25/29/26/17/12/17/26/29%
+  (az000-az315), and top from 14% to 35%. Triangles went from 8,156 to 7,690. All
+  checks are green and there are no orbit advisories. Colour on the palette in the hero
+  view: 42.0% coloured, 18.6% loud. Checked mid-clip (`move` 0.25/0.75, `attack` 0.52,
+  `idle` 0.5) on the orbit. Before / after orbit sheets, hero shots, head close-ups and
+  mid-clip sheets are under `out/compare/raven_r7_*`. Images regenerated:
+  `raven_wyvern.glb` + checks, `raven_wyvern_beauty.png`,
+  `raven_wyvern_silhouette.png`, and the gallery README.
+
+### Art direction — `cards/STYLE.md`
+
+A short card with the rules the modelling session applies for a stylised game asset:
+big-medium-small, head : body per class (biped / bird 1:3-1:4, quadruped head length
+1:2.5-1:3 of the body, brute 1:5-1:6 with a head share never under 5%), limb thickness (a
+real thigh at 0.4-0.5x the torso half-width, a shank at least 0.4x the thigh, legs
+0.8-1.1x the torso depth), eye / lid / brow design (iris about 0.3x the skull
+half-width, pupil 0.5-0.6 with a highlight, a shallow lid with a lower lid, and the
+expression carried by a separate hard-shaded brow whose front end sits lower), separate
+digits with dark claws, the tail as part of the body, wings folded at rest, the stance
+in `idle` and not in the bind pose, and an avoid list for uncanny or crude results.
+Referenced from card 00 ("Art direction") and MANUAL. `synccheck.py` requires it.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**

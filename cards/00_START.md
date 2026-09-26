@@ -6,6 +6,14 @@
 order → ONE required question → silhouette brief → LOW: design FREE + two gates → MID (2 rounds) → HIGH (1 round) → SHIP (scripted delivery + closing dialogue)
 ```
 
+## Art direction
+
+Every creature is modelled as a **stylised game asset** — chunky readable
+shapes, a slightly larger head, big-medium-small, an expressive face, nothing
+uncanny. `cards/STYLE.md` has the concrete rules (head : body per class, limb
+thickness, eye / lid / brow design, separate digits, the avoid list). Read it
+before the first skeleton; it is design direction, not a gate.
+
 ## Iron laws
 
 1. **Form beats obedience.** Every rule below exists to protect form quality; if following a rule would make the creature tamer, the rule loses. Edits whose only purpose is to make a number match a declaration are forbidden.

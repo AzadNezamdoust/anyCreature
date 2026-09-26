@@ -51,7 +51,7 @@ THIRD-PARTY-NOTICES.md  bundled + installed dependency licences
 SECURITY.md          what runs locally (no sockets, no browser), the public key, untrusted input
 VERSION              1.3.2
 setup.sh / setup.ps1 deps + example self-check + red/green calibration ("calibrate OK")
-cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTAX.md
+cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTAX.md · STYLE.md (art direction)
 engine/              cli.js + core/ — the ACS engine v2
   core/normals.js    angle-weighted normals + `smooth_angle` creases (bodies stay smooth)
 harness/
