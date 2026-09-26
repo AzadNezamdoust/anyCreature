@@ -61,7 +61,20 @@ change and is not.
 """
 import sys, os, json, re
 
-VIEWS = ('front', 'side', 'top', 'hero')
+# The views a brief may name as its identity view: the 8+2 orbit outline.py
+# measures by default (az000 = the face, az090 = the creature's left flank, 45
+# degrees apart; top; bottom), plus the legacy names. For READING, a legacy name
+# stands for its orbit equivalent (ORBIT_OF) — the legacy `side` camera is the
+# bounding box's long profile, which for an upright giant is its chest, while
+# the brief that says "side" means the flank.
+AZIMUTHS = tuple(f'az{d:03d}' for d in range(0, 360, 45))
+VIEWS = AZIMUTHS + ('top', 'bottom', 'front', 'side', 'hero')
+ORBIT_OF = {'front': 'az000', 'side': 'az090', 'hero': 'az045'}
+
+
+def orbit_view(v):
+    """A brief's view name -> the orbit view it is read on."""
+    return ORBIT_OF.get(v, v)
 
 # Slot -> (must be filled?, who reads it later). Order is the card's order.
 SLOTS = [
@@ -215,13 +228,19 @@ def check(brief_path, spec_path=None):
                               'allowed and often right, but it has to be a decision made '
                               'here, before the rounds are paid for, and the body then has '
                               'to carry the identity on its own.')
-            v = [w for w in VIEWS if w in val.lower()]
-            if not v:
+            # the FIRST view named, as a whole word — "az045", "the SIDE view";
+            # "stop" is not "top"
+            hits = sorted((m.start(), m.group(1).lower()) for m in
+                          re.finditer(r'(?<![a-z0-9])(' + '|'.join(VIEWS) + r')(?![a-z0-9])',
+                                      val, re.I))
+            if not hits:
                 blocks.append('signature: no view named. Gate 1 requires the '
                               'brief\'s own identity view to be one of the views '
-                              'that read — name one of ' + '/'.join(VIEWS) + '.')
+                              'that read — name one of az000/az045/az090/az135/az180 '
+                              '(the orbit, az000 = the face), top, or a legacy '
+                              'front/side/hero.')
             else:
-                facts['identity_view'] = v[0]
+                facts['identity_view'] = hits[0][1]
         if name in NEEDS_CHAINS and not declared_chains(val):
             blocks.append(f'{name}: names no chains. End the cell with '
                           f'"chains: a, b" so the spec check can confirm the '
@@ -266,11 +285,23 @@ def check(brief_path, spec_path=None):
     return blocks, notes, facts
 
 
+def _order(view):
+    """Where to look for a view's numbers: the view as named, its orbit twin,
+    then the profile, the three-quarter, the front and the top — orbit name
+    first, legacy name second, so a metrics file from either era answers."""
+    out = []
+    for k in ([view, orbit_view(view)] if view else []) + [
+            'az090', 'side', 'az045', 'hero', 'az000', 'front', 'top']:
+        if k and k not in out:
+            out.append(k)
+    return out
+
+
 def layout(metrics, view=None):
     """The six numbers that say where the mass sits, in ONE view."""
     v = metrics.get('views', metrics)
     pick = None
-    for k in ([view] if view else []) + ['side', 'hero', 'front', 'top']:
+    for k in _order(view):
         if k and isinstance(v.get(k), dict) and v[k].get('thirds_cols'):
             pick = v[k]
             break
@@ -294,7 +325,7 @@ def poles_apart(a, b, view=None):
 
 def fill_of(metrics, view=None):
     v = metrics.get('views', metrics)
-    for k in ([view] if view else []) + ['side', 'hero', 'front', 'top']:
+    for k in _order(view):
         for kk in ((k, f'sil_{k}') if k else ()):
             if isinstance(v.get(kk), dict) and v[kk].get('fill') is not None:
                 return v[kk]['fill']

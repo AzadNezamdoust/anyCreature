@@ -274,7 +274,7 @@
    "stage": "LOW",
    "enforce": "block",
    "when": "verify",
-   "plain": "a reader who knows nothing must rank the brief's creature high enough, in enough views (harness/identity.py)",
+   "plain": "a reader who knows nothing must rank the brief's creature high enough, in enough of the orbit read set, an oblique and the identity view among them (harness/identity.py)",
    "by": "B",
    "kind": "style",
    "dept": "model"
@@ -297,6 +297,28 @@
    "enforce": "advise",
    "when": "allocate",
    "plain": "the width of the thinnest feature on the 48px thumbnail the reader sees",
+   "by": "A",
+   "kind": "style",
+   "dept": "model"
+  },
+  {
+   "id": "orbit_consistent",
+   "where": "harness/outline.py + claims.json",
+   "stage": "LOW",
+   "enforce": "advise",
+   "when": "verify",
+   "plain": "around the 8+2 orbit, no in-between azimuth closes into a lump its two neighbours are not",
+   "by": "A",
+   "kind": "style",
+   "dept": "model"
+  },
+  {
+   "id": "head_reads",
+   "where": "harness/outline.py + claims.json",
+   "stage": "LOW",
+   "enforce": "advise",
+   "when": "verify",
+   "plain": "the head is visible from every azimuth, its own mass from the front half, and not small from everywhere",
    "by": "A",
    "kind": "style",
    "dept": "model"

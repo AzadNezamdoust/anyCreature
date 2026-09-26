@@ -134,8 +134,10 @@ def main():
 
         # Silhouettes come from the GEOMETRY, not from a browser. Same camera,
         # same masks (verified against the rendered ones at IoU 0.980-0.989 on
-        # all four views; the remainder is the renderer's antialiased edge), and
-        # no Chromium in the LOW loop at all.
+        # all four legacy views; the remainder is the renderer's antialiased
+        # edge), and no Chromium in the LOW loop at all. The default set is the
+        # 8+2 orbit — eight azimuths around the creature, top and bottom — so
+        # the in-between angles and the head are measured every round.
         cmd = ['python3', os.path.join(H, 'outline.py'), glb, dest]
         if prev_dir:
             cmd += ['--prev', prev_dir]
@@ -160,7 +162,7 @@ def main():
             thin = min(vals) if vals else None
         rows.append({'tag': tag or rn, 'built': True, 'rendered': True,
                      'spec': spec, 'iou': m.get('iou_vs_prev'), 'thin': thin,
-                     'shade': shade, 'metrics': m})
+                     'shade': shade, 'metrics': m, 'metrics_path': mp})
 
     # ── one report ─────────────────────────────────────────────────────────
     print()
@@ -178,6 +180,18 @@ def main():
         elif r['iou'] is not None and r['iou'] > 0.85:
             note = '  <- barely moved from the previous round'
         print(f"  {r['tag']:<4} iou {iou:<7} thinnest {thin:<8}{note}")
+        # The orbit, as ADVICE (outline.py computes it; nothing here blocks on it):
+        # an in-between azimuth that closes into a lump, a head that hides or
+        # merges into the body. One line per kind, so a bad round stays short.
+        orb = (r['metrics'] or {}).get('orbit') or {}
+        byk = {}
+        for f in orb.get('flags', []):
+            byk.setdefault(f['kind'], []).append(f['view'])
+        for k, vs in byk.items():
+            print(f"       advise  {k}: {', '.join(vs)}")
+        if orb:
+            print(f"       orbit sheet (for review, not for grading): "
+                  f"{os.path.join(os.path.dirname(r['metrics_path']), 'orbit_sheet.png')}")
     good = [r for r in rows if r.get('rendered')]
     if not good:
         die('no attempt in this round produced a silhouette — nothing to read.')
@@ -228,7 +242,14 @@ def main():
         print('  -> do NOT spawn a reader. Change the shape and run this again.')
         return 1
     print()
-    def thumbs_of(d):
+    def read_set(d, m):
+        """The Gate 1 reading set: the orbit's read_set (az000, az045, az090,
+        az135, az180 and top — the mirror azimuths only when they differ, see
+        outline.py), else every 48px thumbnail there is."""
+        vs = ((m or {}).get('orbit') or {}).get('read_set')
+        if vs:
+            return [os.path.join(d, f'sil_{v}_thumb48.png') for v in vs
+                    if os.path.exists(os.path.join(d, f'sil_{v}_thumb48.png'))]
         return sorted(os.path.join(d, f) for f in os.listdir(d)
                       if f.endswith('_thumb48.png'))
     if multi:
@@ -240,18 +261,32 @@ def main():
         # that view to be one of the ones that read — so it is the view each pole
         # is shown as. Falling back to hero when the brief did not say was a bug:
         # a creature whose identity view is "side" was being read on its hero.
-        want = facts.get('identity_view') or 'hero'
+        # A legacy name is read on its orbit twin (side -> az090, hero -> az045).
+        named = facts.get('identity_view') or 'az045'
+        want = briefmod.orbit_view(named)
         for r in good:
-            ts = thumbs_of(os.path.join(rdir, r['tag']))
-            pick = next((t for t in ts if want in os.path.basename(t)), None) \
-                or next((t for t in ts if 'hero' in t), None) or (ts[0] if ts else None)
+            d = os.path.join(rdir, r['tag'])
+            ts = read_set(d, r['metrics'])
+            exact = os.path.join(d, f'sil_{want}_thumb48.png')
+            pick = exact if os.path.exists(exact) else \
+                next((t for t in ts if 'az045' in os.path.basename(t)), None) or (ts[0] if ts else None)
             if pick:
-                print(f'       {pick}   ({want} — the brief\'s identity view)')
+                print(f'       {pick}   ({named} — the brief\'s identity view)')
+        rs = ((good[0]['metrics'] or {}).get('orbit') or {}).get('read_set') or []
+        if rs:
+            print('     choosing AND confirming in one batch (card 01 §4b): add each pole\'s '
+                  'read set from its folder — ' + ', '.join(f'sil_{v}_thumb48.png' for v in rs))
         print('  -> then copy the winner up:  python3 harness/round.py '
               f'{outdir} {rn} --promote vK')
     else:
-        print('  -> show these to ONE reader, shuffled, with a canary:')
-        for t in thumbs_of(rdir):
+        # Gate 1 on the orbit (card 01 §4b): the five azimuths from face to tail
+        # plus the top, in ONE batch — six images cost barely more than one,
+        # because a reader bills for existing. The other three azimuths are the
+        # mirror images of three of these and are shown only when they differ;
+        # the bottom is measured, never read.
+        print('  -> show these to ONE reader, shuffled, with a canary')
+        print('     (the orbit read set — face, obliques, profile, tail, top):')
+        for t in read_set(rdir, good[0]['metrics'] if good else None):
             print(f'       {t}')
     print(f'  -> then:  python3 harness/roundcheck.py {outdir} --record {rn} {gate} '
           f'pass|fail "<noun>"')

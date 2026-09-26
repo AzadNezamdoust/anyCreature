@@ -102,7 +102,11 @@ possible judge of whether it reads, because it already knows what it drew. So th
 silhouettes go to a **context-free reader agent** that has never seen the order, and
 the only question is *"what is this?"*
 
-Gate 1 is **RECOGNISED**: all four views have to land. Gate 2 is **PUNCHIER**: a new
+Gate 1 is **RECOGNISED**, read on the orbit: the reader gets six silhouettes in one
+batch — the face, both obliques, the profile, the tail and the top — and the creature
+has to be named across enough of them, **including an in-between view and the view the
+brief declared**. A creature that reads only from the front and the side is a creature
+built for two cameras. Gate 2 is **PUNCHIER**: a new
 round may only make the silhouette bolder than the last one — a round that tames the
 shape is reverted, even if it is "more correct". LOW's deliverable is an exaggerated
 silhouette, not an accurate one.
@@ -123,13 +127,23 @@ skull, a right thigh collapsed to 40% depth by mirrored skinning.
 
 ### What gets measured
 
-![four silhouette views the blind reader is shown](assets/silhouettes.png)
+![the example wolf's 8+2 orbit: eight azimuths 45 degrees apart, then top and bottom](assets/silhouettes.png)
 
-Every round projects these four views from the vertices, reduces them to masks, and computes the numbers
-the design card declared a target for — width over height, mass thirds, torso depth
-contrast, leg fraction, silhouette turn count, zigzag alignment, and IoU against the
-previous round as a regression guard. The 24px thumbnail is what the blind reader
-actually sees; if it does not read at 24px, it does not read.
+Every round projects an **8+2 orbit** from the vertices — eight horizontal views 45°
+apart, like a cylinder around the creature (az000 looks at its face, az090 at its left
+flank), plus top and bottom — reduces them to masks, and computes the numbers the design
+card declared a target for: width over height, mass thirds, protrusions, thinnest feature,
+convexity, and IoU against the previous round as a regression guard. Which way is "the
+face" comes from the skin: the head is every vertex bound to the spec's head joint and
+below it, not the longest side of the bounding box.
+
+Two things are measured that four views never saw. **The head, per view** — how much of
+the silhouette it owns, and how much of its outline clears the body (a skull sunk between
+the shoulders owns pixels and no outline). **The in-between angles** — each azimuth is
+compared with its two neighbours, and one that closes into a lump they do not is flagged.
+Both are advice, printed with the round and drawn on `orbit_sheet.png` (colour, all ten
+views) and `orbit_sil_sheet.png` (the silhouettes above). The 48px thumbnail is what the
+blind reader actually sees; if it does not read at 48px, it does not read.
 
 ## The doctrine in one paragraph
 
@@ -175,9 +189,9 @@ Form beats obedience, everywhere.
 | Script | Role |
 |---|---|
 | `engine/cli.js` | Spec → GLB. The whole engine interface. |
-| `harness/outline.py` | THE measuring tool. Silhouettes, thumbnails, layout and boldness measures, per-part shares, colour, and `hero.png` — all projected from the vertices. |
-| `harness/judge.mjs` | Claims judge over those numbers — part shares, focal contrast, saturated area, rig/anim/triangle budgets. |
-| `harness/deliver.py` | Stamps identity into the GLB, writes the offline showroom viewer and `hero.png`, builds the upload pack. |
+| `harness/outline.py` | THE measuring tool. The 8+2 orbit (eight azimuths, top, bottom): silhouettes, thumbnails, a colour render per view and the two orbit contact sheets; layout and boldness measures, the head per view, per-part shares, colour, and `hero.png` — all projected from the vertices. |
+| `harness/judge.mjs` | Claims judge over those numbers — part shares, focal contrast, saturated area, orbit consistency and the head (advice), rig/anim/triangle budgets. |
+| `harness/deliver.py` | Stamps identity into the GLB, writes the offline showroom viewer, `hero.png` and the orbit sheets, builds the upload pack. |
 | `harness/calibrate.py` | The red/green ruler calibration `setup.sh` runs. |
 | `tools/test.sh` | The whole self-check suite: sync check, calibration, every harness tool on the example. CI runs exactly this. |
 | `harness/publish.mjs` | Gobkit publisher. Only runs after an explicit yes, and always tries the upload before offering the manual page. |

@@ -159,5 +159,13 @@ characters were never the problem. Three builds instead of one were.
   attack, motion amplitude, tri budget) — save the claims output, 04 ships it
   as the gate stamp.
 - Human look #3 (final): value readability + play all three animations once.
+  Look at it on `orbit_sheet.png` — the judge writes it next to its metrics: the
+  colour from all eight azimuths, top and bottom in one picture. The colour
+  norms above read the hero view; the sheet is where a palette that
+  only works from the front shows itself (a flank band that vanishes at az135, a
+  belly colour visible from nowhere but the bottom). The `orbit_consistent` and
+  `head_reads` claims are ADVICE staged at LOW (a full re-run prints them) — by HIGH the
+  silhouette is locked, so read them, note them in the closing line, and do not
+  spend a round on them here.
 
 Then read `cards/04_SHIP.md` — delivery and closing are scripted.

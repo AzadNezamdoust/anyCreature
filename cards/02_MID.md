@@ -129,7 +129,9 @@ Undeclared parts still get measured — a `part_seat` warn means a root may show
 And the join is also a COLOUR decision: a part that is FLESH of its host (trunk,
 tail, brow) continues the host's material colour at its base; a hard colour
 break at the junction reads as equipment, not anatomy. Check the junction in the
-hero render, not just the part in isolation.
+hero render and on `orbit_sheet.png` (the colour render from all ten orbit views
+that every round writes), not just the part in isolation — a junction that hides
+in the hero can gape at az135.
 
 ## Do (layout)
 
@@ -150,7 +152,10 @@ hero render, not just the part in isolation.
 - **Mirrored inward-tilted parts cross at the midline**: length × sin(tilt) vs
   the left-right gap — do the arithmetic BEFORE placing horns/fins.
 - **Parts must not cover focals**: a horn base once covered the eye. After
-  placing anything big, re-check the focal view.
+  placing anything big, re-check the focal view — and the HEAD from the front
+  half of the orbit: a mane, a hump or a pauldron that swallows the skull at
+  az000/az045 shows up as a `head_merged` advisory on the next round, and the
+  head is usually the first focal.
 - **Ride the right bone**: jaw/tongue ride the skull, or they detach in motion.
 - **Every part must TOUCH its host** — `part_attachment` BLOCKs a part whose
   nearest point still stands clear of the host surface. Tusks, trunks and plates

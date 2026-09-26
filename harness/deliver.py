@@ -7,6 +7,9 @@ usage: python3 deliver.py <model.glb> <delivery_dir> <name>
 outputs in <delivery_dir>:
   <name>.glb           final stamped model (identity written INTO the file)
   <name>_viewer.html   offline showroom (open by double-click, no server)
+  hero.png             the three-quarter shot
+  orbit_sheet.png      the creature in colour from all 8+2 orbit views (8 azimuths, top, bottom)
+  orbit_sil_sheet.png  the same ten views as silhouettes
   upload/              ready-to-drag backup pack for gobkit.com/community/upload
 
 stamping (asset block):
@@ -176,10 +179,20 @@ def main():
     # baked into the vertex colours at build time, so lighting it again in three.js
     # was lighting a photograph. outline.py projects it with the same z-buffer every
     # other measure uses, over a transparent background.
+    #
+    # The orbit sheets ride along from the same run: ten colour renders and ten
+    # silhouettes (eight azimuths around the creature, top, bottom) in one
+    # picture each, so whoever receives the creature sees every side of it
+    # before they open a viewer — the in-between angles included.
+    sheets = []
     with tempfile.TemporaryDirectory() as scratch:
         subprocess.run(['python3', os.path.join(HERE, 'outline.py'), glb_path, scratch,
                         '--hero', os.path.join(outdir, 'hero.png'),
-                        '--views', 'hero'], check=False)
+                        '--views', 'orbit'], check=False, stdout=subprocess.DEVNULL)
+        for f in ('orbit_sheet.png', 'orbit_sil_sheet.png'):
+            if os.path.exists(os.path.join(scratch, f)):
+                shutil.copy(os.path.join(scratch, f), os.path.join(outdir, f))
+                sheets.append(f)
 
     # backup upload pack (web drag path)
     up = os.path.join(outdir, 'upload'); os.makedirs(up, exist_ok=True)
@@ -188,7 +201,8 @@ def main():
         shutil.copy(os.path.join(outdir, 'hero.png'), os.path.join(up, 'hero.png'))
     open(os.path.join(up, 'README.txt'), 'w').write(UPLOAD_README)
 
-    print(f'[deliver] done: {name}.glb · {name}_viewer.html · hero.png · upload/'
+    print(f'[deliver] done: {name}.glb · {name}_viewer.html · hero.png · '
+          + ''.join(f'{s} · ' for s in sheets) + 'upload/'
           f'\n[deliver] stamped: {disp}{" " + byline if byline else ""} · gate={"yes" if gate else "no"}'
           f'\n[deliver] checklist: glb, viewer, hero, spec JSON, DEVLOG one-liner')
 

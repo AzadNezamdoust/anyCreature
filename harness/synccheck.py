@@ -199,6 +199,10 @@ FEATURES = [
     ('harness/judge.mjs',       "includes('--json')", 'the judge prints a summary, not the blob'),
     ('harness/outline.py',      'def material_shares', 'part shares come from a z-buffer, not a GPU'),
     ('harness/outline.py',      'def exaggeration', 'boldness measures computed, not eyeballed'),
+    ('harness/outline.py',      'def orbit_report', 'the 8+2 orbit: every azimuth compared with its neighbours'),
+    ('harness/outline.py',      'def head_measures', 'the head is found from the skin and measured per view'),
+    ('harness/outline.py',      'orbit_sheet.png',  'one colour contact sheet of all ten views'),
+    ('harness/identity.py',     'def orbit_conditions', 'Gate 1 needs an oblique and the identity view to read'),
     ('engine/core/checks.js',   'Move joint',       'blocks say how far to move, not just which way'),
     ('engine/core/checks.js',   'multiply every joint coordinate', 'size states the scale factor'),
 ]

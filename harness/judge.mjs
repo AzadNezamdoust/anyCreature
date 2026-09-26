@@ -36,6 +36,15 @@
 //   saturation_area {view?, min?, max?}         — how much of the view carries colour, read on the PALETTE
 //                                                 (albedo before lighting): min bounds the share at HSV
 //                                                 S ≥ 0.30 (default 0.10), max the share at S ≥ 0.50.
+//   orbit_consistent {kinds?}                   — no azimuth of the 8+2 orbit collapses into a blob its
+//                                                 neighbours are not (outline.py's `blob` flags)
+//   head_reads      {kinds?}                    — the head is visible from every azimuth, is its own mass
+//                                                 on the front half, and is not small from everywhere
+//                                                 (outline.py's head_merged / head_hidden / head_small)
+//
+// Views: az000…az315 (az000 = the face, az090 = the creature's left), top, bottom — the
+// orbit — plus the legacy four, front / side / top / hero (tq = hero), whose cameras are
+// unchanged so a claim written against them still reads the same pixels.
 import path from 'path'; import fs from 'fs';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
@@ -52,8 +61,27 @@ const abs = path.resolve(src);
 fs.mkdirSync(outDir, { recursive: true });
 
 // ── measure: one call to the one measuring tool ──
+// Which views to measure. With no spec, everything: the 8+2 orbit AND the
+// legacy four (claims written before the orbit name `side`, `front` and `tq`, and
+// those keep their legacy cameras). With a spec, only what its claims read —
+// plus hero for the summary line — and the orbit whenever a claim reads it,
+// so a colour-only check (calibrate.py) does not pay for ten views.
+const ORBIT_CLAIMS = new Set(['orbit_consistent', 'head_reads']);
+const VIEW = v => (v === 'tq' || v === 'reartq') ? 'hero' : v;
+let wantViews = 'orbit,legacy';
+if (specFile) {
+  const pre = JSON.parse(fs.readFileSync(specFile, 'utf8'));
+  const cl = (pre.claims || []).filter(c => !stageFilter || !c.stage || c.stage.toUpperCase() === stageFilter);
+  const vs = new Set(['hero']);
+  const DEFAULT_VIEW = { saturation_area: 'hero' };
+  for (const c of cl) if (!ORBIT_CLAIMS.has(c.type)) vs.add(VIEW(c.view || DEFAULT_VIEW[c.type] || 'side'));
+  // any orbit claim anywhere in the claims file, whatever the stage filter: a HIGH run still writes
+  // orbit_sheet.png for the final look (card 03), it just does not judge LOW claims
+  if ((pre.claims || []).some(c => ORBIT_CLAIMS.has(c.type)) || [...vs].some(v => /^az\d{3}$|^bottom$/.test(v))) vs.add('orbit');
+  wantViews = [...vs].join(',');
+}
 const outline = path.join(root, 'outline.py');
-const run = spawnSync('python3', [outline, abs, outDir], { encoding: 'utf8' });
+const run = spawnSync('python3', [outline, abs, outDir, '--views', wantViews], { encoding: 'utf8' });
 if (run.status !== 0) {
   console.error('[judge] outline.py failed — it owns every measurement here, so nothing can be judged:\n'
     + (run.stderr || run.stdout || '').trim());
@@ -62,8 +90,8 @@ if (run.status !== 0) {
 const M = JSON.parse(fs.readFileSync(path.join(outDir, 'metrics.json'), 'utf8'));
 
 // `tq`/`reartq` were judge's own camera names; the surviving three-quarter view is `hero`.
-const VIEW = v => (v === 'tq' || v === 'reartq') ? 'hero' : v;
 const view = v => M.views[VIEW(v)] || {};
+const orbit = M.orbit || null;
 const names = M.materials || [];
 const parts = M.parts || {};
 const share = (v, mat) => (view(v).share || {})[mat] ?? 0;
@@ -74,7 +102,9 @@ const m = { name, stats, names,
   hi_sat_share: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.saturated_area])),
   coloured_share: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.coloured_area])),
   palette_source: Object.fromEntries(Object.entries(M.views).map(([vn, d]) => [vn, d.palette_source])),
-  parts, whole: M.whole };
+  parts, whole: M.whole, facing: M.facing,
+  orbit: orbit && { flags: orbit.flags, read_set: orbit.read_set, head_best: orbit.head_best,
+    head_distinct_views: orbit.head_distinct_views, most_blobby: orbit.most_blobby } };
 const metricsPath = path.join(outDir, `${name}_metrics.json`);
 fs.writeFileSync(metricsPath, JSON.stringify(m, null, 1));
 
@@ -91,6 +121,9 @@ else {
     + `${((m.hi_sat_share[v] || 0) * 100).toFixed(1)}% (${m.palette_source[v] === 'albedo' ? 'on the palette' : 'on the baked colour — no palette record'})`);
   const top = Object.entries(parts).sort((a, b) => (share(v, b[0])) - (share(v, a[0]))).slice(0, 3);
   console.log('        biggest in view: ' + top.map(([n]) => `${n} ${(share(v, n) * 100).toFixed(0)}%`).join(' · '));
+  if (orbit) console.log(`        orbit (8+2): ${orbit.flags.length ? orbit.flags.length + ' advisory flag(s) — '
+    + [...new Set(orbit.flags.map(f => `${f.view} ${f.kind}`))].join(', ') : 'holds from every side'}`
+    + ` · sheet ${path.join(outDir, 'orbit_sheet.png')}`);
   console.log(`        full numbers: ${metricsPath}`);
 }
 
@@ -162,6 +195,22 @@ if (specFile) {
       const A=share(v,c.a), B=share(v,c.b); const hi=Math.max(A,B), lo=Math.min(A,B);
       const ratio=c.min_ratio??2;
       if(lo>0 && hi/lo<ratio) bad.push(`Two focal points of equal weight compete: "${c.a}" ${(A*100).toFixed(1)}% vs "${c.b}" ${(B*100).toFixed(1)}% (need ≥${ratio}× apart) — the eye ping-pongs between them; open up the dominance gap`); },
+    // THE ORBIT (8 azimuths + top + bottom, outline.py). Both read the flags
+    // outline.py already computed — one definition of each bar, in one place —
+    // and they offer options, never an order: which mass to move is the designer's call.
+    //   orbit_consistent  no azimuth collapses into a lump its neighbours do not
+    //   head_reads        the head is visible, and its own mass, from the front half
+    orbit_consistent(c){ if(!orbit){ bad.push('Orbit not measured: outline.py wrote no orbit block (was it run with --views orbit?)'); return; }
+      const kinds=c.kinds||['blob'];
+      const hits=orbit.flags.filter(f=>kinds.includes(f.kind));
+      if(hits.length) bad.push(`The creature falls apart between its main views: ${[...new Set(hits.map(f=>f.view))].join(', ')} — `
+        + hits.map(f=>`${f.view}: ${f.why}`).join('; ') + `. Look at orbit_sheet.png; a pose that only reads from the side and the front is a pose built for two cameras`); },
+    head_reads(c){ if(!orbit){ bad.push('Orbit not measured: outline.py wrote no orbit block, so the head was never looked at'); return; }
+      if(!M.facing || /^none/.test(M.facing.head||'')){ bad.push(`No head found (${(M.facing&&M.facing.head)||'no facing record'}) — name a chain "head" or a joint Head*/Skull* so the head can be measured`); return; }
+      const kinds=c.kinds||['head_merged','head_hidden','head_small'];
+      const hits=orbit.flags.filter(f=>kinds.includes(f.kind));
+      if(hits.length) bad.push(`The head does not read from every side: `
+        + hits.map(f=>`${f.view} ${f.kind.replace('head_','')}: ${f.why}`).join('; ') + ` — lift it clear of the shoulder line, give it a neck, or make it bigger; see orbit_sheet.png`); },
   };
   const claims=(S.claims||[]).filter(c=>!stageFilter || !c.stage || c.stage.toUpperCase()===stageFilter);
   // enforce: "block" stops the build; "advise" measures and reports and never

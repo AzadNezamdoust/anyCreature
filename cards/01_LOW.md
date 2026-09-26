@@ -67,10 +67,10 @@ Fill all nine, in one short block, then freeze it:
 
 | Slot | What it must say | Who reads it later |
 |---|---|---|
-| identity | "reads as: X (accepted: a, b, c)" — the noun a stranger should say, and the words that still count as it | Gate 1 (3 of 4 views, identity view mandatory); `identity.py` matches against exactly this list |
+| identity | "reads as: X (accepted: a, b, c)" — the noun a stranger should say, and the words that still count as it | Gate 1 on the orbit (the counted rule, an oblique must read, the identity view must read); `identity.py` matches against exactly this list |
 | feel | one phrase: heavy / fast / sharp / floating | the 24px read |
 | height | real-world metres | `size` gate (±15%, engine BLOCKs) |
-| signature | ONE named part, which view carries it, and "silhouette: yes" or "silhouette: no" — whether it has an outline at all | `part_exists`, `part_signature`, MID whitelist, HIGH main colour |
+| signature | ONE named part, which view carries it (an orbit view — az000 the face, az045, az090 the profile, az135, az180, top — or a legacy front/side/hero), and "silhouette: yes" or "silhouette: no" — whether it has an outline at all | `part_exists`, `part_signature`, MID whitelist, HIGH main colour |
 | mass hierarchy | which masses are primary / secondary / detail | `share_hierarchy` (6:3:1) |
 | two focals | the dominant one and the runner-up | `focal_contrast` (≥2× apart) |
 | stance | how the weight is planted; what is asymmetric | `balance`, and the bind pose IS the pose |
@@ -169,7 +169,7 @@ python3 harness/round.py out r1 --spec pole_a.json pole_b.json --gate ID
 python3 harness/round.py out rN --spec spec.json --prev r<N-1> --gate ID
 ```
 
-It builds every spec, renders the four silhouettes, runs the mask measures,
+It builds every spec, projects the 8+2 orbit (eight azimuths 45° apart, top, bottom) and its colour sheet, runs the mask, head and orbit measures,
 runs `roundcheck --preflight`, and prints ONE report ending in either "spawn
 the reader" or a BLOCK telling you not to.
 
@@ -190,6 +190,12 @@ changed the shape or nudged it — without it `roundcheck.py` cannot enforce iro
 law 3, cannot refuse a wasted read, and says so.
 
 The report measures; YOU judge. Flags worth eyes: `sq_fill` (silhouette volume in a 1:1 frame), `mirror_sym` (only the FRONT view may be symmetric; wing pairs stagger even there), `straight_max` (plank-limb detector), and **`thinnest_px48`** — the width of your thinnest feature on the 48px thumbnail the reader actually sees. Under 3 px it is not a thin feature, it is an invisible one, and no amount of repositioning will make the reader see it: thicken it or drop it. This number is available on the FIRST build; a run that discovers it late has spent every round in between moving something nobody could see.
+
+**The orbit advisories** (`advise` lines under each attempt; `orbit` in metrics.json). The creature is measured from eight azimuths 45° apart — az000 its face, az090 its left flank — plus top and bottom, and two things are checked that four views never saw:
+- `blob` — an in-between azimuth whose outline closes into a lump its two neighbours do not (convexity ≥0.07 above both, or two fewer things sticking out). az000/az180 are exempt: end-on is compact by nature. A pose built for the front and the side camera collapses exactly here — arms folded into the torso at 45°, legs stacked behind each other.
+- `head_merged` / `head_hidden` / `head_small` — the head (found from the skin: the spec's head joint and everything under it) has no outline of its own on the front half of the ring, vanishes from some azimuth, or is under 5% of the silhouette from everywhere. A skull sunk between the shoulders owns pixels and no outline.
+
+They are advice, and they are the first place to look when a reader says "a blob". `orbit_sil_sheet.png` shows all ten silhouettes in one picture and `orbit_sheet.png` the same ten in colour — for the review, not for grading your own read (iron law 2 still holds).
 
 ## 3b. Where the reader budget goes — LOW, not later
 
@@ -275,15 +281,26 @@ If the fresh reader trips on the SAME image, suspect the image before the
 reader: check `thinnest_px48` and the view's own metrics before spending four
 more readers on it.
 
-## 4b. Gate 1 — RECOGNISED (any 3 of the 4 views)
+## 4b. Gate 1 — RECOGNISED (on the orbit: the counted rule, an oblique, the identity view)
+
+**What the reader sees: the orbit's READ SET, in one batch.** `outline.py` measures
+ten views — eight azimuths 45° apart (az000 the face, az090 the left flank, az180 the
+tail) plus top and bottom — but the reader is shown six: **az000, az045, az090,
+az135, az180 and top**. The other three azimuths are the mirror images of az045, az090
+and az135 for a bilaterally symmetric creature (measured: mirror IoU ≥ 0.99 on every
+shipped creature), so reading them is paying twice for one silhouette; `round.py`
+adds them to the batch automatically when a creature is NOT symmetric (IoU under
+0.90). The bottom is measured, never read — nobody names an animal from its belly.
+Six images in one reader cost barely more than four: the reader bills for existing.
 
 Spawn a context-free reader agent (a fresh subagent given NOTHING but the images) with exactly this task:
 
 > Look at these images one at a time, answering only from what you SEE.
 > 1) [thumb24 of the identity view] What FEELING does this shape give — heavy/stable, fast/agile, sharp/menacing, floating? One phrase.
-> 2-5) [thumb48 of front / side / top / hero] **Name your FIVE best guesses for what
->    this is, most likely first.** Then: what parts can you make out, and does this
->    view read as a build or as an abstract shape/nothing?
+> 2-7) [thumb48 of az000 / az045 / az090 / az135 / az180 / top, shuffled with the canary]
+>    **Name your FIVE best guesses for what this is, most likely first.** Then: what
+>    parts can you make out, and does this view read as a build or as an abstract
+>    shape/nothing?
 
 **The verdict is SCORED, not argued — and you do not do the scoring.** Hand over
 the reader's words, verbatim and in order. The tool matches them against the
@@ -291,8 +308,9 @@ accepted list your brief wrote down before any geometry existed:
 
 ```bash
 python3 harness/identity.py --brief brief.md --round N \
-        --guesses side="t-rex,dinosaur,velociraptor,dragon,lizard" \
-                  hero="four-legged animal,dog,goat,boar,bear"
+        --guesses az090="t-rex,dinosaur,velociraptor,dragon,lizard" \
+                  az045="four-legged animal,dog,goat,boar,bear" \
+                  az000="…" az135="…" az180="…" top="…"
 ```
 
 **You may not decide that "hound" counts as "wolf" here.** That judgment is real
@@ -316,6 +334,28 @@ Fifth and beyond does not count: a noun that never gets above fifth is being
 listed, not recognised. **And the requirement drops by one view per repair
 round** (never below one), because another round costs more than the last while
 buying no more information.
+
+**On the orbit, two more conditions — and neither loosens by round:**
+
+1. **An oblique must read.** The noun at rank 4 or better in az045 or az135 (or
+   their mirrors). The old four-view gate could pass on front, side and top
+   while the three-quarter angles — the ones people actually see a creature from
+   in a game — were never looked at, and those are where a pose built for two
+   cameras falls apart. "Recognised in profile, a lump at 45°" is a FAIL.
+2. **The brief's identity view must read** — rank 4 or better on the view the
+   brief named (a legacy `side`/`front`/`hero` is read on az090/az000/az045).
+   This card always said the declared view is not optional; `identity.py` now
+   counts it instead of trusting it.
+
+Why these two and not "all eight azimuths". Eight azimuths are five distinct
+silhouettes; three are mirror images and add nothing but cost. Among the five,
+az000 and az180 are the long axis seen end-on, compact by nature for every
+long-bodied creature, and a bar that demanded them would fail wolves for being
+wolves — exactly the dead-view trap the old "all four" rule fell into. The
+obliques carry the owner's complaint, the identity view carries the brief's
+promise, and the counted rule carries the agreement across the rest. The
+numbers that say WHY an oblique failed are already on the round report
+(`blob`, `head_merged` advisories) before the reader is spent.
 
 Synonyms count as the noun — buffalo for bison, wyrm for dragon. That judgment
 is yours; it is the only one the tool leaves you.
@@ -341,9 +381,10 @@ loudly — and that belongs in the closing line.
 
 ### On a FAIL: look before you rebuild
 
-A pole is read on ONE view. When it fails, **the next thing you spend is three
-more images, not a round.** Show the same shape's other three views to one
-reader before you change a single number. A reader's price is the subagent
+A pole is read on ONE view. When it fails, **the next thing you spend is five
+more images, not a round.** Show the same shape's remaining read-set views
+(az000, az045, az090, az135, az180, top) to one reader before you change a single
+number. A reader's price is the subagent
 existing, not the pictures inside it, so three more images is a fraction of a
 round — and a rebuild is a whole one that may be throwing away a shape which
 already works from a different angle. `identity.py` prints this on every FAIL
@@ -355,7 +396,7 @@ from a view nobody had tried. The creature was never wrong. **The declared
 identity view was.**
 
 If another view reads, do not celebrate and move on quietly — **change the
-brief's identity view and write down why.** Gate 1's 3-of-4 rule holds you to
+brief's identity view and write down why.** Gate 1 holds you to
 the view the brief names, so the brief has to name the one that works. Some
 forms simply have no good side view: anything wide and sprawling is recognised
 from above, and anything wearing architecture reads as architecture in profile.
@@ -398,11 +439,11 @@ also warns when a pole's `fill` — the share of its own bounding box that is
 solid — comes back high: an "opposite pose" that folds the signature part flat
 onto the body has not restaged the creature, it has erased it.
 
-**Poles are judged on the IDENTITY VIEW ONLY — one image each.** Not four views
-each, and not the hero unless the brief named the hero. The batch is two
+**Poles are judged on the IDENTITY VIEW ONLY — one image each.** Not the whole
+read set each, and not az045 unless the brief named it. The batch is two
 identity views plus the canary: three images, not thirteen.
 
-This is what `outline.py` bought. Everything the other three views were being
+This is what `outline.py` bought. Everything the other views were being
 shown for — aspect, protrusion count, thinnest feature, how much the shape moved
 — is now computed from the geometry, exactly, for free, before the reader is
 spawned. The only thing left that needs eyes is *what does this look like*, and
@@ -413,19 +454,17 @@ three quarters of the pictures were being shown to ask questions a script can
 answer.
 
 **ONE reader does the whole gate — choosing AND confirming, in one batch.**
-This used to be two: one to pick the winner, then a second to confirm 3-of-4 on
-it. Send all of it at once instead — each pole's identity view, plus all four
-views of BOTH poles, plus the canary:
+This used to be two: one to pick the winner, then a second to confirm the gate on
+it. Send all of it at once instead — the six read-set views of BOTH poles
+(az000, az045, az090, az135, az180, top), plus the canary:
 
-> Images A-J are silhouettes. For each: what is it? (five best guesses, most
-> likely first). Then: taking A and F as two whole creatures, which reads more
-> strongly, and why? One line each.
+> Images A-M are silhouettes. For each: what is it? (five best guesses, most
+> likely first). Then: taking A-F and G-L as two whole creatures, which reads
+> more strongly, and why? One line each.
 
-Then score the winner's four views with `identity.py`. **You already have the
+Then score the winner's six views with `identity.py`. **You already have the
 answers for the loser too; you simply throw them away.**
 
-Why this inverts the old advice. When a read carried thirteen images, images
-were the unit and the rule was "send fewer". Now each read carries one or two,
 Why this inverts the old advice. When a read carried thirteen images, images
 were the unit and the rule was "send fewer". Now each read carries one or two,
 and the balance flips: almost the whole reader bill is the subagent EXISTING,
@@ -448,23 +487,25 @@ silhouettes and asked which is punchier. This applies the same move to Gate 1,
 where changing one variable at a time — claw height, then tail angle, then leg
 thickness — costs a full round to learn one thing.
 
-**Three of the four views must read. The fourth may be a dead view.** This gate
-used to demand all four, and a demand for a view that carries nothing spends
-readers on a repair that cannot work: a low, wide, shelled creature with a
-central mast is a blob from the front at 48px, and no amount of repair changes
-what an outline of that shape looks like head-on. Some forms have
-one axis that carries nothing — that is a property of the form, not a defect in
-the build.
+**Not every view has to read — but the in-between and the declared one do.**
+This gate once demanded all four views, and a demand for a view that carries
+nothing spends readers on a repair that cannot work: a low, wide, shelled
+creature with a central mast is a blob from the front at 48px, and no amount of
+repair changes what an outline of that shape looks like head-on. Some forms
+have one axis that carries nothing — that is a property of the form, not a
+defect in the build. So az000 and az180 may be dead views.
 
-So: **count the views that read. Three or more = pass.** Two or fewer = fail, and
-the repair goes to the biggest shapes, not to the weakest view. One more rule
-comes with the allowance: **the identity view named in the brief is not
-optional** — if the view you declared would carry this creature is the one that
-reads as "a blob", that is a failed gate no matter what the other three say. You
-chose that view; the gate holds you to it.
+An oblique may not. The three-quarter angle is how a creature is seen in almost
+every game camera and every thumbnail, and it is where a design built for the
+front and the side camera collapses — arms folded into the torso, a head sunk
+into the shoulders, four legs stacked into one post. So: **the counted rule
+passes, AND an oblique reads, AND the identity view named in the brief reads**
+— if the view you declared would carry this creature is the one that reads as
+"a blob", that is a failed gate no matter what the others say. You chose that
+view; the gate holds you to it. `identity.py` checks all three.
 
 Write the count into the record so the budget is visible:
-`--record rN ID pass|fail "<noun>"` and put `3/4` or `2/4` at the front of the noun.
+`--record rN ID pass|fail "<noun>"` and put the count of the read set that named it at the front of the noun — `4/6 +obl`, `2/6 -obl`.
 
 **Ask permission BEFORE the reader, record after it — every time:**
 
@@ -494,7 +535,7 @@ whatever you call it. Two of those and the third is refused. This is the same
 move as law 2 — the thing you cannot be trusted to judge about your own work is
 taken out of your hands — and it applies to Gate 2 identically (`PUNCH`).
 
-## 5. Gate 2 — PUNCHIER (after Gate 1; the same 3-of-4 must stay readable; reader verification from §4 applies — randomize which of prev/current is IMG-A)
+## 5. Gate 2 — PUNCHIER (after Gate 1; the Gate 1 orbit read must still hold; reader verification from §4 applies — randomize which of prev/current is IMG-A)
 
 LOW is not done when it's recognisable — it's done when it's EXAGGERATED. A push
 may ONLY make the silhouette bolder: push the extreme proportion further, harden
@@ -513,8 +554,8 @@ Show the reader the incumbent plus all three pushes, shuffled, labels neutral:
 > These are silhouettes of a creature. Which is punchiest — most striking, most
 > tension? Rank them, one sentence why for the winner.
 
-Incumbent wins = LOW locks where it is, done. A push wins and three views still
-read (the identity view among them) = promote it, skeleton and main volumes lock.
+Incumbent wins = LOW locks where it is, done. A push wins and the Gate 1 orbit read still
+holds (an oblique and the identity view among the views that read) = promote it, skeleton and main volumes lock.
 
 **Why this is one round and not three.** Spending one round per push means each
 push is a full round trip to learn one thing, and the
@@ -533,7 +574,7 @@ field build ran that experiment for us, three rounds and four readers, every one
 reverting to r1, three different readers naming the same silhouette.
 
 A second round is allowed in exactly one case: **a push won on punch but broke
-the 3-of-4 read.** Then you have a direction that works and a legibility problem
+the orbit read.** Then you have a direction that works and a legibility problem
 to fix, which is a real work order. Anything else — stop, lock r1, move to MID.
 
 ## 6. Outputs
