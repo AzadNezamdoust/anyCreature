@@ -935,6 +935,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       if (stem(A.partName || A.part) === stem(B.partName || B.part)) continue;   // own twin, own sub-mesh (claws, pupil), or a ring repeat
       if (A.hostPart === B || B.hostPart === A) continue;   // a part seated on a part: the seat IS the overlap (part_seat measures it)
       if (B.doubleSided) continue;                    // a membrane encloses nothing
+      if (B.open) continue;                          // an open shell (a lid, a pupil disc) encloses nothing either
       let sep = false;
       for (let a = 0; a < 3; a++) if (boxes[i].lo[a] > boxes[k].hi[a] || boxes[k].lo[a] > boxes[i].hi[a]) sep = true;
       if (sep) continue;                              // boxes do not even touch — cheap reject only

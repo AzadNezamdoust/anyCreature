@@ -65,6 +65,6 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — eye 0.82 · tusk 0.74 · fist 0.66 · rock 0.62 · moss 0.62 · hide_torso 0.51 · hide_arm 0.51 · hide_leg 0.51 · hide_head 0.51 · jaw 0.47 · foot 0.38 · brow 0.37 · toenail 0.20 · pupil 0.14"
+  "value_order: materials by lightness, brightest first — highlight 0.97 · eye 0.82 · tusk 0.74 · fist 0.63 · rock 0.62 · moss 0.62 · hide_torso 0.51 · hide_arm 0.51 · hide_leg 0.51 · hide_head 0.51 · jaw 0.47 · foot 0.38 · brow 0.37 · toenail 0.20 · pupil 0.14"
  ]
 }

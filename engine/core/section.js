@@ -41,13 +41,23 @@ function polyPoint(pts, a, rw, rh) {
 }
 
 // pts: chain joints; radii: [[rw,rh],...] per joint; secs: [{exp,bias,roll}] per joint
-function chainRingsRich(pts, radii, N, frame, secs) {
-  const { fr } = require('./geometry.js').framesOf
+// twist (radians, optional): every ring's frame is turned about its tangent by
+// this much before the section is laid on it — a REAL rotation of the section
+// (`roll` only re-phases the vertices around an unchanged ellipse), which is
+// how a curve's "face" aims its 0° side at a world direction.
+function chainRingsRich(pts, radii, N, frame, secs, twist = 0) {
+  const { fr, tan } = require('./geometry.js').framesOf
     ? require('./geometry.js').framesOf(pts, frame)
     : (() => { throw new Error('framesOf missing'); })();
   const rings = [];
   for (let s = 0; s < pts.length; s++) {
-    const [U, W] = fr[s];
+    let [U, W] = fr[s];
+    if (twist) {
+      const c = Math.cos(twist), sn = Math.sin(twist);
+      const W2 = G.nrm(G.add(G.mul(W, c), G.mul(U, sn)));
+      U = G.nrm(G.cross(W2, tan[s])); W = W2;
+      if (G.dot(G.cross(U, W), tan[s]) < 0) U = G.mul(U, -1);
+    }
     const [rw, rh] = Array.isArray(radii[s]) ? radii[s] : [radii[s], radii[s]];
     const sec = secs[s] || {};
     const ring = [];

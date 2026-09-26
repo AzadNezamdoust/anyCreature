@@ -22,17 +22,17 @@ every volume keeps the default `smooth_angle` 50. Its `_template` and
 `_anchor_numbers` fields are an ANCHOR to deviate from, not a target to
 converge on; there is no `templates/` library any more (removed in 1.2.0).
 
-Files: `wolf.glb` — skinned (32 joints, 5,805 vertices, 7,936 triangles),
+Files: `wolf.glb` — skinned (32 joints, 5,752 vertices, 8,072 triangles),
 three clips (idle / move / attack), vertex-coloured, AO baked into COLOR_0,
 UV off (`"keep_uv": true` is opt-in, and this spec does not set it) —
 `wolf_beauty.png` (the projected hero shot over a studio card),
 `wolf_silhouette.png` (side view), `wolf_thumb24.png` (the blind-read image).
 
-Measured (hero view, on the palette): **28.5%** coloured (HSV S ≥ 0.30, the tawny
+Measured (hero view, on the palette): **30.5%** coloured (HSV S ≥ 0.30, the tawny
 legs and paws), 0.1% loud (S ≥ 0.50 — a muted natural palette); median shipped
-luminance 91.7;
-shares fur_leg 33% · fur_body 29% · fur_head 15% · fur_tail 6% · fur_ruff 6%.
-Side W/H 1.74, hero W/H 1.33. (Fourth pass: the tail's frame is `"up"` so its dark
+luminance 91.2;
+shares fur_body 34% · fur_leg 33% · fur_head 15% · fur_ruff 4% · fur_tail 3%.
+Side W/H 1.66, hero W/H 1.34. (Fourth pass: the tail's frame is `"up"` so its dark
 top and pale underside sit where the arcs say, the hind thigh is deep fore-aft as the
 profile intended, and the three tawny bands are feathered at half their width so
 they reach their colour. Fifth pass: the head is built for the in-between views —
@@ -40,7 +40,12 @@ they reach their colour. Fifth pass: the head is built for the in-between views 
 an ellipse, the muzzle is boxy (`exp` 3) with a flat bridge, the eyes are hooded
 by a `lid`, the ears are cupped (`section.cup` on the curve) and the nose pad is a
 boxy `section` — judged on an 8+2 orbit, eight azimuths at 45° plus top and bottom, with
-head close-ups at the same eight.)
+head close-ups at the same eight. Sixth pass: the pupils are flush discs with a
+highlight, the nose is a `nose` part with nostril notches, the ears face forward
+(`face`) with the pale inside in the cup, the chest is a ribcage wider than the skull
+with the legs in a stance, the nape rises to the skull, the ruff stops at the flank so
+nothing dangles between the front legs, the chin is pale (the dark chin arcs read as a
+hole from below), the tail is a round brush, and the paws are smaller.)
 
 ```bash
 # rebuild

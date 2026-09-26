@@ -21,7 +21,7 @@ offline showroom viewer.
 
 *Every creature is compiled from one JSON spec. No mesh files, no downloaded art
 packs, no photogrammetry. The worked example that ships with this repo,
-[`example/wolf.json`](example/wolf.json), is 3,970 vertices and 32 joints written
+[`example/wolf.json`](example/wolf.json), is 5,752 vertices and 32 joints written
 out by the engine from plain text.*
 
 ---

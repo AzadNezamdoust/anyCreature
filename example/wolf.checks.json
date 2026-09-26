@@ -65,6 +65,6 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — fur_ruff 0.88 · eye 0.81 · ear_in 0.80 · fur_paw 0.78 · fur_brush 0.69 · fur_leg 0.62 · fur_body 0.57 · fur_head 0.57 · fur_tail 0.57 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14"
+  "value_order: materials by lightness, brightest first — highlight 0.96 · fur_ruff 0.88 · eye 0.81 · ear_in 0.80 · fur_paw 0.78 · fur_brush 0.69 · fur_leg 0.62 · fur_body 0.57 · fur_head 0.57 · fur_tail 0.57 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14"
  ]
 }
