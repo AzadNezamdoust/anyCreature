@@ -28,9 +28,16 @@ function framesOf(pts,upFrame){
     //   Fix: fix the sign after computing U — U always points toward world +X (creatures are bilaterally symmetric, so an axial part's width axis already lies along ±X);
     //   when U is near-perpendicular to X, fall back to +Y then +Z. On a flip, negate U and W together to keep the frame right-handed (equivalent to a 180° rotation about the tangent).
     //   Encoding and rebuilding both call the same framesOf, so this change is an identity for a SINGLE species' round-trip reproduction.
+    // anyCreature: the sign is fixed on W, not U — W (the height axis, where a ring's 0° sits)
+    //   points UP on every chain that is not vertical. The lineage rule above forced U toward +X,
+    //   which on a chain running BACKWARD (a tail) turned W to world DOWN: "0° = spine" became
+    //   "0° = belly", a tail's dark top shipped underneath, and "frame": "up" could not fix it.
+    //   That rule served a cross-species ring-blending pipeline this engine does not have; twins
+    //   here are made by mirroring the mesh across X. Near-vertical chains keep it (W has no up).
     for(let s=0;s<n;s++){const t=tan[s];const up=Math.abs(dot(t,[0,1,0]))>0.99?[0,0,1]:[0,1,0];
       let U=nrm(cross(up,t)),W=nrm(cross(t,U));
-      for(const a of [[1,0,0],[0,1,0],[0,0,1]]){ const dd=dot(U,a);
+      if(W[1]<-0.1){U=mul(U,-1);W=mul(W,-1);}
+      else if(Math.abs(W[1])<=0.1) for(const a of [[1,0,0],[0,1,0],[0,0,1]]){ const dd=dot(U,a);
         if(Math.abs(dd)>0.1){ if(dd<0){U=mul(U,-1);W=mul(W,-1);} break; } }
       fr.push([U,W]);} // U = horizontal width axis, W = vertical height axis
   } else if(upFrame==='ground'){
@@ -45,7 +52,17 @@ function framesOf(pts,upFrame){
       if(len(U)<0.15){d=[0,0,-1];U=sub(d,mul(t,dot(d,t)));}
       U=nrm(U);fr.push([U,nrm(cross(t,U))]);}
   } else {
-    const ref=Math.abs(tan[0][1])<0.9?[0,1,0]:[1,0,0];let U=nrm(cross(tan[0],ref));fr.push([U,nrm(cross(tan[0],U))]);
+    // parallel transport from the first ring. That ring's W (0°) starts UP on a chain that
+    // lies down — it used to start DOWN (U = tan x up), so every arc and anchor on a
+    // default-frame head or tail was measured from the belly. A chain that stands up keeps
+    // the X reference (a leg: 0° = inner, 90° = front). Standing or lying is decided by the
+    // chain's OVERALL direction, not its first segment: a leg whose thigh slants 30° is
+    // still a leg, and judging it by the thigh alone rolled its frame 180° around.
+    const span=n>1?nrm(sub(pts[n-1],pts[0])):tan[0];
+    const vert=Math.abs((len(sub(pts[n-1],pts[0]))>1e-9?span:tan[0])[1])>=0.9;
+    let U=vert?nrm(cross(tan[0],[1,0,0])):nrm(cross([0,1,0],tan[0]));
+    if(len(U)<1e-6)U=nrm(cross(tan[0],vert?[0,1,0]:[1,0,0]));
+    fr.push([U,nrm(cross(tan[0],U))]);
     for(let s=1;s<n;s++){const t0=tan[s-1],t1=tan[s];let Un=fr[s-1][0];const ax=cross(t0,t1);if(len(ax)>1e-6){const a=nrm(ax),ang=Math.acos(Math.max(-1,Math.min(1,dot(t0,t1))));Un=rod(Un,a,ang);}Un=nrm(sub(Un,mul(t1,dot(Un,t1))));fr.push([Un,nrm(cross(t1,Un))]);}
   }
   return {tan,fr};

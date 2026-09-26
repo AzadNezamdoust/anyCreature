@@ -140,7 +140,26 @@ function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
     if (a.t !== undefined && !(Array.isArray(a.t) && a.t.length === 2))
       throw new Error(`${label}: an arc's "t" is [t0, t1] along the chain, got ${JSON.stringify(a.t)}`);
     if (!a.color) throw new Error(`${label}: an arc needs a "color"`);
-    return { from: a.from ?? 0, to: a.to ?? 180, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
+    let from = a.from ?? 0, to = a.to ?? 180;
+    // The angle is FOLDED (sym below: 0..180, both flanks at once), so an arc
+    // written past 180 or below 0 used to match no vertex at all and ship as a
+    // silent no-op ("270..330" for "the left flank"). Fold it the same way.
+    if (to < from) {
+      INFO.push(`WARN ${label}: arc ${from}..${to}° runs backwards ("from" > "to") and colours nothing — `
+        + `arcs are degrees from the top, 0..180, applied to both sides at once.`);
+    } else if (from < 0 || to > 180) {
+      const f = x => { x = ((x % 360) + 360) % 360; return x > 180 ? 360 - x : x; };
+      // the folded image of [from, to]: it holds 0 if the arc crosses 0 or 360,
+      // 180 if it crosses 180 or -180, and otherwise runs between its ends' images
+      const crosses = v => from <= v && to >= v;
+      const lo = (crosses(0) || crosses(360) || crosses(-360)) ? 0 : Math.min(f(from), f(to));
+      const hi = (crosses(180) || crosses(-180) || crosses(540)) ? 180 : Math.max(f(from), f(to));
+      const nf = to - from >= 360 ? [0, 180] : [lo, hi];
+      INFO.push(`${label}: arc ${from}..${to}° read as ${nf[0]}..${nf[1]}° — arcs are degrees from the top `
+        + `(0) to the bottom (180), the same on both sides of the section.`);
+      [from, to] = nf;
+    }
+    return { from, to, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
              fa: Math.max(0, a.feather || 0), ft: Math.max(0, a.feather_t || 0) };
   });
   const step = 360 / sides;
@@ -165,6 +184,22 @@ function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
         + `${tStep.toFixed(3)} apart in t — a feather narrower than the ring spacing lands between `
         + `two rings and does nothing. Write it at 2-3x the spacing (${(tStep * 2).toFixed(2)}-`
         + `${(tStep * 3).toFixed(2)}), or lower "ring_step".`);
+    // The ramps run INSIDE the band from both closed edges. When they overlap —
+    // a feather over half the band — the band never reaches its colour anywhere,
+    // and the 2-3x-step advice above lands exactly there on a narrow band (60..120
+    // with feather 60 peaks at 74%). Say how far it gets.
+    if (a.t1 < a.t0)
+      INFO.push(`WARN ${label}: arc "t": [${a.t0}, ${a.t1}] runs backwards and colours nothing — t0 is the `
+        + `end nearer the chain's start.`);
+    const sm = u => { u = Math.max(0, Math.min(1, u)); return u * u * (3 - 2 * u); };
+    const pa = (a.from > 0 && a.to < 180 && a.fa > 0) ? sm((a.to - a.from) / 2 / a.fa) : 1;
+    const pt = (a.t0 > 0 && a.t1 < 1 && a.ft > 0) ? sm((a.t1 - a.t0) / 2 / a.ft) : 1;
+    if (pa * pt < 0.95 && a.to > a.from && a.t1 > a.t0)
+      INFO.push(`WARN ${label}: arc ${a.from}..${a.to}°${a.t0 > 0 || a.t1 < 1 ? ` t ${a.t0}..${a.t1}` : ''} `
+        + `never reaches its colour: its feathers are wider than half the band, so the ramps from the two `
+        + `edges meet before 1 and the band peaks at ${Math.round(100 * pa * pt)}%. Widen the band, or `
+        + `feather at most half its width (${((a.to - a.from) / 2).toFixed(0)}°`
+        + `${pt < 1 ? `, feather_t ${((a.t1 - a.t0) / 2).toFixed(2)}` : ''}).`);
   }
   // 1 inside, 0 outside, smoothstep over f inside each CLOSED edge. A band
   // touching 0 or 180 (or t 0 or 1) is open on that side: nothing to feather.
@@ -349,6 +384,26 @@ function buildVolume(spec, vol) {
   const base = hex2lin((spec.palette[vol.material] || {}).color || '#888888');
   const C = arcColours(`volume "${vol.chain}"`, part, sides, ringT, secs.map(s2 => (s2 && s2.roll) || 0),
     base, colSpec, vIndex);
+  // "0° = spine" holds on frame "up" only. On the default (parallel-transport)
+  // frame the height axis of a chain that runs forward or back comes out as
+  // world DOWN, so a "saddle" arc 0..60 lands on the belly and nothing says so.
+  // Say where 0° faces on a lying chain whenever it is not the top.
+  if ((colSpec.arcs || []).length && pts.length > 2) {
+    const s = Math.min(pts.length - 2, Math.max(0, ringT.findIndex(t => t >= 0.5)));
+    const tan = G.nrm(G.sub(pts[s + 1], pts[s]));
+    const rollDeg = ((secs[s] && secs[s].roll) || 0) * 180 / Math.PI;
+    const k = ((Math.round((90 - rollDeg) / 360 * sides) % sides) + sides) % sides;
+    const W0 = G.nrm(G.sub(part.rings[s][k], pts[s]));
+    // 0° pointing DOWN is wrong at any pitch short of vertical (the wolf's
+    // drooping tail shipped pale on top and dark underneath, and a "lies down"
+    // test at 0.7 let it through); 0° pointing sideways only matters on a chain
+    // that lies down, since a vertical leg has no top to speak of.
+    if (W0[1] < -0.5 || (Math.abs(tan[1]) < 0.7 && W0[1] < 0.7))
+      INFO.push(`WARN volume "${vol.chain}": its arcs are measured from 0° = ${dirName(W0)} (world `
+        + `${W0.map(x => x.toFixed(2)).join(',')}), not from the top — this chain does not stand up and its frame `
+        + `is "${vol.frame || 'default'}". A spine band written 0..60 is on the ${W0[1] < -0.5 ? 'BELLY' : 'side'}. `
+        + `"frame": "up" puts 0° on top (anchors on this volume move with it).`);
+  }
   // gradient and noise are NOT applied here any more — they are one whole-body
   // pass in applyShading() below, so every mesh (paws, ears, eyes included)
   // shares one top-to-bottom ramp and one grain size. Arc bands stay local.
@@ -509,6 +564,7 @@ function buildCurve(spec, p) {
     ? require('./section.js').chainRingsRich(pts, radii, sides, false, radii.map(() => ({ roll })))
     : G.chainRings(pts, radii, sides, false);
   const path = pts.map(q => q.slice());   // the centreline before any dome rings: what a hosted part seats on
+  const nBody = pts.length;               // rings past this index are the dome's
   // "cap": "dome" rounds the far end the way volumes do (a horn tip is sharp,
   // an ear or a tongue is not); default stays the flat fan.
   if (p.cap === 'dome' && pts.length >= 2) {
@@ -535,7 +591,10 @@ function buildCurve(spec, p) {
   let C;
   if (p.colors && p.colors.arcs && p.colors.arcs.length) {
     const arc = [0]; for (let i = 1; i < pts.length; i++) arc.push(arc[i - 1] + G.len(G.sub(pts[i], pts[i - 1])));
-    const total = arc[arc.length - 1] || 1;
+    // t = 1 is the END RING, as on a volume: the dome rings sit past it and take
+    // the end row's colour. Measured over the whole path, a domed curve put t = 1
+    // on the dome's apex and every "t" moved rootward by the dome's depth.
+    const total = arc[nBody - 1] || 1;
     const ringT = arc.map(a => a / total);
     const vIndex = new Map(); part.v.forEach((q, i) => vIndex.set(q, i));
     const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
@@ -1089,7 +1148,9 @@ function buildTufts(spec, p, builtVols) {
       if (G.len(u1) < 1e-6) u1 = G.cross(sp.out, [0, 1, 0]);
       u1 = G.nrm(G.sub(u1, G.mul(d, G.dot(u1, d))));
       const u2 = G.nrm(G.cross(d, u1));
-      const L = L0 * (1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
+      // a jitter near 1 or above drove the short tufts' length through zero and
+      // they grew INTO the body, tip first; the shortest tuft keeps 20%
+      const L = L0 * Math.max(0.2, 1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
       const base = G.sub(sp.p, G.mul(sp.out, TH * 0.9));            // rooted under the skin
       const tip = G.add(G.add(base, G.mul(d, L)), [0, -droop * L * 0.15, 0]);
       const rootC = rootAt(t, a);
@@ -1128,6 +1189,14 @@ function buildTufts(spec, p, builtVols) {
   }
   INFO.push(`tufts '${p.name || p.host}': ${made} tufts on "${an.chain}" at t=${(an.t ?? 0.5).toFixed(2)}`
     + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`);
+  // a clump is 6 x sides - 2 triangles (x2 when mirrored) and rows x count has no
+  // ceiling: 8 rows of 40 eight-sided tufts is 14,720 triangles in one part,
+  // past the whole creature's budget, and nothing else said so
+  const nTri = F.reduce((s, f) => s + f.length - 2, 0) * (p.mirrored ? 2 : 1);
+  if (nTri > 2500)
+    INFO.push(`WARN tufts '${p.name || p.host}': ${nTri} triangles${p.mirrored ? ' (both sides)' : ''} in one tufts `
+      + `part (${made} tufts x ${6 * sides - 2}) — most of a creature's budget. Fewer, larger clumps read as fur `
+      + `better anyway: lower "count"/"rows", or "sides" 4-6.`);
   return { material: p.material, V, F, C, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
 }
 

@@ -833,11 +833,14 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       // tail's own fur is fur, not a part that failed to separate. Their read
       // is the outline (and the root→tip ramp the builder gives them), not a
       // material step against the host, so the same-material rule is not theirs.
-      if (m.partType === 'tufts') continue;
       // a part seated on a part separates from THAT part, not from the volume
       // under both of them
       const hostName = m.hostPart ? m.hostPart.part : m.hostChain;
       const a = m.material, b = m.hostPart ? m.hostPart.material : volMat[m.hostChain];
+      // Only the SAME material is exempt: a tuft in its own palette entry that
+      // sits 0.01 OKLab off its host is a part that failed to separate like any
+      // other, and the distance rule below still has to see it.
+      if (m.partType === 'tufts' && a === b) continue;
       if (!a || !b || a === b) {
         if (a && a === b) {
           const k = `${m.part}|${a}`;
@@ -1262,6 +1265,12 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const N = 32;
     const declared = spec.function || {};
     const effChains = new Set(Object.entries(declared).filter(([, v]) => v === 'effector').map(([k]) => k));
+    // "A chain listed in mirror covers its twin automatically" (SYNTAX.md). A twin
+    // VOLUME keeps its source's chain name, so it always counted; a twin PART is
+    // found through its skin, whose joints are the R ones, so its chain came back
+    // as "RArm" and the right fist of an "LArm" effector was "something else in
+    // front" — effector_leads blocked a two-fisted slam on a tie with itself.
+    for (const c of [...effChains]) if ((spec.mirror || []).includes(c)) effChains.add(mirrorName(c));
     // same id as part_spans / self_clip: a mirrored twin volume is "<chain>.R", so a
     // report about the RIGHT hind leg does not name the left one
     const labOf = m => `${m.material}@${m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain) || '?'}`;
@@ -1280,6 +1289,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     };
     const isEff = m => effChains.has(chainOfMesh(m))
       || (m.part && effChains.has(String(m.part).split('@').pop()))
+      || (m.partName && effChains.has(m.partName))          // "fist" covers "fist.R" too
       || effChains.has(m.material);
 
     for (const a of animsResolved) {
