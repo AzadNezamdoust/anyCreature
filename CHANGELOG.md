@@ -503,6 +503,16 @@ them to anyone, so a creature could pass every gate and be a lump at 45°.
   loop, orbit claims pass on the wolf and a sunk head is advice not a block, the Gate 1
   orbit conditions both ways, and the delivery pack carries the sheets.
 
+### Raven-wyvern orbit pass
+
+- Spec only (`example/gallery/raven_wyvern.json`). The head is 1.3x larger, with a wider
+  bill base, lids seated deeper and a shaggy nape. The crest is five broad blades raked
+  back near the midline, and the neck has a throat. The body is broader. The legs stand
+  in a stride (`joints_R`), and the tail tapers with flat side vanes and a flat fan. The
+  wing volumes carry `ring_step` 0.07. Head share of the orbit went from 9/10/10/5/4/5/10/10%
+  to 13/17/15/8/5/8/15/16% (az000-az315), and top from 8% to 14%. Triangles went from
+  8,924 to 8,156. All checks green, no orbit advisories.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**

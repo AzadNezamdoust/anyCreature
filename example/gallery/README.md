@@ -19,10 +19,10 @@ hallux back). A long whip tail ends in a violet feather fan.
 
 | | |
 |---|---|
-| build | 45 joints, 6,849 vertices, 8,924 triangles (claims band 4,000-9,000), all green |
+| build | 45 joints, 6,453 vertices, 8,156 triangles (claims band 4,000-9,000), all green; head share of the orbit 13 / 17 / 15 / 8 / 5 / 8 / 15 / 16% (az000-az315), top 14% |
 | clips | `idle` (breath, head tilt, wing settle), `move` (bipedal stride, balance flutter), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
 | declared | named parts, `function` (head = effector, legs and wings = locomotion; the toes and claws inherit the leg's), `joint_range` for every animated joint |
-| colour | hero view, on the palette: 47.9% coloured (S ≥ 0.30), 11.1% loud (S ≥ 0.50); median shipped luminance 65.8. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
+| colour | hero view, on the palette: 47.7% coloured (S ≥ 0.30), 13.3% loud (S ≥ 0.50); median shipped luminance 65.6. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
 
 What it exercises that the wolf does not:
 
@@ -40,14 +40,19 @@ What it exercises that the wolf does not:
   was refused as floating.
 - **A loose joint** (`Jaw`, attached to `Skull`) that carries the lower bill, so
   the attack opens the beak.
-- **`tufts` used as feathers**: the throat bib, the feathered thighs and the
-  tail fan. **`curve` blades** make the crest — cupped (`"section": {"cup": 0.45}`)
-  and half again as thick as the first build, so they are vanes and not card
-  stalks from the front and the back. The bills carry sections too: a keeled
+- **`tufts` used as feathers**: the throat hackles, a shaggy nape, the feathered
+  thighs, flat vanes down both sides of the tail (so it tapers like a feathered
+  blade, not a rod) and a flat tail fan. **`curve` blades** make the crest: five
+  broad cupped (`"section": {"cup": 0.3}`) blades held close to the midline and
+  raked back, so it reads as one crest from the front, the back and above rather
+  than a sideways comb. The bills carry sections too: a keeled
   upper bill (`exp` 1.8, `bias` 0.3) over a flatter lower one.
 - **A head built for the in-between views.** The skull rows carry `taper`, so
   the head is a wedge toward the bill and not a ball with a beak stuck on; the
   eyes sit under a `lid` (the raptor brow), and the neck has a throat (`bias` below).
+  The orbit pass made the head 1.3x larger with a wider bill base, and staggered
+  the legs in a stride (`joints_R` moves the whole right leg back 25 cm, a pure
+  translation, so `mirror_distortion` passes) so the side view shows two legs.
 - **A chain that ends inside the next mass.** The neck is domed into the head
   (`"caps": ["none", "dome"]`) and the head's root ring sits inside the neck.
   The `open_end` check exists because the first build had the neck open at the
@@ -89,7 +94,7 @@ What is still true:
 - **With membrane wings, the colour budget is the wing's to spend.** The
   spread membrane is about 30% of the hero view on its own. The colour ruler
   reads the palette, so the dusky S 0.41 wings count as coloured and not as
-  loud, and the vivid colour is on the crest, tail fan and bill (11.6% loud).
+  loud, and the vivid colour is on the crest, tail fan and bill (13.3% loud).
   A vivid wing (S 0.80) would put the creature near 41% loud — inside the 50%
   ceiling, which only a creature loud all over crosses. (Until the shading
   stack's shadows became a true multiply, they raised HSV S by about 0.1 on
