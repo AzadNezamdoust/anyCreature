@@ -742,6 +742,11 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const seen = new Set();
     for (const m of meshes) {
       if (!m.part || !m.hostChain) continue;
+      // tufts are the coat itself leaving the silhouette — a tail brush in the
+      // tail's own fur is fur, not a part that failed to separate. Their read
+      // is the outline (and the root→tip ramp the builder gives them), not a
+      // material step against the host, so the same-material rule is not theirs.
+      if (m.partType === 'tufts') continue;
       const a = m.material, b = volMat[m.hostChain];
       if (!a || !b || a === b) {
         if (a && a === b) {

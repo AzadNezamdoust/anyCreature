@@ -1,7 +1,7 @@
 {
  "height": 1.28,
  "name": "quadruped_light",
- "_template": "ANCHOR, not target. A validated light quadruped (stylised timber wolf, bred against the 1.4 engine: tufts ruff, t-ranged and feathered arcs, junction normals). Start here, then DEVIATE: declare your exaggeration vector (which 1-2 numbers you push past this anchor, and how far) in the design card. Converging back to these numbers means you designed nothing.",
+ "_template": "ANCHOR, not target. A validated light quadruped (stylised timber wolf, bred against the 1.4 engine: clump tufts with a root-to-tip ramp, feathered arcs at 2-3x the ring step, curve arcs on the ears, junction normals). Start here, then DEVIATE: declare your exaggeration vector (which 1-2 numbers you push past this anchor, and how far) in the design card. Converging back to these numbers means you designed nothing.",
  "_anchor_numbers": {
   "W_over_H": 1.78,
   "fill": 0.34,
@@ -16,19 +16,19 @@
  },
  "palette": {
   "fur_body": {
-   "color": "#7d7770",
+   "color": "#7b7771",
    "rough": 0.95
   },
   "fur_head": {
-   "color": "#7d7770",
+   "color": "#7b7771",
    "rough": 0.95
   },
   "fur_tail": {
-   "color": "#7d7770",
+   "color": "#7b7771",
    "rough": 0.95
   },
   "fur_leg": {
-   "color": "#9c8462",
+   "color": "#98815f",
    "rough": 0.95
   },
   "fur_paw": {
@@ -62,6 +62,14 @@
   "pupil": {
    "color": "#121212",
    "rough": 0.25
+  },
+  "fur_brush": {
+   "color": "#a49a8a",
+   "rough": 0.95
+  },
+  "ear_in": {
+   "color": "#cdb9a2",
+   "rough": 0.95
   }
  },
  "smooth_angle": 50,
@@ -263,30 +271,30 @@
    "chain": "body",
    "material": "fur_body",
    "frame": "up",
-   "sides": 14,
+   "sides": 16,
    "ring_step": 0.045,
    "profile": [
     [
      0.0,
-     0.105,
-     0.125,
+     0.11,
+     0.13,
      {
       "exp": 2.3
      }
     ],
     [
      0.12,
-     0.18,
-     0.195,
+     0.19,
+     0.205,
      {
       "exp": 2.5,
-      "bias": 0.1
+      "bias": 0.12
      }
     ],
     [
      0.31,
-     0.145,
-     0.165,
+     0.15,
+     0.17,
      {
       "exp": 2.5,
       "bias": 0.1
@@ -303,8 +311,8 @@
     ],
     [
      0.6,
-     0.19,
-     0.22,
+     0.195,
+     0.225,
      {
       "exp": 2.5,
       "bias": -0.2
@@ -312,8 +320,8 @@
     ],
     [
      0.76,
-     0.165,
-     0.19,
+     0.17,
+     0.195,
      {
       "exp": 2.4,
       "bias": -0.1
@@ -350,44 +358,48 @@
     "arcs": [
      {
       "from": 0,
-      "to": 52,
-      "color": "#3f3e40",
-      "feather": 16
-     },
-     {
-      "from": 42,
-      "to": 120,
-      "color": "#b07a44",
-      "t": [
-       0.03,
-       0.76
-      ],
-      "feather": 24,
-      "feather_t": 0.08
-     },
-     {
-      "from": 112,
-      "to": 180,
-      "color": "#efe6d0",
-      "feather": 10
+      "to": 78,
+      "color": "#4a4a4b",
+      "feather": 60
      },
      {
       "from": 70,
+      "to": 142,
+      "color": "#957757",
+      "t": [
+       0.04,
+       0.82
+      ],
+      "feather": 50,
+      "feather_t": 0.16
+     },
+     {
+      "from": 122,
       "to": 180,
-      "color": "#efe6d0",
+      "color": "#e6dcc4",
+      "feather": 45
+     },
+     {
+      "from": 65,
+      "to": 180,
+      "color": "#e6dcc4",
       "t": [
        0.72,
        1.0
-      ]
+      ],
+      "feather": 50,
+      "feather_t": 0.14
      },
      {
       "from": 0,
-      "to": 30,
+      "to": 45,
       "color": "#7d7770",
       "t": [
        0.86,
        1.0
-      ]
+      ],
+      "feather": 45,
+      "feather_t": 0.12
      }
     ]
    }
@@ -396,7 +408,7 @@
    "chain": "head",
    "material": "fur_head",
    "frame": "up",
-   "sides": 12,
+   "sides": 14,
    "profile": [
     [
      0.0,
@@ -470,57 +482,86 @@
     "arcs": [
      {
       "from": 0,
-      "to": 50,
-      "color": "#3f3e40",
+      "to": 55,
+      "color": "#4a4a4b",
       "t": [
        0.0,
-       0.58
+       0.62
       ],
-      "feather": 8,
-      "feather_t": 0.05
+      "feather": 55,
+      "feather_t": 0.16
      },
      {
-      "from": 50,
-      "to": 110,
-      "color": "#b07a44",
+      "from": 45,
+      "to": 120,
+      "color": "#957757",
       "t": [
        0.0,
-       0.34
+       0.4
       ],
-      "feather": 8,
-      "feather_t": 0.06
+      "feather": 60,
+      "feather_t": 0.16
      },
      {
       "from": 50,
       "to": 180,
-      "color": "#efe6d0",
+      "color": "#e6dcc4",
       "t": [
-       0.34,
-       0.58
-      ]
+       0.3,
+       0.62
+      ],
+      "feather": 55,
+      "feather_t": 0.16
      },
      {
-      "from": 110,
+      "from": 115,
       "to": 180,
-      "color": "#efe6d0"
+      "color": "#e6dcc4",
+      "feather": 50
      },
      {
       "from": 0,
-      "to": 40,
+      "to": 45,
       "color": "#7d7770",
       "t": [
-       0.58,
+       0.56,
        1.0
-      ]
+      ],
+      "feather": 45,
+      "feather_t": 0.14
      },
      {
       "from": 40,
       "to": 180,
-      "color": "#efe6d0",
+      "color": "#e6dcc4",
       "t": [
-       0.58,
+       0.6,
        1.0
-      ]
+      ],
+      "feather": 45,
+      "feather_t": 0.14
+     },
+     {
+      "from": 0,
+      "to": 22,
+      "color": "#5c554f",
+      "t": [
+       0.7,
+       1.0
+      ],
+      "feather": 40,
+      "feather_t": 0.14
+     },
+     {
+      "from": 150,
+      "to": 180,
+      "color": "#5c554f",
+      "t": [
+       0.66,
+       1.0
+      ],
+      "feather": 40,
+      "feather_t": 0.14
      }
     ]
    }
@@ -528,7 +569,7 @@
   {
    "chain": "tail",
    "material": "fur_tail",
-   "sides": 10,
+   "sides": 12,
    "profile": [
     [
      0.0,
@@ -537,18 +578,23 @@
     ],
     [
      0.3,
+     0.12,
+     0.135
+    ],
+    [
+     0.62,
      0.115,
      0.13
     ],
     [
-     0.62,
-     0.11,
-     0.125
+     0.88,
+     0.075,
+     0.08
     ],
     [
      1.0,
-     0.045,
-     0.05
+     0.05,
+     0.055
     ]
    ],
    "caps": [
@@ -563,38 +609,41 @@
     "arcs": [
      {
       "from": 0,
-      "to": 60,
-      "color": "#3f3e40"
+      "to": 70,
+      "color": "#4a4a4b",
+      "feather": 60
      },
      {
-      "from": 60,
-      "to": 120,
-      "color": "#b07a44",
+      "from": 55,
+      "to": 130,
+      "color": "#957757",
       "t": [
        0.0,
-       0.6
+       0.62
       ],
-      "feather": 12,
-      "feather_t": 0.1
+      "feather": 60,
+      "feather_t": 0.16
      },
      {
-      "from": 120,
+      "from": 115,
       "to": 180,
-      "color": "#efe6d0",
+      "color": "#e6dcc4",
       "t": [
        0.0,
-       0.7
-      ]
+       0.72
+      ],
+      "feather": 60,
+      "feather_t": 0.14
      },
      {
       "from": 0,
       "to": 180,
-      "color": "#3f3e40",
+      "color": "#4a4340",
       "t": [
-       0.74,
+       0.84,
        1.0
       ],
-      "feather_t": 0.1
+      "feather_t": 0.14
      }
     ]
    }
@@ -607,36 +656,44 @@
    "profile": [
     [
      0.0,
-     0.1,
-     0.12,
+     0.125,
+     0.115,
      {
       "exp": 2.4
      }
     ],
     [
-     0.18,
-     0.09,
-     0.108,
+     0.14,
+     0.13,
+     0.115,
      {
       "exp": 2.5
      }
     ],
     [
-     0.38,
-     0.064,
-     0.078,
+     0.3,
+     0.09,
+     0.085,
      {
       "exp": 2.4
      }
     ],
     [
-     0.52,
+     0.42,
+     0.064,
+     0.07,
+     {
+      "exp": 2.4
+     }
+    ],
+    [
+     0.55,
      0.056,
-     0.066
+     0.064
     ],
     [
      0.74,
-     0.047,
+     0.048,
      0.055
     ],
     [
@@ -663,21 +720,23 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#7d7770",
+      "color": "#957757",
       "t": [
        0.0,
-       0.44
+       0.5
       ],
-      "feather_t": 0.06
+      "feather_t": 0.2
      },
      {
       "from": 0,
-      "to": 55,
-      "color": "#efe6d0",
+      "to": 80,
+      "color": "#c9b894",
       "t": [
-       0.3,
+       0.25,
        1.0
-      ]
+      ],
+      "feather": 60,
+      "feather_t": 0.2
      }
     ]
    }
@@ -690,34 +749,40 @@
    "profile": [
     [
      0.0,
-     0.095,
+     0.14,
      0.115,
      {
-      "exp": 2.5,
-      "bias": 0.05
+      "exp": 2.5
      }
     ],
     [
-     0.16,
-     0.105,
-     0.135,
+     0.13,
+     0.165,
+     0.12,
      {
-      "exp": 2.6,
-      "bias": 0.05
+      "exp": 2.6
      }
     ],
     [
-     0.37,
-     0.066,
-     0.084,
+     0.3,
+     0.11,
+     0.095,
+     {
+      "exp": 2.5
+     }
+    ],
+    [
+     0.42,
+     0.07,
+     0.078,
      {
       "exp": 2.4
      }
     ],
     [
-     0.52,
+     0.55,
      0.056,
-     0.068
+     0.066
     ],
     [
      0.7,
@@ -748,21 +813,23 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#7d7770",
+      "color": "#957757",
       "t": [
        0.0,
-       0.44
+       0.5
       ],
-      "feather_t": 0.06
+      "feather_t": 0.2
      },
      {
       "from": 0,
-      "to": 55,
-      "color": "#efe6d0",
+      "to": 80,
+      "color": "#c9b894",
       "t": [
-       0.3,
+       0.25,
        1.0
-      ]
+      ],
+      "feather": 60,
+      "feather_t": 0.2
      }
     ]
    }
@@ -815,7 +882,17 @@
     }
    ],
    "cap": "dome",
-   "cap_depth": 0.6
+   "cap_depth": 0.6,
+   "colors": {
+    "arcs": [
+     {
+      "from": 95,
+      "to": 180,
+      "color": "#cdb9a2",
+      "feather": 60
+     }
+    ]
+   }
   },
   {
    "name": "eye",
@@ -878,15 +955,17 @@
     ]
    },
    "rows": 2,
-   "span": 0.12,
-   "count": 7,
-   "length": 0.17,
-   "width": 0.1,
-   "thick": 0.05,
-   "sweep": -1.2,
-   "droop": 0.55,
+   "span": 0.16,
+   "count": 6,
+   "length": 0.19,
+   "width": 0.11,
+   "thick": 0.06,
+   "sweep": -1.4,
+   "droop": 0.32,
    "flare": 0.9,
-   "jitter": 0.3
+   "jitter": 0.35,
+   "sides": 6,
+   "bulge": 0.95
   },
   {
    "name": "cheek",
@@ -906,17 +985,19 @@
    "count": 5,
    "length": 0.13,
    "width": 0.075,
-   "thick": 0.035,
+   "thick": 0.04,
    "sweep": -1.4,
    "droop": 0.45,
    "flare": 0.8,
-   "jitter": 0.3
+   "jitter": 0.3,
+   "sides": 5,
+   "bulge": 0.9
   },
   {
    "name": "brush",
    "type": "tufts",
    "host": "Tail1",
-   "material": "fur_tail",
+   "material": "fur_brush",
    "mirrored": true,
    "anchor": {
     "chain": "tail",
@@ -928,14 +1009,43 @@
    },
    "rows": 3,
    "span": 0.5,
+   "count": 4,
+   "length": 0.13,
+   "width": 0.095,
+   "thick": 0.045,
+   "sweep": 1.8,
+   "droop": 0.6,
+   "flare": 0.5,
+   "jitter": 0.35,
+   "sides": 5,
+   "bulge": 0.9
+  },
+  {
+   "name": "tail_tip",
+   "type": "tufts",
+   "host": "TailTip",
+   "material": "fur_dark",
+   "anchor": {
+    "chain": "tail",
+    "t": 0.93,
+    "around": [
+     20,
+     160
+    ]
+   },
+   "rows": 1,
    "count": 3,
-   "length": 0.12,
-   "width": 0.1,
+   "length": 0.09,
+   "width": 0.07,
    "thick": 0.04,
-   "sweep": 1.6,
-   "droop": 0.7,
-   "flare": 0.7,
-   "jitter": 0.35
+   "sweep": 1.8,
+   "droop": 0.5,
+   "flare": 0.4,
+   "jitter": 0.3,
+   "sides": 5,
+   "bulge": 0.9,
+   "mirrored": true,
+   "tip_color": "#5a524c"
   },
   {
    "name": "front_paw",

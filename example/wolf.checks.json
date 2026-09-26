@@ -24,8 +24,7 @@
   },
   {
    "name": "size",
-   "passed": true,
-   "warned": true
+   "passed": true
   },
   {
    "name": "proportion",
@@ -62,8 +61,6 @@
  ],
  "blocking": [],
  "measures": [
-  "value_order: materials by lightness, brightest first — fur_ruff 0.88 · eye 0.81 · fur_paw 0.78 · fur_leg 0.63 · fur_body 0.58 · fur_head 0.58 · fur_tail 0.58 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14",
-  "contrast_adjacent: part \"brush\" wears the SAME material \"fur_tail\" as the \"tail\" it sits on — at reading size it is not a part, it is a bump. Give it its own entry in the palette.",
-  "contrast_adjacent: part \"brush.R\" wears the SAME material \"fur_tail\" as the \"tail\" it sits on — at reading size it is not a part, it is a bump. Give it its own entry in the palette."
+  "value_order: materials by lightness, brightest first — fur_ruff 0.88 · eye 0.81 · ear_in 0.80 · fur_paw 0.78 · fur_brush 0.69 · fur_leg 0.62 · fur_body 0.57 · fur_head 0.57 · fur_tail 0.57 · ear 0.38 · fur_dark 0.36 · claw 0.25 · nose 0.19 · pupil 0.14"
  ]
 }

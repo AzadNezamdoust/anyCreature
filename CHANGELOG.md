@@ -119,6 +119,52 @@ the spec.
   and the default `smooth_angle` on every volume. 6,260 triangles. The three clips are
   unchanged. `assets/hero.png` regenerated.
 
+**Third visual pass — the tawny flank was a rectangle, and the ruff was paper**
+
+Reviewed again: a hard-edged orange block on the flank, a pale stripe down the inside
+of the front leg that looked like a bug, thin thighs and no shoulder, a ruff of paper
+spikes, a black blob for a tail tip, and two `contrast_adjacent` warnings on the tail
+brush. Two causes in the engine, one in the check, and the spec.
+
+- **Every feather in the shipped spec did nothing.** `feather` is resolved by the
+  vertices — a vertex colour is interpolated linearly across each wall — so a feather
+  narrower than the ring step (360/sides) lands between two vertices and ships a hard
+  edge. The wolf wrote 8-24° feathers on 12-14-sided volumes (26-30° steps) and 0.05-0.08
+  `feather_t` on rings 0.07 apart: all of them below the step, all silent. That is the
+  orange rectangle, and the leg stripe was the same thing — the authored inner-leg cream,
+  a 55° band on a 12-sided leg, two vertices wide at three times its neighbours'
+  brightness, with a hard edge on both sides. The ramp is now a smoothstep, and the
+  compiler WARNS with the numbers whenever a feather is under the step or a `feather_t`
+  under the ring spacing, and says what to write instead (2-3x, or raise `sides`). The
+  card says the same. The arc code moved out of `buildVolume` into one `arcColours()`.
+- **`curve` parts take `colors.arcs`** — the pale inside of an ear, the dark upper edge
+  of a horn. The angle is read in the curve's own parallel-transport frame, not the
+  body's, so the build prints where 0° / 90° / 180° face.
+- **Tufts are clumps, not blades.** The wedge was two rings tapering straight to a
+  point; a crown of them read as paper spikes because every silhouette edge was a
+  straight line and every tuft was one flat colour. Each tuft now has a root ring, a
+  full ring a third of the way out (`bulge` x `width`), a shoulder ring and a tip — a
+  lobe that pinches — and carries a colour ramp: the ROOT takes the colour of the host's
+  skin at that vertex (it never stands off the body) and the TIP takes the material, or
+  `tip_color`; `root_color` overrides the root. Fewer, larger, 5-6-sided clumps read as
+  fur.
+- **`contrast_adjacent` leaves tufts alone.** A tail brush in the tail's own fur is fur,
+  not a part that failed to separate; its read is the outline and the root-to-tip ramp.
+  `brush.R` was never a bug: `"mirrored": true` on a centreline tail grows the other
+  side's clumps (the `around` range covers one side), and the twin takes the `.R` name
+  like any mirrored part.
+- **Example:** feathers at 2-3x the step on 16-sided body / 14-sided head / 12-sided
+  tail, a muted tawny (`#957757`, the chroma boost turned `#b07a44` orange) confined to
+  the lower flank under a cool charcoal saddle, the inner leg a soft `#c9b894` gradient
+  at 60° feather; the leg ellipse turned deep fore-aft (the old spec had the haunch
+  wider side-to-side than front-to-back, i.e. a post) with a real thigh (0.165 x 0.12)
+  and upper arm; the ruff 2 x 6 six-sided clumps hugging the neck, cheek and brush
+  clumps to match, the brush in its own `fur_brush`, three dark `tail_tip` tufts
+  extending the tail instead of a black dome; a pale inner ear; nose bridge and lower
+  lip a step darker. 7,688 triangles (budget 4,000-9,000). The three clips are unchanged
+  and were checked mid-motion from three angles: no stretching at shoulder or hip, no
+  tufts through the body, no colour smearing.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**
