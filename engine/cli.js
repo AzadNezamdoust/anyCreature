@@ -166,15 +166,25 @@ if (STACK) {
   const ys = meshes.flatMap(m => m.V.map(v => v[1]));
   const modelH = Math.max(1e-6, Math.max(...ys) - Math.min(...ys));
   const band = (nsh.junction_band ?? 0.06) * modelH;
-  const volOf = (chain, twin) => meshes.find(x => x._rings && x.chain === chain && (twin ? x._mirrorSrc : !x._mirrorSrc))
-                              || meshes.find(x => x._rings && x.chain === chain);
-  const chainOfJoint = j => Object.keys(spec.chains || {}).find(c => (spec.chains[c] || []).includes(j));
+  // A VOLUME is any mesh grown from a chain that is not a part. Mirrored twins
+  // carry no _rings (mirrorMesh does not copy them), so testing _rings found
+  // only the left side: the right legs had no host at all, and a right paw's
+  // host fell back to the LEFT leg, 20 cm away — every right-hand junction
+  // shipped without the blend, the left-hand ones with it.
+  const isVol = x => !x.part && x.chain;
+  const volOf = (chain, twin) => meshes.find(x => isVol(x) && x.chain === chain && !!x._mirrorSrc === twin)
+                              || meshes.find(x => isVol(x) && x.chain === chain && !x._mirrorSrc);
+  // the chain that OWNS the attach joint: one with a volume, and not the piece
+  // itself (same rule as root_containment) — the first chain that merely lists
+  // the joint may be the attached chain or a volume-less guide
+  const chainOfJoint = (j, self) => Object.keys(spec.chains || {}).find(c => c !== self
+    && (spec.chains[c] || []).includes(j) && meshes.some(x => isVol(x) && x.chain === c));
   if (band > 0) for (const m of meshes) {
     if (m._cls !== 'flesh') continue;
     let host = null;
-    if (m._rings && m.chain && (spec.attach || {})[m.chain]) {
-      const hc = chainOfJoint(spec.attach[m.chain]);
-      if (hc && hc !== m.chain) host = volOf(hc, !!m._mirrorSrc);
+    if (isVol(m) && (spec.attach || {})[m.chain]) {
+      const hc = chainOfJoint(spec.attach[m.chain], m.chain);
+      if (hc) host = volOf(hc, !!m._mirrorSrc);
     } else if (m.part && m.hostChain) host = volOf(m.hostChain, !!m._mirrorSrc);
     if (host && host !== m) junctions.push({ m, host, band, amount: nsh.junction ?? 1 });
   }

@@ -51,7 +51,51 @@ function tris(mesh) {
     return { a, b, c, n: [n[0] / L, n[1] / L, n[2] / L], cen, rad, i: t };
   });
   Object.defineProperty(mesh, '_sdT', { value: T, enumerable: false });
+  // Pseudo-normals for the sign (Baerentzen & Aanaes): when the closest point is
+  // a CORNER or an EDGE, the one triangle that happened to win has no say over
+  // which side p is on — at a tuft tip, a fan cap or a claw point the winner's
+  // face normal routinely points away, and a point 1.3 m clear of a ruff read as
+  // 1.3 m INSIDE it. The angle-weighted normal of every face at the corner (the
+  // summed normals of the two faces at an edge) is exact for a closed surface.
+  // Keyed by POSITION, because seams and split copies duplicate indices.
+  const key = q => Math.round(q[0] * 1e6) + ',' + Math.round(q[1] * 1e6) + ',' + Math.round(q[2] * 1e6);
+  const vn = new Map(), en = new Map();
+  const add = (m, k, n, w) => { const o = m.get(k) || [0, 0, 0]; o[0] += n[0] * w; o[1] += n[1] * w; o[2] += n[2] * w; m.set(k, o); };
+  const ang = (p0, p1, p2) => {
+    const u = [p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]], v = [p2[0] - p0[0], p2[1] - p0[1], p2[2] - p0[2]];
+    const lu = Math.hypot(u[0], u[1], u[2]), lv = Math.hypot(v[0], v[1], v[2]);
+    return lu > 0 && lv > 0 ? Math.acos(Math.max(-1, Math.min(1, (u[0] * v[0] + u[1] * v[1] + u[2] * v[2]) / (lu * lv)))) : 0;
+  };
+  for (const t of T) {
+    const P = [t.a, t.b, t.c], K = P.map(key);
+    for (let k = 0; k < 3; k++) {
+      add(vn, K[k], t.n, ang(P[k], P[(k + 1) % 3], P[(k + 2) % 3]));
+      const e = K[k] < K[(k + 1) % 3] ? K[k] + '|' + K[(k + 1) % 3] : K[(k + 1) % 3] + '|' + K[k];
+      add(en, e, t.n, 1);
+    }
+  }
+  Object.defineProperty(mesh, '_sdPN', { value: { key, vn, en }, enumerable: false });
   return T;
+}
+
+// the normal that decides the SIDE of p at q on triangle t: the face's own when q
+// is inside the face, the edge's or the corner's pseudo-normal otherwise
+function sideNormal(mesh, t, q) {
+  const PN = mesh._sdPN; if (!PN) return t.n;
+  const P = [t.a, t.b, t.c];
+  const tol = 1e-9 + 1e-7 * t.rad;
+  for (const c of P) if (Math.hypot(q[0] - c[0], q[1] - c[1], q[2] - c[2]) <= tol) return PN.vn.get(PN.key(c)) || t.n;
+  for (let k = 0; k < 3; k++) {
+    const a = P[k], b = P[(k + 1) % 3];
+    const ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], aq = [q[0] - a[0], q[1] - a[1], q[2] - a[2]];
+    const cx = [ab[1] * aq[2] - ab[2] * aq[1], ab[2] * aq[0] - ab[0] * aq[2], ab[0] * aq[1] - ab[1] * aq[0]];
+    const L = Math.hypot(ab[0], ab[1], ab[2]);
+    if (L > 0 && Math.hypot(cx[0], cx[1], cx[2]) / L <= tol) {
+      const ka = PN.key(a), kb = PN.key(b);
+      return PN.en.get(ka < kb ? ka + '|' + kb : kb + '|' + ka) || t.n;
+    }
+  }
+  return t.n;
 }
 
 // closest point on a triangle to p — the standard region test, no iteration
@@ -109,7 +153,8 @@ function nearest(p, mesh) {
   }
   if (!hit) return null;
   const q = closestOnTri(p, hit);
-  const side = (p[0] - q[0]) * hit.n[0] + (p[1] - q[1]) * hit.n[1] + (p[2] - q[2]) * hit.n[2];
+  const sn = sideNormal(mesh, hit, q);
+  const side = (p[0] - q[0]) * sn[0] + (p[1] - q[1]) * sn[1] + (p[2] - q[2]) * sn[2];
   return { d: side < 0 ? -best : best, q, tri: hit };
 }
 

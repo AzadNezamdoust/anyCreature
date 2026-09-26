@@ -123,18 +123,43 @@ const SOFT_LEAN = 8;     // degrees: a wall tilted less than this is "parallel t
 // Dome cap rings (t outside [0,1]) are left out: a dome on a sausage is still
 // a sausage. Computed on the ring table because checks run before the GLB is
 // assembled, and because the ring table is where the bone axis is known.
+//
+// Three things the first version of this ruler got wrong (review of 38b58b9):
+//  - it measured the wall VECTOR from vertex k of one ring to vertex k of the
+//    next, so a section ROLL (twist) tilted every wall without changing the
+//    shape: a sausage with {"roll":1.2} on its last row scored 60%. A wall now
+//    leans by how much its RADIUS changes against how far the ring advances —
+//    twist, bends and re-indexing do not move that.
+//  - it pooled walls by COUNT, so one short cone with 32 sides and a fine
+//    ring_step, buried in the chest, outvoted the whole body (56%). Walls are
+//    pooled by AREA now: what you can see is what counts.
+//  - the 8° bar is absolute, so a long thin mass could never clear it — a 2.4 m
+//    snake that swells 6x behind the head and tapers to a point scored 0%. The
+//    bar is now the smaller of 8° and "a girth change of one mean radius over
+//    the chain's own length", so the long chains register their taper and a
+//    tube of one radius still scores 0.
 function formShare(m) {
   const rings = m._rings, pts = m._pts, rt = m._ringT;
   if (!rings || !pts || !rt) return { lean: 0, tot: 0 };
-  const cos = Math.cos(SOFT_LEAN * Math.PI / 180);
+  const inside = s => rt[s] >= -1e-6 && rt[s] <= 1 + 1e-6;
+  const rad = (s, k) => G.len(G.sub(rings[s][k], pts[s]));
+  let rs = 0, rn = 0, L = 0;
+  for (let s = 0; s < rings.length; s++) if (inside(s)) for (let k = 0; k < rings[s].length; k++) { rs += rad(s, k); rn++; }
+  for (let s = 0; s < rings.length - 1; s++) if (inside(s) && inside(s + 1)) L += G.len(G.sub(pts[s + 1], pts[s]));
+  if (!rn || !(L > 0)) return { lean: 0, tot: 0 };
+  const bar = Math.min(Math.tan(SOFT_LEAN * Math.PI / 180), (rs / rn) / L);
   let lean = 0, tot = 0;
   for (let s = 0; s < rings.length - 1; s++) {
-    if (rt[s] < -1e-6 || rt[s + 1] > 1 + 1e-6) continue;
-    const ax = G.nrm(G.sub(pts[s + 1], pts[s]));
-    for (let k = 0; k < rings[s].length; k++) {
-      const w = G.nrm(G.sub(rings[s + 1][k], rings[s][k]));
-      tot++;
-      if (Math.abs(G.dot(w, ax)) < cos) lean++;
+    if (!inside(s) || !inside(s + 1)) continue;
+    const dz = G.len(G.sub(pts[s + 1], pts[s]));
+    const n = rings[s].length;
+    for (let k = 0; k < n; k++) {
+      const k1 = (k + 1) % n;
+      const dr = rad(s + 1, k) - rad(s, k);
+      const area = 0.5 * (G.len(G.sub(rings[s][k1], rings[s][k])) + G.len(G.sub(rings[s + 1][k1], rings[s + 1][k])))
+                 * Math.hypot(dz, dr);
+      tot += area;
+      if (Math.abs(dr) > bar * Math.max(dz, 1e-9)) lean += area;
     }
   }
   return { lean, tot };
@@ -175,15 +200,16 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       const r = formShare(m);
       if (!r.tot) continue;
       lean += r.lean; tot += r.tot;
-      per.push({ chain: m.chain, pct: 100 * r.lean / r.tot, walls: r.tot });
+      per.push({ chain: m.chain, pct: 100 * r.lean / r.tot, area: r.tot });
     }
     if (tot) {
       const pct = 100 * lean / tot;
       if (pct < SOFT_FLOOR) {
-        per.sort((a, b) => (a.pct - b.pct) || (b.walls - a.walls));
+        per.sort((a, b) => (a.pct - b.pct) || (b.area - a.area));
         const worst = per.slice(0, 3).map(p => `"${p.chain}" ${p.pct.toFixed(0)}%`).join(', ');
         fails.push(`soft_mass: only ${pct.toFixed(0)}% of this creature's skin leans off its own bones `
-          + `(the floor is ${SOFT_FLOOR}%; a wall counts once it tilts ${SOFT_LEAN}° off the chain axis). `
+          + `(the floor is ${SOFT_FLOOR}% of the skin's area; a wall counts once its radius changes by `
+          + `${SOFT_LEAN}° off the chain axis, or by one mean radius over the chain's length on a long thin one). `
           + `Every mass is a tube of one radius, so it renders as a sausage. Softest first: ${worst}. `
           + `The lever is the PROFILE on the volume: give each mass a radius that CHANGES along its `
           + `chain — a chest that swells and a waist that narrows, a thigh that tapers into a hock, a `
@@ -866,16 +892,12 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   //     a warn — look at the junction and either sink it or declare the join.
   {
     const vols = Object.values(volsByChain);
-    const insideAnyVol = (q) => {
-      for (const vol of vols) {
-        let best = Infinity, bs = 0;
-        vol._pts.forEach((c2, si) => { const d = G.len(G.sub(q, c2)); if (d < best) { best = d; bs = si; } });
-        const c2 = vol._pts[bs];
-        const rad = Math.max(...vol._rings[bs].map(r2 => G.len(G.sub(r2, c2))));
-        if (best < rad * 0.98) return true;
-      }
-      return false;
-    };
+    // Against the real surface (inside.js), like root_containment and
+    // part_attachment. The sphere through the nearest ring CENTRE that stood here
+    // was blind on a thin volume: a claw seated 12 mm deep in a 22 mm toe, between
+    // two ring centres, read "0% inside a body" because its base ring was nearer
+    // no centre than that ring's own radius.
+    const insideAnyVol = (q) => vols.some(vol => signedDistance(q, vol) < 0);
     const JOINS = new Set(['insert', 'extrude', 'snap', 'place', undefined]);
     for (const pt of spec.parts || []) {
       if (!JOINS.has(pt.join))
@@ -1170,7 +1192,9 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     const N = 32;
     const declared = spec.function || {};
     const effChains = new Set(Object.entries(declared).filter(([, v]) => v === 'effector').map(([k]) => k));
-    const labOf = m => `${m.material}@${m.chain || m.part || '?'}`;
+    // same id as part_spans / self_clip: a mirrored twin volume is "<chain>.R", so a
+    // report about the RIGHT hind leg does not name the left one
+    const labOf = m => `${m.material}@${m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain) || '?'}`;
     // A part (a claw, a blade, a spike) carries no chain of its own — it hangs off a joint.
     // Find that joint from the skin weights and ask which chain the joint belongs to, so
     // "function": {"neck": "effector"} covers the blade bolted to the neck without the

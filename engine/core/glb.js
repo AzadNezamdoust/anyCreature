@@ -75,10 +75,25 @@ function boneField(V, skin, sk) {
 // vertex point object → [host normal, weight] so it survives the crease split
 // below (smoothSplit copies share the point object).
 const JUNCTION_MOVED = [];
-function junctionField(m, host, band, amount) {
+function junctionField(m, host, band, amount, l8, skeleton) {
   const { nearest } = require('./inside.js');
   const { vertexNormals } = require('./normals.js');
-  if (!host._jN) host._jN = vertexNormals(host.V, triangulate(host.F));
+  if (!host._jN) {
+    let HN = vertexNormals(host.V, triangulate(host.F));
+    // the host SHIPS its normals with L8 applied (below); a junction that copies
+    // the raw ones leaves a 4-10 degree step exactly where it promised continuity
+    if (l8 && host._cls === 'flesh' && skeleton && host.skin) {
+      const F = boneField(host.V, host.skin, skeleton);
+      HN = HN.map((n, i) => {
+        const f = F[i];
+        if (!f || n[0] * f[0] + n[1] * f[1] + n[2] * f[2] <= 0) return n;
+        const b = [n[0] * (1 - l8) + f[0] * l8, n[1] * (1 - l8) + f[1] * l8, n[2] * (1 - l8) + f[2] * l8];
+        const L = Math.hypot(b[0], b[1], b[2]);
+        return L > 1e-9 ? [b[0] / L, b[1] / L, b[2] / L] : n;
+      });
+    }
+    host._jN = HN;
+  }
   const HN = host._jN;
   const out = new Map();
   for (const v of m.V) {
@@ -105,7 +120,7 @@ function writeGLB(build, outPath, opts = {}) {
   // point objects, so the map still applies afterwards)
   const jfields = new Map();
   for (const j of opts.junctions || [])
-    jfields.set(j.m, junctionField(j.m, j.host, j.band, j.amount ?? 1));
+    jfields.set(j.m, junctionField(j.m, j.host, j.band, j.amount ?? 1, opts.boneNormals, build.skeleton));
   const { meshes, skeleton, ibm, anims } = build;
   const names = opts.names || {};   // internal joint name → public export name
   const bufs = []; let byteLen = 0;
@@ -210,14 +225,22 @@ function writeGLB(build, outPath, opts = {}) {
       N = N.map((n, i) => {
         const e = jf.get(m.V[i]);
         if (!e) return n;
-        const [h, w] = e;
+        const [h, w0] = e;
+        // the band is 6% of the model's height, which swallows a whole paw: never
+        // hand a vertex a normal from the far side of its own surface (it shades
+        // black) — the same guard L8 carries, faded in over cos 0..0.5 so the
+        // guard itself does not become a step. Tufts are exempt: they are fur
+        // cards, and a card's underside is meant to take the skin's normal.
+        const dot = n[0] * h[0] + n[1] * h[1] + n[2] * h[2];
+        const w = m.partType === 'tufts' ? w0 : w0 * Math.min(1, Math.max(0, dot / 0.5));
+        if (!(w > 0)) return n;
         const b = [n[0] * (1 - w) + h[0] * w, n[1] * (1 - w) + h[1] * w, n[2] * (1 - w) + h[2] * w];
         const L = Math.hypot(b[0], b[1], b[2]);
         if (L < 1e-9) return n;
         moved++;
         return [b[0] / L, b[1] / L, b[2] / L];
       });
-      if (moved) JUNCTION_MOVED.push([m.part || m.chain, moved]);
+      if (moved) JUNCTION_MOVED.push([m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain), moved]);
     }
     const key = [m.material, m.color, m.rough ?? 0.9, m.metal ?? 0, !!m.doubleSided, !!m.C, !!m.UV].join('|');
     let g = groups.get(key);

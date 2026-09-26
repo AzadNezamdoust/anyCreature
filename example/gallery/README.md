@@ -57,10 +57,6 @@ These are engine limits, not choices made for this design:
 - **A part cannot host a part.** `part_seat` and `part_attachment` measure only
   against volumes, so a claw on a `curve` toe is refused as floating. The
   workaround here was to turn every toe into a chain.
-- **`part_seat` under-reads burial in thin volumes.** It tests a sphere around
-  the nearest ring centre, not the surface. A claw seated 12 mm deep inside a
-  22 mm toe reads "0% inside a body", so the claws here start at the toe-tip
-  ring centre.
 - **A membrane is one flat colour.** `colors.arcs` works on volumes and curves but
   not on membranes, so the wing has no darker leading edge or vein pattern.
 - **With membrane wings, colour budget and spotlight pull against each other.**
@@ -72,7 +68,7 @@ These are engine limits, not choices made for this design:
   the chest end passed every check. In a real renderer, the gap between that
   open ring and the neck showed as a white crescent (backface culling). The
   body is domed at both ends here, but nothing checks for this.
-- **False `part_overlap` warnings on tufts.** The build warns that `wing_skin`
-  sits 96% inside `hackles`. It doesn't: `signedDistance` takes its sign from
-  whichever face happens to be nearest at a tuft's tip, so points well clear of
-  the tuft read as inside it.
+
+The build warns that `lower_bill` sits 63% inside `upper_bill`. That one is
+real and intended: the closed bill halves overlap at rest, and the `Jaw` hinge
+opens them in the attack.

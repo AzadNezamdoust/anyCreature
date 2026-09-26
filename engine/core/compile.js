@@ -1061,14 +1061,18 @@ function buildFin(spec, p, builtVols) {
   return { material: p.material, V, F, skin: V.map(() => [[p.host, 1]]) };
 }
 
-function mirrorMesh(m, rDelta) { // duplicate across X with flipped winding + L→R joints
+function mirrorMesh(m, rDelta, mj = mirrorName) { // duplicate across X with flipped winding + L→R joints
+  // mj maps a joint to its twin. It must leave a CENTRE-LINE joint alone even when
+  // its name starts with "L" ("Loin", "Lip", "Lumbar"): a tuft inherits the body
+  // ring's weights, and the bare prefix rule sent "Loin" to a "Roin" that does not
+  // exist — skinVerts() then died with a TypeError instead of a BLOCK.
   // rDelta: per-R-joint translation from "joints_R" pose overrides — verts follow
   // their joints by skin weight, so a staggered right side carries its skin along
   const shift = (v, infl) => {
     if (!rDelta || !infl) return v;
     let dx = 0, dy = 0, dz = 0;
     for (const [j, w] of infl) {
-      const d = rDelta[mirrorName(j)];
+      const d = rDelta[mj(j)];
       if (d) { dx += w * d[0]; dy += w * d[1]; dz += w * d[2]; }
     }
     return [v[0] + dx, v[1] + dy, v[2] + dz];
@@ -1085,7 +1089,7 @@ function mirrorMesh(m, rDelta) { // duplicate across X with flipped winding + L�
     V: m.V.map((v, i) => shift([-v[0], v[1], v[2]], m.skin && m.skin[i])),
     F: m.F.map(f => f.slice().reverse()),
     C: m.C ? m.C.map(c => c.slice()) : undefined,
-    skin: m.skin ? m.skin.map(infl => infl.map(([j, w]) => [mirrorName(j), w])) : undefined,
+    skin: m.skin ? m.skin.map(infl => infl.map(([j, w]) => [mj(j), w])) : undefined,
     // index-based ring topology survives mirroring → mirrored volumes still get
     // proper cylindrical UVs (their own atlas island, required for AO bakes)
     _ringIdx: m._ringIdx, _ringT: m._ringT, _sides: m._sides,
@@ -1105,6 +1109,15 @@ function rPoseDeltas(spec) {   // joints_R override − default mirror = per-joi
 
 function compile(spec) {
   const meshes = []; const builtVols = {}; const rd = rPoseDeltas(spec);
+  // the joints that really HAVE a right twin — the same rule skeleton.js uses to
+  // make them: every joint of a mirrored chain, and loose L* joints
+  const twinned = new Set();
+  for (const cn of spec.mirror || []) for (const j of spec.chains[cn] || []) twinned.add(j);
+  {
+    const inChains = new Set(Object.values(spec.chains || {}).flat());
+    for (const n of Object.keys(spec.joints || {})) if (!inChains.has(n) && n.startsWith('L')) twinned.add(n);
+  }
+  const mj = j => (twinned.has(j) ? mirrorName(j) : j);
   // smoothing angle: spec-level default (50°), overridable per volume/part.
   // mirrorMesh copies it along with everything else it carries.
   const defSmooth = spec.smooth_angle ?? 50;
@@ -1114,7 +1127,7 @@ function compile(spec) {
     builtVols[vol.chain] = m;
     meshes.push(m);
     if ((spec.mirror || []).includes(vol.chain)) {
-      const t = mirrorMesh(m, rd);
+      const t = mirrorMesh(m, rd, mj);
       t._mirrorSrc = m;      // lets checks compare the twin's shape against the original
       meshes.push(t);
     }
@@ -1144,7 +1157,7 @@ function compile(spec) {
       for (const m of Array.isArray(built) ? built : [built]) {
         const lbl = m.sub ? label + '.' + m.sub : label;
         m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
-        if (p.mirrored) { const t = mirrorMesh(m, rd); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
+        if (p.mirrored) { const t = mirrorMesh(m, rd, mj); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
           t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade; meshes.push(t); }
       }
     } else throw new Error(`unknown part type "${p.type}"`);

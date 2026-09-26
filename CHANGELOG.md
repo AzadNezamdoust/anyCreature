@@ -165,6 +165,21 @@ brush. Two causes in the engine, one in the check, and the spec.
   and were checked mid-motion from three angles: no stretching at shoulder or hip, no
   tufts through the body, no colour smearing.
 
+
+**Review fixes (engine, found building the gallery raven-wyvern)**
+
+- A mirrored tuft on a centre-line joint whose name starts with "L" (`Loin`) crashed the
+  build: `mirrorMesh` now maps only joints that really have a twin.
+- `soft_mass`'s form ruler measures radius change against axial advance and pools by wall
+  area, with a bar of min(8°, one mean radius over the chain length): a twisted or
+  cone-padded sausage no longer passes, and a long python no longer needs `soft`.
+- Right-hand twins get junction normals (the host lookup used `_rings`, which mirrored
+  volumes do not carry), the blend fades out where the host normal opposes the vertex's
+  own, and hosts ship the same L8 blend as the pieces joined to them.
+- `signedDistance` takes its sign from angle-weighted pseudo-normals, which removes false
+  `part_overlap` warnings at corners; `part_seat` measures burial against the surface.
+- `ground_clip` and effector reports name mirrored twins `<chain>.R`.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**
