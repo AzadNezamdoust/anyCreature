@@ -357,6 +357,7 @@ function buildVolume(spec, vol) {
   return { material: vol.material, V: part.v, F: part.fq, skin, C, chain: vol.chain,
     faceted: vol.faceted,
     _rings: part.rings, _pts: pts, _sides: sides, _ringT: ringT.slice(), _dome0: dome0,
+    _open: [caps[0] === 'none', caps[1] === 'none'],   // which end rings are left open (the open_end check)
     _ringIdx: part.rings.map(ring => ring.map(p => vIndex.get(p))) };
 }
 
@@ -1253,7 +1254,7 @@ function mirrorMesh(m, rDelta, mj = mirrorName) { // duplicate across X with fli
     skin: m.skin ? m.skin.map(infl => infl.map(([j, w]) => [mj(j), w])) : undefined,
     // index-based ring topology survives mirroring → mirrored volumes still get
     // proper cylindrical UVs (their own atlas island, required for AO bakes)
-    _ringIdx: m._ringIdx, _ringT: m._ringT, _sides: m._sides,
+    _ringIdx: m._ringIdx, _ringT: m._ringT, _sides: m._sides, _dome0: m._dome0, _open: m._open,
     _pts: m._pts ? m._pts.map(p => [-p[0], p[1], p[2]]) : undefined };
 }
 

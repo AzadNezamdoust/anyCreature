@@ -92,7 +92,7 @@ for (const w of warns) console.error('warn: ' + w);   // measures, not laws — 
 // the checks; the engine writes them down. Roster matches harness/gates.json.
 const ENGINE_CHECKS = ['mesh_integrity', 'root_containment', 'part_attachment',
   'touch', 'balance', 'size', 'proportion', 'limb_clearance', 'anim_integrity',
-  'attack_reach', 'faceted_body', 'mirror_distortion', 'part_overlap', 'part_seat'];
+  'attack_reach', 'faceted_body', 'mirror_distortion', 'part_overlap', 'part_seat', 'open_end'];
 try {
   const said = (name, list) => list.some(m => String(m).toLowerCase().includes(name));
   const stamp = {

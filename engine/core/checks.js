@@ -420,6 +420,63 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     }
   }
 
+  // 4a. open_end — an open end ring must be buried in another body.
+  //
+  // `"caps": ["none", ...]` leaves a ring open on purpose: the ring is meant to
+  // sit inside the mass the chain grows from (or into), so the join is a buried
+  // seam and no cap geometry doubles up inside it. root_containment covers the
+  // START ring of an attached chain and nothing covered any other open ring: a
+  // body left "none" at the chest end passed every check, and in a real
+  // renderer the gap between that ring and the neck showed as a white crescent
+  // (backface culling: an open tube seen from outside shows the background
+  // through its mouth). This asks the question of every open ring that
+  // root_containment does not: is it inside SOMETHING? The ring's points are
+  // tested against every other closed mesh (a membrane encloses nothing), with
+  // 1% of the height of slack for a point sitting just outside a curved host.
+  // A THIRD of the ring exposed BLOCKS; a tenth is a measure. The bar is lower
+  // than root_containment's median because this is the defect that was seen:
+  // the body's chest ring, 43% outside the neck, was the white crescent, and a
+  // crescent of a third of a ring is not a few points poking out of a curve.
+  // (Attached roots are root_containment's, and are skipped here, so the two
+  // never disagree about one ring.)
+  {
+    const tol = 0.01 * modelH;
+    const others = meshes.filter(o => !o.doubleSided && o.V && o.V.length && o.F && o.F.length);
+    const boxOf = o => {
+      if (o._oeBox) return o._oeBox;
+      const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+      for (const v of o.V) for (let k = 0; k < 3; k++) { if (v[k] < lo[k]) lo[k] = v[k]; if (v[k] > hi[k]) hi[k] = v[k]; }
+      Object.defineProperty(o, '_oeBox', { value: { lo, hi }, enumerable: false });
+      return o._oeBox;
+    };
+    const covered = (p, self) => others.some(o => {
+      if (o === self) return false;
+      const b = boxOf(o);
+      for (let k = 0; k < 3; k++) if (p[k] < b.lo[k] - tol || p[k] > b.hi[k] + tol) return false;
+      return signedDistance(p, o) < tol;
+    });
+    for (const m of meshes) {
+      if (!m._ringIdx || !m.chain || !m._open || m._mirrorSrc) continue;   // twins are symmetric by construction
+      const rootDone = (spec.attach || {})[m.chain] && Object.keys(spec.chains).some(c =>
+        volsByChain[c] && c !== m.chain && spec.chains[c].includes(spec.attach[m.chain]));
+      const ends = [];
+      if (m._open[0] && !rootDone) ends.push(['start', m._ringIdx[m._dome0 || 0]]);
+      if (m._open[1]) ends.push(['end', m._ringIdx[m._ringIdx.length - 1]]);
+      for (const [which, idx] of ends) {
+        const pts = idx.map(i => m.V[i]).filter(Boolean);
+        if (!pts.length) continue;
+        const exposed = pts.filter(p => !covered(p, m)).length / pts.length;
+        const jn = which === 'start' ? spec.chains[m.chain][0] : spec.chains[m.chain][spec.chains[m.chain].length - 1];
+        const msg = `open_end: volume "${m.chain}" is left open ("caps": "none") at its ${which} (joint "${jn}") and `
+          + `${Math.round(exposed * 100)}% of that ring is not inside any other body — an open ring shows the background `
+          + `through its mouth in any renderer that culls back faces. THE FIX: close it ("caps": [..., "dome"]) if nothing `
+          + `else is meant to cover it, or bury it — move "${jn}" into the mass it should sit inside, or widen that mass.`;
+        if (exposed > 1 / 3) fails.push(msg);
+        else if (exposed > 0.10) warns.push(msg);
+      }
+    }
+  }
+
   // 5. limb clearance — mirrored volumes must not touch across the centreline
   //    (Verified:ly on exposed verts below the torso)
   {
