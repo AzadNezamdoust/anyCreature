@@ -101,10 +101,6 @@ What is still true:
   mid-saturation surfaces and the ruler read that shipped colour; see the
   CHANGELOG.)
 
-The build warns that `lower_bill` sits 63% inside `upper_bill`. That one is
-real and intended: the closed bill halves overlap at rest, and the `Jaw` hinge
-opens them in the attack.
-
 ## giant: a menacing mountain giant
 
 ![beauty](giant_beauty.png)
