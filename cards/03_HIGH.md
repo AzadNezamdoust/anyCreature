@@ -23,9 +23,9 @@ Pick the palette yourself, from the creature's story. The norms:
 
    The band rules HOW MUCH, never WHERE — which surfaces carry the colour is
    your call. The shipped examples (hero view, coloured / loud):
-   the muted wolf 28.7% / 0.1% (its colour is the tawny legs, S 0.38), the
-   raven-wyvern 48.2% / 11.6% (dusky S 0.41 wings, vivid crest and beak), the
-   giant 19.3% / 18.2% (ochre fists on a slate hide). A spread wing is ~30% of
+   the muted wolf 30.5% / 0.1% (its colour is the tawny legs, S 0.38), the
+   raven-wyvern 47.7% / 13.3% (dusky S 0.41 wings, vivid crest and beak), the
+   giant 15.2% / 0.2% (sandstone fists on a slate hide). A spread wing is ~30% of
    the hero view on its own, so even a VIVID membrane on a quiet body lands
    near 40% loud — inside the ceiling; only a creature loud all over crosses
    it. Out of band, raise or drop saturation on a mass that deserves the

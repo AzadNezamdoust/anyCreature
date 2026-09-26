@@ -513,6 +513,85 @@ them to anyone, so a creature could pass every gate and be a lump at 45°.
   to 13/17/15/8/5/8/15/16% (az000-az315), and top from 8% to 14%. Triangles went from
   8,924 to 8,156. All checks green, no orbit advisories.
 
+**Sixth pass — the giant's head clears the hump, the wolf's face stops being beads**
+
+Owner feedback again: "head and side view/front between view are not ok". The fifth
+pass had added wedge and cup sections, curve sections and eyelids; the orbit sheet then
+said what was still wrong. Giant: 11 advisories — `head_merged` at az000/045/315 (0-5% of
+the head's outline clear of the body), `head_hidden` at az135/180/225 (0%: no head from
+behind), `blob` at all four obliques (convexity 0.88-0.89 against 0.77-0.81), `head_small`
+(best view 3%). Wolf: no advisories, but pupils that were black hexagonal beads bulging
+out of the eye, a nose that was a faceted black lump, a dark "hole" under the jaw from
+below, flat triangle ears from the front, a chest no wider than the skull over two
+parallel pillars, a pale tuft dangling between the front legs, a paddle tail.
+
+**Engine**
+
+- **The pupil is a disc ON the iris.** It was a second sphere seated 55% proud of the
+  iris — 32 triangles, an octahedron from any angle but dead-on — so every eye shipped
+  with a hexagonal bead sticking out of it. It is now a spherical cap of the iris itself
+  (`capMesh`), a hair (1.2%) proud so it never z-fights: flush and round from every
+  azimuth. **`pupil.highlight`** (`{}` / `true` / `{material, size}`) adds a small pale
+  cap up and to the light side of the pupil in its own palette material (default
+  `"highlight"`, which must exist): the specular that says "wet eye" at reading size.
+  Ships as `<eye>.shine.L/.R`, fx-shaded.
+- **`nose` part type — a leather pad with nostrils.** A nose used to be a curve or a
+  spike in a dark material: a faceted black ball on the end of the muzzle. The pad is
+  lofted from four rings (a buried root, a boxy belly, the wings, a narrower front) and a
+  shallow dome, and its front rings carry a NOTCHED section — two nostril notches low on
+  either side (`nostril`, a fraction of the radius) and a philtrum groove at the bottom
+  centre (`groove`) — so the nostrils are in the silhouette from below and from the
+  front, which is where a nose reads. `size` is `[half-width, half-height, length]`,
+  `join` defaults to `extrude`, shade to `hard`; takes `colors.arcs`. ~130 triangles.
+- **`curve` takes `face`: [x,y,z].** Aims the section's 0° side (+H, the side the colour
+  line's 0° prints and a positive `cup` hollows) at a world direction. `chainRingsRich`
+  gained a `twist` — a REAL rotation of every ring's frame about the tube. `roll` only
+  re-phased the vertices around an unchanged ellipse, and where 0° landed on a tilted ear
+  was whatever `cross(up, dir)` made it: the wolf's ear was cupped and painted pale on its
+  OUTER face, so from the front it was a flat triangle. The "0° faces …" info line
+  reports the turned frame.
+- **`part_overlap` skips open shells.** A lid, a pupil disc and a highlight cap enclose
+  nothing; the signed-distance test against one is noise (the brow ridge was reported
+  "COMPLETELY buried inside eye.pupil.L"). Such meshes carry `open: true` and are never
+  the container.
+
+**Specs**
+
+- **Giant.** The hump is lower (0.32 above the chest, was 0.42) and the head chain
+  starts with a real neck — t 0-0.28 at r 0.3, rising 0.32 m out of the hump — under a
+  0.4 m skull with `bias` 0.35 (a domed crown), a brow ridge that is now above the eyes,
+  and tusks twice the size (r 0.075, 0.33 m). The head is 6-7% of the front and side
+  views (was 3%) and 1.7% from behind (was 0.0%; the bar is 1%). The torso is a ribcage
+  with depth (0.78, was 0.62) instead of a 1.0 m-wide slab; the shoulders sit inside it
+  at 0.5 with the elbows 0.9 m out and the fists forward of the legs (a knuckle-walker's
+  hang), so the arm-torso gap is open at 45° and the obliques stop closing into a lump
+  (convexity 0.84 against 0.75/0.78; was 0.89 against 0.77/0.81). The fists are
+  sandstone (`#9c8464`, a pale knuckle row over a darker palm) instead of ochre mittens,
+  the forearm's hard colour band is gone, the belly patch is a feathered soft grey, the
+  moss is ten clumps over a narrower band, the centre crag leans back out of the head's
+  way. `LShoulder.rz` is 15 (the sweep stops there now that the fists hang forward), the
+  attack's overhead raise is 120° (152° folded the root ring with the arm out sideways),
+  the elbow bend 78°. **11 advisories → 0.** 8,506 triangles (was 8,834).
+- **Wolf.** Pupils are flush discs with a highlight; the nose is a `nose` part (12 sides,
+  nostril 0.38); the ears use `face` so the cup and the pale inside face forward, and are
+  larger and more upright (they count as a protrusion in profile now); the ribcage is
+  0.235 wide (was 0.195) with the shoulders at 0.125 and the hips at 0.115 (a stance,
+  not two pillars), the nape rises to the skull (`bias` 0.12-0.15 on the last body
+  rows), the ruff stops at 135° so nothing dangles between the front legs, the dark
+  chin arcs are gone (they read as a cavity from below), the tail is a round brush (tufts
+  all round, flared, over a tail pinched at the root), the paws are 0.135 x 0.10. 8,072
+  triangles (was 7,936). The orbit holds; the blob rule is exactly as tight as a
+  quadruped's profile allows (the leg pairs cost the two protrusions the rule tolerates).
+- Images regenerated (same derivations as before): `example/wolf.glb` + checks,
+  `wolf_beauty.png`, `wolf_silhouette.png`, `wolf_thumb24.png`, the giant build + checks,
+  `giant_beauty.png`, `giant_silhouette.png`, `assets/hero.png`, `assets/silhouettes.png`.
+  Before / after orbit sheets under `out/compare/`. Both checked mid-clip (`move`,
+  `attack`) on the orbit. `cards/SYNTAX.md` documents `nose`, `pupil.highlight`, `face`.
+- `tools/test.sh` block 8: the frame twist is a real rotation, `face` aims the ear's 0°
+  forward, the nose is a closed shell wider than tall, the pupil is flush on the iris and
+  the shine ships, no part is reported inside an open shell, and the giant's orbit holds
+  with no advisory.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**

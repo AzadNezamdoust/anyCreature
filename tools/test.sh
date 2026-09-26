@@ -365,6 +365,40 @@ ok      "deliver.py: the pack carries the orbit sheets" \
         test -s "$T/del/orbit_sheet.png" -a -s "$T/del/orbit_sil_sheet.png"
 # ── END orbit block ──
 
+# ── BEGIN sixth-pass block (pupil disc, nose part, curve face, open shells, giant orbit) — additive ──
+echo "== 8. sixth-pass face features"
+ok      "section twist is a real rotation of the ring frame" \
+        node -e "
+const s=require('./engine/core/section.js');const pts=[[0,0,0],[0,0,1]];
+const a=s.chainRingsRich(pts,[1,1],8,false,[{},{}],0)[0][0], b=s.chainRingsRich(pts,[1,1],8,false,[{},{}],Math.PI/2)[0][0];
+const d=Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]); process.exit(d>1.3&&d<1.5?0:1)"
+prints  "curve face aims the ear's 0° forward"  "curve 'ear': colours — 0° faces fwd" \
+        node engine/cli.js example/wolf.json "$T/wolf_face.glb"
+ok      "the nose part is a closed shell, wider than tall" \
+        node -e "
+const {compile}=require('./engine/core/compile.js');const s=JSON.parse(require('fs').readFileSync('example/wolf.json'));
+require('./engine/core/relative.js').resolveJoints(s);
+const m=compile(s).find(m=>m.part==='nose_pad'); if(!m)process.exit(2);
+const e=new Map();for(const f of m.F){const n=f.length;for(let i=0;i<n;i++){const a=f[i],b=f[(i+1)%n];const k=a<b?a+'_'+b:b+'_'+a;e.set(k,(e.get(k)||0)+1);}}
+if([...e.values()].some(n=>n!==2)){console.error('open edge');process.exit(1);}
+const xs=m.V.map(v=>v[0]),ys=m.V.map(v=>v[1]);const w=Math.max(...xs)-Math.min(...xs),h=Math.max(...ys)-Math.min(...ys);
+process.exit(w>h?0:1)"
+ok      "the pupil is a disc flush on the iris, and the shine ships" \
+        node -e "
+const {compile}=require('./engine/core/compile.js');const s=JSON.parse(require('fs').readFileSync('example/wolf.json'));
+require('./engine/core/relative.js').resolveJoints(s);const ms=compile(s);
+const iris=ms.find(m=>m.part==='eye.L'),pu=ms.find(m=>m.part==='eye.pupil.L'),sh=ms.find(m=>m.part==='eye.shine.L');
+if(!iris||!pu||!sh)process.exit(2);
+const c=[0,1,2].map(k=>iris.V.reduce((t,v)=>t+v[k],0)/iris.V.length);
+const r=Math.max(...iris.V.map(v=>Math.hypot(v[0]-c[0],v[1]-c[1],v[2]-c[2])));
+const far=Math.max(...pu.V.map(v=>Math.hypot(v[0]-c[0],v[1]-c[1],v[2]-c[2])));
+process.exit(far<r*1.05&&pu.open&&sh.open?0:1)"
+ok      "no part is reported inside an open shell (lid, pupil, shine)" \
+        bash -c "! grep -q 'inside .eye\.\(pupil\|shine\|lid\)' '$T/wolf_face.checks.json'"
+prints  "giant: the orbit holds with no advisory" "orbit holds" \
+        python3 harness/outline.py "$T/giant.glb" "$T/giant_orbit"
+# ── END sixth-pass block ──
+
 echo
 echo "$PASS passed, $FAIL failed"
 if [ "$FAIL" -ne 0 ]; then

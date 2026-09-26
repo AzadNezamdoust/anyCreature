@@ -108,18 +108,19 @@ What is still true:
 The README's canonical order, "make me a menacing mountain giant", at 4 m. A
 heavy, hunched biped whose signature is its fists: each one is about a metre
 across, built from a palm, four folded fingers and a wrapped thumb, with the
-back of the hand facing forward and the knuckle row as the striking face. The
-shoulders rise above a small, low head with a heavy brow, amber eyes and an
-underbite with two tusks. Granite-grey hide with a mottled pattern, a moss
-mantle and rock crags on the hump, and sandstone fists behind a dark crust at
-each wrist.
+back of the hand facing forward and the knuckle row as the striking face. A
+short thick neck lifts a heavy skull clear of the hump — a brow ridge over
+amber eyes, an underbite with two big tusks — so the head breaks the outline
+from every azimuth, behind included. Granite-grey hide with a mottled pattern,
+a moss mantle and rock crags on the hump, elbows out and the sandstone fists
+hanging forward of the legs.
 
 | | |
 |---|---|
-| build | 71 joints, 5,652 vertices, 8,834 triangles (claims band 4,000-9,000), all green |
+| build | 71 joints, 5,684 vertices, 8,506 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head sway, arm settle), `move` (heavy bipedal walk with pelvis bob and sway, arms swinging opposite the legs), `attack` (both fists pull back, rise overhead, then the body pitches forward and the fists come down together in front, jaw open) |
 | declared | named parts, `function` (arms, palms, fingers and thumbs = effector, legs = locomotion), `joint_range` for every animated joint |
-| colour | hero view palette 19.0% coloured (S ≥ 0.30) and 17.8% loud (S ≥ 0.50), median shipped luminance 74.1. The fists are the brightest large mass (ochre, OKLab L 0.66); the hide is a cool slate (L 0.51) with a darker back and a pale chest; moss and rock sit on the hump; the eyes are the accent |
+| colour | hero view palette 15.2% coloured (S ≥ 0.30) and 0.2% loud (S ≥ 0.50), median shipped luminance 72.2. The fists are the brightest large mass (sandstone, OKLab L 0.60, a pale knuckle row over a darker palm); the hide is a cool slate (L 0.51) with a darker back and a soft pale chest; moss and rock sit on the hump; the eyes are the accent |
 
 What it exercises that the wolf and the raven do not:
 
@@ -133,16 +134,22 @@ What it exercises that the wolf and the raven do not:
   are declared hard. See the L1 note below.
 - **A two-fisted strike.** The shoulders' `ry`/`rz` bring the fists together
   at impact. `attack_windup` and `effector_leads` both pass.
-- **A head that survives 45°.** Fifth pass: the skull rows carry `taper` 0.3
-  (a wide brow over a narrow jaw) and the jaw a negative one (heavier below),
-  the eyes are hooded by a `lid`, the neck joint is lifted 0.08 m out of the
-  hump (the torso's top ring widened to keep the root ring inside) so the head
-  reads from the side. The fingers dropped to 7 sides to pay for the lids and
-  the finer irises inside the 9,000 budget.
+- **A head that survives the whole orbit.** Fifth pass: the skull rows carry
+  `taper` 0.3 (a wide brow over a narrow jaw) and the jaw a negative one
+  (heavier below), the eyes are hooded by a `lid`. Sixth pass: that head was
+  still a box sunk into the chest — 3% of the front view, 0% from behind, 11
+  orbit advisories. The hump is lower, the head chain starts with a real neck
+  (t 0-0.28, r 0.3) rising 0.32 m out of it and the skull is a 0.4 m mass with a
+  brow ridge and tusks twice the size; the ribcage has depth (0.78) instead of
+  a 1.0 m-wide slab, the shoulders sit inside it with the elbows 0.9 m out and
+  the fists forward of the legs, so the arm-torso gap is open at 45°. Zero
+  orbit advisories; the head is 6-7% of the front and side views and 1.7%
+  from behind (the bar is 1%).
 
 Files: `giant.json` (the spec), `giant.glb`, `giant.checks.json`,
 `giant_beauty.png` (the `outline.py --hero` shot) and `giant_silhouette.png`
-(front view, where the fists read).
+(front view, where the fists read). `out/compare/giant_before_*` / `giant_after_*`
+hold the orbit sheets either side of the sixth pass.
 
 ```bash
 node engine/cli.js example/gallery/giant.json example/gallery/giant.glb

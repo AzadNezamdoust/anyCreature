@@ -5,7 +5,7 @@
   "The fists are chains, not a 'hand' part: palm (LHand) + four folded fingers (LF1-LF4, knuckle joint b, proximal c runs back, middle d runs up, tip e tucks in) + a thumb. Back of the hand faces forward, knuckles down.",
   "Fists, fingers and thumb are shade 'hard': the L1 seam blend radius on a 4 m body is ~20 cm, wider than a finger, and it averaged the knuckle row away and painted the knees ochre where the fists hang beside them.",
   "function names RArm/RHand/RF1-4/RThumb explicitly: effector_leads does not count a mirrored chain's twin as the effector (see example/gallery/README.md).",
-  "joint_range LShoulder.rz is -15..26: the engine's sweep stops the arm there (a finger of the right fist reaches the foot, 2 cm short at 30 since the 1.4 ring frames)."
+  "joint_range LShoulder.rz is -15..15: the engine sweep stops the arm there (a finger of the right fist reaches the foot at 16 now that the fists hang forward of the legs)."
  ],
  "height": 4.0,
  "shading": {
@@ -38,7 +38,7 @@
    "rough": 0.95
   },
   "fist": {
-   "color": "#c0803f",
+   "color": "#9c8464",
    "rough": 0.9
   },
   "moss": {
@@ -72,6 +72,10 @@
   "pupil": {
    "color": "#1a0e05",
    "rough": 0.4
+  },
+  "highlight": {
+   "color": "#fff3d6",
+   "rough": 0.2
   }
  },
  "joints": {
@@ -92,61 +96,61 @@
   },
   "Hump": {
    "from": "Chest",
-   "up": 0.42,
-   "fwd": 0.18
+   "up": 0.32,
+   "fwd": 0.14
   },
   "Neck": {
    "from": "Hump",
-   "up": -0.1,
-   "fwd": 0.36
+   "up": 0.32,
+   "fwd": 0.16
   },
   "Skull": {
    "from": "Neck",
-   "up": -0.02,
-   "fwd": 0.24
+   "up": 0.32,
+   "fwd": 0.3
   },
   "Snout": {
    "from": "Skull",
-   "up": -0.1,
-   "fwd": 0.18
+   "up": -0.08,
+   "fwd": 0.3
   },
   "JawRoot": {
-   "from": "Neck",
-   "up": -0.09,
-   "fwd": 0.1
+   "from": "Skull",
+   "up": -0.1,
+   "fwd": 0.08
   },
   "JawTip": {
    "from": "JawRoot",
-   "up": -0.08,
-   "fwd": 0.34
+   "up": -0.12,
+   "fwd": 0.42
   },
   "LShoulder": {
    "from": "Chest",
-   "side": 0.58,
-   "up": 0.24,
-   "fwd": 0.0
+   "side": 0.5,
+   "up": 0.26,
+   "fwd": 0.02
   },
   "LElbow": {
    "from": "LShoulder",
-   "side": 0.66,
-   "up": -0.98,
-   "fwd": 0.06
+   "side": 0.9,
+   "up": -0.84,
+   "fwd": -0.1
   },
   "LWrist": {
    "from": "LElbow",
-   "side": 0.16,
-   "up": -0.86,
-   "fwd": 0.26
+   "side": 0.04,
+   "up": -0.82,
+   "fwd": 0.54
   },
   "LHip": {
    "from": "Pelvis",
-   "side": 0.33,
+   "side": 0.4,
    "up": 0.0,
    "fwd": 0.12
   },
   "LKnee": {
    "from": "LHip",
-   "side": 0.21,
+   "side": 0.18,
    "up": -0.62,
    "fwd": 0.16
   },
@@ -357,7 +361,7 @@
  },
  "attach": {
   "head": "Hump",
-  "jaw": "Neck",
+  "jaw": "Skull",
   "LArm": "Chest",
   "LHand": "LWrist",
   "LLeg": "Pelvis",
@@ -432,41 +436,41 @@
    ],
    "cap_depth": [
     0.5,
-    0.9
+    0.7
    ],
    "profile": [
     [
      0.0,
-     0.7,
-     0.5
+     0.62,
+     0.58
     ],
     [
      0.25,
-     0.66,
-     0.52,
+     0.62,
+     0.6,
      {
-      "bias": -0.2
+      "bias": -0.25
      }
     ],
     [
      0.55,
-     0.95,
-     0.62,
+     0.8,
+     0.78,
      {
-      "bias": 0.1
+      "bias": 0.05
      }
     ],
     [
      0.8,
-     1.02,
-     0.7,
+     0.86,
+     0.82,
      {
-      "bias": 0.35
+      "bias": 0.3
      }
     ],
     [
      1.0,
-     0.8,
+     0.7,
      0.66,
      {
       "bias": 0.35
@@ -483,25 +487,25 @@
      },
      {
       "from": 0,
-      "to": 44,
-      "color": "#6a8a2c",
+      "to": 34,
+      "color": "#617f2a",
       "t": [
-       0.62,
+       0.7,
        1.0
       ],
-      "feather": 30,
-      "feather_t": 0.14
+      "feather": 45,
+      "feather_t": 0.1
      },
      {
-      "from": 130,
+      "from": 125,
       "to": 180,
-      "color": "#8c8a80",
+      "color": "#767470",
       "t": [
        0.0,
-       0.62
+       0.6
       ],
-      "feather": 40,
-      "feather_t": 0.15
+      "feather": 50,
+      "feather_t": 0.18
      }
     ]
    }
@@ -522,16 +526,26 @@
    "profile": [
     [
      0.0,
-     0.25,
-     0.25,
+     0.3,
+     0.3,
      {
-      "taper": 0.1
+      "taper": 0.05
      }
     ],
     [
-     0.4,
-     0.32,
      0.28,
+     0.34,
+     0.33,
+     {
+      "bias": 0.2,
+      "exp": 2.5,
+      "taper": 0.15
+     }
+    ],
+    [
+     0.5,
+     0.4,
+     0.36,
      {
       "bias": 0.35,
       "exp": 2.7,
@@ -539,9 +553,9 @@
      }
     ],
     [
-     0.62,
-     0.235,
-     0.18,
+     0.72,
+     0.33,
+     0.27,
      {
       "exp": 2.6,
       "taper": 0.3
@@ -549,8 +563,8 @@
     ],
     [
      1.0,
-     0.2,
-     0.14,
+     0.26,
+     0.18,
      {
       "exp": 2.6,
       "taper": 0.25
@@ -564,14 +578,15 @@
       "to": 60,
       "color": "#3a3f45",
       "t": [
-       0.2,
-       0.6
+       0.3,
+       0.7
       ],
       "feather": 40,
       "feather_t": 0.15
      }
     ]
-   }
+   },
+   "ring_step": 0.08
   },
   {
    "chain": "jaw",
@@ -589,16 +604,16 @@
    "profile": [
     [
      0.0,
-     0.2,
-     0.14,
+     0.22,
+     0.13,
      {
       "taper": -0.15
      }
     ],
     [
      0.6,
-     0.24,
-     0.13,
+     0.3,
+     0.15,
      {
       "exp": 2.8,
       "taper": -0.2
@@ -606,8 +621,8 @@
     ],
     [
      1.0,
-     0.22,
-     0.11,
+     0.27,
+     0.13,
      {
       "exp": 2.8,
       "taper": -0.2
@@ -619,7 +634,7 @@
    "chain": "LArm",
    "material": "hide_arm",
    "sides": 14,
-   "ring_step": 0.12,
+   "ring_step": 0.2,
    "caps": [
     "dome",
     "dome"
@@ -631,13 +646,13 @@
    "profile": [
     [
      0.0,
-     0.42,
-     0.42
+     0.36,
+     0.36
     ],
     [
      0.2,
-     0.4,
      0.38,
+     0.36,
      {
       "exp": 2.3,
       "bias": 0.15
@@ -645,24 +660,24 @@
     ],
     [
      0.45,
-     0.28,
-     0.28,
+     0.3,
+     0.3,
      {
       "exp": 2.4
      }
     ],
     [
      0.52,
-     0.27,
-     0.27,
+     0.3,
+     0.3,
      {
       "exp": 2.5
      }
     ],
     [
      0.72,
-     0.4,
-     0.36,
+     0.38,
+     0.35,
      {
       "exp": 2.5,
       "bias": -0.12
@@ -671,7 +686,7 @@
     [
      0.9,
      0.33,
-     0.29,
+     0.3,
      {
       "exp": 2.4,
       "bias": -0.08
@@ -679,22 +694,12 @@
     ],
     [
      1.0,
-     0.26,
-     0.23
+     0.27,
+     0.24
     ]
    ],
    "colors": {
     "arcs": [
-     {
-      "from": 0,
-      "to": 180,
-      "color": "#5e4130",
-      "t": [
-       0.84,
-       1.0
-      ],
-      "feather_t": 0.1
-     },
      {
       "from": 0,
       "to": 60,
@@ -795,7 +800,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#dba066",
+      "color": "#b8a080",
       "t": [
        0.0,
        0.42
@@ -805,7 +810,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#8c5a2e",
+      "color": "#6b5a45",
       "t": [
        0.6,
        1.0
@@ -861,7 +866,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#dba066",
+      "color": "#b8a080",
       "t": [
        0.0,
        0.42
@@ -871,7 +876,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#8c5a2e",
+      "color": "#6b5a45",
       "t": [
        0.6,
        1.0
@@ -927,7 +932,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#dba066",
+      "color": "#b8a080",
       "t": [
        0.0,
        0.42
@@ -937,7 +942,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#8c5a2e",
+      "color": "#6b5a45",
       "t": [
        0.6,
        1.0
@@ -993,7 +998,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#dba066",
+      "color": "#b8a080",
       "t": [
        0.0,
        0.42
@@ -1003,7 +1008,7 @@
      {
       "from": 0,
       "to": 180,
-      "color": "#8c5a2e",
+      "color": "#6b5a45",
       "t": [
        0.6,
        1.0
@@ -1109,15 +1114,18 @@
    "type": "eye",
    "host": "Skull",
    "material": "eye",
-   "size": 0.064,
+   "size": 0.085,
    "anchor": {
     "chain": "head",
-    "t": 0.6,
-    "around": 74
+    "t": 0.56,
+    "around": 72
    },
    "pupil": {
     "material": "pupil",
-    "size": 0.5
+    "size": 0.5,
+    "highlight": {
+     "size": 0.4
+    }
    },
    "sink": 0.55,
    "lid": {
@@ -1130,35 +1138,35 @@
    "type": "curve",
    "host": "Skull",
    "material": "brow",
-   "join": "extrude",
+   "join": "insert",
    "mirrored": true,
    "offset": [
-    0.0,
-    0.16,
-    0.05
+    0,
+    0.17,
+    0.12
    ],
    "dir": [
     1,
-    -0.12,
-    0.12
+    -0.08,
+    0.25
    ],
    "sides": 7,
    "cap": "dome",
    "segments": [
     {
-     "len": 0.14,
+     "len": 0.24,
      "r": [
-      0.08,
-      0.06
+      0.12,
+      0.085
      ]
     },
     {
-     "len": 0.12,
+     "len": 0.16,
      "r": [
-      0.07,
-      0.05
+      0.09,
+      0.06
      ],
-     "behind": 40
+     "behind": 50
     }
    ]
   },
@@ -1170,24 +1178,24 @@
    "mirrored": true,
    "join": "insert",
    "offset": [
-    0.13,
-    0.02,
-    -0.04
+    0.18,
+    0.03,
+    -0.02
    ],
    "dir": [
-    0.15,
+    0.12,
     1,
-    0.1
+    0.12
    ],
    "sides": 7,
    "segments": [
     {
-     "len": 0.1,
-     "r": 0.05
+     "len": 0.17,
+     "r": 0.075
     },
     {
-     "len": 0.1,
-     "r": 0.04,
+     "len": 0.16,
+     "r": 0.06,
      "behind": 25,
      "taper": true
     }
@@ -1200,24 +1208,24 @@
    "mirrored": true,
    "anchor": {
     "chain": "torso",
-    "t": 0.72,
+    "t": 0.8,
     "around": [
-     10,
-     70
+     6,
+     52
     ]
    },
    "rows": 2,
-   "span": 0.16,
-   "count": 4,
-   "length": 0.3,
-   "width": 0.34,
-   "thick": 0.2,
-   "sweep": -0.9,
-   "droop": 0.5,
-   "flare": 0.7,
+   "span": 0.14,
+   "count": 5,
+   "length": 0.22,
+   "width": 0.22,
+   "thick": 0.16,
+   "sweep": -0.6,
+   "droop": 0.7,
+   "flare": 0.6,
    "jitter": 0.3,
    "sides": 5,
-   "bulge": 1.35,
+   "bulge": 1.4,
    "join": "insert"
   },
   {
@@ -1229,19 +1237,19 @@
    "join": "insert",
    "offset": [
     0.0,
-    0.2,
-    -0.3
+    0.08,
+    -0.42
    ],
    "dir": [
     0.05,
-    0.8,
-    -0.6
+    0.55,
+    -0.85
    ],
    "sides": 5,
    "segments": [
     {
-     "len": 0.75,
-     "r": 0.24
+     "len": 0.6,
+     "r": 0.22
     }
    ]
   },
@@ -1253,21 +1261,21 @@
    "faceted": true,
    "join": "insert",
    "offset": [
-    0.35,
-    0.05,
-    -0.4
+    0.42,
+    0.0,
+    -0.36
    ],
    "dir": [
-    0.45,
-    0.6,
-    -0.65
+    0.62,
+    0.42,
+    -0.66
    ],
    "sides": 5,
    "mirrored": true,
    "segments": [
     {
-     "len": 0.6,
-     "r": 0.2
+     "len": 0.8,
+     "r": 0.24
     }
    ]
   },
@@ -1279,21 +1287,21 @@
    "faceted": true,
    "join": "insert",
    "offset": [
-    0.62,
-    0.35,
+    0.66,
+    0.3,
     -0.2
    ],
    "dir": [
-    0.7,
-    0.7,
-    -0.2
+    0.75,
+    0.6,
+    -0.3
    ],
    "sides": 5,
    "mirrored": true,
    "segments": [
     {
-     "len": 0.42,
-     "r": 0.16
+     "len": 0.55,
+     "r": 0.18
     }
    ]
   }
@@ -1684,7 +1692,7 @@
       ],
       [
        0.42,
-       -152
+       -120
       ],
       [
        0.56,
@@ -1710,11 +1718,11 @@
       ],
       [
        0.56,
-       -28
+       -12
       ],
       [
        0.8,
-       -26
+       -11
       ],
       [
        1,
@@ -1732,11 +1740,11 @@
       ],
       [
        0.56,
-       -15
+       -8
       ],
       [
        0.8,
-       -14
+       -7
       ],
       [
        1,
@@ -1752,15 +1760,15 @@
       ],
       [
        0.12,
-       -35
+       -30
       ],
       [
        0.3,
-       -95
+       -72
       ],
       [
        0.42,
-       -100
+       -78
       ],
       [
        0.56,
@@ -1827,7 +1835,7 @@
    ],
    "rz": [
     -15,
-    26
+    15
    ]
   },
   "LElbow": {

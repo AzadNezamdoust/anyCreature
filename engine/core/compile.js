@@ -510,7 +510,7 @@ function buildEye(spec, p, builtVols) {
       if (ld.lower) caps.push([G.mul(axis, -1), ld.lower]);
       for (const [ax, ang] of caps) {
         const lm = lidMesh(c, r, ax, fwd, ang * Math.PI / 180, ld.thick ?? 0.14);
-        out.push({ material: mat, V: lm.V, F: lm.F, side: sx > 0 ? 'L' : 'R', sub: 'lid', shade: 'flesh',
+        out.push({ material: mat, V: lm.V, F: lm.F, side: sx > 0 ? 'L' : 'R', sub: 'lid', shade: 'flesh', open: true,
           skin: lm.V.map(() => [[p.host, 1]]) });
       }
     }
@@ -537,10 +537,29 @@ function buildEye(spec, p, builtVols) {
         look = G.nrm(G.add(G.add(G.len(lvl) > 1e-6 ? G.nrm(lvl) : sp.out, G.mul(fwd, 0.9)),
           G.mul(up, p.lid ? -0.25 : 0)));
       } else look = fwd;
-      const pc = G.add(c, G.mul(look, r - rp * 0.45));
-      const pm = sphereMesh(pc, rp, 1);
+      // The pupil is a DISC ON the iris, not a second ball: a sphere seated
+      // 55% proud of the iris shipped as a hexagonal bead bulging out of the
+      // eye (its 32 triangles are an octahedron from any angle but dead-on).
+      // A spherical cap of the iris itself, a hair proud so it never z-fights,
+      // is flush and round from every azimuth — what a pupil looks like.
+      const pm = capMesh(c, r * 1.012, look, Math.asin(Math.min(0.95, rp / r)), fwd);
       out.push({ material: pp.material || 'pupil', V: pm.V, F: pm.F, side: sx > 0 ? 'L' : 'R',
-        sub: 'pupil', skin: pm.V.map(() => [[p.host, 1]]) });
+        sub: 'pupil', open: true, skin: pm.V.map(() => [[p.host, 1]]) });
+      // "highlight": a small pale cap up and toward the light side of the
+      // pupil, in its own palette material (default "highlight"): the specular
+      // that says "wet eye" at reading size. {} / true / {material, size}.
+      if (pp.highlight) {
+        const hl = typeof pp.highlight === 'object' ? pp.highlight : {};
+        const hm = hl.material || 'highlight';
+        if (!(spec.palette || {})[hm])
+          throw new Error(`eye "${p.name || p.host}": pupil.highlight needs a palette material "${hm}"`);
+        const hr = rp * (hl.size ?? 0.42);
+        const sideL = G.nrm(G.cross(up, look));                 // the cap's own side
+        const hdir = G.nrm(G.add(G.add(look, G.mul(up, 0.32)), G.mul(sideL, 0.3)));
+        const hmesh = capMesh(c, r * 1.02, hdir, Math.asin(Math.min(0.9, hr / r)), fwd, 8, 1);
+        out.push({ material: hm, V: hmesh.V, F: hmesh.F, side: sx > 0 ? 'L' : 'R',
+          sub: 'shine', shade: 'fx', open: true, skin: hmesh.V.map(() => [[p.host, 1]]) });
+      }
     }
   }
   return out;
@@ -573,6 +592,93 @@ function lidMesh(c, r, axis, ref, ang, thick) {
     tri(a, e, d); tri(a, d, b);
   }
   return { V, F };
+}
+
+// a spherical cap: the patch of the sphere (c, r) around `axis` out to polar
+// angle `ang`, `rings` concentric rings of `segs` points and an apex. Outward
+// winding whichever way the frame was handed in (the R eye is a mirror).
+function capMesh(c, r, axis, ang, ref, segs = 12, rings = 2) {
+  const A = G.nrm(axis);
+  let U = G.cross(A, G.nrm(ref)); if (G.len(U) < 1e-6) U = G.cross(A, [1, 0, 0]);
+  U = G.nrm(U); const W = G.cross(A, U);
+  const at = (phi, th) => G.add(c, G.mul(G.add(G.mul(A, Math.cos(phi)),
+    G.add(G.mul(U, Math.sin(phi) * Math.cos(th)), G.mul(W, Math.sin(phi) * Math.sin(th)))), r));
+  const V = [G.add(c, G.mul(A, r))], F = [], R = [];
+  for (let j = 1; j <= rings; j++) {
+    const idx = [];
+    for (let k = 0; k < segs; k++) { idx.push(V.length); V.push(at(ang * j / rings, 2 * Math.PI * k / segs)); }
+    R.push(idx);
+  }
+  const n0 = G.cross(G.sub(V[R[0][0]], V[0]), G.sub(V[R[0][1]], V[0]));
+  const ccw = G.dot(n0, A) > 0;
+  const tri = (a, b, d) => F.push(ccw ? [a, b, d] : [a, d, b]);
+  for (let k = 0; k < segs; k++) tri(0, R[0][k], R[0][(k + 1) % segs]);
+  for (let j = 0; j < R.length - 1; j++) for (let k = 0; k < segs; k++) {
+    const a = R[j][k], b = R[j][(k + 1) % segs], d = R[j + 1][(k + 1) % segs], e = R[j + 1][k];
+    tri(a, e, d); tri(a, d, b);
+  }
+  return { V, F };
+}
+
+// ── nose: a leather pad with nostrils ──────────────────────────────────────
+// A nose used to be a curve or a spike in a dark material: a faceted black
+// ball on the end of the muzzle. A nose is a PAD — wider than tall, flat-ish
+// in front, with two nostril notches at the lower corners and a philtrum
+// groove between them — and those notches have to be in the SILHOUETTE (from
+// below and from the front) to read; a dark material alone is a bead.
+//   host      the joint the pad grows from (the muzzle tip)
+//   offset    from it (default [0,0,0]); dir the pad's forward (default +Z, the
+//             root is at host+offset, the front face `len` along dir)
+//   size      [half-width, half-height, len] (default [0.035, 0.028, 0.03])
+//   sides     ring sides (default 12: the notches need vertices to land on)
+//   nostril   notch depth as a fraction of the radius (default 0.32, 0 = none)
+//   groove    philtrum depth (default 0.10)
+//   join      default "extrude" (grows out of the muzzle); shade default "hard"
+// The pad is lofted as four rings (root, belly, wings, front) plus a shallow
+// dome, so it takes `colors.arcs` like a curve if ever wanted. ~130 triangles.
+function buildNose(spec, p) {
+  const host = spec.joints[p.host];
+  if (!host) throw new Error(`nose host joint "${p.host}" missing`);
+  const [rw, rh, L] = p.size || [0.035, 0.028, 0.03];
+  const dir = G.nrm(p.dir || [0, 0, 1]);
+  const sides = p.sides || 12;
+  const depth = p.nostril ?? 0.32, groove = p.groove ?? 0.10;
+  // the nostril section, in unit space: a boxy superellipse with two notches
+  // low on either side and a narrow groove at the bottom centre
+  const NP = 36, poly = [];
+  const bump = (a, c, w) => { let d = Math.abs(((a - c + 540) % 360) - 180); return Math.exp(-(d * d) / (2 * w * w)); };
+  for (let i = 0; i < NP; i++) {
+    const a = 360 * i / NP, ar = a * Math.PI / 180;
+    const [x, y] = require('./section.js').sectionPoint(ar, 1, 1, 2.8, 0.1, 0, 0);
+    const k = 1 - depth * (bump(a, 232, 16) + bump(a, 308, 16)) - groove * bump(a, 270, 8);
+    poly.push([x * k, y * k]);
+  }
+  const p0 = G.add(host, p.offset || [0, 0, 0]);
+  const pts = [0, 0.45, 0.8, 1.0].map(f => G.add(p0, G.mul(dir, L * f)));
+  const radii = [[rw * 0.82, rh * 0.82], [rw, rh], [rw * 0.98, rh * 0.94], [rw * 0.74, rh * 0.6]];
+  const notched = (depth || groove) ? { pts: poly } : { exp: 2.8, bias: 0.1 };
+  const secs = [{ exp: 2.4, bias: 0.1 }, { exp: 2.8, bias: 0.12 }, notched, notched];
+  const rings = require('./section.js').chainRingsRich(pts, radii, sides, false, secs);
+  const path = pts.map(q => q.slice());
+  {                                          // a shallow dome closes the front
+    const s = pts.length - 1, c = pts[s], D = 2, rr = Math.min(...radii[s]) * (p.cap_depth ?? 0.5);
+    for (let j = 1; j <= D; j++) {
+      const phi = (j / (D + 1)) * Math.PI / 2, sc = Math.cos(phi), lift = Math.sin(phi) * rr;
+      rings.push(rings[s].map(q => G.add(G.add(c, G.mul(G.sub(q, c), sc)), G.mul(dir, lift))));
+      pts.push(G.add(c, G.mul(dir, lift)));
+    }
+  }
+  const part = G.partFromRings(rings, sides, 'ngon', 'fan', pts);
+  let C;
+  if (p.colors && p.colors.arcs && p.colors.arcs.length) {
+    const ringT = pts.map((_, i) => Math.min(1, i / 3));
+    const vIndex = new Map(); part.v.forEach((q, i) => vIndex.set(q, i));
+    const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
+    C = arcColours(`nose "${p.name || p.host}"`, part, sides, ringT, rings.map(() => 0), base, p.colors, vIndex);
+  }
+  return { material: p.material, V: part.v, F: part.fq, join: p.join || 'extrude', C,
+    shade: p.shade || 'hard', _seatIdx: Array.from({ length: sides }, (_, i) => i), _path: path,
+    skin: part.v.map(() => [[p.host, 1]]) };
 }
 
 // octahedron subdivided `sub` times and projected to a sphere of radius r at c
@@ -644,9 +750,23 @@ function buildCurve(spec, p) {
     return o;
   };
   const secs = [secOf(null)]; for (const seg of p.segments) secs.push(secOf(seg));
-  const shaped = roll || secs.some(o => Object.keys(o).length > 1);
+  // "face": [x,y,z] aims the section's 0° side (+H, where the colour line's
+  // 0° prints, the side a "cup" hollows when positive) at a WORLD direction —
+  // the front of an ear, the top of a beak. The frame is turned about the
+  // tube for every ring, so the [rw, rh] axes and the arcs follow it. Without
+  // it the frame is parallel transport off the first heading, and where 0°
+  // lands on a tilted ear is whatever cross(up, dir) made it.
+  let twist = 0;
+  if (p.face) {
+    const { fr: fr0, tan: tn0 } = G.framesOf(pts, false);
+    const t0 = tn0[0]; let f = G.nrm(p.face); f = G.sub(f, G.mul(t0, G.dot(f, t0)));
+    if (G.len(f) < 1e-6) throw new Error(`curve "${p.name || p.host}": "face" is parallel to "dir" — it has to point across the tube`);
+    f = G.nrm(f);
+    twist = Math.atan2(G.dot(f, fr0[0][0]), G.dot(f, fr0[0][1]));
+  }
+  const shaped = roll || twist || secs.some(o => Object.keys(o).length > 1);
   const rings = shaped
-    ? require('./section.js').chainRingsRich(pts, radii, sides, false, secs)
+    ? require('./section.js').chainRingsRich(pts, radii, sides, false, secs, twist)
     : G.chainRings(pts, radii, sides, false);
   const path = pts.map(q => q.slice());   // the centreline before any dome rings: what a hosted part seats on
   const nBody = pts.length;               // rings past this index are the dome's
@@ -685,7 +805,9 @@ function buildCurve(spec, p) {
     const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
     C = arcColours(`curve "${p.name || p.host}"`, part, sides, ringT, rings.map(() => roll), base, p.colors, vIndex);
     const { fr } = G.framesOf(pts.slice(0, Math.max(2, pts.length)), false);
-    const W = fr[0][1], U = fr[0][0];
+    let W = fr[0][1], U = fr[0][0];
+    if (twist) { const W2 = G.nrm(G.add(G.mul(W, Math.cos(twist)), G.mul(U, Math.sin(twist))));
+      U = G.nrm(G.cross(W2, G.nrm(G.sub(pts[1], pts[0])))); W = W2; }
     INFO.push(`curve '${p.name || p.host}': colours — 0° faces ${dirName(W)} (world ${W.map(x => x.toFixed(2)).join(',')}), `
       + `90° faces ${dirName(U)} (world ${U.map(x => x.toFixed(2)).join(',')}), 180° faces ${dirName(G.mul(W, -1))}`);
   }
@@ -1448,7 +1570,7 @@ function compile(spec) {
       meshes.push(t);
     }
   }
-  const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane, hand: buildHand,
+  const BUILDERS = { spike: buildSpike, curve: buildCurve, nose: buildNose, membrane: buildMembrane, hand: buildHand,
     paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols),
     tufts: (s2, p2) => buildTufts(s2, p2, builtVols) };
   // the parts built so far, by name: what a later part may be seated on

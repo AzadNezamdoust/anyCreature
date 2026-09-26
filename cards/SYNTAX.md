@@ -154,6 +154,12 @@
     "segments":[ {"len":0.1,"r":0.035,"ahead":20}, {"len":0.1,"r":0.028,"rise":35},
                  {"len":0.08,"r":0.015,"rise":30,"taper":true} ],
     "roll":0, "cap":"dome",
+    "face":[0,0.3,1],                // sixth pass: aim the section's 0° side (+H — where the
+    // colour line's 0° prints, the side a positive "cup" hollows) at a WORLD direction: the
+    // front of an ear, the top of a beak. The frame is TURNED about the tube for every ring,
+    // so [rw,rh] and the arcs follow it. "roll" only re-phases the vertices around an
+    // unchanged ellipse; without "face", where 0° lands on a tilted ear is whatever
+    // cross(up, dir) made it — read the build's "0° faces ..." line either way.
     "section":{"exp":2.5,"bias":0,"taper":0,"cup":0} },  // 1.5: a SHAPED section on every
     // ring — a boxy nose pad (exp 3), a cupped ear (cup -0.5 hollows the 180° face; the
     // colour line says which face that is), a keeled beak (exp 1.8, bias 0.3), a flat
@@ -231,11 +237,19 @@
   { "type":"eye", "host":"Brow", "material":"eye", "size":0.028,
     "anchor":{"chain":"head","t":0.4,"around":62},    // both eyes from one entry; side of head ≈55-70
     "sink":0.5,                                       // fraction of the radius buried (default 0.35)
-    "pupil":{"material":"pupil","size":0.55},         // 1.4: the engine seats a darker sphere on the
+    "pupil":{"material":"pupil","size":0.55,          // 1.4: the engine seats a darker pupil on the
+             "highlight":{"material":"highlight","size":0.42}},
     // FRONT of the iris where it actually landed. An eye is a VALUE STEP, not a coloured dot —
     // without a pupil the eye_pupil measure warns. "look":[x,y,z] aims it; default is ahead
     // (the surface normal levelled, then toward forward — a pupil on the raw normal of the
     // upper skull stares at the sky), and a touch down under a lid.
+    // Sixth pass: the pupil is a DISC ON the iris — a spherical cap of the iris itself, a hair
+    // proud — not a second ball (a sphere seated 55% proud shipped as a hexagonal bead bulging
+    // out of the eye from every azimuth). "highlight": {} / true adds a small pale cap up and
+    // to the light side of the pupil in its own palette material (default "highlight" — it
+    // must exist): the specular that says "wet eye" at reading size. Ships as
+    // `<eye>.shine.L/.R`, fx-shaded. Both are open shells: part_overlap never treats them
+    // (or a lid) as something another part could be "inside".
     "lid":{"angle":52,"tilt":0.55,"thick":0.14,"lower":0,"material":"fur_head"} },
     // 1.5: the eye SEATED in the head. A bare sphere half-buried in a skull is a bead: from
     // 45° and from above it pokes out of the outline in the iris colour. "lid": {} hoods it
@@ -245,6 +259,20 @@
     // up, out to polar `angle` (default 62; 48-52 reads open, 60+ reads glowering). "lower"
     // adds a lower lid of that half-angle. ~84 triangles per lid. "subdiv" on the eye now
     // defaults to 2 (128 triangles: a sphere; 1 was a hexagonal bead from every angle).
+
+  { "type":"nose", "name":"nose_pad", "host":"Nose", "material":"nose", "join":"extrude",  // sixth pass:
+    "offset":[0,0.012,0.017], "dir":[0,-0.2,1],       // a LEATHER PAD with nostrils, not a black ball
+    "size":[0.037,0.029,0.033],                       // [half-width, half-height, length root→front]
+    "sides":12, "nostril":0.38, "groove":0.10 },      // notch depth / philtrum depth, fractions of the radius
+    // A nose used to be a curve or a spike in a dark material: a faceted bead on the muzzle tip.
+    // This is a pad — wider than tall, a boxy belly ring, a flat-ish front closed by a shallow
+    // dome — whose front rings carry a NOTCHED section: two nostril notches low on either side
+    // and a philtrum groove between them, so the nostrils are in the SILHOUETTE from below and
+    // from the front (a dark material alone is a bead). Root at host+offset, buried in the
+    // muzzle (join "extrude": the base centre must be inside a body; the muzzle tip's dome
+    // reaches ~cap_depth x r past the last joint, so push "offset" forward until the pad
+    // shows). "nostril": 0 / "groove": 0 for a plain pad. Hard-shaded by default; takes
+    // colors.arcs like a curve. ~130 triangles.
 
   { "type":"hand", "host":"LWrist", "material":"skin_hand", "mirrored":true,  // palm + 4 fingers + OPPOSABLE thumb
     "size":0.17,                          // palm length — the whole hand scales from it
