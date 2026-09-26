@@ -71,13 +71,18 @@ def main():
         # global minimum of the distance transform for thinnest_px48 and read ~0.25px
         # on every creature, because it was re-derived instead of shared. Departments
         # share their tools; synccheck.py lists any measure that still has more than one definition.
-        rc2, out2 = run(['python3', os.path.join(H, 'outline.py'), glb, dest])
+        # ONE view per part, the three-quarter one: a part read asks "what is
+        # this thing", not "does it hold from every side" — the orbit belongs to
+        # the whole creature (round.py), and ten views per part would be ten
+        # times the work for pictures nobody is shown.
+        rc2, out2 = run(['python3', os.path.join(H, 'outline.py'), glb, dest,
+                         '--views', 'hero', '--no-colour'])
         if rc2 != 0:
             print(f'  {name:<22} silhouette failed: '
                   + (out2.strip().splitlines() or [''])[-1][:120])
             continue
         # a part is read from the 3/4 view; it shows depth that side flattens
-        thumbs = [f'sil_{v}_thumb48.png' for v in ('hero', 'side', 'front', 'top')]
+        thumbs = [f'sil_{v}_thumb48.png' for v in ('hero', 'az045', 'az090', 'side', 'front', 'top')]
         pick = next((t for t in thumbs if os.path.exists(os.path.join(dest, t))), None)
         if not pick:
             print(f'  {name:<22} no thumb48 produced (outline.py did not run?)')

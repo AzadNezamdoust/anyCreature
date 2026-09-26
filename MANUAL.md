@@ -34,8 +34,8 @@ Head-to-head experiments showed the model designs BOLDLY when left free, and eve
 attempt to teach it design upfront made the output tamer — so this harness ships a
 **clean painter and a strict inspector**: the creation side gets only the order, the
 engine syntax, and a short pit-map of engine-local traps; ALL quality control lives
-in gates read by context-free reader agents (never self-graded). Gate 1: all four
-views RECOGNISED. Gate 2: rounds may only make the silhouette BOLDER — LOW's
+in gates read by context-free reader agents (never self-graded). Gate 1: RECOGNISED
+on the 8+2 orbit — an oblique and the brief's identity view among the views that read. Gate 2: rounds may only make the silhouette BOLDER — LOW's
 deliverable is an exaggerated silhouette, not a correct one. MID blind-reads the
 whitelisted parts (face, signature, order-named) with one question: what is this?
 Same symptom failed twice = concept restart, never a third tweak. Form beats
@@ -55,12 +55,17 @@ cards/               00_START · 01_LOW · 02_MID · 03_HIGH · 04_SHIP · SYNTA
 engine/              cli.js + core/ — the ACS engine v2
   core/normals.js    angle-weighted normals + `smooth_angle` creases (bodies stay smooth)
 harness/
-  outline.py         THE measuring tool: 4-view silhouettes + thumbs, layout and boldness
-                     measures, per-part shares off a z-buffer, colour off the recorded palette,
-                     and the hero shot. All from the vertices — no browser anywhere
+  outline.py         THE measuring tool: the 8+2 orbit by default (az000..az315 at 45°,
+                     az000 = the face, found from the skin's head joint; top; bottom) —
+                     silhouettes + thumbs, a colour render per view, orbit_sheet.png and
+                     orbit_sil_sheet.png, layout and boldness measures, the head per view
+                     (share, outline clear of the body), orbit flags (blob, head_merged,
+                     head_hidden, head_small — advice), per-part shares off a z-buffer,
+                     colour off the recorded palette, and the hero shot. `--views legacy`
+                     = front/side/top/hero, unchanged. All from the vertices — no browser
   judge.mjs          claims judge over outline.py's numbers (part shares, focal contrast,
-                     styles, saturated area, rig/anim/tri)
-  deliver.py         stamped GLB + showroom viewer + hero.png + backup upload pack
+                     styles, saturated area, orbit_consistent + head_reads (advice), rig/anim/tri)
+  deliver.py         stamped GLB + showroom viewer + hero.png + orbit sheets + backup upload pack
   publish.mjs        Gobkit publisher — ONLY after the user's explicit yes (card 04).
                      ALWAYS attempt the upload; the drag-and-drop page is the
                      fallback for a `blocked` result, never the opening move
@@ -119,8 +124,11 @@ tools/               test.sh (the whole self-check suite, what CI runs) · sync-
 ## Scale discipline
 
 24px reads FEEL (heavy/fast/sharp); 48px reads IDENTITY (what creature). Judge each
-at its own scale. Only the FRONT view may be left-right symmetric — and paired
-features (four wings) still stagger. Model-level looks are the final judge.
+at its own scale. Only the FRONT view (az000, and az180 behind it) may be left-right
+symmetric — and paired features (four wings) still stagger. Every azimuth of the orbit
+is a view someone will see the creature from: the in-between ones (az045, az135) are
+where a pose built for two cameras collapses, and the head has to read from the front
+half of the ring, not only in profile. Model-level looks are the final judge.
 
 ## Delivery & publish
 

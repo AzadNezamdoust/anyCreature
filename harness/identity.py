@@ -2,8 +2,13 @@
 """The identity verdict, weighted and counted — not argued.
 
     python3 harness/identity.py --brief brief.md --round 1 \\
-            --guesses side="t-rex,dinosaur,velociraptor,dragon,lizard" \\
-                      hero="four-legged animal,dog,goat,boar,bear"
+            --guesses az090="t-rex,dinosaur,velociraptor,dragon,lizard" \\
+                      az045="four-legged animal,dog,goat,boar,bear" \\
+                      az000="..." az135="..." az180="..." top="..."
+
+The views are the orbit's read set (outline.py, round.py prints it): az000 the
+face, az045 and az135 the obliques, az090 the profile, az180 the tail, top.
+Legacy names (front/side/top/hero) still score, under the old rule alone.
 
 You hand over THE WORDS THE READER SAID, in order. This tool decides whether any
 of them is the creature, by matching against the accepted list the brief wrote
@@ -104,6 +109,69 @@ def needed(rank, rnd):
     return max(1, rank - (rnd - 1))
 
 
+# ── the orbit conditions ─────────────────────────────────────────────────────
+# Gate 1 used to be read on four views and passed on "three of four", which let
+# a creature through on front, side and top while its three-quarter views were
+# never looked at — and those are the ones people actually see a creature
+# from. The orbit gives the reader six silhouettes (az000, az045, az090, az135,
+# az180, top; outline.py's read_set — the other three azimuths are mirror
+# images and are shown only when they differ). The counted rule above is
+# unchanged, and two conditions are added whenever the read was an orbit read
+# (any az### view in the guesses):
+#
+#   1. an OBLIQUE must read — the noun at rank MAX_RANK or better in at least
+#      one of az045/az135/az225/az315. The in-between cannot be a dead view:
+#      that is the failure the orbit exists to catch.
+#   2. the brief's IDENTITY VIEW must read, if it was shown — rank MAX_RANK or
+#      better there. Card 01 always said the declared view is not optional; now
+#      it is counted instead of trusted.
+#
+# Neither loosens by round. The counted rule loosens because another round buys
+# no new information about agreement; a dead oblique or a dead identity view is
+# a specific, repairable fault, and letting it through at r3 ships it.
+OBLIQUES = ('az045', 'az135', 'az225', 'az315')
+ORBIT_OF = {'front': 'az000', 'side': 'az090', 'hero': 'az045'}
+READ_SET = ('az000', 'az045', 'az090', 'az135', 'az180', 'top')
+
+
+def is_orbit_read(ranks):
+    return any(re.fullmatch(r'az\d{3}', v) for v in ranks)
+
+
+def orbit_conditions(ranks, identity_view=None):
+    """[(ok, text)] for the orbit conditions; [] for a legacy four-view read."""
+    if not is_orbit_read(ranks):
+        return []
+    out = []
+    ob = [v for v in OBLIQUES if v in ranks]
+    hit = [v for v in ob if ranks[v] is not None and ranks[v] <= MAX_RANK]
+    if not ob:
+        out.append((False, 'no oblique was read — show az045 and az135 (the read set is '
+                           + ', '.join(READ_SET) + ')'))
+    else:
+        out.append((bool(hit), f'an oblique reads: {", ".join(hit) if hit else "none of " + ", ".join(ob)}'
+                               f' (rank {MAX_RANK} or better)'))
+    if identity_view:
+        iv = identity_view if identity_view in ranks else ORBIT_OF.get(identity_view, identity_view)
+        if iv in ranks:
+            k = ranks[iv]
+            out.append((k is not None and k <= MAX_RANK,
+                        f'the brief\'s identity view ({identity_view}'
+                        + (f' = {iv}' if iv != identity_view else '') + ') reads: '
+                        + (f'rank {k}' if k else 'not in the list')))
+    return out
+
+
+def brief_identity_view(path):
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import brief as briefmod
+        _b, _n, facts = briefmod.check(path)
+        return facts.get('identity_view')
+    except Exception:
+        return None
+
+
 def verdict(ranks, rnd):
     """ranks: {view: int|None}. Returns (passed, rank_that_carried, detail)."""
     lines = []
@@ -179,7 +247,20 @@ def main():
         for r, got, need, ok, hit in lines:
             print(f'  {"✓" if ok else " "} rank {r}: {got} view(s) at {r} or better, needs {need}'
                   + (f'  [{", ".join(hit)}]' if hit else ''))
+        conds = orbit_conditions(ranks, brief_identity_view(brief))
+        for ok, text in conds:
+            print(f'  {"✓" if ok else "✗"} {text}')
         print()
+        if passed and not all(ok for ok, _ in conds):
+            print(f'FAIL — the counted rule carried at rank {carried}, but the orbit '
+                  f'does not hold: ' + '; '.join(t for ok, t in conds if not ok) + '.')
+            print('  A creature that reads from the front and the side and not from')
+            print('  between them is a creature built for two cameras. The repair is to')
+            print('  the masses that collapse at that angle — outline.py\'s orbit flags and')
+            print('  orbit_sil_sheet.png show which.')
+            print(f'  record it:  roundcheck.py <out> --record r{rnd} ID fail '
+                  f'"<noun> — oblique dead"')
+            return 1
         if passed:
             print(f'PASS — carried at rank {carried}.')
             print(f'  record it:  roundcheck.py <out> --record r{rnd} ID pass '
@@ -225,7 +306,12 @@ def main():
         return 2
 
     passed, carried, lines = verdict(ranks, rnd)
+    conds = orbit_conditions(ranks)
+    if passed and not all(ok for ok, _ in conds):
+        passed = False          # the counted rule held; an orbit condition did not
     print(f'identity r{rnd} — "{noun}" across {len(ranks)} view(s)')
+    for ok, text in conds:
+        print(f'  {"✓" if ok else "✗"} {text}')
     for v, k in ranks.items():
         print(f'    {v:<7} {"not in the list" if k is None else f"guess {k}"}')
     print()
@@ -244,7 +330,10 @@ def main():
         print(f'  record it:  roundcheck.py <out> --record r{rnd} ID pass "{noun} (rank {carried})"')
         return 0
     print(f'FAIL — "{noun}" did not reach any rank in enough views.')
-    unread = [v for v in ('front', 'side', 'top', 'hero') if v not in ranks]
+    if is_orbit_read(ranks):
+        unread = [v for v in READ_SET if v not in ranks]
+    else:
+        unread = [v for v in ('front', 'side', 'top', 'hero') if v not in ranks]
     if unread:
         print()
         print(f'  LOOK BEFORE YOU REBUILD. {len(unread)} view(s) of THIS shape have not been')

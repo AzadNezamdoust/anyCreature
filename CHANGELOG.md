@@ -344,6 +344,97 @@ order, plus what the new check found.
   only, so a limit that only collides from a clip's pose is not caught there — `self_clip`
   is what catches it.
 
+**The 8+2 orbit — the in-between views and the head are measured, shown and read**
+
+Owner feedback: "head and side view/front between view are not ok". Four views (front,
+side, top, hero) never measured the angles between them or the head, and nothing showed
+them to anyone, so a creature could pass every gate and be a lump at 45°.
+
+- `harness/outline.py` measures an **orbit** by default: `az000 … az315`, eight
+  horizontal views 45° apart like a cylinder around the creature, plus `top` and
+  `bottom` — same pinhole, distance rule and 640 grid as before, so the numbers mean what
+  they meant. `az000` looks at the FACE, found from the skin: the head is every vertex
+  whose strongest joint is the spec's head joint (a chain named head/skull, its
+  Head*/Skull* joint) or below it, and the facing is the body-centre → head direction
+  snapped to the nearest world axis — not the longest bounding-box side, which points an
+  upright giant's legacy `side` camera at its chest. No head → +Z, the engine convention.
+  `az090` is the creature's left (+X) flank.
+- The legacy `front`/`side`/`hero` keep their exact cameras (`--views legacy`), so every
+  claim and calibration naming them reads the same pixels. `top` now puts the face at the
+  top of the image (was the long axis — the same picture for any long-bodied creature).
+  View sets: `--views orbit` (default), `legacy`, `azimuths`, or any list.
+- Per view, as before: `mask_*.npy`, `sil_*.png`, 24/48px thumbs. New: a **colour render
+  per view** (`col_<view>.png`, the hero shot's shading with the light rig turned with the
+  camera, so the back view is lit), and two **contact sheets**: `orbit_sheet.png` (the ten
+  colour renders, 5×2, labelled with head share and any flag) and `orbit_sil_sheet.png`.
+  The eight azimuths share ONE crop, so a view that shrinks looks smaller.
+- **The head, per view**: `head_share` (pixels the head owns after the depth test),
+  `head_out` (share of the head's outline clear of the rest of the body's — a skull sunk
+  between the shoulders owns pixels and no outline), `head_px48`, `head_distinct`.
+- **The orbit, read as one object** (`orbit` in metrics.json): a ring table (area, W/H,
+  convexity, protrusions, thinnest, head per azimuth), mirror IoU of the three mirror
+  pairs, the Gate 1 read set, and flags — all ADVICE:
+  `blob` (an azimuth other than az000/az180 whose convexity is ≥0.07 above BOTH
+  neighbours, or with 2 fewer protrusions than both), `head_merged` (front half of the
+  ring, <15% of the head's outline clears the body), `head_hidden` (<1% of any azimuth),
+  `head_small` (the head's best azimuth <5%). Printed as `advise` lines by outline.py
+  and round.py.
+- The bars, read off every azimuth of the three shipped creatures and wolf_green:
+
+  | | wolf | raven-wyvern | giant | wolf_green |
+  |---|---|---|---|---|
+  | worst convexity above both neighbours (off the long axis) | −0.13 | +0.06 | **+0.08** (all four obliques) | −0.09 |
+  | min head_out, front half | 0.18 (az000) | 0.52 | **0.000** | 0.33 |
+  | min head_share, any azimuth | 3.1% (az180) | 2.8% (az180) | **0.0%** (az135-225) | 4.5% |
+  | best head_share | 29% | 9.5% | **2.5%** | 29% |
+  | flags | none | none | 11 | none |
+
+  One flagged creature out of four is enough to say where to look, not to refuse a build
+  (and the blob bar clears the raven by only 0.01):
+  both new claims are `advise`.
+- `harness/judge.mjs`: claims `orbit_consistent` and `head_reads` (in `claims.json`,
+  stage LOW, `advise`; registered in `gates.json`). Both read outline.py's flags — one
+  definition of each bar. Judge measures only the views its claims read (plus hero, plus
+  the orbit when an orbit claim is present); with no spec, everything.
+- **The rasteriser is vectorised**: triangles batched by pixel-box size, nearest fragment
+  wins, ties to the earlier triangle — bit-identical to the per-triangle loop on the owner,
+  colour, normal and albedo buffers of every shipped creature (checked in the suite), and
+  ~8× faster (1.3s → 0.1-0.3s a view). Ten views plus colour and sheets take 4.9s (wolf),
+  5.3s (raven-wyvern), 6.7s (giant); the four legacy views took 5.3s on the giant.
+  `hero.png` is byte-identical. The accessor reader is one `frombuffer`, not a loop.
+- `iou_vs_prev` is the minimum over the CORE views (az000, az045, az090, top — the orbit
+  twins of the four the 0.85 tweak bar was calibrated on); `iou_vs_prev_all` over all ten.
+
+**Gate 1 on the orbit**
+
+- The reader gets the **read set** in ONE batch: az000, az045, az090, az135, az180, top.
+  az225/az270/az315 are the mirrors of az135/az090/az045 (mirror IoU ≥0.99 on every
+  shipped creature) and join the set only when a creature is not symmetric (<0.90); the
+  bottom is measured, never read. `round.py` prints the read set (single spec) or the
+  identity view per pole plus the read-set file names (two poles).
+- `identity.py` keeps the counted rule (rank R in R views, loosening by round) and adds,
+  for an orbit read: **an oblique must read** (the noun at rank ≤4 in az045/az135 or a
+  mirror) and **the brief's identity view must read** (rank ≤4; a legacy side/front/hero
+  is read on az090/az000/az045). Neither loosens by round. Not "all eight azimuths":
+  three are mirrors, and az000/az180 are the long axis end-on — compact by nature, the
+  dead-view trap the old "all four" rule fell into.
+- `brief.py` accepts `az000 … az315`, `top`, `bottom` and the legacy names as the
+  identity view, matched as whole words (the first one named wins).
+
+**Plumbing**
+
+- `deliver.py` puts `orbit_sheet.png` and `orbit_sil_sheet.png` in the delivery pack.
+- `partreads.py` measures one view per part (`--views hero --no-colour`): a part read asks
+  what the thing is, not whether it holds from every side.
+- `calibrate.py` calibrates the head ruler: the example wolf is reported (advisory), its
+  headless twin — head vertices shrunk into the chest — must be caught by `head_reads`.
+- Cards 00/01, MANUAL and README describe the orbit, the advisories and the Gate 1 rule;
+  `assets/silhouettes.png` is the wolf's 10-view orbit silhouette sheet.
+- `tools/test.sh` gains an orbit block: default ten views, sheets and colour renders,
+  facing follows the head of a turned wolf, the vectorised z-buffer equals the reference
+  loop, orbit claims pass on the wolf and a sunk head is advice not a block, the Gate 1
+  orbit conditions both ways, and the delivery pack carries the sheets.
+
 ## 1.3.2 — the creature declares what its parts are for, and the engine makes it pay
 
 **Pipeline integrity fixes (after the 1.3.2 cut)**

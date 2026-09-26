@@ -22,6 +22,12 @@ session says it did:
     out/rN/metrics.json — a nudged silhouette stays >0.85 similar to the last
     one no matter what the session calls it. Run outline.py with
     `--prev out/r<N-1>` or this number is null and the guard is blind.
+    Since the 8+2 orbit, outline.py measures ten views, and iou_vs_prev
+    is the minimum over the CORE ones — az000, az045, az090 and top, the orbit
+    twins of the four views the 0.85 bar was calibrated on (front, hero, side,
+    top). Ten chances for one small view to swing would quietly stop the bar
+    catching nudges; the all-view minimum is kept as iou_vs_prev_all, for
+    information.
   · whether the feature being argued about is even visible at reading size,
     from thinnest_px48 — the blind read happens on a 48px thumbnail.
 

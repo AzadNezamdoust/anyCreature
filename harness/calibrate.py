@@ -143,6 +143,50 @@ def saturate(src, dst, floor=0.80):
     _recolour(src, dst, loud)
 
 
+def sink_head(src, dst):
+    """The headless twin: every head vertex (outline.py's head — the skin's
+    head joint and everything under it) shrunk to half size and moved to the
+    body's centroid, inside the torso. Nothing else moves, so the only thing
+    that changes is exactly what the head ruler claims to measure. Returns
+    False when the file has no head to sink."""
+    import numpy as np
+    sys.path.insert(0, H)
+    import outline
+    V, _F = outline.triangles(src)
+    head, _how = outline.head_vertices(src, len(V))
+    if head is None:
+        return False
+    hc, bc = V[head].mean(axis=0), V[~head].mean(axis=0)
+    NV = V.copy()
+    NV[head] = (V[head] - hc) * 0.5 + bc
+    d = open(src, 'rb').read()
+    jl, = struct.unpack('<I', d[12:16])
+    g = json.loads(d[20:20 + jl])
+    rest = bytearray(d[20 + jl:])
+    k = 0
+    for mesh in g.get('meshes', []):
+        for prim in mesh.get('primitives', []):
+            ai = prim.get('attributes', {}).get('POSITION')
+            if ai is None:
+                continue
+            a = g['accessors'][ai]
+            bv = g['bufferViews'][a['bufferView']]
+            off = 8 + bv.get('byteOffset', 0) + a.get('byteOffset', 0)
+            stride = bv.get('byteStride') or 12
+            for i in range(a['count']):
+                struct.pack_into('<fff', rest, off + i * stride, *map(float, NV[k + i]))
+            k += a['count']
+    open(dst, 'wb').write(d[:20 + jl] + bytes(rest))
+    return True
+
+
+# The orbit rulers (outline.py): claims set to BLOCK here, and only here, so the
+# exit code shows whether they bite. In claims.json both are advice.
+ORBIT_CLAIM = {'name': 'orbit-ruler', 'claims': [
+    {'type': 'head_reads', 'enforce': 'block'},
+    {'type': 'orbit_consistent', 'enforce': 'block'}]}
+
+
 SAT_CLAIM = {'name': 'colour-ruler', 'claims': [
     {'type': 'saturation_area', 'view': 'hero', 'min': 0.10, 'max': 0.50,
      'label': 'coloured, not a grey mass (floor 10% at S 0.30); loud colour a spotlight (ceiling 50% at S 0.50)'}]}
@@ -260,6 +304,35 @@ def run(tmp):
             else:
                 fails += 1
                 print(f'colour   ({tag:<14}) -> NOT refused ✗ ({got}; the colour ruler passes anything)')
+
+    # ── the orbit rulers (8+2 views, the head) ──────────────────────────────
+    # RED is hard: the headless twin of the example wolf must be caught by
+    # head_reads, or the head ruler passes anything. GREEN is reported, not
+    # counted: the example wolf is the front-page example, under active modelling
+    # and these rulers are ADVICE — a flag on it is a note for the modeller and
+    # a reason to look at orbit_sheet.png, not a reason to refuse to start.
+    if wolf:
+        oc = os.path.join(tmp, 'orbit.json')
+        json.dump(ORBIT_CLAIM, open(oc, 'w'))
+        rc, txt, _ = judge(wolf, oc, tmp, 'orbit_green')
+        if rc == 0:
+            print('orbit    (example wolf  ) -> holds from all 8+2 views, head reads ✓')
+        else:
+            first = next((l.strip() for l in txt.splitlines() if l.strip().startswith('✗')), '')
+            print(f'orbit    (example wolf  ) -> flagged (advisory — note, not a failure): {first[:150]}')
+        twin = os.path.join(tmp, 'headless.glb')
+        if not sink_head(wolf, twin):
+            fails += 1
+            print('orbit    (headless      ) -> the wolf has no head outline.py can find ✗')
+        else:
+            rc, txt, _ = judge(twin, oc, tmp, 'orbit_red')
+            if rc != 0 and 'head does not read' in txt:
+                print('orbit    (headless      ) -> flagged by head_reads ✓')
+            else:
+                fails += 1
+                print('orbit    (headless      ) -> NOT flagged ✗ (the head ruler passes a creature '
+                      'with its head sunk into its chest)')
+                print(tail(txt))
 
     if fails:
         print(f'[calibrate] FAILED — {fails} ruler(s) do not separate good from bad. '

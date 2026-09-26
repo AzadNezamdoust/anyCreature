@@ -77,6 +77,16 @@ same z-buffer, the colour numbers are the palette and baked colour the engine al
 and even `hero.png` is projected rather than rendered. The offline viewer is HTML
 the customer opens themselves.
 
+**The silhouettes are an ORBIT, not four views.** Eight azimuths 45° apart around
+the creature — az000 on its face, found from the skin's head joint — plus top and
+bottom: ten silhouettes, ten colour renders and two contact sheets
+(`orbit_sheet.png`, `orbit_sil_sheet.png`) per build, in about 5–7 seconds. Four
+views never looked at the in-between angles or at the head, and that is where
+creatures went wrong. Both are now measured and printed as advice every round; the
+blind reader gets six of the ten in ONE batch (card 01 §4b) — the other three
+azimuths are mirror images and the bottom is never read, so law 2's price does not
+move.
+
 ## Environment self-check (run verbatim)
 
 ```bash

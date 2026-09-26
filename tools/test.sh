@@ -124,7 +124,7 @@ refuses "glbcheck: truncated in BIN is [truncated]" "\[truncated\].*inside the B
         bash -c "head -c \$(( \$(wc -c < '$T/wolf.glb') - 64 )) '$T/wolf.glb' > '$T/trunc2.glb' && node harness/glbcheck.mjs '$T/trunc2.glb'"
 refuses "glbcheck: appended bytes are [trailing_bytes]" "\[trailing_bytes\]" \
         bash -c "cat '$T/wolf.glb' > '$T/trail.glb' && printf 'PK' >> '$T/trail.glb' && node harness/glbcheck.mjs '$T/trail.glb'"
-prints  "outline.py: 4 views"             "4 views"     python3 harness/outline.py "$T/wolf.glb" "$T/ol"
+prints  "outline.py: 4 legacy views"      "4 views"     python3 harness/outline.py "$T/wolf.glb" "$T/ol" --views legacy
 ok      "outline.py: hero shot"           python3 harness/outline.py "$T/wolf.glb" "$T/ol" --hero "$T/ol/hero.png"
 ok      "outline.py wrote metrics + thumbs" test -s "$T/ol/metrics.json" -a -s "$T/ol/sil_side_thumb48.png" -a -s "$T/ol/hero.png"
 prints  "judge.mjs: measure only"         "saturated area" node harness/judge.mjs "$T/wolf.glb" "$T/j" wolf
@@ -269,6 +269,73 @@ json.dump(s, open(sys.argv[1], 'w'))
 PY"
 prints  "gates.py lists open_end"          "open_end"     python3 harness/gates.py
 ok      "checks stamp carries open_end"    bash -c "grep -q '\"name\": \"open_end\"' '$T/rw_hp.checks.json'"
+
+# ── BEGIN orbit block (8+2 views, the head) — additive; leave the lines above alone ──
+echo "== 6. the 8+2 orbit"
+prints  "outline.py: default is the 10-view orbit" "10 views" \
+        python3 harness/outline.py "$T/wolf.glb" "$T/orb"
+ok      "orbit: sheets, colour renders, thumbs" \
+        test -s "$T/orb/orbit_sheet.png" -a -s "$T/orb/orbit_sil_sheet.png" -a -s "$T/orb/col_az045.png" \
+             -a -s "$T/orb/sil_az135_thumb48.png" -a -s "$T/orb/sil_bottom_thumb24.png"
+ok      "orbit: metrics carry facing, head and ring" python3 -c "
+import json, sys; m = json.load(open(sys.argv[1]))
+assert m['facing']['forward'] == [0.0, 0.0, 1.0], m['facing']
+assert m['facing']['head'].startswith('spec chain'), m['facing']
+o = m['orbit']; assert len(o['ring']) == 8 and o['read_set'][0] == 'az000' and o['read_set'][-1] == 'top'
+assert all('head_share' in m['views'][v] for v in ('az000', 'az090', 'top', 'bottom'))
+assert m['views']['az090']['head_distinct'] is True" "$T/orb/metrics.json"
+ok      "orbit: sheet is 5x2 tiles"      python3 -c "
+from PIL import Image; import sys; w, h = Image.open(sys.argv[1]).size; sys.exit(not (w == 5 * 256 and h == 2 * 278))" "$T/orb/orbit_sheet.png"
+# facing comes from the head, not the bounding box: the wolf turned to face +X
+# must say +X, and its az000 must look at its face
+ok      "orbit: facing follows the head, not the bbox" python3 -c "
+import sys; sys.path.insert(0, 'harness'); import numpy as np, outline as o
+V, F = o.triangles(sys.argv[1]); h, _ = o.head_vertices(sys.argv[1], len(V))
+R = np.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]], float)   # +Z -> +X
+f, how = o.facing_of(V @ R.T, h); assert list(f) == [1, 0, 0], (f, how)
+o.FACING = f; px, py, z = o.project(V @ R.T, 'az000')
+assert z[h].mean() < z[~h].mean(), 'az000 does not look at the face'" "$T/wolf.glb"
+# the vectorised z-buffer must give the per-triangle loop's answer, pixel for pixel
+ok      "orbit: z-buffer matches the reference loop" python3 -c "
+import sys, math; sys.path.insert(0, 'harness'); import numpy as np, outline as o
+o.RES = 160; V, F, MID, mats = o.triangles_by_material(sys.argv[1])
+px, py, z = o.project(V, 'az045'); got = o.zbuffer(px, py, z, F)
+depth = np.full((o.RES, o.RES), np.inf); own = np.full((o.RES, o.RES), -1)
+for t, (a, b, c) in enumerate(F):
+    xs, ys = px[[a, b, c]], py[[a, b, c]]
+    x0, x1 = int(max(0, math.floor(xs.min()))), int(min(o.RES - 1, math.ceil(xs.max())))
+    y0, y1 = int(max(0, math.floor(ys.min()))), int(min(o.RES - 1, math.ceil(ys.max())))
+    if x1 < x0 or y1 < y0: continue
+    if abs((ys[1]-ys[2])*(xs[0]-xs[2]) + (xs[2]-xs[1])*(ys[0]-ys[2])) < 1e-12: continue
+    gx, gy = np.meshgrid(np.arange(x0, x1 + 1) + 0.5, np.arange(y0, y1 + 1) + 0.5)
+    l0, l1, l2, zz = o._bary(px, py, z, a, b, c, gx, gy)
+    w =(l0 >= 0) & (l1 >= 0) & (l2 >= 0) & (zz < depth[y0:y1+1, x0:x1+1])
+    depth[y0:y1+1, x0:x1+1][w] = zz[w]; own[y0:y1+1, x0:x1+1][w] = t
+sys.exit(not np.array_equal(own, got))" "$T/wolf.glb"
+cat > "$T/orbit_claims.json" <<'EOF'
+{"name": "orbit", "claims": [
+ {"type": "head_reads", "enforce": "advise"}, {"type": "orbit_consistent", "enforce": "advise"}]}
+EOF
+prints  "judge.mjs: orbit claims pass on the wolf" "all claims pass" \
+        node harness/judge.mjs "$T/wolf.glb" "$T/oj" wolf --spec "$T/orbit_claims.json"
+prints  "judge.mjs: a sunk head is ADVICE, not a block" "head does not read" \
+        bash -c "python3 -c \"import sys; sys.path.insert(0, 'harness'); import calibrate; calibrate.sink_head(sys.argv[1], sys.argv[2])\" '$T/wolf.glb' '$T/headless.glb' && node harness/judge.mjs '$T/headless.glb' '$T/hj' headless --spec '$T/orbit_claims.json'"
+prints  "gates.py lists the orbit checks" "head_reads" python3 harness/gates.py LOW
+# Gate 1 on the orbit: the counted rule, plus an oblique that reads
+sed 's/carried by the SIDE view/carried by the az090 view/' "$T/brief.md" > "$T/brief_orbit.md"
+prints  "brief.py: an orbit identity view"  "identity_view=az090" python3 harness/brief.py "$T/brief_orbit.md"
+prints  "identity.py: orbit read passes with a live oblique" "PASS" \
+        python3 harness/identity.py --brief "$T/brief_orbit.md" --round 1 \
+          --guesses az000="dog,wolf" az045="wolf,dog" az090="wolf" az135="fox,dog,wolf" az180="bear" top="lizard"
+refuses "identity.py: a dead oblique fails the orbit" "orbit does not hold" \
+        python3 harness/identity.py --brief "$T/brief_orbit.md" --round 1 \
+          --guesses az000="wolf" az045="lamp,chair" az090="wolf" az135="rock,blob" az180="wolf" top="wolf"
+refuses "identity.py: a dead identity view fails the orbit" "identity view (az090)" \
+        python3 harness/identity.py --brief "$T/brief_orbit.md" --round 1 \
+          --guesses az000="wolf" az045="wolf" az090="lamp" az135="wolf" az180="wolf" top="wolf"
+ok      "deliver.py: the pack carries the orbit sheets" \
+        test -s "$T/del/orbit_sheet.png" -a -s "$T/del/orbit_sil_sheet.png"
+# ── END orbit block ──
 
 echo
 echo "$PASS passed, $FAIL failed"
