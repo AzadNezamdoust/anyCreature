@@ -464,7 +464,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
   {
     const gap = 0.015 * modelH;   // a part nearer than this counts as meeting the host
     for (const m of meshes) {
-      if (!m.part || !m.hostChain) continue;
+      if (!m.part || !(m.hostChain || m.hostPart)) continue;
       // A mirrored twin is the source reflected across X, and its host volume is
       // the source's host reflected the same way — testing it against the LEFT
       // host would measure the width of the creature. The source carries the
@@ -474,8 +474,12 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       // floating rune, an orbiting shard) — the strict law yields to it;
       // part_seat still reports the measured burial for the record.
       if (m.join === 'place') continue;
-      const host = volsByChain[m.hostChain];
-      if (!host || !host._rings) continue;
+      // a part seated on a PART (host_part) is measured against that part's own
+      // surface — a claw on a curve toe used to be refused as floating because
+      // only volumes were ever looked at
+      const host = m.hostPart || volsByChain[m.hostChain];
+      if (!host || !(m.hostPart || host._rings)) continue;
+      const hostName = m.hostPart ? `part "${m.hostPart.part}"` : `"${m.hostChain}"`;
       let nearest = Infinity;
       for (const p of m.V) {
         // <0 inside the host, >0 clear of it — measured against the surface, not
@@ -489,7 +493,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         // subtraction back out of the prose. The first third of a root is meant
         // to be embedded, so the useful number is the one that buries it, not
         // the one that merely touches: gap + a third of the part's own reach.
-        fails.push(`part_attachment: "${m.part}" never meets its host "${m.hostChain}" — its closest `
+        fails.push(`part_attachment: "${m.part}" never meets its host ${hostName} — its closest `
           + `point still stands ${nearest.toFixed(3)} clear of the surface (tolerance ${gap.toFixed(3)}). `
           + `Move it ${(nearest + gap).toFixed(3)} INTO the host along its own axis — touching is the `
           + `floor, and the first third of a root is meant to be embedded, which is what hides the seam. `
@@ -767,20 +771,23 @@ function runChecks(spec, sk, meshes, animsCompiled) {
     for (const m of meshes) if (!m.part && m.chain) volMat[m.chain] = m.material;
     const seen = new Set();
     for (const m of meshes) {
-      if (!m.part || !m.hostChain) continue;
+      if (!m.part || !(m.hostChain || m.hostPart)) continue;
       // tufts are the coat itself leaving the silhouette — a tail brush in the
       // tail's own fur is fur, not a part that failed to separate. Their read
       // is the outline (and the root→tip ramp the builder gives them), not a
       // material step against the host, so the same-material rule is not theirs.
       if (m.partType === 'tufts') continue;
-      const a = m.material, b = volMat[m.hostChain];
+      // a part seated on a part separates from THAT part, not from the volume
+      // under both of them
+      const hostName = m.hostPart ? m.hostPart.part : m.hostChain;
+      const a = m.material, b = m.hostPart ? m.hostPart.material : volMat[m.hostChain];
       if (!a || !b || a === b) {
         if (a && a === b) {
           const k = `${m.part}|${a}`;
           if (!seen.has(k)) {
             seen.add(k);
             warns.push(`contrast_adjacent: part "${m.part}" wears the SAME material "${a}" as the `
-              + `"${m.hostChain}" it sits on — at reading size it is not a part, it is a bump. `
+              + `"${hostName}" it sits on — at reading size it is not a part, it is a bump. `
               + `Give it its own entry in the palette.`);
           }
         }
@@ -793,7 +800,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
         if (seen.has(k)) continue;
         seen.add(k);
         warns.push(`contrast_adjacent: part "${m.part}" (${a}, L ${lab[a][0].toFixed(2)}) against its `
-          + `host "${m.hostChain}" (${b}, L ${lab[b][0].toFixed(2)}) — OKLab distance ${d.toFixed(3)}, `
+          + `host "${hostName}" (${b}, L ${lab[b][0].toFixed(2)}) — OKLab distance ${d.toFixed(3)}, `
           + `under 0.10. They will read as one mass at thumbnail size. Move one of them in `
           + `LIGHTNESS, which is what survives shrinking; hue alone does not.`);
       }
@@ -860,6 +867,7 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       if (i === k) continue;
       const A = parts[i], B = parts[k];
       if (stem(A.partName || A.part) === stem(B.partName || B.part)) continue;   // own twin, own sub-mesh (claws, pupil), or a ring repeat
+      if (A.hostPart === B || B.hostPart === A) continue;   // a part seated on a part: the seat IS the overlap (part_seat measures it)
       if (B.doubleSided) continue;                    // a membrane encloses nothing
       let sep = false;
       for (let a = 0; a < 3; a++) if (boxes[i].lo[a] > boxes[k].hi[a] || boxes[k].lo[a] > boxes[i].hi[a]) sep = true;
@@ -909,15 +917,20 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       if (!m._seatIdx) continue;
       let seat = m._seatIdx.map(i => m.V[i]).filter(Boolean);
       if (!seat.length) continue;
+      // a part seated on a PART counts burial in that part's surface (its twin
+      // carries the host's twin, so it is measured where it is, not mirrored)
+      const insideHost = m.hostPart
+        ? (q => signedDistance(q, m.hostPart) < 0 || insideAnyVol(q))
+        : insideAnyVol;
       // mirrored twins: the vols list holds the LEFT/axis volumes, so test the
       // twin's seat in mirror space (x-flipped) — symmetric by construction
-      if (m.part && m.part.endsWith('.R')) seat = seat.map(q => [-q[0], q[1], q[2]]);
-      const buried = seat.filter(insideAnyVol).length / seat.length;
+      if (!m.hostPart && m.part && m.part.endsWith('.R')) seat = seat.map(q => [-q[0], q[1], q[2]]);
+      const buried = seat.filter(insideHost).length / seat.length;
       const centre = seat.reduce((a, q) => G.add(a, q), [0, 0, 0]).map(x => x / seat.length);
       const label = m.part || 'part';
       if (m.join === 'insert' && buried < 0.6)
-        fails.push(`part_seat: '${label}' declares join "insert" but its base ring is only ${Math.round(buried * 100)}% inside a body (need ≥60%) — sink the root deeper or thicken the host`);
-      else if (m.join === 'extrude' && !insideAnyVol(centre))
+        fails.push(`part_seat: '${label}' declares join "insert" but its base ring is only ${Math.round(buried * 100)}% inside a body${m.hostPart ? ` (its host part "${m.hostPart.part}" or a volume)` : ''} (need ≥60%) — sink the root deeper or thicken the host`);
+      else if (m.join === 'extrude' && !insideHost(centre))
         fails.push(`part_seat: '${label}' declares join "extrude" but its base centre sits outside every body — the part does not grow out of a surface`);
       else if (!m.join && buried < 0.5)
         warns.push(`part_seat: '${label}' base ring is ${Math.round(buried * 100)}% buried — the root may show; sink it, or declare the join (insert/extrude/snap/place)`);

@@ -156,7 +156,8 @@ if (spec.embed_spec !== false) {
   asset.extras.parts = [
     ...(pristine.volumes || []).map(v => ({ kind: 'volume', chain: v.chain, material: v.material })),
     ...(pristine.parts || []).map(p => ({ kind: 'part', type: p.type, name: p.name || null,
-      material: p.material, host: p.host || (p.ribs ? 'ribs' : null), join: p.join || null })),
+      material: p.material, host: p.host || (p.ribs ? 'ribs' : null), join: p.join || null,
+      ...(p.host_part ? { host_part: p.host_part } : {}) })),
   ];
 }
 const names = require('./core/skeleton.js').exportNames(spec, sk);

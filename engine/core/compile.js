@@ -393,6 +393,7 @@ function buildSpike(spec, p) {
   const part = G.partFromRings(rings, p.sides || 6, 'ngon', 'fan', pts);
   return { material: p.material, V: part.v, F: part.fq, join: p.join,
     _seatIdx: Array.from({ length: p.sides || 6 }, (_, i) => i),  // base ring = the part's socket
+    _path: pts.map(q => q.slice()),                               // the centreline, for a part seated on this one
     skin: part.v.map(() => [[p.host, 1]]) };
 }
 
@@ -506,6 +507,7 @@ function buildCurve(spec, p) {
   const rings = roll
     ? require('./section.js').chainRingsRich(pts, radii, sides, false, radii.map(() => ({ roll })))
     : G.chainRings(pts, radii, sides, false);
+  const path = pts.map(q => q.slice());   // the centreline before any dome rings: what a hosted part seats on
   // "cap": "dome" rounds the far end the way volumes do (a horn tip is sharp,
   // an ear or a tongue is not); default stays the flat fan.
   if (p.cap === 'dome' && pts.length >= 2) {
@@ -544,7 +546,77 @@ function buildCurve(spec, p) {
   }
   return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted, join: p.join, C,
     _seatIdx: Array.from({ length: sides }, (_, i) => i),  // base ring = the part's socket
+    _path: path,
     skin: part.v.map(() => [[p.host, 1]]) };
+}
+
+// ── a part seated on a part ────────────────────────────────────────────────
+// "host_part": "<name>" seats a part on another part instead of on a joint —
+// a claw on a curve toe, a barb on a spine, a bell on a tentacle. It used to
+// be refused: part_seat and part_attachment measured only against VOLUMES, so
+// a claw seated 12 mm deep in a curve toe read as floating, and the only way
+// round it was to make every toe a chain with its own joints.
+//
+//   host_part  the name of an EARLIER part in the list (it has to exist to be
+//              seated on)
+//   at         0..1 along the host's centreline (a curve or a spike), default
+//              1 = the far end; the part's origin lands there, plus "offset"
+//   dir        defaults to the host centreline's tangent at that point
+//   host       defaults to the host part's own joint — only the fallback
+//
+// The seated part's skin weights are INHERITED from the host part (each vertex
+// takes the weights of the host's nearest vertex), so it moves with whatever
+// the host moves with, and the checks measure it against the host part's own
+// surface. A host with no centreline (a fin, a paw, a hand) seats the part at
+// its joint + offset, and "dir" is then required.
+function resolveHostPart(spec, p, byName) {
+  const hp = byName.get(p.host_part);
+  if (!hp) {
+    const later = (spec.parts || []).some(x => x.name === p.host_part);
+    throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" ${later
+      ? 'is listed AFTER this part — a part can only be seated on one that already exists; move it up the list'
+      : 'names no part in this spec'}`);
+  }
+  const { mesh: hm, spec: hs } = hp;
+  const hostJoint = p.host || hs.host;
+  if (!hostJoint || !spec.joints[hostJoint])
+    throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" has no host joint to fall back on — give this part a "host"`);
+  let seat, tangent = null;
+  if (hm._path && hm._path.length >= 2) {
+    const path = hm._path, arc = [0];
+    for (let i = 1; i < path.length; i++) arc.push(arc[i - 1] + G.len(G.sub(path[i], path[i - 1])));
+    const L = arc[arc.length - 1] || 1;
+    const at = Math.min(1, Math.max(0, p.at ?? 1)) * L;
+    let i = 0; while (i < arc.length - 2 && at > arc[i + 1]) i++;
+    const f = (at - arc[i]) / (arc[i + 1] - arc[i] || 1);
+    seat = G.add(G.mul(path[i], 1 - f), G.mul(path[i + 1], f));
+    tangent = G.nrm(G.sub(path[i + 1], path[i]));
+  } else {
+    if (p.at !== undefined)
+      INFO.push(`WARN part '${p.name}': host_part "${p.host_part}" is a ${hs.type} with no centreline, so "at" does nothing — the seat is the host's joint + "offset"`);
+    if (!p.dir) throw new Error(`part "${p.name || p.type}": host_part "${p.host_part}" is a ${hs.type} with no centreline to take a direction from — give this part a "dir"`);
+    seat = G.add(spec.joints[hs.host], hs.offset || [0, 0, 0]);
+  }
+  const origin = G.add(seat, p.offset || [0, 0, 0]);
+  const p2 = { ...p, host: hostJoint, offset: G.sub(origin, spec.joints[hostJoint]), dir: p.dir || tangent };
+  INFO.push(`part '${p.name}': seated on part "${p.host_part}"${tangent ? ` at ${(p.at ?? 1).toFixed(2)} of its length` : ''}`
+    + ` [${origin.map(x => x.toFixed(3)).join(', ')}]${p.dir ? '' : tangent ? `, pointing along it (${dirName(tangent)})` : ''}`
+    + `; skin inherited from it`);
+  return { p2, hostMesh: hm };
+}
+
+// every vertex takes the skin of the host's nearest vertex
+function inheritSkin(m, host) {
+  if (!host.skin || !host.V.length) return;
+  m.skin = m.V.map(v => {
+    let best = Infinity, bi = 0;
+    for (let i = 0; i < host.V.length; i++) {
+      const q = host.V[i];
+      const d = (v[0] - q[0]) ** 2 + (v[1] - q[1]) ** 2 + (v[2] - q[2]) ** 2;
+      if (d < best) { best = d; bi = i; }
+    }
+    return host.skin[bi].map(x => x.slice());
+  });
 }
 
 function buildMembrane(spec, p) {
@@ -1224,13 +1296,25 @@ function compile(spec) {
   const BUILDERS = { spike: buildSpike, curve: buildCurve, membrane: buildMembrane, hand: buildHand,
     paw: buildPaw, fin: (s2, p2) => buildFin(s2, p2, builtVols),
     tufts: (s2, p2) => buildTufts(s2, p2, builtVols) };
-  for (const p of spec.parts || []) {
-    const label = p.name || `${p.type}@${p.host || 'ribs'}`;
+  // the parts built so far, by name: what a later part may be seated on
+  // (host_part). The value is the part's PRIMARY mesh and its twin, if any.
+  const byName = new Map();
+  for (const p0 of spec.parts || []) {
+    let p = p0;
+    const label = p.name || `${p.type}@${p.host || p.host_part || 'ribs'}`;
     const sa = p.smooth_angle ?? defSmooth;
+    let hostMesh = null;
+    if (p.host_part) {
+      if (p.type === 'eye' || p.type === 'membrane' || p.type === 'tufts')
+        throw new Error(`part "${label}": a ${p.type} cannot be seated with host_part — it places itself (an eye by anchor, a membrane by its ribs, tufts by their anchor)`);
+      ({ p2: p, hostMesh } = resolveHostPart(spec, p, byName));
+    }
     // which volume is this part supposed to be growing out of? Either declared
     // via anchor.chain, or the chain that owns its host joint. checks.js needs
-    // it to tell "buried in the host" from "floating next to the host".
-    const hostChain = (p.anchor && p.anchor.chain)
+    // it to tell "buried in the host" from "floating next to the host". A part
+    // seated on a part inherits its host's chain and carries the host mesh too.
+    const hostChain = hostMesh ? (hostMesh.hostChain || null)
+      : (p.anchor && p.anchor.chain)
       || (p.host && Object.keys(spec.chains || {}).find(c => (spec.chains[c] || []).includes(p.host)))
       || null;
     if (p.type === 'eye') {
@@ -1243,11 +1327,20 @@ function compile(spec) {
       // the part itself, the rest are named `<part>.<sub>` and carry their own
       // shade class / join when the builder says so
       const built = BUILDERS[p.type](spec, p);
+      let first = true;
       for (const m of Array.isArray(built) ? built : [built]) {
         const lbl = m.sub ? label + '.' + m.sub : label;
-        m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain; meshes.push(m);
-        if (p.mirrored) { const t = mirrorMesh(m, rd, mj); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
-          t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade; meshes.push(t); }
+        m.part = lbl; m.partName = label; m.smoothAngle = sa; m.partType = p.type; m.hostChain = hostChain;
+        if (hostMesh) { m.hostPart = hostMesh; inheritSkin(m, hostMesh); }
+        meshes.push(m);
+        let t = null;
+        if (p.mirrored) { t = mirrorMesh(m, rd, mj); t.part = lbl + '.R'; t.partName = label; t._mirrorSrc = m;
+          t.partType = p.type; t.hostChain = hostChain; t.shade = m.shade;
+          // the twin sits on the host's twin when the host was mirrored too,
+          // else on the same (centre-line) host
+          if (hostMesh) t.hostPart = (byName.get(p0.host_part) || {}).twin || hostMesh;
+          meshes.push(t); }
+        if (first) { byName.set(label, { mesh: m, twin: t, spec: p0 }); first = false; }
       }
     } else throw new Error(`unknown part type "${p.type}"`);
   }
