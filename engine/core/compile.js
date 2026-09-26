@@ -107,6 +107,99 @@ function crProfile(profile, t) {
           Math.max(0.004, cr(p0[2], p1[2], p2[2], p3[2])), sec];
 }
 
+// ── arc colours: bands around a ring-built mesh ─────────────────────────────
+// Shared by volumes and curves. An arc is a band [from, to] in degrees from
+// the section's top (0 = +W: the spine on a body chain, 180 = belly), applied
+// in order, later ones over earlier ones, on top of the material colour.
+//
+// An arc may also be limited ALONG the chain: "t": [t0, t1] (fractions of
+// the chain, default the whole of it). A saddle that stops at the withers,
+// a pale muzzle on a dark head, a dark tail tip, a cream chest that does not
+// run under the belly — none of these are a band around the whole chain, and
+// without a t range the only way to get them was to cut the chain in two.
+// The dome cap rings sit at t just outside [0, 1] and belong to the end row
+// they extend.
+//
+// "feather" (degrees, default 0) softens the arc's angular edges and
+// "feather_t" (a fraction of the chain, default 0) its t edges: the band's
+// weight ramps from 0 at the edge to 1 that far inside it, so a saddle can
+// melt into the flank instead of stopping on a ring line. Where the ramps
+// overlap the arc is only partly applied — the seam-blend pass (L1) will not
+// soften an edge inside one mass, so this is the only lever for that.
+//
+// The ramp is a smoothstep, and it is RESOLVED BY THE VERTICES: a vertex
+// colour is interpolated linearly across each wall, so a feather narrower
+// than the ring step (360/sides) lands between two vertices and does nothing,
+// and one just wider than it puts ONE vertex on the ramp — a single kink, not
+// a gradient. A gradient needs two or three vertices inside the ramp: 2-3x
+// the step. The compiler says so when a feather is under the step, because
+// the symptom — a hard-edged block where a soft band was written — looks like
+// a colour bug and is not.
+function arcColours(label, part, sides, ringT, rolls, base, colSpec, vIndex) {
+  const arcs = (colSpec.arcs || []).map(a => {
+    if (a.t !== undefined && !(Array.isArray(a.t) && a.t.length === 2))
+      throw new Error(`${label}: an arc's "t" is [t0, t1] along the chain, got ${JSON.stringify(a.t)}`);
+    if (!a.color) throw new Error(`${label}: an arc needs a "color"`);
+    return { from: a.from ?? 0, to: a.to ?? 180, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
+             fa: Math.max(0, a.feather || 0), ft: Math.max(0, a.feather_t || 0) };
+  });
+  const step = 360 / sides;
+  // ring spacing along t: the median gap between consecutive rings inside [0,1]
+  const gaps = [];
+  for (let i = 1; i < ringT.length; i++) {
+    const g = ringT[i] - ringT[i - 1];
+    if (g > 1e-9 && ringT[i] <= 1 + 1e-9 && ringT[i - 1] >= -1e-9) gaps.push(g);
+  }
+  gaps.sort((x, y) => x - y);
+  const tStep = gaps.length ? gaps[gaps.length >> 1] : 1;
+  for (const a of arcs) {
+    const edged = (a.from > 0 && a.fa > 0) || (a.to < 180 && a.fa > 0);
+    if (edged && a.fa < step)
+      INFO.push(`WARN ${label}: arc ${a.from}..${a.to}° has "feather": ${a.fa} but the ring step is `
+        + `${step.toFixed(1)}° (${sides} sides) — a feather narrower than the step lands between two `
+        + `vertices and does nothing; the band ships with a hard edge. Write it at 2-3x the step `
+        + `(${Math.round(step * 2)}-${Math.round(step * 3)}°) for a gradient, or raise "sides".`);
+    const tEdged = (a.t0 > 0 || a.t1 < 1) && a.ft > 0;
+    if (tEdged && a.ft < tStep)
+      INFO.push(`WARN ${label}: arc t ${a.t0}..${a.t1} has "feather_t": ${a.ft} but the rings are `
+        + `${tStep.toFixed(3)} apart in t — a feather narrower than the ring spacing lands between `
+        + `two rings and does nothing. Write it at 2-3x the spacing (${(tStep * 2).toFixed(2)}-`
+        + `${(tStep * 3).toFixed(2)}), or lower "ring_step".`);
+  }
+  // 1 inside, 0 outside, smoothstep over f inside each CLOSED edge. A band
+  // touching 0 or 180 (or t 0 or 1) is open on that side: nothing to feather.
+  const edgeW = (x, lo, hi, f, openLo, openHi) => {
+    if (x < lo - 1e-9 || x > hi + 1e-9) return 0;
+    if (!(f > 0)) return 1;
+    let u = 1;
+    if (!openLo) u = Math.min(u, (x - lo) / f);
+    if (!openHi) u = Math.min(u, (hi - x) / f);
+    u = Math.max(0, Math.min(1, u));
+    return u * u * (3 - 2 * u);
+  };
+  const C = part.v.map(() => null);
+  part.rings.forEach((ring, s2) => {
+    const tt = Math.min(1, Math.max(0, ringT[s2]));
+    const roll = (rolls && rolls[s2]) || 0;
+    ring.forEach((pnt, k) => {
+      const vi = vIndex.get(pnt);
+      const aDeg = ((360 * k / sides + roll * 180 / Math.PI) % 360 + 360) % 360;
+      const fromTop = (450 - aDeg) % 360;                 // 0=top(+W), 180=bottom
+      const sym = fromTop > 180 ? 360 - fromTop : fromTop; // symmetric 0..180
+      let c = base;
+      for (const a of arcs) {
+        const wa = edgeW(sym, a.from, a.to, a.fa, a.from <= 0, a.to >= 180);
+        const wt = edgeW(tt, a.t0, a.t1, a.ft, a.t0 <= 0, a.t1 >= 1);
+        const w = wa * wt;
+        if (w > 0) c = [c[0] + (a.c[0] - c[0]) * w, c[1] + (a.c[1] - c[1]) * w, c[2] + (a.c[2] - c[2]) * w];
+      }
+      C[vi] = c.slice();
+    });
+  });
+  for (let i = 0; i < C.length; i++) if (!C[i]) C[i] = base.slice();
+  return C;
+}
+
 function buildVolume(spec, vol) {
   const sides = vol.sides || 12;
   const joints = chainPoints(spec, vol.chain);
@@ -251,57 +344,11 @@ function buildVolume(spec, vol) {
     const d0 = G.len(G.sub(p, pts[0])), d1 = G.len(G.sub(p, pts[pts.length - 1]));
     skin[i] = [[d0 < d1 ? names[0] : names[names.length - 1], 1]];
   });
-  // ── vertex colours: arc bands (0°=spine, 180°=belly) + gradient + noise ──
+  // ── vertex colours: arc bands (0°=spine, 180°=belly) ─────────────────────
   const colSpec = vol.colors || {};
   const base = hex2lin((spec.palette[vol.material] || {}).color || '#888888');
-  // An arc may also be limited ALONG the chain: "t": [t0, t1] (fractions of
-  // the chain, default the whole of it). A saddle that stops at the withers,
-  // a pale muzzle on a dark head, a dark tail tip, a cream chest that does not
-  // run under the belly — none of these are a band around the whole chain, and
-  // without a t range the only way to get them was to cut the chain in two.
-  // Arcs are applied in order, later ones over earlier ones. The dome cap rings
-  // sit at t just outside [0, 1] and belong to the end row they extend.
-  // "feather" (degrees, default 0) softens the arc's angular edges and
-  // "feather_t" (a fraction of the chain, default 0) its t edges: the band's
-  // weight ramps from 0 at the edge to 1 that far inside it, so a saddle can
-  // melt into the flank instead of stopping on a ring line. Where the ramps
-  // overlap the arc is only partly applied — the seam-blend pass (L1) will not
-  // soften an edge inside one mass, so this is the only lever for that.
-  const arcs = (colSpec.arcs || []).map(a => {
-    if (a.t !== undefined && !(Array.isArray(a.t) && a.t.length === 2))
-      throw new Error(`volume "${vol.chain}": an arc's "t" is [t0, t1] along the chain, got ${JSON.stringify(a.t)}`);
-    return { from: a.from ?? 0, to: a.to ?? 180, t0: a.t ? a.t[0] : 0, t1: a.t ? a.t[1] : 1, c: hex2lin(a.color),
-             fa: Math.max(0, a.feather || 0), ft: Math.max(0, a.feather_t || 0) };
-  });
-  const ramp = (x, lo, hi, f) => {          // 1 inside, 0 outside, linear over f inside each edge
-    if (x < lo - 1e-9 || x > hi + 1e-9) return 0;
-    if (!(f > 0)) return 1;
-    return Math.min(1, (x - lo) / f, (hi - x) / f);
-  };
-  const C = part.v.map(() => null);
-  const rollOf = s2 => (secs[s2] && secs[s2].roll) || 0;
-  part.rings.forEach((ring, s2) => {
-    const tt = Math.min(1, Math.max(0, ringT[s2]));
-    ring.forEach((pnt, k) => {
-      const vi = vIndex.get(pnt);
-      const aDeg = (360 * k / sides + rollOf(s2) * 180 / Math.PI) % 360;
-      const fromTop = (450 - aDeg) % 360;                 // 0=top(+W), 180=bottom
-      const sym = fromTop > 180 ? 360 - fromTop : fromTop; // symmetric 0..180
-      let c = base;
-      for (const a of arcs) {
-        // a full-width band (0..180) has no angular edges to feather, and an
-        // arc touching the spine or belly line has only one
-        const wa = ramp(sym, a.from, a.to, a.fa) || (a.fa > 0 && sym >= a.from && sym <= a.to
-          ? Math.min(1, a.from <= 0 ? (a.to - sym) / a.fa : 1, a.to >= 180 ? (sym - a.from) / a.fa : 1) : 0);
-        const wt = ramp(tt, a.t0, a.t1, a.ft) || (a.ft > 0 && tt >= a.t0 - 1e-9 && tt <= a.t1 + 1e-9
-          ? Math.min(1, a.t0 <= 0 ? (a.t1 - tt) / a.ft : 1, a.t1 >= 1 ? (tt - a.t0) / a.ft : 1) : 0);
-        const w = Math.max(0, Math.min(1, wa * wt));
-        if (w > 0) c = [c[0] + (a.c[0] - c[0]) * w, c[1] + (a.c[1] - c[1]) * w, c[2] + (a.c[2] - c[2]) * w];
-      }
-      C[vi] = c.slice();
-    });
-  });
-  for (let i = 0; i < C.length; i++) if (!C[i]) C[i] = base.slice();
+  const C = arcColours(`volume "${vol.chain}"`, part, sides, ringT, secs.map(s2 => (s2 && s2.roll) || 0),
+    base, colSpec, vIndex);
   // gradient and noise are NOT applied here any more — they are one whole-body
   // pass in applyShading() below, so every mesh (paws, ears, eyes included)
   // shares one top-to-bottom ramp and one grain size. Arc bands stay local.
@@ -477,7 +524,25 @@ function buildCurve(spec, p) {
   const bend = Math.acos(Math.max(-1, Math.min(1, G.dot(d0, t)))) * 180 / Math.PI;
   const dy = pts[pts.length - 1][1] - pts[0][1];
   if (bend > 15) INFO.push(`curve '${p.name || p.host}': steering accumulated to ${bend.toFixed(0)}° — starts ${dirName(d0)}, finishes ${dirName(t)}, far end ${dy >= 0 ? '+' : ''}${dy.toFixed(2)} in y`);
-  return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted, join: p.join,
+  // A curve takes "colors": {"arcs": [...]} like a volume: t runs 0 at the root
+  // to 1 at the far end, and the angle is read in the curve's OWN frame, which
+  // is a parallel-transport frame off its first heading — not the body's
+  // spine/belly. So where 0° faces is printed (the pale inside of an ear, the
+  // dark upper edge of a horn: read that line, do not reason from the body).
+  let C;
+  if (p.colors && p.colors.arcs && p.colors.arcs.length) {
+    const arc = [0]; for (let i = 1; i < pts.length; i++) arc.push(arc[i - 1] + G.len(G.sub(pts[i], pts[i - 1])));
+    const total = arc[arc.length - 1] || 1;
+    const ringT = arc.map(a => a / total);
+    const vIndex = new Map(); part.v.forEach((q, i) => vIndex.set(q, i));
+    const base = hex2lin((spec.palette[p.material] || {}).color || '#888888');
+    C = arcColours(`curve "${p.name || p.host}"`, part, sides, ringT, rings.map(() => roll), base, p.colors, vIndex);
+    const { fr } = G.framesOf(pts.slice(0, Math.max(2, pts.length)), false);
+    const W = fr[0][1], U = fr[0][0];
+    INFO.push(`curve '${p.name || p.host}': colours — 0° faces ${dirName(W)} (world ${W.map(x => x.toFixed(2)).join(',')}), `
+      + `90° faces ${dirName(U)} (world ${U.map(x => x.toFixed(2)).join(',')}), 180° faces ${dirName(G.mul(W, -1))}`);
+  }
+  return { material: p.material, V: part.v, F: part.fq, faceted: p.faceted, join: p.join, C,
     _seatIdx: Array.from({ length: sides }, (_, i) => i),  // base ring = the part's socket
     skin: part.v.map(() => [[p.host, 1]]) };
 }
@@ -786,6 +851,20 @@ function buildPaw(spec, p) {
 //   droop    toward world down (default 0.3);  flare  along the surface normal (1)
 //   jitter   ±fraction of length, alternating per tuft (default 0.3)
 //   sides    ring sides (default 4: a diamond wedge; 6 for a rounder tuft)
+//   bulge    the clump's full width as a multiple of `width`, a third of the
+//            way out (default 1.0; 0.6 makes a blade, 1.3 a pom)
+//   root_color / tip_color   the colour ramp along each tuft (see below)
+//
+// A tuft is a CLUMP, not a blade. The first version was a two-ring wedge that
+// tapered straight from the root to a point, and a crown of those read as
+// paper spikes: every silhouette edge was a straight line and every tuft was
+// the same flat colour as its neighbour. Now each tuft has a root ring under
+// the skin, a full ring a third of the way out (the clump's belly), a shoulder
+// ring at three quarters and a tip, so the outline is a lobe that pinches to a
+// point, and it carries its own colour ramp: the root takes the colour of the
+// skin it grows from (so it never stands off the body), and the tip takes the
+// part's material — cream tips over a grey neck is what a ruff looks like.
+// `root_color` / `tip_color` override either end.
 function buildTufts(spec, p, builtVols) {
   if (p.host && !spec.joints[p.host]) throw new Error(`tufts host joint "${p.host}" missing`);
   const an = p.anchor;
@@ -797,7 +876,10 @@ function buildTufts(spec, p, builtVols) {
   const span = p.span ?? 0, sides = Math.max(3, (p.sides ?? 4) | 0);
   const L0 = p.length ?? 0.1, W = p.width ?? 0.04, TH = p.thick ?? 0.025;
   const sweep = p.sweep ?? 0, droop = p.droop ?? 0.3, flare = p.flare ?? 1, jit = p.jitter ?? 0.3;
-  const V = [], F = [], skin = [];
+  const bulge = Math.max(0.2, p.bulge ?? 1.0);
+  const tipC = hex2lin(p.tip_color || (spec.palette[p.material] || {}).color || '#888888');
+  const rootOverride = p.root_color ? hex2lin(p.root_color) : null;
+  const V = [], F = [], skin = [], C = [];
   // local chain tangent at t, from the ring table (bevel-skip drops rings, so
   // look the bracketing rings up by their true t, as surfacePoint does)
   const ringAt = t => {
@@ -815,15 +897,20 @@ function buildTufts(spec, p, builtVols) {
   // neck instead of hanging off whichever single joint was named. "host" is
   // then only the fallback for a chain with no skin (it never is), and may be
   // left out.
-  const skinAt = (t, aroundDeg) => {
+  const hostVertex = (t, aroundDeg) => {
     const [s0, s1] = ringAt(t);
     const s = Math.abs(bv._ringT[s0] - t) < Math.abs(bv._ringT[s1] - t) ? s0 : s1;
     const N = bv._sides, fromTop = ((aroundDeg % 360) + 360) % 360;
     const k = Math.round(((450 - fromTop) % 360) / 360 * N) % N;
-    const vi = bv._ringIdx[s][k];
-    const w = bv.skin && bv.skin[vi];
+    return bv._ringIdx[s][k];
+  };
+  const skinAt = (t, aroundDeg) => {
+    const w = bv.skin && bv.skin[hostVertex(t, aroundDeg)];
     return w ? w.map(x => x.slice()) : [[p.host, 1]];
   };
+  // the colour of the skin under the tuft: the host's arc colour at that vertex
+  const rootAt = (t, aroundDeg) => rootOverride
+    || (bv.C && bv.C[hostVertex(t, aroundDeg)]) || tipC;
   let made = 0;
   for (let r = 0; r < rows; r++) {
     const t = Math.min(1, Math.max(0, (an.t ?? 0.5) + (rows > 1 ? (r / (rows - 1) - 0.5) * span : 0)));
@@ -842,29 +929,44 @@ function buildTufts(spec, p, builtVols) {
       const u2 = G.nrm(G.cross(d, u1));
       const L = L0 * (1 + jit * ((i + r) % 2 ? 0.5 : -0.5) * 2 * (0.6 + 0.4 * hash3(i, r, made)));
       const base = G.sub(sp.p, G.mul(sp.out, TH * 0.9));            // rooted under the skin
-      const mid = G.add(base, G.mul(d, L * 0.45));
       const tip = G.add(G.add(base, G.mul(d, L)), [0, -droop * L * 0.15, 0]);
+      const rootC = rootAt(t, a);
+      const cAt = f => [rootC[0] + (tipC[0] - rootC[0]) * f, rootC[1] + (tipC[1] - rootC[1]) * f,
+                        rootC[2] + (tipC[2] - rootC[2]) * f];
+      // stations along the tuft: [fraction of L, half-width, half-thickness, colour mix]
+      const stations = [
+        [0.00, W * 0.32, TH * 0.36, 0.00],                 // root, under the skin
+        [0.34, W * 0.5 * bulge, TH * 0.5 * bulge, 0.45],   // the clump's belly
+        [0.74, W * 0.27, TH * 0.24, 0.85],                 // shoulder
+      ];
       const b0 = V.length;
-      for (const [c, rw, rh] of [[base, W / 2, TH / 2], [mid, W * 0.38, TH * 0.34]])
+      for (const [f, rw, rh, cf] of stations) {
+        const c = G.add(base, G.mul(d, L * f));
+        const col = cAt(cf);
         for (let k = 0; k < sides; k++) {
           const th = 2 * Math.PI * k / sides;
           V.push(G.add(c, G.add(G.mul(u1, Math.cos(th) * rw), G.mul(u2, Math.sin(th) * rh))));
+          C.push(col.slice());
         }
-      const ti = V.length; V.push(tip);
+      }
+      const ti = V.length; V.push(tip); C.push(cAt(1));
       const w = skinAt(t, a);
       while (skin.length < V.length) skin.push(w.map(x => x.slice()));
-      for (let k = 0; k < sides; k++) {
-        const k1 = (k + 1) % sides;
-        F.push([b0 + k, b0 + k1, b0 + sides + k1, b0 + sides + k]);
-        F.push([b0 + sides + k, b0 + sides + k1, ti]);
-      }
+      const nS = stations.length;
+      for (let s = 0; s < nS - 1; s++)
+        for (let k = 0; k < sides; k++) {
+          const k1 = (k + 1) % sides, r0 = b0 + s * sides, r1 = r0 + sides;
+          F.push([r0 + k, r0 + k1, r1 + k1, r1 + k]);
+        }
+      const last = b0 + (nS - 1) * sides;
+      for (let k = 0; k < sides; k++) F.push([last + k, last + (k + 1) % sides, ti]);
       for (let k = 1; k < sides - 1; k++) F.push([b0, b0 + k + 1, b0 + k]);   // base, buried
       made++;
     }
   }
   INFO.push(`tufts '${p.name || p.host}': ${made} tufts on "${an.chain}" at t=${(an.t ?? 0.5).toFixed(2)}`
     + `${rows > 1 ? ` ±${(span / 2).toFixed(2)}` : ''}, around ${rangeA[0]}..${rangeA[1]}°`);
-  return { material: p.material, V, F, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
+  return { material: p.material, V, F, C, join: p.join || 'insert', shade: p.shade || 'flesh', skin };
 }
 
 const { mirrorName } = require('./skeleton.js');
