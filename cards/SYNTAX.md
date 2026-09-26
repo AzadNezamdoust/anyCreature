@@ -41,6 +41,12 @@
                         // needs room), so the root of a limb deforms with the body and the
                         // seam stays gone MID-CLIP — a normal copied in bind pose used to
                         // rotate with the limb bone and the seam came back at every step.
+                        // Only the share of a vertex that follows the chain's ROOT joint
+                        // moves to the host, the band is also measured along the limb
+                        // (a limb lying against its host is not "at the junction" to the
+                        // elbow), and a root joint that swings far in the clips gets a
+                        // shallower blend (the build says how much and why) — a full
+                        // blend under a 152° shoulder raise tore the rings in the band.
                         // Runs before the checks, so anim_integrity sweeps what ships.
    "stack": true },     // false = the 1.2.0 ramp-and-grain instead (gradient/noise below)
                         // legacy, only read when stack:false:

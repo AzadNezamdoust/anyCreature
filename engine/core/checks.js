@@ -288,7 +288,10 @@ function runChecks(spec, sk, meshes, animsCompiled) {
       // the spec. Name the mesh, and for a stretch name the joint driving it.
       let folds = 0, maxStretch = 0, worstFoldMesh = '', worstFolds = 0;
       let stretchMesh = '', stretchJoint = '';
-      const nameOf = (m) => m.chain || m.part || m.material;
+      // a mirrored twin volume is "<chain>.R" (same id as self_clip / part_spans):
+      // "5.5x in LArm, pulled by RElbow" read as a wrong host, when it was the
+      // right arm all along
+      const nameOf = (m) => m.part || (m.chain && m._mirrorSrc ? m.chain + '.R' : m.chain) || m.material;
       const heaviestJoint = (m, vi) => {
         const infl = (m.skin && m.skin[vi]) || [];
         let best = '', bw = -1;

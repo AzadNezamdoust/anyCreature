@@ -200,6 +200,18 @@ order, plus what the new check found.
   that ship. On the wolf's foreleg (26° swing) a smoothstep ramp over the 0.06 band
   folded 3 triangles at move@0.2; linear over 0.09 folds nothing and peaks at 2.1x edge
   stretch (2.0x with the old rigid root). `junction_skin: 0` opts out.
+  Three rules keep the blend on a large-range joint: (1) only the share of a vertex's
+  skin that follows the chain's ROOT joint is handed to the host — a vertex already
+  weighted to the second joint is past the shoulder however near the torso it lies;
+  (2) the ramp variable is the larger of the distance to the host's surface and the
+  distance along the limb past the root ring's own radius, so a limb hanging against
+  its host (the giant's upper arm along a 2 m torso) is not "at the junction" down to
+  the elbow; (3) the blend depth is capped by the root joint's travel in the clips —
+  a root ring of radius R turned θ moves 2R·sin(θ/2) across the band, and the depth
+  is set so the ramp's own share of edge stretch stays near 1.2x (the build narrates
+  the cap). The giant's 152° fist raise went from 5.5x stretch and 6 folded triangles
+  at attack@0.4 to 2.5x and none (2.0x with no blend); the wolf and the raven, whose
+  roots swing under 30°, keep the full blend and their seams.
 - **Membranes take colours.** `colors.arcs` was a band around a ring-built mesh and a
   sheet has no rings; a wing shipped one flat colour. A membrane now takes `"colors":
   {"arcs": [{u, t, color, feather_u, feather_t}], "veins": {color, width}}` in the sheet's

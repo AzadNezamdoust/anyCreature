@@ -5,7 +5,7 @@
   "The fists are chains, not a 'hand' part: palm (LHand) + four folded fingers (LF1-LF4, knuckle joint b, proximal c runs back, middle d runs up, tip e tucks in) + a thumb. Back of the hand faces forward, knuckles down.",
   "Fists, fingers and thumb are shade 'hard': the L1 seam blend radius on a 4 m body is ~20 cm, wider than a finger, and it averaged the knuckle row away and painted the knees ochre where the fists hang beside them.",
   "function names RArm/RHand/RF1-4/RThumb explicitly: effector_leads does not count a mirrored chain's twin as the effector (see example/gallery/README.md).",
-  "joint_range LShoulder.rz is -15..30: the engine's sweep stops the arm there (a finger reaches the foot)."
+  "joint_range LShoulder.rz is -15..26: the engine's sweep stops the arm there (a finger of the right fist reaches the foot, 2 cm short at 30 since the 1.4 ring frames)."
  ],
  "height": 4.0,
  "shading": {
@@ -1788,7 +1788,7 @@
    ],
    "rz": [
     -15,
-    30
+    26
    ]
   },
   "LElbow": {
