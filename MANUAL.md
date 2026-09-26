@@ -56,7 +56,7 @@ engine/              cli.js + core/ — the ACS engine v2
   core/normals.js    angle-weighted normals + `smooth_angle` creases (bodies stay smooth)
 harness/
   outline.py         THE measuring tool: 4-view silhouettes + thumbs, layout and boldness
-                     measures, per-part shares off a z-buffer, colour off the baked albedo,
+                     measures, per-part shares off a z-buffer, colour off the recorded palette,
                      and the hero shot. All from the vertices — no browser anywhere
   judge.mjs          claims judge over outline.py's numbers (part shares, focal contrast,
                      styles, saturated area, rig/anim/tri)

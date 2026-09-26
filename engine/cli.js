@@ -159,6 +159,26 @@ if (spec.embed_spec !== false) {
       material: p.material, host: p.host || (p.ribs ? 'ribs' : null), join: p.join || null,
       ...(p.host_part ? { host_part: p.host_part } : {}) })),
   ];
+  // The PALETTE, per vertex, before any lighting (shade.js, the albedo track):
+  // 8-bit sRGB triplets, base64, one run per part_spans row, `counts[k]` long.
+  // Those are the vertices BEFORE writeGLB's crease split: a split appends
+  // copies of existing vertices after a mesh's originals, so a row's first
+  // counts[k] shipped vertices are these, in order, and each later one shares
+  // its position with one of them. harness/outline.py measures saturated area
+  // on this rather than on COLOR_0, because COLOR_0 carries the ramp, the top
+  // boost and every shadow, none of which the designer chose. Rides with
+  // part_spans (it cannot be placed without them); wash.py drops it on delivery.
+  if (STACK && meshes.every(m => !m.V.length || (m.albedo && m.albedo.length === m.V.length))) {
+    const counts = meshes.map(m => m.V.length);
+    const buf = Buffer.alloc(counts.reduce((a, n) => a + n, 0) * 3);
+    let o = 0;
+    const enc = v => { const x = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
+                       return Math.max(0, Math.min(255, Math.round(x * 255))); };
+    for (const m of meshes) for (const c of (m.V.length ? m.albedo : [])) {
+      buf[o++] = enc(c[0]); buf[o++] = enc(c[1]); buf[o++] = enc(c[2]);
+    }
+    asset.extras.albedo = { encoding: 'srgb8', counts, data: buf.toString('base64') };
+  }
 }
 const names = require('./core/skeleton.js').exportNames(spec, sk);
 // L8: the only layer that leaves COLOR_0 and goes into the file's NORMAL, so

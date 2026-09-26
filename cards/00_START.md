@@ -73,7 +73,7 @@ then measured. Verified against the rendered masks on all four views at IoU
 0.980–0.989 — the remainder is the renderer's antialiased edge. A round went
 from 9.0s to 1.4s and a three-variant round from 11.0s to 4.4s. **1.3.2 finished
 the job: nothing in this harness launches a browser at all.** Part shares are the
-same z-buffer, the colour numbers are the baked albedo the engine already wrote,
+same z-buffer, the colour numbers are the palette and baked colour the engine already wrote,
 and even `hero.png` is projected rather than rendered. The offline viewer is HTML
 the customer opens themselves.
 

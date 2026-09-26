@@ -11,19 +11,37 @@ Pick the palette yourself, from the creature's story. The norms:
    — the memory spark. One accent temperature, not two. The 5% caps the ACCENT
    alone; it is not a cap on how much of the creature carries saturated colour —
    norm 4 sets that, and its floor sits well above 5%.
-4. **Saturated area: 10%–34% — computed, not judged by eye.** The
-   `saturation_area` claim counts the share of the view carrying HSV saturation
-   ≥ 0.50, read on the UNLIT baked vertex colour, so brightness, AO and lighting
-   cannot skew it. Below the floor the creature reads as a grey mass; above the
-   ceiling saturation stops working as a spotlight. The band rules HOW MUCH,
-   never WHERE — which surfaces carry the loud colour is your call. It agrees
-   with norm 1: one main colour on the signature plus its supporting bands lands
-   mid-band (the wolf example measures 26.0%). Out of band, raise or drop
-   saturation on a mass that deserves the attention; do not tint everything.
-5. **Brightness floor — do not crush to black.** The judge measures the beauty
-   render's median luminance; a "dark" creature reads by VALUE STEPS between
-   its masses, not by making everything dark. If the render medians below the
-   floor, lift the mid masses, keep the darks only where a step needs them.
+4. **Colour area — computed, not judged by eye, on YOUR palette.** The
+   `saturation_area` claim reads the albedo the engine records BEFORE any
+   lighting (the arcs, the pattern, the seam blend; not the ramp, the top boost
+   or a single shadow), so the numbers move only when your colours do. Two
+   bars, two questions:
+   - **floor 10% at HSV S ≥ 0.30** — at least a tenth of the view carries a
+     colour you can name. Under it the creature reads as a grey mass.
+   - **ceiling 50% at HSV S ≥ 0.50** — at most half the view is LOUD. Over it
+     saturation is the base colour, not a spotlight.
+
+   The band rules HOW MUCH, never WHERE — which surfaces carry the colour is
+   your call. The shipped examples (hero view, coloured / loud):
+   the muted wolf 28.7% / 0.1% (its colour is the tawny legs, S 0.38), the
+   raven-wyvern 48.2% / 11.6% (dusky S 0.41 wings, vivid crest and beak), the
+   giant 19.3% / 18.2% (ochre fists on a slate hide). A spread wing is ~30% of
+   the hero view on its own, so even a VIVID membrane on a quiet body lands
+   near 40% loud — inside the ceiling; only a creature loud all over crosses
+   it. Out of band, raise or drop saturation on a mass that deserves the
+   attention; do not tint everything.
+
+   The build's shading cannot inflate this, and no longer inflates the look
+   either: its shadows are a true multiply (lightness and chroma scale
+   together), so a shadow is darker, never louder than the lit side. The one
+   layer that does add chroma on purpose is the top boost (x1.25 chroma up
+   top), which is why the ruler reads the palette and not the baked colour.
+5. **Brightness floor — do not crush to black.** The judge measures the median
+   luminance of the SHIPPED colour (the palette after the ramp, AO and shadow —
+   unlike norm 4, brightness is about what ships); a "dark" creature reads by
+   VALUE STEPS between its masses, not by making everything dark. If the median
+   sits below the floor, lift the mid masses, keep the darks only where a step
+   needs them.
 
 The engine bakes **per-vertex AO at compile** (crevices, pits, undersides
 darken automatically — that's the "solid" look). The floor is computed AFTER
@@ -43,7 +61,8 @@ gives two coincident points the same value, by construction); lays the pattern
 if the spec named one; multiplies a top-to-bottom three-colour ramp over
 everything; brightens **and** saturates the upper region while leaving the
 lower region exactly untouched; bleeds hardware colour into the flesh around
-it; shades hardware and flesh separately; and finally softens the shipped
+it; shades hardware and flesh separately (a true multiply — a shadow is darker,
+never more saturated); and finally softens the shipped
 NORMAL on flesh toward the bone field, which is the one layer the viewer's own
 lighting reacts to.
 

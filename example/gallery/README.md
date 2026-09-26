@@ -22,7 +22,7 @@ hallux back). A long whip tail ends in a violet feather fan.
 | build | 45 joints, 6,636 vertices, 8,564 triangles (claims band 4,000-9,000), all green |
 | clips | `idle` (breath, head tilt, wing settle), `move` (bipedal stride, balance flutter), `attack` (neck and wings wind back with the bill open, then the root lunges and the neck throws the bill forward) |
 | declared | named parts, `function` (head = effector, legs and wings = locomotion; the toes and claws inherit the leg's), `joint_range` for every animated joint |
-| colour | hero view saturated area 25.0%, median albedo luminance 65.3. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
+| colour | hero view, on the palette: 48.2% coloured (S ≥ 0.30), 11.6% loud (S ≥ 0.50); median shipped luminance 65.7. Near-neutral slate masses with a dark saddle and a pale breast, dusky violet wings with a darker leading edge and rib veins, magenta crest and tail fan (the spotlight), gold bill, dark talons |
 
 What it exercises that the wolf does not:
 
@@ -80,16 +80,15 @@ feature or a check, and the build above uses all of them:
 
 What is still true:
 
-- **With membrane wings, colour budget and spotlight pull against each other,
-  and the ruler reads the shipped colour, not the palette.** The spread
-  membrane is about 30% of the hero view on its own, and the shading stack
-  raises HSV saturation in shadow by about 0.1 on mid-saturation surfaces (the
-  wing's palette is S 0.41, under the 0.50 bar, yet 64% of its shipped vertices
-  measure over it). A saturated membrane therefore lands at 48-55% saturated
-  area, far over the card's 34% ceiling. The wings stay dusky violet and the
-  vivid colour is on the crest and tail fan; the leading edge and veins are
-  darker, not louder. See the CHANGELOG for the measurement — the ceiling was
-  left where it is.
+- **With membrane wings, the colour budget is the wing's to spend.** The
+  spread membrane is about 30% of the hero view on its own. The colour ruler
+  reads the palette, so the dusky S 0.41 wings count as coloured and not as
+  loud, and the vivid colour is on the crest, tail fan and bill (11.6% loud).
+  A vivid wing (S 0.80) would put the creature near 41% loud — inside the 50%
+  ceiling, which only a creature loud all over crosses. (Until the shading
+  stack's shadows became a true multiply, they raised HSV S by about 0.1 on
+  mid-saturation surfaces and the ruler read that shipped colour; see the
+  CHANGELOG.)
 
 The build warns that `lower_bill` sits 63% inside `upper_bill`. That one is
 real and intended: the closed bill halves overlap at rest, and the `Jaw` hinge

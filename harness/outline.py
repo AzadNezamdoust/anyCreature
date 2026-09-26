@@ -64,11 +64,13 @@ def accessor(g, b, base, idx):
 def triangles_by_material(path, want_colour=False):
     """Triangles grouped by material name, so a share can be attributed.
 
-    With want_colour, also returns the baked albedo: per-vertex COLOR_0 and the
-    per-material baseColorFactor. ALBEDO = baseColorFactor x COLOR_0, ALWAYS
-    BOTH — the engine splits the baked colour, the hue into baseColorFactor and
-    the shading ratio (<=1) into COLOR_0, so reading either alone measures half
-    a colour. Both are linear; the sRGB encode happens at measurement time."""
+    With want_colour, also returns the baked (shipped) colour: per-vertex COLOR_0
+    and the per-material baseColorFactor. COLOUR = baseColorFactor x COLOR_0,
+    ALWAYS BOTH — the engine splits the baked colour, the hue into
+    baseColorFactor and the per-vertex ratio (<=1) into COLOR_0, so reading
+    either alone measures half a colour. Both are linear; the sRGB encode
+    happens at measurement time. This is the colour AFTER the shading stack;
+    the palette before it is albedo_of()."""
     g, b, base = read_glb(path)
     mats = [m.get('name', f'mat{i}') for i, m in enumerate(g.get('materials', []))]
     basecol = np.array([(m.get('pbrMetallicRoughness', {}) or {}).get('baseColorFactor', [1, 1, 1, 1])[:3]
@@ -108,6 +110,66 @@ def triangles_by_material(path, want_colour=False):
     if want_colour:
         return np.vstack(V), np.vstack(F), np.concatenate(MID), mats, np.vstack(C), basecol, np.vstack(N)
     return np.vstack(V), np.vstack(F), np.concatenate(MID), mats
+
+
+def albedo_of(path, V):
+    """The PALETTE per vertex, or None: what the designer chose, before light.
+
+    The engine ships it in asset.extras.albedo — 8-bit sRGB triplets, base64,
+    one run per part_spans row, counts[k] long. It is the colour after the seam
+    blend, the pattern and the hardware bleed, and BEFORE the ramp, the top
+    boost and the shadows. counts[k] is the row's vertex count BEFORE the
+    crease split that writeGLB does on the way out: the split appends copies
+    after a mesh's own vertices, so the row's first counts[k] shipped vertices
+    are the recorded ones, in order, and every later one is placed by its
+    position (a split copy sits exactly on its original).
+
+    Returned LINEAR and indexed like the vertex array triangles_by_material
+    stacks, so it rasterises exactly like COLOR_0. Anything missing or
+    inconsistent returns None and the caller falls back to the shipped colour —
+    a washed or foreign file has no palette record, and a partial one is worse
+    than none."""
+    import base64
+    try:
+        g, _b, _base = read_glb(path)
+        x = (g.get('asset', {}) or {}).get('extras', {}) or {}
+        rec, spans = x.get('albedo'), x.get('part_spans')
+        if not isinstance(rec, dict) or rec.get('encoding') != 'srgb8' or not spans:
+            return None
+        counts = rec.get('counts') or []
+        meshes = g.get('meshes', [])
+        if len(meshes) != 1 or len(counts) != len(spans):
+            return None
+        offs, o = [], 0
+        for pr in meshes[0].get('primitives', []):
+            offs.append(o)
+            o += g['accessors'][pr['attributes']['POSITION']]['count']
+        if o != len(V):
+            return None
+        raw = np.frombuffer(base64.b64decode(rec['data']), dtype=np.uint8)
+        if raw.size != 3 * sum(int(n) for n in counts):
+            return None
+        srgb = raw.reshape(-1, 3).astype(np.float64) / 255.0
+        lin = np.where(srgb <= 0.04045, srgb / 12.92, np.power((srgb + 0.055) / 1.055, 2.4))
+        out = np.full((len(V), 3), np.nan)
+        k = 0
+        for s, n0 in zip(spans, counts):
+            n, at = int(s['count']), offs[int(s['primitive'])] + int(s['first'])
+            n0 = int(n0)
+            if n0 > n:
+                return None
+            out[at:at + n0] = lin[k:k + n0]
+            if n > n0:
+                own = {tuple(V[at + i]): at + i for i in range(n0)}
+                for j in range(at + n0, at + n):
+                    src = own.get(tuple(V[j]))
+                    if src is None:
+                        return None
+                    out[j] = out[src]
+            k += n0
+        return None if np.isnan(out).any() else out
+    except Exception:
+        return None
 
 
 def structure(path):
@@ -316,7 +378,7 @@ def project(V, view):
     return px, py, z
 
 
-def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
+def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None, A=None):
     """Which material OWNS each silhouette pixel, with a depth test.
 
     The share of the frame a part holds is a geometry question, and it was being
@@ -324,7 +386,10 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
     pixels back, count them. That needs a GPU only because of occlusion — a wing
     behind the torso must not be counted — and occlusion is a z-buffer, which is
     thirty lines. So: rasterise every triangle with a depth test, keep the
-    winning material per pixel, and count."""
+    winning material per pixel, and count.
+
+    A (per-vertex LINEAR albedo, already a whole colour — no baseColorFactor)
+    rides along in the same pass when given, and is returned last."""
     px, py, z = project(V, view)
     depth = np.full((RES, RES), np.inf)
     owner = np.full((RES, RES), -1, dtype=np.int64)
@@ -333,6 +398,7 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
     # have to be kept in agreement by hand.
     colour = np.zeros((RES, RES, 3)) if C is not None else None
     normal = np.zeros((RES, RES, 3)) if N is not None else None
+    albedo = np.zeros((RES, RES, 3)) if A is not None else None
     for tri, mi in zip(F, MID):
         a, b, c = tri
         xs = np.array([px[a], px[b], px[c]])
@@ -381,6 +447,10 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
                 nn = ((l0 / z[a])[..., None] * N[a] + (l1 / z[b])[..., None] * N[b]
                       + (l2 / z[c])[..., None] * N[c]) * zz[..., None]
                 normal[y0:y1 + 1, x0:x1 + 1][win] = nn[win]
+            if albedo is not None:
+                aa = ((l0 / z[a])[..., None] * A[a] + (l1 / z[b])[..., None] * A[b]
+                      + (l2 / z[c])[..., None] * A[c]) * zz[..., None]
+                albedo[y0:y1 + 1, x0:x1 + 1][win] = aa[win]
     total = int((owner >= 0).sum())
     out = {}
     if total:
@@ -389,11 +459,14 @@ def material_shares(V, F, MID, mats, view, C=None, basecol=None, N=None):
                 continue
             name = mats[mi] if 0 <= mi < len(mats) else f'mat{mi}'
             out[name] = round(float((owner == mi).sum()) / total, 5)
-    if colour is not None and normal is not None:
-        return out, owner >= 0, colour, normal
+    ret = (out, owner >= 0)
     if colour is not None:
-        return out, owner >= 0, colour
-    return out, owner >= 0
+        ret += (colour,)
+    if normal is not None:
+        ret += (normal,)
+    if albedo is not None:
+        ret += (albedo,)
+    return ret
 
 
 def hero_png(model, out_png, view='hero', res=1024):
@@ -511,39 +584,73 @@ def hero_png(model, out_png, view='hero', res=1024):
     return out_png
 
 
-def colour_measures(body, colour):
-    """The two colour numbers, off the UNLIT baked albedo.
+# Two bars, because the colour norm asks two different questions.
+#   COLOUR_BAR  "is there colour here at all" — a hue you can name. The floor
+#               counts this. Muted naturalistic palettes live at S 0.30-0.40
+#               (the example wolf's legs are #98815f, S 0.38); a plain grey-beige
+#               palette sits near 0.17 and a grey mass at 0.
+#   SAT_BAR     "is this LOUD" — the spotlight colour. The ceiling counts this.
+# One bar cannot do both: at 0.50 the floor refuses every muted palette, and at
+# 0.30-0.35 a dusky #6e5a98 wing (S 0.41) and a vivid one (S 0.80) measure the
+# same, so the ceiling stops being about loudness.
+COLOUR_BAR = 0.30
+SAT_BAR = 0.50
+
+
+def _srgb255(lin):
+    lin = np.clip(lin, 0.0, 1.0)
+    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
+    return np.clip(srgb * 255.0, 0, 255)
+
+
+def _hsv_s(d):
+    mx, mn = d.max(axis=1), d.min(axis=1)
+    return np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+
+
+def colour_measures(body, colour, albedo=None):
+    """The colour numbers, off the file — no renderer, no lights.
 
     They used to come from a headless browser: render the model, read the pixels,
-    count. Rendering was never what made them true — the baked colour IS the
-    answer, and the z-buffer above already decides which surface each pixel sees.
+    count. Rendering was never what made them true — the colour is in the file,
+    and the z-buffer above already decides which surface each pixel sees.
 
-    median_lum      how bright the creature's own colour is, 0-255 sRGB
-    saturated_area  the share of it carrying a strong colour (HSV S >= 0.50)
+    median_lum              how bright the SHIPPED colour is, 0-255 sRGB — the
+                            baked COLOR_0 x baseColorFactor, ramp, AO and shadow
+                            included, because "do not crush to black" is about
+                            what ships
+    coloured_area           share of the view whose PALETTE colour has
+                            HSV S >= COLOUR_BAR (0.30): the floor's number
+    saturated_area          share whose PALETTE colour has HSV S >= SAT_BAR
+                            (0.50): the ceiling's number
+    palette_source          'albedo' when the file carries the engine's palette
+                            record (asset.extras.albedo); 'shipped' when it does
+                            not and both areas fell back to the baked colour
+    saturated_area_shipped  S >= 0.50 on the baked colour, for comparison only
 
-    Unlit on purpose. LIGHTS move saturation — a white key washes colour out, a
-    blue rim invents it — and measuring the lit render made the answer a property
-    of the lighting rig, which nobody ships.
+    The two areas read the PALETTE — the albedo before any lighting — because
+    that is what the designer chose and what the claim tells them to change.
+    The baked colour is a different number: the shading stack ramps it, boosts
+    chroma up top (L4, x1.25) and shadows it, and each of those moves HSV S.
+    Until the stack's shadows became a true multiply they RAISED S (L scaled at
+    constant a, b): the example wolf's grey-brown legs measured 21.3% "highly
+    saturated" while its palette measured 0.1%, and a #6e5a98 membrane (S 0.41)
+    shipped 64% of its vertices over 0.50. A band calibrated on the baked colour
+    is a band on the shading stack, and it moves every time the stack does.
 
-    What it reads is the SHIPPED colour, and that is not the palette. The shading
-    stack's L3 / L6 / L7 layers multiply OKLab L at constant a, b, which raises
-    HSV S in shadow (an RGB multiply would not): a #6e5a98 membrane (S 0.41,
-    under the bar) ships 64% of its vertices at S >= 0.50, a #9a8458 talon goes
-    0.43 -> 0.58, and with the stack changed to a true multiply the example wolf
-    measures 2.9% here instead of 20.1%. So the 10-34% band is a band on the
-    shipped colour, shadow included; budget a supporting mass's palette under
-    ~S 0.35 if it must stay under the bar."""
+    Unlit on purpose: lights move saturation too — a white key washes colour
+    out, a blue rim invents it — and nobody ships the lighting rig."""
     if not body.any():
         return {}
-    lin = np.clip(colour[body], 0.0, 1.0)
-    srgb = np.where(lin <= 0.0031308, lin * 12.92, 1.055 * np.power(lin, 1 / 2.4) - 0.055)
-    d = np.clip(srgb * 255.0, 0, 255)
+    d = _srgb255(colour[body])
     lum = 0.2126 * d[:, 0] + 0.7152 * d[:, 1] + 0.0722 * d[:, 2]
-    mx = d.max(axis=1)
-    mn = d.min(axis=1)
-    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+    s_ship = _hsv_s(d)
+    s = _hsv_s(_srgb255(albedo[body])) if albedo is not None else s_ship
     return {'median_lum': round(float(np.median(lum)), 1),
-            'saturated_area': round(float((sat >= 0.50).mean()), 4)}
+            'coloured_area': round(float((s >= COLOUR_BAR).mean()), 4),
+            'saturated_area': round(float((s >= SAT_BAR).mean()), 4),
+            'palette_source': 'albedo' if albedo is not None else 'shipped',
+            'saturated_area_shipped': round(float((s_ship >= SAT_BAR).mean()), 4)}
 
 
 def exaggeration(mask):
@@ -623,13 +730,14 @@ def main():
         hero_png(model, hero_out)
         print(f'hero: {hero_out}')
     V, F, MID, mats, C, basecol, _N = triangles_by_material(model, want_colour=True)
+    A = albedo_of(model, V)
     boxes, whole = part_boxes(V, F, MID, mats)
     report = {'vertices': int(len(V)), 'triangles': int(len(F)),
               'materials': mats, 'stats': structure(model),
               'parts': boxes, 'whole': {'size': whole}, 'views': {}}
     thin_all = []
     for v in views:
-        shares, mask, colour = material_shares(V, F, MID, mats, v, C, basecol)
+        shares, mask, colour, *alb = material_shares(V, F, MID, mats, v, C, basecol, A=A)
         np.save(os.path.join(outdir, f'mask_{v}.npy'), mask)
         Image.fromarray(np.where(mask, 0, 255).astype(np.uint8), 'L').save(
             os.path.join(outdir, f'sil_{v}.png'))
@@ -637,7 +745,7 @@ def main():
             thumb(mask, px, os.path.join(outdir, f'sil_{v}_thumb{px}.png'))
         mm = measures(mask)
         mm.update(exaggeration(mask))
-        mm.update(colour_measures(mask, colour))
+        mm.update(colour_measures(mask, colour, alb[0] if alb else None))
         mm['share'] = shares
         if mm.get('thinnest_px48') is not None:
             thin_all.append(mm['thinnest_px48'])

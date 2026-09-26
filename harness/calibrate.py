@@ -18,12 +18,20 @@ exits non-zero, and counting a stack trace as a block is how a broken engine
 would pass calibration.
 
 COLOUR ruler (harness/judge.mjs over harness/outline.py)
-  The shipped example wolf must read as coloured (saturated area over the 10%
-  floor), and a DESATURATED copy of that same file — geometry untouched, only
-  the albedo greyed — must be refused by saturation_area. Both directions, one
-  sample: a ruler is calibrated by proving it separates. The colour sample is
-  example/wolf.json, not wolf_green: wolf_green's palette is deliberately plain,
-  it exists to exercise the engine blocks.
+  The claim reads the PALETTE (the albedo the engine records before lighting)
+  with a floor on the share at HSV S >= 0.30 and a ceiling on the share at
+  S >= 0.50. Both directions of both bars, on shipped files:
+    good   example/wolf.json (a muted natural palette) and the gallery
+           raven_wyvern (a vivid crest and beak, dusky wings) must pass both
+    grey   a DESATURATED copy of the wolf — geometry untouched, every colour
+           greyed (palette record, baseColorFactor and COLOR_0) — must be
+           refused by the floor
+    loud   a SATURATED copy — every colour pushed to HSV S >= 0.80, hue and
+           value kept — must be refused by the ceiling
+  A ruler is calibrated by proving it separates. The colour samples are the
+  shipped examples, not wolf_green: wolf_green's palette is deliberately plain
+  (fur S 0.17, 0.2% coloured), it exists to exercise the engine blocks. The
+  gallery giant is judged against the same band by tools/test.sh.
 
 This file was retired in 1.3.2 together with the browser; setup kept printing
 that it calibrated while nothing did. It is back, browser-free.
@@ -57,39 +65,54 @@ def tail(text, n=4):
     return '\n'.join('        ' + l[:160] for l in text.strip().splitlines()[-n:])
 
 
-def desaturate(src, dst):
-    """A grey twin of a built GLB: every colour replaced by its own luminance.
+def _recolour(src, dst, fn):
+    """A twin of a built GLB with every colour passed through fn — geometry and
+    animation untouched, so the only thing that changes is exactly the quantity
+    the colour ruler claims to measure.
 
-    Both halves of the albedo — baseColorFactor AND the float COLOR_0 stream —
-    because the L1-L8 stack puts real chroma in the vertices. Geometry and
-    animation are untouched, so the only thing that changes is exactly the
-    quantity this ruler claims to measure."""
+    fn maps an (n, 3) array of sRGB 0..1 colours to the same. Every place a
+    colour lives is rewritten: the palette record (asset.extras.albedo, what the
+    ruler reads) and the baked colour — baseColorFactor x COLOR_0, folded into
+    COLOR_0 with the base set to white, since a recoloured vertex no longer fits
+    under its material's old per-channel maximum."""
+    import base64
+    import numpy as np
+    enc = lambda l: np.where(l <= 0.0031308, l * 12.92, 1.055 * np.power(np.clip(l, 0, None), 1 / 2.4) - 0.055)
+    dec = lambda c: np.where(c <= 0.04045, c / 12.92, np.power((c + 0.055) / 1.055, 2.4))
     d = open(src, 'rb').read()
     jl, = struct.unpack('<I', d[12:16])
     g = json.loads(d[20:20 + jl])
     rest = bytearray(d[20 + jl:])
-    for m in g.get('materials', []):
+    x = (g.get('asset', {}) or {}).get('extras', {}) or {}
+    rec = x.get('albedo')
+    if isinstance(rec, dict) and rec.get('data'):
+        raw = np.frombuffer(base64.b64decode(rec['data']), dtype=np.uint8).reshape(-1, 3) / 255.0
+        rec['data'] = base64.b64encode(np.clip(np.round(fn(raw) * 255), 0, 255)
+                                       .astype(np.uint8).tobytes()).decode()
+    mats = g.get('materials', [])
+    bases = [list((m.get('pbrMetallicRoughness', {}) or {}).get('baseColorFactor', [1, 1, 1, 1])) for m in mats]
+    views, off0 = g.get('bufferViews', []), 8      # rest = 8-byte BIN header + payload
+    for mesh in g.get('meshes', []):
+        for prim in mesh.get('primitives', []):
+            ai = prim.get('attributes', {}).get('COLOR_0')
+            if ai is None:
+                continue
+            a = g['accessors'][ai]
+            if a.get('componentType') != 5126 or a.get('type') not in ('VEC3', 'VEC4'):
+                continue                           # only float colours are rewritten
+            n = 3 if a['type'] == 'VEC3' else 4
+            bv = views[a['bufferView']]
+            off = off0 + bv.get('byteOffset', 0) + a.get('byteOffset', 0)
+            stride = bv.get('byteStride') or 4 * n
+            base = np.array((bases[prim['material']] if 'material' in prim else [1, 1, 1, 1])[:3])
+            lin = np.array([struct.unpack_from('<fff', rest, off + i * stride) for i in range(a['count'])]) * base
+            out = dec(np.clip(fn(np.clip(enc(lin), 0, 1)), 0, 1))
+            for i, c in enumerate(out):
+                struct.pack_into('<fff', rest, off + i * stride, *map(float, c))
+    for m in mats:
         p = m.setdefault('pbrMetallicRoughness', {})
         b = p.get('baseColorFactor', [1, 1, 1, 1])
-        lum = 0.2126 * b[0] + 0.7152 * b[1] + 0.0722 * b[2]
-        p['baseColorFactor'] = [lum, lum, lum, b[3] if len(b) > 3 else 1]
-    acc_ids = {prim['attributes']['COLOR_0']
-               for mesh in g.get('meshes', []) for prim in mesh.get('primitives', [])
-               if 'COLOR_0' in prim.get('attributes', {})}
-    views, base = g.get('bufferViews', []), 8      # rest = 8-byte BIN header + payload
-    for ai in acc_ids:
-        a = g['accessors'][ai]
-        if a.get('componentType') != 5126 or a.get('type') not in ('VEC3', 'VEC4'):
-            continue                               # only float colours are rewritten
-        n = 3 if a['type'] == 'VEC3' else 4
-        bv = views[a['bufferView']]
-        off = base + bv.get('byteOffset', 0) + a.get('byteOffset', 0)
-        stride = bv.get('byteStride') or 4 * n
-        for i in range(a['count']):
-            o = off + i * stride
-            r, gg, bb = struct.unpack_from('<fff', rest, o)
-            L = 0.2126 * r + 0.7152 * gg + 0.0722 * bb
-            struct.pack_into('<fff', rest, o, L, L, L)
+        p['baseColorFactor'] = [1.0, 1.0, 1.0, b[3] if len(b) > 3 else 1]
     js = json.dumps(g).encode()
     js += b' ' * ((4 - len(js) % 4) % 4)
     out = b'glTF' + struct.pack('<II', 2, 0) + struct.pack('<II', len(js), 0x4E4F534A) + js + bytes(rest)
@@ -97,9 +120,32 @@ def desaturate(src, dst):
     open(dst, 'wb').write(out)
 
 
+def desaturate(src, dst):
+    """The grey twin: every colour replaced by its own luminance."""
+    def grey(c):
+        L = (0.2126 * c[:, 0] + 0.7152 * c[:, 1] + 0.0722 * c[:, 2])[:, None]
+        return c * 0 + L
+    _recolour(src, dst, grey)
+
+
+def saturate(src, dst, floor=0.80):
+    """The loud twin: every colour's HSV S raised to at least `floor`, hue and
+    value kept. Greys (no hue to keep) stay grey — a pupil, an eye white."""
+    import numpy as np
+
+    def loud(c):
+        mx, mn = c.max(axis=1), c.min(axis=1)
+        s = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+        s2 = np.where(s > 0.02, np.maximum(s, floor), s)
+        # keep V (the max channel) and the hue: scale every channel's distance from the max
+        k = np.where(s > 1e-9, s2 / np.maximum(s, 1e-9), 1.0)[:, None]
+        return mx[:, None] - (mx[:, None] - c) * k
+    _recolour(src, dst, loud)
+
+
 SAT_CLAIM = {'name': 'colour-ruler', 'claims': [
-    {'type': 'saturation_area', 'view': 'hero', 'min': 0.10,
-     'label': 'must not read as a grey mass (floor 10%)'}]}
+    {'type': 'saturation_area', 'view': 'hero', 'min': 0.10, 'max': 0.50,
+     'label': 'coloured, not a grey mass (floor 10% at S 0.30); loud colour a spotlight (ceiling 50% at S 0.50)'}]}
 
 
 def judge(glb, claims, tmp, tag):
@@ -111,7 +157,9 @@ def judge(glb, claims, tmp, tag):
     for line in text.splitlines():
         if line.startswith('{') and 'hi_sat_share' in line:
             try:
-                share = json.loads(line)['hi_sat_share'].get('hero')
+                j = json.loads(line)
+                share = (j.get('coloured_share', {}).get('hero'), j['hi_sat_share'].get('hero'),
+                         j.get('palette_source', {}).get('hero'))
             except Exception:
                 pass
     return p.returncode, text, share
@@ -170,34 +218,48 @@ def run(tmp):
                   '(must be proportion and nothing else, or it proves nothing about that ruler)')
 
     # ── the colour ruler ────────────────────────────────────────────────────
-    c = build(os.path.join(R, 'example', 'wolf.json'), tmp)
-    if not c['ok']:
-        fails += 1
-        print('colour ruler              -> example/wolf.json did not build ✗')
-        print(tail(c['text']))
-    else:
-        claims = os.path.join(tmp, 'sat.json')
-        json.dump(SAT_CLAIM, open(claims, 'w'))
-        rc_c, txt_c, share = judge(c['out'], claims, tmp, 'colour')
-        grey = os.path.join(tmp, 'grey.glb')
-        desaturate(c['out'], grey)
-        rc_g, txt_g, share_g = judge(grey, claims, tmp, 'grey')
-        if share is None:
+    claims = os.path.join(tmp, 'sat.json')
+    json.dump(SAT_CLAIM, open(claims, 'w'))
+    fmt = lambda sh: f'{sh[0] * 100:.1f}% coloured, {sh[1] * 100:.1f}% loud, ' \
+                     + ('on the palette' if sh[2] == 'albedo' else 'on the baked colour')
+    wolf = None
+    for tag, spec in (('example wolf', os.path.join(R, 'example', 'wolf.json')),
+                      ('gallery wyvern', os.path.join(R, 'example', 'gallery', 'raven_wyvern.json'))):
+        c = build(spec, tmp)
+        if not c['ok']:
             fails += 1
-            print('colour ruler              -> the judge measured nothing ✗')
-            print(tail(txt_c))
+            print(f'colour   ({tag:<14}) -> did not build ✗')
+            print(tail(c['text']))
+            continue
+        rc, txt, share = judge(c['out'], claims, tmp, tag.split()[-1])
+        if share is None or share[0] is None:
+            fails += 1
+            print(f'colour   ({tag:<14}) -> the judge measured nothing ✗')
+            print(tail(txt))
+        elif share[2] != 'albedo':
+            fails += 1
+            print(f'colour   ({tag:<14}) -> measured the baked colour, not the palette ✗ '
+                  '(the build wrote no asset.extras.albedo, or outline.py could not place it)')
+        elif rc == 0:
+            print(f'colour   ({tag:<14}) -> in band ✓ ({fmt(share)})')
         else:
-            if rc_c == 0:
-                print(f'colour   (example wolf)    -> reads as coloured ✓ ({share * 100:.1f}% saturated)')
+            fails += 1
+            print(f'colour   ({tag:<14}) -> REFUSED ✗ ({fmt(share)} — the band is off, or the example drifted)')
+            print(tail(txt))
+        if tag == 'example wolf':
+            wolf = c['out']
+    if wolf:
+        for tag, make, want in (('desaturated', desaturate, 'Too little colour'),
+                                ('saturated', saturate, 'Too much loud colour')):
+            twin = os.path.join(tmp, tag + '.glb')
+            make(wolf, twin)
+            rc, txt, share = judge(twin, claims, tmp, tag)
+            got = fmt(share) if share and share[0] is not None else 'nothing measured'
+            if rc != 0 and want in txt:
+                print(f'colour   ({tag:<14}) -> refused ✓ ({got})')
             else:
                 fails += 1
-                print(f'colour   (example wolf)    -> BLOCKED ✗ ({share * 100:.1f}% — the ruler is not '
-                      'seeing baseColorFactor x COLOR_0, or the example went grey)')
-            if rc_g != 0 and 'saturated' in txt_g:
-                print(f'colour   (desaturated)     -> blocked by saturation_area ✓ ({(share_g or 0) * 100:.1f}%)')
-            else:
-                fails += 1
-                print('colour   (desaturated)     -> NOT blocked ✗ (the colour ruler passes anything)')
+                print(f'colour   ({tag:<14}) -> NOT refused ✗ ({got}; the colour ruler passes anything)')
 
     if fails:
         print(f'[calibrate] FAILED — {fails} ruler(s) do not separate good from bad. '

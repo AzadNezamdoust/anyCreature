@@ -7,7 +7,7 @@
     "part_signature": "{part, view?, min_share, or_min_span} signature part: frame share OR span ratio must clear its bar",
     "style_dark": "{view?, max_median_lum} dark styling: cap on body median luminance (0-255)",
     "style_light": "{view?, min_median_lum} light styling: the floor",
-    "saturation_area": "{view?, min?, max?} share of the view carrying a highly saturated colour (HSV S ≥ 0.50 on the UNLIT baked colour, default view tq, default band 0.10-0.34): under the floor the creature reads as a grey mass, over the ceiling saturation stops working as a spotlight. Says HOW MUCH, never WHERE",
+    "saturation_area": "{view?, min?, max?} how much of the view carries colour, read on the PALETTE (albedo before lighting, default view tq): min bounds the share at HSV S ≥ 0.30 (default 0.10) — under it the creature reads as a grey mass; max bounds the share at S ≥ 0.50 (no default; 0.50 recommended) — over it saturation is the base colour, not a spotlight. Says HOW MUCH, never WHERE",
     "rig_skinned": "{} must be skinned",
     "anim_named": "{names:[...]} these named animations must be present",
     "tri_budget": "{min, max} triangle budget band",
@@ -42,9 +42,9 @@
       "type": "saturation_area",
       "view": "tq",
       "min": 0.1,
-      "max": 0.34,
+      "max": 0.5,
       "stage": "HIGH",
-      "label": "high-saturation area must sit in the 10%-34% band: amount of colour, not where it goes"
+      "label": "palette colour: at least 10% of the view coloured (S ≥ 0.30), at most 50% loud (S ≥ 0.50) — amount of colour, not where it goes"
     },
     {
       "type": "tri_budget",
