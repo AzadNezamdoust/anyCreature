@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the stop-side face (N3-H1, back edge to widest)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "nostril: a loop inside the nose disc (the half cap = one nostril per side)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "partial_loop",
+   "reason": "mouth line: from the nose-disc rim back to the cheek under the eye, fan-terminated in the disc-rim quad and the cheek quad (skull: nothing bends)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "ear top: a loop inside the ear tip cap, raised into a dome (round ear top)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "ear cup: a loop inside the forward face of the ear",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

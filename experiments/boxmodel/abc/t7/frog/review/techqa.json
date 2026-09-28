@@ -1,0 +1,108 @@
+{
+ "limits": {
+  "sliver_pct": 2.0,
+  "hit": 0,
+  "float": 0,
+  "zfight": 2,
+  "flip_pct": 0.5,
+  "flip_area_pct": 0.5,
+  "drift": 0
+ },
+ "totals": {
+  "float": 0,
+  "sliver": 12,
+  "zfight": 0,
+  "open": 0,
+  "fold": 0,
+  "flip": 0,
+  "flip_area": 0,
+  "valley": 0,
+  "hit": 0,
+  "area": 0.8364347456307631,
+  "drift": 0
+ },
+ "triangles": 1412,
+ "turned": 94,
+ "stuck": 0,
+ "per_object": {
+  "body": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 8,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.7162112077482783,
+   "flip_area": 0
+  },
+  "piece_eye": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.017922346821919052,
+   "flip_area": 0
+  },
+  "piece_pupil": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.0013590084539591232,
+   "flip_area": 0
+  },
+  "piece_spots": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.028588983818892726,
+   "flip_area": 0
+  },
+  "piece_hand_toes": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.02403160840610352,
+   "flip_area": 0
+  },
+  "piece_foot_toes": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 4,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.04832159038161038,
+   "flip_area": 0
+  }
+ },
+ "ok": true
+}

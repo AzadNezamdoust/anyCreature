@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: a second ring between elbow and forearm so the elbow bends, not kinks",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "stifle: a second ring between knee and gaskin for the hind-leg bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck: a mid-neck ring so the head-down lunge bends the neck in two places",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the stop face, under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

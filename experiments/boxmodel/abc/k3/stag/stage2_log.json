@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "shoulder loop on the fore leg: the leg swings from here in the walk",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "hip loop on the hind leg: the thigh swings from here",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck loop between the neck-base and mid-neck rings: the grazing bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop in the skull side face, dented for the eye piece",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

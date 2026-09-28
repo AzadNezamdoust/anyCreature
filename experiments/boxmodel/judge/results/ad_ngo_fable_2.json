@@ -1,0 +1,119 @@
+{
+ "crab": {
+  "A": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Rim teeth are sparse needle spikes on the carapace front edge, read as slivers at close range (2_closeups front limb)",
+    "Walking legs are constant-section tubes between the two bends; no taper or knee swell",
+    "Barnacles are plain extruded prisms glued on the rear rim rather than bedded in"
+   ],
+   "brief_fit": "Hits nearly every line: low wide carapace, two chunky gapped claws with teeth, eight legs with two bends and dark tips, eye stalks, barnacle cluster, palette exact"
+  },
+  "B": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Walking legs are straight hexagonal sticks with one hip bend and no knee, the brief asks for two bends (1_beauty az090, 2_closeups hind limb)",
+    "Dark slot gap visible between carapace overhang and body under the front rim (2_closeups front limb colour)",
+    "Claw finger gap is tiny; movable dactyl is a small nub so the claw reads as a mitten; posed fold-over on the eye (3_tech purple)"
+   ],
+   "brief_fit": "Good carapace with saw-tooth rim, belly plate and barnacles, but legs miss the two-bend cue and the claws lack the real gap"
+  },
+  "C": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Colour borders run across faces: belly cream bleeds up whole legs and both claws so limbs alternate red and tan (1_beauty az000/az090, 2_closeups hind limb)",
+    "First walking leg in az090 is a needle-thin stick to the ground, out of scale with the others",
+    "Carapace is small and shallow; the body reads spidery and 16 slivers on the body"
+   ],
+   "brief_fit": "Reads as a spider crab with stalk eyes and claws, but the paint job and thin legs break the flat-colour plane read the brief asks for"
+  },
+  "rank": [
+   "A",
+   "B",
+   "C"
+  ],
+  "margin": "clear",
+  "why": "A is the only one with proper two-bend legs, gapped claws and clean colour borders; B loses on stick legs, C on cross-face paint and a needle leg"
+ },
+ "frog": {
+  "A": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Black arrow-shaped nostril marks on the snout read as stray decals at thumbnail size (2_closeups head)",
+    "Mouth line is a thin ribbon plate that stands proud of the jaw in wire (2_closeups head wire)",
+    "Posed fold-over patch at the hip in the hero heatmap; body reads as a box from the front (az000)"
+   ],
+   "brief_fit": "Closest to brief: big gold eyes with horizontal pupil band, wide mouth line, cream jaw and belly, straight front legs with pad toes, folded Z hind legs with long webbed feet, spots"
+  },
+  "B": {
+   "score": 5,
+   "verdict": "REBUILD",
+   "top_issues": [
+    "Body is flattened and sprawled; front legs stick out sideways so the front is not tilted up (1_beauty hero, az000)",
+    "Eyes are tiny gold caps set wide on a flat head, not big bulging eyes on top",
+    "Dark underside gap between head and belly, and the cream belly is barely visible from any view"
+   ],
+   "brief_fit": "Reads more like a squashed lizard than a sitting frog; misses the tilted-up squat and the big eyes"
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Eyes are small gold discs on the outer sides of the head-corner bumps rather than big bulging eyes on top (1_beauty az000, 2_closeups head)",
+    "Pupils barely read at any distance; face expression is blank",
+    "Hind leg is a flat box block with the foot tucked under; z-fight on one back spot"
+   ],
+   "brief_fit": "Good chunky bullfrog mass, cream belly and jaw, spots, straight front legs, but the eye cue in the brief is under-delivered"
+  },
+  "rank": [
+   "A",
+   "C",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "A and C are both shippable-adjacent volumes, but A delivers the big gold eyes and Z hind legs the brief names while C hides its eyes on the head corners"
+ },
+ "giant": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Fingers are a comb of four identical parallel bars hanging under the fist (1_beauty hero, 2_closeups front limb)",
+    "Head is a big blob fused into the chest with no brow or jaw plane; eyes are small yellow patches on a flat face with a dark slit",
+    "Moss ring sits on the head like a wig instead of bedded on the shoulders; posed fold-over at both armpits (3_tech az000)"
+   ],
+   "brief_fit": "Hunched hump, long arms, belt and loincloth and tusks are there, but the head and fists are the weakest of the three"
+  },
+  "B": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Posed fold-over at both armpits in az000 heatmap and z-fight on finger0",
+    "Loincloth is a thin plate that hangs with a visible gap from the belt in profile (1_beauty az090)",
+    "Amber eye is a tiny hexagon deep in the socket; reads only at close range"
+   ],
+   "brief_fit": "Best match: heavy brow overhang, deep-set amber eyes, nose, tusks from the lower jaw, head set low and forward under massive shoulders, pot belly, big flat feet with nails, moss and rocks on the shoulders"
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Fists are dark mitts with five parallel nail slabs in a row (1_beauty az000), no knuckle row or separate fingers",
+    "Face is a small inset with two cube eyes and no brow or mouth plane (2_closeups head)",
+    "Moss and rocks are glued on the hump top as flat chips"
+   ],
+   "brief_fit": "Cleanest tech and a strong hunched profile, but the sunken head has no face and the fists are mitts"
+  },
+  "rank": [
+   "B",
+   "C",
+   "A"
+  ],
+  "margin": "clear",
+  "why": "B is the only giant with a designed face (brow, socket, nose, tusks) and a head that sits under the shoulders rather than fused into the chest"
+ }
+}

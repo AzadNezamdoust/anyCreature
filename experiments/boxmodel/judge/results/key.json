@@ -1,0 +1,86 @@
+{
+ "pairs": {
+  "set1_image1.jpg": {
+   "creature": "giant",
+   "against": "engine",
+   "box_side": "B"
+  },
+  "set2_image1.jpg": {
+   "creature": "giant",
+   "against": "engine",
+   "box_side": "A"
+  },
+  "set1_image2.jpg": {
+   "creature": "giant",
+   "against": "ref",
+   "box_side": "A"
+  },
+  "set2_image2.jpg": {
+   "creature": "giant",
+   "against": "ref",
+   "box_side": "B"
+  },
+  "set1_image3.jpg": {
+   "creature": "raven_wyvern",
+   "against": "engine",
+   "box_side": "A"
+  },
+  "set2_image3.jpg": {
+   "creature": "raven_wyvern",
+   "against": "engine",
+   "box_side": "B"
+  },
+  "set1_image4.jpg": {
+   "creature": "wolf",
+   "against": "ref",
+   "box_side": "A"
+  },
+  "set2_image4.jpg": {
+   "creature": "wolf",
+   "against": "ref",
+   "box_side": "B"
+  },
+  "set1_image5.jpg": {
+   "creature": "boar",
+   "against": "ref",
+   "box_side": "A"
+  },
+  "set2_image5.jpg": {
+   "creature": "boar",
+   "against": "ref",
+   "box_side": "B"
+  },
+  "set1_image6.jpg": {
+   "creature": "goblin",
+   "against": "ref",
+   "box_side": "B"
+  },
+  "set2_image6.jpg": {
+   "creature": "goblin",
+   "against": "ref",
+   "box_side": "A"
+  },
+  "set1_image7.jpg": {
+   "creature": "wolf",
+   "against": "engine",
+   "box_side": "A"
+  },
+  "set2_image7.jpg": {
+   "creature": "wolf",
+   "against": "engine",
+   "box_side": "B"
+  }
+ },
+ "identity": {
+  "shape1.jpg": "raven_wyvern",
+  "look1.jpg": "raven_wyvern",
+  "shape2.jpg": "goblin",
+  "look2.jpg": "goblin",
+  "shape3.jpg": "boar",
+  "look3.jpg": "boar",
+  "shape4.jpg": "giant",
+  "look4.jpg": "giant",
+  "shape5.jpg": "wolf",
+  "look5.jpg": "wolf"
+ }
+}

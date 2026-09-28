@@ -1,0 +1,36 @@
+# bear (w4) build notes
+
+Conflict log: brief says length 1.7 m; the reference sheet/blueprint is 1.42 m long. Sheet wins on shape; kept 1.42 m.
+
+## Stage 1
+- r01: 716 tris, IoU side .958 front .886 top .899. Critique: torso and head read as round tubes (14-sided sections, even rings) in hero/az045; should be a few broad planes. Diagnosis: HEAD/TORSO profiles have 8 verts per half ring. Fix: cut profiles to 6 verts per half (10-sided sections), legs now from faces v3-v4.
+- r02: 588 tris, IoU .960/.890/.894. Result of r01 fix: better, broad planes on flank. Critique: head reads as a cone/pig snout (hero, az045); a bear has a blocky muzzle and a stop step up to a broad brow. Diagnosis: rings 0-2 taper width .045->.095 into ring 3 (.15). Fix: muzzle rings 0-2 near-constant width (.058/.070/.078), stop ring top lowered to .712 so ring 3 steps up.
+- r03: 588 tris, IoU .960/.890/.893. Result: better, muzzle now a block with a stop. Critique: front view (az000) is a round-topped box; the reference front is a pyramid, narrow at the hump and widest low at the elbows. Diagnosis: TORSO v1 at (.66w,.90) and widest v2 at z-fraction .50. Fix: TORSO v1 -> (.45w,.93), v2 -> (1.0w,.38): a roof plane from ridge to low flank.
+- r04: 588 tris, IoU .960/.910/.893. Result: better, front view is now the bear pyramid. Critique: flank (hero, az045) shows alternating light/dark vertical bands, the tube rhythm; the reference flank is one big plane from elbow to thigh. Diagnosis: waist ring 10 (w .29) between rings 9 (.33) and 11 (.315) zig-zags the side normals. Fix: delete the waist ring; one span from front-leg back to hind-leg front.
+- r05: 568 tris, IoU .958/.910/.882. Result: better, one clean flank plane. Critique: legs are thin even posts (az000, az180, az135); reference legs are thick at the top, flaring into shoulder and thigh, tapering to the wrist. Diagnosis: attach verts v3/v4 at .86w/.38w and first leg segment same width as the wrist. Fix: attach verts to .92w/.28w and first two segments widened (x .095-.305) and deepened.
+- r06: 568 tris, IoU .956/.921/.878. Result: better, legs flare into shoulder/thigh (az180, az135). Critique: ears stick out sideways as flat boxes (az000, top); bear ears are small, round, upright on the top corners of the skull. Diagnosis: ear() extrudes along the face normal (~50 deg outward) by .075. Fix: extrude mostly up (+.05 z, +.012 x), narrower, second segment shrunk to round the tip.
+- r07: 568 tris, IoU .956/.921/.887. Result: mixed; ears upright but now thin pointed fins, nearly invisible from the front (az000) and cat-like in az045. Diagnosis: first ear segment scaled .6 in y and the tip shrunk to .65/.5. Fix: thicker ears (y .75, tip .85), more lateral (+.03 x) and a blunter tip so they read as round bear ears.
+- r08: 568 tris, IoU .956/.921/.882. Result: better, ears read as round bear ears in az045/hero. Critique: the base reads as a bear from every view (hump highest, head low, pyramid front, thick legs); remaining issues are secondary (chest plane, brow, eye socket, knee crease) and belong to stage 2. Fix: none; lock at r09.
+- r09 LOCK: 568 tris, edge sha 7d00766119e00287. IoU at lock .956/.921/.882. Orbit rc=0 (advise: no head chain named at stage 1).
+
+## Stage 2
+- r01 plan. Critique: face has no brow or socket (hero, az045); the eye area is one flat face. Diagnosis: ring 3 corner v1 sits straight above the stop face. Fix: brow vertex (and forehead seam vert) forward, inset eye socket in the stop/cheek face.
+- r01: 584 tris, all gates PASS, IoU vs s1 min .998. Result: better, brow shelf and socket read in az045. Critique: front view (az000) shows a flat horizontal shelf under the head; the reference chest is a V keel. Diagnosis: ring 6 bottom seam vert level with its neighbour. Fix: ring-6 seam vert down .045 and forward .03 (neighbour follows a little), throat seam down .015.
+- r02: 584 tris, PASS, IoU min .989. Result: better, chest reads as a V keel in az000. Critique: the face from the front is a narrow tube end; a bear face is broad at the cheeks with a flat-sided muzzle block. Diagnosis: cheek verts (ring 3/4 v2) at x .150/.175; muzzle side verts not coplanar. Fix: cheeks out .018/.012; flatten the muzzle side verts (y<-.58) into one plane.
+- r03: 584 tris, PASS, IoU min .988. Result: better, face broader with flat muzzle sides (az045, hero). Critique: side (az090) flank has no shoulder/upper-arm mass over the foreleg or thigh over the hind leg; the reference shows both as bulging planes. Diagnosis: widest verts (v2) of rings 7-9 and 11 sit on one straight flank line. Fix: push them out (.018/.012) and the shoulder ones down .02.
+- r04 (final, orbit): 584 tris, PASS, IoU vs s1 min .975, orbit rc=0. Result: better, shoulder and thigh masses read in hero.
+
+## Stage 3
+- r01 plan: paint 7 colours (fur, dark lower legs/belly/socket, lighter chest plane, pale muzzle block bounded by the stop ring, black nose cap), eye lenses in the sockets, 4 hooked claws per paw.
+- r01: 832 tris, all gates PASS, 7 colours. Critique: az000 colour shows the whole muzzle top black (nose rule too greedy) and no lighter chest plane (belly rule wins first). Diagnosis: body_rule order/extent. Fix: nose = front cap only; chest test before the dark-underside test, normal threshold -.25.
+- r02: 832 tris, PASS. Result: better; nose pad is the front cap, eyes read, claws read. Critique: the lighter chest V is barely distinguishable from the fur in az000. Diagnosis: chest #8a6a50 too close in value to fur #6b4a33. Fix: chest #9c7a5a.
+- r03 (final, orbit): 832 tris, PASS, orbit rc=0. Result: chest V now reads lighter.
+
+## Stage 4
+- r01 plan: 12-bone rig on J (roll auto), automatic skin, pieces bound with body weights; idle 48 f, move 33 f, attack 40 f.
+- r01: 832 tris, all gates PASS (flip 0%, drift 0). Critique: attack f010 (az090) pitches the whole front DOWN and drives the raised paw into the ground; the lunge does not read. Diagnosis: on the spine chain, negative bone-local X pitches the front down, so the wind-up signs were inverted; paw lift too small. Fix: wind-up spine/chest/neck/head positive (rear back, head up), swipe negative; upperarm 40 / forearm -45 on wind-up.
+- r02: PASS, flips 0. Result: better, the bear now rears with the head up at f010. Critique: the swiping paw still reaches forward-down to the ground (az090 f010) instead of rising. Diagnosis: forearm.L -45 swings its tip back, undoing the upper-arm lift. Fix: forearm.L +28 and fpaw +15 on the wind-up (the whole arm raised ahead), +8/-10 on the swipe.
+- r03: PASS, flips 0, drift 0. Result: better, the arm rises high on the wind-up (az090 f010). Critique: the raised paw points its sole forward with the claws straight up, like a wave not a swipe. Diagnosis: fpaw.L +15 adds to the arm lift. Fix: fpaw.L -30 so the paw curls, claws forward/down. Final round with orbit.
+- r04 (final, orbit + glbcheck): all gates PASS; hit 0, float 0, z-fight 0, slivers 0%, flips 0.00% tris / 0.00% area, drift 0; glbcheck OK (attack/idle/move). Orbit advises az000 head_merged (head does not clear the body outline from the front). Review packet built.
+
+Triangles: stage 1 568, stage 2 584, stage 3/4 832 total. Rounds: s1 9 (lock r09), s2 4, s3 3, s4 4.

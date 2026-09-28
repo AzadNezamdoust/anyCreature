@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the upper face between skull and face rings",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee: a supporting loop above the knee ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "knee: a supporting loop below the knee ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

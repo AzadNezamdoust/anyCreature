@@ -1,0 +1,416 @@
+{
+ "wolf": {
+  "identity": "wolf",
+  "accepted": "dog, husky, coyote, canine, hound, jackal, dingo",
+  "size": "height 1.1 m to the ear tips, length 1.7 m nose to tail tip, width 0.5 m",
+  "pose": "standing on all four legs, head level",
+  "cue": "wedge head with tall pointed ears, thick neck ruff, deep chest with a clear tuck-up, long legs, bushy brush tail with a dark tip carried low",
+  "head": "long wedge muzzle, black nose pad over a cream lip, amber eyes under a slight brow, tall pointed ears",
+  "body": "deep chest, narrow waist, long tapering legs, oval paws with the middle toes leading",
+  "pieces": "neck ruff in clumps, dark back saddle, cream bib, tail brush with a dark tip, toe claws",
+  "palette": [
+   [
+    "grey fur",
+    "#9c978e"
+   ],
+   [
+    "dark saddle",
+    "#65636b"
+   ],
+   [
+    "tan legs",
+    "#b59d76"
+   ],
+   [
+    "cream bib",
+    "#efe6cf"
+   ],
+   [
+    "amber eye",
+    "#e0a030"
+   ],
+   [
+    "black nose",
+    "#1e1b1b"
+   ]
+  ],
+  "clips": "idle: breathing, ear twitch; move: trot in diagonal pairs; attack: head-down lunge and snap",
+  "image_description": "a wolf: wedge head with tall pointed ears, thick neck ruff, deep chest with a clear tuck-up, long legs, bushy brush tail with a dark tip carried low; long wedge muzzle, black nose pad over a cream lip, amber eyes under a slight brow, tall pointed ears; deep chest, narrow waist, long tapering legs, oval paws with the middle toes leading; neck ruff in clumps, dark back saddle, cream bib, tail brush with a dark tip, toe claws"
+ },
+ "giant": {
+  "identity": "giant",
+  "accepted": "troll, ogre, titan",
+  "size": "height 4.0 m, length 2.5 m, width 3.9 m across the arms",
+  "pose": "standing hunched, arms hanging to the knees",
+  "cue": "hunched mountain troll: small sunken head under massive shoulders, very long arms to the knees with huge fists, short thick legs",
+  "head": "small head set low, heavy brow, deep-set amber eyes, cream tusks rising from the lower jaw",
+  "body": "massive hump of shoulders and back, pot belly, short thick legs, big flat feet, fists with a knuckle row and separate fingers",
+  "pieces": "moss clumps and a few flat rocks bedded on the shoulders, belt with a loincloth, stone-coloured nails",
+  "palette": [
+   [
+    "blue-grey hide",
+    "#66727f"
+   ],
+   [
+    "dark hide",
+    "#343b46"
+   ],
+   [
+    "stone",
+    "#8b867c"
+   ],
+   [
+    "moss green",
+    "#6f8f3a"
+   ],
+   [
+    "tan leather",
+    "#a58c67"
+   ],
+   [
+    "cream tusk",
+    "#d6c9a6"
+   ],
+   [
+    "amber eye",
+    "#f4b427"
+   ]
+  ],
+  "clips": "idle: heavy breathing sway; move: lumbering walk; attack: two-handed overhead slam",
+  "image_description": "a giant: hunched mountain troll: small sunken head under massive shoulders, very long arms to the knees with huge fists, short thick legs; small head set low, heavy brow, deep-set amber eyes, cream tusks rising from the lower jaw; massive hump of shoulders and back, pot belly, short thick legs, big flat feet, fists with a knuckle row and separate fingers; moss clumps and a few flat rocks bedded on the shoulders, belt with a loincloth, stone-coloured nails"
+ },
+ "boar": {
+  "identity": "boar",
+  "accepted": "pig, hog, warthog, swine, peccary",
+  "size": "height 0.9 m at the shoulder crest, length 1.4 m, width 0.46 m",
+  "pose": "standing on all four legs, head low",
+  "cue": "front-heavy body with a high shoulder hump, long wedge head ending in a flat snout disc, upward tusks, bristly crest along the spine",
+  "head": "long wedge head, flat round snout disc with two nostrils, small dark eye, pointed ears tilted forward, cream tusks curving up from the lower jaw",
+  "body": "high shoulder hump, body tapering to narrow hips, short legs with hock angles, cloven hooves, thin tail with a tuft",
+  "pieces": "bristly dark crest from the nape to mid-back in blunt clumps, dark shoulder saddle, tusks",
+  "palette": [
+   [
+    "brown body",
+    "#6f5040"
+   ],
+   [
+    "dark bristle",
+    "#3e2c24"
+   ],
+   [
+    "pink-grey snout",
+    "#b88e7e"
+   ],
+   [
+    "cream tusk",
+    "#efe3c8"
+   ],
+   [
+    "black hoof",
+    "#2a201c"
+   ],
+   [
+    "dark eye",
+    "#1a1414"
+   ]
+  ],
+  "clips": "idle: sniffing and rooting; move: trot; attack: head-down charge with a tusk toss",
+  "image_description": "a boar: front-heavy body with a high shoulder hump, long wedge head ending in a flat snout disc, upward tusks, bristly crest along the spine; long wedge head, flat round snout disc with two nostrils, small dark eye, pointed ears tilted forward, cream tusks curving up from the lower jaw; high shoulder hump, body tapering to narrow hips, short legs with hock angles, cloven hooves, thin tail with a tuft; bristly dark crest from the nape to mid-back in blunt clumps, dark shoulder saddle, tusks"
+ },
+ "goblin": {
+  "identity": "goblin",
+  "accepted": "imp, gremlin, hobgoblin, kobold",
+  "size": "height 1.1 m, length 0.6 m, width 0.8 m across the ears",
+  "pose": "standing crouched, arms hanging",
+  "cue": "small hunched humanoid with a big head, long horizontal pointed ears, hooked nose, arms to the knees",
+  "head": "big domed head, heavy brow, yellow eyes, long hooked nose, wide fanged grin, long horizontal ears",
+  "body": "thin limbs, pot belly over a belt, clawed three-fingered hands, three-toed feet, crouched stance",
+  "pieces": "belt with a chunky buckle, tattered loincloth, claws, fangs",
+  "palette": [
+   [
+    "green skin",
+    "#6aa84f"
+   ],
+   [
+    "light green belly",
+    "#9ccc7a"
+   ],
+   [
+    "dark brown belt",
+    "#4a3222"
+   ],
+   [
+    "brown cloth",
+    "#7a5a3a"
+   ],
+   [
+    "cream fang",
+    "#efe6cf"
+   ],
+   [
+    "yellow eye",
+    "#f2d23c"
+   ]
+  ],
+  "clips": "idle: fidget and look around; move: sneaky crouched walk; attack: claw swipe",
+  "image_description": "a goblin: small hunched humanoid with a big head, long horizontal pointed ears, hooked nose, arms to the knees; big domed head, heavy brow, yellow eyes, long hooked nose, wide fanged grin, long horizontal ears; thin limbs, pot belly over a belt, clawed three-fingered hands, three-toed feet, crouched stance; belt with a chunky buckle, tattered loincloth, claws, fangs"
+ },
+ "raven_wyvern": {
+  "identity": "wyvern",
+  "accepted": "dragon, drake, raven dragon, bird dragon, griffin, gryphon",
+  "size": "height 1.4 m, length 2.3 m bill to tail tip, width 0.7 m with the wings folded",
+  "pose": "standing on two legs, body pitched forward, wings folded",
+  "cue": "a wyvern first: two legs, the wings ARE the forelimbs folded at rest, a long reptile tail longer than the body with a fin tip; raven traits second",
+  "head": "raven skull with a heavy black bill and a pale tip, amber eye, swept-back horns, shaggy throat hackles",
+  "body": "S-curved neck, deep keeled chest, forward-pitched crouch, bird legs with a reversed hock and talons, long tapering tail",
+  "pieces": "folded membrane wings with tapered finger spars and a thumb claw, graded dorsal spines, tail fin, horns, hackles",
+  "palette": [
+   [
+    "blue-black plumage",
+    "#2c3346"
+   ],
+   [
+    "purple membrane",
+    "#6a3f9a"
+   ],
+   [
+    "black bill",
+    "#1c1c22"
+   ],
+   [
+    "pale bill tip",
+    "#d8cfb8"
+   ],
+   [
+    "amber eye",
+    "#f0a020"
+   ],
+   [
+    "grey-brown shank",
+    "#6e665e"
+   ],
+   [
+    "horn",
+    "#e4dcc8"
+   ]
+  ],
+  "clips": "idle: breathing and head tilt; move: bird-like stalking walk; attack: neck lunge with the wings mantling",
+  "image_description": "a raven-headed wyvern: a wyvern first: two legs, the wings ARE the forelimbs folded at rest, a long reptile tail longer than the body with a fin tip; raven traits second; raven skull with a heavy black bill and a pale tip, amber eye, swept-back horns, shaggy throat hackles; S-curved neck, deep keeled chest, forward-pitched crouch, bird legs with a reversed hock and talons, long tapering tail; folded membrane wings with tapered finger spars and a thumb claw, graded dorsal spines, tail fin, horns, hackles"
+ },
+ "bear": {
+  "identity": "bear",
+  "accepted": "grizzly, brown bear, black bear",
+  "size": "height 1.0 m at the hump, length 1.7 m, width 0.7 m",
+  "pose": "standing on all four legs, head low",
+  "cue": "big shoulder hump as the highest point, head carried low, heavy body, thick legs",
+  "head": "broad dished face, pale muzzle block with a black nose pad, small dark eyes, round ears",
+  "body": "shoulder hump, deep body, thick legs tapering to the wrist, plantigrade paws with dark claws, stub tail",
+  "pieces": "claws, darker lower legs, lighter chest plane",
+  "palette": [
+   [
+    "brown fur",
+    "#6b4a33"
+   ],
+   [
+    "dark fur",
+    "#4a3222"
+   ],
+   [
+    "pale muzzle",
+    "#c9a57d"
+   ],
+   [
+    "black nose",
+    "#1e1714"
+   ],
+   [
+    "dark claw",
+    "#2a221e"
+   ],
+   [
+    "eye",
+    "#151010"
+   ]
+  ],
+  "clips": "idle: breathing and sniffing; move: heavy walk; attack: lunge with a paw swipe",
+  "image_description": "a bear: big shoulder hump as the highest point, head carried low, heavy body, thick legs; broad dished face, pale muzzle block with a black nose pad, small dark eyes, round ears; shoulder hump, deep body, thick legs tapering to the wrist, plantigrade paws with dark claws, stub tail; claws, darker lower legs, lighter chest plane"
+ },
+ "stag": {
+  "identity": "stag",
+  "accepted": "deer, elk, red deer, moose, reindeer, caribou, buck",
+  "size": "height 1.7 m to the antler tips, length 1.8 m, width 0.6 m",
+  "pose": "standing on all four legs, head up",
+  "cue": "tall branching antlers, upright neck with a dark mane, deep chest, slender legs",
+  "head": "long tapered head, black nose, pale jaw line, dark eyes, leaf-shaped ears, antlers with brow tines pointing forward and crowned tips",
+  "body": "deep chest, slender legs with knees and hocks, small black hooves, cream rump patch, short hanging tail",
+  "pieces": "antlers, neck mane with a V bib, tail",
+  "palette": [
+   [
+    "red-brown body",
+    "#8a5a3a"
+   ],
+   [
+    "dark mane",
+    "#6a4630"
+   ],
+   [
+    "pale cream",
+    "#d9c3a0"
+   ],
+   [
+    "antler",
+    "#d8c8a8"
+   ],
+   [
+    "black hoof",
+    "#231a16"
+   ],
+   [
+    "eye",
+    "#111111"
+   ]
+  ],
+  "clips": "idle: grazing and ear flick; move: walk; attack: head-down antler charge",
+  "image_description": "a stag: tall branching antlers, upright neck with a dark mane, deep chest, slender legs; long tapered head, black nose, pale jaw line, dark eyes, leaf-shaped ears, antlers with brow tines pointing forward and crowned tips; deep chest, slender legs with knees and hocks, small black hooves, cream rump patch, short hanging tail; antlers, neck mane with a V bib, tail"
+ },
+ "frog": {
+  "identity": "frog",
+  "accepted": "toad, bullfrog",
+  "size": "height 0.3 m to the eye tops, length 0.5 m, width 0.8 m with the feet",
+  "pose": "sitting, front legs straight, hind legs folded",
+  "cue": "squat sitting frog tilted up at the front, big bulging eyes on top of a wide head, folded Z hind legs with long webbed feet",
+  "head": "wide flat head, big gold eyes with horizontal black pupils, wide black mouth line, cream jaw",
+  "body": "pear-shaped body, short front legs with splayed toes and pad tips, hind legs folded thigh-shin-foot with webbed feet",
+  "pieces": "toe pads, darker irregular spots on the back, webbing",
+  "palette": [
+   [
+    "green skin",
+    "#5fae3c"
+   ],
+   [
+    "dark green spots",
+    "#2f6b2a"
+   ],
+   [
+    "cream belly",
+    "#efe0b0"
+   ],
+   [
+    "gold eye",
+    "#f2c230"
+   ],
+   [
+    "black pupil and mouth",
+    "#151515"
+   ]
+  ],
+  "clips": "idle: throat pulse and blink; move: hop; attack: tongue lash",
+  "image_description": "a frog: squat sitting frog tilted up at the front, big bulging eyes on top of a wide head, folded Z hind legs with long webbed feet; wide flat head, big gold eyes with horizontal black pupils, wide black mouth line, cream jaw; pear-shaped body, short front legs with splayed toes and pad tips, hind legs folded thigh-shin-foot with webbed feet; toe pads, darker irregular spots on the back, webbing"
+ },
+ "owl": {
+  "identity": "owl",
+  "accepted": "barn owl, horned owl, eagle owl, owlet",
+  "size": "height 0.64 m, length 0.41 m, width 0.35 m",
+  "pose": "perched upright on its feet, wings folded",
+  "cue": "upright egg-shaped body, rounded head with two ear tufts, big round eyes",
+  "head": "rounded head, two ear tufts, big orange eyes with black pupils, pale facial disc with a dark rim, V brows, small hooked beak",
+  "body": "upright body, folded wings along the sides, short fan tail, feathered legs with dark talons",
+  "pieces": "ear tufts, brows, beak, talons, a lighter belly",
+  "palette": [
+   [
+    "brown feathers",
+    "#7a5a3c"
+   ],
+   [
+    "dark brown",
+    "#4a3424"
+   ],
+   [
+    "cream face and belly",
+    "#efe3c6"
+   ],
+   [
+    "orange eye",
+    "#f08a1c"
+   ],
+   [
+    "black pupil",
+    "#111111"
+   ],
+   [
+    "beak and talon",
+    "#d8b870"
+   ]
+  ],
+  "clips": "idle: head turn and blink; move: short hop with a wing flap; attack: talon strike with the wings spread",
+  "image_description": "a owl: upright egg-shaped body, rounded head with two ear tufts, big round eyes; rounded head, two ear tufts, big orange eyes with black pupils, pale facial disc with a dark rim, V brows, small hooked beak; upright body, folded wings along the sides, short fan tail, feathered legs with dark talons; ear tufts, brows, beak, talons, a lighter belly"
+ },
+ "crab": {
+  "identity": "crab",
+  "accepted": "hermit crab, spider crab, fiddler crab",
+  "size": "height 0.4 m, length 1.2 m, width 1.5 m with the legs",
+  "pose": "standing low, claws held in front",
+  "cue": "wide low carapace with two big claws held in front and eight splayed walking legs with two bends each, body close to the ground",
+  "head": "eye stalks with bulb eyes on the front rim, a toothed front edge on the carapace",
+  "body": "broad carapace made of a few big planes, chunky claws with a real gap between the fingers, walking legs with a knee and a second bend, dark leg tips",
+  "pieces": "claws, eye stalks, a small cluster of barnacles on the rear rim",
+  "palette": [
+   [
+    "red-orange shell",
+    "#c8502e"
+   ],
+   [
+    "dark red ridge",
+    "#8e3420"
+   ],
+   [
+    "cream belly",
+    "#efc9a0"
+   ],
+   [
+    "dark tip",
+    "#2a1c18"
+   ],
+   [
+    "black eye",
+    "#111111"
+   ],
+   [
+    "barnacle",
+    "#9a8474"
+   ]
+  ],
+  "clips": "idle: claw clicks; move: sideways scuttle; attack: claw snap",
+  "image_description": "a crab: wide low carapace with two big claws held in front and eight splayed walking legs with two bends each, body close to the ground; eye stalks with bulb eyes on the front rim, a toothed front edge on the carapace; broad carapace made of a few big planes, chunky claws with a real gap between the fingers, walking legs with a knee and a second bend, dark leg tips; claws, eye stalks, a small cluster of barnacles on the rear rim"
+ },
+ "character": {
+  "identity": "cartoon character",
+  "accepted": "human, person, man, boy, kid, child, humanoid, mannequin, doll, figure, toon",
+  "size": "height 1.6 m to the top of the head, arm span 1.5 m in the T-pose, depth 0.3 m",
+  "pose": "standing T-pose, arms straight out to the sides, palms down, feet slightly apart",
+  "cue": "a big round head about a quarter of the body height on a thin neck, a slim straight torso, long thin arms and legs",
+  "head": "a faceted sphere head; two big round cartoon eyes with white sclera, black pupils and a thin black outline; thin dark brows; a tiny pointed nose; a short straight line for the mouth",
+  "body": "slim torso with no clothing detail, thin arms with simple hands (thumb and a mitten of fingers slightly curled), thin straight legs, bare feet with toe blocks",
+  "pieces": "eyes (sclera, pupil, outline), brows, mouth line",
+  "palette": [
+   [
+    "peach skin",
+    "#f0b477"
+   ],
+   [
+    "eye white",
+    "#f7f7f5"
+   ],
+   [
+    "black pupil and outline",
+    "#151515"
+   ],
+   [
+    "dark brow and mouth",
+    "#3a2f2a"
+   ]
+  ],
+  "clips": "idle: breathing and a blink; move: a relaxed walk with arm swing; attack: a punch",
+  "image_description": "a cartoon humanoid character: a big round head about a quarter of the body height on a thin neck, a slim straight torso, long thin arms and legs; a faceted sphere head; two big round cartoon eyes with white sclera, black pupils and a thin black outline; thin dark brows; a tiny pointed nose; a short straight line for the mouth; slim torso with no clothing detail, thin arms with simple hands (thumb and a mitten of fingers slightly curled), thin straight legs, bare feet with toe blocks"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye/cheek plane under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "gut: a ring between the belly (R1) and the ribs (R2) for the upper curve of the gut",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

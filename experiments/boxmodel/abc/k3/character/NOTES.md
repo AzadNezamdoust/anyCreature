@@ -1,0 +1,56 @@
+# character (k3) build notes
+
+Reference sheet present: blueprint.json traced from it is the stage-1 target (not redrawn).
+
+## Stage 1
+- r01: first blockout. Torso column of half-octagons, 12-gon faceted-sphere head (non-uniform thetas so the eye sits on a face), hex legs from a pelvis-floor socket, hex arms from two chest-side quads, foot from the ankle's front quad, thumb from the palm's front quad. 802 tris, gates PASS, IoU side .883 / front .896 / top .733.
+- r02: Critique: feet read as tall boxy boots (hero, az090); reference feet are low, broad at the toes. Diagnosis: foot rings are rectangles with vertical sides, ankle ring at z .12. Fix: trapezoid foot rings (top narrower), lower ball/toe tops, ankle ring to z .105.
+- r02 result: feet lower and splayed but still slipper-like; acceptable for now. 802 tris.
+- r03: Critique: hands are tiny flat flippers (hero, az000); reference hands are big mittens with fingers curling down. Diagnosis: palm/finger rings A[7..9] thin (rz .016) and only one curl step. Fix: wider thicker palm, one more finger ring curling down to z 1.034, thumb angled down-forward.
+- r03 result: hands now read as curled mittens; better. 826 tris, IoU top .735.
+- r04: Critique: top view arms sit forward of the reference band and are too shallow front-to-back (top IoU .735). Diagnosis: arm ring centres cy ~.01-.03, ry .032-.042. Fix: arm rings shifted back 2.2 cm (1.2 at the shoulder) and 15% deeper.
+- r04 result: top IoU .735 -> .760, arms sit in the reference band. 826 tris.
+- r05: Critique: legs read too thin in the side view (az090, side overlay: thigh/calf inside the red outline). Diagnosis: leg hexes have flat faces front and back, so their depth is only 0.87 ry. Fix: leg ry divided by 0.88.
+- r05 result: side IoU .874 -> .896; legs now fill the side outline. 826 tris.
+- r06 (lock): the base reads as the toon figure from every view (big round head on a thin neck, slim straight torso, long thin limbs, mitten hands, feet); remaining shape work (torso planes, knees) goes to stage 2 vertex moves. Locked with orbit.
+
+Stage 1: 6 rounds (r06 = lock), 826 tris, lock edge sha256 3bf3100449c69d95. Min blueprint IoU: top .760 (side .896, front .892).
+
+## Stage 2
+- r01: eye-socket inset (pushed 8 mm in, kept as a valley), one shoulder loop for the arm drop/swing, knee cap forward, calf back, pecs forward, seat back. Gates PASS, IoU vs s1 min .991, 866 tris. Critique: the socket reads as a square dent until the lens covers it; the torso is still a plain column (accepted: the reference torso is plain). One round is enough.
+
+## Stage 3
+- r01: eyes as three stacked lenses (outline, sclera, pupil), brow, mouth line, nose pyramid; palette skin/eye white/black/brow. FAIL hit: 4 shells (outline and sclera lenses cut each other and the socket in two places).
+- r02: Fix: outline and sclera merged into ONE closed lens (black band + white dome painted by face), pupil a separate small lens seated on it. Gates PASS, 1156 tris, 4 colours. Critique (az000 colour): only one brow — the brow strip was built without the mirror.
+- r03: Fix: brow strip mirrored. Final stage-3 round with orbit.
+- r03 result: both brows read; face reads as the toon face. 1184 tris total, 4 colours, all s3 gates PASS.
+  Note: the workbench clay/colour renders show #f0b477 darker (tan) than the reference; palette kept to the brief.
+
+## Stage 4
+- r01: rig from J (+ eye bones for the blink, kept out of the skin), clips idle (breath + blink by eye-bone scale on frames 41-45), move (walk, arm swing, hip bob), attack (right cross). glbcheck OK, drift 0, hit 0. FAIL flips: 27 body tris (2.28%, area .33%), all under the shoulder where the upper arm drops 61 deg from the T-pose.
+- r02: Fix: the arm drop is shared with the clavicle (clav 12, upper arm 38 / 40 in the walk) so the armpit quads do not collapse.
+- r02 result: same 27 flips — not the drop. Diagnosis (one-off per-frame area probe, removed after): collapses only at attack frame 10, front of the RIGHT shoulder, where the upper arm swings 80 deg forward for the punch; 1 more in the walk.
+- r03: Fix: the punch reach is shared by chest twist (24), clavicle forward (24) and upper arm (52) instead of the upper arm alone.
+- r03 result: 20 flips (1.69%, area .07%). Diagnosis (probe runs on the kit-triangulated mesh, not kept as rounds): ONE front-armpit triangle per side (0.126, -0.029, 1.05) folds in every frame where the arm is dropped, even at a 36 deg drop — the upper-arm pivot sat mid-height in the arm, so the arm's underside swung in under the torso.
+- r04 (final, with orbit): Fix: shoulder joint moved to the armpit line, J['shoulder'] = (0.15, 0.02, 1.064); the probe showed 0 folds.
+- r04 result: all stage-4 gates PASS (hit 0, float 0, z-fight 0, slivers 0%, flips 0% / 0% area, drift 0, lock PASS, glbcheck OK). Posed wires: neck, knees, elbows bend without collapse; the punch reads mild.
+
+Triangles: stage 1 826; stage 2 866; stage 3/4 total 1184.
+Rounds: stage 1 6 (incl. lock), stage 2 1, stage 3 3, stage 4 4.
+Note: J was not used to place stage-1 rings (the ring tables carry the same joint heights); J['shoulder'] was moved in stage 4 only.
+
+## Repair pass (NGO AD notes, K=1, 2026-09-28; stage 1 locked, no unlock)
+- r07 (baseline, current kit): FAIL flips 95 (8.02% tris / 1.75% area) and drift 2 shells. The tech sheet shows purple only on both eyes: the blink (eye bone scale z 0.08, frames 41-45, now sampled) collapses the lens, and the lens is seated (its back is buried in the socket) so any scale drags it over the skin.
+- r08: Critique: the blink cannot be a scale of a piece seated in the skin (a z-scale to 0.35 still moves the rim ~4 cm, drift limit 1.6 cm). Diagnosis: one lens did both jobs (seated outline + blinking sclera). Fix (stage 3+4): split the eye into a static outline torus (bound bone=head, seated; front annulus black, outer side skin) and a white sclera dome hanging in the outline's inner wall, every vertex off the skin, bound to the eye bone with the pupil; blink squashes z to 0.35 (not 0.08). Result: flips 1 (0.07%), but drift 2 (sclera 6.1 mm off the skin, under the 6.4 mm seat distance) and hit 2 (outline crossed the skin along two rings: outer and inner wall).
+- r09: Fix: sclera lifted 1.5 mm (all vertices >= 7.2 mm off the skin, probed on the GLB), outline inner wall lifted off the skin (+1.5 mm) so it crosses the skin along one ring only. Result: all s4 gates PASS (flips 1 = 0.07% / 0.04% area, drift 0, hit 0). Probe: blink squashes the sclera 0.099 -> 0.035 m in z only at f43. 1380 tris. Side of the outline is skin now (item 3's eye part).
+- r10: Critique (item 1): the hand is a paper paddle (edge verts +-1 cm on a 10 cm hand) with a thin thumb hook hanging 3 cm in front and 2.5 cm below the palm. Diagnosis: hex hand rings A[7..10] with sharp side corners; the thumb's two extrusions go forward-down. Fix (stage 2): hand ring side verts pushed to 72% of the top offset, top/bottom x1.1 (depth now 30-46% of width); finger ring rotated 20 deg down about ring 9; thumb tip layer moved out along the palm and up. Result: FAIL s2 self-intersection (2): the tip moved past the layer before it, the thumb tube crossed itself.
+- r11: Fix: the thumb re-placed as a lobe along the palm's front edge: root at the wrist ring, layer 1 and tip set so the plan outline R6-A1-TA-TB-B1-R7 is simple; tip 1.6 cm off the palm edge (16% of the hand width), 8 mm higher. Result: all gates PASS, IoU min .988; close-up 1: a thick mitten with a short thumb against it; hero: the far hand reads as a block.
+- r12: Critique (item 2): each foot a 26 cm flat wedge (toe top 2.6 cm), a flipper in az090 and the hind close-up. Diagnosis: two foot extrusions with the top dropping monotonically to the toe. Fix (stage 2): one logged loop around the foot (the ball row) and the three foot rows re-placed: toe pulled back 3.6 cm, instep row raised to 7.4 cm, ball row 4.2 cm, toe block top 3.4 cm with a blunt front. Result: gates PASS, IoU min .918 (bottom view; the foot is most of it); close-up 2 and az090: a short foot with an instep and a toe block.
+- r13: Critique (item 3): brow and mouth bars stand 6 mm proud with a shadow gap (head close-ups). Fix (stage 3): both sunk (out 3/2.5 mm, in -9 mm). Result: FAIL z-fight 8 faces (front faces within 2.4 mm of the facets).
+- r14: Fix: out 4.2 mm (brow) / 3.8 mm (mouth), in -8 mm. Result: all gates PASS, z-fight 0; close-up 0 wire: brows seated, no gap; the far eye is a white dome with a thin dark front ring (the outline's side is skin since r08).
+- r15: Critique (item 4): a briefs line across the hips in az000. Diagnosis: the hip ring (R0) is narrower than the thigh tops. Fix (stage 2): R0 x1.085, R1 x1.05. Result: gates PASS, but az000 still shows the line: it is the pelvis floor quad under the belly (F0-FS-Mf-C), nearly horizontal, catching the dark.
+- r16: Fix: that quad tipped forward (F0 down 1.8 cm, Mf forward 1 cm and down 1.6 cm, crotch forward 8 mm). Result: gates PASS, IoU min .918; az000: no horizontal line at the hips, only the crotch split.
+- r17: Critique (item 5): the head is evenly spaced UV ring bands (head wire). Fix (stage 2): jaw plane (ring phi -62 down 4 mm, ring -38 down 1 cm, its front two verts forward 8 mm), flatten a brow plane (rings 22/46, theta 0-40) and a cheek plane (rings -38/-6, theta 40-68). Moves under 3% of head height. Result: gates PASS, IoU min .918; close-up 0 wire: a flat brow facet above the eye and a cheek facet below; subtle, the crown still bands.
+- r18: final stage-4 run with orbit, then --review and --compare (debug intersection probe removed from stage 2).
+- r18 result: all stage-4 gates PASS (hit 0, float 0, z-fight 2 (limit 2), slivers 2 = 0.1%, flips 1 = 0.07% / 0.04% area, drift 0, lock PASS, IoU min .918 bottom), glbcheck OK, orbit holds; clip 0 (0% area). Review packet and side_by_side rebuilt. Packet check (idle f1): eyes seated in every posed frame, far hand a block, feet short with an instep, no hip line, brows seated. Residual: two thin sliver lines at the thumb tips in the posed wires; the crown still bands; feet have no separate toes.
+Triangles: stage 1 826; total 1396. Repair rounds: r07-r18 (12).

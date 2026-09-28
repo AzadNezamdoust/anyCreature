@@ -446,7 +446,10 @@ for dirpath, dirs, files in os.walk(ROOT):
 # checks for, conditionally), and the bundled three.js.
 # docs/research/ holds investigation notes: they name files a proposal WOULD add
 # and the versions of third-party tools, so neither scan below applies there.
-RESEARCH = lambda d: os.path.relpath(d, ROOT).replace(os.sep, '/').startswith('docs/research')
+# experiments/ is the same kind of tree (the staged box-model runs: notes that
+# name Blender versions and files a port would add). The leak scan above still
+# covers both.
+RESEARCH = lambda d: os.path.relpath(d, ROOT).replace(os.sep, '/').startswith(('docs/research', 'experiments'))
 REF_RE = re.compile(r'(?<![\w./-])(?:harness|engine|tools|calibration|example|cards|assets)'
                     r'/[A-Za-z0-9_./-]*[A-Za-z0-9_]\.(?:py|mjs|js|json|md|sh|ps1|html|png|glb)\b')
 REF_EXT = SCAN_EXT + ('.yml', '.yaml', '.html')

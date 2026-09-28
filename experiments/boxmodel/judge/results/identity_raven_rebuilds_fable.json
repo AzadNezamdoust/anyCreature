@@ -1,0 +1,8 @@
+{"note": "blind Fable 5.1 readers, one seat per sheet, neutral paths (out/boxmodel/judge/q0927). An earlier set whose paths contained 'raven' was discarded as primed. Scored by harness/identity.py against judge/raven_wyvern.brief.md.",
+ "opus_v2": {"shape": {"az000": ["bat", "gargoyle", "wyvern", "imp", "dragon"], "az045": ["pteranodon", "wyvern", "raven", "griffin", "cockatoo"], "az090": ["pteranodon", "wyvern", "raven", "roadrunner", "dragon"], "az135": ["pteranodon", "wyvern", "raven", "griffin", "crow"], "az180": ["bat", "gargoyle", "wyvern", "imp", "rabbit"], "top": ["raven", "pteranodon", "wyvern", "pigeon", "lizard"]},
+             "shape_verdict": "PASS at rank 2 (az045, az090, az135); accepted word in all 6 views at rank <= 3",
+             "look": ["raven wyvern", "cockatrice", "horned raven", "wyvern", "bird dragon"], "look_rank": 1},
+ "fable": {"shape": {"az000": ["rabbit", "gargoyle", "goblin", "meerkat", "bat"], "az045": ["wyvern", "dragon", "griffin", "cockatrice", "velociraptor"], "az090": ["wyvern", "dragon", "velociraptor", "griffin", "cockatrice"], "az135": ["dragon", "wyvern", "griffin", "hippogriff", "velociraptor"], "az180": ["rabbit", "gargoyle", "imp", "owl", "goblin"], "top": ["dragon", "wyvern", "crocodile", "lizard", "raven"]},
+           "shape_verdict": "PASS at rank 1 (az045, az090, az135, top); az000 and az180 read nothing accepted",
+           "look": ["raven", "wyvern", "crow", "griffin", "dragon"], "look_rank": 2},
+ "v1_for_reference": "FAIL (parrot, cockatoo, eagle; griffin at rank 4-5 only)"}

@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye sockets: a recessed orbit on the front face for the stalk bases",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

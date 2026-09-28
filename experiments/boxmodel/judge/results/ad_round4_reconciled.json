@@ -1,0 +1,67 @@
+{
+ "stag": {
+  "fable": [
+   "FIX",
+   7
+  ],
+  "opus": [
+   "FIX",
+   7
+  ],
+  "verdict": "FIX",
+  "score": 7.0,
+  "round3": 7.5
+ },
+ "frog": {
+  "fable": [
+   "FIX",
+   7
+  ],
+  "opus": [
+   "FIX",
+   7
+  ],
+  "verdict": "FIX",
+  "score": 7.0,
+  "round3": 6.5
+ },
+ "wolf": {
+  "fable": [
+   "SHIP",
+   7
+  ],
+  "opus": [
+   "FIX",
+   6
+  ],
+  "verdict": "FIX",
+  "score": 6.5,
+  "round3": 6.0
+ },
+ "crab": {
+  "fable": [
+   "SHIP",
+   7
+  ],
+  "opus": [
+   "FIX",
+   5
+  ],
+  "verdict": "FIX",
+  "score": 6.0,
+  "round3": 6.0
+ },
+ "giant": {
+  "fable": [
+   "FIX",
+   6
+  ],
+  "opus": [
+   "FIX",
+   6
+  ],
+  "verdict": "FIX",
+  "score": 6.0,
+  "round3": 5.0
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "stag": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Mane is a comb of thin, identical shard spikes that read as splinters edge-on, including the front V bib, which looks like scattered paper triangles",
+    "The antler tines are identical cone thorns stuck along a thin, constant-section beam, a machine tell. The tines do not grow out of the beam and the crowns are weak",
+    "A heavy dark valley in the armpit and under the chest muddies the front limb close-up. The cream ears are pale plates that compete with the antlers"
+   ],
+   "brief_fit": "It has every cue: tall antlers, dark mane, rump patch, pale jaw, short tail. But the mane and tines are executed procedurally, not as bold clumps"
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "The antlers are short and stubby with brown, body-coloured pedicel posts. They miss 'tall branching antlers' and the forward brow tines barely read",
+    "The mane is a hollow shell with a visible rim ring at the throat (tech hero/az000). In attack_f017 it balloons into a hood over the head",
+    "The pale jaw line is a flat cream plate stuck under the jaw, and stray cream bands sit at the hind hocks"
+   ],
+   "brief_fit": "The solid mane mass, deep chest and rump patch are the most commercial-looking, but the weak antlers undercut the stag's defining cue"
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "The mane and bib are built from many thin shard plates, not a few bold clumps, so they read spiky and procedural in the close-ups",
+    "The ear is a thin flat cream plate that sits in front of the antler base and eye (head close-up). Two flipped faces at the throat fold when posed (purple in tech az000)",
+    "The tines have separate darker cone caps that read as glued-on pencil tips. The lower legs add an off-palette dark stocking colour"
+   ],
+   "brief_fit": "Best fit: tall, properly branching antlers with forward brow tines and crowned tips, a dark mane with a cream V bib, rump patch and short tail"
+  },
+  "rank": [
+   "C",
+   "B",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "C's antlers grow and branch like a real stag's crown with forward brow tines, carrying identity where B's antlers are stubby and A's are thorned sticks, while all three share shard-built manes."
+ },
+ "wolf": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Proportions read as a stocky pup or dog: oversized barrel chest, short thick legs, little tuck-up in hero and az000",
+    "The ruff is a few scattered small shard spikes glued on, not clumps. The cream bib has a grey window cut into it (hero, az090)",
+    "The saddle is a flat purple-grey patch pasted on the back. The tail tip is a single black needle spike, not a dark brush tip"
+   ],
+   "brief_fit": "Tall pointed ears, a good wedge face with amber eyes, and a low tail, but the long legs, tuck-up and clumped ruff cues are weak"
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "The ears are short blunt boxes with a dark slot, failing the 'tall pointed ears' silhouette cue. The skull has a flat boxy brow shelf",
+    "8 slivers on the body (yellow seams along the shoulder and forelimb in tech hero/az000). The ruff is a jumble of small flakes, not clumps",
+    "A dark wedge hangs between the front legs (az000). The tail brush fringe is made of small shards"
+   ],
+   "brief_fit": "Best body: long legs, deep chest, clear tuck-up, low bushy tail with a dark tip. The head and ears miss the brief"
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "The ruff is built from many thin triangle plates, and the hackles are a row of identical spikes along the spine (machine tell, paper-thin edge-on)",
+    "Two flipped faces fold over at the throat when posed (purple in tech hero/az000). A dark spike pendant hangs under the chest between the forelegs (az000)",
+    "The tail is dark along its whole underside rather than a dark tip. Some ruff plates cross the shoulder and forelimb line"
+   ],
+   "brief_fit": "Closest overall: wedge head, tall pointed ears, strong amber eyes, dark saddle, deep chest with tuck-up, long legs, low bushy tail"
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "C is the only wolf with both a wolf's head (tall pointed ears, wedge muzzle) and a wolf's body (long legs, tuck-up); A has the head but a pup's body, and B has the body but blunt box ears."
+ }
+}

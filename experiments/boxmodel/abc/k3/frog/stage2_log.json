@@ -1,0 +1,53 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: second loop above the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "elbow: third loop below the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "hip: a loop where the thigh leaves the body",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "shin: mid loop for the hop stretch",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "nostril on the snout top",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "partial_loop",
+   "reason": "mouth line: a thin strip of faces just above the lip ridge, painted black in stage 3",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "inset",
+   "reason": "snout front: a rim whose lower edges carry the front of the mouth line",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

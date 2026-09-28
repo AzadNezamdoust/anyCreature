@@ -1,0 +1,156 @@
+{
+ "per_creature": [
+  {
+   "creature": "bear",
+   "mean": {
+    "N": 5.5,
+    "O": 5.5,
+    "G": 6.5
+   },
+   "first": {
+    "fable": "G",
+    "opus": "G"
+   }
+  },
+  {
+   "creature": "boar",
+   "mean": {
+    "N": 6.5,
+    "G": 5.0,
+    "O": 6.5
+   },
+   "first": {
+    "fable": "N",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "character",
+   "mean": {
+    "O": 6.0,
+    "G": 5.0,
+    "N": 6.5
+   },
+   "first": {
+    "fable": "N",
+    "opus": "N"
+   }
+  },
+  {
+   "creature": "crab",
+   "mean": {
+    "O": 6.5,
+    "G": 5.0,
+    "N": 5.0
+   },
+   "first": {
+    "fable": "O",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "frog",
+   "mean": {
+    "O": 6.5,
+    "N": 4.5,
+    "G": 5.5
+   },
+   "first": {
+    "fable": "O",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "giant",
+   "mean": {
+    "G": 5.0,
+    "N": 6.0,
+    "O": 6.0
+   },
+   "first": {
+    "fable": "N",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "goblin",
+   "mean": {
+    "N": 6.25,
+    "O": 5.25,
+    "G": 7.0
+   },
+   "first": {
+    "fable": "G",
+    "opus": "G"
+   }
+  },
+  {
+   "creature": "owl",
+   "mean": {
+    "N": 5.75,
+    "O": 7.0,
+    "G": 6.25
+   },
+   "first": {
+    "fable": "O",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "raven_wyvern",
+   "mean": {
+    "N": 6.0,
+    "G": 5.75,
+    "O": 5.25
+   },
+   "first": {
+    "fable": "N",
+    "opus": "G"
+   }
+  },
+  {
+   "creature": "stag",
+   "mean": {
+    "G": 5.0,
+    "N": 4.5,
+    "O": 6.0
+   },
+   "first": {
+    "fable": "O",
+    "opus": "O"
+   }
+  },
+  {
+   "creature": "wolf",
+   "mean": {
+    "G": 5.0,
+    "N": 5.5,
+    "O": 6.25
+   },
+   "first": {
+    "fable": "O",
+    "opus": "O"
+   }
+  }
+ ],
+ "per_setting": {
+  "N": {
+   "mean": 5.636,
+   "first": 5,
+   "last": 8,
+   "mean_rank": 2.136
+  },
+  "G": {
+   "mean": 5.545,
+   "first": 5,
+   "last": 10,
+   "mean_rank": 2.227
+  },
+  "O": {
+   "mean": 6.068,
+   "first": 12,
+   "last": 4,
+   "mean_rank": 1.636
+  }
+ }
+}

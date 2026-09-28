@@ -1,0 +1,259 @@
+{
+ "wolf": {
+  "fable": [
+   "FIX",
+   6
+  ],
+  "opus": [
+   "FIX",
+   6
+  ],
+  "verdict": "FIX",
+  "score": 6.0,
+  "round2": [
+   7,
+   6
+  ],
+  "majors": [
+   [
+    "F",
+    "major",
+    "piece_ruff is still one uniform ring: a flat top rim runs right round the neck as a shelf,"
+   ],
+   [
+    "F",
+    "major",
+    "a dark grey pointed wedge hangs below the V of the bib and reads as a dangling flap or a t"
+   ],
+   [
+    "O",
+    "major",
+    "The legs still hang under a hem. The upper-arm mass overhangs the forearm with a dark hori"
+   ],
+   [
+    "O",
+    "major",
+    "The sternum keel still hangs below the bib between the forelegs as a dark charcoal pointed"
+   ]
+  ]
+ },
+ "giant": {
+  "fable": [
+   "FIX",
+   5
+  ],
+  "opus": [
+   "FIX",
+   5
+  ],
+  "verdict": "FIX",
+  "score": 5.0,
+  "round2": [
+   6,
+   5
+  ],
+  "majors": [
+   [
+    "F",
+    "major",
+    "each flap is a straight rigid plate hanging from the belt's outer edge; edge-on it is a st"
+   ],
+   [
+    "F",
+    "major",
+    "a black hairline slit runs the length of the brow shelf; the finger gaps read as three bla"
+   ],
+   [
+    "F",
+    "major",
+    "the fist top is a smooth featureless dome with no knuckle ridge and four identical finger "
+   ],
+   [
+    "F",
+    "major",
+    "toenails and fingernails are flat black rectangles on the digit fronts and read as a grill"
+   ],
+   [
+    "O",
+    "major",
+    "The fists still read as mitts. The back of the hand is a smooth faceted dome with no knuck"
+   ],
+   [
+    "O",
+    "major",
+    "The loincloth flaps are still rigid boards. In az090 both hang as straight vertical sticks"
+   ]
+  ]
+ },
+ "boar": {
+  "fable": [
+   "SHIP",
+   7
+  ],
+  "opus": [
+   "SHIP",
+   7
+  ],
+  "verdict": "SHIP",
+  "score": 7.0,
+  "round2": [
+   7,
+   7
+  ],
+  "majors": []
+ },
+ "goblin": {
+  "fable": [
+   "SHIP",
+   7
+  ],
+  "opus": [
+   "SHIP",
+   7
+  ],
+  "verdict": "SHIP",
+  "score": 7.0,
+  "round2": [
+   7,
+   6
+  ],
+  "majors": []
+ },
+ "raven_wyvern": {
+  "fable": [
+   "SHIP",
+   7
+  ],
+  "opus": [
+   "SHIP",
+   7
+  ],
+  "verdict": "SHIP",
+  "score": 7.0,
+  "round2": null,
+  "majors": []
+ },
+ "bear": {
+  "fable": [
+   "SHIP",
+   8
+  ],
+  "opus": [
+   "SHIP",
+   7
+  ],
+  "verdict": "SHIP",
+  "score": 7.5,
+  "round2": [
+   7,
+   7
+  ],
+  "majors": []
+ },
+ "stag": {
+  "fable": [
+   "SHIP",
+   8
+  ],
+  "opus": [
+   "FIX",
+   7
+  ],
+  "verdict": "FIX",
+  "score": 7.5,
+  "round2": [
+   7,
+   7
+  ],
+  "majors": [
+   [
+    "O",
+    "major",
+    "The tail still stands proud of the rump. At close range it is a grey curled scroll, with a"
+   ]
+  ]
+ },
+ "frog": {
+  "fable": [
+   "FIX",
+   6
+  ],
+  "opus": [
+   "FIX",
+   7
+  ],
+  "verdict": "FIX",
+  "score": 6.5,
+  "round2": [
+   7,
+   6
+  ],
+  "majors": [
+   [
+    "F",
+    "major",
+    "In the hop's extreme frame the near leg's segment between the knee block and the foot is p"
+   ],
+   [
+    "F",
+    "major",
+    "A cream wedge of each toe-pad piece exits the toe's outer side wall just behind the pad, a"
+   ],
+   [
+    "O",
+    "major",
+    "At full hop extension the thigh hangs off the pelvis on a neck about 40% of the thigh's wi"
+   ]
+  ]
+ },
+ "owl": {
+  "fable": [
+   "SHIP",
+   8
+  ],
+  "opus": [
+   "SHIP",
+   7
+  ],
+  "verdict": "SHIP",
+  "score": 7.5,
+  "round2": [
+   7,
+   7
+  ],
+  "majors": []
+ },
+ "crab": {
+  "fable": [
+   "FIX",
+   6
+  ],
+  "opus": [
+   "FIX",
+   6
+  ],
+  "verdict": "FIX",
+  "score": 6.0,
+  "round2": [
+   7,
+   5
+  ],
+  "majors": [
+   [
+    "F",
+    "major",
+    "The legs are long straight tapered spikes below a small top bend, standing as a row of nea"
+   ],
+   [
+    "F",
+    "major",
+    "The carapace crown is still one pole vertex with about 30 radial spokes and four concentri"
+   ],
+   [
+    "O",
+    "major",
+    "The walking legs are unchanged: long, straight, two-tone blades below a high knee, with no"
+   ]
+  ]
+ }
+}

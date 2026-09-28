@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face; the eye lens sits in it",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "shoulder loop: the arm drops and swings here",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "ball of the foot: the break between the instep and the toe block",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the upper-side face between skull and brow rings",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "heel: a supporting loop above the heel ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "heel: a supporting loop below the heel ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "upper arm: a loop between shoulder and elbow for the wing lift",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

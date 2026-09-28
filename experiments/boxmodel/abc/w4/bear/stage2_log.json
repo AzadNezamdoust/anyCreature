@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

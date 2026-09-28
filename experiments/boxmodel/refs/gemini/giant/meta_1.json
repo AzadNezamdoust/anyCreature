@@ -1,0 +1,28 @@
+{
+ "provider": "gemini",
+ "model": "gemini-3.8-flash-high",
+ "attempt": 1,
+ "ok": true,
+ "seconds": 48.7,
+ "exit": 0,
+ "prompt": "One image: a 2 x 2 orthographic turnaround sheet of ONE stylised low-poly 3D game creature, four views of the same creature: top-left the SIDE view, top-right the FRONT view, bottom-left the REAR view, bottom-right the TOP view. All four views at one common scale (the same number of pixels per metre in every view), each centred in its own quarter, separated by wide plain white gutters with NO lines between the quarters. No text, no labels, no numbers, no arrows, no frames, no borders, no divider lines. The creature: a giant: hunched mountain troll: small sunken head under massive shoulders, very long arms to the knees with huge fists, short thick legs; small head set low, heavy brow, deep-set amber eyes, cream tusks rising from the lower jaw; massive hump of shoulders and back, pot belly, short thick legs, big flat feet, fists with a knuckle row and separate fingers; moss clumps and a few flat rocks bedded on the shoulders, belt with a loincloth, stone-coloured nails. Size: height 4.0 m, length 2.5 m, width 3.9 m across the arms. Pose: standing hunched, arms hanging to the knees, the same pose in every view. The views: SIDE view: looking straight at the creature's left flank, its head pointing to the LEFT of the image. FRONT view: a straight-on front elevation, looking exactly head-on at its face; the creature is left-right symmetric about the vertical centre line of its quarter, its body hidden behind its chest, never a three-quarter view; the creature's left flank is on the RIGHT of the image. REAR view: a straight-on rear elevation, looking exactly tail-on; left-right symmetric about the centre line, its body hidden behind its rump, never a three-quarter view; its left flank is on the LEFT of the image. TOP view: a plan view looking straight down; its head points to the LEFT of the image and its left flank is at the BOTTOM of the image. Each feature appears only in the views that can see it. Each view is a true orthographic projection, no perspective. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (blue-grey hide, dark hide, stone, moss green, tan leather, cream tusk, amber eye), soft even light, no cast shadows, plain pure white background.",
+ "command": [
+  "~\\AppData\\Local\\agy\\bin\\agy.exe",
+  "--print",
+  "<instruction>",
+  "--add-dir",
+  "~\\AppData\\Local\\Temp\\refs-gemini-giant-83gkrsuk",
+  "--dangerously-skip-permissions",
+  "--effort",
+  "high",
+  "--output-format",
+  "text",
+  "--print-timeout",
+  "8m",
+  "--model",
+  "gemini-3.8-flash-high"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-09-27 23:04:26"
+}

@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 1,
+ "ok": true,
+ "seconds": 74.1,
+ "exit": 0,
+ "prompt": "One image: a 2 x 2 orthographic turnaround sheet of ONE stylised low-poly 3D game creature, four views of the same creature: top-left the SIDE view, top-right the FRONT view, bottom-left the REAR view, bottom-right the TOP view. All four views at one common scale (the same number of pixels per metre in every view), each centred in its own quarter, separated by wide plain white gutters with NO lines between the quarters. No text, no labels, no numbers, no arrows, no frames, no borders, no divider lines. The creature: a owl: upright egg-shaped body, rounded head with two ear tufts, big round eyes; rounded head, two ear tufts, big orange eyes with black pupils, pale facial disc with a dark rim, V brows, small hooked beak; upright body, folded wings along the sides, short fan tail, feathered legs with dark talons; ear tufts, brows, beak, talons, a lighter belly. Size: height 0.64 m, length 0.41 m, width 0.35 m. Pose: perched upright on its feet, wings folded, the same pose in every view. The views: SIDE view: looking straight at the creature's left flank, its head pointing to the LEFT of the image. FRONT view: a straight-on front elevation, looking exactly head-on at its face; the creature is left-right symmetric about the vertical centre line of its quarter, its body hidden behind its chest, never a three-quarter view; the creature's left flank is on the RIGHT of the image. REAR view: a straight-on rear elevation, looking exactly tail-on; left-right symmetric about the centre line, its body hidden behind its rump, never a three-quarter view; its left flank is on the LEFT of the image. TOP view: a plan view looking straight down; its head points to the LEFT of the image and its left flank is at the BOTTOM of the image. Each feature appears only in the views that can see it. Each view is a true orthographic projection, no perspective. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (brown feathers, dark brown, cream face and belly, orange eye, black pupil, beak and talon), soft even light, no cast shadows, plain pure white background.",
+ "command": [
+  "~\\AppData\\Local\\OpenAI\\Codex\\bin\\faa963e871dd422c\\codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "~\\AppData\\Local\\Temp\\refs-gpt-owl-ikhnqf1i\\reply.txt",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-09-27 23:14:58"
+}

@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "partial_loop",
+   "reason": "rim band: the carapace slope turns into the flat rim; dark-ridge colour border; terminated on the flat front and rear slope (no bend there)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "eye socket: the orbit the eye stalk rises from",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

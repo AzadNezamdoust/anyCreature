@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "partial_loop",
+   "reason": "mouth: a loop under the lip line from the snout to the corner, terminated in the snout cap and at the corner (a thin band for the mouth colour and the jaw)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "hip loop: the socket -> thigh-root band gets a middle ring for the hop",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "ear drum: a loop inside the face behind the eye dome, sunk 2 mm (the rim reads)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,95 @@
+{
+ "limits": {
+  "sliver_pct": 2.0,
+  "hit": 0,
+  "float": 0,
+  "zfight": 2,
+  "flip_pct": 0.5,
+  "flip_area_pct": 0.5,
+  "drift": 0
+ },
+ "totals": {
+  "flip": 0,
+  "area": 3.110741317089075,
+  "sliver": 2,
+  "flip_area": 0,
+  "valley": 0,
+  "zfight": 0,
+  "drift": 0,
+  "hit": 0,
+  "fold": 0,
+  "float": 0,
+  "open": 0
+ },
+ "triangles": 1004,
+ "turned": 64,
+ "stuck": 0,
+ "per_object": {
+  "body": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 2,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 2.5057066696821977,
+   "flip_area": 0
+  },
+  "piece_eye": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.0029649622837024346,
+   "flip_area": 0
+  },
+  "piece_antlers": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.13628432894832057,
+   "flip_area": 0
+  },
+  "piece_mane": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.4452411663195982,
+   "flip_area": 0
+  },
+  "piece_tail": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "area": 0.020544189855255923,
+   "flip_area": 0
+  }
+ },
+ "ok": true
+}

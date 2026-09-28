@@ -1,0 +1,95 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck ring between the hump and the skull: the neck must bend without collapsing",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "shoulder loop in the deltoid band: the arm swings from here",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "elbow loop above the elbow ring: the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "elbow loop below the elbow ring: the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "knuckle row across the fist",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "knee loop above the knee ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "knee loop below the knee ring",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "brow ring on the face: the brow ridge overhangs the eyes",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "partial_loop",
+   "reason": "mouth corner on the muzzle side, terminated on the muzzle (no bend there)",
+   "new_verts": 1,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "inset",
+   "reason": "eye socket under the brow: a loop inside one face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "knuckle ridge round the top of the fist (between the fist top and the finger row)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "partial_loop",
+   "reason": "finger groove down the front of the fist, fan-terminated in the knuckle band and under the fist",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "partial_loop",
+   "reason": "finger groove down the front of the fist, fan-terminated in the knuckle band and under the fist",
+   "new_verts": 2,
+   "extra_base_edges": []
+  }
+ ]
+}

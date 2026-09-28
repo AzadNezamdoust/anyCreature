@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "waist loop: the belly tuck needs a ring between hip and chest",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "second loop at the shoulder, for the bend",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "chamfer",
+   "reason": "brow crease",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop in the face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

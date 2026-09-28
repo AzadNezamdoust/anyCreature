@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye facet at 25%, floor 4 mm in",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

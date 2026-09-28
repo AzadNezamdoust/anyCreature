@@ -1,0 +1,430 @@
+{
+ "wolf": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "pieces",
+    "where": "1_beauty back34 and hero, neck behind the ears; az000 both sides of the neck; 2_closeups head colour, top edge of the ruff",
+    "what": "The ruff is thick now but reads as a rolled collar: a uniform ring with a hard top ledge encircling the neck, lighter grey on its top surface, sitting proud of the nape like a scarf glued on rather than a mane in the form.",
+    "fix": "Stage 3: taper piece_ruff to zero thickness along its top-rear edge and along the spine so the nape runs skull-to-withers in one line; keep the full thickness (>= 25% neck width) only at the sides of the neck and the chest bib; slide the top-rear edge down ~15% of neck length; paint the collar's top surface body grey so no lighter band shows from behind.",
+    "check": "back34 shows no raised ring behind the ears; az090 nape silhouette is a single line from skull to withers; techqa piece_ruff flip 0 and sliver 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "animation",
+    "where": "4_posed move_f007 and move_f013",
+    "what": "The move extremes are nearly identical to idle: a few degrees of leg swing, no diagonal-pair stride, no body bob (round-1 item 9 barely done).",
+    "fix": "Stage 4: key shoulders and hips +/-20-25 deg in diagonal pairs, add a 3-5% height bob, keep paws planted through contact.",
+    "check": "The two move frames differ visibly in leg spread at 128 px; no paw slides between contact frames."
+   },
+   {
+    "severity": "minor",
+    "kind": "face",
+    "where": "2_closeups head colour and wire, eye",
+    "what": "The socket is a black hollow about 1.5x the eye; at close range the amber eye reads as a bead in a hole.",
+    "fix": "Stage 3: scale piece_eye 1.15x and paint the socket inset dark grey (~25% value) instead of black; or stage 2: shrink the socket inset to 1.2x the eye.",
+    "check": "Head close-up shows the amber filling >= 2/3 of the socket; az000 still shows two eyes; float 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "colour",
+    "where": "1_beauty az000, chest between the forelegs",
+    "what": "A dark grey chest keel pokes out below the V of the cream bib and reads as a dangling wedge.",
+    "fix": "Stage 3: extend the ruff's centre clump down to the leg line, or paint the sternum tip cream on the existing loop.",
+    "check": "az000: the cream bib reaches the line between the forelegs with no dark point below it."
+   }
+  ],
+  "keep": [
+   "az090 silhouette: wedge head, thick neck, deep chest with tuck-up, bushy brush tail with dark tip",
+   "palette: grey, dark saddle, cream bib, tan legs from wrist/hock down, amber eyes",
+   "tan toe wedges with black tips (zfight 0); body tech-clean (hit 0, float 0, flip 0.23%)"
+  ],
+  "round1_fixed": "Fixed: toes (tan wedges, black tips, zfight 0), tail brush (widest at ~2/3, dark tip), eyes visible in az000 (float 0), leg flare and tan border moved to wrist/hock, tuck-up, nose and mouth, ears shorter. Partly: ruff is thick and below the ears but reads as a collar ring; move stride still barely there."
+ },
+ "giant": {
+  "verdict": "FIX",
+  "score": 6,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "pieces",
+    "where": "1_beauty az090 (both flaps) and hero (front flap); 2_closeups belt and loincloth colour",
+    "what": "The loincloth flaps hang as stiff planks from the belt's outer edge. In az090 the back flap has clear daylight (~10 cm at giant scale) between it and the buttocks and the front flap stands off the thighs; neither drapes on the body (round-1 item 2: thickness done, seating not).",
+    "fix": "Stage 3: rotate each flap about its top edge so its top half lies on the body: back flap draped on the buttocks (touching from belt to mid-buttock), front flap on the belly/thigh below the belt; widen the back flap to ~70% of the front flap; keep the wedge thickness.",
+    "check": "az090 and back34 show no daylight between flap and body over the top half; float 0; loincloth sliver <= 2."
+   },
+   {
+    "severity": "major",
+    "kind": "animation",
+    "where": "3_tech all four views: belt, loincloth, every moss clump and rock are blue; techqa drift moss 4, rocks 3, loincloth 3",
+    "what": "Every attached piece leaves the surface it rests on in a pose: moss and rocks lift off the shoulders in the attack raise, belt and loincloth come off the waist.",
+    "fix": "Stage 4: bind each piece to the bone that drives the surface under it: belt and loincloth with bone=pelvis; each moss clump and rock with the shoulder/clavicle bone beneath it (the round-1 spine binding is what makes them drift when the shoulders rotate).",
+    "check": "techqa drift 0 for all pieces; no blue in 3_tech; attack_f010 shows moss and rocks seated on the shoulders."
+   },
+   {
+    "severity": "major",
+    "kind": "form",
+    "where": "2_closeups fist colour and wire; 1_beauty az000 both fists",
+    "what": "The fist top is a smooth featureless dome with no knuckle ridge, and the four fingers are identical blocks of one length; only paint suggests knuckles. Target asks for separate fingers AND knuckles; round-1 item 5 half done (paint, nails, thumb yes; geometry no).",
+    "fix": "Stage 2: chamfer a knuckle ridge across the fist top at the finger roots and raise four knuckle bumps 3-4 cm; vary finger lengths (middle longest, little finger ~30% shorter). Keep the thumb.",
+    "check": "Fist close-up silhouette shows a knuckle row; the four nail faces do not line up; IoU > 0.9."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "3_tech hero, az090 and az000: purple triangles at both front armpit seams; techqa body flip 4",
+    "what": "Four fold-over triangles remain where the pec meets the deltoid in the overhead raise (36 -> 4; gate met at 0.21%, but round-1 asked for no purple).",
+    "fix": "Stage 4: push the seam-loop blend to 50/50 chest/upper-arm on those faces, or cap shoulder flexion at ~130 deg; if it persists, stage 2: the logged loop 5 cm below the armpit.",
+    "check": "No purple in 3_tech; flip 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "1_beauty az090 near fist; 3_tech az090 same fist",
+    "what": "The finger gaps are needle slits that read as three black scratch lines across the fist edge-on.",
+    "fix": "Stage 2: widen each finger gap to >= 2 cm and chamfer its edges so the separation reads as a groove, not a cut.",
+    "check": "az090 shows grooves between the fingers, no hairline black lines; body sliver count does not rise."
+   },
+   {
+    "severity": "minor",
+    "kind": "face",
+    "where": "2_closeups head colour; 1_beauty az000 face",
+    "what": "No mouth line: the tusks rise from the cheek beside the nose, not from a mouth. The socket recess is one full-width black slot under the brow and reads as a gash.",
+    "fix": "Stage 2: inset a mouth line between the tusk roots ~3 cm below the nose; raise the brow underside between the eyes so the slot splits into two sockets. Stage 3: paint the sockets dark blue-grey (~30% value), not black.",
+    "check": "az000 thumbnail: tusks rise from a mouth line; two separate shadowed sockets."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "1_beauty back34 far foot and hero both feet",
+    "what": "Toenails are dark cubes stacked on the toe fronts.",
+    "fix": "Stage 3: make each nail a wedge sunk 1 cm into the toe with only its front face dark.",
+    "check": "back34: nails read as caps on the toes, not blocks on them; toenails zfight 0."
+   }
+  ],
+  "keep": [
+   "hunched mass: small sunken head, massive shoulders, arms to the knees (troll read)",
+   "moss as lumpy clumps and boulders bedded on the shoulders (sliver 0, float 0)",
+   "brow-shadowed amber eyes, cream tusks, blue-grey fists with thumb and nails"
+  ],
+  "round1_fixed": "Fixed: moss clumps, rocks scaled and varied, eyes under the brow with a thin amber ring, fists repainted with nails and a thumb, belt and loincloth solid (open 0, float 0, zfight 0, slivers 15/1888), flip 36 -> 4. Not fixed: purple still at both armpits, back flap does not rest on the buttocks, no knuckle ridge or finger-length variation, no mouth line. New: belt, loincloth, moss and rocks all drift in poses."
+ },
+ "boar": {
+  "verdict": "SHIP",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "1_beauty az000 (crest head-on) and az090 (crest tips); 3_tech back34 and hero yellow on the crest; techqa piece_crest sliver 8",
+    "what": "From the front the crest is a thin fin about 1/4 as wide as it is tall, and every clump still ends in a needle point (8 slivers).",
+    "fix": "Stage 3: widen each clump base 1.5x and offset alternate clumps +/-1 cm sideways; blunt each tip to a >= 1.5 cm flat.",
+    "check": "az000 crest width >= 40% of its height; crest sliver 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "colour",
+    "where": "1_beauty hero and az090, shoulder saddle",
+    "what": "The dark saddle is still a hard-edged trapezoid with a straight vertical border at the neck; it reads as a blanket.",
+    "fix": "Stage 3: move the border onto loops that run from the crest down the shoulder blade to the elbow point in a V, stepped on existing loops; no straight vertical border.",
+    "check": "hero: no straight vertical colour edge on the shoulder at 128 px."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "3_tech az000 and hero: yellow lines along both ear inner edges; techqa body sliver 8",
+    "what": "The ear tips are still sliver triangles (round-1 check 'ear slivers gone' not met).",
+    "fix": "Stage 2: merge the ear-tip verts or widen each tip to a >= 1 cm flat; thicken the root.",
+    "check": "No yellow on the ears in 3_tech; body sliver <= 4."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "1_beauty az090, tusk",
+    "what": "The tusk lies flat against the muzzle side; its tip does not break the profile silhouette (hit 0 is met, the silhouette check is not).",
+    "fix": "Stage 3: rotate each tusk a further 10-15 deg outward and forward so the tip clears the muzzle by ~4 cm.",
+    "check": "az090 silhouette shows the tusk tip; hit 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "face",
+    "where": "2_closeups head colour; 1_beauty hero",
+    "what": "No mouth line behind the snout disc; the eye is a small dot with no brow ridge.",
+    "fix": "Stage 2: inset a crease from the disc back 1/3 of the head length; pull 2-3 brow verts out ~1 cm. Stage 3: scale piece_eye 1.2x.",
+    "check": "Head close-up shows a mouth line and a brow; the eye reads in hero at 128 px."
+   }
+  ],
+  "keep": [
+   "front-heavy hump in the base and the long wedge head (az090)",
+   "fused crest ridge of varied height, dusky snout disc, cream tusks clearing the lip (hit 0)",
+   "cloven hooves, hock angles, flip 0 in all poses"
+  ],
+  "round1_fixed": "Fixed: tusks clear the lip (hit 0, no magenta), ears wider/shorter/angled out, crest fused into one ridge with varied heights leaning back, snout dusky mauve, underline and forearm flare, base brown lighter. Partly: ear-tip and crest-tip slivers remain, tusk does not break the az090 profile, mouth line and brow not visible, saddle still a hard trapezoid."
+ },
+ "goblin": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "blocker",
+    "kind": "technical",
+    "where": "1_beauty hero and az090, belt front; 2_closeups front limb colour and belt colour, belt front; 3_tech az090 yellow line at the belt front; techqa piece_buckle sliver 2",
+    "what": "The buckle is a thin cream plate projecting roughly 3-4 cm forward from the belt: edge-on it reads as a white shard sticking out of the waist in every side and 3/4 view.",
+    "fix": "Stage 3: rebuild piece_buckle as a box 1.5x the belt height and >= half the belt thickness deep, sunk half its depth into the belt front; nothing projects past the belt by more than its own thickness.",
+    "check": "hero and az090 show a cream block on the belt, no fin; buckle sliver 0; az000 still shows the buckle."
+   },
+   {
+    "severity": "major",
+    "kind": "form",
+    "where": "1_beauty az090 torso profile; hero and az000 belly paint",
+    "what": "The pot belly is weak in the base: the torso front is a near-straight wall that barely passes the belt, and the pale belly paint is still a straight-topped rectangle (tube top). Round-1 item 6 half done.",
+    "fix": "Stage 2: push the belly loops at belt level forward 10-15% of torso depth so the belly overhangs the belt by ~1/3 belt height, and round the top. Stage 3: paint the pale colour on the lower belly only with its top border curved on a loop.",
+    "check": "az090: belly point protrudes past the belt front; az000: pale patch has a curved top border, no straight edge; IoU > 0.9."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "3_tech hero and az000: purple at the left shoulder/neck; techqa body flip 7",
+    "what": "Fold-over remains at the left shoulder only (0.34%, gate met); the right shoulder is clean, so the weights are asymmetric.",
+    "fix": "Stage 4: mirror the right shoulder's chest/upper-arm blend onto the left seam loop.",
+    "check": "No purple in 3_tech; flip 0."
+   },
+   {
+    "severity": "minor",
+    "kind": "animation",
+    "where": "3_tech all views: belt blue; hero and az000: one claw on the left hand blue; techqa drift belt 1, claws 1",
+    "what": "The belt lifts off the waist in a pose and one left-hand claw leaves its finger.",
+    "fix": "Stage 4: bind piece_belt with bone=pelvis (same as the loincloth) and each claw with its finger/hand bone.",
+    "check": "drift 0; no blue in 3_tech."
+   }
+  ],
+  "keep": [
+   "face at thumbnail: brow, hook nose in profile, fanged grin, glint eyes",
+   "big head, long ears, crouch, arms to the knees; domed green skull",
+   "three-digit clawed hands and feet; belt and loincloth solid (open 0, hit 0, zfight 0)"
+  ],
+  "round1_fixed": "Fixed: belt/loincloth/buckle closed solids (open 0, hit 0, zfight 0), flap tops tucked under the belt and the back flap on the buttocks, flip 15 -> 7 (gate met), hands 1.3x with three separated digits and claw wedges, hook nose in profile, domed green skull, ears thicker, grin curved, forearm widened. Partly: pot belly still a straight-topped pale rectangle on a flat torso front; purple remains at the left shoulder. New: the buckle is now a thin fin projecting from the belt."
+ },
+ "bear": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "technical",
+    "where": "3_tech hero/az000/az090: both eyes blue; techqa piece_eye drift 2",
+    "what": "The eye beads sit at rest but come off the face in a pose (the attack head drop/lift, f011/f022): eyes will float or sink into the skull in the attack clip.",
+    "fix": "Stage 4: bind piece_eye with body= the eye-socket vertices (or bone='head' with the same weights as the face) so the beads inherit the head transform exactly.",
+    "check": "drift 0 on piece_eye, no blue on 3_tech; a colour render of attack_f022 head shows both beads in their sockets."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "2_closeups hind limb colour (near hind paw front-left corner, far forepaw) and front limb colour (far paw)",
+    "what": "Claws are four identical radial cones per paw; the outer claw of each paw pokes sideways past the paw's side silhouette instead of forward from a toe.",
+    "fix": "Stage 3: angle all claws within \u00b110\u00b0 of the paw axis, shorten the two outer claws 20%, root each in its toe bump.",
+    "check": "az000 and back34: no claw outside the paw's side outline."
+   },
+   {
+    "severity": "minor",
+    "kind": "form",
+    "where": "1_beauty az000, forelegs",
+    "what": "Forelegs are still constant-section posts: the wrist is as wide as the shoulder (round-1 [O] note only partly done).",
+    "fix": "Stage 2: narrow the wrist loop 15% and flatten the front of the forearm; IoU > 0.9.",
+    "check": "az000: the leg visibly narrows below the elbow."
+   }
+  ],
+  "keep": [
+   "az090: shoulder hump is the highest point, head carried low, all in the base",
+   "broad dished face: pale muzzle block, black nose pad with a straight bottom edge, round half-disc ears",
+   "two-tone legs with plantigrade paws and toe bumps; clean base tech (hit/float/zfight/flip 0)"
+  ],
+  "round1_fixed": "Fixed: ruff removed and hump in base; throat flip 0; nose paint bounded; ears rounded; eyes solid beads with glint; lower legs darkened. Partial: forelegs still posts. New: eye beads drift in a pose."
+ },
+ "stag": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "pieces",
+    "where": "1_beauty hero (mane top border on the neck) and az000 (light line under the hem across the chest); 2_closeups head colour (whole mane border)",
+    "what": "The mane shell's attachment rim sits at the surface and catches light: a thin pale outline traces the entire mane border, reading as a sticker edge.",
+    "fix": "Stage 3: sink the rim a further 2-3% of neck width so the rim's side faces are inside the neck, and paint the rim faces the mane colour.",
+    "check": "Head close-up: no pale line anywhere on the mane border; hero shows the mane as a colour region only."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "1_beauty az000, neck",
+    "what": "From the front the mane is still a full-width bib over the neck and chest with a near-straight hem; the throat line does not show.",
+    "fix": "Stage 3: narrow the mane front 20% and raise the hem 10% at the centre, keeping 3 unequal clumps.",
+    "check": "az000: body brown visible either side of the mane on the neck."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "3_tech back34, tail root (yellow)",
+    "what": "One sliver at the tail root; 4 slivers total on the body.",
+    "fix": "Stage 2: merge the tail-root sliver into the rump loop.",
+    "check": "sliver 0 at the tail in 3_tech."
+   },
+   {
+    "severity": "minor",
+    "kind": "form",
+    "where": "2_closeups front limb wire, cannons",
+    "what": "Each lower leg carries 5-6 evenly spaced ring loops (uniform ring-band tell); not visible in colour but it is in the wire.",
+    "fix": "Stage 2: remove every other cannon loop (logged), keep the knee and fetlock loops.",
+    "check": "Front limb wire: \u2264 3 loops per cannon; IoU > 0.9."
+   }
+  ],
+  "keep": [
+   "side silhouette: rack, deep chest, slender legs with knees and hocks, small solid black hooves",
+   "the rebuilt antlers: swept beam, forward brow tine, varied tines, crown cups, a lyre in az000, ear clear",
+   "rump patch with the hanging tail, the palette, and the head-down charge (flip 0)"
+  ],
+  "round1_fixed": "Fixed: hooves solid and wider than the leg end; mane closed (zfight/sliver 0); antlers rebuilt with brow/bez/trez/crown and no ear crossing; eye seated (float 0); tail pulled in and hung, rump chamfered; belly bar gone. Partial: mane front still a bib and its rim shows as an outline."
+ },
+ "frog": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "animation",
+    "where": "3_tech az090 (purple wedge at the hip) and back34 (purple at both hips); 4_posed move_f012 near hind leg; techqa flip 10",
+    "what": "The hip fold-over is only at the gate edge: flip 10 = 0.47% against the 0.5% limit, purple remains at both hips, and the near thigh narrows to a neck at the hip in the hop. The gate passes; my eye and the heatmap say the hip still folds.",
+    "fix": "Stage 4: blend pelvis/thigh weights 80/20 on the second flank loop and cap the hip extension in the hop at 150\u00b0; if still purple, log a hip loop in stage 2.",
+    "check": "flip \u2264 4, no purple at the hips in 3_tech, thigh keeps its section in move_f012."
+   },
+   {
+    "severity": "minor",
+    "kind": "technical",
+    "where": "3_tech hero and az000 (yellow along the upper lip), az090/back34 (long thin yellow triangles on the back); sliver 34",
+    "what": "The mouth-groove slivers from round 1 were not merged, and the back carries several needle triangles (1.6%, under the gate but visible).",
+    "fix": "Stage 2: merge the lip slivers into the lip loop and collapse the long back triangles into the neighbouring facets.",
+    "check": "sliver \u2264 10 with none on the lip in 3_tech."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "2_closeups hind limb colour/wire (web between toes), 1_beauty back34 left hind foot",
+    "what": "The webbing is closed now but is a thin sheet: its edge reads as a line, not a wedge.",
+    "fix": "Stage 3: thicken the web to \u2265 30% of toe thickness at the toe roots, tapering to the free edge.",
+    "check": "Hind limb close-up shows a visible thickness edge on the web; open 0 stays."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "4_posed attack_f016 (tongue bar left of the mouth); techqa piece_tongue drift 1",
+    "what": "The tongue leaves the body at full extension; in wire it is a thin flat bar. Drift is acceptable for a tongue lash only if the root stays inside the mouth.",
+    "fix": "Stage 3/4: root the tongue \u2265 20% inside the mouth floor at full extension; thickness \u2265 0.3\u00d7 its width.",
+    "check": "Colour render of attack_f016 head: tongue root inside the mouth, no gap at the lip."
+   },
+   {
+    "severity": "minor",
+    "kind": "form",
+    "where": "2_closeups head wire; triangles 2148",
+    "what": "The head is still a dense triangulated shell; the round-1 flatten note (4-6 facets per brow/cheek/back, ~1600 tris) was not done.",
+    "fix": "Stage 2: flatten brow, cheek and back into 4-6 big facets each.",
+    "check": "triangle count \u2264 1700; head wire shows big planes."
+   }
+  ],
+  "keep": [
+   "squat pear body tilted up with the folded hind-leg Z and long webbed feet",
+   "gold dome eyes with the horizontal lozenge pupil and glint (no coin edge in az090/hero)",
+   "wide mouth line with the cream jaw; green/cream/gold palette with painted spots"
+  ],
+  "round1_fixed": "Fixed: webbing closed (open 0); spots painted (no cyan); tympanum gone; eyes rebuilt as domes; thighs taper; belly cream. Partial: hip fold-over 32\u219210 (at the limit, purple remains); tongue drifts in attack. Not fixed: mouth-groove slivers, head facet simplification."
+ },
+ "owl": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "technical",
+    "where": "3_tech hero/az000/az090: eyes, brows and beak all blue; techqa piece_eye drift 4, piece_brow drift 2, piece_beak drift 1",
+    "what": "Every face piece sits at rest but comes off the disc in a pose (the attack head tilt): eyes, brows and beak detach from the face in the attack clip.",
+    "fix": "Stage 4: bind piece_eye, piece_brow and piece_beak with body= the disc vertices (same weights as the face) so they inherit the head transform exactly.",
+    "check": "drift 0 on all three, no blue on 3_tech; a colour render of attack_f016 head shows rings, brows and beak on the disc."
+   },
+   {
+    "severity": "minor",
+    "kind": "animation",
+    "where": "3_tech az090 (purple at the head/body seam, back) and back34 (purple along the neck seam); techqa flip 3",
+    "what": "A residual fold-over moved from the wing root to the neck seam.",
+    "fix": "Stage 4: blend the neck seam loop 50/50 head/body.",
+    "check": "flip 0, no purple in 3_tech."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "2_closeups head colour (near brow outer tip); 1_beauty az090 (wing trailing edge, two short spikes)",
+    "what": "The brow's outer end is a thin blade point, and the wing's trailing edge ends in two short thin spikes.",
+    "fix": "Stage 2/3: chamfer the brow tip to 20% of its width; merge the two trailing spikes into one blunt feather point.",
+    "check": "Head close-up: no needle tip on the brow; sliver \u2264 4."
+   },
+   {
+    "severity": "minor",
+    "kind": "form",
+    "where": "1_beauty az090 and back34, tail",
+    "what": "The tail is one flat plank with a single top plane.",
+    "fix": "Stage 2: split the top plane on the centre line and drop the outer feathers 5%.",
+    "check": "az090: the tail shows two planes; IoU > 0.9."
+   }
+  ],
+  "keep": [
+   "front read: big orange eyes with glints, V brows, hooked beak, pale disc framed by the dark hood",
+   "brown/cream value split with the split, tilted tufts in the base and the rounded head",
+   "the talon strike with spread wings (wing root clean)"
+  ],
+  "round1_fixed": "Fixed: wing-root fold-over (flip 3, none at the wing root); wing/tail tips blunt and tail shortened; eye rings seated at rest (float 0); head rounded with chamfers; tufts split and tilted, brows tucked; toes separate from a palm; beak hook visible, no throat strap. New: eyes, brows and beak drift in a pose; 3 flipped tris at the neck seam."
+ },
+ "crab": {
+  "verdict": "FIX",
+  "score": 7,
+  "issues": [
+   {
+    "severity": "major",
+    "kind": "form",
+    "where": "2_closeups barnacles wire (apex) and front limb wire (carapace top); faint converging facet lines near the apex in the barnacles colour close-up",
+    "what": "The carapace crown is unchanged from round 1: one pole vertex with ~30 radial spokes and two concentric rings (pie lid). The round-1 check (no vertex with > 8 edges on top) fails.",
+    "fix": "Stage 2: log two insets at the apex to replace the fan with a central plate and one ring, then flatten into 5-6 big planes with a soft mid ridge.",
+    "check": "No vertex on the top with more than 8 edges; barnacles wire shows a plate plus one ring."
+   },
+   {
+    "severity": "minor",
+    "kind": "form",
+    "where": "1_beauty hero and az090, all walking legs below the knee",
+    "what": "Knees and paddled merus are in, but the segments below the knee are still long straight tapered cones; the stance is tall and spidery in hero.",
+    "fix": "Stage 2: shorten the lower segments 15-20% and add a slight bend at 60% of their length (propodus/dactyl); unlock stage 1 only if IoU breaks, and log it.",
+    "check": "az090: leg tips fall within 1.6\u00d7 the carapace width; a second bend visible below the knee."
+   },
+   {
+    "severity": "minor",
+    "kind": "animation",
+    "where": "4_posed move_f006/f007/f012/f013",
+    "what": "The four move frames read as idle at this size: no visible leg lift or body shift, so the alternating gait cannot be confirmed.",
+    "fix": "Stage 4: key the tetrapod gait with tips lifted 15% of leg length and a body sway; keep planted tips fixed in world space.",
+    "check": "Tip heights differ \u2265 10% of leg length between f006 and f012; planted tips do not move between consecutive frames."
+   },
+   {
+    "severity": "minor",
+    "kind": "pieces",
+    "where": "2_closeups barnacles colour; 1_beauty back34",
+    "what": "Barnacles are high-contrast pale grey polyhedra sitting on the surface with visible base edges.",
+    "fix": "Stage 3: sink them a further 20% and tint them 15% toward the shell colour.",
+    "check": "No visible base edge in the barnacles close-up."
+   }
+  ],
+  "keep": [
+   "wide low shell with the toothed front edge and the claws held in front: reads as a crab in all four views",
+   "chunky claws with the open finger gap that snap in the attack",
+   "clean tech (hit/float/zfight/flip 0): keep it clean"
+  ],
+  "round1_fixed": "Fixed: legs have knees above the rim, paddled merus, fanned pairs and black only on the tips; toothed front edge; claw gap and hinge; eye stalks thicker with bulbs; barnacles clustered and larger. Not fixed: carapace radial fan (same ~30-spoke pole). Unverifiable: move steps (frames look like idle)."
+ }
+}

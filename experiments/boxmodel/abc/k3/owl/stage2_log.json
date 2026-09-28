@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck loop between L4 and L5: the head turn bends here",
+   "new_verts": 7,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{"note": "Blind A/B art-director review of the two raven-wyvern rebuilds (packets relabelled 'candidate A/B'; A = opus/raven_wyvern_v2, B = fable/raven_wyvern). Seats: Fable 5.1 and Opus 5.5 in parallel. Reconciled notes: fable/raven_wyvern/review/ad_notes.md.",
+ "fable_seat": {"A": {"verdict": "REBUILD", "score": 4}, "B": {"verdict": "FIX", "score": 6}, "prefer": "B", "margin": "clear",
+                "why": "B reads as a wyvern at a glance (long neck, folded forelimb wings, reptile tail, heavy raven bill, seated eye); A is a plump horned bird with cube eyes, floating horn roots and a near-static attack."},
+ "opus_seat": {"A": {"verdict": "FIX", "score": 4}, "B": {"verdict": "FIX", "score": 6}, "prefer": "B", "margin": "clear",
+               "why": "B reads wyvern-first from its forward-pitched crouch, dominant folded membrane and spade tail, with a clean heatmap, a readable eye and strike; A stands upright like a horned crow with orange block eyes, floating cheek horns and an attack that does not read."},
+ "reconciled": {"A": {"verdict": "REBUILD", "score": 4.0}, "B": {"verdict": "FIX", "score": 6.0}, "pick": "B (fable/raven_wyvern)"},
+ "A_top_issues": ["upright horned-bird torso (both)", "orange block eyes / plates (both)", "horn pieces drift off the head in poses: heatmap blue, techqa piece_horns drift 2; built before the drift gate existed (both)", "attack frames barely differ (both)"],
+ "heatmap_note": "Both seats read the drift shells as 'floating' because drift was painted in the floating blue and the legend had no drift entry. Fixed in the kit (drift is brown, own legend entry)."}

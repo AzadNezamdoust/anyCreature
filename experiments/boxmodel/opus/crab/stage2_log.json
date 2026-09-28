@@ -1,0 +1,81 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "carapace plate: a ring round the crown pole, the edge of a flat central plate (the fan inside it shades as one plane)",
+   "new_verts": 16,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "carapace band: a second ring between the plate edge and the top ring, the soft crease of the side panels",
+   "new_verts": 16,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "l1: a ring in the merus between the rim and the knee: the paddle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "l1: a ring in the lower leg (carpus/propodus): the segment swells between two joints",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "l2: a ring in the merus between the rim and the knee: the paddle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "l2: a ring in the lower leg (carpus/propodus): the segment swells between two joints",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "l3: a ring in the merus between the rim and the knee: the paddle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "l3: a ring in the lower leg (carpus/propodus): the segment swells between two joints",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "l4: a ring in the merus between the rim and the knee: the paddle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "l4: a ring in the lower leg (carpus/propodus): the segment swells between two joints",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "inset",
+   "reason": "eye orbit: a loop inside the frontal shoulder face, where the eye stalk sits",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

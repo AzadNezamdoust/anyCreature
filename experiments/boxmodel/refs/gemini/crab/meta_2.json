@@ -1,0 +1,28 @@
+{
+ "provider": "gemini",
+ "model": "gemini-3.8-flash-high",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 47.9,
+ "exit": 0,
+ "prompt": "One image: a 2 x 2 orthographic turnaround sheet of ONE stylised low-poly 3D game creature, four views of the same creature: top-left the SIDE view, top-right the FRONT view, bottom-left the REAR view, bottom-right the TOP view. All four views at one common scale (the same number of pixels per metre in every view), each centred in its own quarter, separated by wide plain white gutters with NO lines between the quarters. No text, no labels, no numbers, no arrows, no frames, no borders, no divider lines. The creature: a crab: wide low carapace with two big claws held in front and eight splayed walking legs with two bends each, body close to the ground; eye stalks with bulb eyes on the front rim, a toothed front edge on the carapace; broad carapace made of a few big planes, chunky claws with a real gap between the fingers, walking legs with a knee and a second bend, dark leg tips; claws, eye stalks, a small cluster of barnacles on the rear rim. Size: height 0.4 m, length 1.2 m, width 1.5 m with the legs. Pose: standing low, claws held in front, the same pose in every view. The views: SIDE view: looking straight at the creature's left flank, its head pointing to the LEFT of the image. FRONT view: a straight-on front elevation, looking exactly head-on at its face; the creature is left-right symmetric about the vertical centre line of its quarter, its body hidden behind its chest, never a three-quarter view; the creature's left flank is on the RIGHT of the image. REAR view: a straight-on rear elevation, looking exactly tail-on; left-right symmetric about the centre line, its body hidden behind its rump, never a three-quarter view; its left flank is on the LEFT of the image. TOP view: a plan view looking straight down; its head points to the LEFT of the image and its left flank is at the BOTTOM of the image. Each feature appears only in the views that can see it. Each view is a true orthographic projection, no perspective. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (red-orange shell, dark red ridge, cream belly, dark tip, black eye, barnacle), soft even light, no cast shadows, plain pure white background.",
+ "command": [
+  "~\\AppData\\Local\\agy\\bin\\agy.exe",
+  "--print",
+  "<instruction>",
+  "--add-dir",
+  "~\\AppData\\Local\\Temp\\refs-gemini-crab-9v9cd8q3",
+  "--dangerously-skip-permissions",
+  "--effort",
+  "high",
+  "--output-format",
+  "text",
+  "--print-timeout",
+  "8m",
+  "--model",
+  "gemini-3.8-flash-high"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-09-27 23:14:39"
+}

@@ -1,0 +1,240 @@
+{
+ "note": "blind Fable 5.1 silhouette reads after the K=3 stage-1 unlock; neutral paths out/boxmodel/judge/q0928; scored by harness/identity.py",
+ "results": {
+  "stag": {
+   "guesses": {
+    "az000": [
+     "stag",
+     "deer",
+     "elk",
+     "reindeer",
+     "moose"
+    ],
+    "az045": [
+     "stag",
+     "deer",
+     "elk",
+     "reindeer",
+     "caribou"
+    ],
+    "az090": [
+     "stag",
+     "red deer",
+     "reindeer",
+     "elk",
+     "caribou"
+    ],
+    "az135": [
+     "stag",
+     "deer",
+     "elk",
+     "reindeer",
+     "caribou"
+    ],
+    "az180": [
+     "stag",
+     "deer",
+     "reindeer",
+     "elk",
+     "moose"
+    ],
+    "top": [
+     "stag",
+     "deer",
+     "reindeer",
+     "moose",
+     "elk"
+    ]
+   },
+   "verdict": "PASS \u2014 carried at rank 1."
+  },
+  "frog": {
+   "guesses": {
+    "az000": [
+     "frog",
+     "toad",
+     "bullfrog",
+     "tree frog",
+     "gecko"
+    ],
+    "az045": [
+     "frog",
+     "toad",
+     "bullfrog",
+     "lizard",
+     "salamander"
+    ],
+    "az090": [
+     "frog",
+     "toad",
+     "bullfrog",
+     "gecko",
+     "salamander"
+    ],
+    "az135": [
+     "frog",
+     "toad",
+     "bullfrog",
+     "lizard",
+     "gecko"
+    ],
+    "az180": [
+     "frog",
+     "toad",
+     "bullfrog",
+     "tree frog",
+     "gecko"
+    ],
+    "top": [
+     "frog",
+     "toad",
+     "tree frog",
+     "bullfrog",
+     "gecko"
+    ]
+   },
+   "verdict": "PASS \u2014 carried at rank 1."
+  },
+  "wolf": {
+   "guesses": {
+    "az000": [
+     "fox",
+     "dog",
+     "wolf",
+     "cat",
+     "coyote"
+    ],
+    "az045": [
+     "fox",
+     "wolf",
+     "husky",
+     "coyote",
+     "dog"
+    ],
+    "az090": [
+     "fox",
+     "wolf",
+     "husky",
+     "coyote",
+     "jackal"
+    ],
+    "az135": [
+     "fox",
+     "wolf",
+     "dog",
+     "coyote",
+     "husky"
+    ],
+    "az180": [
+     "dog",
+     "wolf",
+     "fox",
+     "cat",
+     "coyote"
+    ],
+    "top": [
+     "wolf",
+     "fox",
+     "dog",
+     "coyote",
+     "rat"
+    ]
+   },
+   "verdict": "PASS \u2014 carried at rank 1."
+  },
+  "crab": {
+   "guesses": {
+    "az000": [
+     "crab",
+     "shore crab",
+     "spider crab",
+     "beetle",
+     "tick"
+    ],
+    "az045": [
+     "crab",
+     "shore crab",
+     "fiddler crab",
+     "scorpion",
+     "beetle"
+    ],
+    "az090": [
+     "crab",
+     "fiddler crab",
+     "shore crab",
+     "lobster",
+     "scorpion"
+    ],
+    "az135": [
+     "crab",
+     "shore crab",
+     "fiddler crab",
+     "beetle",
+     "spider"
+    ],
+    "az180": [
+     "crab",
+     "shore crab",
+     "beetle",
+     "tick",
+     "spider"
+    ],
+    "top": [
+     "crab",
+     "shore crab",
+     "mud crab",
+     "blue crab",
+     "spider crab"
+    ]
+   },
+   "verdict": "PASS \u2014 carried at rank 1."
+  },
+  "giant": {
+   "guesses": {
+    "az000": [
+     "troll",
+     "ogre",
+     "gorilla",
+     "orc",
+     "stone golem"
+    ],
+    "az045": [
+     "troll",
+     "ogre",
+     "gorilla",
+     "cave troll",
+     "orc"
+    ],
+    "az090": [
+     "gorilla",
+     "troll",
+     "ogre",
+     "hunched brute",
+     "yeti"
+    ],
+    "az135": [
+     "troll",
+     "gorilla",
+     "ogre",
+     "yeti",
+     "orc"
+    ],
+    "az180": [
+     "gorilla",
+     "troll",
+     "ogre",
+     "yeti",
+     "orc"
+    ],
+    "top": [
+     "troll",
+     "gorilla",
+     "ogre",
+     "stone golem",
+     "crab"
+    ]
+   },
+   "verdict": "PASS \u2014 carried at rank 1."
+  }
+ }
+}

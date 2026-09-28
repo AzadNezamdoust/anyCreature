@@ -1,0 +1,80 @@
+{
+ "stag": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Mane is a comb of identical paper-thin triangular spikes running the full neck and chest (hero, az000, mane close-up): a machine tell, reads as a dragon crest not a dark mane, no V bib",
+    "Antler tines are identical needle slivers stuck along the beam (head close-up, az000); no crowned tips, tines do not grow out of the beam",
+    "Dark inset facets at the armpit and groin fight the form (front-limb and hind-limb close-ups); eye is a barely visible dot and the ear sits flat on the skull"
+   ],
+   "brief_fit": "Body, hooves, rump patch, tail and forward brow tines match; the dark mane with V bib is replaced by a spike comb and the crowned antler tips are missing."
+  },
+  "B": {
+   "score": 4,
+   "verdict": "FIX",
+   "top_issues": [
+    "Antlers are stubby, out of scale for a stag, and mounted on a stalk above a boxy cube head; ears are flat rectangular paddles (hero, az000, head close-up): the defining cue is weak so it reads as a young buck at best",
+    "Mane is one solid dark cowl wrapping the whole neck and hanging below the chest as a large flat wedge edge-on in az090 (dewlap plate); visible collar loop where mane meets the head in the head wire",
+    "Eyes are near-invisible pinpricks high on a blocky head; cream hock patches sit as painted blotches across faces on the hind limb close-up"
+   ],
+   "brief_fit": "Palette, rump patch, tail and V bib shape are present, but the tall branching antlers, long tapered head and leaf ears are not, so the brief's silhouette cue is under-delivered."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Tech heatmap flags posed fold-over (purple) at the mane/neck junction in hero and az000; the mane is a dense pile of overlapping thin shards that gets messy at close range (mane close-up, attack_f016)",
+    "Antler tine tips are identical needle spikes (piece_tines) and 2 flipped body faces are logged near the shoulder; a dark inset facet at the armpit in the front-limb close-up",
+    "Eye is a tiny dot on a long head, so the face has little appeal at thumbnail size"
+   ],
+   "brief_fit": "Closest to the brief: tall crowned antlers with forward brow tines, leaf ears, dark mane over a cream V bib, cream belly and rump, hocks and small black hooves all read."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "C is the only candidate whose antlers and mane-plus-bib deliver the brief's silhouette cue, while A's spike-comb mane is a machine tell and B's stubby antlers and cube head fail the stag read."
+ },
+ "wolf": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Ruff is a handful of flat triangular shards glued on the neck surface (hero, az000, ruff close-up), reading as splinters not fur clumps; tail is a stiff straight log with a dark cap, no brush and not carried low",
+    "Amber eye is a hex bead sitting proud on the cheek with no brow or socket (head close-up); paws are square mitts with three claws stuck on the front",
+    "Saddle is a small patch mid-back rather than a shoulder-to-hip saddle; lower legs are constant-section tubes and a brisket wedge dangles between the front legs in az000"
+   ],
+   "brief_fit": "Wedge head, tall ears, tuck-up and palette are there, but the ruff, brush tail, toe-led paws and full saddle from the brief are missing or token."
+  },
+  "B": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Head is small, short-muzzled and blocky with slab ears set wide (head close-up, az000): it reads coyote/fox rather than wolf, and the eyes are bead studs without a brow",
+    "Tech logs 8 body slivers, visible as long yellow needle triangles down the chest-shoulder edge in hero and az000",
+    "Ruff shards on the neck sides are still thin plates edge-on in az090; front view shows a brisket wedge between the legs"
+   ],
+   "brief_fit": "Best body-level fit: full dark saddle, cream belly and bib, clear tuck-up, long tapering legs, toe-led paws with claws and a low bushy dark-tipped brush tail; the head under-delivers the wedge muzzle and brow."
+  },
+  "C": {
+   "score": 6.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Tech heatmap flags a posed fold-over (purple) on the chest under the ruff, seen in the idle first frame as a dark collapsed facet between the front legs in az000 and hero",
+    "Hackles along the spine are a row of identical repeated spikes (az090, back34), and some ruff triangles float off the shoulder as detached shards (hero, front-limb close-up)",
+    "2 flipped body faces and 2 slivers logged; paws are blocky with claws stuck on rather than oval toe-led paws"
+   ],
+   "brief_fit": "Strongest identity: long wedge muzzle, tall ears, amber eyes under a brow, clumped ruff over a cream bib, dark saddle, tuck-up and a low bushy dark-tipped tail all read at a glance."
+  },
+  "rank": [
+   "C",
+   "B",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "C's head and ruff read as a wolf at thumbnail size where B's small blunt head reads fox, and C's chest fold-over is a stage-4 weight fix while B's head needs stage-2 reshaping."
+ }
+}

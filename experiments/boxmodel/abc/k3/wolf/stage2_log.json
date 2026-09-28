@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck: second ring between nape and mid-neck so the head nods without collapsing",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "shoulder: ring half way down the upper arm so the leg swings off the chest cleanly",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "elbow: second ring just below the elbow ring for the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "hip: ring half way down the thigh so the hind leg swings without tearing the flank",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "stifle: second ring just below the knee for the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the brow-cheek face; the eye piece sits in it",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

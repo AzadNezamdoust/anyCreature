@@ -1,0 +1,53 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "knee: loop above the stifle so the thigh bends cleanly",
+   "new_verts": 15,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee: loop below the stifle (knee = 3 loops)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "hock: loop above the reversed ankle",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "wing: loop at the wrist knuckle, finger side",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "wing: loop at the shoulder so the wing can mantle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "neck: extra loop mid-neck, the S bend",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "socket",
+   "reason": "eye socket: a loop inside the skull side face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}
