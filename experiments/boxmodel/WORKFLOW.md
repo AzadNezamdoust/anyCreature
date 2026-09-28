@@ -28,7 +28,16 @@ The parts it uses:
    pieces, a 5–8 colour palette, and the three clips. Write the accepted
    identity words to `judge/<creature>.brief.md` **before any geometry
    exists.**
-2. **Build.** The builder runs `BRIEF.md` §3/§5. The gates are in the kit and
+2. **Reference sheet** (the default since 2026-09-28).
+   - `refs/gen_refs.py --provider gpt` makes a 2 × 2 turnaround (side,
+     front, rear, top) with Codex on the owner's subscription.
+   - `refs/select_sheets.py` then fixes the view directions and fits the
+     views into one orthographic set. It also stretches the side and plan
+     views to the brief's length.
+   - `kit/refs.py` traces `blueprint.json` and `reference/`, and the builder
+     follows `refs/BUILD.md`.
+   - Details: `refs/SHEETS.md`.
+3. **Build.** The builder runs `BRIEF.md` §3/§5. The gates are in the kit and
    cannot be skipped:
    - stage 1 is one closed shell, frozen after the lock;
    - stage 2 changes topology only through logged ops, with IoU > 0.9;
@@ -38,9 +47,14 @@ The parts it uses:
      - pinched folds are turned outward automatically;
      - gated to zero: pass-through, floating pieces, z-fighting (a small
        allowance);
-     - gated by share: slivers ≤ 2%, posed fold-overs ≤ 0.5%;
-     - open plates are warned.
-3. **Packet.** `run.py <prog> --review` writes `review/`:
+     - gated by share: slivers ≤ 2%, posed fold-overs ≤ 0.5% of triangles
+       and of area;
+     - gated to zero in poses: drift (a piece leaving the body);
+     - posed checks run on every keyed frame of each clip, plus 20/40/60/80%;
+     - warned: open plates, and posed clipping (pink: a part passing through
+       another in a pose but not at rest). Clipping has no limit until the
+       owner sets one.
+4. **Packet.** `run.py <prog> --review` writes `review/`:
    - beauty in four views;
    - close-ups (head, a front limb, a hind limb, the largest piece), colour
      next to wire;
@@ -49,11 +63,11 @@ The parts it uses:
    - `techqa.json`;
    - with a `reference/` (settings G/O), `5_reference.jpg`: each reference
      view next to the model's beauty render from the matching angle.
-4. **Art direction.** The art director reviews the packet against
+5. **Art direction.** The art director reviews the packet against
    `ART_DIRECTOR.md`: SHIP, FIX or REBUILD, with at most 8 ranked issues and
    a keep list.
-5. **Repair.**
-   - The orchestrator writes the reconciled notes: a must-fix list in order,
+6. **Repair.**
+   - The orchestrator (or a Fable seat) writes the reconciled notes: a must-fix list in order,
      a should-fix list, the dropped items with their reasons, and both
      reviews verbatim. They go to `review/ad_notes_r<k>.md`.
    - One builder per creature follows `REPAIR.md`. It runs a baseline on the
@@ -61,7 +75,9 @@ The parts it uses:
      leaves a fresh packet.
    - Stage 1 is unlocked only for a blocker that stages 2–4 cannot fix, and
      the unlock is logged.
-6. **Final.**
+   - After the repair, a blind review compares each build before and after,
+     with the order shuffled.
+7. **Final.**
    - Tech QA passes.
    - The blind identity read passes.
    - The art director's verdict is SHIP.
@@ -93,12 +109,15 @@ mean.
 ## Commands
 
 ```
+py -3.11 experiments/boxmodel/refs/gen_refs.py --provider gpt --creatures a,b [--attempt N] [--ref concept.png]
+py -3.11 experiments/boxmodel/refs/select_sheets.py                 # after the direction audit (refs/audit.json) -> chosen.json, fitted_<n>.png
 py -3.11 experiments/boxmodel/kit/refs.py <sheet.png> <creature_dir> --height <m> [--length <m>]   # settings G/O: 2 x 2 (side|front / rear|top) or 1 x 4 sheet -> reference/ + traced blueprint.json
 py -3.11 experiments/boxmodel/kit/run.py <prog> --blueprint
 py -3.11 experiments/boxmodel/kit/run.py <prog> --stage N --round R [--lock] [--no-orbit]
 py -3.11 experiments/boxmodel/kit/run.py <prog> --review
 py -3.11 experiments/boxmodel/kit/run.py <prog> --compare
 py -3.11 experiments/boxmodel/judge/prepare.py --creatures a,b --blind <dir> --key <file>
+py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any kit change: every locked build to stage 4, no renders; diff two tags
 ```
 
 ## Budgets seen so far (Opus 5.5 builders, 2026-09)
@@ -167,9 +186,16 @@ py -3.11 experiments/boxmodel/judge/prepare.py --creatures a,b --blind <dir> --k
   The owner confirmed it by eye: GPT is better on 9 of 11, all but the boar and
   the bear. Default for the medium and high tiers: generate a 2 × 2 sheet with
   `refs/gen_refs.py --provider gpt`, then `select_sheets.py` (orientation fix
-  and fit), then `kit/refs.py`. Build under `refs/BUILD.md`. Watch the
-  proportion drift: sheets scaled by height can come out shorter than the
-  brief.
+  and fit), then `kit/refs.py`. Build under `refs/BUILD.md`. The
+  proportion drift (sheets scaled by height came out 15–45% short) is fixed:
+  the fit now stretches to the brief's length.
+- **One repair pass on the GPT builds added a full point (2026-09-28).**
+  - Reconciled notes plus a K=1 repair took the mean from 5.36 to 6.36. The
+    repaired build was preferred in 20 of 22 blind calls.
+  - Clipping dropped below 1% on every build that had been above it.
+  - One build regressed: needle slivers from the hands in poses, which no
+    gate measures yet. Blind before/after review catches a regression that
+    the gates pass.
 - **Repair loops plateau around 6.5-7.5.** After three passes the five
   hardest creatures moved only from 6.2 to 6.5. Anatomy the base got wrong
   (hands, paws, a tail) resists notes. The next lever is the target: a
