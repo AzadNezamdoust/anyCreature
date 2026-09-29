@@ -599,8 +599,14 @@ The key is in `out/boxmodel/judge/k3r_key.json`. Results are in
   - But the hands throw needle slivers in every posed frame. The builder
     reported them, and Opus saw them in every frame.
   - The eye ring also reads heavier than the brief.
-  - No gate measures a posed triangle that stretches into a needle. The
-    fold-over check only sees flips and collapses. This is the next kit
-    gap.
+  - **Follow-up:** the needles were a render artifact, not geometry. The
+    wire overlay's Wireframe modifier used even offset, which mitres sharp
+    corners into spikes. No triangle in the exported GLB is a needle, and
+    none stretches 2× in any pose. The overlay no longer uses even offset.
+    The character's packet was re-rendered (r19), and it is clean.
+  - A posed stretch measure was added anyway, as a warning (teal): a
+    triangle whose longest edge grows past 2× its rest length. It fires on
+    8 of 46 builds, mostly frogs, whose tongue lash and leg extension
+    stretch by design, so it stays a warning.
 - **Residual for the owner (K=1 spent):** character hands and eye ring. The
   per-creature top issues are in the review JSONs.

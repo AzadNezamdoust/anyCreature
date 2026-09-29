@@ -87,10 +87,11 @@ The parts it uses:
 
 | | **medium** (a creature a day, many creatures) | **high** (hero creatures, owner-reviewed) |
 |---|---|---|
+| reference | GPT 2 × 2 sheet, fitted to the brief (step 2) | GPT 2 × 2 sheet, fitted to the brief (step 2) |
 | builder | 1 × `boxmodel-builder` | 1 × `boxmodel-builder` |
 | stage-1 rounds | ≤ 10 | ≤ 14 |
 | art-director review | 1 × Fable 5.1, after stage 4 | Fable 5.1 **and** Opus 5.5 in parallel, blind, reconciled by the orchestrator: at the stage-1 lock (silhouette only) and after stage 4 |
-| repair rounds after review | K = 1 | K = 2 (re-review after each) |
+| repair rounds after review | K = 1, then a blind before/after check | K = 2, with a blind before/after re-review after each (GPT sheet + K = 2 is not yet measured) |
 | identity read | silhouettes, 1 Fable seat | silhouettes + colour, 1 Fable seat each |
 | made-by-a-person test | — | pairwise vs a CC0 hand-made reference, both orders, Fable + Opus |
 | owner gate | the gallery sheet | the gallery sheet + close-ups + the residual packet |
@@ -193,9 +194,13 @@ py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any 
   - Reconciled notes plus a K=1 repair took the mean from 5.36 to 6.36. The
     repaired build was preferred in 20 of 22 blind calls.
   - Clipping dropped below 1% on every build that had been above it.
-  - One build regressed: needle slivers from the hands in poses, which no
-    gate measures yet. Blind before/after review catches a regression that
-    the gates pass.
+  - One build lost the blind vote (the character), partly to a render
+    artifact. The wire overlay's even offset drew needle spikes at sharp
+    corners such as thumb tips. The model has no such triangles, and the
+    overlay is fixed. The other reason was a heavier eye ring.
+- **Before you blame the model for a spike, check the renderer.** This is
+  the second overlay artifact reviewers read as geometry, after the
+  per-object outline. Find the triangle in the exported GLB first.
 - **Repair loops plateau around 6.5-7.5.** After three passes the five
   hardest creatures moved only from 6.2 to 6.5. Anatomy the base got wrong
   (hands, paws, a tail) resists notes. The next lever is the target: a

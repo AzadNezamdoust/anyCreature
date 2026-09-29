@@ -41,9 +41,15 @@ SLIVER_DEG = 6.0
 COL = {'ok': (0.80, 0.80, 0.78), 'valley': (0.92, 0.10, 0.10), 'fold': (1.0, 0.55, 0.10),
        'sliver': (1.0, 0.90, 0.15), 'hit': (0.92, 0.10, 0.85), 'open': (0.10, 0.80, 0.95),
        'float': (0.15, 0.30, 1.0), 'zfight': (0.10, 0.85, 0.30), 'flip': (0.55, 0.15, 0.85),
-       'drift': (0.60, 0.38, 0.15), 'clip': (1.0, 0.55, 0.70)}
-PRIORITY = ['flip', 'hit', 'clip', 'float', 'drift', 'zfight', 'open', 'valley', 'sliver', 'fold']
+       'drift': (0.60, 0.38, 0.15), 'clip': (1.0, 0.55, 0.70), 'stretch': (0.0, 0.50, 0.50)}
+PRIORITY = ['flip', 'stretch', 'hit', 'clip', 'float', 'drift', 'zfight', 'open', 'valley', 'sliver', 'fold']
 MAX_SAMPLES = 40          # posed frames per clip
+STRETCH = 2.0             # posed longest edge / rest longest edge: past this a triangle is a needle
+
+
+def _longest(V, t):
+    a, b, c = (V[i] for i in t)
+    return max((a - b).length, (b - c).length, (c - a).length)
 
 
 def _key_frames(act):
@@ -365,6 +371,8 @@ def measure(body, pieces, size, rig=None, acts=None):
         for o in objs:
             V, T, P = data[o.name]
             rest_n[o.name] = [_tri_normal(V, t) for _, t in T]
+        rest_e = {o.name: [_longest(data[o.name][0], t) for _, t in data[o.name][1]] for o in objs}
+        stretched = {}
         drifted = set()
         near = _near_ring(bT)
         clip0 = _clipping(bV, bT, near, {o.name: data[o.name][:2] for o in pieces})   # what already crosses at rest
@@ -416,8 +424,15 @@ def measure(body, pieces, size, rig=None, acts=None):
                         if folded or a1 < 0.2 * a0:
                             flag(o, p, 'flip')
                             flipped.setdefault(o.name, {})[ti] = a0     # each triangle counts once, however many frames
+                        # a stray weight drags one corner away: the triangle survives the fold test as a needle
+                        e0, e1 = rest_e[o.name][ti], _longest(V, t)
+                        if e1 > 0.01 * L and e1 > STRETCH * e0:
+                            flag(o, p, 'stretch')
+                            stretched.setdefault(o.name, {})[ti] = max(stretched.get(o.name, {}).get(ti, 0), e1 / max(e0, 1e-12))
         for o in objs:
             counts[o.name]['flip'] = len(flipped.get(o.name, {}))
+            counts[o.name]['stretch'] = len(stretched.get(o.name, {}))
+            counts[o.name]['stretch_max'] = round(max(stretched.get(o.name, {}).values(), default=0.0), 2)
             T = data[o.name][1]
             for ti in clipped.get(o.name, ()):
                 flag(o, T[ti][0], 'clip')
@@ -466,5 +481,5 @@ def clear_heatmap(objs):
 
 def summary(counts, tris):
     keys = set().union(*[c.keys() for c in counts.values()])
-    tot = {k: sum(c.get(k, 0) for c in counts.values()) for k in keys}
+    tot = {k: (max if k.endswith('_max') else sum)(c.get(k, 0) for c in counts.values()) for k in keys}
     return tot, sum(tris.values())

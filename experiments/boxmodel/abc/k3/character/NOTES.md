@@ -54,3 +54,5 @@ Note: J was not used to place stage-1 rings (the ring tables carry the same join
 - r18: final stage-4 run with orbit, then --review and --compare (debug intersection probe removed from stage 2).
 - r18 result: all stage-4 gates PASS (hit 0, float 0, z-fight 2 (limit 2), slivers 2 = 0.1%, flips 1 = 0.07% / 0.04% area, drift 0, lock PASS, IoU min .918 bottom), glbcheck OK, orbit holds; clip 0 (0% area). Review packet and side_by_side rebuilt. Packet check (idle f1): eyes seated in every posed frame, far hand a block, feet short with an instep, no hip line, brows seated. Residual: two thin sliver lines at the thumb tips in the posed wires; the crown still bands; feet have no separate toes.
 Triangles: stage 1 826; total 1396. Repair rounds: r07-r18 (12).
+
+- r19 (orchestrator, 2026-09-29): no model change. The posed "needle slivers" at the thumb tips were the wire overlay (the Wireframe modifier's even offset mitres sharp corners). The kit overlay is fixed; the stage-4 renders and review/ were regenerated. Gates PASS.

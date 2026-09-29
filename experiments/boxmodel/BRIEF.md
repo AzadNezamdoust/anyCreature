@@ -353,3 +353,8 @@ shoulder. The kit now measures them from stage 2 on (`kit/techqa.py`).
   - `clip` (pink, a warning for now): triangles that cross another part in a
     pose but not at rest, such as a limb through a flap or a paw through the
     cheek. The count is in `techqa.json`.
+  - `stretch` (teal, a warning): a triangle whose longest edge grows past 2×
+    its rest length in a pose. It means a stray weight, unless the part
+    stretches by design, like a tongue.
+  - The wire overlay no longer uses even offset, which drew needle spikes
+    at sharp corners.

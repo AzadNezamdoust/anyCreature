@@ -763,7 +763,7 @@ def _wire_dups(objs, frame):
         wm = d.modifiers.new('wf', 'WIREFRAME')
         wm.thickness = t
         wm.use_replace = True
-        wm.use_even_offset = True
+        wm.use_even_offset = False         # even offset mitres sharp corners (a thumb tip) into long needle spikes
         d.color = (0.02, 0.02, 0.02, 1)
         dups.append(d)
     return dups
@@ -1161,6 +1161,9 @@ def qa_step(k, N, body, pieces, frame, rig=None, acts=None):
         ok &= _gate(f's{N} qa: no piece comes off the body in a pose (drift)', tot.get('drift', 0) <= QA_LIMITS['drift'],
                     f"{tot.get('drift', 0)} shells — bind them with body= weights (or the bone under them)")
         ca = 100.0 * tot.get('clip_area', 0) / max(1e-12, tot.get('area', 0))
+        if tot.get('stretch', 0):
+            say(f"WARN s{N} qa: {tot['stretch']} triangles stretch past {Q.STRETCH:g}x their rest length in a pose "
+                f"(teal, worst {tot.get('stretch_max', 0):g}x): a stray weight, unless the part stretches by design (a tongue)")
         if tot.get('clip', 0):
             say(f"WARN s{N} qa: {tot['clip']} triangles ({ca:.2f}% of surface) clip through the body in a pose that "
                 f"did not at rest (pink): a limb through a flap, a paw through the cheek")

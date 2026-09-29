@@ -9,19 +9,21 @@
   "drift": 0
  },
  "totals": {
-  "clip": 0,
-  "flip_area": 0.000768760357872772,
-  "open": 0,
-  "sliver": 2,
-  "fold": 0,
-  "area": 1.7186884458135423,
-  "drift": 0,
-  "valley": 0,
-  "flip": 1,
   "zfight": 2,
-  "float": 0,
+  "drift": 0,
+  "clip": 0,
+  "valley": 0,
+  "fold": 0,
+  "flip_area": 0.000768760357872772,
+  "hit": 0,
+  "sliver": 2,
   "clip_area": 0,
-  "hit": 0
+  "open": 0,
+  "float": 0,
+  "flip": 1,
+  "area": 1.7186884458135423,
+  "stretch_max": 0.0,
+  "stretch": 0
  },
  "triangles": 1396,
  "turned": 116,
@@ -38,6 +40,8 @@
    "flip": 1,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 1.6414856724892815,
    "flip_area": 0.000768760357872772
@@ -53,6 +57,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.013627050726395027,
    "flip_area": 0
@@ -68,6 +74,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.014989886365451965,
    "flip_area": 0
@@ -83,6 +91,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.0032910848065522756,
    "flip_area": 0
@@ -98,6 +108,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.013627050170936175,
    "flip_area": 0
@@ -113,6 +125,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.014989893881254981,
    "flip_area": 0
@@ -128,6 +142,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.0032910851673111498,
    "flip_area": 0
@@ -143,6 +159,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.008013744431025848,
    "flip_area": 0
@@ -158,6 +176,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.00285040395084173,
    "flip_area": 0
@@ -173,6 +193,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.002522573824491721,
    "flip_area": 0

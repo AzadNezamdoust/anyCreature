@@ -258,7 +258,8 @@ def glbcheck(glb, out):
 LEGEND = [('valley: pinched fold', (235, 26, 26)), ('fold > 25 deg', (255, 140, 26)), ('sliver', (255, 230, 38)),
           ('passes through twice', (235, 26, 217)), ('open plate', (26, 204, 242)), ('floating', (38, 77, 255)),
           ('z-fight', (26, 217, 77)), ('posed fold-over', (140, 38, 217)), ('drifts off when posed', (153, 97, 38)),
-          ('clips through when posed', (255, 140, 178))]
+          ('clips through when posed', (255, 140, 178)),
+          ('stretches when posed', (0, 128, 128))]
 
 
 def legend_strip(w):
