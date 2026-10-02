@@ -116,3 +116,34 @@ Triangles: stage 1 488, stage 2 684 (base), stage 3 1464 total, stage 4 1464 tot
   but still a regular row from az000; the grooves are faint under the dark paint); item 3 partly (a mantle from
   top/back34, still separate patches from az000/hero); item 4 partly (ankles done; the belly curve is small and the
   arm hides it in az090). Should-fix done (wind-up chest pitch -30). Triangles: base 724, total 1632.
+
+## Repair pass round 2 (AD notes r2, K=2; kit of 2026-09-29)
+- s4 r25 (baseline): all gates PASS; WARN clip 14 tris 0.29% (moss 10, belt 4). Item 0: no FAIL.
+- s4 r26 (item 1): Critique: az000, fists near-black boxes with stone dice across the front. Diagnosis: body_rule painted
+  every face at x>1, z<1.12 'dark'; the stone knuckle caps sat on the surface. Fix: fists painted 'hide'; caps replaced by
+  four skin fingers (2-segment curled boxes, half widths 0.066/0.080/0.078/0.062, rooted 0.06 in the lower front,
+  ray-cast to the V front), thumb 'hide' with its stone nail. Result: gates PASS, 1824 tris; four fingers read, nails faint.
+- s4 r27: Fix: tip segment lengthened (0.12 down) and the nail an inset (0.022, +0.012) on its front face, painted stone.
+  Result: small pale nails at the finger tips in az000; gates PASS.
+- s2 r28 (probe, item 2): the mid-face (nose bridge y -1.06) sat 0.13-0.16 behind the brow (-1.19) and nose tip (-1.22):
+  up-facing planes in the brow's shadow. Probe removed afterwards.
+- s4 r29-r30: nose bridge/ridge/cheek tops forward + flatten incl. a socket-edge vert: FAIL s2 self-intersection (4 hits).
+  r31 bisect: the flatten set caused it.
+- s2 r32 / s4 r33: Fix: flatten the cheek plane (cheek top, cheek side, cheek low, jaw corner) instead. PASS; but the
+  bridge at -0.06 hid the inner half of the eyes in az000.
+- s4 r34: Fix: bridge -0.03; eyes 0.11 x 0.06, seated at x 0.175 and turned to the front, brighter amber #ffcc3a.
+  Result: two amber eyes read under the brow in az000; min IoU 0.961; gates PASS.
+- s4 r35 (item 3): Fix: loin_front/back rebuilt as 7-column closed slabs 0.06 thick (5% of width), half width 0.58-0.60
+  at the belt wrapping round the hips, to mid-thigh, jagged hem with 3 uneven points; new palette slot 'cloth' #6e5236
+  (8 colours; no darker brown existed); back flap hangs ~10 deg off the buttocks; both body=. Result: gates PASS,
+  1928 tris, clip 0.44% (loin_front 8 in the walk).
+- s4 r36 (item 4): wind-up upperarm (75,0,-15)->(85,0,-27), slam (32,0,0)->(42,0,-12). Clip 0.61% (moss 16); the near
+  forearm still sweeps across the face in hero. r37: Z -40 + head -8: clip 1.96% (body 10, moss 24) - rejected.
+  r38: Z +10 sign test: arms inward, flips FAIL - rejected (negative Z = elbows out confirmed).
+- s4 r39-r41: wind forearm 55->75 (fist higher in the wind-up); head -8 adds moss clip (24) -> dropped (r41). r40 X 80
+  changed nothing. r42: shoulder moss moved inward: no change -> reverted.
+- s4 r43 (final, orbit + glbcheck): all gates PASS; hit/float/z-fight 0; slivers 2 (0.1%); flips 0/0; drift 0; lock PASS;
+  min IoU 0.961; glbcheck OK; clip warning 30 tris 0.61% (moss 16, loin_front 8, belt 4, rocks 2). 1928 tris.
+  Packet checked: item 1 done; item 2 partly (eyes and nose read; mid-face still darker than the brow); item 3 done;
+  item 4 partly (no body self-clip reported, but the near forearm still passes in front of the face in hero f010/f020;
+  clip 0.61% > the 0.29% target). Should-fix not done (belly paint needs a 9th colour; moss bridge plates not tried).

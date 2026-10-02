@@ -49,6 +49,23 @@ TINES = [(1, [((0.12, -0.47, 1.47), 0.012), ((0.13, -0.60, 1.49), 0.003)]),   # 
          (3, [((0.23, -0.23, 1.63), 0.010), ((0.24, -0.27, 1.70), 0.003)]),   # trez tine, up
          (4, [((0.27, -0.10, 1.65), 0.008), ((0.28, -0.13, 1.70), 0.003)])]   # crown tine
 
+# stage-2 tine edits: (lift deg about X, length factor from the tine root, base ring scale).
+# The brow tine turns 25 deg up (forward and up) and grows 1.35x with a 1.2x base; the rest vary in length
+# (bez shortest, trez middle, crown longest)
+TINE_EDIT = [(-25, 1.35, 1.2), (0, 0.8, 1.0), (0, 1.05, 1.0), (0, 1.25, 1.0)]
+
+
+def tine_warp(ti, p):
+    """Where a point of tine ti ends up after its stage-2 edit (rotation about X through the tine
+    root, then stretch along the new tine direction)."""
+    rot, kf, _ = TINE_EDIT[ti]
+    r0 = Vector(ANTLER[TINES[ti][0]][0])
+    tip = Vector(TINES[ti][1][-1][0])
+    R = Matrix.Rotation(math.radians(rot), 3, 'X')
+    d = (R @ (tip - r0)).normalized()
+    q = R @ (Vector(p) - r0)
+    return r0 + q + d * q.dot(d) * (kf - 1)
+
 
 def half_ring(bm, T, B, side):
     T, B = Vector((0, T[0], T[1])), Vector((0, B[0], B[1]))
@@ -183,6 +200,15 @@ def stage2(k, body):
         vs = verts_where(bm, lambda co, c=c: (co - Vector(c)).length < 0.012)
         assert len(vs) == 4, (c, len(vs))
         scale(vs, f, pivot=Vector(c))
+    # tines: the brow tine turned forward and up and lengthened, the others varied in length
+    for ti, (_, path) in enumerate(TINES):
+        for j, (c, r) in enumerate(path):
+            vs = verts_where(bm, lambda co, c=c: (co - Vector(c)).length < 0.02)
+            assert len(vs) == 4, (ti, c, len(vs))
+            for v in vs:
+                v.co = tine_warp(ti, v.co)
+            if j == 0 and TINE_EDIT[ti][2] != 1.0:
+                scale(vs, TINE_EDIT[ti][2], pivot=tine_warp(ti, c))
     # ear: give the leaf a section (rear face back, tapering to the tip) and turn it back 22 deg
     # about the vertical through its root so it stands beside the antler base, clear of the eye
     root = Vector(J['ear0'])
@@ -199,6 +225,23 @@ def stage2(k, body):
     for _, vs in secs[1:]:
         rotate(vs, (0, 0, 1), 22, pivot=root)
     move(secs[2][1], (0, 0, 0.01))
+    # smaller leaf: the outer two sections pulled toward the ear root (about 20% shorter and narrower)
+    for _, vs in secs[1:]:
+        scale(vs, 0.8, pivot=root)
+    # cup: a partial loop down the middle of the front face (root quad to the tip quad), its new
+    # verts pushed back a quarter of the ear depth, so the leaf is hollow in front and keeps its rim
+    fronts = []
+    for (c, vs), back in zip(secs[:2], (0.012, 0.009)):
+        fv = sorted(vs, key=lambda v: (v.co - centre(vs)).dot(ra))[:2]
+        fronts.append(next(e for e in fv[0].link_edges if e.other_vert(fv[0]) is fv[1]))
+    rows = [r[0] for r in edge_ring(fronts[0])]
+    i0, i1 = rows.index(fronts[0]), rows.index(fronts[1])
+    st, en = (rows[i0 - 1], rows[i1 + 1]) if i0 < i1 else (rows[i0 + 1], rows[i1 - 1])
+    with k.topo(bm, 'partial', 'ear cup: a loop down the middle of the ear front face, root to tip'):
+        mids = partial_loop(bm, st, en, t=0.5)
+    for m, (c, vs) in zip(mids, secs[:2]):
+        depth = max((v.co - m.co).dot(ra) for v in vs)
+        move([m], ra * 0.25 * depth)
     # brow ridge over the eye and a stop in front of it
     for p, d in (((0.09, -0.51, 1.2475), (0.012, -0.004, 0.012)), ((0.085, -0.415, 1.26), (0.008, 0, 0.006)),
                  ((0.035, -0.62, 1.2155), (0, 0, -0.012)), ((0.0, -0.62, 1.22), (0, 0, -0.014))):
@@ -224,7 +267,7 @@ def body_rule(c, n, i):
     if (c - Vector(EYE)).length < 0.035 and n.x > 0.3:
         return 'mane'                                    # the eye socket in shadow
     if ear:
-        return 'cream' if n.y < -0.3 else 'body'         # pale inner ear
+        return 'cream' if n.y < -0.55 and n.x < 0.6 else 'body'   # pale inner (front) ear only; back and rim brown
     if c.z > 1.33:
         return 'antler'
     if c.z < 0.30 and ax > 0.04:
@@ -233,10 +276,10 @@ def body_rule(c, n, i):
         return 'cream'                                   # pale jaw line
     if c.y > 0.585 and c.z > 0.6 and n.y > 0.25:
         return 'cream'                                   # rump patch
-    if -0.28 < c.y < 0.62 and c.z < 0.74 and n.z < -0.25 and abs(c.x) > 0.0 and not (ax < 0.13 and c.z < 0.55):
-        return 'cream'                                   # belly
-    if c.y < -0.30 and 0.6 < c.z < 0.86 and n.y < -0.3:
-        return 'cream'                                   # chest bib under the mane V
+    if -0.28 < c.y < 0.62 and c.z < 0.74 and n.z < -0.6 and not (ax < 0.13 and c.z < 0.55):
+        return 'cream'                                   # belly: down-facing faces only, a thin underline
+    if c.y < -0.30 and 0.6 < c.z < 0.74 and n.y < -0.3 and ax < 0.07:
+        return 'cream'                                   # small chest V under the mane's V tip, inner half
     if -0.52 < c.y < -0.15 and 0.8 < c.z < 1.24:
         return 'mane'
     return 'body'
@@ -256,11 +299,16 @@ def ring_pt(u, s):
     return p, (p - m).normalized()
 
 
-# mane shingles: (ring u, s round the ring 0 top..1 bottom, length, half width, hang direction)
-BACK, DOWN = (0, 0.35, -1), (0, -0.1, -1)
-MANE = [(6.3, 0.12, 0.19, 0.085, BACK), (7.3, 0.12, 0.17, 0.080, BACK),                      # nape
-        (5.9, 0.42, 0.22, 0.100, BACK), (6.7, 0.45, 0.20, 0.100, BACK), (7.5, 0.45, 0.16, 0.085, BACK),  # sides
-        (6.9, 0.80, 0.18, 0.080, DOWN), (7.6, 0.80, 0.15, 0.075, DOWN)]                       # throat, V
+# mane shingles in three tidy rows per side: (ring u, s round the ring 0 top..1 bottom, length,
+# half width, hang direction). Every tip hangs down; side and throat tips turn 25 deg in toward the neck centre
+# line (the nape row hangs straight back along the crest, so no tip crosses the midline);
+# sizes graded from small at the nape to largest at mid-throat; the lowest throat pair is 25% longer
+# and ends in a V on the upper chest
+IN = math.tan(math.radians(25))
+NAPE, SIDE, THROAT = (0, 0.30, -1), (-IN, 0.05, -1), (-IN * 1.6, -0.25, -1)
+MANE = [(6.3, 0.10, 0.13, 0.060, NAPE), (7.1, 0.10, 0.12, 0.055, NAPE), (7.8, 0.12, 0.10, 0.050, NAPE),
+        (6.3, 0.40, 0.17, 0.080, SIDE), (7.0, 0.40, 0.16, 0.078, SIDE), (7.7, 0.40, 0.14, 0.070, SIDE),
+        (7.6, 0.78, 0.17, 0.075, THROAT), (6.9, 0.80, 0.24, 0.085, THROAT)]
 
 
 def centre_pts(ps):
@@ -289,25 +337,26 @@ def stage3(k, body):
     eye = object_from_bm('eye', bm, mirror=True); paint(eye, PAL, lambda c, n, i: 'eye'); pieces.append(eye)
     # tine points: one taper with the tine. Each point is rooted 40% of its length inside the blunt
     # tip, with a collar that matches the tine's last ring (no ledge), lengths varied (brow shortest,
-    # crown longest) and leaning 7 deg outward along the tine
+    # crown longest) each leaning outward by its own 3-12 deg
     bmb = edit(body)
     ends = []
-    for (a, b), vis in zip([(path[-2][0], path[-1][0]) for _, path in TINES] + [(ANTLER[-2][0], ANTLER[-1][0])],
-                           (0.034, 0.044, 0.05, 0.058, 0.066)):
+    for (a, b), vis, lean in zip([(tine_warp(ti, path[-2][0]), tine_warp(ti, path[-1][0])) for ti, (_, path) in enumerate(TINES)]
+                                 + [(ANTLER[-2][0], ANTLER[-1][0])],
+                                 (0.05, 0.034, 0.046, 0.058, 0.075), (4, 9, 3, 7, 12)):
         a, b = Vector(a), Vector(b)
         ring4 = [v.co.copy() for v in bmb.verts if (v.co - b).length < 0.02]
         assert len(ring4) == 4, (b, len(ring4), sorted((v.co - b).length for v in bmb.verts)[:6], len(bmb.verts))
-        ends.append((a, b, ring4, vis))
+        ends.append((a, b, ring4, vis, lean))
     bmb.free()
     bm = bmesh.new()
-    for a, b, ring4, vis in ends:
+    for a, b, ring4, vis, lean in ends:
         m = centre_pts(ring4)
         d = (m - a).normalized()
         ring4 = [q - d * d.dot(q - m) for q in ring4]           # the ring's plane, square to the tine
         ring4.sort(key=lambda q: math.atan2((q - m).dot(d.cross(Vector((0, 0, 1))).normalized() if abs(d.z) < 0.95
                                                         else Vector((1, 0, 0))), (q - m).dot(d.orthogonal().normalized())))
         out = Vector((1, 0, 0)) - d * d.x
-        dl = (d + out.normalized() * math.tan(math.radians(7))).normalized() if out.length > 1e-3 else d
+        dl = (d + out.normalized() * math.tan(math.radians(lean))).normalized() if out.length > 1e-3 else d
         tot = vis / 0.6
         root = ring(bm, [m - d * min(0.4 * tot, 0.015)])[0]      # a short back point sunk in the tine (steep: no z-fight)
         collar = ring(bm, [m + d * 0.002 + (q - m) * 1.06 for q in ring4])
@@ -317,27 +366,41 @@ def stage3(k, body):
             bm.faces.new([collar[q], collar[(q + 1) % 4], tip])
     recalc_normals(bm)
     tines = object_from_bm('tines', bm, mirror=True); paint(tines, PAL, lambda c, n, i: 'antler'); pieces.append(tines)
-    # mane: bold shingle plates in three rows around the neck (nape, sides, throat), hung down and
-    # back like roof tiles, each rooted inside the neck; the long throat pair makes the V over the bib
+    # mane: shingle plates that wrap the neck: each section's centre and side corners are laid on the
+    # skin (nearest point) and lifted along its normal, so no plate edge stands proud of the neck outline
+    from mathutils.bvhtree import BVHTree
+    bme = evaluated_bm(body); bme.normal_update()
+    tree = BVHTree.FromBMesh(bme)
+
+    def on_skin(q, lift):
+        co, nq, _, _ = tree.find_nearest(q)
+        return co + nq * lift, nq
+
     bm = bmesh.new()
     for u_, s_, L, w, g in MANE:
         p, n = ring_pt(u_, s_)
         assert p.z > 0.78, (u_, s_, p.z)                 # no roots over the fore-leg tops (drift)
+        p, n = on_skin(p, 0.0)
         g = Vector(g).normalized()
-        gt = (g - n * g.dot(n)).normalized()
-        d = (gt + n * 0.2).normalized()
+        d = (g - n * g.dot(n)).normalized()
         t = n.cross(d).normalized()
-        o = d.cross(t).normalized()
         secs = []
-        for c, wi, ho, hi in ((p - n * 0.03, 0.6 * w, 0.012, 0.008), (p + d * 0.45 * L, w, 0.028, 0.008),
-                              (p + d * L, 0.35 * w, 0.009, 0.005)):
-            pts = [c + t * wi, c + o * ho, c - t * wi, c - o * hi]
+        root = [p - n * 0.03 + t * 0.6 * w, p - n * 0.03 + n * 0.012, p - n * 0.03 - t * 0.6 * w, p - n * 0.045]
+        secs.append(root)
+        for f, wi, lift, ho, hi in ((0.5, w, 0.022, 0.010, 0.008), (1.0, 0.35 * w, 0.1 * L, 0.006, 0.004)):
+            c, nc = on_skin(p + d * (f * L), lift)
+            tc = nc.cross(d).normalized()
+            pts = [on_skin(c + tc * wi, lift * 0.8)[0], c + nc * ho, on_skin(c - tc * wi, lift * 0.8)[0], c - nc * hi]
+            secs.append(pts)
+        rings = []
+        for pts in secs:
             for q in pts:
                 q.x = max(q.x, 0.004)
-            secs.append(ring(bm, [tuple(q) for q in pts]))
-        for r0, r1 in zip(secs, secs[1:]):
+            rings.append(ring(bm, [tuple(q) for q in pts]))
+        for r0, r1 in zip(rings, rings[1:]):
             bridge(bm, r0, r1, closed=True)
-        cap(bm, secs[0]); cap(bm, list(reversed(secs[-1])))
+        cap(bm, rings[0]); cap(bm, list(reversed(rings[-1])))
+    bme.free()
     recalc_normals(bm)
     mane = object_from_bm('mane', bm, mirror=True); paint(mane, PAL, lambda c, n, i: 'mane'); pieces.append(mane)
     # tail: a short hanging wedge out of the rump patch
@@ -345,6 +408,7 @@ def stage3(k, body):
     rows = []
     for y, z, wd, h in ((0.635, 0.80, 0.035, 0.018), (0.695, 0.76, 0.05, 0.032), (0.72, 0.67, 0.042, 0.028),
                         (0.715, 0.60, 0.016, 0.012)):
+        wd, h = wd * 1.2, h * 1.2                          # 1.2x thicker: reads as a tail, not a flap
         rows.append(ring(bm, [(0, y - h, z), (wd, y - h * 0.4, z), (wd * 0.8, y + h * 0.5, z), (0, y + h, z)]))
     for r0, r1 in zip(rows, rows[1:]):
         bridge(bm, r0, r1)

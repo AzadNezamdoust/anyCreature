@@ -1,0 +1,123 @@
+{
+ "bear": {
+  "X": {"score": 6, "verdict": "FIX", "top_issues": [
+   "2_closeups head wire: eye is a flat disc with a radial triangle fan, reads as a sticker rather than a set-in eye",
+   "1_beauty az000/hero: no lighter chest plane (brief detail piece missing); the muzzle is the only pale value, front reads flat brown",
+   "2_closeups hind limb colour: hind claws are a flat row barely visible under the toe edge; 1_beauty az090 tail is a pointed wedge, not a stub"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "1_beauty az000/hero: no lighter chest plane, front reads as one flat brown mass vs the reference pale chest bib",
+   "4_posed attack_f010: upper-arm mass creases into the chest with a long dark fold on the swiping limb",
+   "1_beauty az090: ears small and set far back; hump-to-rump line nearly flat compared to the reference shoulder peak"]},
+  "better": "Y", "why": "Same base, but Y's eyes are faceted beads instead of fan discs, its claws read on all four paws, and the tail is a rounded stub."
+ },
+ "boar": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty az000/hero: tusks are wide flat crescent planks splayed sideways like a moustache, not upward-curving tusks from the lip",
+   "1_beauty az000 and 2_closeups head: stray mane spike sits on the forehead between the ears, reads as a horn",
+   "4_posed attack_f016: head and snout shoot far forward, neck stretched long with the snout out of frame"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "1_beauty az090/hero: mane bottom is a flat dark rectangular slab painted down the shoulder, colour border cuts across faces",
+   "2_closeups crest: mane spikes are a row of near-identical cones (comb), not clumped bristles",
+   "1_beauty az000: legs are thin constant-section tubes with block hooves; body is a long box with little rib/ham separation"]},
+  "better": "Y", "why": "Y's tusks rise from the lip like the reference, with no forehead spike or neck stretch; its mane slab is a paint fix while X's faults are shape faults."
+ },
+ "character": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "2_closeups front limb: hands are mitts with a single thumb wedge; the reference shows separate fingers",
+   "1_beauty az090/hero: feet are flat wedge slabs with no toes or heel; 2_closeups hind limb shows a stepped jog at the ankle",
+   "1_beauty az000: neck is a thin stalk and the torso a uniform tube, no chest/hip plane change"]},
+  "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+   "2_closeups front limb: mitt hands without fingers, unlike the reference",
+   "1_beauty az090/hero: flat wedge feet without toes",
+   "2_closeups outline.L: eye outline ring is thin and the white disc bulges forward, less graphic than the reference's bold black ring"]},
+  "better": "tie", "why": "Identical geometry and rig; only eye-ring thickness differs (X thicker, nearer the reference), too small to separate them."
+ },
+ "crab": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty hero/az090: claw palms are big boxy blocks with no taper; pincer fingers are plain wedges with no teeth",
+   "1_beauty az000: tan underside shows as two flat rectangular patches on the carapace front, colour cuts across faces",
+   "2_closeups hind limb: walking legs are planks of constant section with a cone tip, no joint bulges"]},
+  "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty hero/az000: eye stalks end in flat hex caps instead of round eyeballs, eyes read as bolts",
+   "2_closeups barnacles: barnacles are grey-brown blocks that read as rocks glued to the shell",
+   "1_beauty az000/hero: claw palms are oversized boxes; tan patch cuts across the carapace front"]},
+  "better": "X", "why": "X's round black eyeballs and pale barnacles match the reference; Y's toothed pincers help but its bolt-like eyes and rock barnacles hurt more."
+ },
+ "frog": {
+  "X": {"score": 6, "verdict": "FIX", "top_issues": [
+   "4_posed move_f012: tongue piece pokes out horizontally through the chest underside during the move clip",
+   "1_beauty az000: throat/belly is one flat pale slab with a hard rectangular edge, no dewlap curve",
+   "1_beauty az090: spots few and small on the flank; green more saturated lime than the reference olive"]},
+  "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty back34/az090: spots are painted diamonds following mesh faces, read as machine facets not round spots",
+   "4_posed move_f012: tongue piece pokes out through the chest underside during the move clip",
+   "1_beauty az000: belly is a flat pale slab with a hard rectangular edge"]},
+  "better": "X", "why": "Same body; X's spots are rounded raised blobs close to the reference, Y's are face-aligned diamonds that read procedural."
+ },
+ "giant": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty hero/az000: hands are dark mitt blocks with grey knuckle cubes glued on the front edge, no fingers",
+   "1_beauty az000: loincloth is a thin tan triangle, reads as a paper flap, not the reference's brown jagged cloth",
+   "1_beauty az000: torso is a box with a dark smudge under the head, no chest/belly mass; eyes are tiny chips"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "2_closeups head colour: eyes are big yellow wedges protruding from the brow, one sticking out past the face silhouette",
+   "1_beauty az000: torso is a box with a dark smudge under the head, no belly or pec planes",
+   "4_posed attack_f010: punching forearm collapses into a boxy block at the wrist"]},
+  "better": "Y", "why": "Y has segmented skin-coloured fingers and the reference's brown jagged loincloth; X's dark mitts with glued cubes read cheaper. Y's eye shards need fixing."
+ },
+ "goblin": {
+  "X": {"score": 6, "verdict": "FIX", "top_issues": [
+   "2_closeups head colour: small spike on the crown of the skull, not in the reference",
+   "4_posed attack_f012: head pitches down so the face folds into the chest; idle_f012 left ear bends sharply",
+   "1_beauty az000: saturated lime green vs reference olive; glossy pale chest panel reads as a separate plate"]},
+  "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty az000/az090: mouth is a big dark open slab with two fangs, losing the reference's toothy grin",
+   "1_beauty az090: loincloth is two separate narrow front/back flaps with a gap at the hip",
+   "4_posed attack_f012: face folds into the chest; same crown spike on the skull as X"]},
+  "better": "X", "why": "X keeps the reference's toothed grin and a wrap-around loincloth; Y's black mouth slab and split flaps read cruder."
+ },
+ "owl": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "2_closeups lid: facial disc is a rectangular pale plate with square eye sockets, reads as a box, not round facial discs",
+   "1_beauty az000: tan beak and dark band under the eyes break the reference face; brows give an angry cartoon look",
+   "1_beauty az000: chest is a plain pale rectangle with no chevron feather breaks; wings are flat panels"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "1_beauty az000: chest is a plain pale rectangle with straight borders, no V feather chevrons",
+   "4_posed attack_f016: raised wing is a single flat paper slab with no feather edge",
+   "2_closeups hind limb: feet are pale blocks with flat toe plates"]},
+  "better": "Y", "why": "Y's round ringed facial discs and dark beak match the reference owl face; X's square face plate reads boxy."
+ },
+ "raven_wyvern": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "2_closeups head: neck/chest feathers are thin needle spikes sticking out of the throat (shards)",
+   "4_posed attack_f020: wing extends back as a flat horizontal slab, reads as a plank, not a wing spread",
+   "1_beauty az000: body is a narrow dark column with wings folded flat to the sides, low value separation"]},
+  "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+   "1_beauty az000: horns swept flat backward and nearly invisible from the front, losing the reference horn read",
+   "2_closeups head: a small loose wedge plate sits on the cheek/neck",
+   "4_posed attack_f020: raised wings are flat paper slabs"]},
+  "better": "Y", "why": "Y's attack spreads the wings into a readable silhouette and its neck lacks the needle shards; X wins only on horn visibility."
+ },
+ "stag": {
+  "X": {"score": 6, "verdict": "FIX", "top_issues": [
+   "2_closeups head: antler base passes through the ear root",
+   "1_beauty az000/hero: antlers near-white with needle-capped tine tips; reference antlers are tan",
+   "1_beauty az090: missing the pale belly line and chest bib from the reference side view"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "1_beauty az000: mane pieces flare sideways as flat flaps, paper-thin edge-on",
+   "2_closeups head: antler base passes through the ear root; ear inner is an oversized pale paddle",
+   "1_beauty az000/hero: antlers near-white with needle tines"]},
+  "better": "tie", "why": "X has the cleaner silhouette, Y has the reference's pale bib and belly stripe but sideways mane flaps; they balance out."
+ },
+ "wolf": {
+  "X": {"score": 5, "verdict": "FIX", "top_issues": [
+   "2_closeups ruff: ruff is made of thin flat triangle plates that read as shards edge-on",
+   "1_beauty az000/hero: paws are grey blocks; reference paws are tan like the legs",
+   "4_posed attack_f016: head drops into the ruff/shoulders and clips through the neck pieces"]},
+  "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+   "1_beauty az000: dark grey shard hangs between the front legs",
+   "4_posed attack_f016: head drops and clips into the ruff clumps",
+   "1_beauty az090: ruff forms a lumpy collar bulge behind the head rather than a layered mane"]},
+  "better": "Y", "why": "Y's ruff is thick clumps instead of X's paper triangles, and its tan paws match the reference."
+ }
+}

@@ -199,7 +199,7 @@ def stage2(k, body):
 
 def head_planes(bm):
     """Break the ring bands: a jaw plane (lowest rings down, chin forward), a brow plane
-    above the eyes and a cheek plane each side. The crown is left alone."""
+    above the eyes, a cheek plane and a crown side plane each side."""
     def hv(phi, ti):
         q = Vector(head_ring(phi)[ti])
         v = vert_near(bm, q)
@@ -214,6 +214,7 @@ def head_planes(bm):
             v.co.y -= 0.008
     flatten(brow)
     flatten(cheek)
+    flatten([hv(p, ti) for p in (66, 82) for ti in (2, 3, 4)])     # crown side plane above the brow
 
 
 def foot(k, bm):
@@ -243,15 +244,19 @@ def hand(bm):
         for v in rv:
             dz = v.co.z - cz
             v.co.z = cz + (math.copysign(0.72 * top, dz) if abs(dz) < 0.75 * top else dz * 1.1)
-    # the thumb: a lobe along the palm's front edge (root at the wrist), tip against the mitten
-    for (x0, y0), (x1, y1, dz) in (((0.5843, -0.0063), (0.584, -0.009, 0.0)), ((0.6267, -0.0254), (0.634, -0.007, 0.0)),
-                                   ((0.6117, -0.0276), (0.626, -0.022, 0.008)), ((0.6393, -0.0401), (0.652, -0.016, 0.008))):
-        vs = verts_where(bm, lambda c: abs(c.x - x0) < 1e-3 and abs(c.y - y0) < 1e-3 and c.z > 1.0)
+    # the thumb: a lobe along the palm's front edge (root at the wrist), about as thick as the
+    # mitten's edge (top/bottom pushed apart, centred on the palm edge), tip against the mitten
+    for (x0, y0), (x1, y1, zb, zt) in (((0.5843, -0.0063), (0.584, -0.009, 1.078, 1.104)),
+                                       ((0.6267, -0.0254), (0.634, -0.007, 1.072, 1.100)),
+                                       ((0.6117, -0.0276), (0.630, -0.020, 1.073, 1.099)),
+                                       ((0.6393, -0.0401), (0.660, -0.008, 1.070, 1.096))):
+        vs = sorted(verts_where(bm, lambda c: abs(c.x - x0) < 1e-3 and abs(c.y - y0) < 1e-3 and c.z > 1.0),
+                    key=lambda v: v.co.z)
         assert len(vs) == 2, (x0, len(vs))
-        for v in vs:
-            v.co.x, v.co.y, v.co.z = x1, y1, v.co.z + dz
+        for v, zz in zip(vs, (zb, zt)):
+            v.co.x, v.co.y, v.co.z = x1, y1, zz
     r9 = verts_where(bm, lambda c: abs(c.x - 0.706) < 2e-4 and c.z > 0.95)
-    rotate(verts_where(bm, lambda c: abs(c.x - 0.724) < 2e-4 and c.z > 0.95), (0, 1, 0), 20, centre(r9))
+    rotate(verts_where(bm, lambda c: abs(c.x - 0.724) < 2e-4 and c.z > 0.95), (0, 1, 0), 35, centre(r9))
 
 
 PAL = {'skin': '#f0b477', 'eye_white': '#f7f7f5', 'black': '#151515', 'brow': '#3a2f2a'}
@@ -298,28 +303,28 @@ def _at(tree, c0, u, w, rr, hh, sides=12):
     return out
 
 
-def outline(name, tree, c0, u, w, sides=12):
+def outline(name, tree, c0, u, w, sides=16):
     """The eye outline: a static torus band seated in the skin; the front annulus
     black, the outer side skin (a thin dark edge from the side, not a disc)."""
     bm = bmesh.new()
-    OB, OF = ring(bm, _at(tree, c0, u, w, 0.058, -0.006)), ring(bm, _at(tree, c0, u, w, 0.061, 0.004))
-    IF, IB = ring(bm, _at(tree, c0, u, w, 0.050, 0.0105)), ring(bm, _at(tree, c0, u, w, 0.047, 0.0015))
+    OB, OF = ring(bm, _at(tree, c0, u, w, 0.058, -0.006, sides)), ring(bm, _at(tree, c0, u, w, 0.061, 0.004, sides))
+    IF, IB = ring(bm, _at(tree, c0, u, w, 0.0561, 0.0135, sides)), ring(bm, _at(tree, c0, u, w, 0.0531, 0.0015, sides))
     for a, b in ((OB, OF), (OF, IF), (IF, IB), (IB, OB)):
         bridge(bm, a, b, closed=True)
     recalc_normals(bm)
     ob = object_from_bm(name, bm, mirror=False)
-    paint(ob, {'skin': PAL['skin'], 'black': PAL['black']}, lambda c, nn, i: 'black' if 12 <= i < 36 else 'skin')
+    paint(ob, {'skin': PAL['skin'], 'black': PAL['black']}, lambda c, nn, i: 'black' if sides <= i < 3 * sides else 'skin')
     return ob
 
 
-def sclera(name, tree, c0, n, u, w, sides=12):
+def sclera(name, tree, c0, n, u, w, sides=16):
     """The white dome inside the outline: its rim sits in the outline's inner wall and
     every vertex stays > 7 mm off the skin, so the blink can squash it without it
     riding over the skin (it hangs on the outline, not on the body)."""
     bm = bmesh.new()
-    R1 = ring(bm, _at(tree, c0, u, w, 0.0505, 0.0097))
-    R2 = ring(bm, _at(tree, c0, u, w, 0.040, 0.0125))
-    RB = ring(bm, _at(tree, c0, u, w, 0.036, 0.0115))
+    R1 = ring(bm, _at(tree, c0, u, w, 0.0558, 0.0097, sides))
+    R2 = ring(bm, _at(tree, c0, u, w, 0.045, 0.0125, sides))
+    RB = ring(bm, _at(tree, c0, u, w, 0.041, 0.0115, sides))
     bridge(bm, R1, R2, closed=True); bridge(bm, RB, R1, closed=True)
     tip = bm.verts.new(centre(R2) + n * 0.008)
     e0 = (c0 - HEAD_C).normalized()
@@ -332,9 +337,18 @@ def sclera(name, tree, c0, n, u, w, sides=12):
 
 
 def strip(name, tree, dirs, out, inn, half, seam=False, mirror=False):
-    """A thin bar laid on the surface along dirs (brow, mouth line)."""
+    """A thin bent bar laid on the surface along dirs (brow, mouth line): every corner of
+    every column is projected onto the skin and offset along that facet's normal, so the
+    bar follows the skull to its ends instead of standing off it as a straight chord."""
     bm = bmesh.new()
     hits = [proj(tree, d) for d in dirs]
+
+    def on(q, h0, h1):
+        e = (q - HEAD_C).normalized()
+        loc, nrm = tree.ray_cast(HEAD_C + e * 0.5, -e)[:2]
+        if nrm.dot(e) < 0:
+            nrm = -nrm
+        return loc + nrm * h0, loc + nrm * h1
     secs = []
     for i, (d, p) in enumerate(zip(dirs, hits)):
         e = Vector(d).normalized()
@@ -342,7 +356,9 @@ def strip(name, tree, dirs, out, inn, half, seam=False, mirror=False):
         up = e.cross(t).normalized()
         if up.z < 0:
             up = -up
-        pts = [p + e * out + up * half, p + e * out - up * half, p + e * inn - up * half, p + e * inn + up * half]
+        to, ti = on(p + up * half, out, inn)
+        bo, bi = on(p - up * half, out, inn)
+        pts = [to, bo, bi, ti]
         if seam and i == 0:
             pts = [Vector((0.0, q.y, q.z)) for q in pts]
         secs.append(ring(bm, pts))
@@ -380,9 +396,9 @@ def stage3(k, body):
         pc = c0 + u * (-sgn * 0.004) - w * 0.002
         pupil = solid(disc(f'pupil.{sd}', tw, pc, n, u, w, 0.022, 0.003, 0.018, -0.004, 0.004, sides=10), 'black')
         pieces += [rim, white, pupil]
-    brow = strip('brow', tb, [sph(t, p) for t, p in ((10, 33), (20, 36.5), (31, 37.5), (42, 35))],
+    brow = strip('brow', tb, [sph(t, p) for t, p in ((10, 33), (17.2, 35.8), (24.4, 37.05), (31.6, 36.8), (38.8, 35))],
                  0.0042, -0.008, 0.0045, mirror=True)
-    mouth = strip('mouth', tb, [sph(t, -24.5) for t in (0, 6, 11.5)], 0.0038, -0.008, 0.0035, seam=True)
+    mouth = strip('mouth', tb, [sph(t, -24.5) for t in (0, 5.75, 11.5)], 0.0038, -0.008, 0.0035, seam=True)
     pieces += [solid(brow, 'brow'), solid(mouth, 'brow')]
     # nose: a small half pyramid, its base buried in the face
     nc = proj(tb, sph(0, -10))

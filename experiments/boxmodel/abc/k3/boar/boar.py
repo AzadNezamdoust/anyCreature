@@ -162,10 +162,20 @@ def stage2(k, body):
         c = ta + td * max(0.0, min(1.0, sv))
         if v.co.y > 0.53 and -0.02 < sv < 1.02 and (v.co - c).length < 0.035:
             v.co = c + (v.co - c) * (1.5 - 0.3 * max(0.0, min(1.0, sv)))
+    # r31 legs: the wrist ring was the waist of an hourglass. Widen it to ~85% of the forearm ring and push
+    # its front verts forward 1 cm (knee bump); the ring above the hoof to ~80% of the new wrist (a slim
+    # straight pastern); the hind hock ring 1.2x so the cannon does not pinch. Hooves unchanged.
+    for z, cy, sx, sy, fwd in ((0.115, -0.150, 1.36, 1.57, 0.010), (0.060, -0.158, 0.93, 1.0, 0.0),
+                               (0.155, 0.535, 1.20, 1.25, 0.0)):
+        vs = verts_where(bm, lambda c: abs(c.z - z) < 0.006 and abs(c.x - 0.13) < 0.07 and abs(c.y - cy) < 0.07)
+        assert len(vs) == 4, (z, len(vs))
+        for v in vs:
+            v.co.x = 0.13 + (v.co.x - 0.13) * sx
+            v.co.y = cy + (v.co.y - cy) * sy - (fwd if v.co.y < cy else 0.0)
     commit(body, bm)
 
 
-PAL = dict(body='#6f5040', bristle='#3e2c24', snout='#b88e7e', tusk='#efe3c8', hoof='#2a201c', eye='#1a1414')
+PAL =dict(body='#6f5040', bristle='#3e2c24', snout='#b88e7e', tusk='#efe3c8', hoof='#2a201c', eye='#1a1414')
 TOP = [(-0.33, .745), (-0.27, .8325), (-0.21, .88), (-0.08, .86), (0.08, .80), (0.165, .7675), (0.25, .735)]
 
 
@@ -216,10 +226,18 @@ def stage3(k, body):
             return 'hoof'
         if c.y < -0.632:
             return 'snout'
-        # mantle: the back band (v0-v1) nape -> mid-back loop, plus the upper flank (v1-v2) only over
-        # the hump, between the neck loop and the raked -0.08 row edge
-        if (-0.335 < c.y < 0.165 and c.z > 0.71) or (-0.275 < c.y < -0.10 and c.z > 0.60):
-            return 'bristle'
+        # mantle: a wedge along the spine, per face against the local spine height. Depth below the
+        # spine 30% of the hump height (0.6) at the nape, 20% at the withers, thinning to the spine
+        # faces only from mid-back on, so the border steps back along existing edges.
+        if -0.335 < c.y < 0.165:
+            if c.y < -0.21:
+                dep = 0.13 + (0.12 - 0.13) * (c.y + 0.335) / 0.125   # r33: 0.18 put the nape v1-v2 quad in, a vertical edge
+            elif c.y < -0.08:
+                dep = 0.12 + (0.04 - 0.12) * (c.y + 0.21) / 0.13
+            else:
+                dep = 0.0
+            if c.z > top_z(c.y) - dep or (abs(n.x) < 0.35 and n.z > 0.6 and c.z > top_z(c.y) - 0.05):
+                return 'bristle'
         return 'body'
     paint(body, {kk: PAL[kk] for kk in ('body', 'bristle', 'snout', 'hoof')}, body_rule)
     out = []
@@ -231,32 +249,40 @@ def stage3(k, body):
     def surf(x, y):
         hit = tree.ray_cast(Vector((x, y, 2.0)), Vector((0, 0, -1)))
         return hit[0].z if hit[0] is not None else top_z(y)
-    clumps = [(-0.345, 0.115, 0.100), (-0.230, 0.100, 0.074), (-0.130, 0.110, 0.086),
-              (-0.020, 0.100, 0.060), (0.080, 0.105, 0.046)]
-    st = []                                    # (base y, top y, height above spine, top half-width, base half-width)
-    for i, (y0, L, h) in enumerate(clumps):
-        hv = 0.0 if i == 0 else 0.35 * min(h, clumps[i - 1][2])    # raised valleys: one ridge, clumps overlap
-        st.append((y0, y0, hv, max(0.020, 0.25 * hv), 0.060))
-        st.append((y0 + 0.40 * L, y0 + 0.55 * L, h, 0.30 * h, 0.075))          # long front slope, flat top,
-        st.append((y0 + 0.70 * L, y0 + 0.86 * L, 0.70 * h, 0.24 * h, 0.075))   # tip combed back over the next valley
-    y_end = clumps[-1][0] + clumps[-1][1]
-    st.append((y_end, y_end, 0.0, 0.020, 0.060))
-    V, F = [], []
-    for yb, yt, h, wt, w in st:
-        if h > 0:
-            top, side_top = surf(0, yt) + h, surf(0, yt) + 0.80 * h
-        else:
-            top, side_top = surf(0, yt) + 0.012, surf(wt, yt) - 0.004
-        V += [(0, yt, top), (wt, yt, side_top), (w, yb, surf(w, yb) - 0.012),
-              (0, yb, surf(0, yb) - 0.05)]
-    for i in range(len(st) - 1):
-        a, b = 4 * i, 4 * i + 4
-        F += [[a + j, a + j + 1, b + j + 1, b + j] for j in range(3)]
-    F += [[0, 1, 2, 3], [len(V) - 1, len(V) - 2, len(V) - 3, len(V) - 4]]
-    out.append(piece('crest', V, F, 'bristle'))
-    # tusks: from the lower jaw, curving up and out
-    V, F = tube([((0.095, -0.570, 0.262), 0.022), ((0.140, -0.600, 0.315), 0.019), ((0.172, -0.590, 0.370), 0.014)],
-                (0.190, -0.555, 0.425))
+    # r27: uneven pitch (lengths vary +-35%), heights on a curve (nape .6, withers 1.0, then .8/.55/.35),
+    # a small low clump between the ears starts the crest at the head; back three lean further back
+    def strip(clumps, lean_from):
+        st = []                                # (base y, top y, height above spine, top half-width, base half-width)
+        for i, (y0, L, h) in enumerate(clumps):
+            hv = 0.0 if i == 0 else 0.35 * min(h, clumps[i - 1][2])    # raised valleys: one ridge, clumps overlap
+            f1, f2, fb, hb = (0.55, 0.86, 0.70, 0.70) if i < lean_from else (0.60, 0.90, 0.68, 0.65)
+            w = 0.045 if h < 0.04 and i == 0 else 0.075
+            st.append((y0, y0, hv, max(0.020, 0.25 * hv), 0.060 if w > 0.05 else 0.040))
+            st.append((y0 + 0.40 * L, y0 + f1 * L, h, 0.30 * h, w))          # long front slope, flat top,
+            st.append((y0 + fb * L, y0 + f2 * L, hb * h, 0.24 * h, w))       # tip combed back over the next valley
+        y_end = clumps[-1][0] + clumps[-1][1]
+        st.append((y_end, y_end, 0.0, 0.020, 0.060 if len(clumps) > 1 else 0.040))
+        V, F = [], []
+        for yb, yt, h, wt, w in st:
+            if h > 0:
+                top, side_top = surf(0, yt) + h, surf(0, yt) + 0.80 * h
+            else:
+                top, side_top = surf(0, yt) + 0.012, surf(wt, yt) - 0.004
+            V += [(0, yt, top), (wt, yt, side_top), (w, yb, surf(w, yb) - 0.012),
+                  (0, yb, surf(0, yb) - 0.05)]
+        for i in range(len(st) - 1):
+            a, b = 4 * i, 4 * i + 4
+            F += [[a + j, a + j + 1, b + j + 1, b + j] for j in range(3)]
+        F += [[0, 1, 2, 3], [len(V) - 1, len(V) - 2, len(V) - 3, len(V) - 4]]
+        return V, F
+    # the small nape clump between the ears is its own piece: one strip across the head/neck bend drifted
+    out.append(piece('crestnape', *strip([(-0.420, 0.060, 0.034)], 9), 'bristle'))
+    out.append(piece('crest', *strip([(-0.350, 0.090, 0.063), (-0.260, 0.130, 0.105), (-0.130, 0.085, 0.084),
+                                      (-0.045, 0.125, 0.058), (0.080, 0.075, 0.037)], 2), 'bristle'))
+    # tusks: rooted at the lower-jaw corner just behind the disc (mouth line), root sunk ~25% into the
+    # jaw; sweep out ~20 deg, then up, tip just above the snout top and a little forward. Thick base.
+    V, F = tube([((0.055, -0.600, 0.232), 0.030), ((0.100, -0.612, 0.248), 0.027), ((0.150, -0.628, 0.282), 0.021),
+                 ((0.176, -0.640, 0.330), 0.014)], (0.180, -0.656, 0.385))
     out.append(piece('tusk', V, F, 'tusk'))
     # eye: a low-poly lens sitting in the stage-2 socket, proud of it
     me = body.data
@@ -325,12 +351,15 @@ def stage4(k, body, pieces):
         return {('forearm.L' if s > 0 else 'forearm.R'): (-22, 0, 0), ('shin.L' if s < 0 else 'shin.R'): (20, 0, 0),
                 'head': (-2, 0, 0)}
     clip(rig, 'move', {1: A(1), 7: mid(-1), 13: A(-1), 19: mid(1), 25: A(1)})
-    clip(rig, 'attack', {1: {},
-                         8: {'spine': (-4, 0, 0), 'neck': (-10, 0, 0), 'head': (-14, 0, 0), 'thigh.L': (-12, 0, 0), 'thigh.R': (-12, 0, 0)},
-                         14: {'spine': (-2, 0, 0), 'neck': (-8, 0, 0), 'head': (-16, 0, 0), 'upperarm.L': (10, 0, 0), 'upperarm.R': (10, 0, 0)},
-                         20: {'neck': (8, 0, 0), 'head': (18, 6, 0), 'ear.L': (-10, 0, 0), 'ear.R': (-10, 0, 0)},
-                         26: {'neck': (2, 0, 0), 'head': (4, 0, 0)},
-                         32: {}})
+    # r29 tusk toss: wind-up held over 25-30% (head+neck down 20, chest down, hinds gathered), lunge and
+    # toss held over 50-56% (root forward ~10% of body length, head+neck up 25, head rolled 10: the hook)
+    down = {'spine': (-5, 0, 0), 'neck': (-8, 0, 0), 'head': (-12, 0, 0), 'thigh.L': (-12, 0, 0), 'thigh.R': (-12, 0, 0)}
+    toss = {'spine': (2, 0, 0), 'neck': (10, 0, 0), 'head': (15, 10, 0), 'upperarm.L': (10, 0, 0), 'upperarm.R': (10, 0, 0),
+            'ear.L': (-10, 0, 0), 'ear.R': (-10, 0, 0)}
+    clip(rig, 'attack', {1: {}, 8: down, 10: down, 16: toss, 18: toss,
+                         25: {'neck': (2, 0, 0), 'head': (4, 0, 0)}, 32: {}},
+         loc={1: {}, 10: {}, 16: {'spine': (0, 0.06, 0)}, 18: {'spine': (0, 0.06, 0)},
+              25: {'spine': (0, 0.015, 0)}, 32: {}})
     return rig
 
 

@@ -190,6 +190,9 @@ def stage2(k, body):
     # eye turret lowered: the gold ball, not a green dome behind it, owns the top of the head
     for v in verts_where(bm, lambda c: c.z > 0.272 and (c.x - 0.071) ** 2 + (c.y + 0.094) ** 2 < 0.045 ** 2):
         v.co.z -= EYE_DROP * min(1.0, (v.co.z - 0.272) / 0.030)
+    # the turret's rear half 5 mm lower again, so no green lid shows behind the ball (back34)
+    for v in verts_where(bm, lambda c: c.z > 0.262 and c.y > -0.092 and (c.x - 0.071) ** 2 + (c.y + 0.094) ** 2 < 0.040 ** 2):
+        v.co.z -= 0.005
     # mouth line as geometry: a partial loop just above the lip ridge (stations 0..3), so the black
     # mouth is a strip of the head's own faces and cannot stand off or poke past the cheek
     ridge = []
@@ -217,6 +220,19 @@ def stage2(k, body):
     STRIP[:] = STRIP + [f.calc_center_median().copy() for f in bm.faces
                 if set(f.verts) <= keep and set(f.verts) & set(ms)]
     NOSTRIL[:] = [nf.calc_center_median().copy()]      # after the skull flatten moved it
+    # back spots: the base quads are 4-6 cm, so whole faces paint as bands and a checkerboard (r32). Each
+    # spot is a flush inset (depth 0) in one back or thigh face, its inner face turned in its plane so the
+    # spots are irregular quads of mixed size; stage 3 paints the inner faces. Borders run on edges.
+    SPOTS[:] = []
+    for c, amt, rot in SPOT_FACES:
+        bm.faces.ensure_lookup_table()
+        f = face_near(bm, c)
+        f.normal_update()
+        with k.topo(bm, 'inset', 'back spot: a flush loop inside one face, painted dark green in stage 3'):
+            sf = inset(bm, [f], amt, 0.0)[0]
+        sf.normal_update()
+        rotate(list(sf.verts), sf.normal.copy(), rot * 0.5)    # (r33: the new face's normal was unset, so no turn)
+        SPOTS.append(sf.calc_center_median().copy())
     say('mouth strip faces', len(STRIP), [tuple(round(q, 3) for q in c) for c in STRIP])
     commit(body, bm)
 
@@ -228,6 +244,15 @@ EYE_DROP = 0.016    # turret top comes down 1.6 cm: a low rim
 WEB_L = 0.62        # hind webs reach 62% of the toe length
 LENS_DROP = 0.006   # the lens only 6 mm, so the gold ball stays proud on the rim
 
+# spot faces: (centre of the stage-2 base face, inset amount, in-plane turn in degrees), left half, mirrored.
+# A big pair either side of the spine, smaller ones in front and on the flank, two on each thigh top.
+SPOT_FACES = [((0.03, 0.015, 0.245), 0.30, 20), ((0.028, -0.055, 0.263), 0.50, -25), ((0.082, -0.029, 0.241), 0.42, 30),
+              ((0.069, 0.072, 0.197), 0.32, -15), ((0.112, -0.055, 0.213), 0.52, 35), ((0.072, 0.127, 0.166), 0.45, 10),
+              ((0.156, 0.056, 0.15), 0.40, 25), ((0.185, 0.012, 0.109), 0.45, -20)]
+# outer column of the front belly (throat side, low flank side): green, so the cream reads as an oval
+BELLY_SIDES = [Vector(c) for c in ((0.105, -0.093, 0.179), (0.118, -0.037, 0.092))]
+SPOTS = []          # centres of the spot inner faces (stage 2 -> stage 3 paint)
+
 PAL = {'skin': '#5fae3c', 'spot': '#2f6b2a', 'belly': '#efe0b0', 'eye': '#f2c230', 'pupil': '#151515', 'tongue': '#d8677a'}
 
 
@@ -237,6 +262,10 @@ def body_rule(c, n, i):
         return 'pupil'                                     # mouth line
     if any((Vector((ax, c.y, c.z)) - q).length < 0.001 for q in NOSTRIL):
         return 'pupil'                                     # nostril: the inset's inner face only, a dot
+    if any((Vector((ax, c.y, c.z)) - q).length < 0.002 for q in SPOTS):
+        return 'spot'                                      # spots: whole base faces, so borders run on edges
+    if any((Vector((ax, c.y, c.z)) - q).length < 0.002 for q in BELLY_SIDES):
+        return 'skin'                                      # green wraps the sides of the cream oval
     if ax > 0.118 or (c.y > 0.07 and ax > 0.06):
         return 'skin'                                      # limbs and thighs
     if c.y < -0.075:
@@ -261,6 +290,28 @@ def toe(bm, root, tip, w):
         bridge(bm, x, y, closed=True)
     cap(bm, list(reversed(vs[0]))); cap(bm, vs[-1])
     return vs
+
+
+def hind_toe(bm, root, tip, w, sw=1.5, sd=1.3):
+    """A thick toe (sw x the old width, sd x the depth) ending in a 6-sided, flattened round pad
+    about 2x the toe width, sunk 30% into the toe tip."""
+    d = (tip - root).normalized()
+    L = (tip - root).length
+    rs = [sec(root, d, w * 1.2 * sw, w * 0.8 * sd, 4, 45), sec(root + d * (L * 0.5), d, w * 1.05 * sw, w * 0.75 * sd, 4, 45),
+          sec(tip - d * 0.002, d, w * 0.8 * sw, w * 0.6 * sd, 4, 45)]
+    vs = [ring(bm, r) for r in rs]
+    for x, y in zip(vs, vs[1:]):
+        bridge(bm, x, y, closed=True)
+    cap(bm, list(reversed(vs[0]))); cap(bm, vs[-1])
+    R = 2 * (w * 0.8 * sw * 0.707)                    # pad radius = the toe tip's full width
+    pc = tip - d * 0.002 + d * (R * 0.4)              # 30% of the pad's diameter overlaps the toe
+    pc.z = 0.0036
+    side = Vector((-d.y, d.x, 0)).normalized()
+    hx = lambda r_, z: [pc + (d * math.cos(math.pi * j / 3) + side * math.sin(math.pi * j / 3)) * r_ + Vector((0, 0, z)) for j in range(6)]
+    pr = [ring(bm, hx(R * 0.65, -0.0029)), ring(bm, hx(R, 0.0)), ring(bm, hx(R * 0.65, 0.0029))]
+    for x, y in zip(pr, pr[1:]):
+        bridge(bm, x, y, closed=True)
+    cap(bm, list(reversed(pr[0]))); cap(bm, pr[-1])
 
 
 def fan(end, fwd, offs, angs, lens, w, zroot):
@@ -297,7 +348,7 @@ def stage3(k, body):
     pieces = []
     # eyes: a gold low-poly ball with a horizontal black pupil band, sitting proud of the turret
     bm = bmesh.new()
-    c, r, lats, nl = V3(0.083, -0.108, 0.284 - LENS_DROP), 0.027, (-60, -12, 12, 60), 10
+    c, r, lats, nl = V3(0.083, -0.108, 0.284 - LENS_DROP), 0.027, (-60, -12, 12, 44.4, 71.8), 12   # cap rings at 0.7r and 0.95r: a dome
     rings_ = [ring(bm, [c + V3(r * math.cos(math.radians(la)) * math.cos(2 * math.pi * j / nl),
                                r * math.cos(math.radians(la)) * math.sin(2 * math.pi * j / nl),
                                r * math.sin(math.radians(la))) for j in range(nl)]) for la in lats]
@@ -310,26 +361,6 @@ def stage3(k, body):
     view = V3(0.6, -0.8, 0).normalized()
     paint(eye, PAL, lambda q, n, i: 'pupil' if abs(n.z) < 0.3 and n.y < -0.3 and n.x * (1 if q.x > 0 else -1) > -0.3 else 'eye')   # front bar only
     pieces.append(eye)
-    # spots: low irregular domes, rim sunk 1 mm into the skin
-    bm = bmesh.new()
-    for (x, y, rr), rot in zip([(0.032, -0.035, 0.024), (0.085, -0.005, 0.026), (0.038, 0.035, 0.028), (0.09, 0.055, 0.021),
-                                (0.045, 0.092, 0.019), (0.11, -0.055, 0.017)],     # six, 1.6x, sizes varied as on the sheet top
-                               (0, 17, 33, 8, 41, 25)):
-        loc, n0, _, _ = tree.ray_cast(V3(x, y, 0.6), V3(0, 0, -1))
-        e1 = n0.cross(V3(0, 1, 0)).normalized(); e2 = n0.cross(e1).normalized()
-        rim, top = [], []
-        for j, f in enumerate((1.0, 0.82, 1.08, 0.9, 1.05, 0.78)):
-            ang = math.radians(rot + 60 * j)
-            q = loc + (e1 * math.cos(ang) + e2 * math.sin(ang)) * rr * f
-            l1, n1, _, _ = tree.find_nearest(q); rim.append(l1 - n1 * 0.001)
-            l2, n2, _, _ = tree.find_nearest(loc + (q - loc) * 0.62); top.append(l2 + n2 * 0.0025)
-        rv, tv = ring(bm, rim), ring(bm, top)
-        cv = bm.verts.new(loc + n0 * 0.003)
-        bridge(bm, rv, tv, closed=True)
-        for j in range(6):
-            bm.faces.new([tv[j], tv[(j + 1) % 6], cv])
-        cap(bm, list(reversed(rv)))
-    spots = object_from_bm('spots', bm); paint(spots, PAL, lambda q, n, i: 'spot'); pieces.append(spots)
     # front toes: four splayed toes with round pad tips
     bm = bmesh.new()
     for root, tip in fan(J['hand'], (0.15, -1, 0), (-0.011, -0.004, 0.004, 0.011), (-40, -13, 13, 40), (0.034, 0.041, 0.041, 0.034), 0.0055, 0.011):   # 1.3x thicker
@@ -339,18 +370,25 @@ def stage3(k, body):
     bm = bmesh.new()
     tt = fan(J['toe'], (0.25, -1, 0), (-0.016, -0.008, 0.0, 0.008, 0.016), (-32, -14, 2, 18, 36), (0.045, 0.058, 0.066, 0.058, 0.048), 0.0045, 0.013)
     for root, tip in tt:
-        toe(bm, root, tip, 0.0045)
+        hind_toe(bm, root, tip, 0.0045)                # 1.5x wide, 1.3x deep, round pad tips
     for (r0, t0), (r1, t1) in zip(tt, tt[1:]):
         B, D = r0.lerp(t0, WEB_L), r1.lerp(t1, WEB_L)
         C = ((B + D) / 2).lerp((r0 + r1) / 2, 0.12)       # a shallow notch: the web fills toe to toe
         slab(bm, [r0, B, C, D, r1], t=0.0025)
     toes = object_from_bm('toes', bm)
     paint(toes, PAL, lambda q, n, i: 'skin'); pieces.append(toes)
-    # tongue: folded inside the head, root first (the root stays on the jaw when it lashes)
+    # tongue: a 6-sided tube (depth >= 50% of width) folded inside the head, root first (the root stays
+    # on the jaw when it lashes), ending in a round pad 1.6x the shaft width
     bm = bmesh.new()
-    ts = [((-0.105, 0.198), 0.010, 0.004), ((-0.122, 0.205), 0.011, 0.004), ((-0.14, 0.212), 0.012, 0.004),
-          ((-0.158, 0.219), 0.012, 0.0038), ((-0.174, 0.225), 0.011, 0.0035), ((-0.1868, 0.229), 0.008, 0.003)]
-    tv = [ring(bm, sec(V3(0, y, z), (0, -1, 0.3), a_, b_, 4, 45)) for (y, z), a_, b_ in ts]
+    ts = [((-0.105, 0.198), 0.010, 0.0055), ((-0.122, 0.205), 0.011, 0.006), ((-0.14, 0.212), 0.011, 0.006),
+          ((-0.158, 0.219), 0.0095, 0.0055), ((-0.172, 0.2245), 0.009, 0.005),
+          ((-0.1775, 0.2265), 0.0145, 0.0075), ((-0.1830, 0.2280), 0.0140, 0.0072), ((-0.1866, 0.2290), 0.0080, 0.0040)]
+    # ring order: the two root rings first (the kit's drift test anchors on a shell's first 12 verts, and
+    # they ride the jaw skin), then the tip (its float test reads the first 40 verts; only the tip touches
+    # the snout front, 0.4 mm), then the rest
+    order = [0, 1, len(ts) - 1] + list(range(2, len(ts) - 1))
+    made = {i: ring(bm, sec(V3(0, ts[i][0][0], ts[i][0][1]), (0, -1, 0.3), ts[i][1], ts[i][2], 6, 0)) for i in order}
+    tv = [made[i] for i in range(len(ts))]
     for x, y in zip(tv, tv[1:]):
         bridge(bm, x, y, closed=True)
     cap(bm, list(reversed(tv[0]))); cap(bm, tv[-1])
@@ -403,21 +441,22 @@ def stage4(k, body, pieces):
     tg = next(p for p in pieces if 'tongue' in p.name)
     g1 = tg.vertex_groups.get('tongue1') or tg.vertex_groups.new(name='tongue1')
     g2 = tg.vertex_groups.get('tongue2') or tg.vertex_groups.new(name='tongue2')
-    for v in tg.data.vertices:                         # sections 1-3 (12 verts) ride the jaw skin; 4-6 lash out
-        if v.index >= 12:
+    for v in tg.data.vertices:                         # sections 1-3 (y > -0.15) ride the jaw skin; the rest lash out
+        if v.co.y < -0.15:
             for g in list(tg.vertex_groups):
                 g.remove([v.index])
-            (g2 if v.index >= 20 else g1).add([v.index], 1.0, 'REPLACE')
+            (g2 if v.co.y < -0.175 else g1).add([v.index], 1.0, 'REPLACE')
+    TR = {'tongue1': (0, 0, 0), 'tongue2': (0, 0, 0)}  # the tongue keyed at rest (retracted) in idle and move
     # idle: throat pulse (jaw drops a little, twice) and a blink (eyes pull down into the head)
     clip(rig, 'idle', {1: {}, 8: {'jaw': (-4, 0, 0), 'chest': (1, 0, 0)}, 16: {}, 24: {'jaw': (-4, 0, 0), 'chest': (1, 0, 0)},
                        32: {}, 48: {}},
-         loc={1: {}, 36: {}, 40: {'eye.L': (0, -0.010, 0), 'eye.R': (0, -0.010, 0)}, 44: {}, 48: {}})
+         loc={1: dict(TR), 36: {}, 40: {'eye.L': (0, -0.010, 0), 'eye.R': (0, -0.010, 0)}, 44: {}, 48: {}})
     # move: a hop - crouch, launch (legs extend, body pitches up), land
     crouch = {'root': (-6, 0, 0), 'thigh.L': (6, 0, 0), 'thigh.R': (6, 0, 0)}
     launch = {'root': (12, 0, 0), 'thigh.L': (-8, 0, 0), 'thigh.R': (-8, 0, 0), 'shin.L': (-18, 0, 0), 'shin.R': (-18, 0, 0)}
     land = {'root': (-4, 0, 0)}
     clip(rig, 'move', {1: {}, 5: crouch, 11: launch, 17: land, 24: {}},
-         loc={1: {}, 5: {'root': (0, 0, -0.008)}, 11: {'root': (0, 0.03, 0.05)}, 17: {'root': (0, 0.05, 0.0)}, 24: {}})
+         loc={1: dict(TR), 5: {'root': (0, 0, -0.008), **TR}, 11: {'root': (0, 0.03, 0.05), **TR}, 17: {'root': (0, 0.05, 0.0), **TR}, 24: dict(TR)})
     # attack: tongue lash - lean in, jaw drops, tongue shoots out and snaps back
     clip(rig, 'attack', {1: {}, 6: {'chest': (-6, 0, 0), 'head': (4, 0, 0)}, 10: {'chest': (-8, 0, 0), 'jaw': (-14, 0, 0)},
                          14: {'chest': (-8, 0, 0), 'jaw': (-14, 0, 0)}, 19: {'chest': (-3, 0, 0), 'jaw': (-3, 0, 0)}, 24: {}},

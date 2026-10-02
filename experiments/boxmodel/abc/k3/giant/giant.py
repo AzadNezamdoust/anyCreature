@@ -267,11 +267,19 @@ def stage2(k, body):
     for v in near_ring(bm, S3):
         v.co.x = anc.x + (v.co.x - anc.x) * 0.85
         v.co.y = anc.y + (v.co.y - anc.y) * 0.85
+    # AD r2 item 2: the mid-face sat 0.13-0.16 behind the brow and the nose tip (a recessed mask in shadow).
+    # Pull the nose bridge and ridge forward, the cheek tops forward and up, and flatten one cheek plane a side.
+    for p, dy, dz in (((0.0, -1.06, 3.01), -0.03, 0.0),
+                      ((0.0, -1.22, 2.82), -0.02, 0.006), ((0.22, -1.12, 2.88), -0.03, 0.01),
+                      ((0.30, -1.06, 2.915), -0.03, 0.01)):
+        v = vert_near(bm, p)
+        v.co.y += dy; v.co.z += dz
+    flatten([vert_near(bm, p) for p in ((0.22, -1.15, 2.89), (0.30, -1.09, 2.925), (0.222, -1.07, 2.682), (0.26, -1.2, 2.5))])
     commit(body, bm)
 
 
 PAL ={'hide': '#66727f', 'dark': '#343b46', 'stone': '#8b867c', 'moss': '#6f8f3a',
-       'leather': '#a58c67', 'tusk': '#d6c9a6', 'eye': '#f4b427'}
+       'leather': '#a58c67', 'cloth': '#6e5236', 'tusk': '#d6c9a6', 'eye': '#ffcc3a'}
 
 
 def prism(bm, base, axis, rx, ry, h, n=6, top=0.8, start=0.0, jit=None):
@@ -305,8 +313,8 @@ def piece(name, build, pal_rule, mirror=True):
 def stage3(k, body):
     from mathutils.bvhtree import BVHTree
     def body_rule(c, n, i):
-        if (c.x > 1.0 and c.z < 1.12) or c.z < 0.2:
-            return 'dark'
+        if c.z < 0.2:
+            return 'dark'                        # soles and feet (the fists take the skin colour, AD r2 item 1)
         if c.y < -1.0 and 2.58 < c.z < 2.75 and abs(c.x) < 0.3 and n.y < -0.4:
             return 'dark'                        # mouth band on the top of the lower jaw
         return 'hide'
@@ -324,8 +332,9 @@ def stage3(k, body):
     out = []
     # eyes: amber lenses proud of the sockets under the brow
     def eyes(bm):
-        loc, n = seat((0.16, -1.14, 3.0))
-        prism(bm, loc - n * 0.02, n, 0.077, 0.05, 0.04, n=5, top=0.7, start=90)   # 1.4x wider, flatter lens
+        loc, n = seat((0.175, -1.14, 3.0))
+        n = (n + Vector((0.15, -1, 0))).normalized()          # face the front, a touch outward
+        prism(bm, loc - n * 0.02, n, 0.11, 0.06, 0.04, n=5, top=0.7, start=90)   # AD r2: 1.4x wider again
     out.append(piece('eyes', eyes, lambda c, n, i: 'eye'))
     # tusks rising from the lower jaw: base ring, bent mid ring, a single tip (no needle quads)
     def tusks(bm):
@@ -403,27 +412,69 @@ def stage3(k, body):
                     bm.faces.new([F[r][c], F[r + 1][c], B[r + 1][c], B[r][c]])
             bridge(bm, F[0], B[0]); bridge(bm, B[-1], F[-1])
         return build
-    out.append(piece('loin_front', plate([(0.30, -0.40, 1.56, 0.02), (0.27, -0.33, 1.28, 0.02), (0.20, -0.20, 1.00, 0.02),
-                                          (0.10, -0.08, 0.78, 0.01), (0.03, -0.04, 0.64, 0.0)], 0.07),
-                     lambda c, n, i: 'leather', mirror=False))
-    out.append(piece('loin_back', plate([(0.36, 1.10, 1.64, -0.02), (0.32, 1.15, 1.36, -0.02), (0.24, 1.16, 1.08, -0.02),
-                                         (0.12, 1.14, 0.86, -0.01), (0.03, 1.12, 0.74, 0.0)], -0.07),
-                     lambda c, n, i: 'leather', mirror=False))
-    # AD item 1: stone knuckle caps on the knuckle ridge (four, middle two widest), a thumb on the inside of
-    # each fist, and three toes of unequal width with the big toe inside. The fingers are the grooved mitt itself.
+    # AD r2 item 3: wide cloth slabs front and back (closed shells, ~5% of their width thick), wrapping round the
+    # hips, to mid-thigh, with a jagged hem of three uneven points; a darker brown than the belt
+    def cloth(rows, t, hem):
+        U = [-1, -0.66, -0.33, 0, 0.33, 0.66, 1]
+        def build(bm):
+            F, B = [], []
+            for r, (w, y, z, bow, wrap) in enumerate(rows):
+                last = r == len(rows) - 1
+                pts = [(u * w, y - bow * (1 - u * u) + wrap * u * u, z + (hem[k] if last else 0)) for k, u in enumerate(U)]
+                F.append(ring(bm, pts))
+                B.append(ring(bm, [(px, py + t, pz) for px, py, pz in pts]))
+            for r in range(len(rows) - 1):
+                bridge(bm, F[r], F[r + 1]); bridge(bm, B[r + 1], B[r])
+                bm.faces.new([F[r][0], F[r + 1][0], B[r + 1][0], B[r][0]])
+                bm.faces.new([F[r][-1], B[r][-1], B[r + 1][-1], F[r + 1][-1]])
+            bridge(bm, F[0], B[0]); bridge(bm, B[-1], F[-1])
+        return build
+    out.append(piece('loin_front', cloth([(0.58, -0.40, 1.56, 0.02, 0.10), (0.56, -0.35, 1.30, 0.02, 0.12),
+                                          (0.52, -0.25, 1.06, 0.02, 0.12), (0.48, -0.16, 0.90, 0.02, 0.10)], 0.06,
+                                         [0.0, -0.10, 0.02, -0.16, 0.0, -0.08, 0.03]),
+                     lambda c, n, i: 'cloth', mirror=False))
+    out.append(piece('loin_back', cloth([(0.60, 1.10, 1.64, -0.02, -0.08), (0.58, 1.16, 1.36, -0.02, -0.08),
+                                         (0.54, 1.21, 1.10, -0.02, -0.07), (0.50, 1.25, 0.92, -0.02, -0.06)], -0.06,
+                                        [0.02, -0.12, 0.0, -0.09, 0.03, -0.15, 0.0]),
+                     lambda c, n, i: 'cloth', mirror=False))
     nails = lambda c, n, i: 'stone' if n.y < -0.7 else 'dark'
-    def knuckles(bm):
-        for x, hw, z, fwd in ((1.26, 0.075, 0.78, 0.07), (1.43, 0.092, 0.81, 0.09), (1.615, 0.088, 0.80, 0.085),
-                              (1.785, 0.07, 0.77, 0.065)):
-            loc, nrm, _, _ = tree.ray_cast(Vector((x, -0.42, z)), Vector((0, -1, 0)))
-            ax = (nrm * 0.6 + Vector((0, -1, 0)) * 0.4).normalized()
-            prism(bm, loc - ax * 0.035, ax, hw / 0.707, 0.10 / 0.707, fwd + 0.035, n=4, top=0.8, start=45)
-    out.append(piece('knuckles', knuckles, lambda c, n, i: 'stone'))
+    # AD r2 item 1: four skin-coloured fingers, 2-segment curled boxes rooted ~30% into the lower front of the
+    # fist below the knuckle ridge, curling back toward the fist bottom, a small raised stone nail on each tip
+    nail_c = []
+    def fingers(bm):
+        up = Vector((0, 0, 1))
+        for x, hw in ((1.25, 0.066), (1.425, 0.080), (1.615, 0.078), (1.79, 0.062)):
+            def front(z):
+                loc, nrm, _, _ = tree.ray_cast(Vector((x, -0.42, z)), Vector((0, -1, 0)))
+                nh = Vector((nrm.x, nrm.y, 0)).normalized()
+                return loc, nh
+            p0, n0 = front(0.68)
+            p1, n1 = front(0.52)
+            p2, n2 = front(0.40)
+            nh = (n0 + n1 + n2).normalized()
+            Lh = up.cross(nh).normalized()
+            cs = [p0 - nh * 0.06, p1 + nh * 0.12, p2 + nh * 0.11 + Vector((0, 0, -0.02)), p2 + nh * 0.07 + Vector((0, 0, -0.12))]
+            ws = [hw, hw * 1.08, hw * 0.96, hw * 0.86]
+            hs = [0.075, 0.08, 0.072, 0.06]
+            rings = []
+            for i, (c, w, h) in enumerate(zip(cs, ws, hs)):
+                t = (cs[min(i + 1, 3)] - cs[max(i - 1, 0)]).normalized()
+                T = Lh.cross(t).normalized()
+                if T.dot(nh) < 0:
+                    T = -T
+                rings.append(ring(bm, [tuple(c + Lh * (w * a) + T * (h * b)) for a, b in ((-1, -1), (1, -1), (1, 1), (-1, 1))]))
+            segs = [bridge(bm, a, b, closed=True) for a, b in zip(rings, rings[1:])]
+            cap(bm, list(reversed(rings[0]))); cap(bm, rings[-1])
+            recalc_normals(bm)
+            tipf = max(segs[2], key=lambda f: f.normal.dot(nh))
+            r = bmesh.ops.inset_individual(bm, faces=[tipf], thickness=0.022, depth=0.012)
+            nail_c.append(tipf.calc_center_median().copy())
+    out.append(piece('fingers', fingers, lambda c, n, i: 'stone' if min((c - q).length for q in nail_c) < 0.02 else 'hide'))
     def thumbs(bm):
         loc = hit((1.52, -0.52, 0.72), (-1, 0, 0))
         ax = Vector((-0.45, -1.0, -0.35)).normalized()
         prism(bm, loc + Vector((0.08, 0.05, 0.02)), ax, 0.095, 0.10, 0.34, n=5, top=0.72, start=90)
-    out.append(piece('thumbs', thumbs, lambda c, n, i: 'stone' if n.dot(Vector((-0.45, -1.0, -0.35)).normalized()) > 0.8 else 'dark'))
+    out.append(piece('thumbs', thumbs, lambda c, n, i: 'stone' if n.dot(Vector((-0.45, -1.0, -0.35)).normalized()) > 0.8 else 'hide'))
     def toes(bm):
         for x, rx in ((0.52, 0.13), (0.70, 0.095), (0.85, 0.075)):
             ys = hit((x, 0.40, 0.07), (0, -1, 0)).y
@@ -472,9 +523,9 @@ def stage4(k, body, pieces):
         return out
     clip(rig, 'move', {1: stepL, 9: passL, 17: swap(stepL), 25: swap(passL), 33: stepL})
     wind = both({'spine': (-3, 0, 0), 'chest': (-30, 0, 0), 'neck': (14, 0, 0), 'clav.L': (0, 0, 8),
-                 'upperarm.L': (75, 0, -15), 'forearm.L': (55, 0, 0)})
+                 'upperarm.L': (85, 0, -27), 'forearm.L': (75, 0, 0)})   # AD r2 item 4: wider, higher
     slam = both({'spine': (4, 0, 0), 'chest': (26, 0, 0), 'neck': (-10, 0, 0), 'clav.L': (0, 0, -4),
-                 'upperarm.L': (32, 0, 0), 'forearm.L': (10, 0, 0), 'thigh.L': (8, 0, 0), 'shin.L': (-12, 0, 0)})
+                 'upperarm.L': (42, 0, -12), 'forearm.L': (10, 0, 0), 'thigh.L': (8, 0, 0), 'shin.L': (-12, 0, 0)})
     hold = both({'spine': (3, 0, 0), 'chest': (17, 0, 0), 'upperarm.L': (28, 0, 0), 'forearm.L': (8, 0, 0)})
     clip(rig, 'attack', {1: {}, 14: wind, 22: slam, 30: hold, 40: {}})
     return rig

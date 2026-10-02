@@ -610,3 +610,44 @@ The key is in `out/boxmodel/judge/k3r_key.json`. Results are in
     stretch by design, so it stays a warning.
 - **Residual for the owner (K=1 spent):** character hands and eye ring. The
   per-creature top issues are in the review JSONs.
+
+## K=2: a second repair round on the k3 builds (2026-10-03)
+
+**Setup.**
+
+- An Opus 5.5 seat reconciled the round-1 re-reviews into
+  `review/ad_notes_r2.md`. Stage 1 stayed locked.
+- 11 Opus builders ran repair round 2.
+- All gates pass, and `kit/regress.py` agrees.
+- **Blind review:** Opus 5.5 and Sonnet 5 compared the round-1 packets
+  (`out/boxmodel/k3_r1/`) with the round-2 packets. The order was shuffled,
+  and the key is `out/boxmodel/judge/k3r2_key.json`.
+
+| creature | Opus r1 → r2 | Sonnet r1 → r2 | better (O / S) |
+|---|---|---|---|
+| bear | 6 → 6 | 6 → 6 | r1 / tie |
+| boar | 6 → 5 | 5 → 6 | r1 / r2 |
+| character | 5 → 5 | 6 → 6 | tie / tie |
+| crab | 5 → 5 | 6 → 5 | r2 / r1 |
+| frog | 6 → 5 | 7 → 6 | **r1 / r1** |
+| giant | 5 → 6 | 6 → 7 | **r2 / r2** |
+| goblin | 5 → 6 | 6 → 7 | **r2 / r2** |
+| owl | 5 → 6 | 7 → 7 | **r2 / r2** |
+| raven_wyvern | 5 → 5 | 6 → 5 | r2 / r1 |
+| stag | 6 → 6 | 6 → 7 | tie / r2 |
+| wolf | 6 → 5 | 6 → 6 | **r1 / r1** |
+
+- **Scores:** the mean went from 5.77 to 5.82. Round 2 was preferred in 10
+  calls, round 1 in 8, with 4 ties. No build reached SHIP.
+- **Agreement:** both seats agree on round 2 for the giant, goblin and owl,
+  and on round 1 for the frog and wolf.
+- **A second round does not pay.** Round 1 added a full point; round 2 is
+  noise.
+  - The notes moved to small parts (claws, eyes, tongues, ruffs), and those
+    fixes trade one flaw for another.
+  - The remaining weaknesses need stage 1 (proportions, paw and claw
+    bases), which the repair contract keeps locked.
+- These scores are not comparable with the round-1 table: different seats
+  (Opus + Sonnet, not Fable + Opus) and a different pair.
+- The round-1 builds are kept in `out/boxmodel/k3_r1/` (programs and
+  packets). The frog and wolf could go back to them.

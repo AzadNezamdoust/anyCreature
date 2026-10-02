@@ -182,6 +182,11 @@ def stage2(k, body):
         ringv = [vert_near(bm, p) for p in sec(*SECS[i])]
         assert all((v.co - Vector(p)).length < 1e-4 for v, p in zip(ringv, sec(*SECS[i]))), i
         move(ringv, (0.0, dy, 0.0))
+    # repair r2 item 5: the brow overhangs the eye: the upper verts of the brow (sec 3) and skull (sec 4) rings
+    # above the eye forward 0.014, down 0.004 (outward moves fail the rear: out 0.011 az180 IoU 0.898, out 0.004 0.899)
+    brow = verts_where(bm, lambda c: c.x > 0.05 and -1.10 < c.y < -0.97 and 1.255 < c.z < 1.29)
+    assert len(brow) == 2, len(brow)
+    move(brow, (0.0, -0.014, -0.004))
     # wing (item 1): two cross loops put verts on the trailing edge between the finger spars, and those
     # are pulled up into membrane bays. (Moving the outer ridge vert up/out for a thinner arm band and an
     # edge thickness dropped the az180 IoU to 0.878-0.896 against the 0.9 floor: not done.)
@@ -295,6 +300,8 @@ def stage3(k, body):
     bm0.free()
     bm = bmesh.new()
     # a lens 1.3x wider than before (0.08 across, ~1/7 of the head), depth 0.024 < 1/3 of its width
+    # repair r2 item 5: the lens tilted 15 deg forward, so it looks along the bill
+    en = (en * math.cos(math.radians(15)) + Vector((0, -1, 0)) * math.sin(math.radians(15))).normalized()
     c = ec + en * 0.004
     eq = around(c, en, 0.040, 0.030, n=6, phase=0.0)
     vs = ring(bm, eq)
@@ -302,6 +309,12 @@ def stage3(k, body):
     for i in range(6):
         bm.faces.new([vs[i], vs[(i + 1) % 6], fp]); bm.faces.new([vs[(i + 1) % 6], vs[i], bp])
     pieces.append(piece('eye', bm, 'eye'))
+    # repair r2 item 5: a brow shelf over the lens (stage 2 could not push the brow out: az180 IoU floor),
+    # rooted in the skull behind the eye, running forward over it to a point above the bill base
+    bm = bmesh.new()
+    tube(bm, [ec + Vector((0, 0.06, 0.035)) - en * 0.02, ec + Vector((0, 0.0, 0.045)) + en * 0.012],
+         [0.013, 0.011], ec + Vector((0, -0.045, 0.032)) + en * 0.006, flat=2.2, up=(0, 0, 1))
+    pieces.append(piece('brow', bm, 'plumage'))
     # swept-back horns
     bm = bmesh.new()
     tube(bm, [(0.06, -0.94, 1.24), (0.09, -0.86, 1.335), (0.125, -0.78, 1.37), (0.15, -0.71, 1.40)],
@@ -349,34 +362,52 @@ def stage3(k, body):
         tube(bm, cs, rs, Vector((cs[-1].x, yz.x, yz.y)), up=(1, 0, 0))
     bm0.free()
     pieces.append(piece('finribs', bm, 'plumage'))
-    # graded dorsal spines on the seam ridge (a full, unmirrored piece)
+    # repair r2 item 4: dorsal plates, graded: height 1.0 at the shoulders, 0.85 mid-back, then linearly to 0.3
+    # at the fin root; spacing wide over the back, close on the tail; each leans back 25 deg and is flattened
+    # sideways (width across 60% of the length along); dark plumage with cream tips (a ring at 60% height)
     bm = bmesh.new()
-    N = 13
+    N, tipf = 12, []
+    lean = math.tan(math.radians(25))
     for j in range(N):
-        t = j / (N - 1)
-        y = -0.60 + 1.50 * t
-        h, L, ws = 0.10 - 0.07 * t, 0.05 - 0.025 * t, 0.022 - 0.010 * t
-        base = [Vector((0, y - L, ridge_z(y - L) - 0.03)), Vector((ws, y, ridge_z(y) - 0.035)),
-                Vector((0, y + L, ridge_z(y + L) - 0.03)), Vector((-ws, y, ridge_z(y) - 0.035))]
+        u = j / (N - 1)
+        y = -0.60 + 1.54 * u * (1.4 - 0.4 * u)
+        g = 1.0 - 0.15 * (y + 0.60) / 0.40 if y < -0.20 else 0.85 - 0.55 * (y + 0.20) / 1.14
+        h, L = 0.12 * g, 0.055 * g
+        ws = 0.6 * L
+        zr = ridge_z(y)
+        base = [Vector((0, y - L, ridge_z(y - L) - 0.03)), Vector((ws, y, zr - 0.035)),
+                Vector((0, y + L, ridge_z(y + L) - 0.03)), Vector((-ws, y, zr - 0.035))]
         bv = ring(bm, base)
-        lean = math.radians(10.0 * math.sin(j * 2.3))          # should-fix: the lean varies +-10 deg
-        tp = bm.verts.new(Vector((0, y + 0.7 * L + h * math.tan(lean), ridge_z(y) + h)))
+        m = 0.6 * h
+        mc = Vector((0, y + 0.15 * L + m * lean, zr + m - 0.02))
+        mv = ring(bm, [mc + (q - Vector((0, y, zr - 0.033))) * 0.42 for q in base])
+        bridge(bm, bv, mv, closed=True)
+        tp = bm.verts.new(Vector((0, y + 0.3 * L + h * lean, zr + h)))
         cap(bm, bv)
         for i in range(4):
-            bm.faces.new([bv[i], bv[(i + 1) % 4], tp])
-    pieces.append(piece('spines', bm, 'horn', mirror=False))
-    # shaggy throat hackles: 6 broad wedge tufts per side, shingled down the throat and chest. Base width 0.45 of
-    # the length, thickness 0.35 of the width, lengths 0.10-0.18, root sunk inside the skin; apex angle > 30 deg
+            tipf.append(bm.faces.new([mv[i], mv[(i + 1) % 4], tp]))
+    bm.faces.index_update()
+    tips = {f.index for f in tipf}
+    ob = object_from_bm('spines', bm, mirror=False)
+    paint(ob, {'plumage': PAL['plumage'], 'horn': PAL['horn']}, lambda c, n, i: 'horn' if i in tips else 'plumage')
+    pieces.append(ob)
+    # repair r2 item 3: 5 shingled clumps per side, broad flat wedges lying down the throat (tip along the
+    # surface toward the chest, 25 deg off it), width 0.7 L, thickness 0.4 W, L 0.08-0.14 (biggest mid-throat),
+    # roots sunk 0.03. No under-jaw clump (r13: it clipped when the head turned)
     bm = bmesh.new()
-    for i, sv, xf, ln in ((5, 0.60, 0.95, 0.12), (5, 0.88, 0.50, 0.10), (6, 0.55, 0.98, 0.16),
-                          (6, 0.88, 0.45, 0.13), (7, 0.60, 0.95, 0.14), (7, 0.88, 0.45, 0.18)):
+    for i, sv, xf, ln in ((5, 0.62, 0.92, 0.09), (6, 0.58, 0.95, 0.12), (6, 0.86, 0.50, 0.14),
+                          (7, 0.60, 0.92, 0.11), (7, 0.86, 0.50, 0.08)):
         P, o = surf(i, sv, xf)
-        W = 0.45 * ln
+        tg = surf(i + 1, sv, xf)[0] - P
+        tg = (tg - o * tg.dot(o)).normalized()
+        dr = tg * math.cos(math.radians(25)) + o * math.sin(math.radians(25))
+        W, T = 0.7 * ln, 0.28 * ln
         root = P - o * 0.03
-        tip = P + o * 0.05 + Vector((0, -0.02, -ln))
-        mid = root.lerp(tip, 0.4) + o * 0.012
-        r = 0.35 * W / 2 / 0.707
-        tube(bm, [root, mid], [r, 0.8 * r], tip, flat=1 / 0.35, up=o)
+        tip = root + dr * ln
+        tip = tip + o * 0.03
+        mid = root.lerp(tip, 0.4) + o * 0.04
+        r = T / 2 / 0.707
+        tube(bm, [root, mid], [r, 0.8 * r], tip, flat=W / T, up=o)
     pieces.append(piece('hackles', bm, 'plumage'))
     return pieces
 
@@ -411,6 +442,21 @@ def pin_hand(ob, pred, name='hand'):
         (ob.vertex_groups.get(bone) or ob.vertex_groups.new(name=bone)).add(ids, 1.0, 'REPLACE')
 
 
+def pin_wrist(ob, body):
+    """The thumb hook (z > 0.9) copies the skin weights of the nearest wrist-block vertex (|x| > 0.2, z > 0.95),
+    whole hook alike: pinned to one bone it slid off the knuckle when the hand rolled for the mantle (drift)."""
+    wr = [v for v in body.data.vertices if abs(v.co.x) > 0.2 and v.co.z > 0.95]
+    root = {1: Vector((0.265, -0.715, 1.035)), -1: Vector((-0.265, -0.715, 1.035))}
+    for side in (1, -1):
+        src = min((v for v in wr if side * v.co.x > 0), key=lambda v: (v.co - root[side]).length)
+        ws = {body.vertex_groups[g.group].name: g.weight for g in src.groups if g.weight > 0}
+        ids = [v.index for v in ob.data.vertices if side * v.co.x > 0 and v.co.z > 0.9]
+        for g in ob.vertex_groups:
+            g.remove(ids)
+        for nm, w in ws.items():
+            (ob.vertex_groups.get(nm) or ob.vertex_groups.new(name=nm)).add(ids, w, 'REPLACE')
+
+
 def stage4(k, body, pieces):
     rig = armature([
         ('hips', J['hips'], J['chest'], None),
@@ -436,14 +482,27 @@ def stage4(k, body, pieces):
         # the spars ride the blade: 100% the hand bone, like the blade; the thumb hook sits on the wrist
         # block: 100% the arm (nearest-face weights gave the hook tip neck/head weights, so it folded)
         pin_hand(p, lambda c: p.name.endswith('spar'))
-        pin_hand(p, lambda c: p.name.endswith('claws') and c.z > 0.9, 'arm')
+        if p.name.endswith('claws'):
+            pin_wrist(p, body)
+    # repair r2 item 2: a base S-neck under every key of every clip (stage 2 is at the az180 IoU floor): the
+    # neck base pitched forward/down, the upper neck back/up, the head down so the bill stays level
+    NECK = {'neck0': (25, 0, 0), 'neck1': (-35, 0, 0), 'head': (10, 0, 0)}
+
+    def sclip(rig, name, keys):
+        out = {}
+        for f, kv in keys.items():
+            kv = dict(kv)
+            for b, r in NECK.items():
+                kv[b] = tuple(a + c for a, c in zip(kv.get(b, (0, 0, 0)), r))
+            out[f] = kv
+        return clip(rig, name, out)
     # idle: breathing and a curious head tilt
-    clip(rig, 'idle', {1: {}, 12: {'chest': (2, 0, 0), 'head': (0, 0, 7), 'neck1': (-3, 0, 0)},
+    sclip(rig, 'idle', {1: {}, 12: {'chest': (2, 0, 0), 'head': (0, 0, 7), 'neck1': (-3, 0, 0)},
                        24: {'chest': (-1, 0, 0), 'head': (0, 0, 0)},
                        36: {'chest': (2, 0, 0), 'head': (0, 0, -6), 'neck1': (3, 0, 0)}, 48: {}})
     # move: bird-like stalking walk, head bobbing, tail swaying
     A, B = 16, 12
-    clip(rig, 'move', {
+    sclip(rig, 'move', {
         1: {'thigh.L': (A, 0, 0), 'thigh.R': (-A, 0, 0), 'neck1': (6, 0, 0), 'tail1': (0, 0, 5), 'hips': (0, 0, 3)},
         9: {'thigh.R': (5, 0, 0), 'shin.R': (-B, 0, 0), 'tarsus.R': (2 * B, 0, 0), 'neck1': (-4, 0, 0)},
         17: {'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'neck1': (6, 0, 0), 'tail1': (0, 0, -5), 'hips': (0, 0, -3)},
@@ -451,17 +510,22 @@ def stage4(k, body, pieces):
         33: {'thigh.L': (A, 0, 0), 'thigh.R': (-A, 0, 0), 'neck1': (6, 0, 0), 'tail1': (0, 0, 5), 'hips': (0, 0, 3)}})
     # attack: coil back, lunge the neck with the wings mantled up and out (held f17-23), recover.
     # arm Z swings the wing out from the flank first so the blade clears it
-    def arms(x, z):   # the arm lifts (X); the hand swings the blade out from the flank (Z) and up (X) about the wrist
-        return {'arm.L': (x, 0, 0), 'arm.R': (x, 0, 0), 'hand.L': (z / 2, 0, -z), 'hand.R': (z / 2, 0, z)}
-    clip(rig, 'attack', {
+    def arms(x, z, hx=None, roll=0):   # the arm lifts (X); the hand swings the blade out (Z), up (X), rolls (Y)
+        hx = z / 2 if hx is None else hx
+        return {'arm.L': (x, 0, 0), 'arm.R': (x, 0, 0), 'hand.L': (hx, roll, -z), 'hand.R': (hx, -roll, z)}
+    # repair r2 item 1: the hand bone runs back-down from the wrist, so hand X alone lifts the blade into a
+    # flat plank behind the body. Swept out 70 about its up-back axis, lifted 45, rolled 40: the tip goes out
+    # and up (0.83, 0.23, 0.51) and the membrane's outer face turns forward (normal -Y 0.97): a spread mantle
+    MANTLE = dict(z=70, hx=45, roll=40)
+    sclip(rig, 'attack', {
         1: {},
         12: {'neck0': (-12, 0, 0), 'neck1': (-8, 0, 0), 'head': (8, 0, 0), **arms(15, 15)},
         17: {'neck0': (12, 0, 0), 'neck1': (9, 0, 0), 'head': (0, 0, 0), 'chest': (3, 0, 0), 'tail1': (4, 0, 0),
-             **arms(22, 45)},
+             **arms(22, **MANTLE)},
         20: {'neck0': (18, 0, 0), 'neck1': (14, 0, 0), 'head': (-4, 0, 0), 'chest': (4, 0, 0), 'tail1': (6, 0, 0),
-             **arms(22, 45)},
+             **arms(22, **MANTLE)},
         23: {'neck0': (14, 0, 0), 'neck1': (10, 0, 0), 'head': (-2, 0, 0), 'chest': (3, 0, 0), 'tail1': (5, 0, 0),
-             **arms(22, 45)},
+             **arms(22, **MANTLE)},
         30: {'neck0': (6, 0, 0), 'neck1': (4, 0, 0), **arms(10, 10)},
         40: {}})
     return rig

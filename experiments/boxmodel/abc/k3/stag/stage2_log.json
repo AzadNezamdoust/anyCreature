@@ -27,6 +27,13 @@
    "reason": "eye socket: a loop in the skull side face, dented for the eye piece",
    "new_verts": 4,
    "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "partial",
+   "reason": "ear cup: a loop down the middle of the ear front face, root to tip",
+   "new_verts": 2,
+   "extra_base_edges": []
   }
  ]
 }

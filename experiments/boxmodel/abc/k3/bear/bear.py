@@ -189,6 +189,25 @@ def stage2(k, body):
     wk6, wk5 = vert_near(bm, (0.0, -0.29, 0.38)), vert_near(bm, (0.14, -0.29, 0.41))
     for v, dz in ((Vn('T0', 6), -0.11), (Vn('T0', 5), -0.09), (wk6, -0.08), (wk5, -0.06)):
         move([v], (0.0, 0.0, dz))
+    # muzzle stop: drop the H2 top back and down so the brow stands as a step; lift the H1 top (no droop); flat nose face
+    hh = P['H4'][0][2] - P['H4'][6][2]
+    move([Vn('H2', 0), Vn('H2', 1)], (0.0, 0.006, -0.04 * hh))
+    move([Vn('H1', 0), Vn('H1', 1)], (0.0, 0.0, 0.02 * hh))
+    flatten([Vn('H0', j) for j in range(7)])
+    # tail: the T10 cap was a flat disc on the rump; pull the tip ring back and down into a small stub cone,
+    # and the root ring back a little so the stub has a base
+    t10 = [Vn('T10', j) for j in range(7)]
+    t9 = [Vn('T9', j) for j in range(7)]
+    tc = Vector((0.0, P['T10'][0][1], (P['T10'][0][2] + P['T10'][6][2]) / 2))
+    scale(t10, (0.8, 1.0, 0.8), tc)
+    move(t10, (0.0, 0.045, -0.030))
+    move(t9, (0.0, 0.025, -0.008))
+    # paws: the box paw had step sides; narrow the paw-top ring and drop its front verts so the paw slopes to the toes
+    for cz, cy, cx in ((0.045, -0.205, J['wristL'][0] + 0.005), (0.04, 0.565, J['hockL'][0] + 0.005)):
+        pr = verts_where(bm, lambda c: c.x > 0.05 and abs(c.y - cy) < 0.25 and abs(c.z - cz) < 0.008)
+        scale(pr, (0.9, 0.9, 1.0), Vector((cx, cy, cz)))
+        fr = [v for v in pr if v.co.y < cy]
+        move(fr, (0.0, 0.0, -0.007))
     commit(body, bm)
 
 
@@ -221,6 +240,22 @@ def bipyramid(bm, c, nrm, r, up, back, sides=6):
         bm.faces.new([rim[j], rim[i], bot])
 
 
+def dome(bm, c, nrm, r, front, back, sides=8):
+    """A low eye dome: a back ring sunk in the socket, a rim ring and a slightly domed front cap."""
+    nrm = Vector(nrm).normalized()
+    t = nrm.orthogonal().normalized()
+    b = nrm.cross(t)
+    rr = lambda o, rad: ring(bm, [c + nrm * o + (t * math.cos(2 * math.pi * i / sides) + b * math.sin(2 * math.pi * i / sides)) * rad
+                                  for i in range(sides)])
+    bk = rr(-back, r * 0.8)
+    rim = rr(front * 0.4, r)
+    bridge(bm, bk, rim, closed=True)
+    cap(bm, list(reversed(bk)))
+    top = bm.verts.new(c + nrm * front)
+    for i in range(sides):
+        bm.faces.new([rim[i], rim[(i + 1) % sides], top])
+
+
 def claw(bm, base, tip, h):
     base, tip = Vector(base), Vector(tip)
     q = ring(bm, [base + Vector(d) for d in ((-h, 0, -h), (h, 0, -h), (h, 0, h), (-h, 0, h))])
@@ -228,6 +263,25 @@ def claw(bm, base, tip, h):
     bm.faces.new(q)
     for i in range(4):
         bm.faces.new([q[(i + 1) % 4], q[i], a])
+
+
+def hook(bm, base, ang, L, hw, hh, sy):
+    """A thick curved claw: base quad rooted 25% inside the toe, a smaller mid quad, the tip bent ~30 deg down."""
+    a = math.radians(ang)
+    d = Vector((math.sin(a), sy * math.cos(a), 0.0))
+    s = Vector((math.cos(a), -sy * math.sin(a), 0.0))
+    z = Vector((0.0, 0.0, 1.0))
+    B = Vector(base)
+    M = B + d * (0.6 * L) - z * (0.15 * L)
+    T = B + d * L
+    T.z = 0.002
+    q0 = ring(bm, [B + s * u * hw + z * w * hh for u, w in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+    q1 = ring(bm, [M + s * u * hw * 0.6 + z * w * hh * 0.6 for u, w in ((-1, -1), (1, -1), (1, 1), (-1, 1))])
+    bridge(bm, q0, q1, closed=True)
+    bm.faces.new(list(reversed(q0)))
+    tip = bm.verts.new(T)
+    for i in range(4):
+        bm.faces.new([q1[i], q1[(i + 1) % 4], tip])
 
 
 def stage3(k, body):
@@ -246,16 +300,16 @@ def stage3(k, body):
     paint(body, PAL, rule)
     bm = bmesh.new()
     fwd = (nr + Vector((0.0, -0.5, 0.0))).normalized()   # face the lens more forward so it reads head-on too
-    bipyramid(bm, c + nr * 0.004, fwd, 0.021, 0.016, 0.014)
+    dome(bm, c, fwd, 0.021, 0.005, 0.010)          # depth 0.015 = 35% of the 0.042 width, front 0.005 proud
     eye = object_from_bm('eye', bm, mirror=True)
     paint(eye, {'eye': PAL['eye']}, lambda c, n, i: 'eye')
-    # claws: five blunt dark hooks per paw, rooted inside the toe
+    # claws: five thick curved hooks per paw, graded (outer 80%), fanned out, tip bent down to the ground line
     bm = bmesh.new()
     fx = J['wristL'][0] + 0.005
     hx = J['hockL'][0] + 0.005
-    for o in (-0.06, -0.03, 0.0, 0.03, 0.06):
-        claw(bm, (fx + o, -0.352, 0.022), (fx + o * 1.05, -0.415, 0.004), 0.011)
-        claw(bm, (hx + o, 0.372, 0.020), (hx + o * 1.05, 0.312, 0.004), 0.011)
+    for o, ang, g in ((-0.07, -12, 0.8), (-0.035, -6, 1.0), (0.0, 0, 1.0), (0.035, 6, 1.0), (0.07, 12, 0.8)):
+        hook(bm, (fx + o, -0.362, 0.024), ang, 0.040 * g, 0.014, 0.011, -1)
+        hook(bm, (hx + o * 0.9, 0.357, 0.017), ang, 0.028 * g, 0.010, 0.008, -1)
     claws = object_from_bm('claws', bm, mirror=True)
     paint(claws, {'claw': PAL['claw']}, lambda c, n, i: 'claw')
     # nose pad: a separate black block on the front-top of the muzzle (half, mirrored)

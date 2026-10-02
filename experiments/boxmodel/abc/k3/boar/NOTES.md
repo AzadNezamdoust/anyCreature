@@ -50,3 +50,16 @@ Conflict: the reference top view is shorter than the side view (hind hooves at y
 - r20 item 5 nostrils: 6-sided discs r .021 (25% of the disc), front face .0035 proud. Result: round, flush, z-fight 0; 890 tris.
 - r21 should-fix ears: back verts of the ear base ring +.007 y. Result: flips 3 -> 2 (0.22% / 0.17%).
 - r22 final (orbit + glbcheck OK; advisory az000 head_merged), --review, --compare. clip 0.
+
+## Repair pass (K=2, 2026-10-03, notes review/ad_notes_r2.md; stage 1 locked, no unlock)
+- r23 baseline: all s4 gates PASS (2 flips 0.22%/0.17%, clip 0, drift 0). No item 0.
+- r24 item 1 mantle. Critique: dark box on the shoulder, vertical back edge (az090, hero, top). Diagnosis: r13 rule painted the whole v1-v2 band between the neck loop and the -0.08 row. Fix: per-face rule vs top_z(y): depth 0.18 (nape) -> 0.12 (withers) -> spine faces only. Result: PASS; top still boxy to y 0.
+- r25 mantle: depth 0.12 -> 0.04 at -0.08, 0 behind (crest carries the dark to mid-back). Result: wedge nape -> withers, then the crest strip.
+- r26 item 2 tusks. Critique: short horns on the cheek. Diagnosis: root at (.095,-.57,.262), above the lip line, well behind the disc. Fix: root at the lower-jaw corner y -0.60/-0.612 (~15% head length behind the disc), sunk ~0.045 into the jaw, 4 rings sweeping out then up to a tip (.18,-.656,.385) just above the snout top, base r .030 (~1/3 length). Result: PASS; az000 reads like the reference front (tusks frame the disc).
+- r27 item 3 crest. Fix: 6 clumps, lengths .06-.13 (uneven), heights .034 nape-between-ears, .063, .105 withers, .084, .058, .037; back three lean further (top 0.60-0.90L). Result: ridge rises to the withers and falls; drift FAIL 1 (crest) + clip 3: one strip across the head/neck bend.
+- r28 drift. Fix: the nape clump split into its own piece 'crestnape' (body= bound). Result: drift 0, clip 0, all PASS.
+- r29 item 4 attack. Diagnosis: the old toss peaked at f20, between the packet's f008/f016 samples. Fix: down held f8-f10 (spine -5, neck -8, head -12, hinds gathered), toss held f16-f18 (neck +10, head +15 roll 10, spine loc +0.12 forward), settle f25, rest f32. Result: PASS, flips 1; head left the az090 frame at f016.
+- r30 lunge 0.12 -> 0.06 (5% of body length, partly) so the head stays in frame. Result: PASS; f008 head down, f016 head up with tusks over the snout line.
+- r31 item 5 legs. Fix (stage 2 vertex moves): wrist ring to ~85% of the forearm (sx 1.36, sy 1.57) with front verts +1 cm forward, pastern ring 0.93x, hind hock ring 1.2x. Result: PASS, IoU min .972; foreleg a column with knee and slim pastern, no hourglass.
+- r32 final (orbit + glbcheck OK; advisory az000 head_merged); review showed a dark vertical strip behind the ear at the nape.
+- r33 mantle nape depth 0.18 -> 0.13: the nape v1-v2 quad made a vertical border; topology cannot slant it. r34 final: all PASS, 950 tris, clip 0, flips 1 (0.11%/0.08%), --review, --compare.

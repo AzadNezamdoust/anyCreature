@@ -9,22 +9,24 @@
   "drift": 0
  },
  "totals": {
-  "flip": 0,
-  "float": 0,
-  "drift": 0,
-  "flip_area": 0,
-  "clip": 0,
-  "zfight": 0,
-  "clip_area": 0,
-  "sliver": 0,
   "valley": 0,
-  "fold": 0,
+  "flip_area": 0,
   "hit": 0,
-  "area": 0.8094701935572972,
-  "open": 0
+  "sliver": 0,
+  "drift": 0,
+  "float": 0,
+  "clip": 4,
+  "stretch": 0,
+  "fold": 0,
+  "stretch_max": 0.0,
+  "clip_area": 0.0007658664284778688,
+  "flip": 0,
+  "area": 0.8777275496976925,
+  "open": 0,
+  "zfight": 0
  },
- "triangles": 1046,
- "turned": 64,
+ "triangles": 1478,
+ "turned": 82,
  "stuck": 0,
  "per_object": {
   "body": {
@@ -38,8 +40,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.7668112070925203,
+   "area": 0.7645441415778899,
    "flip_area": 0
   },
   "piece_eye": {
@@ -53,6 +57,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.016828310624726475,
    "flip_area": 0
@@ -68,6 +74,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.0027814831620850376,
    "flip_area": 0
@@ -83,6 +91,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.004680367883017052,
    "flip_area": 0
@@ -98,8 +108,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.005933415190794729,
+   "area": 0.0094873406952318,
    "flip_area": 0
   },
   "piece_brow": {
@@ -113,8 +125,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.006286694842176148,
+   "area": 0.013533689837310733,
    "flip_area": 0
   },
   "piece_talons": {
@@ -128,8 +142,27 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.006148714761977502,
+   "area": 0.00979039103052556,
+   "flip_area": 0
+  },
+  "piece_disc": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "clip": 4,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0.0007658664284778688,
+   "area": 0.056081824886905975,
    "flip_area": 0
   }
  },

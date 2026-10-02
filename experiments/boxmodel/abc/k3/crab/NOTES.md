@@ -96,3 +96,30 @@ stage 1: 772 (locked) | stage 2: 804 | stage 3 total: 1104 | stage 4: 1104
 - r19 final (orbit + glbcheck OK), --review, --compare. All gates PASS; 1180 tris; slivers 0.3 %; flips 0; drift 0;
   min IoU 0.914; clip warn 2 barnacle tris (0.03 % of area). Packet (idle f1) checked for items 1-5.
 Triangles this pass: stage 1 772 (locked) | stage 2 772+logged | stage 3/4 total 1180
+
+## Repair pass (K=2, 2026-10-03; notes review/ad_notes_r2.md; stage 1 locked)
+- r20 baseline (s4, current kit): all gates PASS; 1180 tris; slivers 0.3 %; flips 0; drift 0; clip warn 2 barnacle tris. No item 0.
+- r21 (item 1, s2) Critique: claw = boxy palm with thin spike fingers and spurs (closeups front limb). Diagnosis: finger
+  rings 0.04-0.06 vs palm 0.17-0.2; tips are bare points. Fix: `claw_pincer()` walks the finger rings back from each tip
+  (distance matching failed: the rings are not rectangles), scales them 1.5-1.6x, curls the tips 15 deg toward each other,
+  pulls them back 30 %, shaves the palm bottom 0.015. Result: FAIL IoU az090 0.899; fixed finger a stub; 24 stretched
+  tris on the spur spikes (they span the gap and borrow both fingers' weights).
+- r22 Fix: scales 1.15-1.45, pull 12 %, shave 0.006; spur spikes dropped (s3); dark only on the last segment of each finger
+  (moved tips passed to stage 3). Result: PASS, IoU 0.906; stretch 0. Fixed finger still short.
+- r23-r24 Fix: the fixed finger tip moves 30 % of its segment further out instead of back; dark-tip radius 0.72x each
+  finger's last segment (the dactyl's tip was still red). Result: PASS; hero shows two thick fingers, a gap, dark tips.
+- r25 (item 2, s2) Fix: knee rings -0.023 z, +0.02 along the reach; tip vertex +0.027. Result: FAIL IoU 0.891 in every
+  view: lifting the tips shrinks the bbox. r26: no tip lift, knee drop 0.012, palm shave 0 (it cost side IoU).
+  Result: PASS, min IoU 0.901 (az090); az090 knees at/below the carapace top, legs splay a little.
+- r27 (item 3, s3) Fix: rim_teeth rebuilt: 6 pyramids/side, base depth 0.65 w, height 0.7 w, tip 15 deg down, sunk 35 %,
+  graded 0.035-0.05, shell red. Result: FAIL hit 2 (the eye stalk passed through the tooth in front of it).
+- r28 Fix: one tooth on the front edge, five past the stalk (arc 0.168-0.39). Result: PASS; close-up 0 saw-tooth rim with
+  thickness, no dark wedges.
+- r29 (item 4, s3) Fix: `ball()` 10-sided with rings at +-0.7r and +-0.95r (small caps); stalk 1.4x tall, 0.8x radius.
+  Result: PASS; az000 round black balls on thin stalks.
+- r30 (item 5, s2) Fix: extra across-plane taper rings 4/5 x0.86/0.80. Result: PASS, slivers 0.3 %, IoU unchanged 0.901;
+  close-up 1 wire tapers knee to tip.
+- r31 (should-fix, s3) Fix: barnacles 8-sided, cream, dark crater, two smallest sunk 45 %. Result: PASS; clip warning gone.
+- r32 final (orbit + glbcheck OK), --review, --compare. All gates PASS; 1320 tris; slivers 0.3 %; flips 0; drift 0;
+  z-fight 1 face (allowance); min IoU 0.901 (az090/270); clip 0. Packet (idle f1) checked for items 1-5 and the barnacles.
+Triangles this pass: stage 1 772 (locked) | stage 3/4 total 1320

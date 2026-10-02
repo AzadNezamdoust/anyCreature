@@ -178,6 +178,18 @@ def stage2(k, body):
             f = max(0.0, min(1.0, (-0.15 - v.co.y) / 0.08))
             v.co.y += 0.03 * f
             v.co.z += 0.004 * f
+    # repair r103: az090 still shows a deep dark slot at the mouth corner (ms-R8 P1-P2 gap 0.055 tall): the lower lip
+    # (grin-loop row, front half) rises toward the upper lip, most at the corner, so the opening narrows
+    for v in ms:
+        if v.co.y < -0.1:
+            ax = min(1.0, abs(v.co.x) / 0.15)
+            v.co.z += 0.003 + 0.013 * ax * ax
+    # repair r108: the hand's last ring widens 20% across the fingers so they root on a palm, not a point
+    ha_, hu_, hv_ = basis((0.1, -0.5, -1), (1, 0, 0))
+    hc_ = V(0.323, -0.11, 0.185)
+    for v in verts_where(bm, lambda q: (q - hc_).length < 0.07 and abs((q - hc_).dot(ha_)) < 0.004):
+        d = v.co - hc_
+        v.co += hv_ * d.dot(hv_) * 0.2
     # ear: thicker root and a blunt (not needle) tip, so the blade has no sliver facets
     ear = V(sub(J['earTipL'], J['earL'])).normalized()
     t = ear.cross(V(0, 0, 1)).normalized()
@@ -235,7 +247,11 @@ def stage2(k, body):
     r9p1, r9p2, r8p2 = nv[3][0], vert_near(bm, P(9, 2)), vert_near(bm, P(8, 2))
     lipf = [f for f in r9p1.link_faces if r8p2 in f.verts][0]
     lipf.normal_update()
-    MOUTH.append(lipf.calc_center_median().copy())
+    # repair r102: the upper-lip quad goes back to skin green (no longer appended to MOUTH): dark only inside the slot
+    MOUTH_LIP[:] = [lipf.calc_center_median().copy()]
+    # rows for the teeth: the upper-lip edge R8 P0-P2 and the lower-lip edge (grin loop) P0-P2, x >= 0, front first
+    TEETH[:] = [[vert_near(bm, P(8, i)).co.copy() for i in (0, 1, 2)],
+                sorted([v.co.copy() for v in ms if v.co.x > -1e-4 and v.co.y < -0.1], key=lambda c: c.x)]
     LIP[:] = [r9p1.co.copy(), r9p2.co.copy(), lipf.normal.copy()]
     if os.environ.get('GOB_DBG'):
         def mina(a, b, c):
@@ -263,6 +279,9 @@ def stage2(k, body):
 
 
 MOUTH = []
+MOUTH_LIP = []
+FING = []
+TEETH = []
 EAR_SHEAR = 0.02    # r17: the top-view IoU floor (0.9) caps the ear tip's forward shear: 0.02 -> 0.909, 0.03 -> 0.895
 EAR_TH = 1.0
 LIP = []
@@ -319,7 +338,7 @@ def plate(bm, top, bot, nrm, d0, d1):
     bm.faces.new([ti[-1], to[-1], bo[-1], bi[-1]])
 
 
-def plate3(bm, top, bot, nrm, dt, db):
+def plate3(bm, top, bot, nrm, dt, db, both_ends=False):
     """repair r21: a thick cloth quad strip with a mid-height row, so the long side wall is split once.
     Rows top/mid/bot (seam first); the top row sits at offsets dt (inside the belt), the bottom at db (thicker)."""
     mid = [a.lerp(b, 0.5) for a, b in zip(top, bot)]
@@ -332,6 +351,9 @@ def plate3(bm, top, bot, nrm, dt, db):
     bridge(bm, ti, to); bridge(bm, bo, bi)
     bm.faces.new([ti[-1], to[-1], mo[-1], mi[-1]])
     bm.faces.new([mi[-1], mo[-1], bo[-1], bi[-1]])
+    if both_ends:                     # repair r107: a hip panel has no seam, so its first column is capped too
+        bm.faces.new([mi[0], mo[0], to[0], ti[0]])
+        bm.faces.new([bi[0], bo[0], mo[0], mi[0]])
     recalc_normals(bm)
 
 
@@ -391,11 +413,32 @@ def stage3(k, body):
         tops = [lo[s0], lo[s0].lerp(lo[s1], 0.5), lo[s1], lo[s1].lerp(lo[s2], 0.3)]
         nn = [ns[s0], ns[s0].lerp(ns[s1], 0.5).normalized(), ns[s1], ns[s1].lerp(ns[s2], 0.3).normalized()]
         tops = [t + V(0, 0, 0.013) for t in tops]
-        bots = [t + V(0, tilt, -d) for t, d in zip(tops, drops)]
+        # repair r107: the hem flares ~9 deg outward (along the column normal) so the flap follows the thigh
+        bots = [t + n * 0.16 * d + V(0, tilt, -d) for t, n, d in zip(tops, nn, drops)]
         plate3(bm, tops, bots, nn, (0.012, 0.023), (0.007, 0.028))   # repair r21: >= 0.02 thick below the belt
         cloth = object_from_bm(nm, bm)
         paint(cloth, pal('cloth'), lambda c, n, i: 'cloth')
         pieces.append(cloth)
+
+    # repair r107: hip panels: the loincloth wraps the hips. Each runs under the belt from the front flap's outer edge
+    # (lo1-lo2 at 0.34) round the hip to the back flap's outer edge (lo4-lo3 at 0.34); short tattered hem flared out
+    # over the thigh, same thickness as the flaps
+    bm = bmesh.new()
+    ts = [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0]
+    def onbelt(rowp, t):
+        if t <= 1.0:
+            return rowp[1].lerp(rowp[2], 0.34 + 0.66 * t)
+        if t <= 2.0:
+            return rowp[2].lerp(rowp[3], t - 1.0)
+        return rowp[3].lerp(rowp[4], (t - 2.0) * 0.66)
+    tops = [onbelt(lo, t) + V(0, 0, 0.013) for t in ts]
+    nn = [onbelt(ns, t).normalized() for t in ts]
+    drops = (0.10, 0.075, 0.105, 0.07, 0.10, 0.075, 0.105)
+    bots = [t + n * (0.012 + 0.3 * d) + V(0, 0, -d) for t, n, d in zip(tops, nn, drops)]
+    plate3(bm, tops, bots, nn, (0.012, 0.023), (0.007, 0.028), both_ends=True)
+    hip = object_from_bm('cloth_hip', bm)
+    paint(hip, pal('cloth'), lambda c, n, i: 'cloth')
+    pieces.append(hip)
 
     # eyes: a low-poly lens sunk in the socket, iris ring and pupil proud of it
     bm = bmesh.new()
@@ -423,6 +466,25 @@ def stage3(k, body):
     for t, L, r in ((0.3, 0.05, 0.017), (0.68, 0.064, 0.02)):
         p = la.lerp(lb, t)
         spike(bm, p - ln * 0.012 + V(0, 0, 0.012), p + ln * 0.012 + V(0, 0, -L), r, knots=((0.5, 0.8),))
+    # repair r102: a row of small upper teeth seated in the upper-lip edge (R8) between and beside the fangs, and two
+    # small lower teeth on the lower lip, so the mouth reads as a toothy grin, not a dark box
+    up8, lo7 = TEETH
+    def along(row, t):
+        L = [(b - a).length for a, b in zip(row, row[1:])]
+        d = t * sum(L)
+        for (a, b), l in zip(zip(row, row[1:]), L):
+            if d <= l:
+                return a.lerp(b, d / l)
+            d -= l
+        return row[-1].copy()
+    inward = V(0, 1, 0.35).normalized()
+    for t in (0.06, 0.2, 0.34, 0.5, 0.66):
+        p = along(up8, t)
+        Lt = 0.03   # repair r104: 0.02 read as a stipple at az000; r106: tip leans forward, clear of the raised lower lip
+        spike(bm, p + inward * 0.4 * Lt, p + V(0, -0.003, -0.52 * Lt), 0.008, knots=((0.5, 0.75),))
+    for t in (0.12, 0.38):
+        p = along(lo7, t)
+        spike(bm, p + V(0, 0.008, -0.006), p + V(0, -0.008, 0.009), 0.0055, knots=((0.5, 0.75),))
     fangs = object_from_bm('fangs', bm)
     paint(fangs, pal('fang'), lambda c, n, i: 'fang')
     pieces.append(fangs)
@@ -449,18 +511,45 @@ def stage3(k, body):
     paint(nose, pal('skin'), lambda c, n, i: 'skin')
     pieces.append(nose)
 
-    # fingers: three long clawed fingers out of the hand paddle
+    # repair r108: three thick knuckled fingers per hand (each ~25% of the widened palm), splayed 12 deg apart,
+    # two segments with a 20 deg curl at the middle knuckle, and separate cream claws 1.3x longer, rooted 30% into the tips
     ha, hu, hv = basis((0.1, -0.5, -1), (1, 0, 0))
     hc = V(0.323, -0.11, 0.185)
-    bm = bmesh.new()
+    bm, bc = bmesh.new(), bmesh.new()
+
+    def rot(d, toward, deg):
+        t = (toward - d * toward.dot(d)).normalized()
+        return (d * math.cos(math.radians(deg)) + t * math.sin(math.radians(deg))).normalized()
+
+    def tube(rows):
+        rr = []
+        for c, d, r in rows:
+            _, u, w = basis(d, hv)
+            rr.append(ring(bm, [c + (u * math.cos(q) + w * math.sin(q)) * r for q in [2 * math.pi * (i + 0.5) / 5 for i in range(5)]]))
+        for r0, r1 in zip(rr, rr[1:]):
+            bridge(bm, r0, r1, closed=True)
+        cap(bm, list(reversed(rr[0])))
+        cap(bm, rr[-1])
+    curl = V(-0.5, 1, 0)
     for sgn in (-1, 0, 1):
-        b0 = hc + hv * 0.03 * sgn - ha * 0.02
-        tip = hc + hv * 0.04 * sgn + ha * 0.085 + V(-0.012, 0.02, 0)
-        spike(bm, b0, tip, 0.011, knots=((0.5, 0.9), (0.72, 0.8)), hint=(1, 0, 0))
+        d0 = rot(ha, hv * sgn if sgn else ha, 12 * abs(sgn))
+        p0 = hc + hv * 0.035 * sgn - ha * 0.022
+        ln = 0.72 if sgn < 0 else 1.0   # repair r110: the rear (low) finger's tip sat nearer the foot than the palm (drift); shorter
+        k = p0 + d0 * 0.058 * ln
+        d1 = rot(d0, curl, 20)
+        tp = k + d1 * 0.04 * ln
+        FING.append((p0.copy(), tp.copy()))
+        tube([(p0, d0, 0.015), (k, (d0 + d1).normalized(), 0.0155), (tp, d1, 0.011)])
+        d2 = rot(d1, curl, 25)
+        # repair r111: the claws read as dark pin points in hero: longer and wider, the root still 30% inside the tip
+        spike(bc, tp - d1 * 0.013, tp + d2 * 0.032 * (0.85 + 0.15 * ln), 0.0115, knots=((0.45, 0.8),), hint=tuple(hv))
+    recalc_normals(bm)
     fingers = object_from_bm('fingers', bm)
-    zc = hc.z + ha.z * 0.06
-    paint(fingers, pal('skin', 'fang'), lambda c, n, i: 'fang' if c.z < zc else 'skin')
+    paint(fingers, pal('skin'), lambda c, n, i: 'skin')
     pieces.append(fingers)
+    hclaws = object_from_bm('handclaws', bc)
+    paint(hclaws, pal('fang'), lambda c, n, i: 'fang')
+    pieces.append(hclaws)
 
     # toe claws: three per foot
     bm = bmesh.new()
@@ -494,6 +583,37 @@ def even_through(ob, rad=0.06):
                 ob.vertex_groups[g].add([i], w, 'REPLACE')
 
 
+def finger_rigid(pcs):
+    """repair r109: rigid fingers (nearest bone) drifted off the heat-skinned palm; body weights folded them. Each finger
+    and its claw now take one weight set: the mean body weights of that finger's root ring, so the finger follows the
+    palm where it roots and stays straight."""
+    segs = [(a, b) for a, b in FING] + [(V(-a.x, a.y, a.z), V(-b.x, b.y, b.z)) for a, b in FING]
+    def sd(p, a, b):
+        ab = b - a
+        t = max(0.0, min(1.0, (p - a).dot(ab) / ab.length_squared))
+        return (p - (a + ab * t)).length
+    def which(p):
+        return min(range(len(segs)), key=lambda i: sd(p, *segs[i]))
+    fg = pcs[0]
+    W = [{fg.vertex_groups[g.group].name: g.weight for g in v.groups} for v in fg.data.vertices]
+    root = []
+    for i, (a, b) in enumerate(segs):
+        ids = [j for j, v in enumerate(fg.data.vertices) if (v.co - a).length < 0.02 and which(v.co) == i]
+        acc = {}
+        for j in ids:
+            for g, w in W[j].items():
+                acc[g] = acc.get(g, 0.0) + w / len(ids)
+        root.append(acc)
+    for ob in pcs:
+        vs = ob.data.vertices
+        for vg in ob.vertex_groups:
+            vg.remove(list(range(len(vs))))
+        for j, v in enumerate(vs):
+            for g, w in root[which(v.co)].items():
+                if w > 1e-4:
+                    (ob.vertex_groups.get(g) or ob.vertex_groups.new(name=g)).add([j], w, 'REPLACE')
+
+
 def stage4(k, body, pieces):
     rig = armature([
         ('hips', (0, 0.11, 0.40), (0, 0.09, 0.54), None),
@@ -511,12 +631,19 @@ def stage4(k, body, pieces):
     ], roll='auto')
     skin(body, rig)
     for pc in pieces:
-        if pc.name == 'piece_fingers':
-            bind(pc, rig)            # nearest bone per vertex: each finger rides its hand bone rigidly
-        else:
-            bind(pc, rig, body=body)
+        bind(pc, rig, body=body)
         if pc.name.startswith('piece_cloth'):
             even_through(pc)
+        if pc.name == 'piece_fangs':   # repair r105: a small tooth took lip and jaw weights at either end and folded (3 flips)
+            even_through(pc, rad=0.03)
+    finger_rigid([pc for nm in ('piece_fingers', 'piece_handclaws') for pc in pieces if pc.name == nm])
+    if os.environ.get('GOB_FDBG'):
+        eb = evaluated_bm(body); eb.faces.ensure_lookup_table(); tr = BVHTree.FromBMesh(eb)
+        fg = [pc for pc in pieces if pc.name == 'piece_fingers'][0]
+        for v in fg.data.vertices:
+            if v.co.x > 0:
+                loc, nrm, idx, d = tr.find_nearest(v.co)
+                say('FN', tuple(round(x, 3) for x in v.co), tuple(round(x, 3) for x in loc), round(d, 3))
     both = lambda b, v: {b + '.L': v, b + '.R': v}
     clip(rig, 'idle', {
         1: {},

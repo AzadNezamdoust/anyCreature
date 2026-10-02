@@ -63,3 +63,25 @@ Triangles: stage 1 524, stage 2 620, stage 3 1016 total, stage 4 992 total (body
 - r19 Final: the same program with the orbit and glbcheck. Result: PASS every gate; hit/float/z-fight 0/0/0, slivers 2 (0.2%), flips 0 (0.00% / 0.00% area), drift 0, clip 0; IoU min 0.985; glbcheck OK. --review and --compare rebuilt.
   Checked in review/ (idle frame 1): no plate on the shoulder or foreleg, no detached shard, no spine comb, no purple, grey tail with a dark tip, larger eye. Open: the dark point between the forelegs in 1_beauty az000 is the tail tip (z 0.17, x 0) seen through the legs, not the chest; the brisket move and chest loop from note 3 were not needed for the fold and were not made. Paws taper but stay 4-vert pads.
 Repair pass: 9 rounds (r11-r19), 956 tris (body 620 + pieces 336).
+
+## Repair pass (K=2, from review/ad_notes_r2.md; stage 1 locked, no unlock)
+- r20 Baseline (current kit): every gate PASS, clip 0, flips 0. No item 0.
+- r21 Critique (must-fix 1): the ruff is six big flat slabs on the neck (2_closeups ruff). Diagnosis: two rows of three `shingle()` plates 0.15 x 0.04, L 0.10-0.14. Fix: three rows round the neck axis (cheek y -0.50 x3, mid y -0.43 x4, rear y -0.36 x3 per side), plates 0.09 x 0.024, L 0.075-0.085, sunk 30%; cheek/throat cream, nape and rear grey.
+  Result: PASS, 1068 tris; a layered collar, but clip warning 18 tris (0.65% area) on the low throat clumps in the head-down attack.
+- r22-r26 Critique: the pink (posed clip) is on the low throat clumps. Diagnosis: at 0.25 normal the small, deeper-sunk clumps lie in the throat crease that closes when the head drops. Fix (one per round): clumps below 25 deg lifted to 0.42 normal (r22, 0.18%); cheek row moved back to y -0.48 (r23, 0.16%); a=-40 tried and reverted (r24 worse, 0.46%); whole cheek row lifted (r25, no change); mid-row throat clump a -30 -> -22, L 0.065 (r26, 0.10%). r27 rear-row probe: no change, reverted.
+- r28 Critique: the new clumps read as square chips, and the top cheek clump was cream behind the ear. Diagnosis: shingle shoulder ring 0.36 w at 55% L gives a blunt rectangle. Fix: `shingle(sh=)` parameter, ruff uses shoulder 0.30 w at 35% L (pointed tip); the 55-deg cheek clump grey.
+  Result: PASS; pointed clumps sweeping back and down; clip 10 tris (0.17% area, warning only, small pink at the cheek-row low clump).
+- r29 Critique (must-fix 2): needle claws on a plain tan block paw. Diagnosis: claws 0.013 x 0.011, L 0.024/0.038, pitch -0.24. Fix: claws t 0.020 (2x), w 0.012 (fits the 4 toes without touching), L 0.024/0.030 (~70% of middle), pitched -0.50/-0.62 so tips reach the ground line; body faces z < 0.045 facing forward painted dark grey (toe fronts).
+  Result: PASS, z-fight 0; dark toe tips with four dark claws, middle pair leading. From the front the claws still read thin.
+- r30-r31 Critique (must-fix 3): the eye is an amber triangle with no brow. Diagnosis: the lens copied the 4-vert socket face; the brow vert overhung only +0.010 x. Fix: stage 2 brow vert +0.009 x, -0.006 y more (3%/2% of head width); stage 3 a 6-point almond lens (long axis along -Y in the socket plane, sharp front/back corners), socket faces within 0.03 of EYE painted dark grey (rim). r31: almond lengthened (0.95 x 0.55 of the socket extents) after r30 gave a small hexagon.
+  Result: PASS, z-fight 0, IoU 0.985; an amber almond in a dark rim under a brow.
+- r32 Critique (must-fix 4): the underline runs level to the hind legs (az090). Diagnosis: waist ring y 0.28 bottom at z 0.52, below the y 0.17 ring. Fix (stage 2): bottom and under verts of rings y 0.17 / 0.28 raised 0.03 / 0.06, under verts in 0.011; brisket untouched.
+  Result: PASS, flips 0, IoU 0.985; az090 underline rises clearly from chest to flank.
+- r33-r34 Critique (must-fix 5b): the dark tail tip shows between the forelegs in az000. Fix: tail0 pitched on every idle key; r33 +12 swung the tail forward (wrong sign), r34 -12 back.
+  Result: PASS; tail back and low, but the tip still showed between the legs.
+- r35 Should-fix: pastern rings (z 0.06) scaled 0.82 x / 0.85 y, so the leg tapers into the paw. PASS, IoU 0.985.
+- r36 Orbit run and --review (PASS every gate); the packet showed the tip still between the forelegs.
+- r37-r38 Critique: az000 still shows the dark tip through the leg gap (the tail is on the centre line). Fix: tail0 also swung 12 (r37), then 20 deg (r38) sideways on every idle key, so the tip sits behind the left hind leg.
+  Result: PASS; 1_beauty az000 shows nothing dark between the forelegs. Nape tab: not seen in 4_posed attack_f016 after the ruff rebuild.
+- r39 Final with orbit and glbcheck: PASS every gate; hit/float/z-fight 0/0/0, slivers 2 (0.2%), flips 0 (0.00% / 0.00% area), drift 0, clip warning 10 tris (0.17% area), IoU min 0.985, glbcheck OK. --review and --compare rebuilt.
+Repair pass K=2: rounds r20-r39, 1084 tris (body 620 + pieces 464).

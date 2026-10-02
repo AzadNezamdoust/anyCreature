@@ -9,6 +9,41 @@
   },
   {
    "op": 2,
+   "kind": "loop",
+   "reason": "tail band 1: across the tail, for the dark/brown feather bands",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "tail band 2: across the tail tip half, for the feather bands",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "partial",
+   "reason": "toe split 1: three toes out of the foot plate (terminators on the leg front / sole, or toe top / bottom)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "partial",
+   "reason": "toe split 2: three toes out of the foot plate (terminators on the leg front / sole, or toe top / bottom)",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "partial",
+   "reason": "toe split 3: three toes out of the foot plate (terminators on the leg front / sole, or toe top / bottom)",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
    "kind": "inset",
    "reason": "eye socket: a loop inside the eye face",
    "new_verts": 4,

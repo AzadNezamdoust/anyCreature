@@ -76,3 +76,16 @@ s1 676 | s2 740 | s3 904 (body 740 + eyes, claws, nose pad) | s4 904. Rounds: s1
 - r22 final (orbit + glbcheck): all gates PASS; hit 0, float 0, z-fight 0, slivers 4 (0.4%), flips 0.00%/0.00% area, drift 0, clip 0, lock PASS, IoU min 0.958, glbcheck OK. Orbit advisories unchanged (head merged az000, hidden az180). Review packet and side_by_side rebuilt.
 - Should-fix: claws/nose pad left as they were; muzzle-front flatten not done (it risks the nose-pad seat, low value).
 - Triangles: s1 676 | s2 740 | s3 904 | s4 904. Repair rounds r09-r22 (13 fix rounds + baseline + final; three face/vert dump runs were debug only, their sheets deleted).
+
+## Repair pass 2 (K=2, 2026-10-03; stage 1 locked, no unlock; notes review/ad_notes_r2.md)
+- r23 baseline (current kit): all gates PASS, clip 0, stretch 0. No item 0.
+- r24 (item 1, s3): Critique: the eye is a proud 8-face gem (2_closeups head wire). Diagnosis: `bipyramid` put a point 0.016 out of the socket. Fix: `dome()`: 8 sides, sunk back ring (r 0.8x), rim, low front cap; depth 0.015 (35% of 0.042 width), front 0.005 proud; same width, lens still turned toward -Y, socket paint kept. First try left the band open (8 open edges, bridge needs closed=True). Result: a flat-fronted dot set in the socket; hit/float/z-fight 0.
+- r25 (item 2, s3): Critique: a comb of identical needle spikes. Diagnosis: `claw()` = thin pyramids, h 0.011, all equal, parallel, 0.03 apart. Fix: `hook()`: base 0.028 wide (1/7 paw), mid quad lower and 0.6x, tip bent down to z 0.002; length 0.040 (60%), outer pair 80%, fan 0/±6/±12 deg, rooted 25% into the toe; hind 70%. Result: separate blunt dark hooks; 1100 tris; gates PASS.
+- r26 (item 3, s2): Critique: muzzle is one flat wedge, no stop. Diagnosis: the H0-H2 top plane runs straight into the brow. Fix: H2 top verts down 4% head height and back 0.006, H1 top up 2%, flatten H0 (nose face). Result: rounded muzzle top with a step under the brow (close-up head, az090); IoU min 0.958.
+- r27 (item 4, s2): Critique: tail is a disc with a spoke fan. Diagnosis: the T10 n-gon cap sits flush on the rump. Fix: T10 ring scaled 0.6 and pulled back 0.07 / down 0.04, T9 back 0.025. Result: stub cone, but r29's beauty az090 showed a long thin wedge -> r30.
+- r28 (should-fix, s2): paw-top ring scaled 0.9 and its front verts down 0.007 so the paw slopes to the toes (first try picked the hind paw's back verts; fixed). IoU min 0.948.
+- r29: orbit + glbcheck run; beauty showed the tail wedge.
+- r30 (item 4, s2): T10 scale 0.8, back 0.045 / down 0.03. Result: a short stub hanging back and down in az090 and back34. IoU min 0.949.
+- Should-fix far-armpit fan: not done (turn budget kept for the final).
+- Triangles: s1 676 | s2 740 | s3 1100 | s4 1100.
+- r31 final (orbit + glbcheck): all gates PASS; hit 0, float 0, z-fight 0, slivers 2 (0.2%), flips 0.00%/0.00% area, drift 0, clip 0, stretch 0, lock PASS, IoU min 0.949, glbcheck OK. 4_posed: no stray line above the brow (the dropped item stays dropped). Review packet and side_by_side rebuilt.

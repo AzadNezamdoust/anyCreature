@@ -88,3 +88,20 @@ Triangles per stage: s1 536, s2 592, s3/s4 1152 total (8 colours). Rounds: s1 9,
 - r28: Fix: R6 P3 to (0.079, 0.034). Result: clip 0; 2 slivers remain on the jaw side quad (R7 - grin loop, P2-P3; 5.7 deg).
 - r29: Fix: R7 P3 z 0.795 -> 0.782 (the band at P3 widens). Result: slivers 0 (0.0%), clip 0, IoU min 0.916, gates PASS.
 - r30: final with orbit + glbcheck, then --review and --compare. All gates PASS: hit/float/zfight 0, slivers 0 (0.0%), flips 2 (0.16% tris, 0.05% area; the R7 P3 move, posed only), drift 0, clip 0, lock PASS, IoU min 0.916 (top), glbcheck OK. 3_tech is clean grey. 1242 tris. Repair rounds r10-r30.
+
+## Repair pass K=2 (from review/ad_notes_r2.md; stage 1 locked)
+- r100: baseline: every gate PASS (hit/float/zfight 0, slivers 0, flips 2 = 0.16%/0.05%, drift 0, clip 0). No item 0.
+- r101: diagnostic (GOB_FACE dump of the mouth faces): the dark box is the upper-lip quad R8-R9 P1-P2 (face normal (0.72,-0.7), so it shows as a slot in az090); the real opening is the grin-loop band (ms-R8), a thin gap.
+- r102 (item 1): Fix: upper-lip quad back to skin green (dropped from MOUTH); piece_fangs gains 5 upper teeth per side seated 40% into the R8 lip edge and 2 small lower teeth per side on the lower lip; fangs kept. Result: az000 reads as a toothy grin with green lips; az090 still a deep dark corner; clip WARN 6 tris on the teeth.
+- r103 (item 1): Diagnosis: the ms-R8 gap at the mouth corner is 0.055 tall. Fix (stage 2): the grin-loop front verts rise 0.003 at the seam to 0.016 at the corner. Result: az090 now a thin dark line; clip 0; IoU min 0.916.
+- r104 (item 1): upper teeth read as a stipple; length 0.02 -> 0.03, radius 0.008. Result: 3 flips + 2 clip on piece_fangs.
+- r105: Diagnosis: a tooth took lip and jaw weights at either end. Fix: even_through(fangs, rad 0.03). Result: flips on fangs 0; clip 2 remains.
+- r106: Fix: upper-tooth tips lean 0.003 forward and reach 0.52 L down, clear of the raised lower lip. Result: clip 0, flips 2 (body only).
+- r107 (item 2): Fix: piece_cloth_hip, a plate3 panel (both ends capped) on each hip under the belt from the front flap's outer edge round to the back flap's, tattered 3-point hem flared ~0.03 out over the thigh; front/back flap hems flare 9 deg along the column normals. Bound body= + even_through. Result: az090/back34/az000 show a skirt wrapping the hips with thickness; hit/float/zfight/drift/clip 0.
+- r108 (item 3): Fix: fingers rebuilt as 5-sided two-segment tubes (r 0.015, knuckle 0.0155), 12 deg splay, 20 deg curl at the middle knuckle; separate piece_handclaws (cream, rooted 30% in the tips); stage 2 widens the hand's last ring 20% across the fingers. Result: FAIL drift 2 on fingers (nearest-bone rigid binding vs heat-skinned palm). IoU min 0.915.
+- r109: Fix: finger_rigid(): every finger + its claw takes the mean body weights of that finger's root ring. Result: drift still 2.
+- r110: Diagnosis (GOB_FDBG nearest-skin dump): the rear (low) finger's tip verts sit nearer the foot top (0.05) than the palm, so the drift anchor is the foot. Fix: rear finger 0.72x length. Result: drift 0, all gates PASS.
+- r111 (item 3): claws read as dark pin points in hero: claw r 0.0115, length 0.032. Result: three curled clawed fingers per hand read in hero and the front-limb close-up; gates PASS.
+- Item 4 (crown nub), no change: the "nub" in the head close-up and attack_f012 is the far ear's blunt tip seen past the dome (the ear sweeps back and up; a camera above the head projects it over the crown). The dome has no spike; the ears own the top-view IoU (0.915), so they stay.
+- Should-fix (belly): already light green from the chest to the belt in az000; no change. Dropped stray-line item: not present in the new 4_posed idle_f012.
+- r112: final with orbit + glbcheck, --review, --compare. All gates PASS: hit/float/zfight 0, slivers 0 (0.0%), flips 2 (0.12% tris, 0.05% area), drift 0, clip 0, lock PASS, IoU min 0.915, glbcheck OK. 1706 tris. Repair rounds r100-r112.

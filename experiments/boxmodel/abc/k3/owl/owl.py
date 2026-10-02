@@ -168,9 +168,47 @@ def stage2(k, body):
     for p, dz in (((0.0, 0.198, 0.061), -0.012), ((0.080, 0.192, 0.061), -0.012),
                   ((0.0, 0.215, 0.085), 0.003), ((0.092, 0.209, 0.085), 0.003)):
         vert_near(bm, p).co.z += dz
+    # r2 must-fix 4: tail end notched (the seam tip pulls 16 mm, ~15% of the tail, toward the body), and the wing
+    # tip given thickness (the outer tip verts pushed out from the inner ones)
+    for p in ((0.0, 0.198, 0.049), (0.0, 0.215, 0.088)):
+        vert_near(bm, p).co.y -= 0.016
+    vert_near(bm, (0.114, 0.183, 0.112)).co.x += 0.008
+    vert_near(bm, (0.122, 0.138, 0.120)).co.x += 0.004
+    # tail feather bands: two loops across the tail (a cut along its length crosses top, outer side and bottom)
+    with k.topo(bm, 'loop', 'tail band 1: across the tail, for the dark/brown feather bands'):
+        loopcut(bm, edge_near(bm, (0.080, 0.166, 0.127)), t=0.5)
+    with k.topo(bm, 'loop', 'tail band 2: across the tail tip half, for the feather bands'):
+        loopcut(bm, edge_near(bm, (0.086, 0.188, 0.107)), t=0.5)
     # wing tip: the lowest outer face (W1 outer front -> W2 outer) was a 5.7 deg needle: bring the W2
     # outer front vert 8 mm forward and 8 mm up so the face is less skewed
     v = vert_near(bm, (0.128, 0.088, 0.130)); v.co.y -= 0.008; v.co.z += 0.008
+    # toes: three partial loops down the toe (leg front -> toe top -> toe front -> toe bottom -> foot sole) split the
+    # flat foot plate; on the toe front the two notch cuts pull back and the middle cut is the middle toe's tip
+    hx, hy = J['hipL'][0], J['hipL'][1]
+    cuts = []
+    rt = rb = None                                                     # the middle cut's root verts (top, sole)
+    for i, (cx, kind) in enumerate(((hx + 0.001, 'tip'), (hx - 0.014, 'notch'), (hx + 0.015, 'notch'))):
+        with k.topo(bm, 'partial', 'toe split %d: three toes out of the foot plate (terminators on the leg front / sole, or toe top / bottom)' % (i + 1)):
+            if i == 0:
+                st, en = edge_near(bm, (hx, hy - 0.034, 0.060)), edge_near(bm, (hx + 0.001, hy + 0.040, 0.0))
+            else:
+                et, eb = (hx - 0.018, hx - 0.030) if i == 1 else (hx + 0.018, hx + 0.032)
+                st = edge_near(bm, ((rt + et) / 2, hy - 0.022, 0.028))
+                en = edge_near(bm, ((rb + eb) / 2, hy - 0.036, 0.0))
+            ms = partial_loop(bm, st, en, t=0.5)
+        for v in ms:
+            v.co.x = cx if v.co.y < hy - 0.07 else hx + (cx - hx) * 0.6
+            if i == 0 and v.co.y >= hy - 0.07:
+                if v.co.z > 0.01: rt = v.co.x
+                else: rb = v.co.x
+        cuts.append((ms, kind))
+    for ms, kind in cuts:
+        for v in ms:
+            if v.co.y < hy - 0.07:
+                if kind == 'notch':
+                    v.co.y += 0.026 if v.co.z < 0.005 else 0.014              # notch between toes, back ~20% of the foot
+                else:
+                    v.co.y -= 0.004                                            # middle toe tip a touch forward
     # eye socket: one loop inside the eye face, pushed in
     f = face_near(bm, (0.066, -0.200, 0.502), n=(0, -1, 0))
     with k.topo(bm, 'inset', 'eye socket: a loop inside the eye face'):
@@ -181,7 +219,7 @@ def stage2(k, body):
 
 
 PAL = {'brown': '#7a5a3c', 'dark': '#4a3424', 'cream': '#efe3c6',
-       'orange': '#f08a1c', 'black': '#111111', 'beak': '#d8b870'}
+       'orange': '#f08a1c', 'black': '#111111', 'covert': '#9c7752'}
 BROW_N = 5
 EYE_C, EYE_N = Vector((0.066, -0.175, 0.502)), Vector((0.258, -0.966, 0.0)).normalized()
 
@@ -228,6 +266,61 @@ def lens(bm, c, n, rim, back, back_apex, front, front_apex, sides=12, rot=15.0):
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
 
 
+DISC_R = (0.034, 0.055, 0.063)     # inner (eye hole), rim border (~12% of the radius), outer: the discs meet at the beak
+
+
+def disc_piece(me, sides=12):
+    n = EYE_N; u = n.cross(Vector((0, 0, 1))).normalized(); w = u.cross(n)
+    dirs = [u * math.cos(math.radians(15 + 360 * i / sides)) + w * math.sin(math.radians(15 + 360 * i / sides))
+            for i in range(sides)]
+    # the export turns each non-planar quad's diagonal so it folds out: raycast both triangulations, keep the front one
+    vs = [v.co.copy() for v in me.vertices]
+    trees = []
+    for alt in (0, 1):
+        tris = []
+        for pg in me.polygons:
+            ids = list(pg.vertices)
+            if len(ids) == 4 and alt:
+                ids = ids[1:] + ids[:1]
+            tris += [(ids[0], ids[j], ids[j + 1]) for j in range(1, len(ids) - 1)]
+        trees.append(BVHTree.FromPolygons(vs, tris))
+    def skin(q, r):
+        ds = []
+        for t in trees:
+            hit, _, _, dist = t.ray_cast(EYE_C + q * r + n * 0.1, -n)
+            if hit:
+                ds.append(0.1 - dist)
+        return max(ds) if ds else -0.03
+    def at(q, r, d):
+        p = EYE_C + q * r + n * d
+        p.x = max(p.x, 0.006)
+        return p
+    bm = bmesh.new()
+    front, back = [], []
+    for r in DISC_R:
+        pts = []
+        for i, q in enumerate(dirs):
+            # the skin can ridge between two samples (the p2 rim column): take the highest of 5 samples across
+            # each front face, so no skin edge pokes through the cream
+            d = max(skin((q * (1 - t) + dirs[(i + s) % sides] * t).normalized(), r)
+                    for s in (1, -1) for t in (0.0, 0.25, 0.5))
+            pts.append(at(q, r, max(d + 0.004, -0.010)))
+        front.append(ring(bm, pts))
+    for r in (DISC_R[0], DISC_R[2]):
+        back.append(ring(bm, [at(q, r, skin(q, r) - (0.003 if r < 0.05 else 0.008)) for q in dirs]))   # outer rim sunk deeper: rooted, so poses do not cut it
+    bridge(bm, front[0], front[1], closed=True); bridge(bm, front[1], front[2], closed=True)
+    bridge(bm, front[2], back[1], closed=True); bridge(bm, back[1], back[0], closed=True)
+    bridge(bm, back[0], front[0], closed=True)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    ob = object_from_bm('disc', bm)
+    def rule(c, nn, i):
+        v = Vector(c) - EYE_C
+        rr = (v - n * v.dot(n)).length
+        return 'cream' if rr < 0.050 else 'dark'
+    paint(ob, {'cream': PAL['cream'], 'dark': PAL['dark']}, rule)
+    return ob
+
+
 def box(bm, ends):
     """ends: two 4-vertex sections (same winding) -> a closed hexahedron."""
     a, b = ring(bm, ends[0]), ring(bm, ends[1])
@@ -239,15 +332,13 @@ def body_rule(c, n, i):
     if z > 0.585 and x > 0.075:
         return 'dark'                                     # ear tufts
     if 0.43 < z < 0.57 and y < -0.12 and x < 0.118:
-        if x > 0.06 and (z < 0.47 or z > 0.535):
-            return 'dark'                                 # the disc's square corners: rim, so the cream reads round
-        return 'cream' if (n.y < -0.40 and x < 0.112 and 0.438 < z < 0.56) else 'dark'   # disc + dark rim
-    if y > 0.15 and z < 0.14 and x < 0.1:
-        return 'dark'                                     # fan tail
+        return 'brown'                                    # face skin under the round disc pieces: square corners brown
+    if y > 0.12 and z < 0.14 and x < 0.1:
+        return 'brown' if 0.168 < y < 0.19 else 'dark'    # fan tail: dark / brown / dark feather bands
     if z < 0.075:
         return 'cream'                                    # feathered legs and feet
     if x > 0.148 or (x > 0.10 and y > 0.06 and z < 0.30):
-        return 'dark' if z < 0.21 else 'brown'            # folded wing, darker primaries
+        return 'dark' if z < 0.21 else ('covert' if z > 0.30 else 'brown')   # folded wing: light coverts, brown, dark primaries
     if n.y < -0.35 and 0.08 < z < 0.33 and x < 0.12:
         return 'cream'                                    # belly; the chest above it stays brown feathers
     return 'brown'
@@ -267,31 +358,44 @@ def stage3(k, body):
     # centre so it closes over eye and pupil. Not seated on the skin, so its scale is not drift.
     bm = bmesh.new(); lens(bm, EYE_C, EYE_N, (0.0193, 0.0021), [(0.0108, 0.0047)], 0.0054, [(0.0115, 0.0054)], 0.0061)
     out.append(object_from_bm('lid', bm)); paint(out[-1], {'brown': PAL['brown']}, lambda c, n, i: 'brown')
+    # beak: dark hooked beak, 1.4x longer; root sunk in the face, ~60% of it out in front of the disc, tip hooked down 30 deg
     bm = bmesh.new()
-    r0 = ring(bm, [(0, -0.180, 0.494), (0.019, -0.180, 0.468), (0, -0.180, 0.438)])
-    r1 = ring(bm, [(0, -0.212, 0.484), (0.012, -0.210, 0.462), (0, -0.210, 0.445)])
-    tip = ring(bm, [(0, -0.230, 0.428)])[0]
-    bridge(bm, r0, r1)
-    bm.faces.new([r1[0], r1[1], tip]); bm.faces.new([r1[1], r1[2], tip]); cap(bm, r0)
-    out.append(object_from_bm('beak', bm)); paint(out[-1], {'beak': PAL['beak']}, lambda c, n, i: 'beak')
+    r0 = ring(bm, [(0, -0.183, 0.506), (0.020, -0.183, 0.470), (0, -0.183, 0.436)])
+    r1 = ring(bm, [(0, -0.222, 0.500), (0.014, -0.222, 0.472), (0, -0.222, 0.448)])
+    r2 = ring(bm, [(0, -0.240, 0.486), (0.008, -0.240, 0.466), (0, -0.240, 0.452)])
+    tip = ring(bm, [(0, -0.252, 0.430)])[0]
+    bridge(bm, r0, r1); bridge(bm, r1, r2)
+    bm.faces.new([r2[0], r2[1], tip]); bm.faces.new([r2[1], r2[2], tip]); cap(bm, r0)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    beak = object_from_bm('beak', bm); paint(beak, {'black': PAL['black']}, lambda c, n, i: 'black')
+    out.append(beak)
+    # facial disc: a 12-sided cream dish around each eye (hole for the eye), dark outer rim ring, conformed to
+    # the face by raycast: front 2 mm proud of the skin (flattened to a dish where the head curves away), back sunk 3 mm
+    me = body.data
+    btree = BVHTree.FromPolygons([body.matrix_world @ v.co for v in me.vertices], [tuple(p.vertices) for p in me.polygons])
+    disc = disc_piece(me)
+    tv, tf = [v.co.copy() for v in me.vertices], [tuple(p.vertices) for p in me.polygons]
+    o = len(tv); tv += [v.co.copy() for v in disc.data.vertices]; tf += [tuple(i + o for i in p.vertices) for p in disc.data.polygons]
+    tree = BVHTree.FromPolygons(tv, tf)                  # brows raycast onto body + disc rim
     # V brows: tapered wedge plates lying on the disc's upper rim (thick inner end, thin outer end),
     # half sunk into the head along the surface normal, 15 deg down toward the centre
-    me = body.data
-    tree = BVHTree.FromPolygons([body.matrix_world @ v.co for v in me.vertices], [tuple(p.vertices) for p in me.polygons])
     bm = bmesh.new()
     stations = []
-    for i in range(BROW_N):
-        f = i / (BROW_N - 1)
-        x, z = 0.016 + (0.096 - 0.016) * f, 0.536 + (0.558 - 0.536) * f
-        hit, nrm, _, _ = tree.ray_cast(Vector((x, -0.5, z)), Vector((0, 1, 0)))
-        stations.append((hit, nrm.normalized(), 0.0075 - 0.0045 * f, 0.007 - 0.003 * f))
+    # r2 must-fix 5: the outer end sweeps up and back ~30% further, to the ear-tuft base (x .116, z .607)
+    BROW_XZ = [(0.016 + 0.020 * i, 0.536 + 0.0055 * i) for i in range(5)] + [(0.100, 0.564), (0.104, 0.570), (0.109, 0.579), (0.113, 0.588)]
+    for i, (x, z) in enumerate(BROW_XZ):
+        f = i / (len(BROW_XZ) - 1)
+        hit, nrm, _, _ = btree.ray_cast(Vector((x, -0.5, z)), Vector((0, 1, 0)))       # skin: the root
+        top = tree.ray_cast(Vector((x, -0.5, z)), Vector((0, 1, 0)))[0]                # disc rim or skin: the face
+        stations.append((hit, nrm.normalized(), 0.0075 - 0.003 * f, 0.007 - 0.002 * f, top))
     secs = []
-    for i, (S, N, hh, t) in enumerate(stations):
-        T = (stations[min(i + 1, BROW_N - 1)][0] - stations[max(i - 1, 0)][0]).normalized()
+    for i, (S, N, hh, t, Sf) in enumerate(stations):
+        T = (stations[min(i + 1, len(stations) - 1)][0] - stations[max(i - 1, 0)][0]).normalized()
         A = N.cross(T).normalized()
         if A.z < 0:
             A = -A
-        secs.append(ring(bm, [S - A * hh - N * t / 2, S - A * hh + N * t / 2, S + A * hh + N * t / 2, S + A * hh - N * t / 2]))
+        # root always 2 mm in the skin (one continuous contact), face t/2 proud of the disc rim or skin
+        secs.append(ring(bm, [S - A * hh - N * 0.002, Sf - A * hh + N * t / 2, Sf + A * hh + N * t / 2, S + A * hh - N * 0.002]))
     for a, b in zip(secs, secs[1:]):
         bridge(bm, a, b, closed=True)
     cap(bm, secs[0]); cap(bm, list(reversed(secs[-1])))
@@ -300,20 +404,24 @@ def stage3(k, body):
     # talons: three forward hooks per foot and one back, roots sunk in the toe
     hx, hy = J['hipL'][0], J['hipL'][1]
     bm = bmesh.new()
-    # roots 11 mm inside the toe with their tops under its upper face (the toe top is at z .017 at
-    # y -.105 and the slanted toe front drops to z 0 at y -.125); tips forward and down to the ground
-    for tx, dx in ((hx - 0.027, -0.006), (hx, 0.0), (hx + 0.028, 0.006)):
-        base = ring(bm, [(tx - 0.005, -0.106, 0.002), (tx + 0.005, -0.106, 0.002), (tx + 0.004, -0.106, 0.010), (tx - 0.004, -0.106, 0.010)])
-        t = ring(bm, [(tx + dx, -0.146, 0.001)])[0]
+    # thick hooked talons, one per toe (r2 toe split): base 12 x 12 mm sunk inside the toe front, a mid ring
+    # arching up, the tip hooked ~40 deg down to the ground; the same 36-40 mm length as before
+    def talon(bx, by, dx, fwd, sgn=-1):
+        base = ring(bm, [(bx - 0.006, by, 0.001), (bx + 0.006, by, 0.001), (bx + 0.005, by, 0.013), (bx - 0.005, by, 0.013)])
+        my = by + sgn * fwd * 0.62
+        mid = ring(bm, [(bx + dx * 0.6 - 0.0035, my, 0.004), (bx + dx * 0.6 + 0.0035, my, 0.004),
+                        (bx + dx * 0.6 + 0.003, my, 0.012), (bx + dx * 0.6 - 0.003, my, 0.012)])
+        bridge(bm, base, mid, closed=True)
+        t = ring(bm, [(bx + dx, by + sgn * fwd, 0.0006)])[0]
         for i in range(4):
-            bm.faces.new([base[i], base[(i + 1) % 4], t])
+            bm.faces.new([mid[i], mid[(i + 1) % 4], t])
         cap(bm, base)
-    base = ring(bm, [(hx - 0.006, 0.000, 0.002), (hx + 0.006, 0.000, 0.002), (hx + 0.005, 0.000, 0.010), (hx - 0.005, 0.000, 0.010)])
-    t = ring(bm, [(hx, 0.036, 0.001)])[0]
-    for i in range(4):
-        bm.faces.new([base[i], base[(i + 1) % 4], t])
-    cap(bm, base)
+    for bx, by, dx in ((hx - 0.029, -0.096, -0.007), (hx + 0.001, -0.100, 0.0), (hx + 0.031, -0.096, 0.007)):
+        talon(bx, by, dx, 0.038)
+    talon(hx, 0.000, 0.0, 0.034, sgn=1)                                  # hind toe
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
     out.append(object_from_bm('talons', bm)); paint(out[-1], {'black': PAL['black']}, lambda c, n, i: 'black')
+    out.append(disc)
     return out
 
 
@@ -356,7 +464,7 @@ def stage4(k, body, pieces):
     ], roll='auto')
     skin(body, rig)
     add_eye_bones(rig)
-    P = dict(zip(['eye', 'pupil', 'lid', 'beak', 'brow', 'talons'], pieces))   # stage3 order
+    P = dict(zip(['eye', 'pupil', 'lid', 'beak', 'brow', 'talons', 'disc'], pieces))   # stage3 order
     bind(P['eye'], rig, body=body); bind(P['pupil'], rig, body=body)   # the face skin is part spine: borrow its weights
     # lid: the face skin's weights, with its head share handed to the eye bone (a child of head, so it
     # moves as head until the blink scales it): it follows the eye piece exactly and still blinks
@@ -373,6 +481,7 @@ def stage4(k, body, pieces):
     bind(P['beak'], rig, body=body)                        # the face skin under it is part spine: borrow its weights
     bind(P['brow'], rig, body=body)
     bind(P['talons'], rig, body=body)                      # toe skin is part thigh: borrow its weights
+    bind(P['disc'], rig, body=body)                        # facial disc rides the face skin's weights
     H = lambda a: {'head': (0, a, 0)}
     act_idle = clip(rig, 'idle', {1: H(0), 10: H(35), 22: H(35), 24: H(35), 26: H(35),
                        32: H(-25), 40: H(-25), 48: H(0)})
@@ -382,8 +491,10 @@ def stage4(k, body, pieces):
                        12: {**W(5), 'thigh.L': (-20, 0, 0), 'thigh.R': (-20, 0, 0), 'tail': (-10, 0, 0)},
                        18: {**W(30)}, 24: {}},
          loc={1: {}, 6: {'root': (0, 0.03, 0)}, 12: {'root': (0, 0.06, 0)}, 18: {'root': (0, 0.02, 0)}, 24: {}})
-    clip(rig, 'attack', {1: {}, 8: {**W(35), 'spine': (-10, 0, 0), 'head': (-8, 0, 0)},
-                         16: {**W(40), 'spine': (12, 0, 0), 'head': (-10, 0, 0),
+    # strike at f16 (50%): both wings raised (-X lifts the back-hanging tip) and opened 60 deg, talons thrown forward
+    WR = lambda up, a: {'wing.L': (-up, 0, a), 'wing.R': (-up, 0, -a)}
+    clip(rig, 'attack', {1: {}, 8: {**WR(25, 40), 'spine': (-10, 0, 0), 'head': (-8, 0, 0)},
+                         16: {**WR(50, 60), 'spine': (12, 0, 0), 'head': (-10, 0, 0),
                               'thigh.L': (55, 0, 0), 'thigh.R': (55, 0, 0), 'foot.L': (-30, 0, 0), 'foot.R': (-30, 0, 0)},
                          24: {**W(20), 'spine': (4, 0, 0)}, 32: {}})
     return rig

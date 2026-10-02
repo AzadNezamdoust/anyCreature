@@ -1,0 +1,289 @@
+{
+ "bear": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups front limb colour/wire: claws are still a comb of identical needle spikes on the paw edge.",
+     "1_beauty back34: radial fan around the tail stub on the rump; the tail itself is a small disc, not a stub.",
+     "2_closeups head colour: the muzzle is a flat pale wedge with the nose pad sitting on the flat front plane, no dished brow-to-muzzle step."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head: eye is a protruding octahedron gem sitting proud of the brow instead of set into the socket",
+     "4_posed attack_f010/idle_f012/idle_f024: a thin stray sliver line sticks out above the ear/brow in every posed frame",
+     "2_closeups claws: comb of identical needle claws; legs are constant-section tubes onto box paws (same as X)"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0
+ },
+ "boar": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups crest colour: the crest is a row of near-identical blunt clumps of equal height and spacing; vary height and pitch so it reads as bristle, not a comb.",
+     "1_beauty hero/az000: tusks are short and tucked against the snout with weak contrast; they should curve up and out of the lower jaw more.",
+     "2_closeups front limb wire: the foreleg pinches to a waist at the wrist then flares into the hoof block, an hourglass tube rather than a knee and pastern."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty az090/hero: the dark shoulder saddle is a hard rectangular block whose border cuts across faces instead of following loops",
+     "1_beauty hero/az000: tusks stand off the side of the snout like separate horns stuck on the cheek, not rising from the lower jaw",
+     "4_posed attack_f008: head-down charge has barely any tusk toss; silhouette nearly identical to idle"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0
+ },
+ "character": {
+  "reviews": {
+   "fable": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head wire / front limb wire: brows and mouth line are separate bars floating a visible gap off the skull; they need to sit on the surface.",
+     "2_closeups front limb colour: hands are flat paddle mitts with no thumb; brief asks for thumb plus a curled mitten of fingers.",
+     "2_closeups outline.L colour: the eye outline ring is thick and heavy compared with the brief's thin black outline, and the sclera is a faceted 12-gon that shows corners at close range."
+    ]
+   },
+   "opus": {
+    "score": 5,
+    "verdict": "FIX",
+    "top_issues": [
+     "4_posed attack_f007/idle_f012/idle_f024/move_f009/move_f017: long needle slivers shoot out of both hands in every posed frame (stray weighted verts / thumb stretch)",
+     "1_beauty az000/hero: rests in an A-pose with arms at ~45 degrees, not the briefed T-pose; hands are small mitts with a detached-looking thumb wedge",
+     "2_closeups outline.L: eyes are flat discs stuck on the sphere; from az090 they stand proud of the head like buttons"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0,
+  "orchestrator_note": "The posed \"needle slivers\" at the hands were a wire-overlay render artifact (even offset), fixed in the kit; the packet was re-rendered in r19. Drop every needle/sliver-from-the-hands item."
+ },
+ "crab": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups front limb colour/wire: the carapace teeth beside the claw joint are thin needle slivers rather than a toothed edge cut into the rim.",
+     "2_closeups hind limb wire: walking legs are constant-section tubes with two bends; no thickening at the knee or taper toward the tip.",
+     "2_closeups barnacles: the cluster is three small hex prisms of the same size sitting on the rim, reads as glued-on, not bedded in."
+    ]
+   },
+   "opus": {
+    "score": 5,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty az090/az000: body rides high on stilt legs with a single inverted-V bend, not a low crab with two bends per leg",
+     "2_closeups front limb: claw is a boxy palm with thin spike fingers and small spurs, no chunky pincer with a real gap",
+     "1_beauty az000: carapace front rim teeth are a few tiny wedges; eye bulbs are large hex nuts on stub stalks"
+    ]
+   }
+  },
+  "kit_warnings": [
+   "WARN s4 qa: 2 triangles (0.03% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_area_pct": 0.03,
+  "stretch": 0
+ },
+ "frog": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups hind limb colour / toes: hind-foot toes are thin needle sticks that read as slivers edge-on.",
+     "1_beauty back34: back spots are small flat dark polygons pasted on the surface, identical in size and shape.",
+     "1_beauty az000: the cream belly border on the throat is a hard straight line across faces rather than following an edge loop."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "4_posed attack_f012/move_f012: tongue is a flat plank and pokes out under the chin during the hop",
+     "1_beauty az090/2_closeups hind limb: hind legs are thick blocky tubes; no visible webbing between the long toes",
+     "1_beauty az000: eyes sit at the head sides as gold octagon nuts, not domes bulging on top"
+    ]
+   }
+  },
+  "kit_warnings": [
+   "WARN s4 qa: 8 triangles stretch past 2x their rest length in a pose (teal, worst 5.57x): a stray weight, unless the part stretches by design (a tongue)",
+   "WARN s4 qa: 29 triangles (0.91% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_area_pct": 0.91,
+  "stretch": 8
+ },
+ "giant": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head colour: face is still a dark block with little plane separation; eyes are small chips deep in shadow.",
+     "1_beauty az090: loincloth back flap is a paper-thin strip with no thickness.",
+     "1_beauty az000: fists show a knuckle row of identical flat stone blocks; no separate fingers as the brief asks."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "4_posed attack_f010/attack_f020: the forearms pass through the head during the overhead slam",
+     "1_beauty az000/hero: fists are dark boxes with a row of stone knuckle blocks stuck mid-front, not separate fingers",
+     "1_beauty az000: loincloth is a single flat triangle plate; eyes are tiny amber dots barely readable"
+    ]
+   }
+  },
+  "kit_warnings": [
+   "WARN s4 qa: 14 triangles (0.29% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_area_pct": 0.29,
+  "stretch": 0
+ },
+ "goblin": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty hero/az000: the open mouth is a large flat black cavity with fangs sitting on its rim; it needs a lip edge or teeth seated in the jaw.",
+     "2_closeups front limb colour / fingers: hands are pointed mitts with three tiny claw cones; no separate fingers.",
+     "1_beauty az090: loincloth is a thin flat plate hanging in front of the belt with no thickness."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty az090/back34: loincloth front and back flaps are paper-thin plates edge-on",
+     "4_posed idle_f012: a thin stray line runs from the ear tip back across the head (needle sliver)",
+     "1_beauty hero/2_closeups head: small unrequested horn nub on the crown; limbs are thin constant tubes"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0
+ },
+ "owl": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head wire: brow bars still sit slightly off the head as separate pieces.",
+     "2_closeups hind limb colour: talons are thin black spikes on a flat cream foot plate; the wing tip is a paper-thin plate edge-on.",
+     "1_beauty hero: the face is a flat panel; the beak is a small wedge that barely projects from the disc."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "4_posed attack_f008/attack_f016: wings stay folded; the attack reads as a lean, not a talon strike",
+     "1_beauty az000: facial disc and eye sockets are square boxes, not a round disc with a rim",
+     "1_beauty az090/back34: tail is a single flat slab; the body has no feather-group planes"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0
+ },
+ "raven_wyvern": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head colour / hackles: throat hackles and neck feathers are a scatter of thin dark needle slivers rather than shaggy clumps.",
+     "1_beauty az090: dorsal spines along the back and tail are identical repeated cones at even spacing, not graded.",
+     "2_closeups hind limb wire: the folded wing membrane is a single flat plate with spar ridges drawn on; the thumb claw is a small hook floating at the shoulder."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "4_posed attack_f020: the wing swings straight back as a stretched flat box, so the mantle reads as a plank, not a spread wing",
+     "1_beauty az090: neck is short and upright with no S-curve; the head sits on the chest",
+     "2_closeups head: eye is a flat amber lozenge with no brow; hackles are a few spikes"
+    ]
+   }
+  },
+  "kit_warnings": [
+   "WARN s4 qa: 2 triangles (0.08% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_area_pct": 0.08,
+  "stretch": 0
+ },
+ "stag": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups mane colour: mane clumps are blunt but randomly placed and sized; they read as lumps stuck on rather than a hanging mane with a V bib.",
+     "2_closeups head colour: ears are flat pale paddles with no thickness.",
+     "2_closeups head wire: antler tines end in thin slivers; brow tines are small pins."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty az000: the mane's side clumps flare out as flat flaps at the shoulders, like small wings",
+     "1_beauty az090: cream belly stripe is a hard rectangle with borders across faces",
+     "2_closeups head: identical ringed cone antler tips; oversized cream ear paddles"
+    ]
+   }
+  },
+  "kit_warnings": [
+   "WARN s4 qa: 3 triangles (0.10% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_area_pct": 0.1,
+  "stretch": 0
+ },
+ "wolf": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "2_closeups head colour: the eye is a tiny amber triangle chip with no brow; it does not read at thumbnail in 1_beauty az000.",
+     "2_closeups front limb colour: toe claws are thin black needle slivers on a plain block paw; no middle toes leading.",
+     "2_closeups ruff colour: the ruff clumps are a few flat slabs stacked on the neck, they sit on the surface rather than in it."
+    ]
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "1_beauty az090/4_posed attack_f016: ruff chunks sit as separate lumps on the neck, with a small cube tab sticking up behind the ears",
+     "1_beauty az000: a dark grey pendant hangs between the front legs under the chest",
+     "1_beauty az090: weak tuck-up; legs are box tubes with blocky paws"
+    ]
+   }
+  },
+  "kit_warnings": [],
+  "clip_area_pct": 0.0,
+  "stretch": 0
+ }
+}

@@ -111,3 +111,30 @@ membrane/finger rhythm); the fin is a solid spade, not the sheet's ribbed fan; t
   Triangles: s1 460 (locked) | s2 ~544 | s3/s4 1610. Rounds this pass: r06-r20 (15 runs incl. 1 diagnostic).
   Checked in review/ (idle f1): dark arm + purple membrane + 3 spars + thumb hook (az090), wedge hackles (head),
   hooked talons and bigger eye (close-ups), mantle spread (4_posed attack_f020).
+
+## Repair pass 2 (ad_notes_r2, K=2, R0=21; stage 1 locked, no unlock)
+- r21 baseline s4: all gates PASS; WARN clip 2 hackle tris 0.08%.
+- r22-r24 (s4, item 1 mantle): Critique: attack f20 the blade swings back as a flat plank. Diagnosis: the hand bone
+  runs back-down from the wrist and its local X is lateral, so hand X lifts the blade into a horizontal plank behind
+  the body; the notes' X45/Z30/roll50 (r22) still read as a plank (tip out 0.84, back 0.53) and slid the thumb hook
+  off the knuckle (drift 2). Fix: hand X45, Z70 (about its up-back axis), roll Y40, arm stays X22: tip goes
+  out+up (0.83, 0.23, 0.51), the membrane's outer face turns forward; thumb hook copies the nearest wrist-block
+  vertex's skin weights (pin_wrist). Result r24: attack f20 two raised spread wings, spars fanned; all PASS,
+  flips 0, drift 0; WARN stretch 2 wrist tris 2.46x (the heat-weighted wrist between the arm and the pinned blade).
+- r25-r27 (s4, item 2 neck): base S-neck added to every key of every clip (sclip wrapper). 15/-25/10 (r25): head
+  barely moves; 25/-20/-5 (r26): neck drops level, head low; settled on neck0 +25, neck1 -35, head +10 (r27):
+  the base forward, a nape dip, the head forward of the chest, bill level. Flips 2 tris (0.12%, gate PASS).
+- r28-r30 (s3, item 3 hackles): 5 clumps/side, W 0.7 L, T 0.4 W, L 0.08-0.14 (0.14 mid-throat), laid along the
+  throat tangent 25 deg off the surface, roots sunk 0.03. r28 too flush (bumps, clip 10 tris); r29/r30 tip and mid
+  lifted off the skin (0.03/0.04). Result r30: layered clumps on the throat, no spikes; hackle clip 0.
+- r31 (s3, item 4 spines): 12 plates, height 1.0 shoulders -> 0.85 mid-back -> 0.3 fin root, spacing 1.4 -> 0.6,
+  lean back 25 deg, width across 0.6 of the length, dark plumage with cream tips (a ring at 60% height). s4 PASS.
+- r32-r37 (s2+s3, item 5 brow/eye): brow verts out 0.011 -> az180 IoU 0.898; out 0.004 -> 0.899 (FAIL); settled
+  on forward 0.014 / down 0.004 (IoU 0.900). Lens tilted 15 deg forward. Brow still faint, so a stage-3 brow shelf
+  piece in plumage blue over the lens (r36 in bill black was invisible). Result r37: a small blue brow over the
+  eye; PASS. Partly done: the overhang is shallow (rear IoU floor stops the ridge going out).
+- r38 final: s4 with orbit: every gate PASS (hit 0, float 0, zfight 0, slivers 6 = 0.4%, flips 2 = 0.12% tris /
+  0.14% area, drift 0, lock OK, s2 IoU min 0.90 az180), glbcheck OK; WARN clip 2 claw tris 0.03% of surface,
+  WARN stretch 2 wrist tris 2.46x (mantle). --review and --compare rebuilt. Triangles 1700. Rounds r21-r38.
+  Checked in review/: attack_f020 raised spread wings; az090 nape dip with the head forward of the chest; throat
+  clumps without spikes; graded dark spine plates with cream tips; small blue brow over the eye.

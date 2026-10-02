@@ -131,3 +131,33 @@ s1 720 (locked) | s2 788 | s3 1196 | s4 1180 (mane lost its lowest tuft row in s
 - s4 r22 Final with orbit + glbcheck, then --review and --compare. ALL gates PASS: hit 0, float 0,
   z-fight 0, sliver 0%, flips 0 (0% tris / 0% area), drift 0, lock PASS, IoU min 0.958, glbcheck OK;
   clip WARN 3 tris (0.10% of area, mane). Repair pass: 1208 tris (base 788 + pieces), rounds r08-r22.
+
+## Repair pass 2 (K=2, notes: review/ad_notes_r2.md; stage 1 locked, no unlock)
+- s4 r23 Baseline: all gates PASS; WARN clip 3 tris (0.10%, mane). 1208 tris.
+- s4 r24 Critique (item 1): side plates flare as wings in az000; clumps random. Diagnosis: each plate was a
+  straight slab along the root's tangent plane, lifted 0.2 L, so over the widening shoulder its edges stood
+  proud. Fix: stage 3, three graded rows per side (nape / side / throat, largest at mid-throat), tips down
+  and 25 deg in toward the centre line, every section's centre and side corners laid on the skin (BVH
+  nearest point) and lifted along its normal, tip lift 0.1 L; lowest throat pair 25% longer (0.24).
+  Result: gates PASS, no flaps in az000, clip 18 tris 0.49%.
+- s4 r25 Fix: mid lift 0.026 -> 0.032, side corners 0.8 of the lift. Result: clip 2 tris 0.04%.
+- s4 r26 Critique (item 2): flank cream rectangle and chest shield. Fix: stage 3 paint: belly only n.z < -0.6;
+  chest cream only under the mane V tip (z < 0.78) and inner half (|x| < 0.09). Result: az090 thin underline.
+- s4 r27 Fix: a tapered V bound (|x| < 0.025 + ...): the chest faces are too coarse, no cream left.
+- s4 r28 Fix: z < 0.74, |x| < 0.07. Result: a small cream V under the dark mane in az000.
+- s4 r29 Critique (item 1): thin spikes at the neck sides in az000. Diagnosis (stage-3 debug, round s3 r99
+  discarded): nape tips crossed x = 0 and were clamped onto the midline; the low side plate sat on the
+  shoulder bulge (x 0.208). Fix: nape row hangs straight back; side row u 6.3/7.0/7.7, s 0.40.
+- s4 r30 Fix: plate mid lift 0.022, crown 0.010 (edges less proud). Result: clip 4 tris 0.07%, az000 clean.
+- s4 r31 Critique (item 3): ears are large flat pale paddles. Fix: stage 2, outer two ear sections scaled
+  0.8 toward the root; a logged partial loop down the ear front face, its verts pushed back 25% of the ear
+  depth (cup); paint: pale only on front faces (n.y < -0.55), back and rim body brown. Result: IoU min 0.951;
+  az000 small brown ears with pale inners, clear of the antlers.
+- s4 r32 Critique (item 4): brow tine a pin, tines identical. Fix: stage 2 vertex moves (TINE_EDIT): brow tine
+  rotated 35 deg up about X, 1.5x long, base 1.2x; bez 0.8x, trez 1.05x, crown 1.25x; stage-3 points read the
+  moved ends, lengths 0.05/0.034/0.046/0.058/0.075 and leans 4/9/3/7/12 deg. Result: IoU min 0.902 (too
+  close), the brow tine reads as a second beam.
+- s4 r33 Fix: brow tine 25 deg up, 1.35x. Result: IoU min 0.916; forward-up brow tines, uneven crown.
+- s4 r34 Should-fix: tail 1.2x thicker. Gates PASS.
+- s4 r35 Final with orbit + glbcheck, then --review and --compare. ALL gates PASS: hit 0, float 0, z-fight 0,
+  sliver 1.1%, flips 0, drift 0, lock PASS, IoU min 0.916, glbcheck OK; clip WARN 4 tris (0.07%). 1256 tris.

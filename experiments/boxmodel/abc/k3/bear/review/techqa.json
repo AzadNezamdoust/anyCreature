@@ -9,28 +9,30 @@
   "drift": 0
  },
  "totals": {
-  "clip_area": 0,
-  "clip": 0,
-  "fold": 0,
-  "hit": 0,
-  "flip_area": 0,
-  "drift": 0,
-  "sliver": 4,
+  "stretch": 0,
   "float": 0,
-  "zfight": 0,
-  "flip": 0,
-  "area": 4.463661234311079,
+  "drift": 0,
   "valley": 0,
-  "open": 0
+  "hit": 0,
+  "open": 0,
+  "sliver": 2,
+  "stretch_max": 0.0,
+  "flip_area": 0,
+  "clip_area": 0,
+  "area": 4.422024866231436,
+  "fold": 0,
+  "clip": 0,
+  "zfight": 0,
+  "flip": 0
  },
- "triangles": 904,
- "turned": 124,
+ "triangles": 1100,
+ "turned": 126,
  "stuck": 0,
  "per_object": {
   "body": {
    "valley": 0,
    "fold": 0,
-   "sliver": 4,
+   "sliver": 2,
    "hit": 0,
    "open": 0,
    "float": 0,
@@ -38,8 +40,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 4.377499872734355,
+   "area": 4.354321728022404,
    "flip_area": 0
   },
   "piece_eye": {
@@ -53,8 +57,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.0059439170091491605,
+   "area": 0.0070398631879125375,
    "flip_area": 0
   },
   "piece_claws": {
@@ -68,8 +74,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.06564698026372037,
+   "area": 0.046092810717265446,
    "flip_area": 0
   },
   "piece_nose": {
@@ -83,6 +91,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.014570464303854431,
    "flip_area": 0

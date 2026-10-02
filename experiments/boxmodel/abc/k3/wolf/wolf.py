@@ -170,7 +170,7 @@ def stage2(k, body):
     with k.topo(bm, 'inset', 'eye socket: a loop inside the brow-cheek face; the eye piece sits in it'):
         sock = inset(bm, [eye_f], 0.32, -0.010)
     brow = vert_near(bm, (0.076, -0.590, 0.962))
-    brow.co += Vector((0.010, -0.014, 0.004))          # the brow overhangs the socket
+    brow.co += Vector((0.019, -0.020, 0.004))          # the brow overhangs the socket (r30: +3% out, +2% fwd)
     cheek = vert_near(bm, (0.146, -0.575, 0.865))
     cheek.co += Vector((0.006, 0.0, -0.006))           # cheekbone plane under the eye
     # ---- planes: one deliberate rib-cage facet and one muzzle side plane ---
@@ -184,6 +184,20 @@ def stage2(k, body):
     # folds the throat skin as a smooth crease instead of turning a face over (repair r14)
     thr = vert_near(bm, (0.0, -0.548, 0.640))
     thr.co += Vector((0.0, 0.014, 0.008))
+    # ---- tuck-up (repair r32): the waist underline rises from the chest to the flank,
+    # most at the ring in front of the thigh; the low sides pulled in. Brisket untouched.
+    for (y, zb, zu, xu), dz in [((0.170, 0.535, 0.5433, 0.05625), 0.030), ((0.280, 0.520, 0.5284, 0.080), 0.060)]:
+        vert_near(bm, (0.0, y, zb)).co.z += dz
+        vu = vert_near(bm, (xu, y, zu))
+        vu.co.z += dz; vu.co.x -= 0.011
+    # ---- pasterns (repair r35): the ring above the paw slimmed to ~80% so the leg tapers
+    # into the foot instead of reading as a box tube
+    for (px, py), ax, ay in [((J['fpawL'][0], J['fpawL'][1]), 0.033, 0.038),
+                             ((J['hpawL'][0], J['hpawL'][1]), 0.031, 0.036)]:
+        cc = Vector((px, py + 0.010, 0.060))
+        for p in box(tuple(cc), ax, ay).values():
+            v = vert_near(bm, p)
+            v.co = cc + (v.co - cc) * Vector((0.82, 0.85, 1.0))
     # ---- paws: oval pads, the toe leading (repair r16): the sole's heel and toe
     # pulled in, the toe pushed forward, the knuckle heel narrowed
     for (px, py), ax, ay in [((J['fpawL'][0], J['fpawL'][1]), 0.046, 0.064),
@@ -207,12 +221,16 @@ def body_rule(c, n, i):
     x, y, z = c
     if y < -0.79:
         return 'nose'
+    if (Vector((abs(x), y, z)) - Vector(EYE)).length < 0.030:
+        return 'saddle'                              # dark rim round the eye socket (r30)
     if y > 0.58 and z < 0.66:                        # the tail: a grey brush, dark on the last 30%
         if z < 0.26:
             return 'saddle'
         if z > 0.50 and n.z > 0.25:
             return 'saddle'                          # the saddle runs onto the tail root
         return 'fur'
+    if z < 0.045 and n.y < -0.35 and y < 0.5:
+        return 'saddle'                              # dark toe fronts under the claws (r29)
     if z < 0.40:
         return 'tan'                                 # legs below elbow and stifle
     if y < -0.56 and z < 0.80:
@@ -244,7 +262,7 @@ def blade(bm, base, d, n, L, w, t):
     bm.faces.new(list(reversed(q)))
 
 
-def shingle(bm, base, d, n, L, w, t, sink=0.2):
+def shingle(bm, base, d, n, L, w, t, sink=0.2, sh=(0.55, 0.36)):
     """A wide fur shingle: a thick base plate (w x t) sunk `sink` of its thickness into the
     skin, a broad shoulder ring at 55% of the length, and a blunt point. Lies along d."""
     d = d.normalized()
@@ -258,9 +276,9 @@ def shingle(bm, base, d, n, L, w, t, sink=0.2):
     sag = (w / 2) ** 2 / (2 * 0.20)                   # the neck curves away under a wide plate
     b = base + v * (t / 2 - sink * t) - v * sag
     q = ring(bm, [b + u * w / 2 + v * t / 2, b - u * w / 2 + v * t / 2, b - u * w / 2 - v * t / 2, b + u * w / 2 - v * t / 2])
-    m = b + d * (0.55 * L) + v * (0.35 * t)
-    r = ring(bm, [m + u * 0.36 * w + v * 0.30 * t, m - u * 0.36 * w + v * 0.30 * t,
-                  m - u * 0.36 * w - v * 0.30 * t, m + u * 0.36 * w - v * 0.30 * t])
+    m = b + d * (sh[0] * L) + v * (0.35 * t)
+    r = ring(bm, [m + u * sh[1] * w + v * 0.30 * t, m - u * sh[1] * w + v * 0.30 * t,
+                  m - u * sh[1] * w - v * 0.30 * t, m + u * sh[1] * w - v * 0.30 * t])
     tip = ring(bm, [b + d * L + v * 0.25 * t])[0]
     bridge(bm, q, r, closed=True)
     for i in range(4):
@@ -286,24 +304,34 @@ def stage3(k, body):
     vs = [v.co.copy() for v in sf.verts]
     bm0.free()
     bm = bmesh.new()
-    lo = ring(bm, [v.lerp(c, 0.30) - n * 0.004 for v in vs])     # lens 1.4x (repair r18)
-    hi = ring(bm, [v.lerp(c, 0.524) + n * 0.008 for v in vs])
+    # almond lens (repair r30): 6 points, sharp front and back corners, flatter top and
+    # bottom; long axis along the head (-Y projected in the socket plane); r18 size kept
+    fa = Vector((0, -1, 0)); fa = (fa - n * fa.dot(n)).normalized(); fb = n.cross(fa).normalized()
+    if fb.z < 0:
+        fb = -fb
+    ha = 0.95 * max(abs((v - c).dot(fa)) for v in vs); hb = 0.55 * max(abs((v - c).dot(fb)) for v in vs)
+    alm = [(-1.0, 0.0), (-0.38, 0.62), (0.40, 0.55), (1.0, 0.0), (0.40, -0.55), (-0.38, -0.62)]
+    lo = ring(bm, [c + fa * (a * ha) + fb * (b * hb) - n * 0.004 for a, b in alm])
+    hi = ring(bm, [c + fa * (a * ha * 0.68) + fb * (b * hb * 0.68) + n * 0.008 for a, b in alm])
     bridge(bm, lo, hi, closed=True); cap(bm, list(reversed(lo))); cap(bm, hi)
     eye = object_from_bm('eyes', bm); paint(eye, {'eye': PAL['eye']}, lambda c, n, i: 'eye'); pieces.append(eye)
     # ---- neck ruff and cream bib: clumps swept back and down ----------------
-    # two rows of wide shingles round the neck only: rays from the neck axis, perpendicular
-    # to it; roots in front of the withers and above z 0.64 (off the upper-arm band)
+    # three rows of small pointed shingles round the neck only (repair r21): cheek row 3,
+    # mid row 4, rear row 3 per side, ~60% of the r12 plate, roots sunk 30%; rays from the
+    # neck axis, perpendicular to it; roots in front of the withers and above z 0.64
     bm = bmesh.new(); roots = []
     NA = Vector((0, -0.78, 0.62)); NU = Vector((0, 0.62, 0.78))     # neck axis, its up
-    for P, row in [((0, -0.47, 0.83), [(62, 0.13, 'fur'), (18, 0.11, 'fur'), (-28, 0.12, 'cream')]),
-                   ((0, -0.38, 0.77), [(50, 0.14, 'fur'), (4, 0.12, 'fur'), (-38, 0.10, 'cream')])]:
+    for P, row in [((0, -0.48, 0.845), [(55, 0.080, 'fur'), (15, 0.085, 'cream'), (-25, 0.080, 'cream')]),
+                   ((0, -0.43, 0.80), [(62, 0.085, 'fur'), (32, 0.085, 'fur'), (2, 0.085, 'fur'), (-22, 0.065, 'cream')]),
+                   ((0, -0.36, 0.76), [(52, 0.085, 'fur'), (20, 0.080, 'fur'), (-10, 0.075, 'fur')])]:
         for a, L, col in row:
             ar = math.radians(a)
             dr = Vector((math.cos(ar), 0, 0)) + NU * math.sin(ar)
             loc, nor = hit(tree, Vector(P) + dr * 0.8, -dr)
             print(f'WOLF ruff root a={a} P={P} loc=({loc.x:.3f},{loc.y:.3f},{loc.z:.3f})')
             assert loc.z > 0.64 and (loc.y < -0.33 or loc.z > 0.80), f'ruff root off the neck: {loc}'
-            shingle(bm, loc, nor * 0.25 + SWEEP * 0.90, nor, L, 0.150, 0.040)
+            lift = 0.25 if a > 25 and P[1] > -0.47 else 0.42                 # low clumps ride out over the throat crease (r22)
+            shingle(bm, loc, nor * lift + SWEEP * 0.90, nor, L, 0.090, 0.024, sink=0.3, sh=(0.35, 0.30))
             roots.append((loc.copy(), col))
     ruff = object_from_bm('ruff', bm)
     paint(ruff, {'fur': PAL['fur'], 'cream': PAL['cream']},
@@ -326,11 +354,13 @@ def stage3(k, body):
     # ---- claws: four per paw, the middle toes leading -----------------------
     bm = bmesh.new()
     for (px, py) in [(J['fpawL'][0], J['fpawL'][1]), (J['hpawL'][0], J['hpawL'][1])]:
-        for dx, L, sp in [(-0.019, 0.024, -8), (-0.007, 0.038, 0), (0.007, 0.038, 0), (0.019, 0.024, 8)]:
-            loc, nor = hit(tree, (px + dx, py - 0.2, 0.017), (0, 1, 0))
+        # short thick claws (repair r29): 2x the root thickness, 70% length, pitched down
+        # so the tips reach the ground line; middle pair leading, outer pair splayed
+        for dx, L, sp, pz in [(-0.020, 0.024, -8, -0.62), (-0.007, 0.030, 0, -0.50), (0.007, 0.030, 0, -0.50), (0.020, 0.024, 8, -0.62)]:
+            loc, nor = hit(tree, (px + dx, py - 0.2, 0.019), (0, 1, 0))
             s = math.radians(sp)
-            d = Vector((0.85 * math.sin(s), -0.85 * math.cos(s), -0.24))
-            blade(bm, loc, d, nor, L, 0.013, 0.011)   # blade() sinks the root 0.012 (30-50% of L)
+            d = Vector((0.85 * math.sin(s), -0.85 * math.cos(s), pz))
+            blade(bm, loc, d, nor, L, 0.012, 0.020)   # blade() sinks the root 0.012
     claws = object_from_bm('claws', bm); paint(claws, {'nose': PAL['nose']}, lambda c, n, i: 'nose')
     pieces.append(claws)
     ebm.free()
@@ -358,10 +388,13 @@ def stage4(k, body, pieces):
     for p in pieces:
         bind(p, rig, body=body)
     # idle: breathing through the chest, a quick ear twitch, a lazy tail
-    br = lambda a: {'chest': (a, 0, 0), 'neck': (-a * 0.5, 0, 0)}
+    TS = 20                                          # and carried a little to one side, so the dark tip
+                                                     # sits behind a hind leg in the front view (r37)
+    TP = -12                                         # tail root pitched back on every idle key (r33)
+    br = lambda a: {'chest': (a, 0, 0), 'neck': (-a * 0.5, 0, 0), 'tail0': (TP, 0, TS)}
     clip(rig, 'idle', {1: br(0), 12: br(2.5), 20: br(3), 22: {**br(3), 'ear.L': (-14, 0, 6)},
                        24: {**br(3), 'ear.L': (0, 0, 0)}, 26: {**br(3), 'ear.L': (-10, 0, 4)},
-                       28: br(2.5), 36: {**br(1.5), 'tail0': (0, 0, 5)}, 48: br(0)})
+                       28: br(2.5), 36: {**br(1.5), 'tail0': (TP, 0, TS + 5)}, 48: br(0)})
     # move: trot, diagonal pairs (left fore + right hind together)
     def trot(s, flexR, flexL):
         return {'upperarm.L': (18 * s, 0, 0), 'upperarm.R': (-18 * s, 0, 0),

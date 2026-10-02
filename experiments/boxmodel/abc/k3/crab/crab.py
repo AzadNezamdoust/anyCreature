@@ -1,6 +1,7 @@
 import os, sys, math
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'kit'))
 from bmkit import *
+from mathutils import Quaternion
 
 META = dict(creature='crab', model='opus',
             keep_valleys=lambda c: c.y < -0.24 and c.z > 0.28 and abs(c.x) < 0.16)
@@ -53,7 +54,12 @@ LEGP = [(0.07, 0.185, 0.074, 0.080),
 # stage 2 leg profile: knee rings swell (~1.2x the femur), tarsus thins, the second bend moves out
 LEG_RING_SCALE = {2: 1.3, 3: 1.3, 4: 0.92, 5: 0.9}
 BEND_OUT = 0.016
+LEG_TAPER = {4: 0.86, 5: 0.80}     # extra across-plane taper on the tibia end and the tarsus
 KNEE_BUMP = 0.008
+# repair K=2 item 2: knees lower and further out (splay, not peak); the tip cone shorter
+KNEE_DROP = 0.012        # ~3 % of the creature height (6 % costs side IoU 0.898)
+KNEE_OUT = 0.020         # ~4 % of the leg span, along the leg's reach
+TIP_UP = 0.0            # 0.027 (20 %) lifts the bbox: IoU 0.891 in every view
 
 
 def leg_pts(i):
@@ -95,9 +101,9 @@ for _i in range(4):
     _root, _r, _p = leg_pts(_i)
     J[f'l{_i}_root'] = _root
     J[f'l{_i}_hip'] = _p[1]
-    J[f'l{_i}_knee'] = _p[2]
+    J[f'l{_i}_knee'] = tuple(Vector(_p[2]) + Vector((_r[0], _r[1], 0)) * KNEE_OUT * LEGS[_i][2] - Vector((0, 0, KNEE_DROP)))
     J[f'l{_i}_bend'] = tuple(Vector(_p[4]) + Vector((_r[0], _r[1], 0)) * BEND_OUT * LEGS[_i][2])
-    J[f'l{_i}_tip'] = _p[6]
+    J[f'l{_i}_tip'] = tuple(Vector(_p[6]) + Vector((0, 0, TIP_UP)))
 J['c_root'] = side_centre(CLAW_ROOT_SI)
 J['c_elbow'] = CLAW_ARM[1][0]
 J['c_wrist'] = CLAW_ARM[3][0]
@@ -242,15 +248,87 @@ def stage2(k, body):
                         v.co.z += KNEE_BUMP
             else:
                 scale(vs, f, centre(vs))
+                # repair K=2 item 5: taper toward the tip, across the leg plane only
+                c = centre(vs)
+                for v in vs:
+                    v.co += a * ((v.co - c).dot(a) * (LEG_TAPER[j] - 1))
         out = Vector((r[0], r[1], 0)) * BEND_OUT * LEGS[i][2]
         move(rings[(i, 4)] + rings[(i, 5)], out)
+        move(rings[(i, 2)] + rings[(i, 3)], Vector((r[0], r[1], 0)) * KNEE_OUT * LEGS[i][2] - Vector((0, 0, KNEE_DROP)))
+        vert_near(bm, pts[6]).co.z += TIP_UP
+    claw_pincer(bm)
     commit(body, bm)
+
+
+# stage 2 claw: thick pincer fingers with a lens gap (repair K=2 item 1)
+FING_SCALE = {('f', 0): 1.35, ('f', 1): 1.45, ('d', 0): 1.15, ('d', 1): 1.35, ('d', 2): 1.45}
+FTIPS = []              # the moved finger tips, for the stage-3 dark-tip rule
+TIP_PULL = 0.12         # the point moves 12 % back toward the last ring: a short blunt tip
+FIX_EXTEND = 0.3       # fixed finger tip moves 30 % of its last segment further out
+TIP_CURL = 15.0         # fixed finger tip up, moving finger tip down (deg)
+PALM_SHAVE = 0.0        # any shave costs side IoU (8 %: 0.899); the knees need that room
+
+
+def claw_pincer(bm):
+    secs = {('f', j): (Vector(p), w, h) for j, (p, (w, h)) in enumerate(FINGER)}
+    secs.update({('d', j): (Vector(p), w, h) for j, (p, (w, h)) in enumerate(DACTYL)})
+    secs.update({('p', j): (Vector(p), w, h) for j, (p, (w, h)) in enumerate(CLAW_ARM) if j >= 4})
+    # walk the rings back from each tip point along the extrusion edges
+    grp = {}
+    for side, pts in (('f', FINGER), ('d', DACTYL)):
+        tip = min(bm.verts, key=lambda v: (v.co - Vector(pts[-1][0])).length)
+        rings_ = [[tip]]
+        prev_set = {tip}
+        for j in range(len(pts) - 2, -1, -1):
+            nxt = {e.other_vert(v) for v in rings_[-1] for e in v.link_edges} - prev_set
+            if j < len(pts) - 2:
+                nxt -= set(rings_[-2])
+            nxt = [v for v in nxt if v not in rings_[-1]]
+            rings_.append(nxt)
+            prev_set |= set(nxt)
+        for j, vs in enumerate(reversed(rings_)):
+            grp[(side, j)] = vs
+    # palm rings 4 and 5 by distance to their centre (the palm is large and square)
+    for j in (4, 5):
+        p, (w, h) = Vector(CLAW_ARM[j][0]), CLAW_ARM[j][1]
+        grp[('p', j)] = sorted(bm.verts, key=lambda v: abs((v.co - p).length - math.hypot(w, h) / 2))[:4]
+    for key, (p, w, h) in secs.items():
+        n = 1 if w == 0 else 4
+        assert len(grp.get(key, [])) == n, (key, len(grp.get(key, [])))
+    # palm: the bottom of the two palm rings comes in so palm and fingers read as one pincer
+    for j in (4, 5):
+        vs = grp[('p', j)]
+        zc = centre(vs).z
+        for v in vs:
+            if v.co.z < zc:
+                v.co.z += PALM_SHAVE
+    # fingers: thicker rings, tips curled toward each other and pulled back (blunt)
+    for key, f in FING_SCALE.items():
+        vs = grp[key]
+        scale(vs, f, centre(vs))
+    apalm = Vector((0, 0, 1)).cross(U).normalized()
+    for side, sign in (('f', 1), ('d', -1)):
+        pts = FINGER if side == 'f' else DACTYL
+        last = len(pts) - 1
+        tip = grp[(side, last)][0]
+        prev = Vector(pts[last - 1][0])
+        tip.co = tip.co.lerp(prev, TIP_PULL if side == 'd' else -FIX_EXTEND)   # the fixed finger is short: lengthen it
+        root = Vector(pts[0][0])
+        ax = (tip.co - root).cross(Vector((0, 0, 1))).normalized()
+        # rotate the tip (fully) and the last ring (half) about the root, so the tip curls in z
+        for vs, deg in ((grp[(side, last - 1)], TIP_CURL * 0.5), ([tip], TIP_CURL)):
+            for v in vs:
+                q = v.co - root
+                ang = math.radians(deg)
+                cand = [Quaternion(ax, ang) @ q, Quaternion(ax, -ang) @ q]
+                v.co = root + max(cand, key=lambda c: sign * c.z)
+        FTIPS.append((tuple(tip.co), (tip.co - centre(grp[(side, last - 1)])).length))
 
 
 from mathutils.bvhtree import BVHTree
 
 PAL = {'shell': '#c8502e', 'ridge': '#8e3420', 'belly': '#efc9a0', 'tip': '#2a1c18',
-       'eye': '#111111', 'barnacle': '#9a8474'}
+       'eye': '#111111', 'barnacle': '#e6d6bc'}
 
 
 def frustum(bm, a, b, ra, rb, n, rot=0.0):
@@ -283,17 +361,19 @@ def bicone(bm, c, r, h, n):
 
 
 def ball(bm, c, r, n):
-    """low-poly ball: n-sided equator and two smaller rings with flat n-gon caps (no apex)"""
+    """low-poly ball (repair K=2 item 4): n-sided equator, rings at +-0.7r (radius 0.71r) and
+    +-0.95r (radius 0.31r) with small n-gon caps, so it reads round in every view"""
     c = Vector(c)
     rows = []
-    for zf, rf in ((-0.62, 0.72), (0.0, 1.0), (0.62, 0.72)):
+    for zf in (-0.95, -0.7, 0.0, 0.7, 0.95):
+        rf = math.sqrt(max(0.0, 1 - zf * zf))
         rows.append([bm.verts.new(c + Vector((math.cos(2 * math.pi * (i + 0.5) / n) * r * rf,
                                               math.sin(2 * math.pi * (i + 0.5) / n) * r * rf, zf * r)))
                      for i in range(n)])
     bm.faces.new(list(reversed(rows[0])))
-    bridge(bm, rows[0], rows[1], closed=True)
-    bridge(bm, rows[1], rows[2], closed=True)
-    bm.faces.new(rows[2])
+    for a_, b_ in zip(rows, rows[1:]):
+        bridge(bm, a_, b_, closed=True)
+    bm.faces.new(rows[-1])
 
 
 def stage3(k, body):
@@ -309,7 +389,7 @@ def stage3(k, body):
     me = body.data
     body_face = {p.index for p in me.polygons
                  if all(min((me.vertices[v].co - q).length for q in ring_pts) < 0.03 for v in p.vertices)}
-    tips = [Vector(FINGER[-1][0]), Vector(DACTYL[-1][0])]
+    tips = [(Vector(t), ln) for t, ln in FTIPS]      # only the last ~30 % of each finger is dark
 
     def u_z(y):             # z of the under-rim loop (U vertex) at y
         ys = [s[0] for s in SECT]
@@ -322,7 +402,7 @@ def stage3(k, body):
 
     def rule(c, n, i):
         q = Vector((abs(c.x), c.y, c.z))
-        if any((q - t).length < 0.06 for t in tips):
+        if any((q - t).length < 0.72 * ln for t, ln in tips):
             return 'tip'
         if i in body_face:
             zs = [me.vertices[v].co.z for v in me.polygons[i].vertices]
@@ -343,83 +423,72 @@ def stage3(k, body):
     # ---- eye stalks rooted in the sockets, black bulb eyes
     bm = bmesh.new()
     sk = Vector(EYE_SOCKET)
-    top = sk + Vector((-0.004, -0.018, 0.075)) * 0.6          # short stalk (60 %), 20 % thicker
-    frustum(bm, sk - Vector((0, 0, 0.018)), top, 0.023, 0.017, 5)
-    ball(bm, top + Vector((0, -0.003, 0.013)), 0.029, 8)     # round eye, ~1.6x the stalk width
+    top = sk + Vector((-0.004, -0.018, 0.075)) * 0.84         # stalk 1.4x the r13 height, 0.8x its radius
+    frustum(bm, sk - Vector((0, 0, 0.018)), top, 0.0184, 0.0136, 5)
+    ball(bm, top + Vector((0, -0.003, 0.013)), 0.029, 10)     # round eye, ~1.6x the stalk width
     eye = object_from_bm('eyes', bm)
     zt = top.z
     paint(eye, {'shell': PAL['shell'], 'eye': PAL['eye']}, lambda c, n, i: 'eye' if c.z > zt - 0.008 else 'shell')
     pieces.append(eye)
 
-    # ---- toothed front rim: 4 blunt low lobes per side (base >= 1.5x height, sunk 25 %),
-    #      one on the front edge between the eyes, three on the anterolateral rim past the stalk
+    # ---- toothed front rim (repair K=2 item 3): 6 thick pyramids per side from the front edge to
+    #      the claw joint; base depth 65 % of the base width, height 70 %, tip tilted 15 deg down,
+    #      sunk 35 %; graded 70 % at the eyes up to 100 % at the anterolateral corner; shell red
     bm = bmesh.new()
     zz = Vector((0, 0, 1))
+    c15, s15 = math.cos(math.radians(15)), math.sin(math.radians(15))
 
-    def tooth(p, tg, o, h, bw, zt, zb, droop):
-        """blunt pyramid: base (width bw along tg, zt..zb) sunk 0.25h inside the edge p,
-        apex 0.75h out along o"""
-        base = p - o * 0.25 * h
-        vs = [bm.verts.new(base + tg * sx * bw / 2 + zz * sz)
-              for sx, sz in ((-1, zb), (1, zb), (1, zt), (-1, zt))]
-        tip = bm.verts.new(p + o * 0.75 * h - zz * droop)
+    def tooth(p, tg, o, bw):
+        h, bd = 0.7 * bw, 0.65 * bw
+        bc = p - o * 0.35 * h
+        vs = [bm.verts.new(bc + tg * sx * bw / 2 + zz * sz)
+              for sx, sz in ((-1, -0.65 * bd), (1, -0.65 * bd), (1, 0.35 * bd), (-1, 0.35 * bd))]
+        tip = bm.verts.new(bc + (o * c15 - zz * s15) * h)
         bm.faces.new(vs)
         for j in range(4):
             bm.faces.new([vs[(j + 1) % 4], vs[j], tip])
 
-    # front edge (the T0-D0 edge of the vertical front wall), pointing forward
     t0, d0 = Vector(RINGS[0][0]), Vector(RINGS[0][1])
-    tooth(t0.lerp(d0, 0.68), (d0 - t0).normalized(), Vector((0, -1, 0)), 0.030, 0.050, 0.008, -0.018, 0.002)
-    # anterolateral rim, along the R-vertex polyline from section 1, uneven spacing
-    rim = [Vector(RINGS[i][2]) for i in range(1, 5)]
-    segs = [(rim[i], rim[i + 1]) for i in range(3)]
-    for arc, h, bw in ((0.030, 0.038, 0.060), (0.103, 0.034, 0.056), (0.195, 0.036, 0.060)):
-        s = arc
-        for a, b in segs:
-            ln = (b - a).length
-            if s <= ln:
+    path = [t0.lerp(d0, 0.55), d0] + [Vector(RINGS[i][2]) for i in range(0, 4)]
+    segs = list(zip(path, path[1:]))
+    # one on the front edge between the eyes, then five past the eye stalk (a tooth in front of the
+    # stalk put the stalk through it: hit), largest at the anterolateral corner
+    for arc, bw in ((0.020, 0.035), (0.168, 0.050), (0.225, 0.050), (0.282, 0.047), (0.337, 0.043), (0.390, 0.038)):
+        s_ = arc
+        for a_, b_ in segs:
+            ln = (b_ - a_).length
+            if s_ <= ln:
                 break
-            s -= ln
-        p = a.lerp(b, s / ln)
-        tg = b - a; tg.z = 0; tg.normalize()
+            s_ -= ln
+        p = a_.lerp(b_, min(s_ / ln, 1.0))
+        tg = b_ - a_; tg.z = 0; tg.normalize()
         o = Vector((tg.y, -tg.x, 0))
-        if o.dot(Vector((p.x, p.y, 0))) < 0:
+        if o.dot(Vector((p.x, p.y + 0.02, 0))) < 0:
             o = -o
-        tooth(p, tg, o, h, bw, 0.011, -0.021, 0.004)
+        tooth(p, tg, o, bw)
     teeth = object_from_bm('rim_teeth', bm)
-    paint(teeth, {'ridge': PAL['ridge']}, lambda c, n, i: 'ridge')
+    paint(teeth, {'shell': PAL['shell']}, lambda c, n, i: 'shell')
     pieces.append(teeth)
 
-    # ---- pincer teeth (the claws' cutting edge): dark cones on the facing edges of both fingers
-    bm = bmesh.new()
-    f1, f2 = Vector(FINGER[0][0]), Vector(FINGER[1][0])
-    d1, d2 = Vector(DACTYL[1][0]), Vector(DACTYL[2][0])
-    for t in (0.3, 0.75):
-        fp, dp = f1.lerp(f2, t), d1.lerp(d2, t)
-        m = (fp + dp) / 2
-        for tgt in (fp, dp):
-            loc, nrm = hit(m, tgt - m)
-            if loc is None:
-                continue
-            frustum(bm, loc - nrm * 0.008, loc + nrm * 0.022, 0.011, 0.0, 4)
-    ct = object_from_bm('claw_teeth', bm)
-    paint(ct, {'tip': PAL['tip']}, lambda c, n, i: 'tip')
-    pieces.append(ct)
+    # (pincer spur spikes dropped in repair K=2: they read as needles and stretched across the gap)
 
-    # ---- barnacle cluster on the rear rim (one side only)
+    # ---- barnacle cluster on the rear rim: pale 8-sided cones with a dark crater (5_reference rear);
+    #      the two smallest sink 45 % so the cluster beds into the shell (repair K=2 should-fix)
     bm = bmesh.new()
-    # a tight cluster of low truncated cones astride the centre-line: top 60 % of the base,
-    # height 55 % of the base diameter, sunk 30 % of the height, radii +-40 %
+    craters = []
     for x, z, r in ((0.004, 0.302, 0.028), (0.046, 0.296, 0.020), (-0.040, 0.299, 0.023),
                     (0.020, 0.326, 0.016), (-0.018, 0.278, 0.017)):
         loc, nrm = hit((x, 0.9, z + 0.57), (0, -0.6, -0.57))
         if loc is None:
             continue
         h = 1.1 * r
-        _, topf = frustum(bm, loc - nrm * 0.3 * h, loc + nrm * 0.7 * h, r, r * 0.6, 6, rot=x * 900)
+        sink = 0.45 if r < 0.018 else 0.3
+        _, topf = frustum(bm, loc - nrm * sink * h, loc + nrm * (1 - sink) * h, r, r * 0.6, 8, rot=x * 900)
+        craters.append((loc + nrm * (1 - sink) * h, r))
         inset(bm, [topf], 0.4, -h * 0.3)      # the crater
     bar = object_from_bm('barnacles', bm, mirror=False)
-    paint(bar, {'barnacle': PAL['barnacle']}, lambda c, n, i: 'barnacle')
+    paint(bar, {'barnacle': PAL['barnacle'], 'tip': PAL['tip']},
+          lambda c, n, i: 'tip' if any((c - p).length < 0.4 * r_ for p, r_ in craters) else 'barnacle')
     pieces.append(bar)
     ebm.free()
     return pieces

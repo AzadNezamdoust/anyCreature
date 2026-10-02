@@ -91,7 +91,7 @@ The parts it uses:
 | builder | 1 × `boxmodel-builder` | 1 × `boxmodel-builder` |
 | stage-1 rounds | ≤ 10 | ≤ 14 |
 | art-director review | 1 × Fable 5.1, after stage 4 | Fable 5.1 **and** Opus 5.5 in parallel, blind, reconciled by the orchestrator: at the stage-1 lock (silhouette only) and after stage 4 |
-| repair rounds after review | K = 1, then a blind before/after check | K = 2, with a blind before/after re-review after each (GPT sheet + K = 2 is not yet measured) |
+| repair rounds after review | K = 1, then a blind before/after check | K = 1, then a blind before/after check. A second round was measured and does not pay (5.77 → 5.82, `RESULTS.md`). For a hero, the next lever is a stage-1 unlock on the named defects, which the owner approves. |
 | identity read | silhouettes, 1 Fable seat | silhouettes + colour, 1 Fable seat each |
 | made-by-a-person test | — | pairwise vs a CC0 hand-made reference, both orders, Fable + Opus |
 | owner gate | the gallery sheet | the gallery sheet + close-ups + the residual packet |
@@ -198,6 +198,9 @@ py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any 
     artifact. The wire overlay's even offset drew needle spikes at sharp
     corners such as thumb tips. The model has no such triangles, and the
     overlay is fixed. The other reason was a heavier eye ring.
+- **One repair round, not two (2026-10-03).** On the GPT builds, round 1
+  added a full point and round 2 added 0.05. Both seats preferred round 1
+  for two creatures. What is left after round 1 lives in stage 1.
 - **Before you blame the model for a spike, check the renderer.** This is
   the second overlay artifact reviewers read as geometry, after the
   per-object outline. Find the triangle in the exported GLB first.

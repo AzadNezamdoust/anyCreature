@@ -9,22 +9,24 @@
   "drift": 0
  },
  "totals": {
-  "open": 0,
-  "flip": 0,
-  "clip_area": 0.157581476303856,
-  "clip": 14,
-  "flip_area": 0,
-  "area": 54.74543062660976,
-  "sliver": 2,
-  "hit": 0,
-  "valley": 0,
   "fold": 0,
+  "flip_area": 0,
+  "flip": 0,
+  "stretch_max": 0.0,
+  "sliver": 2,
+  "clip": 30,
+  "area": 58.108729387997975,
+  "open": 0,
   "zfight": 0,
+  "drift": 0,
+  "stretch": 0,
   "float": 0,
-  "drift": 0
+  "clip_area": 0.3529226211566431,
+  "valley": 0,
+  "hit": 0
  },
- "triangles": 1632,
- "turned": 132,
+ "triangles": 1928,
+ "turned": 146,
  "stuck": 0,
  "per_object": {
   "body": {
@@ -38,8 +40,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 41.21026389967908,
+   "area": 41.242016940867885,
    "flip_area": 0
   },
   "piece_eyes": {
@@ -53,8 +57,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.054624797771367646,
+   "area": 0.08511086709792062,
    "flip_area": 0
   },
   "piece_tusks": {
@@ -68,6 +74,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.19497917334247297,
    "flip_area": 0
@@ -82,8 +90,10 @@
    "zfight": 0,
    "flip": 0,
    "drift": 0,
-   "clip": 10,
-   "clip_area": 0.0967236605291898,
+   "clip": 16,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0.14262743384175952,
    "area": 4.54541655522855,
    "flip_area": 0
   },
@@ -97,8 +107,10 @@
    "zfight": 0,
    "flip": 0,
    "drift": 0,
-   "clip": 0,
-   "clip_area": 0,
+   "clip": 2,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0.05002211258957248,
    "area": 2.391259709894169,
    "flip_area": 0
   },
@@ -113,6 +125,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 4,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0.060857815774666174,
    "area": 2.315261234931219,
    "flip_area": 0
@@ -127,9 +141,11 @@
    "zfight": 0,
    "flip": 0,
    "drift": 0,
-   "clip": 0,
-   "clip_area": 0,
-   "area": 0.9966057135570271,
+   "clip": 8,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0.09941525895064493,
+   "area": 1.923844380355933,
    "flip_area": 0
   },
   "piece_loin_back": {
@@ -143,11 +159,13 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 1.0902629987409698,
+   "area": 2.022557319877627,
    "flip_area": 0
   },
-  "piece_knuckles": {
+  "piece_fingers": {
    "valley": 0,
    "fold": 0,
    "sliver": 0,
@@ -158,8 +176,10 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 1.0240372488608114,
+   "area": 2.4655639117981054,
    "flip_area": 0
   },
   "piece_thumbs": {
@@ -173,6 +193,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.4044980057465067,
    "flip_area": 0
@@ -188,6 +210,8 @@
    "flip": 0,
    "drift": 0,
    "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
    "clip_area": 0,
    "area": 0.5182212888575864,
    "flip_area": 0

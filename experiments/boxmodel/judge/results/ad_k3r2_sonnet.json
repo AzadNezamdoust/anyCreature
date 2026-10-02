@@ -1,0 +1,244 @@
+{
+ "bear": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero/back34: hind paws are flat wedges, toes unreadable",
+    "2_closeups hind limb: tube legs of constant section, no hock/knee planes",
+    "1_beauty az090: hump too low and long, reads as generic quadruped; torso panels uniform"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "2_closeups hind limb: claws missing/buried on hind paw, mitt foot",
+    "1_beauty back34: rear paws slab-like, no digits",
+    "same constant-section tube legs and weak hump as X"
+   ]
+  },
+  "better": "tie",
+  "why": "Near identical bodies; X claws read slightly better, Y front paws cleaner, net even."
+ },
+ "boar": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090: snout hidden behind oversized tusk, head silhouette lost",
+    "1_beauty hero: tusks sweep large and clump at lip, nose disc flat",
+    "2_closeups crest: spike comb of near-identical cones, hooves plain boxes"
+   ]
+  },
+  "Y": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero/az090: hard-edged dark saddle slab on shoulder reads pasted, not mane",
+    "1_beauty az000: tusks thin and vertical, weak identity",
+    "2_closeups crest: uniform comb of spikes"
+   ]
+  },
+  "better": "X",
+  "why": "X crest tapers into the body and tusks give a strong boar read; Y has a pasted dark block."
+ },
+ "character": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: arms in A-pose and hands are mitts, no fingers",
+    "2_closeups front limb: hand is a wedge",
+    "1_beauty hero: feet are flat wedges, no toes"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: hands are mitts without fingers",
+    "2_closeups head: eye outline ring is thick and floats off the head",
+    "feet flat wedges, no toes"
+   ]
+  },
+  "better": "tie",
+  "why": "Essentially same build; differences only in eye outline weight."
+ },
+ "crab": {
+  "X": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "2_closeups front limb: claw is a smooth blob with no teeth or pincer shape",
+    "1_beauty hero: claw tips dark wedges fused to the palm",
+    "2_closeups barnacles/eyes: eyes are plain balls on sticks"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "2_closeups front limb: tiny tooth spikes on pincers read as slivers",
+    "1_beauty hero: claw mass still a rounded lump",
+    "2_closeups barnacles: muddy brown, low contrast"
+   ]
+  },
+  "better": "Y",
+  "why": "Toothed pincers with dark tips read as crab claws; X claws are featureless blobs."
+ },
+ "frog": {
+  "X": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty back34: dark spots are small dark patches, sparse versus reference",
+    "2_closeups hind limb: thigh is a faceted slab, foot is a flat plate",
+    "2_closeups toes: toes thin stubs without tip pads"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty back34/top: spots are hard rectangles/rhombi, read machine-made",
+    "1_beauty hero: spot straddles leg/flank crease",
+    "2_closeups hind limb foot is flat plate, toes without pads"
+   ]
+  },
+  "better": "X",
+  "why": "X spots are more organic; Y rectangular spots are a machine tell."
+ },
+ "giant": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: forearms/fists are dark blocky boxes with grey cube knuckles",
+    "1_beauty az000: loincloth a plain tan triangle, thin vs reference",
+    "2_closeups head: face is a dark pit, brow/eyes unreadable"
+   ]
+  },
+  "Y": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "2_closeups head: eyes are yellow shards stuck on the brow, one edge-on",
+    "1_beauty hero: arms are long tubes of constant section",
+    "2_closeups hind limb: foot is a flat slab"
+   ]
+  },
+  "better": "Y",
+  "why": "Y brown ragged loincloth and fingered fists match the reference far better than X's boxy dark fists."
+ },
+ "goblin": {
+  "X": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090: ear is a flat paper plate edge-on",
+    "2_closeups fangs: row of tiny teeth are slivers",
+    "1_beauty hero: torso/chest facets pinched under jaw"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: mouth is a big dark band, teeth too few and sparse",
+    "1_beauty hero/az090: loincloth is a narrow flap, reads as tabard",
+    "1_beauty az090: ear paper-thin edge-on"
+   ]
+  },
+  "better": "X",
+  "why": "X toothy grin and wider ragged loincloth match the reference; Y mouth and flap are weaker."
+ },
+ "owl": {
+  "X": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero: facial disc is square box, eyes in rectangular frames",
+    "2_closeups head: tan beak against brief and reference dark beak",
+    "1_beauty back34: tail is a flat slab"
+   ]
+  },
+  "Y": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: round eye discs with dark rim stand out like goggles",
+    "1_beauty back34: tail flat slab, wing patch blocky",
+    "2_closeups hind limb: toes slivers"
+   ]
+  },
+  "better": "Y",
+  "why": "Y black beak matches the reference and round discs read owlish, though goggle-like."
+ },
+ "raven_wyvern": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000: wings are thin paper strips edge-on",
+    "1_beauty hero: neck feather spikes are repeated identical cones",
+    "1_beauty az090: purple wing panel is a flat block, not membrane"
+   ]
+  },
+  "Y": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090: smooth neck and chest, loses the feathered ruff of the reference",
+    "2_closeups head: stray fin shard on neck side",
+    "1_beauty az000: wings thin paper strips edge-on"
+   ]
+  },
+  "better": "X",
+  "why": "X neck ruff adds the feathered raven identity; Y body is plain."
+ },
+ "stag": {
+  "X": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero: ears are pale flat shards",
+    "2_closeups mane: mane is a jumble of small shards, not clumps",
+    "1_beauty az000: antler tines clump into a fan"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090: cream flank panel is a hard rectangle",
+    "1_beauty az000: chest mane flares like wings, shard fringe",
+    "1_beauty hero: ears flat pale shards"
+   ]
+  },
+  "better": "X",
+  "why": "X flank and chest are cleaner; Y adds a pasted cream flank block and flared fringe."
+ },
+ "wolf": {
+  "X": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero/az000: ruff made of loose triangular shards poking out of the neck",
+    "2_closeups ruff: spikes look glued on, not clumps",
+    "1_beauty az090: torso is flat slab, belly pale strip hard"
+   ]
+  },
+  "Y": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "2_closeups head: ruff plates are chunky and overlap the cheek",
+    "1_beauty az090: torso flat slab with little shoulder/rib planes",
+    "paws plain boxes without digits"
+   ]
+  },
+  "better": "Y",
+  "why": "Y ruff reads as merged tufts; X ruff is spiky shards that look pasted on."
+ }
+}
