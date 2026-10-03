@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face, sunk",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "dark lower legs: border loop round each leg at z 0.30",
+   "new_verts": 19,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "pale muzzle: border loop from under the eye to behind the jaw",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "pale bib: V edge seen from the front",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "pale bib: back edge seen from the side",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "pale bib: top edge under the jaw",
+   "new_verts": 3,
+   "extra_base_edges": []
+  }
+ ]
+}

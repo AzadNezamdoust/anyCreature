@@ -198,6 +198,11 @@ py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any 
     artifact. The wire overlay's even offset drew needle spikes at sharp
     corners such as thumb tips. The model has no such triangles, and the
     overlay is fixed. The other reason was a heavier eye ring.
+- **Carve the base, then add detail (2026-10-04).** On 4 creatures, a
+  stage 1 carved from the GPT sheet (`kit/carve.py`) plus builder-added
+  detail beat the hand-built base in 7 of 8 blind calls (mean 4.75 → 5.75).
+  It is the candidate default for stage 1, pending the owner's eye and a
+  run on all 11.
 - **One repair round, not two (2026-10-03).** On the GPT builds, round 1
   added a full point and round 2 added 0.05. Both seats preferred round 1
   for two creatures. What is left after round 1 lives in stage 1.

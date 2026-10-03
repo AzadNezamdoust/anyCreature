@@ -651,3 +651,51 @@ The key is in `out/boxmodel/judge/k3r_key.json`. Results are in
   (Opus + Sonnet, not Fable + Opus) and a different pair.
 - The round-1 builds are kept in `out/boxmodel/k3_r1/` (programs and
   packets). The frog and wolf could go back to them.
+
+## Carve + detail vs hand-built (c1 vs k3, 2026-10-04)
+
+**Method.**
+
+- `kit/carve.py` carves stage 1 from the GPT sheet as a visual hull of the
+  side, front and top views. The hull is rounded, smoothed, decimated to
+  600–1,400 triangles and mirrored.
+- `colour_from_sheet` samples a palette from the sheet.
+- An Opus builder then adds the detail:
+  - stage-1 hand edits where the hull fails, such as separating the arms
+    and redrawing staggered legs;
+  - stage-2 face planes;
+  - stage-3 pieces: eyes, ears, claws, tusks, ruff;
+  - clean colour borders cut into the mesh.
+- Carving alone, with no detail, lost to the hand-built builds. The owner
+  judged that its overall shape was good but it lacked detail.
+
+**Blind looks-first review** by Opus 5.5 and Sonnet 5. The key is
+`out/boxmodel/judge/c1k3_key.json`, and the results are
+`judge/results/ad_c1k3_*.json`.
+
+| creature | Opus k3 / c1 | Sonnet k3 / c1 | better (O / S) |
+|---|---|---|---|
+| bear | 5 / 6 | 5 / 7 | c1 / c1 |
+| giant | 4 / 6 | 4 / 5 | c1 / c1 |
+| goblin | 4 / 6 | 5 / 6 | c1 / c1 |
+| wolf | 6 / 4 | 5 / 6 | k3 / c1 |
+
+- **Scores:** the mean went from 4.75 to 5.75. Carve + detail was
+  preferred in 7 of 8 calls.
+- **Why it wins:** proportions and mass follow the reference, and faces read
+  (the giant's troll face, the goblin's domed head and grin).
+- **Where it loses:** the wolf's ruff of loose shard cards and its slab tail
+  (Opus).
+- **Costs:**
+  - Stage-1 rounds overran the cap, and the giant and goblin relocked
+    stage 1 more than once.
+  - The wolf needed its side mask redrawn, because the sheet's staggered
+    legs carved into six legs.
+  - Posed clipping is high: giant 8.4%, goblin 4.2%.
+- **Kit notes from the builders:**
+  - Carved meshes are all triangles, so colour borders use `bisect_plane`
+    cuts logged as a loop.
+  - The carve cache key does not see edits to the input masks.
+- **Gates:** all four pass, and `kit/regress.py` agrees. It now copies a
+  build's `reference/` and caches.
+- **Gallery:** `carve_detail_vs_k3.jpg`.

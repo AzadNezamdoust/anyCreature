@@ -28,8 +28,11 @@ def one(x):
     rel, p, d = x
     out = os.path.join(ROOT, 'out', 'boxmodel', 'regress', tag, rel)
     shutil.rmtree(out, ignore_errors=True); os.makedirs(out)
-    for f in ('stage1_lock.json', 'blueprint.json'):
-        if os.path.exists(os.path.join(d, f)): shutil.copy(os.path.join(d, f), out)
+    for f in os.listdir(d):                  # the lock, the blueprint and any cache a program reads (carve_base.json)
+        if f.endswith(('.json', '.npz', '.npy')) and os.path.isfile(os.path.join(d, f)):
+            shutil.copy(os.path.join(d, f), out)
+    if os.path.isdir(os.path.join(d, 'reference')):            # carve.py reads the reference views
+        shutil.copytree(os.path.join(d, 'reference'), os.path.join(out, 'reference'))
     cmd = [kitrun.blender_exe(), '-b', '--factory-startup', '--python-exit-code', '3', '-P', p, '--',
            '--out', out, '--scratch', out, '--stage', '4']
     r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', env=env, timeout=1800)
