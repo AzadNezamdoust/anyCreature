@@ -201,8 +201,13 @@ py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any 
 - **Carve the base, then add detail (2026-10-04).** On 4 creatures, a
   stage 1 carved from the GPT sheet (`kit/carve.py`) plus builder-added
   detail beat the hand-built base in 7 of 8 blind calls (mean 4.75 → 5.75).
-  It is the candidate default for stage 1, pending the owner's eye and a
-  run on all 11.
+  **The owner confirmed it by eye (2026-10-04: "mixed method is very
+  good"). Carve + detail is the default stage 1.**
+- **Team pass: use it on weak builds only (2026-10-05).** Fable directs,
+  Opus builds, Sonnet checks each item in the packet, and Opus fixes once
+  more. It lifted the builds scored 4–5 by up to 2 points, and it cost the
+  builds scored 7 a point. Always compare before and after blind, and keep
+  the better version per creature.
 - **One repair round, not two (2026-10-03).** On the GPT builds, round 1
   added a full point and round 2 added 0.05. Both seats preferred round 1
   for two creatures. What is left after round 1 lives in stage 1.

@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "rim underside border: rim band above, red shell below",
+   "new_verts": 9,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "belly border (team AD 2): cream only in a low strip under the rim, as on the sheet",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "ridge border: the rim band (dark red) under the dome",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "claw tip border: the dark finger tips",
+   "new_verts": 2,
+   "extra_base_edges": []
+  }
+ ]
+}

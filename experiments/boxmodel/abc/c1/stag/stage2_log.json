@@ -1,0 +1,95 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the brow-cheek face; the eye piece sits in it",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "colour border nose: a planar edge path (bisect) for a clean region border",
+   "new_verts": 0,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "colour border jaw: a planar edge path (bisect) for a clean region border",
+   "new_verts": 1,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "colour border manef: a planar edge path (bisect) for a clean region border",
+   "new_verts": 0,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "colour border maneb: a planar edge path (bisect) for a clean region border",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "colour border bib: a planar edge path (bisect) for a clean region border",
+   "new_verts": 9,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "colour border belly: a planar edge path (bisect) for a clean region border",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "colour border rump: a planar edge path (bisect) for a clean region border",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "colour border shin: a planar edge path (bisect) for a clean region border",
+   "new_verts": 9,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "colour border hoof: a planar edge path (bisect) for a clean region border",
+   "new_verts": 21,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "colour border manev: a planar edge path (bisect) for a clean region border",
+   "new_verts": 9,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "loop",
+   "reason": "colour border chestlo: a planar edge path (bisect) for a clean region border",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "loop",
+   "reason": "colour border chesthi: a planar edge path (bisect) for a clean region border",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

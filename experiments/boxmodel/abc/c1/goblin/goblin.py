@@ -1,4 +1,4 @@
-import os, sys
+﻿import os, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'kit'))
 from bmkit import *
 from carve import carve_base, colour_from_sheet
@@ -220,8 +220,17 @@ def stage2(k, body):
                       (4, 1): (0.006, -0.004, 0.0), (7, 0): (0, 0.012, 0.004), (7, 1): (0, 0.008, 0)}.items():
         vn(r, i).co += V(d)
     # -- heavy angry brow: the brow ring comes forward and the inner brow drops (a V over the nose)
-    for i, d in ((0, (0, -0.012, -0.018)), (1, (0, -0.02, -0.016)), (2, (0, -0.022, -0.008)), (3, (0.004, -0.018, 0.002))):
+    # team pass, must-fix 3: the brow came forward 12-22 mm and read as a cap brim; now 0-6 mm (the V stays), the
+    # forehead front comes forward 10 mm so the dome flows into the brow, the cheekbone rises to frame the socket
+    # second pass (verify_team item 3): the wire still showed a step: at P2/P3 the brow ring overhung the eye by 2-2.5 cm
+    # and the forehead above it receded at 35-45 deg. The brow's outer half goes back 11-13 mm, the forehead's outer
+    # half forward another 10-12 mm: one slope from the dome to the brow, a 1 cm bump over the eye.
+    for i, d in ((0, (0, -0.002, -0.018)), (1, (0, -0.005, -0.016)), (2, (0, 0.007, -0.008)), (3, (0.004, 0.007, 0.002))):
         vn(8, i).co += V(d)
+    for i, d in ((0, (0, -0.01, 0)), (1, (0, -0.012, 0)), (2, (0, -0.02, 0)), (3, (0, -0.02, 0))):
+        vn(9, i).co += V(d)
+    vn(6, 2).co += V(0, 0, 0.008)
+    vn(6, 3).co += V(0, 0, 0.015)
     # -- cheekbone: the cheek corner under the eye out and forward; jaw corner out (the jaw line reads in front view)
     vn(6, 3).co += V(0.012, -0.01, 0.0)
     vn(5, 3).co += V(0.01, -0.006, 0.0)
@@ -239,6 +248,7 @@ def stage2(k, body):
         if x < 0.13 and 0.40 < z < 0.64 and y < 0.0 and z < 0.66:
             f = max(0.0, 1.0 - ((z - 0.52) / 0.12) ** 2) * max(0.0, 1.0 - (x / 0.13) ** 2)
             v.co.y -= 0.025 * f
+    legs(bm)
     MOUTH[:] = []
     msf = set(ms)
     r3 = {vn(3, i) for i in range(4)}
@@ -248,17 +258,82 @@ def stage2(k, body):
     TEETH[:] = [[vn(3, i).co.copy() for i in (0, 1, 2, 3)],
                 sorted([v.co.copy() for v in ms if v.co.y < -0.12], key=lambda c: c.x)]
     recalc_normals(bm)
+    if os.environ.get('GOB_DUMP'):
+        import json
+        bm.verts.index_update()
+        bm.faces.ensure_lookup_table(); t = BVHTree.FromBMesh(bm)
+        for i, j in t.overlap(t):
+            if i < j and not (set(bm.faces[i].verts) & set(bm.faces[j].verts)):
+                say('HIT', [tuple(round(x, 3) for x in v.co) for v in bm.faces[i].verts], [tuple(round(x, 3) for x in v.co) for v in bm.faces[j].verts])
+        json.dump({'v': [list(v.co) for v in bm.verts], 'f': [[v.index for v in f.verts] for f in bm.faces],
+                   'leg': [v.index for v in LEGV]}, open(os.environ['GOB_DUMP'], 'w'))
     commit(body, bm)
 
 
 SOCKET = []
+LEGV = []
+# (vertex after the first pass) -> (y, z)
+KNEE_MOVES = [
+    ((0.128, -0.077, 0.161), (-0.090, 0.185)), ((0.121, -0.023, 0.112), (-0.062, 0.170)),      # the phantom prong
+    ((0.163, -0.029, 0.117), (-0.064, 0.172)), ((0.117, 0.004, 0.127), (-0.030, 0.165)),
+    ((0.159, 0.007, 0.128), (-0.028, 0.167)), ((0.138, 0.017, 0.148), (-0.012, 0.178)),
+    ((0.129, -0.024, 0.191), (-0.026, 0.195)), ((0.169, -0.028, 0.190), (-0.028, 0.195)),
+    ((0.125, 0.005, 0.230), (-0.005, 0.230)), ((0.190, 0.002, 0.236), (-0.005, 0.236)),         # the slot's top
+    ((0.126, 0.083, 0.242), (0.045, 0.240)), ((0.188, 0.080, 0.239), (0.043, 0.238)),           # the back of the knee
+    ((0.130, 0.050, 0.176), (0.020, 0.176)), ((0.161, 0.057, 0.171), (0.024, 0.171)),           # the shin, mid
+    ((0.128, 0.093, 0.176), (0.095, 0.176)), ((0.160, 0.097, 0.168), (0.097, 0.168))]
+# team pass, must-fix 1 (legs): (z, scale) of the leg's cross-section about its centre line, and (z, dy) of the bend
+LEG_S = [(0.05, 1.0), (0.10, 0.72), (0.16, 0.62), (0.22, 0.74), (0.29, 0.64), (0.36, 0.80), (0.42, 1.0)]
+LEG_CY = [(0.05, 0.03), (0.20, 0.0), (0.30, 0.03)]
+LEG_DY = [(0.05, 0.0), (0.10, 0.015), (0.16, -0.01), (0.22, -0.042), (0.29, -0.02), (0.40, 0.0)]
+
+
+def legs(bm):
+    """The hull's legs are columns as deep as the torso. Leg vertices (the component of the region below z 0.42 that
+    holds the foot, not the hand's) are scaled in x and y about the leg's per-band centre (LEG_S, the knee ring less
+    than thigh and shin so it reads as a joint), and the knee pushed forward / the ankle back (LEG_DY)."""
+    reg = {v for v in bm.verts if v.co.z < 0.42}
+    foot = min(reg, key=lambda v: (v.co - V(0.20, 0.0, 0.0)).length)
+    comp, st = {foot}, [foot]
+    while st:
+        v = st.pop()
+        for e in v.link_edges:
+            w = e.other_vert(v)
+            if w in reg and w not in comp and not (w.co.x > 0.245 and w.co.z > 0.11):
+                comp.add(w); st.append(w)
+    lv = [v for v in comp if v.co.x > 0.03]
+    say('legs: verts', len(lv))
+    LEGV[:] = lv
+    for v in lv:
+        cx, cy = 0.145, interp(LEG_CY, v.co.z)
+        s = interp(LEG_S, v.co.z)
+        wseam = min(1.0, (v.co.x - 0.03) / 0.06)          # the crotch near the seam follows only partly
+        wbutt = min(1.0, max(0.0, (0.22 - v.co.y) / 0.07)) if v.co.z > 0.22 else 1.0   # the buttock is torso
+        s = 1.0 - (1.0 - s) * wseam * wbutt
+        v.co.x = cx + (v.co.x - cx) * s
+        v.co.y = cy + (v.co.y - cy) * s + interp(LEG_DY, v.co.z) * wseam * wbutt
+    # second pass (verify_team item 1). Diagnosis (mesh walk): under the knee the hull has TWO prongs: the real shin
+    # (y 0.05-0.10, down to the heel) and a phantom one in front of it (the hand's side silhouette x the leg's front
+    # silhouette), closed 2 cm above the foot. Together they read as a column in the side view. The phantom prong is
+    # lifted into the knee (its underside), the shin's top is sheared forward under the knee and the back of the knee
+    # hollowed, so the shin runs diagonally from a forward knee to the heel.
+    for src, (y, z) in KNEE_MOVES:
+        v = min(lv, key=lambda u: (u.co - V(src)).length)
+        assert (v.co - V(src)).length < 2e-3, src
+        v.co.y, v.co.z = y, z
 
 
 PAL = {'skin': '#6aa84f', 'belly': '#9ccc7a', 'belt': '#4a3222', 'cloth': '#7a5a3a',
        'fang': '#efe6cf', 'eye': '#f2d23c', 'pupil': '#2b1d14', 'brass': '#b8963c'}
-BELT = (0.455, 0.08, 0.33, 0.056)     # belt centre z at y = -0.08, its rise per metre of y (lower in front), height
+BELT = (0.455, 0.08, 0.20, 0.056)     # belt centre z at y = -0.08, its rise per metre of y (lower in front), height
 HAND = V(0.30, -0.068, 0.158)         # the hull hand's lower centre (stage-3 probe of the base)
 EYE_R = 0.031
+EYE_W, EYE_H, EYE_TILT = 0.052, 0.037, 14.0    # almond half-width / half-height (1.4:1), outer corner up (deg)
+EYE_PW, EYE_PH = 0.0075, 0.0145                # the pupil: a small vertical disc
+BELT_REAR = 0.016                              # the belt's outer offset at the back (22 mm at the front and sides)
+BELT_TH = {19: 146.0}                           # column 19 sits on the rump's corner ridge (deg from the front)
+NB = 25                                        # belt columns, seam to seam
+FING_L, FING_SPREAD, CLAW = (0.058, 0.040), 24, (0.045, 0.0155)   # team pass, must-fix 4: longer fingers, bigger claws
 FINGERS = []
 
 
@@ -343,6 +418,8 @@ def body_labels(bm):
             lab[f.index] = 'skin'; fixed.add(f.index)                     # the head
         elif c.x < 0.105 and zbelt(c.y) < c.z < 0.655 and c.y < 0.0 and n.y < -0.25:
             lab[f.index] = 'belly'
+        elif c.y > 0.12 and not (c.x < 0.10 and c.z > 0.42):
+            lab[f.index] = 'skin'                                         # the rump beside and below the back flap
         elif c.x < 0.165 and 0.29 < c.z < zbelt(c.y) and (c.x < 0.09 or c.z > 0.33):
             lab[f.index] = 'cloth'
         else:
@@ -377,13 +454,13 @@ def stage3(k, body):
     rows = {}
     for dz in (-BELT[3] / 2, BELT[3] / 2):
         pts, nrm = [], []
-        for j in range(13):
-            th = math.pi * j / 12
+        for j in range(NB):
+            th = math.radians(BELT_TH.get(j, 180.0 * j / (NB - 1)))
             d = V(math.sin(th), -math.cos(th), -math.cos(th) * BELT[2]).normalized()
             o = V(0, 0.07, zbelt(0.07) + dz)
             loc, n, _, _ = tree.ray_cast(o, d)
             hn = V(n.x, n.y, n.z * 0.7).normalized()     # the surface normal (the back of the skirt slopes)
-            if j in (0, 12):
+            if j in (0, NB - 1):
                 loc.x, hn.x = 0.0, 0.0
                 hn.normalize()
             pts.append(loc); nrm.append(hn)
@@ -391,22 +468,39 @@ def stage3(k, body):
     eb.free()
     (lo, ln), (hi, hn_) = rows[-BELT[3] / 2], rows[BELT[3] / 2]
     BELTROWS[:] = [lo, ln, hi, hn_]
-    # the hull is lumpy between the 13 columns: a column whose band cuts the skin steps out 5 mm until none does
-    extra = [0.0] * 13
+    # the hull is lumpy between the columns: a column whose band cuts the skin steps out until none does (team pass,
+    # must-fix 5: 25 columns and 2.5 mm steps, so the belt hugs the rump instead of standing off it as a shelf)
+    # second pass (verify_team item 5): the hull's rump is a box, so columns 19 (facing +x) and 20 (facing +y) cut
+    # the corner between them and stepped out 20 mm (the lump), and the 22 mm band stood off the receding back as a
+    # shelf. The column normals are now averaged with their neighbours' (the band wraps the corner, offsets scaled by
+    # 1/cos), and the band thins from 22 mm at the sides to BELT_REAR at the back.
+    for nr in (ln, hn_):
+        raw = [n.copy() for n in nr]
+        for j in range(1, NB - 1):
+            m = (raw[j - 1] + raw[j] * 2 + raw[j + 1]).normalized()
+            nr[j] = m / max(0.7, m.dot(raw[j]))
+    outer = [0.022 + (BELT_REAR - 0.022) * min(1.0, max(0.0, (j - 14) / 4)) for j in range(NB)]
+    extra = [0.0] * NB
     eb2 = evaluated_bm(body); t2 = BVHTree.FromBMesh(eb2)
-    for it in range(10):
+    for it in range(20):
         bm = bmesh.new()
-        A = ring(bm, [p + n * (0.007 + e) for p, n, e in zip(lo, ln, extra)]); B = ring(bm, [p + n * (0.026 + e) for p, n, e in zip(lo, ln, extra)])
-        C = ring(bm, [p + n * (0.026 + e) for p, n, e in zip(hi, hn_, extra)]); D = ring(bm, [p + n * (0.007 + e) for p, n, e in zip(hi, hn_, extra)])
+        A = ring(bm, [p + n * (0.009 + e) for p, n, e in zip(lo, ln, extra)]); B = ring(bm, [p + n * (o + e) for p, n, e, o in zip(lo, ln, extra, outer)])
+        C = ring(bm, [p + n * (o + e) for p, n, e, o in zip(hi, hn_, extra, outer)]); D = ring(bm, [p + n * (0.009 + e) for p, n, e in zip(hi, hn_, extra)])
         bridge(bm, A, B); bridge(bm, B, C); bridge(bm, C, D); bridge(bm, D, A)
         bm.faces.ensure_lookup_table()
-        bad = {j for _, fi in t2.overlap(BVHTree.FromBMesh(bm)) for v in bm.faces[fi].verts for j in [v.index % 13]}
+        bad = {j for _, fi in t2.overlap(BVHTree.FromBMesh(bm)) for v in bm.faces[fi].verts for j in [v.index % NB]}
         if not bad:
             break
         for j in bad:
-            extra[j] += 0.005
+            extra[j] += 0.0025
         bm.free()
     say('belt extra offsets', [round(e, 3) for e in extra])
+    if os.environ.get('GOB_DUMP'):
+        for j in range(15, NB):
+            say('BELT', j, tuple(round(c, 3) for c in lo[j]), tuple(round(c, 3) for c in ln[j]), tuple(round(c, 3) for c in hi[j]), tuple(round(c, 3) for c in hn_[j]))
+        for v in eb2.verts:
+            if v.co.x >= 0 and v.co.y > 0.1 and 0.42 < v.co.z < 0.62:
+                say('BV', tuple(round(c, 3) for c in v.co))
     eb2.free()
     belt = object_from_bm('belt', bm)
     paint(belt, pal('belt'), lambda c, n, i: 'belt')
@@ -428,32 +522,60 @@ def stage3(k, body):
     pieces.append(buckle)
 
     # loincloth: tattered front and back flaps tucked under the belt, the hem flared along the column normals
-    for nm, idx, drops in (('cloth_front', (0, 1, 2, 3), (0.15, 0.11, 0.16, 0.10)),
-                           ('cloth_back', (12, 11, 10, 9), (0.17, 0.12, 0.18, 0.11))):
+    # (second pass: the back flap's top tucks under the thinner rear belt and its hem flares less, so it hangs down
+    # the rump instead of bulging off the belt)
+    for nm, idx, drops, flare, dt, db in (('cloth_front', (0, 2, 4, 6), (0.15, 0.11, 0.16, 0.10), 0.14, (0.010, 0.021), (0.010, 0.030)),
+                                          ('cloth_back', (24, 23, 21, 20), (0.115, 0.08, 0.12, 0.07), 0.10, (0.010, 0.015), (0.009, 0.023))):
         bm = bmesh.new()
-        tops = [lo[j] + V(0, 0, 0.012) for j in idx]
+        tops = [lo[j] + ln[j] * extra[j] + V(0, 0, 0.012) for j in idx]     # tucked under the belt where it steps out
         nn = [ln[j] for j in idx]
-        bots = [t + n * 0.14 * d + V(0, 0, -d) for t, n, d in zip(tops, nn, drops)]
-        plate3(bm, tops, bots, nn, (0.010, 0.021), (0.010, 0.030))
+        bots = [t + n * flare * d + V(0, 0, -d) for t, n, d in zip(tops, nn, drops)]
+        plate3(bm, tops, bots, nn, dt, db)
         cloth = object_from_bm(nm, bm)
         paint(cloth, pal('cloth'), lambda c, n, i: 'cloth')
         pieces.append(cloth)
 
-    # eyes: a low-poly lens sunk in the socket, the iris ring and pupil proud of it (looking forward)
+    # eyes (team pass, must-fix 2): a big almond lens, outer corner up, its rim ray-cast onto the skin around the socket
+    # (flush with the cheek plane, no dark gap), a bulged iris ring, a small vertical pupil (< 35% of the lens)
     sc, sn = SOCKET
     bm = bmesh.new()
     a, u, w = basis(V(sn.x * 0.6, sn.y, sn.z * 0.3), (0, 0, 1))
-    ang = [2 * math.pi * i / 6 for i in range(6)]
+    if w.x < 0:
+        w = -w                                       # w: toward the outer corner (+x)
+    eb = evaluated_bm(body); tree = BVHTree.FromBMesh(eb)
+    tilt = math.tan(math.radians(EYE_TILT))
+    ang = [2 * math.pi * i / 8 for i in range(8)]
 
-    def hexr(off, r):
-        return ring(bm, [sc + a * off + (w * math.cos(q) + u * math.sin(q) * 0.8) * r for q in ang])
-    ra, rb, rp = hexr(0.011, EYE_R), hexr(0.019, EYE_R * 0.7), hexr(0.023, EYE_R * 0.32)
+    def almond(sw, sh):
+        pts = []
+        for q in ang:
+            c, s = math.cos(q), math.sin(q)
+            ps, pt = c * sw * (1.06 if abs(s) < 0.1 else 1.0), s * sh * (0.85 + 0.15 * abs(s))
+            pts.append((ps, pt + ps * tilt))
+        return pts
+
+    def depth(ps, pt):
+        p = sc + w * ps + u * pt
+        loc, *_ = tree.ray_cast(p + a * 0.1, -a, 0.2)
+        return (loc - sc).dot(a) if loc else 0.0
+    rim = almond(EYE_W, EYE_H)
+    dr = [depth(*p) for p in rim]
+    mid = almond(EYE_W * 0.6, EYE_H * 0.6)
+    dr = [max(dr[i], (dr[i - 1] + 2 * dr[i] + dr[(i + 1) % 8]) / 4) for i in range(8)]   # no lumps, never under the skin
+    mean = sum(dr) / 8
+    dmi = [max(0.6 * d + 0.4 * mean + 0.009, depth(*p) + 0.005) for d, p in zip(dr, mid)]
+    dm = sum(dmi) / 8
+    pup = almond(EYE_PW, EYE_PH)
+    ra = ring(bm, [sc + a * (d + 0.004) + w * ps + u * pt for (ps, pt), d in zip(rim, dr)])
+    rb = ring(bm, [sc + a * d + w * ps + u * pt for (ps, pt), d in zip(mid, dmi)])
+    rp = ring(bm, [sc + a * (dm + 0.0025) + w * ps + u * pt for ps, pt in pup])
+    eb.free()
     ap = bm.verts.new(sc - a * 0.02)
-    for i in range(6):
-        bm.faces.new([ra[(i + 1) % 6], ra[i], ap])
+    for i in range(8):
+        bm.faces.new([ra[(i + 1) % 8], ra[i], ap])
     bridge(bm, ra, rb, closed=True); bridge(bm, rb, rp, closed=True)
     cap(bm, rp)
-    pc = sc + a * 0.023
+    pc = sc + a * (dm + 0.0025)
     eye = object_from_bm('eye', bm)
     paint(eye, pal('eye', 'pupil'), lambda c, n, i: 'pupil' if (V(abs(c.x), c.y, c.z) - pc).length < 0.005 else 'eye')
     pieces.append(eye)
@@ -484,25 +606,32 @@ def stage3(k, body):
     pieces.append(fangs)
 
     # hands: three knuckled fingers out of the hull's paddle (rooted inside it), curled forward, cream claws
-    ha, hu, hv = basis((0.1, -0.45, -1), (1, 0, 0))
+    # second pass (verify_team item 4): the three fingers fanned front-to-back (hv ~ -y), so the front view saw one
+    # tapered paddle, and they pointed at the foot, so the drift gate capped their length. Now they fan across the hand
+    # (x, with a little y so the side view sees them too), reach forward and hook down: the tips stay nearer the palm
+    # than the foot, at the full +60% length.
+    ha = V(0.36, -0.80, -0.42).normalized()
+    fan = V(1.0, 0.25, 0.0).normalized()
+    fan = (fan - ha * fan.dot(ha)).normalized()
     bmf, bmc = bmesh.new(), bmesh.new()
 
     def rot(d, toward, deg):
         t = (toward - d * toward.dot(d)).normalized()
         return (d * math.cos(math.radians(deg)) + t * math.sin(math.radians(deg))).normalized()
-    curl = V(-0.3, -1, 0.2)
+    curl = V(-0.1, 0.1, -1)
     FINGERS[:] = []
     for sgn in (-1, 0, 1):
-        d0 = rot(ha, hv * sgn if sgn else ha, 14 * abs(sgn))
-        p0 = HAND + hv * 0.022 * sgn - ha * 0.018
-        ln_ = 0.8 if sgn > 0 else 1.0
-        kn = p0 + d0 * 0.036 * ln_
-        d1 = rot(d0, curl, 25)
-        tp = kn + d1 * 0.026 * ln_
+        d0 = rot(ha, fan * sgn if sgn else ha, FING_SPREAD * abs(sgn))
+        p0 = HAND + V(0, 0, 0.012) + fan * 0.019 * sgn - ha * 0.02
+        ln_ = 0.85 if sgn else 1.0
+        kn = p0 + d0 * FING_L[0] * ln_
+        d1 = rot(d0, curl, 22)
+        tp = kn + d1 * FING_L[1] * ln_
         FINGERS.append((p0.copy(), tp.copy()))
-        tube(bmf, [(p0, d0, 0.014), (kn, (d0 + d1).normalized(), 0.0145), (tp, d1, 0.010)], hint=tuple(hv))
-        d2 = rot(d1, curl, 30)
-        spike(bmc, tp - d1 * 0.011, tp + d2 * 0.03, 0.0105, knots=((0.45, 0.8),), hint=tuple(hv))
+        tube(bmf, [(p0, d0, 0.013), (kn, (d0 + d1).normalized(), 0.013), (tp, d1, 0.009)], hint=tuple(fan))
+        d2 = rot(d1, curl, 18)
+        spike(bmc, tp - d1 * 0.012, tp + d2 * CLAW[0], CLAW[1], knots=((0.45, 0.8),), hint=tuple(fan))
+        say('finger', sgn, 'root', tuple(round(c, 3) for c in p0), 'tip', tuple(round(c, 3) for c in tp))
     recalc_normals(bmf)
     fingers = object_from_bm('fingers', bmf)
     paint(fingers, pal('skin'), lambda c, n, i: 'skin')

@@ -1,0 +1,53 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face; the eye piece sits in it",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "colour border disc: a planar cut so the border runs on an edge path",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "colour border hoof: a planar cut so the border runs on an edge path",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "colour border mfront: a planar cut so the border runs on an edge path",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "colour border mlow: a planar cut so the border runs on an edge path",
+   "new_verts": 15,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "colour border mlow2: a planar cut so the border runs on an edge path",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "colour border mlow3: a planar cut so the border runs on an edge path",
+   "new_verts": 2,
+   "extra_base_edges": []
+  }
+ ]
+}

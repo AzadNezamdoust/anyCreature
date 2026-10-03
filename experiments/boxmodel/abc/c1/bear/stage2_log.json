@@ -10,36 +10,64 @@
   {
    "op": 2,
    "kind": "loop",
-   "reason": "dark lower legs: border loop round each leg at z 0.30",
-   "new_verts": 19,
+   "reason": "hind leg: a loop at the hock, so the rear edge can bend",
+   "new_verts": 21,
    "extra_base_edges": []
   },
   {
    "op": 3,
+   "kind": "loop",
+   "reason": "hind leg: a loop on the shin, under the hock",
+   "new_verts": 17,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "dark lower legs: border loop round each leg at z 0.30",
+   "new_verts": 26,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
    "kind": "loop",
    "reason": "pale muzzle: border loop from under the eye to behind the jaw",
    "new_verts": 11,
    "extra_base_edges": []
   },
   {
-   "op": 4,
+   "op": 6,
    "kind": "loop",
    "reason": "pale bib: V edge seen from the front",
    "new_verts": 8,
    "extra_base_edges": []
   },
   {
-   "op": 5,
+   "op": 7,
    "kind": "loop",
    "reason": "pale bib: back edge seen from the side",
-   "new_verts": 2,
+   "new_verts": 0,
    "extra_base_edges": []
   },
   {
-   "op": 6,
+   "op": 8,
    "kind": "loop",
    "reason": "pale bib: top edge under the jaw",
-   "new_verts": 3,
+   "new_verts": 1,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "chest front: a vertical loop between breastbone and leg, so the leg can separate from the chest",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "front leg: a loop under the shoulder, where the leg leaves the body",
+   "new_verts": 11,
    "extra_base_edges": []
   }
  ]

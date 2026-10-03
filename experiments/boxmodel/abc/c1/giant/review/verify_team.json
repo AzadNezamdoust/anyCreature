@@ -1,0 +1,7 @@
+{"items":[
+{"title":"1. Belt is a thin hoop standing off the belly","verdict":"DONE","evidence":"1_beauty hero/az000: wide tan band hugs the belly with no light gap, toggle visible front-centre; az090 reads as a strap on the hip; techqa hit 0 float 0."},
+{"title":"2. Moss is one flat olive cap; rocks are pebbles","verdict":"PARTLY","evidence":"Moss is now brighter green and rocks are larger and on the shoulder caps (1_beauty back34, az000), but 5_reference top pair still shows a smooth green sheet with no hide down the centre and only mild lumps, not clear 0.3-0.4 m clumps."},
+{"title":"3. Loincloth flaps are paper-thin rods in profile","verdict":"PARTLY","evidence":"1_beauty az000/hero front flap is wider and fuller, but az090 still shows both flaps as thin brown sticks standing off the body."},
+{"title":"4. Belly and pec shelf are flat","verdict":"PARTLY","evidence":"2_closeups front limb wire/colour shows a rounded belly under the pecs, but 1_beauty az090 silhouette is still nearly straight chest to knee with only a small bulge at the belt, far from the reference's 0.25 m."},
+{"title":"5. Toes are nubs","verdict":"NOT","evidence":"1_beauty az000 and 2_closeups hind limb: toes are still small blocks under the foot wedge, nowhere near the reference's big rounded toes."}
+],"regressions":[],"all_done":false}

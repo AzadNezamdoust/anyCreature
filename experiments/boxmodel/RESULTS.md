@@ -699,3 +699,53 @@ The key is in `out/boxmodel/judge/k3r_key.json`. Results are in
 - **Gates:** all four pass, and `kit/regress.py` agrees. It now copies a
   build's `reference/` and caches.
 - **Gallery:** `carve_detail_vs_k3.jpg`.
+- **Owner's verdict (2026-10-04, by eye on the gallery):** "mixed method
+  is very good". Carve + detail is adopted as the default stage 1.
+
+## Carve + detail on all 11, then a three-model team pass (2026-10-05)
+
+**Solo builds.**
+
+- The remaining 7 creatures were built with carve + detail by one Opus
+  builder each.
+- All 11 pass every gate.
+- Gallery: `carve_detail_vs_k3_b.jpg`.
+
+**Team pass.** Each creature went through four steps:
+
+1. Fable 5.1 art-directed: up to 5 must-fix items, with at most one
+   stage-1 unlock.
+2. An Opus 5.5 builder fixed them.
+3. Sonnet 5 checked every item against the new packet, not against the
+   builder's report.
+4. Opus fixed once more, only what the check marked NOT or PARTLY.
+
+All gates pass, and `kit/regress.py` agrees.
+
+**Blind looks-first review** by Fable and Opus, solo against team. The solo
+packets are in `out/boxmodel/c1_solo/`, and the key is
+`out/boxmodel/judge/team_key.json`.
+
+| creature | Fable solo → team | Opus solo → team | better (F / O) |
+|---|---|---|---|
+| bear | 6 → 6 | 6 → 6 | team / team |
+| boar | 6 → 6 | 6 → 7 | tie / team |
+| character | 5 → 6 | 6 → 7 | team / team |
+| crab | 6 → 5 | 7 → 5 | **solo / solo** |
+| frog | 6 → 5 | 6 → 5 | **solo / solo** |
+| giant | 6 → 6 | 6 → 7 | solo / team |
+| goblin | 5 → 6 | 6 → 6 | team / tie |
+| owl | 5 → 6 | 7 → 6 | team / solo |
+| raven_wyvern | 4 → 6 | 4 → 6 | team / team |
+| stag | 7 → 6 | 7 → 6 | **solo / solo** |
+| wolf | 4 → 6 | 5 → 6 | team / team |
+
+- **Scores:** the mean went from 5.73 to 5.95. The team build was preferred
+  in 12 calls, the solo build in 8, with 2 ties. No build reached SHIP.
+- **The team pass lifts weak builds and hurts good ones.** The solo builds
+  at 4–5 gained up to 2 points (raven, wolf, character). The best solo
+  builds lost a point (crab, frog, stag).
+- **The Sonnet check works.** On the first pass most creatures had items
+  marked PARTLY or NOT, and the second pass closed most of them.
+- **Kept per creature:** crab, frog and stag go back to their solo
+  versions, and the rest keep the team version.

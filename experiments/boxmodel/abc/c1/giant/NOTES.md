@@ -75,3 +75,57 @@ stage1_lock.json was deleted (2026-10-03) because stage 1 now adds hand edits on
   Look vs abc/k3/giant review/1_beauty: stronger hump/shoulder mass and arm gap; face reads (brow, sockets, amber
   eyes, nose, tusks, ears). Weaker: moss is the sheet's dull olive, the belt stands visibly off the belly, the
   loincloth flaps read as thin rods in profile, toes are small.
+
+## Team repair pass (Fable AD notes review/ad_notes_team.md; rounds r19-r40; stage 1 stays locked)
+- r19: baseline, all gates PASS (2730 tris), clip warning 8.4%.
+- r20 (item 1 belt): Critique: hero/az000, the belt is a wire hoop 3-10 cm off the belly. Diagnosis: one centre sample per
+  column + a fixed 3/10 cm offset, band 0.12 tall. Fix: band 0.24 tall x 0.07 thick, 28 columns x 6 rings, each row
+  sampled at its own height 1.4 cm proud, front dipping 0.10 m, one stone toggle front-centre. Result: FAIL hit 5 (the
+  band's faces cut the belly between rows).
+- r21: Fix: each row clears the fullest skin within +-0.07 m in z and half a column in angle. Result: PASS; the band hugs.
+- r22: Fix: the toggle is seated on the band's own outer face (it was buried), 0.19 m wide. Result: PASS, reads in az000.
+- r23 (item 2 moss): Critique: back34/top, one dull olive sheet, pebbles. Diagnosis: sheet_palette snapped moss to the
+  sheet's #69733f; rocks r 0.17-0.24 on top of 4 pancake clumps. Fix: moss keeps the brief's #6f8f3a; 5 clumps
+  0.3-0.4 m, 0.10 proud; rocks 0.46-0.54 m, 40% sunk, one on each shoulder cap. Result: PASS, green reads.
+- r24: Fix: rocks to 0.52-0.60 m with a flatter top (0.78). Result: FAIL hit 2 (rocks cut two clumps each).
+- r25: Fix: rocks and clumps re-laid so they do not overlap (4 clumps, 4 rocks per side). Result: FAIL z-fight 6.
+- r26/r27: sinking the clump rims and moving two clumps did not clear it; r28 debug print: the clump at
+  (0.98, 0.78) lay flat on a skin ridge. r29/r30: Fix: that clump to (1.06, 0.70, 3.05). Result: PASS, 2730 tris.
+- r31 (item 3 loincloth): Critique: az090, both flaps are sticks 0.2 m off the body. Diagnosis: every lower row hung at
+  one plane 0.10 m in front of the most forward point below the hem. Fix: flaps 0.07 m thick, each row 3 cm off the
+  fullest skin at its own height, front flap rows widened (0.80/0.76/0.68/0.58 m). Result: PASS.
+- r32 (item 4 belly, stage 2): Fix: belly verts z 1.3-2.0, |x| < 0.6 a further 0.13 m forward (falloff to 0 at 1.1 /
+  2.15 and by |x| 0.8), the under-pec row 0.03 back. Result: PASS, IoU min 0.991; the belt and flap re-fit by sampling.
+- r33 (item 5 toes): Fix: three abutting toes 0.24 m long, 0.15-0.18 m tall, six-sided rounded section, chamfered
+  front top, stone nail over the front 0.08-0.10 m. Result: PASS, 2922 tris; new stretch warning (8 tris, 2.42x, toes).
+- r34: Fix tried: toes rigid on the nearest bone to remove the stretch. Result: FAIL drift 6; reverted (r35, body=).
+- r36: Fix: nail paint per toe (the inner toe sits 0.1 m back and was left hide). Result: PASS, three toes read.
+- r37 (should-fix ears): laid back along the skull at half size. Result: PASS, no cat ears in az000.
+- r38 (should-fix attack arc): slam upper arm raised 13 deg and out 10: clip warning 9.5% -> 9.7%, no gain; reverted.
+- r39: final (orbit) + --review: az090 in the packet still showed the flaps as slabs off the thigh (rows eased only
+  half way in below the belly). r40: Fix: rows ease in 80%. Result: flaps lie on the thigh/buttock; all gates PASS,
+  glbcheck OK, --review, --compare. Triangles: s1 1154, s2 1154, s3/s4 2922. IoU min 0.991.
+  Left: clip warning 9.75% of area (the wider belt rides the bending waist; arms in the slam), stretch warning 8 toe
+  tris; no hide strip down the centre of the back (the moss border is the stage-1 cut); should-fix face paint and
+  knuckles not done.
+
+## Team repair, second pass (verifier review/verify_team.json: items 2-5 PARTLY/NOT; rounds r41-r51)
+- r41: baseline, all gates PASS (2922 tris).
+- r42 (item 2 moss): Critique: top pair, a smooth green sheet, no hide down the back, mild lumps. Diagnosis: body_rule
+  paints all of moss_f > 0; clumps 0.15 proud. Fix: a hide strip down the centre of the back (stage-3 paint only,
+  the cut stays), clumps 0.24 thick; belt columns 28 -> 20 to free triangles. Result: FAIL hit 1 + folds 0.53%
+  (the coarser belt). r43: belt back to 28 columns: PASS. r44: strip widened (0.30 m half-width at the top, 0.60 low):
+  hide reads down the spine with a moss diamond in the middle, as the reference rear; clumps read as lumps. PASS.
+- r45 (item 4 belly, stage 2): Critique: az090, chest to knee nearly straight. Fix: a further cosine bump, 0.12 m
+  forward at z 1.62 (zero at 1.12 / 2.12, full to |x| 0.65). Result: the belly stands in front of the arm and thigh
+  line in az090; IoU min 0.982; PASS. Total belly move 0.32 m at the peak.
+- r46 (item 3 loincloth): Critique: az090, both flaps are straight sticks off the body. Diagnosis: every column of a
+  row sat at the row's fullest point, so the flap was a flat board. Fix: each column drapes on the skin under it
+  (40% bridged to the row's fullest point). r47: flaps widened so the edges wrap the thighs/hips (front 1.0 m at the
+  belt, back 1.36 m). Result: PASS; a skirt lying on the body in hero/back34; in az090 it follows the belly and
+  buttock curve (still seen edge-on there: a cloth 0.07 thick is a narrow stroke in pure profile).
+- r48 (item 5 toes): bigger toes: FAIL hit 2. r49 probe: the carved foot is a wedge whose front overhangs the sole by
+  0.45 m above z 0.2, so the toes sat hidden under it. Fix: each toe runs low (0.12) under the overhang and rises
+  to 0.22-0.27 m tall, 0.30 m in front of the wedge, 0.21-0.25 wide, abutting. Result: hit 0, the stretch warning
+  is gone, 3066 tris (over). r50: one toe ring dropped: 2994 tris, PASS; three big toes with stone nails read in az000.
+- r51: final (orbit), --review, --compare.

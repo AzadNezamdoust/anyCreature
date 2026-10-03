@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "wing front edge (side view), shoulder to tail root",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "wing inner edge (front view) on the chest",
+   "new_verts": 0,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "bib: mid-tan band over the cream belly",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "chest: brown upper chest over the mid-tan band (team M5)",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "ankle: border loop round each leg, cream leg over tan toes",
+   "new_verts": 0,
+   "extra_base_edges": []
+  }
+ ]
+}

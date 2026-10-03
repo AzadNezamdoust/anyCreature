@@ -9,24 +9,24 @@
   "drift": 0
  },
  "totals": {
-  "open": 0,
-  "hit": 0,
+  "flip_area": 0.0009940616737549597,
+  "clip_area": 0.0073560621793851925,
   "zfight": 2,
-  "stretch_max": 2.81,
-  "flip_area": 0.01443256922628227,
-  "float": 0,
-  "stretch": 4,
-  "area": 3.206031921114252,
   "fold": 0,
+  "open": 0,
+  "float": 0,
+  "sliver": 14,
+  "flip": 2,
+  "clip": 4,
+  "hit": 0,
+  "area": 3.21048518991269,
   "valley": 0,
-  "sliver": 10,
-  "clip": 16,
-  "flip": 8,
+  "stretch": 0,
   "drift": 0,
-  "clip_area": 0.05340596925806522
+  "stretch_max": 0.0
  },
- "triangles": 2094,
- "turned": 4,
+ "triangles": 2130,
+ "turned": 62,
  "stuck": 0,
  "per_object": {
   "body": {
@@ -39,12 +39,12 @@
    "zfight": 0,
    "flip": 2,
    "drift": 0,
-   "clip": 12,
-   "stretch": 4,
-   "stretch_max": 2.81,
-   "clip_area": 0.04631229842996597,
-   "area": 2.3491851880327,
-   "flip_area": 0.005708905309308929
+   "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0,
+   "area": 2.542382549260241,
+   "flip_area": 0.0009940616737549597
   },
   "piece_eyes": {
    "valley": 0,
@@ -60,7 +60,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.005410503991652687,
+   "area": 0.011069476264428462,
    "flip_area": 0
   },
   "piece_nose": {
@@ -80,6 +80,23 @@
    "area": 0.008177834644914905,
    "flip_area": 0
   },
+  "piece_mouth": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 4,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0,
+   "drift": 0,
+   "clip": 0,
+   "stretch": 0,
+   "stretch_max": 0.0,
+   "clip_area": 0,
+   "area": 0.012713836207788385,
+   "flip_area": 0
+  },
   "piece_inner_ears": {
    "valley": 0,
    "fold": 0,
@@ -94,7 +111,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.006381231534109175,
+   "area": 0.008775679157827433,
    "flip_area": 0
   },
   "piece_ruff": {
@@ -105,14 +122,14 @@
    "open": 0,
    "float": 0,
    "zfight": 0,
-   "flip": 4,
+   "flip": 0,
    "drift": 0,
    "clip": 0,
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.7368941166755533,
-   "flip_area": 0.0072836617307080525
+   "area": 0.5489701680800654,
+   "flip_area": 0
   },
   "piece_tailbrush": {
    "valley": 0,
@@ -122,14 +139,14 @@
    "open": 0,
    "float": 0,
    "zfight": 0,
-   "flip": 2,
+   "flip": 0,
    "drift": 0,
    "clip": 4,
    "stretch": 0,
    "stretch_max": 0.0,
-   "clip_area": 0.007093670828099249,
-   "area": 0.08094227568607394,
-   "flip_area": 0.001440002186265289
+   "clip_area": 0.0073560621793851925,
+   "area": 0.05889133587107268,
+   "flip_area": 0
   },
   "piece_claws": {
    "valley": 0,
@@ -145,7 +162,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.019040770549248007,
+   "area": 0.019504310426351364,
    "flip_area": 0
   }
  },

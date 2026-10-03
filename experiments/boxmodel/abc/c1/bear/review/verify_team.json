@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1. Body surface is a noisy hull, not planes","verdict":"PARTLY","evidence":"1_beauty back34/az090 flank and rump are calmer but still show many small light-catching facets; 2_closeups hind limb wire is still fan/triangle soup, not 6-8 big planes."},
+{"title":"2. Hind legs are pillars: no hock, no heel, no foot","verdict":"PARTLY","evidence":"1_beauty az090 hind leg has a stepped rear edge and forward foot block, but no visible hock angle; shin still reads as a near-vertical slab (3_tech az090 same)."},
+{"title":"3. Hind-leg dark paint jagged and grey","verdict":"DONE","evidence":"1_beauty az090 and back34: one horizontal dark border at matching height on hind and front legs, no dark tongue up the thigh; dark reads warm brown."},
+{"title":"4. Front legs not separated from chest","verdict":"NOT","evidence":"1_beauty hero/az000: front legs still drop straight out of the chest with a dark seam, no shoulder mass or shadow gap; 3_tech az000 shows purple/teal defects at the chest cleft between the legs."},
+{"title":"5. Attack clip does not read as an attack","verdict":"PARTLY","evidence":"4_posed attack_f010/f020: body leans forward/down and one paw is off the ground reaching forward, clearly different from idle; but the paw is low under the chin, not at chest height swept across, and head is not raised."}
+],
+"regressions":[],
+"all_done":false}

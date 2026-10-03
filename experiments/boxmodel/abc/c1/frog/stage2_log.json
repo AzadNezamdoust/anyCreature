@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "colour border jaw: a bisect plane cut, the paint border runs on its edge path",
+   "new_verts": 14,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "colour border throat: a bisect plane cut, the paint border runs on its edge path",
+   "new_verts": 34,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "colour border flank: a bisect plane cut, the paint border runs on its edge path",
+   "new_verts": 34,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "colour border arm: a bisect plane cut, the paint border runs on its edge path",
+   "new_verts": 10,
+   "extra_base_edges": []
+  }
+ ]
+}

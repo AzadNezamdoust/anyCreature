@@ -3,6 +3,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'
 from bmkit import *
 from carve import carve_base, colour_from_sheet
 import math
+import numpy as np
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
@@ -33,7 +34,8 @@ BIB_T = ((0.0, -0.4, 0.45), (0.0, 0.0, 1.0))     # the bib's top edge under the 
 in_head = lambda c: c.y < -0.50 and c.z < 0.75
 in_chest = lambda c: -0.62 < c.y < -0.12 and 0.22 < c.z < 0.60 and c.x < 0.30
 CUTS = {
-    'dark lower legs: border loop round each leg at z 0.30': ((0, 0, LEG_Z), (0, 0, 1), lambda c: c.z < LEG_Z + 0.08),
+    'dark lower legs: border loop round each leg at z 0.30': ((0, 0, LEG_Z), (0, 0, 1),
+        lambda c: c.z < LEG_Z + 0.08 and not (c.x < 0.10 and -0.36 < c.y < -0.18)),   # not the raised chest floor (slivers)
     'pale muzzle: border loop from under the eye to behind the jaw': (*MUZ, in_head),
     'pale bib: V edge seen from the front': (*BIB_V, in_chest),
     'pale bib: back edge seen from the side': (*BIB_Y, in_chest),
@@ -67,10 +69,212 @@ def stage2(k, body):
     move([V_(bm, (0.0, -0.699, 0.605))], (0.0, 0.004, -0.018))          # the stop: a step down to the muzzle
     move([V_(bm, (0.065, -0.706, 0.589))], (0.0, 0.004, -0.020))
     move([V_(bm, (0.0, -0.714, 0.564))], (0.0, 0.0, -0.008))            # straight muzzle top
+    # --- big planes on the torso (team pass, must-fix 1): the hull's speckle becomes a few large facets
+    for _ in range(FACET_PASSES):                    # repeated: each pass refits the planes to the moved surface
+        facet(bm, torso_face, K=FACET_K, lam=FACET_LAM, max_d=FACET_MAXD, fit=FACET_FIT)
+    say('torso before denoise: ' + speckle(bm, torso_face))
+    if DENOISE:                                      # second pass (verifier: still small light-catching facets)
+        denoise(bm, torso_face, **DENOISE)
+    say('torso after denoise: ' + speckle(bm, torso_face))
+    # --- hind leg (team pass, must-fix 2): a hock bulge at the back, a narrower shin, a flat plantigrade foot
+    hind = lambda c: c.y > 0.28 and c.z < 0.85
+    cut(k, bm, (0, 0, HOCK_Z), (0, 0, 1), hind, 'hind leg: a loop at the hock, so the rear edge can bend')
+    cut(k, bm, (0, 0, SHIN_Z), (0, 0, 1), hind, 'hind leg: a loop on the shin, under the hock')
+    ring_at = lambda z, pred: [v for v in bm.verts if abs(v.co.z - z) < 0.004 and pred(v.co)]
+    move(ring_at(HOCK_Z, lambda c: c.y > 0.60 and c.x > 0.07), (0, 0.065, 0))          # hock pulled back
+    move(ring_at(SHIN_Z, lambda c: c.y > 0.60 and c.x > 0.07), (0, -0.05, 0))          # shin back edge in: the hock angle
+    move(verts_where(bm, lambda c: c.y > 0.28 and c.y < 0.40 and c.z < 0.07), (0, -0.045, 0))   # toes forward
+    flatten(verts_where(bm, lambda c: c.y > 0.28 and c.y < 0.45 and 0.055 < c.z < 0.13))     # foot top: one plane
+    # second pass (verifier: no visible hock angle, shin a slab): the shin's FRONT edge goes back under the knee,
+    # most at the ankle, so the leg tapers from thigh to ankle and the flat foot sticks out forward of it
+    for v in verts_where(bm, lambda c: 0.28 < c.y < 0.47 and 0.135 < c.z < HOCK_Z - 0.005):
+        t = min(1.0, (HOCK_Z - v.co.z) / (HOCK_Z - SHIN_Z - 0.02))
+        move([v], (0, ANKLE_IN * t * min(1.0, (0.47 - v.co.y) / 0.05), 0))
+    # --- front legs off the chest (team pass, must-fix 4): chest floor up, armpits in, brisket back, shoulder out
+    move(verts_where(bm, lambda c: c.x < 0.05 and -0.32 < c.y < -0.20 and c.z < 0.30), (0, 0, FLOOR_UP))
+    move(verts_where(bm, lambda c: 0.05 < c.x < 0.09 and -0.30 < c.y < -0.22 and c.z < 0.30), (0.02, 0, 0.01))
+    move(verts_where(bm, lambda c: c.x < 0.12 and -0.42 < c.y < -0.28 and 0.30 < c.z < 0.42), (0, 0.035, 0))
+    move(verts_where(bm, lambda c: c.x > 0.27 and -0.32 < c.y < 0.0 and 0.42 < c.z < 0.62), (0.012, 0, 0))
     # --- colour borders on edge loops (round s2 r02): a planar loop cut through the region, so the border is a straight run
     for name, (co, no, box) in CUTS.items():
         cut(k, bm, co, no, box, name)
+    # second pass (verifier: legs still drop straight out of the chest): a loop where the leg leaves the body; above
+    # it the shoulder ring goes out, below it the leg is narrowed about its own axis down to the wrist, so the
+    # shoulder and chest overhang the leg (a shadow step) and the leg reads as a column under a mass
+    # the hull's chest front and leg front are ONE sheet (triangles run from the breastbone to the outer leg), so a
+    # vertical loop splits it where the leg meets the chest, and that line is sunk: a groove, the armpit shadow
+    cut(k, bm, (CLEFT_X, 0, 0), (1, 0, 0), lambda c: c.y < -0.20 and 0.17 < c.z < 0.47 and c.x < 0.31,
+        'chest front: a vertical loop between breastbone and leg, so the leg can separate from the chest')
+    move(verts_where(bm, lambda c: abs(c.x - CLEFT_X) < 0.004 and c.y < -0.20 and 0.17 < c.z < 0.40), (0, CLEFT_D, 0))
+    fleg = lambda c: -0.45 < c.y < 0.0 and c.z < 0.52 and c.x > 0.085
+    cut(k, bm, (0, 0, ARM_Z), (0, 0, 1), fleg, 'front leg: a loop under the shoulder, where the leg leaves the body')
+    ax = Vector((J['elbowL'][0], J['elbowL'][1], 0.0))
+    for v in verts_where(bm, lambda c: fleg(c) and 0.115 < c.z < ARM_Z + 0.004):
+        top = abs(v.co.z - ARM_Z) < 0.004
+        f = ARM_OUT if top else ARM_IN + (1.0 - ARM_IN) * max(0.0, (0.20 - v.co.z) / 0.085)
+        move([v], ((v.co.x - ax.x) * (f - 1.0), (v.co.y - ax.y) * (f - 1.0), 0))
     commit(body, bm)
+
+
+ARM_Z, ARM_OUT, ARM_IN = 0.355, 1.06, 0.84
+CLEFT_X, CLEFT_D = 0.10, 0.02
+FLOOR_UP = 0.0
+FACET_K, FACET_LAM, FACET_PASSES, FACET_MAXD, FACET_FIT = 14, 0.002, 12, 0.02, 1
+DENOISE = None
+HOCK_Z, SHIN_Z = 0.37, 0.19
+ANKLE_IN = 0.06
+ATK_REAR = 18
+ATK_ROLL = 8          # chest roll at the strike: the right shoulder drops
+torso_face = lambda f: all(v.co.z > 0.33 and v.co.y > -0.45 for v in f.verts)
+
+
+def min_angle(f):
+    vs = [v.co for v in f.verts]
+    out = 180.0
+    for i in range(len(vs)):
+        a, b = vs[i - 1] - vs[i], vs[(i + 1) % len(vs)] - vs[i]
+        if a.length > 1e-9 and b.length > 1e-9:
+            out = min(out, math.degrees(a.angle(b)))
+    return out
+
+
+def facet(bm, mask, K=16, lam=0.08, iters=12, max_d=0.03, seed=3, fit=1):
+    """Planar facets (a VSA-style fit): the masked faces are clustered by normal and position into K regions,
+    each region gets one plane (area-weighted normal and centroid), and every vertex is moved to the least-squares
+    meet of the planes of the regions around it (pulled back to where it was by lam, capped at max_d). Vertices
+    that touch an unmasked face stay put, so the head, legs and borders do not move; seam vertices stay on x = 0."""
+    F = sorted((f for f in bm.faces if mask(f)), key=lambda f: tuple(round(x, 5) for x in f.calc_center_median()))
+    if not F:
+        return
+    orig = {v: v.co.copy() for f in F for v in f.verts}
+    N = np.array([f.normal[:] for f in F]); C = np.array([f.calc_center_median()[:] for f in F])
+    A = np.array([f.calc_area() for f in F])
+    X = np.hstack([N, C / 0.35])
+    rng = np.random.default_rng(seed)
+    ctr = X[rng.choice(len(F), K, replace=False, p=A / A.sum())]
+    for _ in range(iters):
+        lab = np.argmin(((X[:, None, :] - ctr[None]) ** 2).sum(-1), axis=1)
+        for j in range(K):
+            m = lab == j
+            if m.any():
+                ctr[j] = (X[m] * A[m, None]).sum(0) / A[m].sum()
+    fl = {f: lab[i] for i, f in enumerate(F)}
+    for _fit in range(fit):                          # fixed regions: refit the planes, move, repeat (converges to planes)
+        for f in F:
+            f.normal_update()
+        N = np.array([f.normal[:] for f in F]); C = np.array([f.calc_center_median()[:] for f in F])
+        A = np.array([f.calc_area() for f in F])
+        planes = {}
+        for j in range(K):
+            m = lab == j
+            if not m.any():
+                continue
+            n = (N[m] * A[m, None]).sum(0); n /= np.linalg.norm(n)
+            c = (C[m] * A[m, None]).sum(0) / A[m].sum()
+            planes[j] = (n, float(n @ c))
+        new = {}
+        for v in {v for f in F for v in f.verts}:
+            if any(f not in fl for f in v.link_faces):
+                continue
+            p0 = np.array(v.co[:]); seam = abs(p0[0]) < 1e-4
+            ks = {fl[f] for f in v.link_faces}
+            M = lam * np.eye(3); b = lam * p0
+            for j in ks:
+                n, d = planes[j]
+                M += np.outer(n, n); b += n * d
+            if seam:
+                M2, b2 = M[1:, 1:], b[1:] - M[1:, 0] * 0.0
+                q = np.concatenate([[0.0], np.linalg.solve(M2, b2)])
+            else:
+                q = np.linalg.solve(M, b)
+            o = np.array(orig[v][:]); dv = q - o; L = np.linalg.norm(dv)      # capped from where the vertex started
+            if L > max_d:
+                dv *= max_d / L
+            new[v] = Vector(o + dv)
+        mx = max(((new[v] - v.co).length for v in new), default=0.0)
+        back = 0  
+        bm.verts.index_update()
+        for v, q in sorted(new.items(), key=lambda t: t[0].index):   # a move that would make a needle triangle is shortened (fixed order)
+            p0 = v.co.copy()
+            before = min((min_angle(f) for f in v.link_faces), default=90.0)
+            for t in (1.0, 0.6, 0.3, 0.0):
+                v.co = p0.lerp(q, t)
+                if t == 0.0 or min(min_angle(f) for f in v.link_faces) >= min(8.0, before):
+                    break
+            back += t < 1.0
+    undone = 0
+    for _ in range(6):                               # a move that makes two faces cross is undone
+        tree = BVHTree.FromBMesh(bm)
+        bm.faces.ensure_lookup_table()
+        bad = set()
+        for i, j in tree.overlap(tree):
+            fi, fj = bm.faces[i], bm.faces[j]
+            if i < j and not set(fi.verts) & set(fj.verts):
+                bad |= set(fi.verts) | set(fj.verts)
+        bad = {v for v in bad if v in orig and (v.co - orig[v]).length > 1e-7}
+        if not bad:
+            break
+        for v in bad:
+            v.co = orig[v]
+        undone += len(bad)
+    for f in bm.faces:
+        f.normal_update()
+    say(f'facet: {undone} moves undone (crossing faces); {len(F)} faces -> {len(planes)} planes, {len(new)} verts moved, max {mx:.3f}, {back} shortened')
+
+
+def speckle(bm, mask):
+    """Share of the masked surface's edge length that is flat (< 4 deg), speckle (4-18 deg) or a crease (> 18 deg)."""
+    fs = {f for f in bm.faces if mask(f)}
+    b = [0.0, 0.0, 0.0]
+    for e in {e for f in fs for e in f.edges}:
+        lf = [f for f in e.link_faces if f in fs]
+        if len(lf) == 2:
+            a = math.degrees(lf[0].normal.angle(lf[1].normal, 0.0))
+            b[0 if a < 4 else 1 if a < 18 else 2] += e.calc_length()
+    t = sum(b) or 1.0
+    return 'flat %.0f%% speckle %.0f%% crease %.0f%%' % tuple(100 * x / t for x in b)
+
+
+def denoise(bm, mask, sigma=0.3, n_iters=6, v_iters=12, max_d=0.025):
+    """Bilateral normal filtering (mesh denoising): each masked face's normal is averaged with its neighbours'
+    (edge+vertex ring), weighted by area and by how close the normals already are (sigma, in |dn|), so near-equal
+    neighbours merge into one plane and real creases stay; then vertices are moved to fit the filtered normals
+    (Sun et al. 2007). Vertices touching an unmasked face stay; seam vertices stay on x = 0; moves capped at max_d."""
+    F = [f for f in bm.faces if mask(f)]
+    fset = set(F)
+    free = [v for v in {v for f in F for v in f.verts} if all(f in fset for f in v.link_faces)]
+    p0 = {v: v.co.copy() for v in free}
+    nb = {f: {g for v in f.verts for g in v.link_faces if g in fset} for f in F}
+    for f in F:
+        f.normal_update()
+    n = {f: f.normal.copy() for f in F}
+    A = {f: f.calc_area() for f in F}
+    for _ in range(n_iters):
+        m = {}
+        for f in F:
+            acc = Vector((0, 0, 0))
+            for g in nb[f]:
+                w = A[g] * math.exp(-((n[f] - n[g]).length / sigma) ** 2)
+                acc += n[g] * w
+            m[f] = acc.normalized()
+        n = m
+    for _ in range(v_iters):
+        C = {f: f.calc_center_median() for f in F}
+        for v in free:
+            d = Vector((0, 0, 0))
+            fs = v.link_faces
+            for f in fs:
+                d += n[f] * n[f].dot(C[f] - v.co)
+            q = v.co + d / len(fs)
+            if abs(p0[v].x) < 1e-4:
+                q.x = 0.0
+            off = q - p0[v]
+            if off.length > max_d:
+                q = p0[v] + off * (max_d / off.length)
+            v.co = q
+    for f in bm.faces:
+        f.normal_update()
+    say(f'denoise: {len(F)} faces, {len(free)} verts, max move {max(((v.co - p0[v]).length for v in free), default=0):.3f}')
 
 
 def cut(k, bm, co, no, box, reason, dist=0.012):
@@ -188,6 +392,7 @@ EAR_FACING = (0.45, -1.0, 0.1)
 
 def stage3(k, body):
     pal = sheet_palette(k, body)
+    pal['dark'] = BRIEF['dark']                      # team pass, must-fix 3: the sheet's dark (#403832) read grey; the brief's warm brown
     hb = edit(body)
     tree = BVHTree.FromBMesh(hb)
     cands = [f for f in hb.faces if (f.calc_center_median() - Vector((0.114, -0.656, 0.560))).length < 0.04 and f.normal.x > 0.2]
@@ -280,16 +485,23 @@ def stage4(k, body, pieces):
              'head': (2, 0, 0)},
         33: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-H, 0, 0), 'thigh.R': (H, 0, 0),
              'chest': (0, 0, 2), 'head': (-3, 0, 0)}})
+    # attack (team pass, must-fix 5): a lunge (body forward ~10% of length, down, head up) with the left paw
+    # raised to chest height, then swept across toward the midline; the right shoulder drops; thighs and the
+    # right arm swing back by the lunge's distance so the planted feet stay put
+    S = ATK_REAR                                     # second pass: the body rears about the pelvis, so the paw gets high without folding the chest
     clip(rig, 'attack', {
         1: {},
-        10: {'chest': (6, 0, 0), 'neck': (4, 0, 0), 'head': (6, 0, 0), 'upperarm.L': (28, 0, 0),
-             'forearm.L': (-24, 0, 0), 'paw.L': (-8, 0, 0)},
-        18: {'chest': (-4, 0, -5), 'neck': (-4, 0, 0), 'head': (-8, 0, 0), 'upperarm.L': (-10, 0, 0),
-             'forearm.L': (-5, 0, 0), 'paw.L': (-10, 0, 0)},
-        26: {'chest': (-2, 0, -3), 'head': (-4, 0, 0), 'upperarm.L': (-5, 0, 0)},
+        10: {'spine': (S, 0, 0), 'chest': (-4, 0, 0), 'neck': (6, 0, 0), 'head': (12, 0, 0),
+             'upperarm.L': (40, 0, 10), 'forearm.L': (25, 0, 0), 'paw.L': (10, 0, 0),
+             'upperarm.R': (-14, 0, 0), 'thigh.L': (-S, 0, 0), 'thigh.R': (-S, 0, 0)},
+        20: {'spine': (S * 0.6, 0, 0), 'chest': (-6, ATK_ROLL, 0), 'neck': (2, 0, 0), 'head': (6, 0, -10),
+             'upperarm.L': (38, 0, -16), 'forearm.L': (20, 0, 0), 'paw.L': (-10, 0, 0),
+             'upperarm.R': (-17, 0, 0), 'thigh.L': (-S * 0.6, 0, 0), 'thigh.R': (-S * 0.6, 0, 0)},
+        28: {'chest': (-2, 0, 0), 'head': (2, 0, -4), 'upperarm.L': (18, 0, -8), 'forearm.L': (-6, 0, 0),
+             'upperarm.R': (-6, 0, 0)},
         40: {}},
-        loc={1: {'spine': (0, 0, 0)}, 10: {'spine': (0, -0.02, 0)}, 18: {'spine': (0, 0.04, 0)},
-             26: {'spine': (0, 0.02, 0)}, 40: {'spine': (0, 0, 0)}})
+        loc={1: {'spine': (0, 0, 0)}, 10: {'spine': (0, 0.04, 0.0)}, 20: {'spine': (0, 0.08, 0.0)},
+             28: {'spine': (0, 0.03, 0.0)}, 40: {'spine': (0, 0, 0)}})
     return rig
 
 

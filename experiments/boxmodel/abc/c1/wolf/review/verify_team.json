@@ -1,0 +1,9 @@
+{"items":[
+{"title":"Forelegs fused into one tan column (stage 1 unlock)","verdict":"DONE","evidence":"2_closeups front limb: two separate tan columns from the ruff down; 1_beauty az000: visible gap between the legs from the chest floor. Hind legs also read as two columns in back34."},
+{"title":"Tail is a slab hanging straight down","verdict":"PARTLY","evidence":"1_beauty az090 tail now angles back and trails behind the hind legs, and 5_reference top shows a narrow brush; but back34 and the hind-limb close-up still show a broad, deep tail fused into the thigh."},
+{"title":"Eyes pin-points and no mouth","verdict":"DONE","evidence":"2_closeups head colour: large amber eye with pupil and a dark mouth line along the lip; 1_beauty az000: both eyes read at thumbnail size."},
+{"title":"Front view cream wall with small head","verdict":"PARTLY","evidence":"1_beauty az000 and 5_reference az000: still a wide cream bib block from chin down to the leg tops, the head is still small relative to the ruff width and the cheek tufts still stack beside the jaw; the bib is less long than before but not close to the reference ratio."},
+{"title":"Belly has no tuck-up","verdict":"PARTLY","evidence":"1_beauty az090: a slight rise of the cream belly behind the elbow, but the underline is still near-flat to the hind leg; 5_reference side does not show the clear waist narrowing the reference has."}
+],
+"regressions":["Ruff clumps over the shoulder still read as same-size shards (should-fix, not improved; not a new regression)"],
+"all_done":false}

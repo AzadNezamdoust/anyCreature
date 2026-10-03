@@ -388,6 +388,24 @@ def stage2(k, body):
         wb = max(0.0, 1.0 - abs(c.z - 1.72) / 0.32)
         wp = max(0.0, 1.0 - abs(c.z - 2.22) / 0.10)
         c.y += -0.07 * wb * wb * (3 - 2 * wb) + 0.05 * wp
+    # AD team item 4: the belly bulges a further 0.13 m forward (z 1.3-2.0, falloff to 0 at 1.1 / 2.15,
+    # |x| < 0.6 full, 0 by 0.8), the under-pec row 0.03 further back so the shelf overhang reads
+    for v in bm.verts:
+        c = v.co
+        if c.y > -0.25:
+            continue
+        wz = _smooth01((c.z - 1.10) / 0.20) * _smooth01((2.15 - c.z) / 0.15)
+        wx = _smooth01((0.80 - abs(c.x)) / 0.20)
+        wp = max(0.0, 1.0 - abs(c.z - 2.22) / 0.08) * wx
+        c.y += -0.13 * wz * wx + 0.03 * wp
+    # verify pass item 4: az090 still read as a straight line chest to knee: a rounder pot belly, peaking
+    # 0.12 m further forward at z 1.62 (cosine bump, zero at z 1.12 / 2.12, full to |x| 0.65, zero by 0.86)
+    for v in bm.verts:
+        c = v.co
+        if c.y > -0.25 or not 1.12 < c.z < 2.12:
+            continue
+        wz = 0.5 + 0.5 * math.cos((c.z - 1.62) / 0.50 * math.pi)
+        c.y -= 0.12 * wz * _smooth01((0.86 - abs(c.x)) / 0.21)
     commit(body, bm); bm.free()
 
 
@@ -409,7 +427,7 @@ def sheet_palette(k, body):
     _kill(tmp)
     say('sheet palette', sheet)
     pal = dict(BRIEF_PAL)
-    for role in ('hide', 'moss', 'cloth'):
+    for role in ('hide', 'cloth'):                         # moss keeps the brief's #6f8f3a (AD team item 2a)
         r = _hex_rgb(BRIEF_PAL[role])
         best = min(sheet.values(), key=lambda h: sum((p - q) ** 2 for p, q in zip(_hex_rgb(h), r)))
         d = sum((p - q) ** 2 for p, q in zip(_hex_rgb(best), r)) ** 0.5
@@ -475,6 +493,9 @@ def stage3(k, body):
 
     def body_rule(c, n, i):
         if moss_f(c) > 0:
+            # verify pass item 2: hide shows down the centre of the back (a strip widening downward)
+            if c.y > -0.05 and abs(c.x) < 0.30 + 0.30 * _smooth01((3.85 - c.z) / 0.55):
+                return 'hide'
             return 'moss'                                   # the mantle: its border is the stage-1 cut path
         if abs(c.x) < 0.30 and c.y < -0.95 and 2.60 < c.z < 2.70:
             return 'dark'                                   # the mouth crease between the jaw and lip rings
@@ -516,9 +537,9 @@ def stage3(k, body):
     # ears: short pointed troll ears out of the skull sides, swept back and up
     def ears(bm):
         root = Vector((0.33, -0.74, 3.05))
-        horn(bm, [section(root, (1, 0.35, 0.25), 0.10, 0.055, n=4, spin=0),
-                  section(root + Vector((0.13, 0.05, 0.05)), (1, 0.5, 0.35), 0.075, 0.035, n=4, spin=0)],
-             root + Vector((0.27, 0.14, 0.15)))
+        horn(bm, [section(root, (0.6, 0.8, 0.15), 0.06, 0.035, n=4, spin=0),     # should-fix: laid back, half size
+                  section(root + Vector((0.05, 0.07, 0.02)), (0.45, 0.9, 0.2), 0.045, 0.022, n=4, spin=0)],
+             root + Vector((0.10, 0.20, 0.06)))
     out.append(piece('ears', ears, lambda c, n, i: 'hide'))
 
     # nose: a broad bulb over the nose base with dark nostrils underneath
@@ -541,7 +562,7 @@ def stage3(k, body):
         for i in range(nn):
             th = math.radians(spin) + i * 2 * math.pi / nn
             d = e1 * (math.cos(th) * rx * jit[i]) + e2 * (math.sin(th) * ry * jit[i])
-            outer.append(on_skin(loc + d, -0.008))
+            outer.append(on_skin(loc + d, -0.03))
             midt.append(on_skin(loc + d * 0.75, t * 0.6))
             midb.append(on_skin(loc + d * 0.75, -t * 0.4))
         O = ring(bm, [tuple(q) for q in outer]); MT = ring(bm, [tuple(q) for q in midt]); MB = ring(bm, [tuple(q) for q in midb])
@@ -551,78 +572,110 @@ def stage3(k, body):
             j = (i + 1) % nn
             bm.faces.new([MT[i], MT[j], ct]); bm.faces.new([MB[j], MB[i], cb])
 
-    def moss(bm):
-        drape(bm, (0.40, 0.05, 3.90), 0.36, 0.55, [1, 0.8, 1.1, 0.95, 0.75, 1.05, 0.9, 1.15, 0.85], spin=10)
-        drape(bm, (1.00, 0.10, 3.30), 0.28, 0.42, [0.9, 1.1, 0.8, 1.05, 1.0, 0.7, 1.1, 0.95], spin=35)
-        drape(bm, (0.62, -0.42, 3.55), 0.30, 0.24, [1.1, 0.8, 1.0, 0.75, 1.15, 0.9, 1.0], spin=5)
-        drape(bm, (0.55, 0.80, 3.25), 0.32, 0.30, [1.0, 0.85, 1.1, 0.8, 1.05, 0.9, 0.95], spin=20)
+    def moss(bm):                                           # AD team item 2c: 5 clumps 0.3-0.4 m, proud ~0.1 m
+        for p, rx, ry, jit, sp in (((0.62, -0.30, 3.65), 0.20, 0.18, [1, 0.8, 1.1, 0.9, 0.75, 1.05, 0.95], 10),
+                                   ((1.18, 0.44, 3.20), 0.15, 0.15, [0.9, 1.1, 0.8, 1.05, 1.0, 0.75], 35),
+                                   ((0.20, 0.62, 3.70), 0.17, 0.18, [1.1, 0.8, 1.0, 0.75, 1.15, 0.9], 5),
+                                   ((1.06, 0.70, 3.05), 0.16, 0.15, [1.0, 0.85, 1.1, 0.8, 1.05, 0.9, 0.95], 20)):
+            drape(bm, p, rx, ry, jit, t=0.24, spin=sp)
     out.append(piece('moss', moss, lambda c, n, i: 'moss'))
 
-    def rocks(bm):
-        for p, r, h in (((0.80, -0.40, 3.42), 0.20, 0.18), ((0.22, 0.40, 3.93), 0.24, 0.20),
-                        ((1.18, 0.30, 3.05), 0.20, 0.18), ((0.75, 0.45, 3.62), 0.17, 0.15)):
+    def rocks(bm):                                          # AD team item 2b: 0.45-0.6 m flat rocks, 40% sunk
+        for p, r, h in (((1.12, -0.10, 3.35), 0.30, 0.20), ((0.34, 0.12, 3.95), 0.27, 0.19),
+                        ((0.80, 0.30, 3.65), 0.27, 0.18), ((0.55, 0.95, 3.20), 0.26, 0.17)):
             loc, n = seat(p)
-            prism(bm, loc - n * h * 0.5, n, r, r * 0.78, h, n=6, top=0.66, start=15, jit=[1, 0.8, 1.1, 0.9, 1.0, 0.85])
+            prism(bm, loc - n * h * 0.4, n, r, r * 0.8, h, n=6, top=0.78, start=15, jit=[1, 0.8, 1.1, 0.9, 1.0, 0.85])
     out.append(piece('rocks', rocks, lambda c, n, i: 'stone'))
 
-    # belt: a band round the waist, sunk into the belly, sagging at the front; a stone buckle
-    BELT_Z = lambda th: 1.66 - 0.08 * math.cos(th)
+    # belt: a wide leather band hugging the hips 1-2 cm proud of the skin (each row sampled at its own
+    # height), the front edge dipping 0.1 m below the back; one stone toggle front-centre under the belly
+    BELT_Z = lambda th: 1.64 - 0.05 * math.cos(th)
+    BELT_H, BELT_IN, BELT_OUT = 0.12, 0.014, 0.084
+
+    BELT_FRONT = []
 
     def belt(bm):
-        rows = [[], [], [], []]
-        N = 32
+        N = 28
+        prof = ((-BELT_H, BELT_IN), (-BELT_H, BELT_OUT), (0.0, BELT_OUT + 0.006), (BELT_H, BELT_OUT),
+                (BELT_H, BELT_IN), (0.0, BELT_IN))
+        rows = [[] for _ in prof]
         for i in range(N):
             th = i * 2 * math.pi / N
             d = Vector((math.sin(th), -math.cos(th), 0))
-            z = BELT_Z(th)
-            loc = hit((0, 0.20, z), d)
-            for r, (dz, dd) in zip(rows, ((-0.06, 0.03), (-0.06, 0.10), (0.06, 0.10), (0.06, 0.03))):
-                r.append(loc + d * dd + Vector((0, 0, dz)))
+            z0 = BELT_Z(th)
+            rad = {}
+            for dz in (-BELT_H, 0.0, BELT_H):        # each row clears the fullest skin around it (z and angle)
+                best = 0.0
+                for ez in (-0.07, -0.035, 0.0, 0.035, 0.07):
+                    for et in (-0.5, 0.0, 0.5):
+                        t2 = th + et * 2 * math.pi / N
+                        d2 = Vector((math.sin(t2), -math.cos(t2), 0))
+                        q = hit((0, 0.20, z0 + dz + ez), d2)
+                        if q is not None:
+                            best = max(best, (q - Vector((0, 0.20, 0))).dot(d))
+                rad[dz] = best
+            far = max(rad.values())
+            if i == 0:
+                BELT_FRONT.append(rad[0.0] + max(0.0, far - rad[0.0]) * 0.35)
+            for r, (dz, dd) in zip(rows, prof):
+                rr = rad[dz] + max(0.0, far - rad[dz]) * 0.35        # a strap bridges small hollows
+                r.append(Vector((0, 0.20, z0 + dz)) + d * (rr + dd))
         R = [ring(bm, [tuple(p) for p in r]) for r in rows]
         for a, b in zip(R, R[1:] + R[:1]):
             bridge(bm, a, b, closed=True)
     out.append(piece('belt', belt, lambda c, n, i: 'leather', mirror=False))
 
-    def toggles(bm):                                         # stone toggles on the belt at the hips (the sheet's)
-        for th in (math.radians(66),):
-            d = Vector((math.sin(th), -math.cos(th), 0))
-            c = hit((0, 0.20, BELT_Z(th)), d)
-            prism(bm, c + d * 0.065, d, 0.085, 0.07, 0.07, n=6, top=0.75, start=0)
-    out.append(piece('toggles', toggles, lambda c, n, i: 'stone'))
+    def toggles(bm):                                         # one stone toggle front-centre on the belt
+        d = Vector((0, -1, 0))
+        z = BELT_Z(0.0) - 0.02
+        c = Vector((0, 0.20, z)) + d * (BELT_FRONT[0] + BELT_OUT - 0.01)
+        prism(bm, c, d, 0.095, 0.075, 0.08, n=6, top=0.72, start=0, jit=[1, 0.9, 1.05, 1, 0.9, 1.05])
+    out.append(piece('toggles', toggles, lambda c, n, i: 'stone', mirror=False))
     # loincloth flaps front and back: thick plates hanging flat in front of the body, a jagged hem
     U = [-1, -0.66, -0.33, 0, 0.33, 0.66, 1]
 
-    def cloth(rows, side, hem, t=0.05):
+    def cloth(rows, side, hem, t=0.07, gap=0.03):
+        """AD team item 3: a closed flap 0.07 m thick; the top row tucked inside the belt band, the lower
+        rows lying 3 cm off the body (the fullest point across the row and a little above it), easing in
+        a fifth of the way where the body recedes (r40: half way still read as a rod off the thigh in az090)."""
+        def outmost(w, z0, z1):
+            ys = [h.y * -side for zz in (z0, (z0 + z1) / 2, z1) for u in U
+                  for h in [hit((u * w * 1.1, -2.5 * side, zz), (0, side, 0))] if h]
+            return max(ys) if ys else 0.7                    # outward distance along -side
         def build(bm):
             F, Bk = [], []
+            prev = None
             for r, (w, z) in enumerate(rows):
                 last = r == len(rows) - 1
                 pts = []
-                for kk, u in enumerate(U):
-                    zz = z + (hem[kk] if last else 0.0)
-                    ys = [h.y for h in (hit((u * w, -2.5 * side, zz - dz), (0, side, 0)) for dz in ((0.0, 0.08, 0.16) if r == 0 else (0.0,))) if h]
-                    hy = max(y * -side for y in ys) * -side if ys else -0.7 * side   # the most outward point below the belt
-                    pts.append([u * w, hy, zz])
                 if r == 0:                                   # the top row sits inside the belt band only
-                    for p in pts:
-                        p[1] -= side * 0.065
-                else:                                        # lower rows hang flat in front of the most forward point
-                    lim = min(h.y * side for zz in [rows[-1][1] + 0.1 * q for q in range(9)] for u in U
-                              for h in [hit((u * rows[r][0], -2.5 * side, zz), (0, side, 0))] if h) * side   # hang clear of everything below
-                    for p, u in zip(pts, U):
-                        p[1] = lim - side * 0.10 + side * 0.03 * u * u     # side: the ray direction (inward)
+                    for kk, u in enumerate(U):
+                        ys = [h.y for h in (hit((u * w, -2.5 * side, z - dz), (0, side, 0)) for dz in (0.0, 0.08, 0.16)) if h]
+                        hy = max(y * -side for y in ys) * -side if ys else -0.7 * side
+                        pts.append([u * w, hy - side * 0.082, z])
+                    tt = 0.045
+                else:
+                    o = outmost(w, z - 0.05, z + 0.05)
+                    for kk, u in enumerate(U):               # verify pass item 3: each column drapes on the skin
+                        zz = z + (hem[kk] if last else 0.0)  # under it (40% bridged to the row's fullest point),
+                        ys = [h.y * -side for dz in (-0.06, 0.0, 0.06) for du in (-0.12, 0.0, 0.12)   # so the
+                              for h in [hit(((u + du) * w, -2.5 * side, z + dz), (0, side, 0))] if h]  # edges wrap
+                        oc = max(ys) if ys else o
+                        oc = max(oc + 0.4 * (o - oc), o - 0.16)
+                        pts.append([u * w, -side * (oc + gap + t), zz])
+                    tt = t
                 F.append(ring(bm, [tuple(p) for p in pts]))
-                Bk.append(ring(bm, [(px, py + side * t, pz) for px, py, pz in pts]))
+                Bk.append(ring(bm, [(px, py + side * tt, pz) for px, py, pz in pts]))
             for r in range(len(rows) - 1):
                 bridge(bm, F[r], F[r + 1]); bridge(bm, Bk[r + 1], Bk[r])
                 bm.faces.new([F[r][0], F[r + 1][0], Bk[r + 1][0], Bk[r][0]])
                 bm.faces.new([F[r][-1], Bk[r][-1], Bk[r + 1][-1], F[r + 1][-1]])
             bridge(bm, F[0], Bk[0]); bridge(bm, Bk[-1], F[-1])
         return build
-    out.append(piece('loin_front', cloth([(0.40, 1.58), (0.36, 1.30), (0.31, 1.02), (0.26, 0.74)], 1,
+    out.append(piece('loin_front', cloth([(0.50, 1.58), (0.48, 1.30), (0.42, 1.02), (0.33, 0.74)], 1,
                                          [0.0, -0.10, 0.02, -0.18, 0.0, -0.08, 0.03]),
                      lambda c, n, i: 'cloth', mirror=False))
-    out.append(piece('loin_back', cloth([(0.50, 1.74), (0.47, 1.48), (0.43, 1.24), (0.38, 1.04)], -1,
+    out.append(piece('loin_back', cloth([(0.68, 1.74), (0.66, 1.48), (0.58, 1.24), (0.46, 1.04)], -1,
                                         [0.02, -0.12, 0.0, -0.09, 0.03, -0.15, 0.0]),
                      lambda c, n, i: 'cloth', mirror=False))
 
@@ -666,12 +719,30 @@ def stage3(k, body):
         prism(bm, loc + Vector((0.08, 0.05, 0.02)), ax, 0.095, 0.10, 0.32, n=5, top=0.72, start=90)
     out.append(piece('thumbs', thumbs, lambda c, n, i: 'stone' if n.dot(Vector((-0.45, -1.0, -0.35)).normalized()) > 0.8 else 'hide'))
 
-    # toes: three blunt toes with big stone nails on each foot front
+    # toes (AD team item 5): three big abutting toes ~0.24 m long, 0.15-0.18 m tall, rounded tops with the
+    # front-top edge chamfered, stone nails over the front 0.08 m; the sole stays the body's dark
+    toe_tip = []
+
     def toes(bm):
-        for x, rx in ((0.48, 0.12), (0.68, 0.10), (0.87, 0.08)):
-            h = hit((x, -2.0, 0.08), (0, 1, 0))
-            prism(bm, (x, h.y + 0.06, 0.08), (0, -1, 0), rx, 0.075 if rx > 0.1 else 0.065, 0.15, n=4, top=0.85, start=45)
-    out.append(piece('toes', toes, lambda c, n, i: 'stone' if n.y < -0.7 or (n.z > 0.7 and c.y < -0.7) else 'hide'))
+        # verify pass item 5: still nubs under the wedge: 0.22-0.27 m tall (they stand above the foot's
+        # front edge), 0.30 m proud of it, wider, so three big rounded toes read from az000
+        for x, w, h in ((0.43, 0.125, 0.27), (0.67, 0.115, 0.25), (0.89, 0.105, 0.22)):
+            # r49 probe: the hull's foot is a wedge whose front overhangs the sole by 0.45 m above z 0.2, so
+            # the old toes sat hidden under it. The toe now runs low under the overhang and rises in front.
+            ys = [q.y for q in (hit((x, -2.0, z), (0, 1, 0)) for z in (0.05, 0.10)) if q]
+            yw = min(q.y for q in (hit((x + dx, -2.0, z), (0, 1, 0)) for dx in (-w, 0, w) for z in (0.2, 0.24, 0.3, 0.38)) if q) - 0.03
+            yb, yt = max(ys) + 0.03, yw - 0.30
+            lo = 0.12 / h
+            prof = [(-1, 0), (1, 0), (1, 0.6), (0.6, 1), (-0.6, 1), (-1, 0.6)]
+            R = []
+            for y, sx, sz in ((yb, 0.9, lo), (yw - 0.01, 0.95, lo), (yw - 0.08, 1.0, 1.0), (yt + 0.10, 1.0, 1.0), (yt, 0.78, 0.6)):
+                R.append(ring(bm, [(x + px * w * sx, y, 0.012 + pz * (h - 0.012) * sz) for px, pz in prof]))
+            for r0, r1 in zip(R, R[1:]):
+                bridge(bm, r0, r1, closed=True)
+            cap(bm, R[0]); cap(bm, list(reversed(R[-1])))
+            toe_tip.append((x, yt))
+        recalc_normals(bm)
+    out.append(piece('toes', toes, lambda c, n, i: 'stone' if (c.y < min(toe_tip, key=lambda q: abs(abs(c.x) - q[0]))[1] + 0.11 and n.z > -0.5 and (n.y < -0.35 or n.z > 0.35)) else 'hide'))
     return out
 
 

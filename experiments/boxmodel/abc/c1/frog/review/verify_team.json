@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1 Stage-1 unlock: rear dome with two thigh lobes","verdict":"NOT","evidence":"5_reference row 3 model az180 and 1_beauty back34 still show square haunches with vertical outer walls, flat back wall and a flat-faced thigh block as tall as the belly; no light gap between belly and thigh. Tri count is 2994 in techqa (check asked 900-1400)."},
+{"title":"2 Spots as round discs","verdict":"PARTLY","evidence":"1_beauty az090 and 5_reference top now show hexagonal disc spots (clear gain, 3_tech/techqa piece_spots float 0 zfight 0), but sizes vary and back34/az180 still show small dark flake-like slivers along the spine that read as debris, not dots."},
+{"title":"3 Bigger bulging eyes","verdict":"DONE","evidence":"1_beauty az000 and az090: gold balls are large, stand proud above the turret and break the skull silhouette at top and side; 3_tech eyes grey, no float."},
+{"title":"4 Mouth to under eye, no pink at rest","verdict":"DONE","evidence":"1_beauty az090: black mouth line runs back to under the eye; az000 and 2_closeups head colour show no pink; 4_posed attack_f012 still shows the lash. Minor: a tiny pink dot is faintly visible in the 2_closeups toes-panel thumbnail."},
+{"title":"5 Ragged cream flank border","verdict":"PARTLY","evidence":"1_beauty az090: cream flank is now a mostly clean vertical strip behind the foreleg, but its lower end is still jagged with a notch and a few stray cream facets near the thigh; not one convex edge to the floor."}
+],
+"regressions":["techqa triangles 2994 vs the 900-1400 gate in item 1 (budget regression)","tongue stretch still 14 tris, stretch_max 5.55 (unchanged, should-fix)"],
+"all_done":false}

@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "wing membrane: cross loop at the rear spar bay, so the trailing edge can scallop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "wing membrane: cross loop at the front spar bay, so the trailing edge can scallop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "black bill: border loop round the bill base",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "pale bill tip: border loop round the hook",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "grey-brown shank: border loop round each leg at z 0.47",
+   "new_verts": 11,
+   "extra_base_edges": []
+  }
+ ]
+}

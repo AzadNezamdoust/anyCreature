@@ -1,0 +1,9 @@
+{"items":[
+{"title":"Legs are thick, knee-less columns","verdict":"PARTLY","evidence":"5_reference.jpg side/front rows: legs slimmer than before but az090 thigh still runs near-straight to the foot with no clear forward knee; 2_closeups hind limb shows a bend but not three distinct masses."},
+{"title":"Eyes too small and set too deep","verdict":"DONE","evidence":"1_beauty.jpg az000 and hero: large yellow almond eyes with slit pupils, flush with the cheek, readable at thumbnail size and the first thing the face says."},
+{"title":"Brow overhang reads as cap/hood brim","verdict":"PARTLY","evidence":"1_beauty.jpg az090/hero: forehead flows into the brow better with no heavy black band, but 3_tech.jpg hero/az090 and 4_posed.jpg wire still show a brim-like step shelf above the eye."},
+{"title":"Hands are stub mitts","verdict":"PARTLY","evidence":"1_beauty.jpg az000: hands are longer with visible white claws, but read as tapered paddles rather than three spread clawed fingers; hero claws are visible; 4_posed attack_f006 fingers follow the swipe, drift 0 in techqa.json."},
+{"title":"Belt stands off the body at the back; back flap is a bib","verdict":"PARTLY","evidence":"1_beauty.jpg back34 flap is now short and narrower than the hips with tatters, but az090 still shows the belt projecting behind the butt as a shelf with the flap bulging off it; techqa hit/float 0 but belt clip 15 tris."}
+],
+"regressions":["techqa.json flips 5 (area 0.010%) vs 3 before: still within limits, minor","clip warning 32 tris (belt 15, front flap 4) not reduced"],
+"all_done":false}

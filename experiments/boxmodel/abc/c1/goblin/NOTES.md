@@ -88,3 +88,61 @@ Lock: r15, 1122 tris, edge sha256 78576a9075a21571.
   clip WARN 74 tris (4.2% area: the front flap against the thighs in move). Over budget: stage 4 took 8 rounds
   (the hull's hand-knee web cost 6).
 - stage 4 r09: final with orbit + glbcheck, --review, --compare.
+
+## Team pass (review/ad_notes_team.md), rounds 10-30
+- r10: baseline, all gates PASS (flips 3, drift 0, clip 74 warn).
+- s2 r11 (must-fix 1, legs): Critique: thigh/shin are one column as deep as the torso. Diagnosis: the hull leg (85
+  vertices, no knee ring). Fix: legs(): scale leg vertices about per-band centroids. Result: PASS but jagged (the
+  centroids of 4-10 vertices per band jump; the band at z 0.36 is the rump).
+- s2 r12: Fix: a fixed centre line (x 0.145, LEG_CY), the buttock (y > 0.15-0.22) and the crotch near the seam excluded.
+  Result: FAIL slivers 2.1%; shape smooth.
+- s2 r13: Fix: LEG_S shin 0.62 / knee 0.74 / thigh 0.64, LEG_DY knee -42 mm, ankle +15 mm. PASS, IoU min 0.948,
+  slivers 1.9%. s4 r14: PASS, flips 5 (0.22% / 0.35%), clip 74 -> 22.
+- s4 r15 (must-fix 2, eyes): Fix: 8-point almond lens (EYE_W/EYE_H, outer corner up 14 deg), rim ray-cast onto the
+  skin + 4 mm, bulged iris ring, small vertical pupil. Result: PASS; readable, but half under the brow, a flange at the
+  outer corner.
+- s4 r16 (must-fix 3, brow): Fix: brow ring forward push 12-22 mm -> 2-6 mm, forehead front +10 mm forward, cheekbone
+  H6 P2/P3 up 8/15 mm. Result: PASS, IoU 0.949; no brim, the forehead runs into the brow.
+- s3 r17 / s4 r18: rim depths smoothed, the iris ring follows the rim's tilt, corner elongation 1.12 -> 1.06: a clean
+  almond. r19: size 0.052 x 0.037 (a yellow fleck: the smoothed rim dipped under the brow). r20: rim = max(raw,
+  smoothed): clean. Eyes are the first read in hero and az000.
+- s4 r21 (must-fix 4, hands): Fix: fingers 0.058+0.040, spread 20 deg, claws 0.045 x 0.0155. Result: FAIL drift 2
+  (finger shells: the tips come nearer the foot top than the palm, so the kit anchors them to the foot).
+- r22: fingers 0.048+0.034 (+33%): PASS drift 0. r23: 0.053+0.037: FAIL drift 2. Kept 0.048+0.034. Partly done: the
+  drift gate caps the length; claws are +50%.
+- s4 r24 (must-fix 5, belt): Fix: 25 belt columns, 2.5 mm steps (rear step 40 mm -> 18 mm). Result: FAIL hit 1 (belt).
+  r25: inner offset 7 -> 9 mm: PASS.
+- r26: Fix: belt rise 0.33 -> 0.20 per metre (the rear sat on the receding slope above the rump and stood off as a
+  shelf; now on the near-vertical part). Result: FAIL hit 2 (the back flap no longer tucked under the stepped columns).
+- r27: flap tops follow the belt's step-out: PASS (Blender crashed after the gates in the render, rerun fine).
+- r28: back flap columns 24,23,21,20 (to 150 deg, ~70% of the old width), drops x 2/3, 4 tatters. PASS.
+- r29: the rump beside/below the back flap painted skin (the painted "skirt" on the base was the bib). PASS.
+- r30: belt outer 26 -> 22 mm; final with orbit + glbcheck OK, --review, --compare. 2514 tris, slivers 1.0%,
+  flips 5 (0.20% / 0.36% area), hit/float/zfight/drift 0, clip 32 (warn), IoU min 0.949, lock PASS.
+- Not done: should-fix list (skull nub, collar shelf, mouth crease, move stride, ear slivers). Rear belt columns 19-20
+  still step out 20 mm (a lump of the hull at the hip).
+
+## Team pass, second pass (review/verify_team.json: items 1, 3, 4, 5 PARTLY), rounds 31-43
+- r31: baseline, all gates PASS (flips 5, drift 0, clip 32 warn).
+- s2 r33 (item 1, legs): Critique: az090 the leg is still a column, no forward knee. Diagnosis (mesh dump, side plot): under
+  the knee the hull has two prongs: the real shin (y 0.05-0.10) and a phantom one in front of it (hand side silhouette
+  x leg front silhouette), closed 2 cm above the foot. A y-remap of the whole band: FAIL (34 hits). Fix: KNEE_MOVES,
+  16 explicit vertex moves: the phantom prong lifted into the knee's underside, the back of the knee hollowed.
+  Result: PASS, IoU min 0.933, slivers 1.9%: a forward knee, the shin runs diagonally back to the heel. s4 r34 PASS.
+- s2 r35: Fix: shin mid ring 4 -> 7.5 cm deep (it read as a blade). PASS, IoU 0.937.
+- s4 r36 (item 3, brow): Diagnosis: at P2/P3 the brow ring overhung the eye 2-2.5 cm and the forehead above receded
+  at 35-45 deg (the step in the wire). Fix: brow P2/P3 back 11-13 mm, forehead P2/P3 forward 10-12 mm. PASS: one
+  slope from dome to brow; the ring edge still shows as a line in the wire (partly).
+- s4 r37 (item 4, hands): Diagnosis: the fingers fanned front-to-back (hv ~ -y), so az000 saw one paddle, and they
+  pointed at the foot, so the drift gate capped the length. Fix: fan across the hand (x), fingers reach forward and
+  hook down, length 0.058+0.040 (the full +60%), spread 24 deg. PASS drift 0; clip 46 (claws vs the foot in move).
+- r38/r39: hand axis outward and less down (0.36, -0.80, -0.42), claw hook 30 -> 18 deg: clip 32 (claws 8).
+- s4 r40 (item 5, belt): Diagnosis (column dump): the rump is a box; column 19 faced +x and column 20 +y, the band
+  cut the corner ridge between them and stepped out 20 mm; the 22 mm band stood off the receding back. Fix: column
+  normals averaged with their neighbours, column 19 moved onto the ridge (146 deg), outer offset 22 -> 16 mm at the
+  back. Result: PASS, steps 3 mm, belt clip 15 -> 10.
+- r41: back flap top (10, 15) mm under the thinner belt, hem (9, 23) mm, flare 0.14 -> 0.10: it hangs down the rump.
+- r42: belt even_through radius 0.035: no change in clip, reverted.
+- r43: final with orbit + glbcheck OK, --review, --compare. 2514 tris, slivers 1.4%, flips 5 (0.20% / 0.36% area),
+  hit/float/zfight/drift 0, clip 27 (warn; was 32), IoU min 0.937, lock PASS.
+- Not done: flips stay 5 (within limits, inner forearm faces); clip 27 remains (belt 10, claws 8, fangs 5, front flap 4).
