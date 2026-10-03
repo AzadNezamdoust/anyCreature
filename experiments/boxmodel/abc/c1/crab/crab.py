@@ -211,7 +211,6 @@ def stage1(k):
         v.co.z += LIFT
     squeeze_underbody(bm)
     dome(bm)
-    front_wall(bm)
     add_legs(bm)
     snap_seam(bm, 1e-6)
     commit(body, bm)
@@ -219,66 +218,6 @@ def stage1(k):
     debug_slivers(body, 's2')
     debug_slivers(body, 's1')
     return body
-
-
-# 1c. front wall (team round, STAGE-1 UNLOCK, AD must-fix 1): the carve's wall between the claw arms
-#     is a strip of needle triangles whose verts zigzag 2.5 cm in y (stripes at az000). Its six faces
-#     are replaced by a 2-row x 3-column grid per half on a shallow arc (bulge 1.5 cm at the seam,
-#     radius ~ body half-width); the boundary verts keep their rows and slide onto the arc.
-WALL_Y0, WALL_BULGE, WALL_W = -0.279, 0.015, 0.12
-
-
-def front_wall(bm):
-    bm.normal_update()
-    faces = [f for f in bm.faces if f.normal.y < -0.4 and
-             all(v.co.y < -0.24 and abs(v.co.x) < 0.12 and 0.08 < v.co.z < 0.275 for v in f.verts)]
-    vs = {v for f in faces for v in f.verts}
-    mid_z = sum(v.co.z for v in vs) / len(vs)
-    top = sorted((v for v in vs if v.co.z > mid_z), key=lambda v: v.co.x)
-    bot = sorted((v for v in vs if v.co.z <= mid_z), key=lambda v: v.co.x)
-    say('CRAB wall faces', len(faces), 'top', [tuple(round(c, 3) for c in v.co) for v in top],
-        'bot', [tuple(round(c, 3) for c in v.co) for v in bot])
-    assert len(faces) == 6 and len(top) == 4 and len(bot) == 4, (len(faces), len(top), len(bot))
-    bmesh.ops.delete(bm, geom=faces, context='FACES_ONLY')
-    xs = [0.0, 0.037, 0.074, 0.11]
-    arc = lambda x: WALL_Y0 + WALL_BULGE * (x / WALL_W) ** 2
-    zt = lambda x: 0.270 - 0.030 * x / 0.11          # the rim lip row (0.270 at the seam)
-    zb = lambda x: 0.094 + 0.020 * x / 0.11          # the belly row
-    mid = []
-    for j, x in enumerate(xs):
-        top[j].co = Vector((x, arc(x), zt(x)))
-        bot[j].co = Vector((x, arc(x), zb(x)))
-        if j == 3:      # the outer edge keeps its face beside the claw: split it (no T-junction)
-            e = bm.edges.get((top[j], bot[j]))
-            _, m = bmesh.utils.edge_split(e, bot[j], 0.5)
-            m.co = (x, arc(x), 0.5 * (zt(x) + zb(x)))
-            mid.append(m)
-        else:
-            mid.append(bm.verts.new((x, arc(x), 0.5 * (zt(x) + zb(x)))))
-    for j in range(3):
-        for a, b, c, d in ((bot[j], bot[j + 1], mid[j + 1], mid[j]), (mid[j], mid[j + 1], top[j + 1], top[j])):
-            f = bm.faces.new((a, b, c, d))
-            f.normal_update()
-            if f.normal.y > 0:
-                f.normal_flip()
-    loose = [e for e in bm.edges if not e.link_faces]      # the old diagonals and verticals
-    bmesh.ops.delete(bm, geom=loose, context='EDGES')
-    bm.normal_update()
-    for e in bm.edges:
-        if len(e.link_faces) != 2 and not all(abs(v.co.x) < 1e-6 for v in e.verts):
-            say('CRAB open edge', [tuple(round(c, 3) for c in v.co) for v in e.verts], len(e.link_faces))
-
-
-def debug_wall(bm):
-    bm.verts.index_update()
-    vs = [v for v in bm.verts if v.co.y < -0.10 and abs(v.co.x) < 0.2 and v.co.z < 0.33]
-    for v in sorted(vs, key=lambda v: (round(v.co.z, 2), v.co.x)):
-        say('CRAB wallv', v.index, tuple(round(c, 3) for c in v.co), [f.index for f in v.link_faces])
-    fs = {f for v in vs for f in v.link_faces}
-    bm.faces.index_update()
-    for f in sorted(fs, key=lambda f: f.index):
-        f.normal_update()
-        say('CRAB wallf', f.index, [v.index for v in f.verts], tuple(round(c, 2) for c in f.normal))
 
 
 def debug_slivers(ob, tag):
@@ -314,22 +253,11 @@ def body_zone(c):
     return disc_r(c) < 1.15 and c.y > -0.34 and not (c.x > 0.17 and c.y < -0.12)
 
 
-BELLY_TOP = 0.175       # team AD must-fix 2: the cream strip's top (was the rim, 0.235)
-TIP_TAPER = 0.5
-CLAW_TIP_Y = -0.58    # team AD must-fix 4: the dark finger cap = the last ~20% of the fingers (was -0.555)
-
-
-def belly_box(c):
-    """the bowl under the rim only: not the leg roots' side faces (their hip rings sit out past it)"""
-    return body_zone(c) and abs(c.x) <= bowl(c.z) + 0.012 and c.z < RIM_Z
-
-
 # colour borders as planar loops: (point, normal, faces whose verts all satisfy box)
 CUTS = {
-    'rim underside border: rim band above, red shell below': ((0, 0, RIM_Z), (0, 0, 1), body_zone),
-    'belly border (team AD 2): cream only in a low strip under the rim, as on the sheet': ((0, 0, BELLY_TOP), (0, 0, 1), lambda c: belly_box(c)),
+    'belly border: the rim underside, red shell above, cream below': ((0, 0, RIM_Z), (0, 0, 1), body_zone),
     'ridge border: the rim band (dark red) under the dome': ((0, 0, 0.272), (0, 0, 1), lambda c: body_zone(c) and disc_r(c) > 0.72),
-    'claw tip border: the dark finger tips': ((0, CLAW_TIP_Y, 0), (0, -1, 0), lambda c: c.y < -0.46 and abs(c.x) > 0.03),
+    'claw tip border: the dark finger tips': ((0, -0.555, 0), (0, -1, 0), lambda c: c.y < -0.46 and abs(c.x) > 0.03),
 }
 
 
@@ -351,58 +279,6 @@ EYE = (0.12, -0.275, 0.305)          # the stalk root on the front rim (front vi
 SOCKET = []
 
 
-# team AD 5: legs reach further and arch. Per path point (root, hip, knee a, knee b, bend, tip ring,
-# tip): out = along the leg's azimuth, up = +z. Tips stay on z = 0 and go 11 cm out.
-LEG_OUT = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.045)     # second pass: the tip only (the tip ring's 1.5 cm cost 3 IoU points)
-LEG_UP = (0.0, 0.0, 0.028, 0.028, 0.0, 0.0, 0.0)     # second pass: knees 2.8 cm up (was 1.2), above the rim
-# second pass (AD 5 + should-fix taper): each ring's section scales about the leg path:
-# the tibia and tarsus taper toward the tip, so the knee reads as a joint and not a constant box
-LEG_SC = (1.0, 1.0, 1.0, 1.0, 0.90, 0.87, 1.0)
-
-
-def leg_rad(P):
-    return Vector((P[-1][0] - P[0][0], P[-1][1] - P[0][1], 0)).normalized()
-
-
-LEG_S = 1.0     # the AD's full move (knees +4/+3, tips +11 cm) cost IoU .69 (r21), 30% of it .85
-#                 (r22): a thin leg shifted by its own width loses its overlap. r23: only the tarsus
-#                 lengthens (tip +6 cm along the reach) and the knees lift 1.5 cm.
-
-
-def leg_off(P, i):
-    return (leg_rad(P) * LEG_OUT[i] + Vector((0, 0, LEG_UP[i]))) * LEG_S
-
-
-def leg_path(P):
-    """the path as stage 2 leaves it before legs_out: knee b slid 2 cm toward the bend"""
-    Q = [Vector(p) for p in P]
-    Q[3] = Q[3] + (Q[4] - Q[3]).normalized() * 0.02
-    return Q
-
-
-def legs_out(bm):
-    n = 0
-    for v in bm.verts:
-        if v.co.x < 0.1:
-            continue
-        best = None
-        for P in LEGS:
-            Q = leg_path(P)
-            for i in range(1, 6):
-                a, b = Q[i], Q[i + 1]
-                ab = b - a
-                t = max(0.0, min(1.0, (v.co - a).dot(ab) / ab.length_squared))
-                d = (v.co - (a + ab * t)).length
-                if d < 0.065 and (best is None or d < best[0]):
-                    best = (d, P, i, t, a + ab * t)
-        if best:
-            _, P, i, t, ax = best
-            sc = LEG_SC[i] * (1 - t) + LEG_SC[i + 1] * t
-            v.co = ax + (v.co - ax) * sc + leg_off(P, i) * (1 - t) + leg_off(P, i + 1) * t
-            n += 1
-    say('CRAB legs_out verts', n)
-
-
 def stage2(k, body):
     bm = edit(body)
     for reason, (co, no, box) in CUTS.items():
@@ -416,33 +292,6 @@ def stage2(k, body):
         say('CRAB knee b ring', [round((v.co - kb).length, 3) for v in ring_b])
         assert len(ring_b) == 4, len(ring_b)
         move(ring_b, tuple(dirn * 0.02))
-    legs_out(bm)
-    # claw fingers (team AD 4): the gap opens as a wedge toward the tips (the dactyl's verts up, the
-    # pollex's down, 0 at the gap root y -0.48, full 1.2 cm at y -0.56), the dactyl's top edge up
-    # with it, so the two fingers read apart from the hero and az000
-    n_f = 0
-    for v in bm.verts:
-        c = v.co
-        if c.x < 0.10 or c.y > -0.48:
-            continue
-        t = min(1.0, (-0.48 - c.y) / 0.08)
-        if 0.135 <= c.z:
-            c.z += 0.012 * t
-        elif 0.075 <= c.z < 0.13:
-            c.z -= 0.010 * t
-        else:
-            continue
-        n_f += 1
-    say('CRAB finger verts moved', n_f)
-    # team AD 4, second pass: the fingers end blunt (the dactyl's section on the tip loop is 10 x 5 cm),
-    # so the dark cap shows as a big wedge from the front. Each finger's ring on the tip loop shrinks
-    # toward its own centre (TIP_TAPER): pointed fingers, a small dark cap.
-    for lo, hi, tt in ((0.13, 0.30, TIP_TAPER), (0.0, 0.13, 0.7)):
-        ring = [v for v in bm.verts if abs(v.co.y - CLAW_TIP_Y) < 1e-4 and v.co.x > 0.03 and lo <= v.co.z < hi]
-        c0 = centre_of(ring)
-        for v in ring:
-            v.co = c0 + (v.co - c0) * tt
-        say('CRAB tip ring', len(ring), tuple(round(q, 3) for q in c0))
     # carapace crown: the seam row on the dome rises into a low keel; the dome planes meet on it
     for v in bm.verts:
         if abs(v.co.x) < 1e-6 and v.co.z > 0.33 and -0.2 < v.co.y < 0.3:
@@ -523,10 +372,10 @@ def stage3(k, body):
         if min(zs) < 0.003 and plan_r(q) > 0.36:
             return 'tip'                                   # walking-leg tips: the cone below the tip ring
         ys = [me.vertices[v].co.y for v in me.polygons[i].vertices]
-        if max(ys) <= CLAW_TIP_Y + 0.002 and q.x > 0.03:
+        if max(ys) <= -0.553 and q.x > 0.03:
             return 'tip'                                   # finger tips: wholly past the claw-tip loop
         if body_zone(q):
-            if max(zs) <= BELLY_TOP + 0.002:
+            if max(zs) <= RIM_Z + 0.002:
                 return 'belly'
             if min(zs) >= RIM_Z - 0.002 and max(zs) <= 0.2745 and disc_r(q) > 0.72:
                 return 'ridge'
@@ -545,11 +394,9 @@ def stage3(k, body):
     bm = bmesh.new()
     root, rn = hit((0.122, -0.240, 0.6), (0, 0, -1))
     say('CRAB eye root', tuple(round(c, 3) for c in root))
-    # team AD 3: a short stalk (~2 cm above the rim, 40% of before) socketed 1 cm into the rim,
-    # +30% wide; the ball +25% sits about one radius above the rim, as on the sheet
-    top = root + Vector((0.004, -0.012, 0.020))
-    frustum(bm, root - Vector((0, 0, 0.022)), top, 0.022, 0.017, 6)     # second pass: socket 2.2 cm deep (the base cap crossed the skin in a pose)
-    ball(bm, top + Vector((0, -0.003, 0.015)), 0.0325, 10)
+    top = Vector((0.13, -0.262, 0.366))
+    frustum(bm, root - Vector((0, 0, 0.02)), top, 0.017, 0.013, 6)
+    ball(bm, top + Vector((0, -0.002, 0.016)), 0.026, 10)
     eye = object_from_bm('eyes', bm)
     zt = top.z
     paint(eye, {'shell': PAL['shell'], 'eye': PAL['eye']}, lambda c, n, i: 'eye' if c.z > zt - 0.006 else 'shell')
@@ -612,9 +459,8 @@ def stage3(k, body):
 # skeleton: the leg paths the legs were extruded on, the claw read off the carved base
 J = dict(body_a=(0.0, 0.16, 0.22), body_b=(0.0, -0.16, 0.22))
 for _i, _P in enumerate(LEGS):
-    _O = [tuple(Vector(_P[j]) + leg_off(_P, j)) for j in range(7)]      # the stage-2 leg moves
-    J[f'l{_i}_root'], J[f'l{_i}_hip'], J[f'l{_i}_knee'] = _O[0], _O[1], _O[2]
-    J[f'l{_i}_bend'], J[f'l{_i}_tip'] = _O[4], _O[6]
+    J[f'l{_i}_root'], J[f'l{_i}_hip'], J[f'l{_i}_knee'] = _P[0], _P[1], _P[2]
+    J[f'l{_i}_bend'], J[f'l{_i}_tip'] = _P[4], _P[6]
 J.update(c_root=(0.22, -0.12, 0.205), c_elbow=(0.30, -0.22, 0.21), c_wrist=(0.33, -0.32, 0.20),
          c_palm=(0.27, -0.50, 0.15), c_ftip=(0.24, -0.59, 0.10),
          c_droot=(0.27, -0.45, 0.22), c_dtip=(0.14, -0.615, 0.17))
@@ -678,9 +524,9 @@ def stage4(k, body, pieces):
         bind(p, rig, body=body)
     # idle: two claw clicks, a slow breath
     clip(rig, 'idle', {1: K(claw_dactyl=(0, 0, 0), claw_arm=(0, 0, 0)),
-                       8: K(claw_dactyl=(0, 0, -30), claw_arm=(0, 0, -2)),
+                       8: K(claw_dactyl=(0, 0, -20), claw_arm=(0, 0, -2)),
                        12: K(claw_dactyl=(0, 0, 2), claw_arm=(0, 0, -3)),
-                       20: K(claw_dactyl=(0, 0, -30), claw_arm=(0, 0, -4)),
+                       20: K(claw_dactyl=(0, 0, -20), claw_arm=(0, 0, -4)),
                        24: K(claw_dactyl=(0, 0, 2), claw_arm=(0, 0, -4)),
                        36: K(claw_dactyl=(0, 0, 0), claw_arm=(0, 0, -2)),
                        48: K(claw_dactyl=(0, 0, 0), claw_arm=(0, 0, 0))},

@@ -175,17 +175,9 @@ CUTS = {
     'bib':    (_plf((0.065, 1.07), (0.0, 0.90), (0.0, 1.05)), lambda c: c.y < -0.40 and 0.86 < c.z < 1.10 and c.x < 0.10),
     'belly':  (_pl((-0.28, 0.585), (0.36, 0.615), (0.0, 0.4)), lambda c: -0.30 < c.y < 0.40 and 0.48 < c.z < 0.70),
     'rump':   (_pl((0.615, 0.90), (0.650, 0.58), (0.8, 0.7)), lambda c: c.y > 0.52 and c.z > 0.64),
-    'shin':   (_pl((-1.0, 0.26), (1.0, 0.26), (0.0, 0.0)), lambda c: c.z < 0.36),   # team should-fix: was z 0.31 (dark from the knee read heavy)
+    'shin':   (_pl((-1.0, 0.31), (1.0, 0.31), (0.0, 0.0)), lambda c: c.z < 0.40),
     'hoof':   (_pl((-1.0, 0.058), (1.0, 0.058), (0.0, 0.0)), lambda c: c.z < 0.12),
-    # team repair: the mane's lower edge on the chest is a V (front plane), its point ~55% of the way
-    # from the throat (z 1.0) to the elbow (z 0.53); a cream diamond sits under the point
-    # verify pass: the V was shallow (slope 0.6: a trapezoid with a notch); now slope 1.5, the arms run
-    # from the point up to the neck's edge at the throat, so the mane tapers to mid-chest
-    'manev':  (_plf((0.0, 0.74), (0.16, 0.98), (0.0, 1.0)), lambda c: c.y < -0.28 and 0.66 < c.z < 1.0),
-    'chestlo': (_plf((0.0, 0.60), (0.05, 0.67), (0.0, 0.70)), lambda c: c.y < -0.28 and 0.55 < c.z < 0.71 and c.x < 0.09),
-    'chesthi': (_plf((0.0, 0.74), (0.05, 0.67), (0.0, 0.60)), lambda c: c.y < -0.33 and 0.62 < c.z < 0.78 and c.x < 0.09),
 }
-SMALL_CUTS = ('shin', 'hoof', 'rump', 'chestlo', 'chesthi')
 
 
 def side_of(name, c):
@@ -206,8 +198,6 @@ def cut(bm, name, snap=0.018):
     for v in verts:
         d = (v.co - p).dot(n)
         if abs(d) < snap and (abs(v.co.x) > 1e-6 or abs(n.x) < 1e-9):
-            if abs(v.co.x) > 1e-6 and (v.co - n * d).x < 0.004:
-                continue                     # a snap must not push a vertex onto or across the seam (open edges, r29)
             v.co -= n * d
     edges = {e for f in faces for e in f.edges}
     bmesh.ops.bisect_plane(bm, geom=faces + list(edges) + list(verts), plane_co=p, plane_no=n, dist=1e-5)
@@ -242,7 +232,7 @@ def stage2(k, body):
     # ---- colour borders as edge paths (see CUTS)
     for name in CUTS:
         with k.topo(bm, 'loop', f'colour border {name}: a planar edge path (bisect) for a clean region border'):
-            cut(bm, name, snap=0.014 if name == 'shin' else 0.008 if name in SMALL_CUTS else 0.018)
+            cut(bm, name, snap=0.008 if name in ('shin', 'hoof', 'rump') else 0.018)
     snap_seam(bm, 1e-6)
     commit(body, bm)
     _hits(body)
@@ -294,15 +284,11 @@ def body_rule(c, n, i):
         return 'mane'
     if in_cut('jaw', c):
         return 'cream'
-    chest = c.y < -0.33 and 0.55 < c.z < 0.94 and n.y < -0.2       # the chest's front plane
-    if chest and side_of('chestlo', c) and side_of('chesthi', c) and c.x < 0.06:
-        return 'cream'                                             # the chest diamond under the mane's V
-    mane_lo = in_cut('manev', c) if (c.y < -0.28 and 0.55 < c.z < 1.0) else side_of('maneb', c)   # the V holds on every chest/neck-front face, not only the front-facing ones
-    if side_of('manef', c) and mane_lo and c.y < -0.04 and c.z > 0.70:
+    if side_of('manef', c) and side_of('maneb', c) and c.y < -0.04 and c.z > 0.70:
         if in_cut('bib', c) and n.y < -0.25:
             return 'cream'
         return 'mane'
-    if in_cut('belly', c) and (c.y > -0.07 or c.x < 0.04):         # forelegs stay body-brown to the knee
+    if in_cut('belly', c):
         return 'cream'
     if in_cut('rump', c):
         return 'cream'
@@ -408,33 +394,6 @@ def shingle(bm, base, d, n, L, w, t, sink=0.45, sh=(0.45, 0.36)):
     bm.faces.new(list(reversed(q)))
 
 
-def hug_lock(bm, tree, base, d0, L, w, t):
-    """A fur lock lying on the skin: root plate (centre 2 mm under the skin), a broad shoulder ring
-    at 45% (inner face ~2 mm over the skin), a blunt tip 4 mm over it; each station projected onto
-    the body along the hint direction d0 (made tangent to the skin)."""
-    def on_skin(p):
-        loc, nor, _, _ = tree.find_nearest(p)
-        return loc, nor.normalized()
-    loc0, n0 = on_skin(base)
-    d = (d0 - n0 * d0.dot(n0)).normalized()
-    stations = []
-    for s, off, hw, ht in [(0.0, -0.002, 0.5, 0.5), (0.45, 0.011, 0.42, 0.30)]:
-        loc, nn = on_skin(loc0 + d * (s * L))
-        dd = (d - nn * d.dot(nn)).normalized()
-        u = dd.cross(nn).normalized()
-        # each edge of the section is projected on its own, so the plate bends round the neck
-        (pl, nl), (pr, nr) = on_skin(loc + u * hw * w), on_skin(loc - u * hw * w)
-        stations.append(ring(bm, [pl + nl * (off + ht * t), pr + nr * (off + ht * t),
-                                  pr + nr * (off - ht * t), pl + nl * (off - ht * t)]))
-    tl, tn = on_skin(loc0 + d * L)
-    tip = ring(bm, [tl + tn * 0.008])[0]
-    q, r = stations
-    bridge(bm, q, r, closed=True)
-    for i in range(4):
-        bm.faces.new([r[i], r[(i + 1) % 4], tip])
-    bm.faces.new(list(reversed(q)))
-
-
 def hit(tree, o, d):
     loc, nor, _, _ = tree.ray_cast(Vector(o), Vector(d).normalized())
     assert loc is not None, f'no surface from {o} along {d}'
@@ -453,9 +412,6 @@ ANT_TINES = [  # (root beam index, root t toward next, tip, base radius)
     (5, 0.0, (0.205, -0.235, 1.675), 0.011),   # crown, inner
     (5, 0.4, (0.250, -0.155, 1.715), 0.010),   # crown, middle
 ]
-ANT_SPREAD, ANT_PITCH = 0.60, 25.0   # tine x scale
-ANT_XMAX = 0.165                     # verify pass: beam centre max x (az000 spread <= 1.6 head widths; 0.227 measured ~1.9)
-EAR_UP, EAR_YAW, EAR_BACK = 28.0, -15.0, 0.03   # yaw < 0: back (forward put the ear through the thicker beam, r15)
 EAR_ROOT, EAR_TIP = Vector((0.052, -0.430, 1.228)), Vector((0.215, -0.355, 1.335))
 
 
@@ -476,15 +432,12 @@ def stage3(k, body):
     fa = Vector((0, -1, 0.15)); fa = (fa - n * fa.dot(n)).normalized(); fb = n.cross(fa).normalized()
     if fb.z < 0:
         fb = -fb
-    # team repair: a round-almond dome ~0.032 x 0.026 m (was a 0.044 x 0.016 slit), its crown ~4 mm
-    # proud of the face around the 8 mm socket
-    ha, hb = 0.016, 0.015
-    alm = [(-1.0, -0.05), (-0.62, 0.72), (0.0, 0.88), (0.62, 0.72), (1.0, 0.05), (0.55, -0.70), (-0.55, -0.72)]
+    ha, hb = 0.022, 0.013
+    alm = [(-1.0, -0.05), (-0.40, 0.62), (0.40, 0.60), (1.0, 0.05), (0.40, -0.55), (-0.40, -0.58)]
     bm = bmesh.new()
     lo = ring(bm, [c + fa * (a * ha) + fb * (b * hb) - n * 0.003 for a, b in alm])
-    mid = ring(bm, [c + fa * (a * ha * 0.95) + fb * (b * hb * 0.95) + n * 0.007 for a, b in alm])
-    hi = ring(bm, [c + fa * (a * ha * 0.62) + fb * (b * hb * 0.62) + n * 0.012 for a, b in alm])
-    bridge(bm, lo, mid, closed=True); bridge(bm, mid, hi, closed=True); cap(bm, list(reversed(lo))); cap(bm, hi)
+    hi = ring(bm, [c + fa * (a * ha * 0.75) + fb * (b * hb * 0.75) + n * 0.010 for a, b in alm])
+    bridge(bm, lo, hi, closed=True); cap(bm, list(reversed(lo))); cap(bm, hi)
     eye = object_from_bm('eyes', bm)
     paint(eye, {'eye': pal['eye']}, lambda cc, nn, i: 'eye')
     pieces.append(eye)
@@ -492,15 +445,6 @@ def stage3(k, body):
     # ---- ears: leaf blades, cupped (the inner face sunk), cream inside a body-colour rim
     bm = bmesh.new()
     d = (EAR_TIP - EAR_ROOT)
-    # team repair: the ears stood out like wings: pitched up EAR_UP about the root, yawed EAR_YAW
-    # forward, 15% shorter (the root stays sunk in the skull)
-    h = Vector((d.x, d.y, 0.0))
-    yaw = math.atan2(h.y, h.x) - math.radians(EAR_YAW)
-    el = math.atan2(d.z, h.length) + math.radians(EAR_UP)
-    d = Vector((math.cos(yaw) * math.cos(el), math.sin(yaw) * math.cos(el), math.sin(el))) * (d.length * 0.85)
-    ear_root = EAR_ROOT + Vector((0.0, EAR_BACK, 0.008))
-    ear_tip = ear_root + d
-    say('STAG ear tip', tuple(round(x, 3) for x in ear_tip))
     L = d.length
     d.normalize()
     front = Vector((0.25, -1.0, 0.15)); front = (front - d * front.dot(d)).normalized()
@@ -508,74 +452,51 @@ def stage3(k, body):
     secs = [(0.0, 0.020, 0.012), (0.30, 0.042, 0.016), (0.62, 0.040, 0.014), (0.86, 0.022, 0.010)]
     rings_ = []
     for s_, hw, th in secs:
-        o = ear_root + d * (s_ * L) - front * 0.004
+        o = EAR_ROOT + d * (s_ * L) - front * 0.004
         rings_.append(ring(bm, [o + w * hw, o + w * 0.55 * hw + front * (0.2 * th), o - w * 0.55 * hw + front * (0.2 * th),
                                 o - w * hw, o - w * 0.5 * hw - front * th, o + w * 0.5 * hw - front * th]))
     for a, b in zip(rings_, rings_[1:]):
         bridge(bm, a, b, closed=True)
     cap(bm, list(reversed(rings_[0])))
-    tv = ring(bm, [ear_tip])[0]
+    tv = ring(bm, [EAR_TIP])[0]
     for j in range(6):
         bm.faces.new([rings_[-1][j], rings_[-1][(j + 1) % 6], tv])
     ears = object_from_bm('ears', bm)
     paint(ears, {'body': pal['body'], 'cream': pal['cream']},
-          lambda cc, nn, i: 'cream' if nn.dot(front) > 0.80 and (cc - ear_root).dot(d) < 0.80 * L else 'body')
+          lambda cc, nn, i: 'cream' if nn.dot(front) > 0.80 and (cc - EAR_ROOT).dot(d) < 0.80 * L else 'body')
     pieces.append(ears)
 
     # ---- antlers: beam + 5 tines, 5-sided, rooted in the skull
-    # team repair (rake -> crown): the side spread is pulled in (x about the root * ANT_SPREAD) so the
-    # front-view spread is ~1.6 head widths; tines pitched ANT_PITCH toward vertical (tips up, brow
-    # still forward), 20% shorter; beam base radius +25%; the dark burr only on the beam's bottom 10%
     bm = bmesh.new()
-    old = [Vector(p) for p in ANT_BEAM]
-    x0 = old[0].x
-    # verify pass: a lyre, not a V: the beam swings out early to ANT_XMAX and then rises (a linear
-    # pull-in to the 1.6-head-width limit bunched beams and tines into two upright spikes, r25)
-    xs = old[-1].x - x0
-    beam = [Vector((x0 + (ANT_XMAX - x0) * (1 - (1 - (p.x - x0) / xs) ** 2), p.y, p.z)) for p in old]
-    taper(bm, beam, 0.040, 0.011, sides=5, flat=0.8, seg_k=3.5)
+    beam = [Vector(p) for p in ANT_BEAM]
+    taper(bm, beam, 0.032, 0.011, sides=5, flat=0.8)
     for bi, tt, tip, r0 in ANT_TINES:
-        root0 = old[bi].lerp(old[bi + 1], tt)
         root = beam[bi].lerp(beam[bi + 1], tt)
-        d = Vector(tip) - root0
-        L = d.length * 0.80
-        d.x *= ANT_SPREAD
-        h = Vector((d.x, d.y, 0.0))
-        a = min(math.radians(80), math.atan2(d.z, h.length) + math.radians(ANT_PITCH))
-        dr = (h.normalized() * math.cos(a) + Vector((0, 0, 1)) * math.sin(a)).normalized()
-        say('STAG tine', bi, tuple(round(x, 3) for x in root), tuple(round(x, 2) for x in dr), round(L, 3))
-        taper(bm, [root - dr * 0.012, root + dr * L], r0 * 1.5, 0.009, sides=5, flat=0.85, seg_k=3.2)   # verify pass: tines still thin
+        dr = (Vector(tip) - root).normalized()
+        say('STAG tine', bi, tuple(round(x, 3) for x in root), tuple(round(x, 2) for x in dr))
+        taper(bm, [root - dr * 0.012, Vector(tip)], r0 * 1.15, 0.0065, sides=5, flat=0.85)
     ant = object_from_bm('antlers', bm)
-    zb = beam[0].z + 0.10 * (beam[-1].z - beam[0].z) + 0.05      # the burr: the beam's bottom 10% above the skull
     paint(ant, {'antler': pal['antler'], 'antler_dk': pal['antler_dk']},
-          lambda cc, nn, i: 'antler_dk' if cc.z < zb else 'antler')
+          lambda cc, nn, i: 'antler_dk' if cc.z < 1.36 else 'antler')
     pieces.append(ant)
 
     # ---- mane: a jagged fringe of few, broad locks lying on the skin along the mane's lower
     # border (the neck itself is painted dark), hanging down and back over the shoulder; two
     # throat locks either side of the cream bib
-    # team repair: the straight shingles stood off as cards where the shoulder falls away under the
-    # neck (hero plate, az000 vest bars, back34 throat shard). Each lock now follows the skin: its
-    # root, shoulder ring and tip are projected onto the body (find_nearest) and offset along the
-    # local normal, root sunk, outer face <= ~15 mm off the skin. 3 locks per side, no throat lock.
     bm = bmesh.new()
-    # (r31: the two shoulder locks are shorter and swept back, so the mane's front-view corners sit
-    # high, at the shoulder, and the V below them is deep)
-    for (y, z), L in [((-0.27, 0.89), 0.10), ((-0.19, 0.935), 0.10)]:
+    for (y, z), L in [((-0.43, 0.83), 0.17), ((-0.33, 0.87), 0.18), ((-0.23, 0.925), 0.16), ((-0.15, 0.95), 0.13)]:
         loc, nor = hit(tree, (0.6, y, z + 0.035), (-1, 0, 0))
-        hug_lock(bm, tree, loc, Vector((0.0, 0.9, -1.0)), L, 0.11, 0.018)
-    # verify pass: the front lock sits on the V's arm (chest front) and hangs toward the V's point
-    loc, nor = hit(tree, (0.085, -1.0, 0.885), (0, 1, 0))
-    hug_lock(bm, tree, loc, Vector((-0.45, 0.0, -1.0)), 0.12, 0.08, 0.018)
-    say('STAG lock skin offsets (m, max/verts>15mm)', round(max((v.co - tree.find_nearest(v.co)[0]).length for v in bm.verts), 4),
-        [tuple(round(x, 3) for x in v.co) for v in bm.verts if (v.co - tree.find_nearest(v.co)[0]).length > 0.015])
+        shingle(bm, loc, nor * 0.12 + Vector((0.0, 0.35, -1.0)), nor, L, 0.12, 0.040, sink=0.55)
+    for (x, z), L in [((0.075, 0.84), 0.14)]:
+        loc, nor = hit(tree, (x, -1.2, z), (0, 1, 0))
+        shingle(bm, loc, nor * 0.15 + Vector((0.10, 0.10, -1.0)), nor, L, 0.10, 0.038, sink=0.55)
     mane = object_from_bm('mane', bm)
     paint(mane, {'mane': pal['mane']}, lambda cc, nn, i: 'mane')
     pieces.append(mane)
 
     # ---- tail: a short hanging wedge from the rump top
     bm = bmesh.new()
-    tp = [Vector((0.0, 0.660, 0.800)), Vector((0.0, 0.718, 0.765)), Vector((0.0, 0.746, 0.660)), Vector((0.0, 0.736, 0.530))]   # team should-fix: +20%, a slight hang
+    tp = [Vector((0.0, 0.660, 0.800)), Vector((0.0, 0.715, 0.760)), Vector((0.0, 0.738, 0.670)), Vector((0.0, 0.725, 0.575))]
     tube(bm, tp, [0.030, 0.032, 0.026, 0.0], sides=6, flat=0.7, up=Vector((1, 0, 0)))
     tail = object_from_bm('tail', bm, mirror=False)
     paint(tail, {'mane': pal['mane']}, lambda cc, nn, i: 'mane')
@@ -595,7 +516,7 @@ J = dict(
     ffet=(0.095, -0.215, 0.10), fhoof=(0.095, -0.26, 0.01),
     hhip=(0.10, 0.50, 0.76), hstf=(0.10, 0.52, 0.46), hhock=(0.095, 0.665, 0.385),
     hfet=(0.095, 0.655, 0.09), hhoof=(0.095, 0.63, 0.01),
-    ear0=(0.07, -0.40, 1.235), ear1=(0.123, -0.341, 1.38),   # team repair: follows the raised ear (r16)
+    ear0=(0.07, -0.43, 1.235), ear1=(0.215, -0.355, 1.335),
 )
 
 

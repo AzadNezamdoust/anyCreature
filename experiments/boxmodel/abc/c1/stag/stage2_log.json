@@ -60,7 +60,7 @@
    "op": 9,
    "kind": "loop",
    "reason": "colour border shin: a planar edge path (bisect) for a clean region border",
-   "new_verts": 9,
+   "new_verts": 27,
    "extra_base_edges": []
   },
   {
@@ -68,27 +68,6 @@
    "kind": "loop",
    "reason": "colour border hoof: a planar edge path (bisect) for a clean region border",
    "new_verts": 21,
-   "extra_base_edges": []
-  },
-  {
-   "op": 11,
-   "kind": "loop",
-   "reason": "colour border manev: a planar edge path (bisect) for a clean region border",
-   "new_verts": 9,
-   "extra_base_edges": []
-  },
-  {
-   "op": 12,
-   "kind": "loop",
-   "reason": "colour border chestlo: a planar edge path (bisect) for a clean region border",
-   "new_verts": 5,
-   "extra_base_edges": []
-  },
-  {
-   "op": 13,
-   "kind": "loop",
-   "reason": "colour border chesthi: a planar edge path (bisect) for a clean region border",
-   "new_verts": 6,
    "extra_base_edges": []
   }
  ]

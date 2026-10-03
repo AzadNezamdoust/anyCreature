@@ -79,7 +79,7 @@ CARVE = dict(plan_roundness=2.5, target_tris=(900, 1400))
 def stage1(k):
     # carve_base's cache key does not see the mask edit: key it here (a changed polygon re-carves)
     import hashlib
-    key = hashlib.sha256(repr((MASK, CARVE, BELLY, TURRET, belly_x.__code__.co_consts, REAR, rear_cut.__code__.co_consts)).encode()).hexdigest()
+    key = hashlib.sha256(repr((MASK, CARVE, BELLY, TURRET, belly_x.__code__.co_consts)).encode()).hexdigest()
     kf, cf = os.path.join(k.dir, 'carve_mask.key'), os.path.join(k.dir, 'carve_base.json')
     if not os.path.exists(kf) or open(kf).read() != key:
         if os.path.exists(cf):
@@ -133,51 +133,7 @@ def belly_cut(F, org, vs):
     c, r = np.array(TURRET['c']), TURRET['r']
     d = np.sqrt((X - c[0]) ** 2 + (Y - c[1]) ** 2 + (Z - c[2]) ** 2)
     F = np.maximum(F, np.clip(0.5 + (r - d) / (2 * vs), 0.0, 1.0))
-    F = rear_cut(F, X, Y, Z, vs)
     return F.astype(np.float32)
-
-
-# ---- rear (team notes must-fix 1, STAGE-1 UNLOCK): the hull's rear is a crate (front mask x top mask
-# extrude two square haunches with vertical outer walls, square floor corners and a flat back). The
-# reference rear is one round dome (falling toward the rear wall) with two smaller rounded thigh lobes
-# beside it and light between belly and thigh at the floor. A 3D cut behind y 0.035: nothing outside
-# body-egg U thigh-lobe U foot-paddle. Only removes occupancy; the side mask is untouched.
-REAR = dict(y0=0.02, fade=0.02, bw=0.11, by0=0.05, by1=0.145, bzc=0.06, bzb=0.07,
-            ztop=((0.06, 0.235), (0.19, 0.08)), zexp=1.5,
-            xo=((0.03, 0.20), (0.05, 0.16), (0.15, 0.142), (0.175, 0.13), (0.195, 0.10)),
-            xi=((0.05, 0.095), (0.19, 0.07)), tz=0.07, trz=0.088, tilt=28.0,
-            foot=(0.11, 0.185, 0.032))
-
-
-def rear_cut(F, X, Y, Z, vs):
-    R = REAR
-    wr = np.clip((Y - R['y0']) / R['fade'], 0.0, 1.0)
-    yy = Y[0, :, 0]
-    # body egg: plan half-width xb(y), (x,z) ellipse whose top falls toward the rear wall
-    xb = R['bw'] * np.sqrt(np.clip(1.0 - (np.maximum(yy - R['by0'], 0.0) / R['by1']) ** 2, 1e-4, 1.0))
-    (ya, za), (yb, zb) = R['ztop']
-    zl = za - (za - zb) * np.clip((yy - ya) / (yb - ya), 0.0, 1.0) ** R['zexp']
-    xb, zl = xb[None, :, None], zl[None, :, None]
-    zc = R['bzc']
-    qz = np.where(Z > zc, (Z - zc) / (zl - zc), (zc - Z) / R['bzb'])
-    q = np.sqrt((X / xb) ** 2 + qz ** 2)
-    s_body = (1.0 - q) * np.minimum(xb, 0.08)
-    # thigh lobe: (x,z) ellipse between xi(y) and xo(y)
-    xo = np.interp(yy, *zip(*R['xo']))[None, :, None]
-    xi = np.interp(yy, *zip(*R['xi']))[None, :, None]
-    xt, rx = (xo + xi) / 2, np.maximum((xo - xi) / 2, 1e-3)
-    # verify pass (item 1 NOT): an upright ellipse left vertical outer walls as tall as the belly. The
-    # lobe section is tilted: its top leans in against the body, its outer face slopes down and out.
-    ct, st = math.cos(math.radians(R['tilt'])), math.sin(math.radians(R['tilt']))
-    U, Vv = (X - xt) * ct + (Z - R['tz']) * st, -(X - xt) * st + (Z - R['tz']) * ct
-    q = np.sqrt((U / rx) ** 2 + (Vv / R['trz']) ** 2)
-    s_thigh = (1.0 - q) * np.minimum(rx, R['trz'])
-    # foot paddle lying on the ground beside the thigh
-    fa, fb, fz = R['foot']
-    s_foot = np.minimum(np.minimum(X - fa, fb - X), fz - Z)
-    s = np.maximum(np.maximum(s_body, s_thigh), s_foot)
-    G = np.clip(0.5 + s / (2 * vs), 0.0, 1.0)
-    return np.minimum(F, np.maximum(G, 1.0 - wr))
 
 
 def belly_x(z):
@@ -208,9 +164,6 @@ CUTS = {
     'jaw':    (_pl((-0.195, 0.228), (-0.06, 0.197), (-0.1, 0.0)), lambda c: c.y < -0.03 and 0.15 < c.z < 0.26),
     'throat': (_pl((-0.06, 0.205), (0.07, 0.035), (-0.2, 0.0)), lambda c: -0.10 < c.y < 0.10 and c.z < 0.23),
     'flank':  (_pl((0.109, 0.2), (0.07, 0.05), (0.0, 0.1), ax=(0, 2)), lambda c: c.y < 0.09 and c.z < 0.215 and 0.04 < c.x < 0.13),
-    # side cream patch behind the foreleg: 'arm' = a vertical plane ~1 cm behind the foreleg's back,
-    # 'side' = the patch's front-low edge from the throat seam to the floor in front of the thigh
-    'arm':    (_pl((-0.042, 0.0), (-0.042, 0.3), (0.2, 0.0)), lambda c: 0.03 < c.x < 0.175 and -0.07 < c.y < -0.015 and 0.03 < c.z < 0.21),
 }
 
 
@@ -253,7 +206,7 @@ def stage2(k, body):
         if c.y < -0.04 and 0.12 < c.z < 0.206 and 0.0 < c.x < 0.105:
             yt = yseam(c.z) + 0.9 * c.x * c.x
             if c.y > yt:
-                w = min(1.0, (c.z - 0.12) / 0.025) * max(0.0, min(1.0, (0.105 - c.x) / 0.02))   # fades out toward the shoulder (new base: a full move there folded 1 tri)
+                w = min(1.0, (c.z - 0.12) / 0.025)
                 c.y += (yt - c.y) * w
                 MOVED.append(tuple(round(q, 3) for q in c))
     say('FROG throat moved %d' % len(MOVED))
@@ -265,79 +218,31 @@ def stage2(k, body):
                               use_axis_x=True, use_axis_y=True, use_axis_z=True)
         bmesh.ops.smooth_vert(bm, verts=[v for v in zone if v.co.x <= 1e-6], factor=0.5,
                               use_axis_x=False, use_axis_y=True, use_axis_z=True)
-    def bmhits():
-        t = BVHTree.FromBMesh(bm); bm.faces.ensure_lookup_table()
-        return sum(1 for i, j in t.overlap(t) if i < j and not (set(bm.faces[i].verts) & set(bm.faces[j].verts)))
-    say('FROG pre-cut hits %d' % bmhits())
     for name in CUTS:
         cut(k, bm, name)
-        say('FROG cut %s hits %d' % (name, bmhits()))
     snap_seam(bm, 1e-6)
     commit(body, bm)
-    say('FROG s2 hits %s' % selfhits(body))
 
 
 PAL = {'skin': '#5fae3c', 'spot': '#2f6b2a', 'belly': '#efe0b0', 'eye': '#f2c230', 'pupil': '#151515', 'tongue': '#d8677a'}
 
 
-# spots (team notes must-fix 2): painted carve triangles read as random dark facets; the reference
-# has round spots of one size. Separate 6-sided disc pieces, every vertex projected onto the skin
-# (+1 mm), a sunk apex below: (axis, a, b) = cast down at (x, y) for 'top', in from +X at (y, z)
-# for 'side'. x >= 0 half; the mirror repeats them.
-SPOT_R = 0.017
-SPOTS = [('top', 0.040, -0.030), ('top', 0.045, 0.062), ('top', 0.040, 0.125),
-         ('side', -0.012, 0.178), ('side', 0.075, 0.180), ('top', 0.118, 0.120)]
-
-
-def spot_disc(bm, tree, kind, a, b, r=SPOT_R, k=6, lift=0.0015):
-    """Verify pass (item 2 PARTLY): discs projected vertex-by-vertex onto the facets came out in
-    different sizes with slivers dipping under the skin. Now ONE planar regular hexagon per spot:
-    the plane is fitted to the skin under the rim and lifted clear of every facet under it; a
-    sunk apex cone below closes the piece into the skin."""
-    if kind == 'top':
-        o, d = Vector((a, b, 0.6)), Vector((0, 0, -1))
-    else:
-        o, d = Vector((0.6, a, b)), Vector((-1, 0, 0))
-    p, n, _, _ = tree.ray_cast(o, d)
-    if p is None:
-        say('FROG spot miss %s %.3f %.3f' % (kind, a, b)); return
-    def hit(q, nn):
-        h = tree.ray_cast(q + nn * 0.02, -nn, 0.04)[0]
-        return h if h is not None else q
-    def frame(nn):
-        e1 = nn.cross(Vector((0, 0, 1)) if abs(nn.z) < 0.9 else Vector((1, 0, 0))).normalized()
-        return e1, nn.cross(e1).normalized()
-    for _ in range(2):                              # plane normal = fit to the skin under the rim
-        e1, e2 = frame(n)
-        hs = [hit(p + (e1 * math.cos(2 * math.pi * j / k) + e2 * math.sin(2 * math.pi * j / k)) * r, n) for j in range(k)]
-        nn = Vector()
-        for j in range(k):
-            nn += (hs[j] - p).cross(hs[(j + 1) % k] - p)
-        if nn.dot(n) < 0:
-            nn = -nn
-        n = nn.normalized()
-    e1, e2 = frame(n)
-    ring_ = lambda rr: [p + (e1 * math.cos(2 * math.pi * j / k) + e2 * math.sin(2 * math.pi * j / k)) * rr for j in range(k)]
-    samp = [p] + ring_(r) + ring_(r * 0.5)
-    h = max((hit(q, n) - q).dot(n) for q in samp) + lift
-    low = min((hit(q, n) - q).dot(n) for q in samp)
-    say('FROG spot %s %.3f %.3f hover max %.1f mm' % (kind, a, b, (h - low) * 1000))
-    vc, va = bm.verts.new(p + n * h), bm.verts.new(p + n * (low - 0.012))
-    rv = [bm.verts.new(q + n * h) for q in ring_(r)]
-    for j in range(k):
-        bm.faces.new([vc, rv[j], rv[(j + 1) % k]]); bm.faces.new([rv[(j + 1) % k], rv[j], va])
+# spots: whole carve triangles painted dark (the carve's irregular triangles give polygonal blobs like
+# the reference's), picked by face centre: top-view spots (x, y, r) on up-facing faces, flank spots
+# (y, z, r) on side-facing faces. x >= 0 half; the mirror repeats them.
+SPOTS_TOP = [(0.0, 0.005, 0.036), (0.045, 0.085, 0.034), (0.085, 0.045, 0.030), (0.055, -0.012, 0.026),
+             (0.095, -0.035, 0.020), (0.035, -0.062, 0.018)]
+SPOTS_SIDE = [(0.060, 0.175, 0.026), (0.125, 0.165, 0.020), (0.000, 0.205, 0.016)]
 
 
 def body_rule(c, n, i):
     if side_of('jaw', c) and side_of('throat', c) and side_of('flank', c):
         return 'belly'
-    # flank (team notes must-fix 5): one cream edge from the throat down behind the foreleg to the
-    # floor in front of the thigh, on the 'arm' and 'side' cut edge paths
-    # verify pass (item 5 PARTLY): the separate 'side' edge left a green wedge and a jagged lower end.
-    # Now the flank patch shares the throat plane's edge path (one straight diagonal from the mouth
-    # corner down to the thigh) and stops at the belly/thigh crease.
-    if side_of('arm', c) and side_of('throat', c) and side_of('jaw', c) and c.z > 0.004 and not (c.y > 0.012 and abs(c.x) > 0.085):
-        return 'belly'
+    ax = abs(c.x)
+    if c.z > 0.14 and n.z > 0.3 and any((ax - x) ** 2 + (c.y - y) ** 2 < r * r for x, y, r in SPOTS_TOP):
+        return 'spot'
+    if c.z > 0.14 and abs(n.x) > 0.5 and any((c.y - y) ** 2 + (c.z - z) ** 2 < r * r for y, z, r in SPOTS_SIDE):
+        return 'spot'
     return 'skin'
 
 
@@ -360,7 +265,7 @@ def V3(*a):
 def toe(bm, root, tip, w):
     d = (tip - root).normalized()
     L = (tip - root).length
-    rs = [sec(root, d, w * 1.2, w * 0.8, 4, 45), sec(tip - d * 0.009, d, w * 0.8, w * 0.6, 4, 45),   # (budget: no mid ring)
+    rs = [sec(root, d, w * 1.2, w * 0.8, 4, 45), sec(root + d * (L * 0.5), d, w * 1.05, w * 0.75, 4, 45), sec(tip - d * 0.009, d, w * 0.8, w * 0.6, 4, 45),
           sec(tip - d * 0.004, d, w * 1.9, w * 1.0, 4, 45), sec(tip + d * 0.002, d, w * 1.1, w * 0.7, 4, 45)]
     vs = [ring(bm, r) for r in rs]
     for x, y in zip(vs, vs[1:]):
@@ -374,18 +279,18 @@ def hind_toe(bm, root, tip, w, sw=1.5, sd=1.3):
     about 2x the toe width, sunk 30% into the toe tip."""
     d = (tip - root).normalized()
     L = (tip - root).length
-    rs = [sec(root, d, w * 1.2 * sw, w * 0.8 * sd, 4, 45),                       # (budget: no mid ring)
+    rs = [sec(root, d, w * 1.2 * sw, w * 0.8 * sd, 4, 45), sec(root + d * (L * 0.5), d, w * 1.05 * sw, w * 0.75 * sd, 4, 45),
           sec(tip - d * 0.002, d, w * 0.8 * sw, w * 0.6 * sd, 4, 45)]
     vs = [ring(bm, r) for r in rs]
     for x, y in zip(vs, vs[1:]):
         bridge(bm, x, y, closed=True)
     cap(bm, list(reversed(vs[0]))); cap(bm, vs[-1])
-    R = 1.2 * 2 * (w * 0.8 * sw * 0.707)              # pad radius = 1.2 x the toe tip's full width (team should-fix)
+    R = 2 * (w * 0.8 * sw * 0.707)                    # pad radius = the toe tip's full width
     pc = tip - d * 0.002 + d * (R * 0.4)              # 30% of the pad's diameter overlaps the toe
     pc.z = 0.0036
     side = Vector((-d.y, d.x, 0)).normalized()
     hx = lambda r_, z: [pc + (d * math.cos(math.pi * j / 3) + side * math.sin(math.pi * j / 3)) * r_ + Vector((0, 0, z)) for j in range(6)]
-    pr = [ring(bm, hx(R, -0.0029)), ring(bm, hx(R, 0.0029))]   # a 6-sided prism (budget: 20 tris, was 32)
+    pr = [ring(bm, hx(R * 0.65, -0.0029)), ring(bm, hx(R, 0.0)), ring(bm, hx(R * 0.65, 0.0029))]
     for x, y in zip(pr, pr[1:]):
         bridge(bm, x, y, closed=True)
     cap(bm, list(reversed(pr[0]))); cap(bm, pr[-1])
@@ -442,28 +347,19 @@ def mouth_path(body):
 
 
 TURRET_C = Vector(TURRET['c'])
-MOUTH_END = -0.075                # the mouth line ends under the back of the eye
-TONGUE_IN = 0.014                  # idle/move key the tongue 14 mm back inside the snout (no pink at idle)
-EYE_C, EYE_R = (0.089, -0.116, 0.288), 0.037
 GAZE = Vector((0.5, -0.85, 0.05)).normalized()
 
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    say('FROG spot faces %d' % sum(1 for p in body.data.polygons if body.data.materials[p.material_index].name.startswith('spot')))
     eb = evaluated_bm(body)
     tree = BVHTree.FromBMesh(eb)
     pieces = []
-    bm = bmesh.new()
-    for sp_ in SPOTS:
-        spot_disc(bm, tree, *sp_)
-    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
-    spots = object_from_bm('spots', bm); paint(spots, PAL, lambda q, n, i: 'spot'); pieces.append(spots)
     # ---- eyes: a gold low-poly ball on the front-outer face of each turret, a horizontal black pupil bar
     bm = bmesh.new()
-    # team notes must-fix 3: x1.5 (r 0.025 -> 0.037), rises 1/3 of its diameter above the turret top
-    # (0.300), 0.7 cm outboard, so it breaks the skull outline from the front and the side
-    c = Vector(EYE_C)
-    r, lats, nl = EYE_R, (-60, -12, 12, 44.4, 71.8), 10
+    c = TURRET_C + Vector((0.45, -0.8, 0.40)).normalized() * 0.017
+    r, lats, nl = 0.025, (-60, -12, 12, 44.4, 71.8), 12
     rings_ = [ring(bm, [c + V3(r * math.cos(math.radians(la)) * math.cos(2 * math.pi * j / nl),
                                r * math.cos(math.radians(la)) * math.sin(2 * math.pi * j / nl),
                                r * math.sin(math.radians(la))) for j in range(nl)]) for la in lats]
@@ -481,16 +377,6 @@ def stage3(k, body):
     pieces.append(eye)
     # ---- mouth: a black square tube along the jaw cut, half sunk into the skin, one piece across the seam
     half = mouth_path(body)
-    # team notes must-fix 4: the path stops at the snout corner; the reference mouth runs back under
-    # the eye. Continue it on the jaw plane's border (the paint border) by casting in from +X.
-    (jp, jn), _ = CUTS['jaw']
-    zj = lambda y: jp.z - (jn.y * (y - jp.y)) / jn.z
-    y = half[-1].y + 0.012
-    while y <= MOUTH_END + 1e-6:
-        hit = tree.ray_cast(Vector((0.5, y, zj(y))), Vector((-1, 0, 0)))[0]
-        if hit is not None and hit.x > half[-1].x - 0.02:
-            half.append(hit)
-        y += 0.012
     say('FROG mouth path %d pts %s .. %s' % (len(half), tuple(round(q, 3) for q in half[0]), tuple(round(q, 3) for q in half[-1])))
     pts = [Vector((-q.x, q.y, q.z)) for q in reversed(half[1:])] + half
     bm = bmesh.new(); rs = []
@@ -532,7 +418,7 @@ def stage3(k, body):
     say('FROG tongue tip surface y %.4f' % loc.y)
     ts = [((-0.105, 0.205), 0.010, 0.0055), ((-0.122, 0.209), 0.011, 0.006), ((-0.14, 0.213), 0.011, 0.006),
           ((yt + 0.024, 0.219), 0.0095, 0.0055), ((yt + 0.0105, 0.2235), 0.009, 0.005),
-          ((yt + 0.005, 0.2245), 0.0120, 0.0060), ((yt + 0.0014, 0.225), 0.0115, 0.0058), ((yt, 0.225), 0.0080, 0.0040)]
+          ((yt + 0.005, 0.2245), 0.0145, 0.0075), ((yt + 0.0014, 0.225), 0.0140, 0.0072), ((yt, 0.225), 0.0080, 0.0040)]
     bm = bmesh.new()
     order = [0, 1, len(ts) - 1] + list(range(2, len(ts) - 1))
     made = {i: ring(bm, sec(V3(0, ts[i][0][0], ts[i][0][1]), (0, -1, 0.3), ts[i][1], ts[i][2], 6, 0)) for i in order}
@@ -607,20 +493,12 @@ def stage4(k, body, pieces):
     tg = next(p for p in pieces if 'tongue' in p.name)
     g1 = tg.vertex_groups.get('tongue1') or tg.vertex_groups.new(name='tongue1')
     g2 = tg.vertex_groups.get('tongue2') or tg.vertex_groups.new(name='tongue2')
-    # verify pass (tongue stretch 5.55x): the lash was taken by two ring gaps. Graded weights spread it
-    # evenly over the four gaps behind the pad (ring y -0.122 / -0.14 / -0.164 / -0.178 and the tip).
-    gj = tg.vertex_groups.get('jaw') or tg.vertex_groups.new(name='jaw')
-    for v in tg.data.vertices:
-        y = v.co.y
-        if y > -0.1135:
-            continue                                    # root ring rides the jaw skin
-        w1, w2 = (0.39, 0.0) if y > -0.131 else (0.80, 0.0) if y > -0.152 else (0.48, 0.52) if y > -0.171 else (0.0, 1.0)
-        for g in list(tg.vertex_groups):
-            g.remove([v.index])
-        for g, w in ((gj, 1.0 - w1 - w2), (g1, w1), (g2, w2)):
-            if w > 1e-6:
-                g.add([v.index], w, 'REPLACE')
-    TR = {'tongue1': (0, -TONGUE_IN, 0), 'tongue2': (0, 0, 0)}  # retracted TONGUE_IN in idle and move (bone +Y = out)
+    for v in tg.data.vertices:                         # sections 1-3 (y > -0.15) ride the jaw skin; the rest lash out
+        if v.co.y < TONGUE_SPLIT:
+            for g in list(tg.vertex_groups):
+                g.remove([v.index])
+            (g2 if v.co.y < TONGUE_SPLIT2 else g1).add([v.index], 1.0, 'REPLACE')
+    TR = {'tongue1': (0, 0, 0), 'tongue2': (0, 0, 0)}  # the tongue keyed at rest (retracted) in idle and move
     # idle: throat pulse (jaw drops a little, twice) and a blink (eyes pull down into the head)
     clip(rig, 'idle', {1: {}, 8: {'jaw': (-4, 0, 0), 'chest': (1, 0, 0)}, 16: {}, 24: {'jaw': (-4, 0, 0), 'chest': (1, 0, 0)},
                        32: {}, 48: {}},
@@ -634,7 +512,7 @@ def stage4(k, body, pieces):
     # attack: tongue lash - lean in, jaw drops, tongue shoots out and snaps back
     clip(rig, 'attack', {1: {}, 6: {'chest': (-6, 0, 0), 'head': (4, 0, 0)}, 10: {'chest': (-8, 0, 0), 'jaw': (-14, 0, 0)},
                          14: {'chest': (-8, 0, 0), 'jaw': (-14, 0, 0)}, 19: {'chest': (-3, 0, 0), 'jaw': (-3, 0, 0)}, 24: {}},
-         loc={1: {}, 8: {}, 11: {'tongue1': (0, 0.085, 0), 'tongue2': (0, 0.057, 0)}, 14: {'tongue1': (0, 0.085, 0), 'tongue2': (0, 0.057, 0)},
+         loc={1: {}, 8: {}, 11: {'tongue1': (0, 0.09, 0), 'tongue2': (0, 0.06, 0)}, 14: {'tongue1': (0, 0.09, 0), 'tongue2': (0, 0.06, 0)},
               18: {}, 24: {}})
     return rig
 

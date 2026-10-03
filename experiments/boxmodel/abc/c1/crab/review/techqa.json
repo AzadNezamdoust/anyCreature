@@ -9,30 +9,30 @@
   "drift": 0
  },
  "totals": {
-  "area": 2.7841879497613413,
+  "drift": 0,
   "flip_area": 0,
-  "zfight": 0,
+  "clip_area": 0.0013948137649777803,
+  "sliver": 20,
   "clip": 2,
   "stretch_max": 0.0,
-  "drift": 0,
-  "fold": 0,
-  "sliver": 14,
-  "clip_area": 0.0013948134356074353,
   "hit": 0,
-  "flip": 0,
   "valley": 0,
-  "stretch": 0,
   "open": 0,
-  "float": 0
+  "fold": 0,
+  "float": 0,
+  "zfight": 0,
+  "flip": 0,
+  "stretch": 0,
+  "area": 2.7489734556331653
  },
- "triangles": 1600,
- "turned": 35,
+ "triangles": 1620,
+ "turned": 29,
  "stuck": 0,
  "per_object": {
   "body": {
    "valley": 0,
    "fold": 0,
-   "sliver": 14,
+   "sliver": 20,
    "hit": 0,
    "open": 0,
    "float": 0,
@@ -43,7 +43,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 2.680611175681548,
+   "area": 2.6482863364527978,
    "flip_area": 0
   },
   "piece_eyes": {
@@ -60,7 +60,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.0384674138618235,
+   "area": 0.03557776077446145,
    "flip_area": 0
   },
   "piece_rim_teeth": {
@@ -76,8 +76,8 @@
    "clip": 2,
    "stretch": 0,
    "stretch_max": 0.0,
-   "clip_area": 0.0013948134356074353,
-   "area": 0.04288356230610508,
+   "clip_area": 0.0013948137649777803,
+   "area": 0.042883566839125614,
    "flip_area": 0
   },
   "piece_barnacles": {
@@ -94,7 +94,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.02222579791186478,
+   "area": 0.022225791566780683,
    "flip_area": 0
   }
  },
