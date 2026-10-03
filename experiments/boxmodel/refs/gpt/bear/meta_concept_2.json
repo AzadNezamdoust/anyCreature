@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 66.2,
+ "exit": 0,
+ "prompt": "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole creature in frame on a plain pure white background. The creature: a bear: big shoulder hump as the highest point, head carried low, heavy body, thick legs; broad dished face, pale muzzle block with a black nose pad, small dark eyes, round ears; shoulder hump, deep body, thick legs tapering to the wrist, plantigrade paws with dark claws, stub tail; claws, darker lower legs, lighter chest plane. Size: height 1.0 m at the hump, length 1.7 m, width 0.7 m. Pose: standing on all four legs, head low. Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; no thin spikes, no loose shards, no tiny noisy details. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (brown fur, dark fur, pale muzzle, black nose, dark claw, eye), soft even light, no cast shadows, no text, no labels.",
+ "reference": null,
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:32:46"
+}

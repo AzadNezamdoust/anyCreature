@@ -45,13 +45,30 @@ SHEET = (
     "no cast shadows, plain pure white background.")
 
 
+CONCEPT = (
+    "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole "
+    "creature in frame on a plain pure white background. The creature: {desc}. Size: {size}. Pose: {pose}. "
+    "Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between "
+    "big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, "
+    "a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; "
+    "no thin spikes, no loose shards, no tiny noisy details. "
+    "Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours ({palette}), soft even light, "
+    "no cast shadows, no text, no labels.")
+
+CARVE = (" Keep the design readable from every side: left and right legs exactly side by side (in the SIDE view the "
+         "far legs are hidden behind the near legs, never staggered); arms hang clear of the body with a visible gap; "
+         "the mouth is closed; the tail does not touch the legs.")
+
 REF_SENTENCE = (' The reference image shows this exact character design: keep its design exactly (the same parts, shapes, '
                 'colours and proportions); only the viewing direction changes.')
 
 
-def prompt_for(c, ref=None):
+def prompt_for(c, ref=None, concept=False, carve=False):
     b = BRIEFS[c]
-    return (REF_SENTENCE.strip() + ' ' if ref else '') + SHEET.format(desc=b['image_description'], size=b['size'], pose=b['pose'],
+    if concept:
+        return CONCEPT.format(desc=b['image_description'], size=b['size'], pose=b['pose'],
+                              palette=', '.join(n for n, _ in b['palette']))
+    return (CARVE.strip() + ' ' if carve else '') + (REF_SENTENCE.strip() + ' ' if ref else '') + SHEET.format(desc=b['image_description'], size=b['size'], pose=b['pose'],
                         palette=', '.join(n for n, _ in b['palette']))
 
 
@@ -111,6 +128,10 @@ def main():
     ap.add_argument('--creatures', default=','.join(BRIEFS))
     ap.add_argument('--attempt', type=int, default=1)
     ap.add_argument('--model')
+    ap.add_argument('--concept', action='store_true', help='make a single-view shape-design concept image, not a sheet '
+                    '(saved as <provider>/<creature>/concept_<attempt>.png)')
+    ap.add_argument('--carve', action='store_true', help='add the carve-friendly rules to the sheet prompt')
+    ap.add_argument('--tag', default='sheet', help='output name stem for a sheet (default sheet -> sheet_<attempt>.png)')
     ap.add_argument('--ref', help='a concept image both providers get as the design reference')
     a = ap.parse_args()
     model = a.model or ('gemini-3.8-flash-high' if a.provider == 'gemini' else 'gpt-6-astra')
@@ -118,19 +139,20 @@ def main():
     for c in a.creatures.split(','):
         out = os.path.join(HERE, a.provider, c)
         os.makedirs(out, exist_ok=True)
-        ref = os.path.abspath(a.ref) if a.ref else None
-        p = prompt_for(c, ref)
+        ref = os.path.abspath(a.ref.replace('{c}', c)) if a.ref else None
+        p = prompt_for(c, ref, a.concept, a.carve)
         work = tempfile.mkdtemp(prefix=f'refs-{a.provider}-{c}-')
         png, r, dt, shown = (gen_gemini if a.provider == 'gemini' else gen_gpt)(p, work, model, ref)
         good = os.path.exists(png) and os.path.getsize(png) > 20000
-        dst = os.path.join(out, f'sheet_{a.attempt}.png')
+        stem = 'concept' if a.concept else a.tag
+        dst = os.path.join(out, f'{stem}_{a.attempt}.png')
         if good:
             shutil.copy(png, dst)
         reply = (r.stdout or '')[-1500:]
         json.dump(dict(provider=a.provider, model=model, attempt=a.attempt, ok=good, seconds=round(dt, 1), exit=r.returncode,
-                       prompt=p, reference=a.ref, command=shown, reply=reply, stderr=(r.stderr or '')[-800:],
+                       prompt=p, reference=a.ref, command=[os.path.basename(shown[0])] + [x for x in shown[1:] if os.sep not in str(x) and '/' not in str(x)], reply='', stderr='',     # the CLI output carries local paths: not kept
                        created=time.strftime('%Y-%m-%d %H:%M:%S')),
-                  open(os.path.join(out, f'meta_{a.attempt}.json'), 'w', encoding='utf-8'), indent=1)
+                  open(os.path.join(out, f'meta_{stem}_{a.attempt}.json' if stem != 'sheet' else f'meta_{a.attempt}.json'), 'w', encoding='utf-8'), indent=1)
         print(f'{c}: {"OK " + os.path.relpath(dst, HERE) if good else "FAIL (no image; see meta)"}  {dt:.0f}s  exit {r.returncode}')
         ok &= good
     sys.exit(0 if ok else 1)

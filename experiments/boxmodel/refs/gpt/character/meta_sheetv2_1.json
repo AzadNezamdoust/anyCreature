@@ -1,0 +1,28 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 1,
+ "ok": true,
+ "seconds": 98.8,
+ "exit": 0,
+ "prompt": "Keep the design readable from every side: left and right legs exactly side by side (in the SIDE view the far legs are hidden behind the near legs, never staggered); arms hang clear of the body with a visible gap; the mouth is closed; the tail does not touch the legs. The reference image shows this exact character design: keep its design exactly (the same parts, shapes, colours and proportions); only the viewing direction changes. One image: a 2 x 2 orthographic turnaround sheet of ONE stylised low-poly 3D game creature, four views of the same creature: top-left the SIDE view, top-right the FRONT view, bottom-left the REAR view, bottom-right the TOP view. All four views at one common scale (the same number of pixels per metre in every view), each centred in its own quarter, separated by wide plain white gutters with NO lines between the quarters. No text, no labels, no numbers, no arrows, no frames, no borders, no divider lines. The creature: a cartoon humanoid character: a big round head about a quarter of the body height on a thin neck, a slim straight torso, long thin arms and legs; a faceted sphere head; two big round cartoon eyes with white sclera, black pupils and a thin black outline; thin dark brows; a tiny pointed nose; a short straight line for the mouth; slim torso with no clothing detail, thin arms with simple hands (thumb and a mitten of fingers slightly curled), thin straight legs, bare feet with toe blocks. Size: height 1.6 m to the top of the head, arm span 1.5 m in the T-pose, depth 0.3 m. Pose: standing T-pose, arms straight out to the sides, palms down, feet slightly apart, the same pose in every view. The views: SIDE view: looking straight at the creature's left flank, its head pointing to the LEFT of the image. FRONT view: a straight-on front elevation, looking exactly head-on at its face; the creature is left-right symmetric about the vertical centre line of its quarter, its body hidden behind its chest, never a three-quarter view; the creature's left flank is on the RIGHT of the image. REAR view: a straight-on rear elevation, looking exactly tail-on; left-right symmetric about the centre line, its body hidden behind its rump, never a three-quarter view; its left flank is on the LEFT of the image. TOP view: a plan view looking straight down; its head points to the LEFT of the image and its left flank is at the BOTTOM of the image. Each feature appears only in the views that can see it. Each view is a true orthographic projection, no perspective. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (peach skin, eye white, black pupil and outline, dark brow and mouth), soft even light, no cast shadows, plain pure white background.",
+ "reference": "D:/Git/anyCreature/experiments/boxmodel/refs/gpt/{c}/concept_2.png",
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "-i",
+  "--",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:42:32"
+}

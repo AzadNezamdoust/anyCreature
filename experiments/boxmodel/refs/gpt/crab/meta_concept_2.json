@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 93.0,
+ "exit": 0,
+ "prompt": "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole creature in frame on a plain pure white background. The creature: a crab: wide low carapace with two big claws held in front and eight splayed walking legs with two bends each, body close to the ground; eye stalks with bulb eyes on the front rim, a toothed front edge on the carapace; broad carapace made of a few big planes, chunky claws with a real gap between the fingers, walking legs with a knee and a second bend, dark leg tips; claws, eye stalks, a small cluster of barnacles on the rear rim. Size: height 0.4 m, length 1.2 m, width 1.5 m with the legs. Pose: standing low, claws held in front. Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; no thin spikes, no loose shards, no tiny noisy details. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (red-orange shell, dark red ridge, cream belly, dark tip, black eye, barnacle), soft even light, no cast shadows, no text, no labels.",
+ "reference": null,
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:37:08"
+}
