@@ -36,7 +36,7 @@ def aspect_of(c):
 def main():
     audit = json.load(open(os.path.join(HERE, 'audit.json'), encoding='utf-8'))
     chosen, todo = {}, []
-    for p in ('gemini', 'gpt'):
+    for p in ('gpt',):        # Gemini is retired (owner 2026-10-06); its old sheets stay as the N/G/O record
         for c in sorted(accept.BRIEFS):
             sheets = sorted(f for f in os.listdir(os.path.join(HERE, p, c)) if f.startswith('sheet_') and f.endswith('.png'))
             log = []

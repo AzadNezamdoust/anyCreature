@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "grin loop: lower lip and mouth border, smile crease, eye centre line, a rounder cranium",
+   "new_verts": 9,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "eye-line loop: socket depth across the eye plane, temple, the ear cup and its back spine",
+   "new_verts": 15,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "pot-belly ring between the belt and the waist: the belly is a round mass, not a cone",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

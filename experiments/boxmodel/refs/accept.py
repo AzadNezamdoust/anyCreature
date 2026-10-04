@@ -71,7 +71,7 @@ def check(sheet, c):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--provider', default='gemini,gpt')
+    ap.add_argument('--provider', default='gpt')
     ap.add_argument('--creatures', default=','.join(BRIEFS))
     a = ap.parse_args()
     res = json.load(open(os.path.join(HERE, 'accept.json'))) if os.path.exists(os.path.join(HERE, 'accept.json')) else {}

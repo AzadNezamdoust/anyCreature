@@ -1,0 +1,34 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "c8772dee01d0ddf8dd6945860d9ad8408e7f546f34a49c3081d0c0a8e8ae5d85",
+  "collapsed_edge_hash": "c8772dee01d0ddf8dd6945860d9ad8408e7f546f34a49c3081d0c0a8e8ae5d85",
+  "logged_ops": 3,
+  "logged_new_verts": 29,
+  "errors": []
+ },
+ "colours": [
+  "belly",
+  "cream",
+  "dark",
+  "leather",
+  "skin",
+  "tan",
+  "yellow"
+ ],
+ "colour_count": 7,
+ "tris": 1868,
+ "attach": [],
+ "pieces": {
+  "piece_claws_0": 80,
+  "piece_claws_1": 60,
+  "piece_eye_L": 80,
+  "piece_eye_R": 80,
+  "piece_teeth_up": 72,
+  "piece_teeth_lo": 74,
+  "piece_belt": 96,
+  "piece_buckle": 20,
+  "piece_cloth_front": 60,
+  "piece_cloth_back": 60
+ }
+}

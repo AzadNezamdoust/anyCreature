@@ -9,15 +9,12 @@ before writing code.
 
 The owner's verdict on everything so far: it does not look made by a person.
 
-- The **engine creatures** (`example/wolf.glb`, `example/gallery/*.glb`) read as
-  lofted tubes: round sections everywhere, blobby joins, smooth gradients, no
-  deliberate planes.
-- The **first box-model protos** (`docs/research/img/research_opus_blender_wolf_vs_ours.jpg`)
-  failed differently: plank legs with arbitrary bends, a crate for a body, a
-  stiff tail, the face a flat wedge. Fur chunks were stuck on in a way that tore
-  the neck apart. The owner said: *"you change topology of the mesh for small
-  details that you should keep for later — the neck of the wolf is fully
-  deformed because you wanted some fur details."*
+- The **engine creatures** (`example/wolf.glb`) read as lofted tubes: round
+  sections, blobby joins, no deliberate planes.
+- The **first box-model protos** had plank legs, a crate body and a flat wedge
+  face, and fur chunks cut into the base tore the neck apart.
+- The **carved bases** (the hull decimated into the mesh) had the right masses
+  and a surface of triangle noise with no loops at any joint.
 
 The target is the look of a good commercial stylised low-poly asset: the
 Quaternius or Synty kind of creature. That means:
@@ -48,8 +45,8 @@ A person looking at it should not be able to tell a program made it.
    side-to-side, with narrow wrists and ankles, broad paws, hands and feet.
    Use 6–8 sided sections on the torso and 4–6 on limbs; never a uniform
    12-gon.
-4. **Rhythm.** Loops are dense where form changes (face, joints) and sparse
-   across big planes (flank, back). Ring spacing is never uniform.
+4. **Rhythm.** Faces are near square and near one size within a region; a
+   loop is added where the form turns or a joint bends, never to stripe a limb.
 5. **Anatomy for the pose.**
    - Quadrupeds stand on the toes: the foreleg is nearly straight with the
      elbow tucked behind the chest bottom and a small forward wrist. The hind
@@ -102,17 +99,69 @@ on x = 0, nothing goes below x = 0, and no face lies in the x = 0 plane
   stage 1 and every round**: the round sheets and the review packet show them
   next to the matching renders. Where the views disagree with each other or
   with the brief, the side view wins for proportions; note the choice.
-- **Stage 1: blockout.** One connected, closed, mirrored low-poly base with no
-  self-intersections and 400–1,500 triangles (counted after the mirror).
-  - Masses and silhouette come first.
-  - Legs, arms, ears, tail and neck are extruded out of torso or head faces
-    (`extrude`). There are no separate shells and no intersecting parts.
-  - Edge loops go only where the body bends (2–3 per major joint) and where
-    the form changes.
+- **Stage 1: a quad cage over the guide.** `guide = part_guide(k)` (module
+  `carve`) is the hidden base form, built part by part on `J` (torso, limbs,
+  head, `extra` chains: each sized from the sheet view that sees it, a mass
+  prior where none does). A sculpt to measure, never the mesh; judge it first
+  (`blockout/0_guide.jpg`). Box-model the base on `J` (`ring`, `bridge`,
+  `extrude`). Set `META['cage'] = True`, `META['J']`, `META['plan']` (`cage_plan`).
+  - **Name in `J` what the guide should have.** `tail0, tail1, ...` and
+    `earL, earTipL` are built even when `plan['extra']` leaves them out (a
+    tail as a tapered part, an ear as a thin leaf); a creature with ears or
+    a tail whose `J` does not name them gets a guide without them. A limb
+    whose tip joint is on the ground ends in a foot wedge along the ground
+    (`'<limb>_foot'`, width from the front view); one that hangs ends in a
+    palm block. An upright biped's head is a level stack from chin to crown
+    (`'head'`: cranium, jaw, brow and cheek masses, measured without the
+    ears) and its nose a part of its own (`'nose'`, the head -> snout
+    chain's thin end); its torso carries chest, belly and pelvis stations
+    (`k.guide_parts['torso']['masses']`). Knobs: `carve.PART`.
+  - **Form first: every ring is PLACED with `part_rings`**:
+    `part_rings(k.guide_parts, part, n)` gives centre, width, depth and
+    section exponent per station (`'torso'`, `'neck'`, `'head'`, a limb name);
+    `part_rings(k.guide_parts, part)` (no `n`) gives the ring BUDGET of
+    `part_budget`: the two ends, one mass ring per bone where the profile
+    changes most, two rings at each limb joint, each with its suggested
+    side count (`sides`: limbs 6, a nose or an ear 4, torso and head 8).
+    `ring_points(ring)` gives that ring's vertices: a limb ring is a rounded
+    box (exponent 3.2) with a flat front and back, the torso and the head
+    are rounder. `fit_to_guide(rings, guide, max_move)` slides vertices onto
+    the guide.
+    Never a constant radius: a limb keeps its masses (shoulder, elbow, forearm
+    swell, wrist; thigh, knee, calf, ankle); the head is brow, cheek, muzzle
+    and jaw masses, not one lofted wedge. `src: prior` = no view saw it: check
+    the concept. Torso 6–8 sided, limbs 4–6 (`planarize` settles facets).
+  - **Topology rules** (`topology()` measures them on the cage's own quads;
+    `blockout/4_topology.jpg` shows them):
+    1. Even face size: near-square quads of one size per region (edge length
+       p90/p10 ≤ 4 per region; at most 5% of faces longer than 5:1).
+    2. Rings about one face-width apart, 2–3 loops per joint; never 3+ rings
+       closer than half the limb's width outside a joint band.
+    3. Loops round the shoulder and the hip (the limb's root loop passes over
+       its joint), the neck, the eye and the mouth (`META['landmarks']`).
+    4. Limbs are extruded from torso or head faces so their loops flow on
+       into the torso: no cap, n-gon or fan (valence ≥ 6) at the junction.
+    5. Poles (valence 3 or 5) sit on the flat of a form, never in a joint band.
+    6. A library part joins ring-to-ring at the cage's vertex count and size.
+    7. The budget goes to silhouette and joints, not toes and eyes (triangle
+       share / area share per region within 0.5–2).
+  - Gates: one closed mirrored shell, no self-intersection, 400–1,500
+    triangles; ≥ 2 loops at every joint of `J`; silhouette IoU against the
+    blueprint (side 0.90, front 0.85, top 0.80); proportion ratios within 10%
+    of the sheet; topology rules 1–5; part profiles (`part_profiles()`,
+    `blockout/5_profiles.jpg`; head and each limb): taper ratio within 20% of
+    the reference's, profile RMS ≤ 3% of the part's length. An intended
+    proportion or profile deviation goes in `META['intended']` with its
+    reason (`'head profile': '...'`); `blockout/5_profiles.jpg` then prints
+    the gate as INTENDED. A thin part that comes later as a library or extra
+    piece (big ears, a tail fan) goes in `META['later'] = {'ear': ['earL',
+    'earTipL']}` (or `dict(chain=[...], radius=metres)`): the stage-1
+    silhouette IoU is then measured outside it, on the model and the sheet
+    alike. META may hold any value (`--lock` writes callables by name).
 
-  Iterate grey (see §5) until the base reads as the creature on its own. Then
-  lock it with `run.py <prog> --stage 1 --lock`. After the lock, stage1() is
-  frozen: any change fails the gate. Later shape changes go in stage2().
+  Iterate grey (see §5), lock with `run.py <prog> --stage 1 --lock` (stage1()
+  is then frozen), then `run.py <prog> --blockout` builds `blockout/` for the
+  blockout review (`ART_DIRECTOR.md`). Stage 2 waits for its sign-off.
 - **Stage 2: secondary.** Vertex moves, `flatten` planes, loop slides and
   asymmetry are free. Connectivity changes happen ONLY inside
   `with k.topo(bm, kind, reason):` blocks. Allowed changes:
@@ -134,6 +183,32 @@ on x = 0, nothing goes below x = 0, and no face lies in the x = 0 plane
   ruff, tail brush, claws, eyes, teeth, tusks, crest, moss, cloth. Paint 4–8
   region colours (`paint`). Stage 3 may not touch the base geometry at all;
   painting its faces is fine. Total 500–3,000 triangles.
+  - **The parts library is the default.** `import parts as P` (`kit/parts.py`;
+    every part with its variants is on `parts_demo/parts_sheet.jpg`). Eyes
+    (`eye_set`), paws (`paw_canine`, `paw_bear`), hooves (`hoof_cloven`),
+    hands (`hand_three_finger`, `hand_mitten`, `fist`), feet (`foot_biped`,
+    `bird_foot`), ears (`ear_cup`), horns (`horn`, `antler_beam`, `tusk`),
+    teeth (`tooth_row`), noses (`nose_pad`), fur clumps (`fur_clump`) and
+    tails (`tail_tuft`) come from it. Pick parameters; do not model these
+    from scratch. A hand-built version is allowed only when no part fits, and
+    NOTES.md says which part was tried and why it did not fit.
+  - Place a part with `origin`/`center`/`base`, `forward` and `up`; on the
+    right flank pass the mirrored vectors and `side=-1`. `P.attach(ob)` gives
+    its named points (claw tips, pupil, root).
+  - Colours: send a part's slots to your palette, `mats={'skin': 'fur',
+    'pad': 'dark'}`. The colour gate counts distinct colours, not material
+    names, so slots that share a palette colour cost nothing.
+  - A limb-end part built with `open_root=True` joins a cage ring of any vertex
+    count with `k.bridge_part(part, ring, reason=...)` (the part stays a
+    piece; logged in `stage3/stats.json`). Before the lock,
+    `bridge_part(part, ring, bm=bm)` welds it into the base instead.
+  - Budget: the defaults are the close-up versions. Four `paw_canine` cost
+    736 triangles, so on a creature near the 3,000 cap use the lite settings
+    each docstring lists: `paw_canine(toe_segs=1, claws=False)` 104,
+    `paw_bear(toe_segs=1)`, `antler_beam(tine_segs=1)` 86,
+    `tail_tuft(tiers=2, sides=5)` 48, `fur_clump(n=3)` 48,
+    `eye_set(brow_wedge=False)` 60, `tooth_row(gum=False)` 6 per tooth,
+    `bird_foot(toe_sides=3)` 124.
 - **Stage 4: rig and clips.**
   - Build the armature from the same joint positions you built the model on:
     keep a `J = {...}` dict of joints at the top of the program and use it in
@@ -197,6 +272,9 @@ Verbs:
   - `extrude(bm, faces, offset=None)` returns `{'faces', 'verts', 'sides'}`;
     the original faces are removed.
   - `inset(bm, faces, amount, depth)`.
+  - `bridge_uneven(bm, a, b)` stitches two closed loops with different vertex
+    counts (quads and triangles); `bridge_part(part, ring, bm=None)` uses it
+    to join a `parts.py` limb end to a cage ring.
 - **Moving vertices:** `move(verts, d)`, `scale(verts, s, pivot)`,
   `rotate(verts, axis, deg, pivot)`, `place(verts, pts)`, `flatten(verts)`,
   `slide([(v, target), ...], t)`, `snap_seam(bm)`.
@@ -260,28 +338,22 @@ Rules:
 - One diagnosed fix per round.
 - Stage 1 gets up to 14 rounds; lock when it reads as the creature from every
   view. Stage 2 up to 6, stage 3 up to 5, stage 4 up to 4.
-- If a gate fails three times running for the same reason, stop and report
-  it.
-- Be your own harshest critic: compare against the bar in §1, not against
-  the last round.
+- If a gate fails three times running for the same reason, stop and report it.
+- Be your own harshest critic: compare against §1, not against the last round.
 
 ## 6. Deliverables (all under `experiments/boxmodel/opus/<creature>/`)
 
-- the program;
-- `blueprint.json` and `blueprint.png`;
+- the program, `blueprint.json` and `blueprint.png`, `blockout/`;
 - `stage1_lock.json`, `stage2_log.json` and `lock_assert.json`;
 - `stage1/` … `stage4/`: renders, wireframes, GLBs, `orbit/` sheets and
   stats; stage 4 also has `glbcheck.txt` and the `posed/` renders;
-- `rounds/`: every round's sheet;
-- `NOTES.md`: every round, plus triangles per stage;
+- `rounds/` (every round's sheet) and `NOTES.md` (every round, triangles);
 - `side_by_side.jpg`, from `run.py <prog> --compare` after stage 4.
 
 Final report (your last message, max 15 lines):
 
-- the gates at stage 4 (PASS/FAIL);
-- triangles per stage;
-- the lock edge hash;
-- the number of rounds per stage;
+- the gates at stage 4 (PASS/FAIL) and the lock edge hash;
+- triangles and the number of rounds per stage;
 - the three biggest remaining weaknesses, stated honestly;
 - the paths to `side_by_side.jpg` and `stage4/sheet.jpg`.
 
@@ -302,8 +374,6 @@ shared. If the kit blocks you, report the exact error rather than editing it.
 - **Turn budget.** You run in chunks of about 60 tool calls. Keep rounds lean:
   use `--no-orbit` except on lock and final rounds, and read one sheet per
   round. If you are cut off, the orchestrator resumes you from your files.
-- `extrude()` on multi-face regions is fixed, so do not delete loose edges
-  yourself. Grey-stage orbits now work.
 
 ## 8. Tech QA and art direction (from the owner's close-up review of batch 2)
 
@@ -321,40 +391,25 @@ shoulder. The kit now measures them from stage 2 on (`kit/techqa.py`).
   - z-fighting ≤ 2 faces, so an eye lens must sit proud of its socket, not
     flush;
   - slivers ≤ 2% of triangles;
-  - posed fold-overs and collapses ≤ 0.5%;
+  - posed fold-overs and collapses ≤ 0.5% of the triangles and of the area;
+  - no piece comes off the body in a pose (`drift`): bind face pieces with
+    the skin's weights (`bind(body=)`);
   - open (single-sided) pieces are warned: give capes, ruffs and webbing a
     little thickness.
 - **Renders:** each stage 2–4 sheet shows the tech heatmap, with the legend
   in `review/3_tech.jpg`. Stage 4 adds close-ups (head, a front limb, a hind
   limb, the largest piece); set your own with
-  `META['closeups'] = [(name, (x, y, z), radius, view)]`.
+  `META['closeups'] = [(name, (x, y, z), radius, view)]`. A view is a name
+  (`az045`, `hero`, `top` ...) or your own: `view('under', (0.4, -0.6, -1))`
+  registers a direction from the subject to the camera.
 - **Rolls:** `armature(..., roll='auto')` gives consistent bone rolls (+X
   swings a hanging limb's tip forward, on both sides). Use it for new builds.
-- `flatten()` keeps seam vertices on x = 0.
-- **Review packet:** `run.py <prog> --review` builds `review/`. The art
-  director reviews it against `ART_DIRECTOR.md`; a repair pass works from
-  those notes.
-- **Gates added after the round-2 art direction:**
-  - posed fold-overs must stay ≤ 0.5% of the surface AREA as well as of the
-    triangle count;
-  - no piece may come off or slide over the body in a pose (`drift`). Bind
-    face pieces with the same weights as the skin under them (`bind(body=)`),
-    or weight the skin under a rigid piece 100% to that piece's bone.
-- New locks sort stage 1 into a canonical vertex/face order, so the lock is
-  stable across runs.
-- **Kit fixes after the N/G/O builds (2026-09-28):**
-  - `extrude()` returns `sides` in a fixed order with fresh normals, and
-    `move`, `scale`, `rotate`, `place`, `flatten` and `slide` refresh the
-    normals of the faces they touch. Picking a face by its normal after a
-    move is now safe.
-  - Posed QA checks every keyed frame of each clip, plus 20/40/60/80%. A
-    blink or a snap keyed between those points is checked now. A triangle
-    counts once however many frames it folds in.
-  - `clip` (pink, a warning for now): triangles that cross another part in a
-    pose but not at rest, such as a limb through a flap or a paw through the
-    cheek. The count is in `techqa.json`.
-  - `stretch` (teal, a warning): a triangle whose longest edge grows past 2×
-    its rest length in a pose. It means a stray weight, unless the part
-    stretches by design, like a tongue.
-  - The wire overlay no longer uses even offset, which drew needle spikes
-    at sharp corners.
+- **Review packet:** `run.py <prog> --review` builds `review/` for the art
+  director (`ART_DIRECTOR.md`); a repair pass works from those notes.
+- Posed QA checks every keyed frame of each clip, plus 20/40/60/80%.
+  Warnings: `clip` (pink), triangles that cross another part in a pose but
+  not at rest; `stretch` (teal), an edge past 2× its rest length (a stray
+  weight, unless the part stretches by design).
+- Every wire render shows the faces as modelled (quads, n-gons), never the
+  export triangles; `review/6_topology.jpg` adds the poles, the density
+  heatmap and the triangle budget per region and piece.

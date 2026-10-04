@@ -17,7 +17,17 @@
              2_closeups.jpg (head, limbs, body side: colour | wire), 3_tech.jpg
              (the tech-QA heatmap, legend on it), 4_posed.jpg, techqa.json; with a
              reference/ (refs.py, settings G/O) also 5_reference.jpg: each reference
-             view next to the model's beauty render from the matching angle.
+             view next to the model's beauty render from the matching angle. A cage build also gets
+             6_topology.jpg: the quad wire of the base as modelled (never the export triangles) with the
+             poles, the density heatmap, and the topology table with the triangle budget per region and piece.
+--blockout   the blockout sign-off packet of a cage build (META['cage']), blockout/: 1_grey.jpg and
+             1_thumbs.jpg (four grey views, full size and 256 px), 2_silhouette.jpg (model | reference
+             | difference, with the IoU), 3_proportions.jpg, 4_wire.jpg (joints and their loop counts),
+             4_topology.jpg (quad wire over flat grey from six views and four close views, poles as dots),
+             4_density.jpg and 4_aspect.jpg (heatmaps), 4_topology_table.jpg, topology.json,
+             0_guide.jpg (the guide alone, grey: the base form before any cage),
+             5_profiles.jpg and profiles.json (head, arm and leg profiles against the reference; 'guide' = the guide's own),
+             5_rom.jpg (three range-of-motion poses on a proxy rig), blockout.json.
 When <creature>/reference/ exists, the round sheets carry the reference views as
 tiles next to the matching renders (side|az090, front|az000, rear or back|az180, top|top,
 threeq|hero); a view with no matching render goes at the sheet's end.
@@ -317,11 +327,304 @@ def review(cdir, scr):
                 tiles += [(refs[v], f'reference {v}'), (os.path.join(scr, 'review', f'final_{az}.png'), f'model {az}')]
         sheet(tiles, os.path.join(out, '5_reference.jpg'), cols=2, tile=640,
               title=f'{name}: reference sheet view | model (beauty) from the matching angle')
-    for f in ('techqa.json',):
+    for f in ('techqa.json', 'topology.json'):
         if os.path.exists(os.path.join(s4, f)):
             shutil.copy(os.path.join(s4, f), os.path.join(out, f))
+    if os.path.exists(os.path.join(s4, 'topology.json')):               # a cage build: the base's faces as modelled
+        topology_sheets(s4, json.load(open(os.path.join(s4, 'topology.json'))), name, out, '6_', final=True)
     print('BMK review packet:', os.path.relpath(out, ROOT))
     return 0
+
+
+# ---------------------------------------------------------------- topology and part profiles
+TOPO_LEGEND = [('quad', (200, 200, 196)), ('triangle', (245, 185, 110)), ('n-gon', (185, 150, 235)),
+               ('piece', (170, 182, 198)), ('pole: valence 3', (20, 110, 255)), ('pole: valence 5', (255, 110, 0)),
+               ('pole: valence 6+ (fan)', (215, 0, 190))]
+DENSITY_LEGEND = [('8x smaller than the median face (dense)', (30, 70, 220)), ('median', (200, 200, 196)),
+                  ('8x larger (sparse)', (220, 40, 30))]
+ASPECT_LEGEND = [('up to 2:1', (200, 200, 196)), ('3:1', (240, 220, 60)), ('5:1 and over', (215, 25, 25))]
+
+
+def strip(w, items, title=None):
+    im = Image.new('RGB', (w, 34), (250, 250, 248))
+    d = ImageDraw.Draw(im)
+    x = 8
+    if title:
+        d.text((x, 6), title, fill=(20, 20, 20), font=font(18)); x += int(d.textlength(title, font=font(18))) + 24
+    for name, c in items:
+        d.rectangle([x, 9, x + 16, 25], fill=c, outline=(60, 60, 60))
+        d.text((x + 22, 8), name, fill=(20, 20, 20), font=font(15))
+        x += 40 + int(d.textlength(name, font=font(15)))
+    return im
+
+
+def grid(tiles, cols, tile):
+    """[(png, label)] -> a labelled Image (missing files are skipped)."""
+    tiles = [(p, l) for p, l in tiles if os.path.exists(p)]
+    if not tiles:
+        return None
+    rows = (len(tiles) + cols - 1) // cols
+    im = Image.new('RGB', (cols * tile, rows * (tile + 22)), (245, 245, 243))
+    d = ImageDraw.Draw(im)
+    for i, (p, l) in enumerate(tiles):
+        x, y = (i % cols) * tile, (i // cols) * (tile + 22)
+        im.paste(Image.open(p).convert('RGB').resize((tile, tile), Image.LANCZOS), (x, y + 22))
+        d.text((x + 6, y + 3), l, fill=(30, 30, 30), font=font(15))
+    return im
+
+
+def vstack(ims, out=None):
+    ims = [i for i in ims if i is not None]
+    im = Image.new('RGB', (max(i.width for i in ims), sum(i.height for i in ims)), (250, 250, 248))
+    y = 0
+    for i in ims:
+        im.paste(i, (0, y)); y += i.height
+    if out:
+        im.save(out, quality=88)
+    return im
+
+
+def text_image(lines, w=2400, size=17):
+    """[(text, colour)] -> Image, long lines wrapped."""
+    import textwrap
+    rows = []
+    for t, c in lines:
+        rows += [(x, c) for x in (textwrap.wrap(t, int(w / (size * 0.52)), subsequent_indent='        ') or [''])]
+    im = Image.new('RGB', (w, 16 + (size + 7) * len(rows)), (252, 252, 250))
+    d = ImageDraw.Draw(im)
+    for i, (t, c) in enumerate(rows):
+        d.text((10, 8 + i * (size + 7)), t, fill=c, font=font(size))
+    return im
+
+
+def check_lines(checks, what):
+    out = []
+    for c in checks:
+        gate = c['kind'] == 'gate'
+        why = c.get('intended') if not c['ok'] else None                # META['intended'] waiver (bmkit.cage_gates)
+        col = (20, 20, 20) if c['ok'] else ((200, 30, 30) if gate and not why else (170, 110, 0))
+        out.append((f"{'GATE' if gate else 'warn'} {'PASS' if c['ok'] else 'INTENDED' if why else 'FAIL'}  {what}: {c['name']}  —  {c['detail']}"
+                    + (f'  (intended: {why})' if why else ''), col))
+    return out
+
+
+def topology_table(T, name):
+    K, G = (20, 20, 20), (90, 90, 90)
+    L = [(f"{name}: topology of the cage's own faces  ({T['faces']} faces, {T['tris']} triangles; gates block the stage-1 lock)", K)]
+    L += check_lines(T['checks'], 'topology') + [('', K)]
+    L.append(('region        faces  tris  tri%  area%  density   edge p10 / p50 / p90 (m)    p90/p10   >3:1   >5:1   tris  n-gons', G))
+    for n, r in T['regions'].items():
+        e = r['edge']
+        L.append((f"{n:<12} {r['faces']:>5} {r['tris']:>6} {100 * r['tri_share']:>5.0f} {100 * r['area_share']:>6.0f} {r['density']:>8.2f}x"
+                  f"     {e['p10']:.3f} / {e['p50']:.3f} / {e['p90']:.3f}       {e['ratio']:>5.2f}  {r['gt3_pct']:>5.1f}% {r['gt5_pct']:>5.1f}%"
+                  f"  {r['tris_n']:>4} {r['ngons']:>6}", K))
+    s, a, q, p = T['size'], T['aspect'], T['nonquad'], T['poles']
+    L.append((f"body: edge p90/p10 {s['edge']['ratio']:g}, face area p90/p10 {s['area']['ratio']:g}; faces over 3:1 {a['gt3_pct']:g}%, over 5:1 "
+              f"{a['gt5_pct']:g}% (worst {a['worst']:g}:1); non-quads {q['tris']} triangles + {q['ngons']} n-gons ({100 * q['share']:.1f}%)", K))
+    L.append((f"poles: {p['n3']} of valence 3, {p['n5']} of valence 5, {p['n6']} of valence 6+; {p['in_joint']} in joint bands {p['by_joint'] or ''}, "
+              f"{p['at_roots']} at limb roots, {p['elsewhere']} elsewhere", K))
+    L.append(('joints: ' + '; '.join(f"{n} {j['loops']} loops ({j['rings']} rings, spacing {j['spacing_over_width']} x width)"
+                                     for n, j in T['joints'].items()), K))
+    L.append(('limb roots: ' + '; '.join(f"{n}: loop {'yes' if r['loop'] else 'NO'}, {'over' if r['over_joint'] else 'below'} the joint (t {r.get('t')}), "
+                                         f"flow {r['flow']:g}, {r['fans']} fans, {r['caps']} non-quads, {r['rings']} rings"
+                                         for n, r in T['roots'].items()), K))
+    L.append(('ring-band stacks: ' + ('; '.join(f"{x['chain']} {x['rings']} rings at {x['spacing_over_width']:g} x width" for x in T['ring_stacks']) or 'none')
+              + '   face loops: ' + ', '.join(f'{n} {v}' for n, v in T['face_loops'].items()), K))
+    if T.get('budget'):
+        B = T['budget']
+        L += [('', K), (f"triangle budget of the final model ({B['total']} triangles, pieces {100 * B['pieces_share']:.0f}%):  "
+                        + ',  '.join(f"{n} {r['tris']} ({100 * r['share']:.0f}%)" for n, r in B['rows'].items()), K)]
+    return text_image(L)
+
+
+def topology_sheets(src, T, name, out, prefix, tag='topo', final=False):
+    """Compose the topology pictures of a run: <prefix>topology.jpg (and, for a blockout, the two heatmaps and the table)."""
+    lab = json.load(open(os.path.join(src, f'{tag}_shots.json')))['close'] if os.path.exists(os.path.join(src, f'{tag}_shots.json')) else []
+    full = grid([(os.path.join(src, f'{tag}_wire_{v}.png'), l) for v, l in
+                 (('hero', 'hero'), ('az090', 'side'), ('az000', 'front'), ('top', 'top'), ('back34', 'back 3/4'), ('under', 'under-belly'))], 3, 800)
+    close = grid([(os.path.join(src, f'{tag}_close_{i}.png'), l) for i, l in enumerate(lab)], 4, 600)
+    if full is None:
+        return
+    head = strip(2400, TOPO_LEGEND, f"{name}: quad wire, the faces as modelled (no triangulation)")
+    dens = vstack([strip(2100, DENSITY_LEGEND, f'{name}: density, face area against the median'),
+                   grid([(os.path.join(src, f'{tag}_density_{v}.png'), v) for v in ('hero', 'az090', 'top')], 3, 700)])
+    asp = vstack([strip(2100, ASPECT_LEGEND, f'{name}: face aspect, longest / shortest edge'),
+                  grid([(os.path.join(src, f'{tag}_aspect_{v}.png'), v) for v in ('hero', 'az090', 'top')], 3, 700)])
+    table = topology_table(T, name)
+    if final:
+        vstack([head, full, close, dens, table], os.path.join(out, f'{prefix}topology.jpg'))
+    else:
+        vstack([head, full, close], os.path.join(out, f'{prefix}topology.jpg'))
+        dens.save(os.path.join(out, f'{prefix}density.jpg'), quality=88)
+        asp.save(os.path.join(out, f'{prefix}aspect.jpg'), quality=88)
+        table.save(os.path.join(out, f'{prefix}topology_table.jpg'), quality=90)
+
+
+def profiles_sheet(cdir, raw, P, frame, name, out):
+    """5_profiles.jpg: per part the reference crop | the model crop (side view, the station cuts drawn) | the depth
+    and width curves along the part (reference black, model red)."""
+    sheet_png = os.path.join(cdir, 'reference', 'sheet.png')
+    mp = os.path.join(raw, 'grey_side_ortho.png')
+    ref = Image.open(sheet_png).convert('RGB') if os.path.exists(sheet_png) and P.get('sheet_map') else None
+    mod = Image.open(mp).convert('RGB') if os.path.exists(mp) and frame else None
+    S, K, R = 420, (20, 20, 20), (215, 30, 30)
+    rows = []
+    for pn, part in P['parts'].items():
+        st = [r for r in part['stations']]
+        ys = [r['at'][1] for r in st]; zs = [r['at'][2] for r in st]
+        half = 0.5 * max(max(ys) - min(ys), max(zs) - min(zs)) + 0.6 * max([r['model']['depth'] for r in st if 'model' in r] or [0.1])
+        cy, cz = (max(ys) + min(ys)) / 2, (max(zs) + min(zs)) / 2
+        row = Image.new('RGB', (4 * S, S + 26), (252, 252, 250))
+        d = ImageDraw.Draw(row)
+        d.text((6, 4), f"{pn}: reference (sheet, side view)", fill=K, font=font(15))
+        d.text((S + 6, 4), 'model (side view)', fill=K, font=font(15))
+
+        def crop(img, to_px, key, col):
+            (x0, y0), (x1, y1) = to_px((cy - half, cz + half)), to_px((cy + half, cz - half))
+            c = img.crop((int(x0), int(y0), int(x1), int(y1))).resize((S, S), Image.LANCZOS)
+            dd = ImageDraw.Draw(c)
+            k = S / max(1e-9, x1 - x0)
+            for r in st:
+                src = r.get(key) or {}
+                if 'depth' not in src:
+                    continue
+                cen = (r.get('guide') or r['model'])['centre'] if key == 'ref' else r['model']['centre']
+                h = src['depth'] / 2
+                a = to_px((cen[1] - r['w'][1] * h, cen[2] - r['w'][2] * h)); b = to_px((cen[1] + r['w'][1] * h, cen[2] + r['w'][2] * h))
+                dd.line([((a[0] - x0) * k, (a[1] - y0) * k), ((b[0] - x0) * k, (b[1] - y0) * k)], fill=col, width=3)
+            return c
+
+        if ref is not None:
+            m_ = P['sheet_map']['side']
+            row.paste(crop(ref, lambda q: (m_['cmid'] + q[0] / m_['s'], m_['ground'] - q[1] / m_['s']), 'ref', (20, 60, 220)), (0, 26))
+        if mod is not None:
+            mp_, _ = _mapper('side', frame, mod.width)
+            row.paste(crop(mod, mp_, 'model', R), (S, 26))
+        for ci, key in enumerate(('depth', 'width')):
+            ox, oy, W, H = (2 + ci) * S + 46, 26 + 30, S - 66, S - 80
+            vals = [r[k_][key] for r in st for k_ in ('model', 'ref') if key in r.get(k_, {})]
+            top = 1.15 * max(vals or [0.1])
+            D = part['dims'][key]
+            d.text(((2 + ci) * S + 8, 4), f"{'depth (side view)' if key == 'depth' else 'width (front / top view)'}, m along the part", fill=K, font=font(15))
+            d.rectangle([ox, oy, ox + W, oy + H], outline=(150, 150, 150))
+            d.text((ox - 40, oy - 6), f'{top:.2f}', fill=(90, 90, 90), font=font(12)); d.text((ox - 16, oy + H - 8), '0', fill=(90, 90, 90), font=font(12))
+            for k_, col in (('ref', K), ('model', R)):
+                pts = [(ox + r['s'] * W, oy + H - r[k_][key] / top * H) for r in st if key in r.get(k_, {}) and key in r.get('ref', {})]
+                if len(pts) > 1:
+                    d.line(pts, fill=col, width=3)
+                for x, y in pts:
+                    d.ellipse([x - 4, y - 4, x + 4, y + 4], fill=col)
+            for r in st:                                                # hidden or fused stations: a grey tick on the axis
+                if r['fused'] or r['src'].get(key) == 'hidden':
+                    x = ox + r['s'] * W
+                    d.line([(x, oy + H - 8), (x, oy + H)], fill=(150, 150, 150), width=3)
+            t = (f"taper model {D['taper_model']:g} ref {D['taper_ref']:g} ({D['taper_diff_pct']:+g}%)  tube {D['tube_model']:g} / {D['tube_ref']:g}  RMS {D['rms_pct']:g}%"
+                 if 'taper_model' in D else f"no reference: {D['hidden']} stations hidden in every view")
+            d.text(((2 + ci) * S + 8, 26 + S - 44), t, fill=K, font=font(13))
+            d.text(((2 + ci) * S + 8, 26 + S - 24), f"{D['stations']} stations: {D['sources']['sheet']} sheet, {D['sources']['guide']} guide, {D['hidden']} hidden", fill=(90, 90, 90), font=font(13))
+        rows.append(row)
+        g = part['guide']
+        rows.append(text_image([(f"{pn} ({' > '.join(part['joints'])}): RMS {part.get('rms_pct')}% of length, max {part.get('max_pct')}%;  the guide alone: {g['stations']} of {g['of']} stations cut cleanly"
+                                 + (f", taper {g['taper']:g}, tube score {g['tube']:g}, section fill {g['fill']:g} (0.79 ellipse, 1.00 box), width/depth {g['aspect']:g}" if 'taper' in g else '')
+                                 + f";  model section fill {part['model_fill']}", K)], w=4 * S, size=14))
+    head = text_image([(f"{name}: part profiles: reference black / blue cuts, model red; grey ticks = station fused with the body or hidden in every view", K)]
+                      + check_lines(P['checks'], 'form'), w=4 * S, size=14)
+    vstack([head] + rows, out)
+
+
+# ---------------------------------------------------------------- blockout sign-off
+GUIDE_TILES = [('hero', 'hero'), ('az090', 'side'), ('az000', 'front'), ('top', 'top'), ('back34', 'back34')]
+
+
+def blockout(cdir, scr):
+    """Compose blockout/ from the raw renders of a --blockout run (bmkit.blockout_packet)."""
+    import numpy as np
+    raw, out = os.path.join(scr, 'blockout'), os.path.join(cdir, 'blockout')
+    ip = os.path.join(out, 'blockout.json')
+    if not os.path.exists(ip):
+        print("no blockout.json: the program needs META['cage'] = True, META['J'] and META['plan']"); return 2
+    info = json.load(open(ip))
+    name = info.get('creature') or os.path.basename(cdir)
+    views = ['hero', 'az090', 'az000', 'back34']
+    grey = [(os.path.join(raw, f'grey_{v}_clay.png'), v) for v in views]
+    sheet([(os.path.join(raw, f'guide_{v}_clay.png'), l) for v, l in GUIDE_TILES], os.path.join(out, '0_guide.jpg'), cols=3,
+          tile=640, title=f'{name}: the guide alone (the base form, before any cage)')
+    sheet(grey, os.path.join(out, '1_thumbs.jpg'), cols=4, tile=256)
+    sheet(grey, os.path.join(out, '1_grey.jpg'), cols=2, tile=768, title=f'{name}: grey blockout (stage-1 cage)')
+    # silhouettes: model | reference | difference
+    sp = os.path.join(raw, 'sil.npz')
+    if os.path.exists(sp):
+        Z = np.load(sp)
+        res = Z['model_side'].shape[0]
+        vs = [v for v in ('side', 'front', 'top') if f'ref_{v}' in Z]
+        im = Image.new('RGB', (3 * res, len(vs) * (res + 26) + 34), (255, 255, 255))
+        d = ImageDraw.Draw(im)
+        d.text((8, 6), f'{name}: silhouette  model | reference sheet | difference (red = model only, blue = sheet only)',
+               fill=(20, 20, 20), font=font(20))
+        for r, v in enumerate(vs):
+            m, f = Z[f'model_{v}'], Z[f'ref_{v}']
+            y = 34 + r * (res + 26)
+            diff = np.full((res, res, 3), 255, np.uint8)
+            diff[m & f] = (120, 120, 120); diff[m & ~f] = (225, 40, 40); diff[~m & f] = (40, 90, 225)
+            for c, a in enumerate((np.where(m, 0, 255).astype(np.uint8), np.where(f, 0, 255).astype(np.uint8), diff)):
+                im.paste(Image.fromarray(a).convert('RGB'), (c * res, y + 26))
+            d.text((8, y + 4), f"{v}   IoU {info['iou'].get(v)}   (floor {info['iou_floor'].get(v)})",
+                   fill=(20, 20, 20), font=font(17))
+        im.save(os.path.join(out, '2_silhouette.jpg'), quality=88)
+    # the proportion table
+    prop = info.get('proportions') or {}
+    if prop:
+        lim, intended = info['limits']['proportion_pct'], info.get('intended', {})
+        W, rh = 1100, 30
+        im = Image.new('RGB', (W, 70 + rh * (len(prop) + 1) + 24 * len(intended) + 16), (252, 252, 250))
+        d = ImageDraw.Draw(im)
+        d.text((10, 8), f'{name}: proportions, model against the reference sheet (limit {lim:g}%)', fill=(20, 20, 20), font=font(20))
+        for x, t in ((10, 'ratio'), (520, 'model'), (650, 'sheet'), (780, 'difference'), (930, 'verdict')):
+            d.text((x, 44), t, fill=(90, 90, 90), font=font(17))
+        y = 44 + rh
+        for n, r in prop.items():
+            bad = abs(r['diff_pct']) > lim
+            verdict = 'ok' if not bad else ('intended' if n in intended else 'OFF')
+            col = (20, 20, 20) if not bad else ((170, 110, 0) if n in intended else (200, 30, 30))
+            for x, t in ((10, n), (520, f"{r['model']:.3f}"), (650, f"{r['sheet']:.3f}"), (780, f"{r['diff_pct']:+.1f}%"),
+                         (930, verdict)):
+                d.text((x, y), t, fill=col, font=font(17))
+            y += rh
+        for n, why in intended.items():
+            d.text((10, y + 6), f'intended: {n}: {why}', fill=(170, 110, 0), font=font(15)); y += 24
+        im.save(os.path.join(out, '3_proportions.jpg'), quality=90)
+    # wire: the side view with the joints and their loop counts, and two 3/4 views
+    wp = os.path.join(raw, 'wire_side_ortho.png')
+    tiles = []
+    if os.path.exists(wp) and info.get('frame'):
+        im = Image.open(wp).convert('RGB')
+        d = ImageDraw.Draw(im)
+        m, _ = _mapper('side', info['frame'], im.width)
+        for n, p in info['joints'].items():
+            x, y = m((p[1], p[2]))
+            d.ellipse([x - 7, y - 7, x + 7, y + 7], outline=(220, 30, 30), width=3)
+            d.text((x + 10, y - 10), f"{n}: {info['loops'].get(n)} loops", fill=(200, 20, 20), font=font(18))
+        jp = os.path.join(raw, 'wire_side_joints.png'); im.save(jp)
+        tiles.append((jp, 'side (orthographic): joints from J and the edge loops counted at each'))
+    tiles += [(os.path.join(raw, f'grey_{v}_wire.png'), f'{v} wire') for v in ('hero', 'back34')]
+    sheet(tiles, os.path.join(out, '4_wire.jpg'), cols=3, tile=768,
+          title=f"{name}: cage wire  {info['tris']} triangles, quad share {100 * info['quad_share']:.0f}%")
+    if os.path.exists(os.path.join(out, 'topology.json')):               # quad wire sheet, heatmaps, the table
+        topology_sheets(raw, json.load(open(os.path.join(out, 'topology.json'))), name, out, '4_')
+    if os.path.exists(os.path.join(out, 'profiles.json')):               # head, arms, legs against the reference
+        profiles_sheet(cdir, raw, json.load(open(os.path.join(out, 'profiles.json'))), info.get('frame'), name,
+                       os.path.join(out, '5_profiles.jpg'))
+    # range of motion
+    tiles = []
+    for pn in info.get('poses', {}):
+        tiles += [(os.path.join(raw, f'rom_{pn}_{v}_{mode}.png'), f'{pn} {v} {mode}')
+                  for v, mode in (('hero', 'clay'), ('az090', 'clay'), ('hero', 'wire'), ('az090', 'wire'))]
+    rom = info.get('rom', {})
+    sheet(tiles, os.path.join(out, '5_rom.jpg'), cols=4, tile=512,
+          title=f"{name}: range of motion on a proxy rig  ({rom.get('flip_tris')} of {rom.get('triangles')} triangles "
+                f"fold over, {rom.get('flip_area_pct')}% of area)")
+    print('BMK blockout packet:', os.path.relpath(out, ROOT), '— gates', 'PASS' if info.get('gates_ok') else 'FAIL')
+    return 0 if info.get('gates_ok') else 1
 
 
 # ---------------------------------------------------------------- main
@@ -339,6 +642,7 @@ def main():
     ap.add_argument('--compare', action='store_true')
     ap.add_argument('--no-orbit', action='store_true')
     ap.add_argument('--review', action='store_true')
+    ap.add_argument('--blockout', action='store_true')
     a = ap.parse_args()
     prog = os.path.abspath(a.program)
     cdir = os.path.dirname(prog)
@@ -350,6 +654,15 @@ def main():
 
     if a.review:
         return review(cdir, scr)
+
+    if a.blockout:
+        rc, lines, tb = blender(prog, ['--out', cdir, '--scratch', scr, '--stage', '1', '--blockout'],
+                                os.path.join(scr, 'blockout.log'))
+        for l in lines:
+            print(l)
+        if tb:
+            print('\n'.join(tb)); return 2
+        return blockout(cdir, scr)
 
     if a.compare:
         lock = json.load(open(os.path.join(cdir, 'stage1_lock.json')))

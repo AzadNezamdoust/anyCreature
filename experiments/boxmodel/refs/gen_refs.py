@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Multi-view reference sheets for the N/G/O test, made on the owner's SUBSCRIPTIONS (no API keys).
 
-    py -3.11 experiments/boxmodel/refs/gen_refs.py --provider gemini|gpt [--creatures a,b] [--attempt N] [--model ID]
+    py -3.11 experiments/boxmodel/refs/gen_refs.py [--creatures a,b] [--attempt N] [--model ID] [--concept] [--carve] [--ref img]
 
-  gemini  Antigravity CLI `agy --print` (Google AI Ultra login); its agent calls `generate_image`.
-          Default agent model gemini-3.8-flash-high.
-  gpt     Codex CLI `codex exec` (ChatGPT login); the model's built-in `image_gen` tool.
+  gpt     Codex CLI `codex exec` (ChatGPT login); the model's built-in `image_gen` tool. The only provider:
+          Gemini (Antigravity) was retired by the owner on 2026-10-06; its old sheets stay as the N/G/O record.
           Default model gpt-6-astra, reasoning effort low.
 
 The method follows D:/Git/checkout/tools/LLMModeling (research/v7/IMAGEGEN-AB.md, 2026-09-27): ONE image holding
@@ -16,7 +15,6 @@ Output: experiments/boxmodel/refs/<provider>/<creature>/sheet_<attempt>.png + me
 command line minus the prompt, the time). Invocation lessons from the owner's other projects:
   - codex exec waits on stdin when it has no TTY: stdin is closed; it runs from the output directory;
   - the codex binary sits under a hash folder that changes with app updates: resolved at run time;
-  - agy's agent wanders after generating: it is told to call generate_image once and reply with the path only.
 """
 import argparse, glob, json, os, shutil, subprocess, sys, tempfile, time
 
@@ -79,33 +77,11 @@ def codex_exe():
     return hits[-1]
 
 
-def agy_exe():
-    p = os.environ.get('AGY_BIN') or os.path.join(LOCAL, 'agy', 'bin', 'agy.exe')
-    if not os.path.exists(p):
-        sys.exit(f'no agy at {p} (Antigravity CLI; set AGY_BIN)')
-    return p
-
-
 def run(cmd, cwd, timeout):
     t0 = time.time()
     r = subprocess.run(cmd, cwd=cwd, stdin=subprocess.DEVNULL, capture_output=True, text=True, encoding='utf-8',
                        errors='replace', timeout=timeout)
     return r, time.time() - t0
-
-
-def gen_gemini(prompt, work, model, ref=None):
-    png = os.path.join(work, 'sheet.png')
-    instruction = ' '.join([
-        f'Use your generate_image tool ONCE to create this image and save the PNG file as {png}',
-        (f'Pass the image {ref} to generate_image as its reference image (ImagePaths).' if ref else ''),
-        '(the file must exist on disk when you finish). Do not list folders or do anything else.',
-        f'Prompt for the image: {prompt}',
-        'Reply with the saved path and the image model used, nothing else.'])
-    cmd = [agy_exe(), '--print', instruction, '--add-dir', work] + (['--add-dir', os.path.dirname(ref)] if ref else []) + [
-           '--dangerously-skip-permissions', '--effort', 'high',
-           '--output-format', 'text', '--print-timeout', '8m', '--model', model]
-    r, dt = run(cmd, work, 11 * 60)
-    return png, r, dt, cmd[:1] + ['--print', '<instruction>'] + cmd[3:]
 
 
 def gen_gpt(prompt, work, model, ref=None):
@@ -124,7 +100,8 @@ def gen_gpt(prompt, work, model, ref=None):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--provider', choices=['gemini', 'gpt'], required=True)
+    ap.add_argument('--provider', choices=['gpt'], default='gpt',
+                    help='gpt only: Gemini is retired (owner 2026-10-06)')
     ap.add_argument('--creatures', default=','.join(BRIEFS))
     ap.add_argument('--attempt', type=int, default=1)
     ap.add_argument('--model')
@@ -134,7 +111,7 @@ def main():
     ap.add_argument('--tag', default='sheet', help='output name stem for a sheet (default sheet -> sheet_<attempt>.png)')
     ap.add_argument('--ref', help='a concept image both providers get as the design reference')
     a = ap.parse_args()
-    model = a.model or ('gemini-3.8-flash-high' if a.provider == 'gemini' else 'gpt-6-astra')
+    model = a.model or 'gpt-6-astra'
     ok = True
     for c in a.creatures.split(','):
         out = os.path.join(HERE, a.provider, c)
@@ -142,7 +119,7 @@ def main():
         ref = os.path.abspath(a.ref.replace('{c}', c)) if a.ref else None
         p = prompt_for(c, ref, a.concept, a.carve)
         work = tempfile.mkdtemp(prefix=f'refs-{a.provider}-{c}-')
-        png, r, dt, shown = (gen_gemini if a.provider == 'gemini' else gen_gpt)(p, work, model, ref)
+        png, r, dt, shown = gen_gpt(p, work, model, ref)
         good = os.path.exists(png) and os.path.getsize(png) > 20000
         stem = 'concept' if a.concept else a.tag
         dst = os.path.join(out, f'{stem}_{a.attempt}.png')

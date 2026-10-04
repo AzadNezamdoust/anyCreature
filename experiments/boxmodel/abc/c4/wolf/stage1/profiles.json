@@ -1,0 +1,1218 @@
+{
+ "limits": {
+  "taper_pct": 20.0,
+  "rms_pct": 3.0,
+  "per_bone": 3,
+  "hidden": 1.25,
+  "sheet_band": [
+   0.6,
+   1.2
+  ],
+  "min_stations": 3
+ },
+ "parts": {
+  "head": {
+   "joints": [
+    "neck",
+    "head",
+    "snout"
+   ],
+   "length": 0.4912,
+   "stations": [
+    {
+     "s": 0.0,
+     "at": [
+      0.0,
+      -0.41,
+      0.73
+     ],
+     "bone": "neck",
+     "w": [
+      -0.0,
+      0.555,
+      0.832
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.3613,
+      "depth": 0.4654,
+      "centre": [
+       0.0,
+       -0.4232,
+       0.7102
+      ],
+      "fill": 0.786
+     },
+     "guide": {
+      "width": 0.3629,
+      "depth": 0.4714,
+      "centre": [
+       0.0,
+       -0.4191,
+       0.7164
+      ],
+      "fill": 0.819
+     },
+     "ref": {
+      "depth": 0.4842,
+      "width": 0.3228
+     },
+     "sheet": {
+      "depth": 0.4842,
+      "width": 0.3228
+     }
+    },
+    {
+     "s": 0.171,
+     "at": [
+      0.0,
+      -0.48,
+      0.7767
+     ],
+     "bone": "neck",
+     "w": [
+      -0.0,
+      0.555,
+      0.832
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.361,
+      "depth": 0.4176,
+      "centre": [
+       0.0,
+       -0.4693,
+       0.7928
+      ],
+      "fill": 0.776
+     },
+     "guide": {
+      "width": 0.3485,
+      "depth": 0.4358,
+      "centre": [
+       -0.0001,
+       -0.4761,
+       0.7826
+      ],
+      "fill": 0.814
+     },
+     "ref": {
+      "depth": 0.4659,
+      "width": 0.3329
+     },
+     "sheet": {
+      "depth": 0.4659,
+      "width": 0.3329
+     }
+    },
+    {
+     "s": 0.343,
+     "at": [
+      0.0,
+      -0.55,
+      0.8233
+     ],
+     "bone": "neck",
+     "w": [
+      -0.0,
+      0.555,
+      0.832
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "guide"
+     },
+     "model": {
+      "width": 0.2705,
+      "depth": 0.2856,
+      "centre": [
+       0.0,
+       -0.5025,
+       0.8945
+      ],
+      "fill": 0.775
+     },
+     "guide": {
+      "width": 0.243,
+      "depth": 0.3677,
+      "centre": [
+       0.0001,
+       -0.5308,
+       0.8521
+      ],
+      "fill": 0.821
+     },
+     "ref": {
+      "depth": 0.3563,
+      "width": 0.243
+     },
+     "sheet": {
+      "depth": 0.3563,
+      "width": 0.3918
+     }
+    },
+    {
+     "s": 0.514,
+     "at": [
+      0.0,
+      -0.62,
+      0.87
+     ],
+     "bone": "neck",
+     "w": [
+      -0.0,
+      0.555,
+      0.832
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.231,
+      "depth": 0.3577,
+      "centre": [
+       0.0,
+       -0.6096,
+       0.8856
+      ],
+      "fill": 0.759
+     },
+     "guide": {
+      "width": 0.2205,
+      "depth": 0.3721,
+      "centre": [
+       0.0003,
+       -0.6051,
+       0.8924
+      ],
+      "fill": 0.79
+     },
+     "ref": {
+      "depth": 0.403,
+      "width": 0.2314
+     },
+     "sheet": {
+      "depth": 0.403,
+      "width": 0.2314
+     }
+    },
+    {
+     "s": 0.676,
+     "at": [
+      0.0,
+      -0.695,
+      0.8433
+     ],
+     "bone": "head",
+     "w": [
+      0.0,
+      -0.335,
+      0.942
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.1606,
+      "depth": 0.1766,
+      "centre": [
+       0.0,
+       -0.69,
+       0.8293
+      ],
+      "fill": 0.791
+     },
+     "guide": {
+      "width": 0.1533,
+      "depth": 0.1667,
+      "centre": [
+       -0.0001,
+       -0.6872,
+       0.8213
+      ],
+      "fill": 0.82
+     },
+     "ref": {
+      "depth": 0.1594,
+      "width": 0.1421
+     },
+     "sheet": {
+      "depth": 0.1594,
+      "width": 0.1421
+     }
+    },
+    {
+     "s": 0.838,
+     "at": [
+      0.0,
+      -0.77,
+      0.8167
+     ],
+     "bone": "head",
+     "w": [
+      0.0,
+      -0.335,
+      0.942
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.102,
+      "depth": 0.1066,
+      "centre": [
+       0.0,
+       -0.7597,
+       0.7878
+      ],
+      "fill": 0.73
+     },
+     "guide": {
+      "width": 0.0968,
+      "depth": 0.1106,
+      "centre": [
+       0.0001,
+       -0.7593,
+       0.7866
+      ],
+      "fill": 0.844
+     },
+     "ref": {
+      "depth": 0.1147,
+      "width": 0.1035
+     },
+     "sheet": {
+      "depth": 0.1147,
+      "width": 0.1035
+     }
+    }
+   ],
+   "dims": {
+    "depth": {
+     "stations": 6,
+     "hidden": 0,
+     "sources": {
+      "sheet": 6,
+      "guide": 0
+     },
+     "taper_model": 4.37,
+     "taper_ref": 4.22,
+     "taper_diff_pct": 3.4,
+     "tube_model": 0.58,
+     "tube_ref": 0.57,
+     "rms_pct": 8.35
+    },
+    "width": {
+     "stations": 6,
+     "hidden": 0,
+     "sources": {
+      "sheet": 5,
+      "guide": 1
+     },
+     "taper_model": 3.54,
+     "taper_ref": 3.22,
+     "taper_diff_pct": 10.1,
+     "tube_model": 0.61,
+     "tube_ref": 0.63,
+     "rms_pct": 4.83
+    }
+   },
+   "rms_pct": 6.82,
+   "max_pct": 14.39,
+   "model_fill": 0.77,
+   "guide": {
+    "stations": 6,
+    "of": 6,
+    "fused": 0,
+    "taper": 4.0,
+    "tube": 0.59,
+    "fill": 0.82,
+    "aspect": 0.77,
+    "vs_sheet_pct": {
+     "depth": 4.7,
+     "width": 12.4
+    }
+   }
+  },
+  "fore": {
+   "joints": [
+    "shoulderL",
+    "elbowL",
+    "wristL",
+    "pawL"
+   ],
+   "length": 0.5788,
+   "stations": [
+    {
+     "s": 0.0,
+     "at": [
+      0.106,
+      -0.29,
+      0.56
+     ],
+     "bone": "shoulderL",
+     "w": [
+      0.0,
+      -1.0,
+      -0.023
+     ],
+     "fused": true,
+     "src": {}
+    },
+    {
+     "s": 0.124,
+     "at": [
+      0.106,
+      -0.2883,
+      0.4883
+     ],
+     "bone": "shoulderL",
+     "w": [
+      0.0,
+      -1.0,
+      -0.023
+     ],
+     "fused": true,
+     "src": {}
+    },
+    {
+     "s": 0.248,
+     "at": [
+      0.106,
+      -0.2867,
+      0.4167
+     ],
+     "bone": "shoulderL",
+     "w": [
+      0.0,
+      -1.0,
+      -0.023
+     ],
+     "fused": false,
+     "src": {
+      "depth": "hidden",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.1217,
+      "depth": 0.2235,
+      "centre": [
+       0.0939,
+       -0.2933,
+       0.4165
+      ],
+      "fill": 0.733
+     },
+     "ref": {},
+     "sheet": {
+      "depth": 0.3603
+     }
+    },
+    {
+     "s": 0.372,
+     "at": [
+      0.106,
+      -0.285,
+      0.345
+     ],
+     "bone": "shoulderL",
+     "w": [
+      0.0,
+      -1.0,
+      -0.023
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.1127,
+      "depth": 0.1811,
+      "centre": [
+       0.0995,
+       -0.2879,
+       0.3449
+      ],
+      "fill": 0.732
+     },
+     "guide": {
+      "width": 0.1128,
+      "depth": 0.1826,
+      "centre": [
+       0.0996,
+       -0.2886,
+       0.3449
+      ],
+      "fill": 0.865
+     },
+     "ref": {
+      "depth": 0.1746
+     },
+     "sheet": {
+      "depth": 0.1746
+     }
+    },
+    {
+     "s": 0.493,
+     "at": [
+      0.108,
+      -0.2933,
+      0.275
+     ],
+     "bone": "elbowL",
+     "w": [
+      0.0,
+      -0.993,
+      0.118
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.0892,
+      "depth": 0.1426,
+      "centre": [
+       0.0961,
+       -0.2912,
+       0.2744
+      ],
+      "fill": 0.716
+     },
+     "guide": {
+      "width": 0.0882,
+      "depth": 0.1439,
+      "centre": [
+       0.0952,
+       -0.2976,
+       0.2751
+      ],
+      "fill": 0.874
+     },
+     "ref": {
+      "depth": 0.1431
+     },
+     "sheet": {
+      "depth": 0.1431
+     }
+    },
+    {
+     "s": 0.615,
+     "at": [
+      0.11,
+      -0.3017,
+      0.205
+     ],
+     "bone": "elbowL",
+     "w": [
+      0.0,
+      -0.993,
+      0.118
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0747,
+      "depth": 0.1257,
+      "centre": [
+       0.0976,
+       -0.2952,
+       0.2039
+      ],
+      "fill": 0.764
+     },
+     "guide": {
+      "width": 0.0764,
+      "depth": 0.1201,
+      "centre": [
+       0.0963,
+       -0.3028,
+       0.2047
+      ],
+      "fill": 0.879
+     },
+     "ref": {
+      "depth": 0.1188,
+      "width": 0.0751
+     },
+     "sheet": {
+      "depth": 0.1188,
+      "width": 0.0751
+     }
+    },
+    {
+     "s": 0.737,
+     "at": [
+      0.112,
+      -0.31,
+      0.135
+     ],
+     "bone": "elbowL",
+     "w": [
+      0.0,
+      -0.993,
+      0.118
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0796,
+      "depth": 0.1229,
+      "centre": [
+       0.1019,
+       -0.311,
+       0.1348
+      ],
+      "fill": 0.765
+     },
+     "guide": {
+      "width": 0.084,
+      "depth": 0.1276,
+      "centre": [
+       0.1051,
+       -0.3084,
+       0.1346
+      ],
+      "fill": 0.867
+     },
+     "ref": {
+      "depth": 0.1208,
+      "width": 0.0873
+     },
+     "sheet": {
+      "depth": 0.1208,
+      "width": 0.0873
+     }
+    },
+    {
+     "s": 0.825,
+     "at": [
+      0.1137,
+      -0.3467,
+      0.1
+     ],
+     "bone": "wristL",
+     "w": [
+      0.0,
+      -0.69,
+      0.723
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0863,
+      "depth": 0.1016,
+      "centre": [
+       0.1008,
+       -0.346,
+       0.0987
+      ],
+      "fill": 0.755
+     },
+     "guide": {
+      "width": 0.0876,
+      "depth": 0.124,
+      "centre": [
+       0.0991,
+       -0.333,
+       0.085
+      ],
+      "fill": 0.84
+     },
+     "ref": {
+      "depth": 0.1208,
+      "width": 0.0914
+     },
+     "sheet": {
+      "depth": 0.1208,
+      "width": 0.0914
+     }
+    },
+    {
+     "s": 0.912,
+     "at": [
+      0.1153,
+      -0.3833,
+      0.065
+     ],
+     "bone": "wristL",
+     "w": [
+      0.0,
+      -0.69,
+      0.723
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0941,
+      "depth": 0.1033,
+      "centre": [
+       0.0989,
+       -0.3864,
+       0.0674
+      ],
+      "fill": 0.766
+     },
+     "guide": {
+      "width": 0.1262,
+      "depth": 0.1281,
+      "centre": [
+       0.1018,
+       -0.3681,
+       0.0484
+      ],
+      "fill": 0.823
+     },
+     "ref": {
+      "depth": 0.1177,
+      "width": 0.1238
+     },
+     "sheet": {
+      "depth": 0.1177,
+      "width": 0.1238
+     }
+    }
+   ],
+   "dims": {
+    "depth": {
+     "stations": 6,
+     "hidden": 1,
+     "sources": {
+      "sheet": 6,
+      "guide": 0
+     },
+     "taper_model": 1.78,
+     "taper_ref": 1.48,
+     "taper_diff_pct": 20.2,
+     "tube_model": 0.79,
+     "tube_ref": 0.84,
+     "rms_pct": 1.83
+    },
+    "width": {
+     "stations": 4,
+     "hidden": 3,
+     "sources": {
+      "sheet": 4,
+      "guide": 0
+     },
+     "taper_model": 1.26,
+     "taper_ref": 1.65,
+     "taper_diff_pct": -23.6,
+     "tube_model": 0.91,
+     "tube_ref": 0.81,
+     "rms_pct": 2.69
+    }
+   },
+   "rms_pct": 2.21,
+   "max_pct": 5.13,
+   "model_fill": 0.75,
+   "guide": {
+    "stations": 6,
+    "of": 9,
+    "fused": 2,
+    "taper": 1.5,
+    "tube": 0.86,
+    "fill": 0.86,
+    "aspect": 0.7,
+    "vs_sheet_pct": {
+     "depth": 3.9,
+     "width": 2.9
+    }
+   }
+  },
+  "hind": {
+   "joints": [
+    "hipL",
+    "kneeL",
+    "hockL",
+    "toeL"
+   ],
+   "length": 0.5981,
+   "stations": [
+    {
+     "s": 0.0,
+     "at": [
+      0.105,
+      0.3,
+      0.56
+     ],
+     "bone": "hipL",
+     "w": [
+      0.0,
+      -0.998,
+      0.07
+     ],
+     "fused": true,
+     "src": {}
+    },
+    {
+     "s": 0.12,
+     "at": [
+      0.105,
+      0.295,
+      0.4883
+     ],
+     "bone": "hipL",
+     "w": [
+      0.0,
+      -0.998,
+      0.07
+     ],
+     "fused": true,
+     "src": {}
+    },
+    {
+     "s": 0.24,
+     "at": [
+      0.105,
+      0.29,
+      0.4167
+     ],
+     "bone": "hipL",
+     "w": [
+      0.0,
+      -0.998,
+      0.07
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.1074,
+      "depth": 0.2375,
+      "centre": [
+       0.1043,
+       0.2715,
+       0.418
+      ],
+      "fill": 0.744
+     },
+     "guide": {
+      "width": 0.1136,
+      "depth": 0.2462,
+      "centre": [
+       0.1022,
+       0.2724,
+       0.4179
+      ],
+      "fill": 0.839
+     },
+     "ref": {
+      "depth": 0.2842
+     },
+     "sheet": {
+      "depth": 0.2842
+     }
+    },
+    {
+     "s": 0.36,
+     "at": [
+      0.105,
+      0.285,
+      0.345
+     ],
+     "bone": "hipL",
+     "w": [
+      0.0,
+      -0.998,
+      0.07
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.1165,
+      "depth": 0.2214,
+      "centre": [
+       0.0992,
+       0.2958,
+       0.3442
+      ],
+      "fill": 0.753
+     },
+     "guide": {
+      "width": 0.118,
+      "depth": 0.2212,
+      "centre": [
+       0.0992,
+       0.2888,
+       0.3447
+      ],
+      "fill": 0.853
+     },
+     "ref": {
+      "depth": 0.2091
+     },
+     "sheet": {
+      "depth": 0.2091
+     }
+    },
+    {
+     "s": 0.455,
+     "at": [
+      0.105,
+      0.3283,
+      0.3083
+     ],
+     "bone": "kneeL",
+     "w": [
+      -0.0,
+      0.646,
+      0.763
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.1042,
+      "depth": 0.1639,
+      "centre": [
+       0.0972,
+       0.3382,
+       0.32
+      ],
+      "fill": 0.721
+     },
+     "guide": {
+      "width": 0.1061,
+      "depth": 0.162,
+      "centre": [
+       0.0981,
+       0.3421,
+       0.3246
+      ],
+      "fill": 0.807
+     },
+     "ref": {
+      "depth": 0.1654
+     },
+     "sheet": {
+      "depth": 0.1654
+     }
+    },
+    {
+     "s": 0.55,
+     "at": [
+      0.105,
+      0.3717,
+      0.2717
+     ],
+     "bone": "kneeL",
+     "w": [
+      -0.0,
+      0.646,
+      0.763
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "hidden"
+     },
+     "model": {
+      "width": 0.0886,
+      "depth": 0.1202,
+      "centre": [
+       0.096,
+       0.3742,
+       0.2746
+      ],
+      "fill": 0.76
+     },
+     "guide": {
+      "width": 0.0861,
+      "depth": 0.1094,
+      "centre": [
+       0.0949,
+       0.3711,
+       0.271
+      ],
+      "fill": 0.87
+     },
+     "ref": {
+      "depth": 0.1066
+     },
+     "sheet": {
+      "depth": 0.1066
+     }
+    },
+    {
+     "s": 0.645,
+     "at": [
+      0.105,
+      0.415,
+      0.235
+     ],
+     "bone": "kneeL",
+     "w": [
+      -0.0,
+      0.646,
+      0.763
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0827,
+      "depth": 0.146,
+      "centre": [
+       0.0981,
+       0.3988,
+       0.2159
+      ],
+      "fill": 0.784
+     },
+     "guide": {
+      "width": 0.0829,
+      "depth": 0.1595,
+      "centre": [
+       0.0982,
+       0.404,
+       0.222
+      ],
+      "fill": 0.852
+     },
+     "ref": {
+      "depth": 0.1289,
+      "width": 0.0771
+     },
+     "sheet": {
+      "depth": 0.1289,
+      "width": 0.0771
+     }
+    },
+    {
+     "s": 0.763,
+     "at": [
+      0.106,
+      0.3967,
+      0.1667
+     ],
+     "bone": "hockL",
+     "w": [
+      0.0,
+      -0.966,
+      0.259
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0807,
+      "depth": 0.1227,
+      "centre": [
+       0.0989,
+       0.4099,
+       0.163
+      ],
+      "fill": 0.766
+     },
+     "guide": {
+      "width": 0.0782,
+      "depth": 0.1184,
+      "centre": [
+       0.0979,
+       0.4091,
+       0.1632
+      ],
+      "fill": 0.873
+     },
+     "ref": {
+      "depth": 0.1167,
+      "width": 0.0792
+     },
+     "sheet": {
+      "depth": 0.1167,
+      "width": 0.0792
+     }
+    },
+    {
+     "s": 0.882,
+     "at": [
+      0.107,
+      0.3783,
+      0.0983
+     ],
+     "bone": "hockL",
+     "w": [
+      0.0,
+      -0.966,
+      0.259
+     ],
+     "fused": false,
+     "src": {
+      "depth": "sheet",
+      "width": "sheet"
+     },
+     "model": {
+      "width": 0.0945,
+      "depth": 0.1134,
+      "centre": [
+       0.1014,
+       0.3865,
+       0.0961
+      ],
+      "fill": 0.761
+     },
+     "guide": {
+      "width": 0.0847,
+      "depth": 0.1333,
+      "centre": [
+       0.1006,
+       0.4011,
+       0.0921
+      ],
+      "fill": 0.883
+     },
+     "ref": {
+      "depth": 0.1248,
+      "width": 0.0832
+     },
+     "sheet": {
+      "depth": 0.1248,
+      "width": 0.0832
+     }
+    }
+   ],
+   "dims": {
+    "depth": {
+     "stations": 7,
+     "hidden": 0,
+     "sources": {
+      "sheet": 7,
+      "guide": 0
+     },
+     "taper_model": 2.09,
+     "taper_ref": 2.67,
+     "taper_diff_pct": -21.4,
+     "tube_model": 0.71,
+     "tube_ref": 0.63,
+     "rms_pct": 3.45
+    },
+    "width": {
+     "stations": 3,
+     "hidden": 4,
+     "sources": {
+      "sheet": 3,
+      "guide": 0
+     },
+     "taper_model": 1.17,
+     "taper_ref": 1.08,
+     "taper_diff_pct": 8.5,
+     "tube_model": 0.93,
+     "tube_ref": 0.97,
+     "rms_pct": 1.23
+    }
+   },
+   "rms_pct": 2.96,
+   "max_pct": 7.81,
+   "model_fill": 0.76,
+   "guide": {
+    "stations": 7,
+    "of": 9,
+    "fused": 2,
+    "taper": 1.74,
+    "tube": 0.78,
+    "fill": 0.85,
+    "aspect": 0.61,
+    "vs_sheet_pct": {
+     "depth": 8.0,
+     "width": 3.5
+    }
+   }
+  }
+ },
+ "source": {
+  "sheet": true,
+  "guide": true
+ },
+ "sheet_map": {
+  "side": {
+   "s": 0.00203,
+   "ground": 986,
+   "cmid": 569.5
+  }
+ },
+ "checks": [
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "depth model 4.37 reference 4.22 (+3.4%), tube score 0.58 vs 0.57; width model 3.54 reference 3.22 (+10.1%), tube score 0.61 vs 0.63"
+  },
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: profile RMS <= 3% of the part's length",
+   "ok": false,
+   "detail": "RMS 6.82%, max 14.39% (depth 6 stations: 6 sheet 0 guide, width 6 stations: 5 sheet 1 guide)"
+  },
+  {
+   "kind": "gate",
+   "part": "fore",
+   "name": "fore: taper ratio within 20% of the reference's",
+   "ok": false,
+   "detail": "depth model 1.78 reference 1.48 (+20.2%), tube score 0.79 vs 0.84; width model 1.26 reference 1.65 (-23.6%), tube score 0.91 vs 0.81"
+  },
+  {
+   "kind": "gate",
+   "part": "fore",
+   "name": "fore: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.21%, max 5.13% (depth 6 stations: 6 sheet 0 guide, width 4 stations: 4 sheet 0 guide); depth hidden at 1, width hidden at 3"
+  },
+  {
+   "kind": "gate",
+   "part": "hind",
+   "name": "hind: taper ratio within 20% of the reference's",
+   "ok": false,
+   "detail": "depth model 2.09 reference 2.67 (-21.4%), tube score 0.71 vs 0.63; width model 1.17 reference 1.08 (+8.5%), tube score 0.93 vs 0.97"
+  },
+  {
+   "kind": "gate",
+   "part": "hind",
+   "name": "hind: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.96%, max 7.81% (depth 7 stations: 7 sheet 0 guide, width 3 stations: 3 sheet 0 guide); width hidden at 4"
+  }
+ ]
+}

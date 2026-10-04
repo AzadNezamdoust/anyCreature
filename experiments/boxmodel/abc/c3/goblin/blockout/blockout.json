@@ -1,0 +1,399 @@
+{
+ "creature": "goblin",
+ "gates_ok": true,
+ "tris": 1128,
+ "verts": 566,
+ "joints": {
+  "elbowL": [
+   0.261,
+   0.072,
+   0.492
+  ],
+  "wristL": [
+   0.299,
+   -0.004,
+   0.364
+  ],
+  "kneeL": [
+   0.098,
+   -0.017,
+   0.253
+  ],
+  "ankleL": [
+   0.08,
+   0.043,
+   0.131
+  ],
+  "neck": [
+   0.0,
+   -0.02,
+   0.775
+  ]
+ },
+ "poses": {
+  "fold": {
+   "elbow.L": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "ankle.L": [
+    80.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "ankle.R": [
+    80.0,
+    0,
+    0
+   ]
+  },
+  "swing": {
+   "shoulder.L": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    60.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    60.0,
+    0,
+    0
+   ]
+  },
+  "crouch": {
+   "elbow.L": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.L": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "ankle.L": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    30.0,
+    0,
+    0
+   ],
+   "neck": [
+    -35.0,
+    0,
+    0
+   ],
+   "head": [
+    -25.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "ankle.R": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    30.0,
+    0,
+    0
+   ]
+  }
+ },
+ "rom": {
+  "flip_tris": 13,
+  "triangles": 1128,
+  "flip_area_pct": 0.85,
+  "stretch_tris": 0
+ },
+ "loops": {
+  "elbowL": 3,
+  "wristL": 2,
+  "kneeL": 3,
+  "ankleL": 3,
+  "neck": 3
+ },
+ "quad_share": 1.0,
+ "topology_checks": [
+  {
+   "kind": "gate",
+   "name": "even face size: edge length p90/p10 <= 4 in every region",
+   "ok": true,
+   "detail": "torso 2.75, head 3.66, arm 2.36, leg 2.8, ear 3.83"
+  },
+  {
+   "kind": "gate",
+   "name": "long faces: at most 5% of faces over 5:1",
+   "ok": true,
+   "detail": "0% (worst 4.9:1)"
+  },
+  {
+   "kind": "gate",
+   "name": "no pole (valence 3 or 5+) inside a joint band",
+   "ok": true,
+   "detail": "0 of 76 poles"
+  },
+  {
+   "kind": "gate",
+   "name": "a closed loop round every limb root, over its joint (shoulder / hip loop)",
+   "ok": true,
+   "detail": "arm: over the joint, leg: over the joint"
+  },
+  {
+   "kind": "gate",
+   "name": "limbs join the torso by edge flow: no fan (valence >= 6) and no non-quad face at the junction",
+   "ok": true,
+   "detail": "arm 0 fans 0 non-quads, leg 0 fans 0 non-quads"
+  },
+  {
+   "kind": "gate",
+   "name": "no ring-band stack (3+ parallel rings closer than 0.5 x the limb width outside a joint band)",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "kind": "warn",
+   "name": "faces over 3:1 at most 20%",
+   "ok": true,
+   "detail": "11%"
+  },
+  {
+   "kind": "warn",
+   "name": "density per region within 0.5-2 x the body average (triangle share / area share)",
+   "ok": true,
+   "detail": "torso 0.92, head 1.03, arm 1.3, leg 1.02, ear 0.54"
+  },
+  {
+   "kind": "warn",
+   "name": "edge length p90/p10 over the whole body <= 6",
+   "ok": true,
+   "detail": "3.25"
+  },
+  {
+   "kind": "warn",
+   "name": "limb edges run on into the torso (flow >= 0.3)",
+   "ok": true,
+   "detail": "arm 0.83, leg 0.67"
+  },
+  {
+   "kind": "warn",
+   "name": "face loops round the eye and the mouth (META['landmarks'])",
+   "ok": true,
+   "detail": "eye present, mouth present"
+  }
+ ],
+ "iou": {
+  "side": 0.9,
+  "front": 0.857,
+  "top": 0.479
+ },
+ "iou_floor": {
+  "side": 0.9,
+  "front": 0.85,
+  "top": 0.45
+ },
+ "proportions": {
+  "body length / height": {
+   "model": 0.54,
+   "sheet": 0.543,
+   "diff_pct": -0.4
+  },
+  "head height / body height": {
+   "model": 0.356,
+   "sheet": 0.36,
+   "diff_pct": -1.0
+  },
+  "leg length / body height": {
+   "model": 0.305,
+   "sheet": 0.183,
+   "diff_pct": 66.2
+  },
+  "neck width / head width": {
+   "model": 0.589,
+   "sheet": 0.562,
+   "diff_pct": 4.9
+  },
+  "arm limb thickness / length": {
+   "model": 0.409,
+   "sheet": 0.435,
+   "diff_pct": -5.9
+  },
+  "leg limb thickness / length": {
+   "model": 0.165,
+   "sheet": 0.375,
+   "diff_pct": -56.1
+  }
+ },
+ "intended": {
+  "leg limb thickness / length": "the sheet's side run at mid shin is the shin plus the hanging hand in front of it (0.17 m; the leg's own section there is 0.06 - 0.08 in the guide and in part_profiles). The model's hand hangs 1 - 2 cm clear of the shin in that view, so its run is the shin alone",
+  "leg length / body height": "the sheet's centre-line clearance is the loincloth's tip (z 0.20); the loincloth is a stage-3 piece (brief). The body's crotch is at 0.33, where the sheet's inner thigh ends (0.31)",
+  "head profile": "the head stations on the neck > head bone cut through both ears (width = ear span; the reference there is the plan view's straight ears or the guide's cone ear, and BRIEF 3 lets the side view's swept ears win), and the first head > snout plane runs on into the shoulders. The stations that do measure the head (neck, nose) are within 3 cm"
+ },
+ "frame": {
+  "centre": [
+   0.0,
+   0.0,
+   0.55
+  ],
+  "size": [
+   1.116,
+   0.598,
+   1.1
+  ],
+  "ortho": 1.3392000000000002
+ },
+ "later": [
+  {
+   "name": "loincloth",
+   "chain": [
+    "clothF",
+    "clothB"
+   ],
+   "radius": 0.06
+  }
+ ],
+ "profile_checks": [
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: taper ratio within 20% of the reference's",
+   "ok": false,
+   "detail": "depth model 42.28 reference 7.66 (+451.9%), tube score 0.35 vs 0.5; width model 2.6 reference 2.93 (-11.4%), tube score 0.64 vs 0.55",
+   "intended": "the head stations on the neck > head bone cut through both ears (width = ear span; the reference there is the plan view's straight ears or the guide's cone ear, and BRIEF 3 lets the side view's swept ears win), and the first head > snout plane runs on into the shoulders. The stations that do measure the head (neck, nose) are within 3 cm"
+  },
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: profile RMS <= 3% of the part's length",
+   "ok": false,
+   "detail": "RMS 18.79%, max 38.77% (depth 5 stations: 4 sheet 1 guide, width 4 stations: 3 sheet 1 guide); depth hidden at 1, width hidden at 2",
+   "intended": "the head stations on the neck > head bone cut through both ears (width = ear span; the reference there is the plan view's straight ears or the guide's cone ear, and BRIEF 3 lets the side view's swept ears win), and the first head > snout plane runs on into the shoulders. The stations that do measure the head (neck, nose) are within 3 cm"
+  },
+  {
+   "kind": "gate",
+   "part": "arm",
+   "name": "arm: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "width model 1.6 reference 1.76 (-9%), tube score 0.84 vs 0.82"
+  },
+  {
+   "kind": "gate",
+   "part": "arm",
+   "name": "arm: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.17%, max 4.08% (width 8 stations: 7 sheet 1 guide); depth hidden at 7"
+  },
+  {
+   "kind": "gate",
+   "part": "leg",
+   "name": "leg: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "depth model 4.16 reference 4.15 (+0.3%), tube score 0.48 vs 0.44; width model 3.6 reference 3.93 (-8.2%), tube score 0.5 vs 0.47"
+  },
+  {
+   "kind": "gate",
+   "part": "leg",
+   "name": "leg: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.44%, max 6.22% (depth 3 stations: 2 sheet 1 guide, width 6 stations: 6 sheet 0 guide); depth hidden at 4, width hidden at 1"
+  }
+ ],
+ "limits": {
+  "joint_loops": 2,
+  "quad_share": 0.85,
+  "iou": {
+   "side": 0.9,
+   "front": 0.85,
+   "top": 0.8
+  },
+  "proportion_pct": 10.0
+ }
+}

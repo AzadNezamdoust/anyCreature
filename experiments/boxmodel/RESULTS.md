@@ -749,3 +749,60 @@ packets are in `out/boxmodel/c1_solo/`, and the key is
   marked PARTLY or NOT, and the second pass closed most of them.
 - **Kept per creature:** crab, frog and stag go back to their solo
   versions, and the rest keep the team version.
+
+## Cage method pilot: clean cage over the carve, blockout gate, parts library (2026-10-06)
+
+**Why.** Two independent reviews, written as veteran game character artists
+(Fable 5.1 and Opus 5.5, `research/artist_review_*.md`), gave the same
+diagnosis: the pipeline had no retopology. The decimated carve was the
+final mesh, so flat shading showed triangle noise, joints had no loops, and
+art direction arrived only after rigging.
+
+**What changed.**
+
+- **Stage 1 is a box-modelled quad cage** on the joint dict, fitted to the
+  carve as a hidden guide (`carve_guide`, `hull_sections`, `fit_to_guide`).
+  The cage is what gets locked. Gates: at least 2 loops per joint,
+  silhouette IoU against the sheet, and proportions within 10%.
+- **Blockout sign-off** (`run.py --blockout`): grey model, silhouettes,
+  proportion table, wire, and three range-of-motion poses. The reviewer may
+  note primary things only. The final review order is now silhouette first
+  and technical last.
+- **`kit/parts.py`:** eyes with a brow as the expression control, paws,
+  hooves, hands, feet, ears, horns, teeth, noses, fur clumps and tails.
+  The sheet is `parts_demo/parts_sheet.jpg`.
+- **Sheets come from the v2 GPT concepts** (`refs/concepts_v2.jpg`), which
+  put shape design first.
+
+**Pilot.** Bear, goblin and wolf were built in `abc/c2/`, with one Opus
+blockout review each. All gates pass, and `kit/regress.py` agrees.
+
+**Blind looks-first review** against the concept, by Opus 5.5 and Sonnet.
+The key is `out/boxmodel/judge/c2c1_key.json`, and the gallery is
+`cage_pilot.jpg`.
+
+| creature | Opus c1 / c2 | Sonnet c1 / c2 | better |
+|---|---|---|---|
+| bear | 5 / 7 | 5 / 7 | c2 / c2 |
+| goblin | 4 / 6 | 5 / 6 | c2 / c2 |
+| wolf | 5 / 6 | 5 / 6 | c2 / c2 |
+
+- **Scores:** the mean went from 4.83 to 6.33. The cage method was
+  preferred in 6 of 6 calls. No build reached SHIP.
+- **Why it wins:** designed planes, colour true to the concept, real paws,
+  hands and faces. The older builds read as muddy and scan-like in
+  close-up.
+- **What the reviewers still reject:**
+  - limbs are constant-section columns with ring bands;
+  - proportions lean toy-like (wolf: large head and ears on short legs;
+    goblin: stubby limbs, no pot-bellied crouch);
+  - the goblin's ears are thin needle cones;
+  - loincloth and ruff pieces read as combs or blobs;
+  - raised limbs stretch in the attack.
+- **Open items:**
+  - Range-of-motion folding stayed at 3.4–4% of the surface after the
+    blockout fixes; the reviews asked for 1–2%.
+  - The fixed blockouts were not re-reviewed before the lock.
+  - The stage-1 IoU gate forces big ears into the base, so they cannot be
+    library pieces.
+  - `--lock` fails on a lambda in META.

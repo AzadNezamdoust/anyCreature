@@ -203,6 +203,12 @@ py -3.11 experiments/boxmodel/kit/regress.py <tag> [path filter]    # after any 
   detail beat the hand-built base in 7 of 8 blind calls (mean 4.75 → 5.75).
   **The owner confirmed it by eye (2026-10-04: "mixed method is very
   good"). Carve + detail is the default stage 1.**
+- **Retopologise: a clean cage over the carve (2026-10-06).** The carve is
+  a guide, not the mesh. A box-modelled quad cage with joint loops, a
+  blockout sign-off before the lock, and library parts for faces and
+  extremities beat carve + detail in 6 of 6 blind calls (mean 4.83 → 6.33).
+  This is the default now: `BRIEF.md` stage 1, `ART_DIRECTOR.md` "Blockout
+  review", `kit/parts.py`.
 - **Team pass: use it on weak builds only (2026-10-05).** Fable directs,
   Opus builds, Sonnet checks each item in the packet, and Opus fixes once
   more. It lifted the builds scored 4–5 by up to 2 points, and it cost the

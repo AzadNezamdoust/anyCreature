@@ -1,0 +1,1203 @@
+{
+ "faces": 722,
+ "tris": 1444,
+ "verts": 724,
+ "limits": {
+  "edge_ratio": 4.0,
+  "aspect5_pct": 5.0,
+  "joint_poles": 0,
+  "root_loop": true,
+  "fans": 0,
+  "caps": 0,
+  "ring_stacks": 0,
+  "stack_gap": 0.5,
+  "aspect3_pct": 20.0,
+  "density": [
+   0.5,
+   2.0
+  ],
+  "body_edge_ratio": 6.0,
+  "flow": 0.3,
+  "piece_share": 0.5,
+  "template": {
+   "socket_verts": 8,
+   "socket_flow": 0.9,
+   "pole_share": 0.15,
+   "warp_deg": 12.0,
+   "warp_pct": 5.0,
+   "hinge_ratio": [
+    0.4,
+    0.7
+   ],
+   "edge_ratio": 2.5,
+   "density": [
+    0.7,
+    1.6
+   ],
+   "corner_share": 0.6,
+   "corner_tol": 0.02,
+   "rom_fold_pct": 1.0,
+   "tris": [
+    1200,
+    2200
+   ]
+  }
+ },
+ "size": {
+  "edge": {
+   "p10": 0.0294,
+   "p50": 0.0571,
+   "p90": 0.1096,
+   "ratio": 3.73
+  },
+  "area": {
+   "p10": 0.001055,
+   "p50": 0.002698,
+   "p90": 0.007112,
+   "ratio": 6.74
+  }
+ },
+ "aspect": {
+  "gt3_pct": 25.2,
+  "gt5_pct": 15.0,
+  "worst": 49.6
+ },
+ "nonquad": {
+  "tris": 0,
+  "ngons": 0,
+  "share": 0.0
+ },
+ "regions": {
+  "torso": {
+   "faces": 130,
+   "tris": 260,
+   "tri_share": 0.18,
+   "area_share": 0.28,
+   "density": 0.64,
+   "edge": {
+    "p10": 0.0367,
+    "p50": 0.0708,
+    "p90": 0.1579,
+    "ratio": 4.3
+   },
+   "area_ratio": 4.47,
+   "gt3_pct": 35.4,
+   "gt5_pct": 16.9,
+   "tris_n": 0,
+   "ngons": 0
+  },
+  "head": {
+   "faces": 156,
+   "tris": 312,
+   "tri_share": 0.216,
+   "area_share": 0.193,
+   "density": 1.12,
+   "edge": {
+    "p10": 0.0173,
+    "p50": 0.0487,
+    "p90": 0.1163,
+    "ratio": 6.72
+   },
+   "area_ratio": 14.87,
+   "gt3_pct": 32.1,
+   "gt5_pct": 19.2,
+   "tris_n": 0,
+   "ngons": 0
+  },
+  "fore": {
+   "faces": 184,
+   "tris": 368,
+   "tri_share": 0.255,
+   "area_share": 0.204,
+   "density": 1.25,
+   "edge": {
+    "p10": 0.0297,
+    "p50": 0.0579,
+    "p90": 0.0999,
+    "ratio": 3.37
+   },
+   "area_ratio": 4.28,
+   "gt3_pct": 21.7,
+   "gt5_pct": 15.2,
+   "tris_n": 0,
+   "ngons": 0
+  },
+  "hind": {
+   "faces": 184,
+   "tris": 368,
+   "tri_share": 0.255,
+   "area_share": 0.202,
+   "density": 1.26,
+   "edge": {
+    "p10": 0.0326,
+    "p50": 0.0504,
+    "p90": 0.086,
+    "ratio": 2.64
+   },
+   "area_ratio": 3.62,
+   "gt3_pct": 8.7,
+   "gt5_pct": 6.5,
+   "tris_n": 0,
+   "ngons": 0
+  },
+  "tail": {
+   "faces": 68,
+   "tris": 136,
+   "tri_share": 0.094,
+   "area_share": 0.12,
+   "density": 0.78,
+   "edge": {
+    "p10": 0.0353,
+    "p50": 0.0722,
+    "p90": 0.1203,
+    "ratio": 3.41
+   },
+   "area_ratio": 6.35,
+   "gt3_pct": 44.1,
+   "gt5_pct": 23.5,
+   "tris_n": 0,
+   "ngons": 0
+  }
+ },
+ "joints": {
+  "elbowL": {
+   "loops": 4,
+   "rings": 3,
+   "spacing": [
+    0.0546,
+    0.0558
+   ],
+   "width": 0.1451,
+   "spacing_over_width": 0.38
+  },
+  "wristL": {
+   "loops": 2,
+   "rings": 2,
+   "spacing": [
+    0.0512
+   ],
+   "width": 0.1036,
+   "spacing_over_width": 0.49
+  },
+  "kneeL": {
+   "loops": 4,
+   "rings": 3,
+   "spacing": [
+    0.0552,
+    0.0476
+   ],
+   "width": 0.1549,
+   "spacing_over_width": 0.33
+  },
+  "hockL": {
+   "loops": 3,
+   "rings": 3,
+   "spacing": [
+    0.0385,
+    0.0368
+   ],
+   "width": 0.1047,
+   "spacing_over_width": 0.36
+  },
+  "neck": {
+   "loops": 2,
+   "rings": 4,
+   "spacing": [
+    0.0209,
+    0.0405,
+    0.036
+   ],
+   "width": 0.413,
+   "spacing_over_width": 0.08
+  }
+ },
+ "poles": {
+  "n3": 50,
+  "n5": 38,
+  "n6": 2,
+  "in_joint": 8,
+  "by_joint": {
+   "neck": 6,
+   "elbowL": 2
+  },
+  "at_roots": 12,
+  "elsewhere": 70,
+  "at": [
+   [
+    0.0249,
+    -0.7964,
+    0.7559,
+    3,
+    ""
+   ],
+   [
+    0.027,
+    -0.8111,
+    0.8056,
+    3,
+    ""
+   ],
+   [
+    0.0316,
+    0.7692,
+    0.17,
+    3,
+    ""
+   ],
+   [
+    0.0324,
+    -0.6998,
+    0.7449,
+    5,
+    ""
+   ],
+   [
+    0.0339,
+    0.4574,
+    0.4405,
+    5,
+    ""
+   ],
+   [
+    0.0355,
+    0.8242,
+    0.2225,
+    3,
+    ""
+   ],
+   [
+    0.0383,
+    -0.7429,
+    0.8665,
+    6,
+    ""
+   ],
+   [
+    0.0397,
+    0.1427,
+    0.4629,
+    5,
+    ""
+   ],
+   [
+    0.0405,
+    -0.4532,
+    0.4519,
+    5,
+    "neck"
+   ],
+   [
+    0.0468,
+    -0.6886,
+    0.9473,
+    5,
+    ""
+   ],
+   [
+    0.0493,
+    -0.4841,
+    1.0303,
+    5,
+    ""
+   ],
+   [
+    0.0503,
+    -0.7307,
+    0.8658,
+    3,
+    ""
+   ],
+   [
+    0.0525,
+    -0.1776,
+    0.4207,
+    5,
+    "elbowL"
+   ],
+   [
+    0.0529,
+    -0.73,
+    0.8414,
+    3,
+    ""
+   ],
+   [
+    0.0561,
+    -0.7246,
+    0.8293,
+    3,
+    ""
+   ],
+   [
+    0.0608,
+    -0.7204,
+    0.8158,
+    5,
+    ""
+   ],
+   [
+    0.0632,
+    0.5222,
+    0.5704,
+    5,
+    ""
+   ],
+   [
+    0.064,
+    -0.6999,
+    0.765,
+    3,
+    ""
+   ],
+   [
+    0.068,
+    0.4878,
+    0.467,
+    5,
+    ""
+   ],
+   [
+    0.0699,
+    0.3287,
+    0.0318,
+    3,
+    ""
+   ],
+   [
+    0.0712,
+    0.4992,
+    0.5973,
+    3,
+    ""
+   ],
+   [
+    0.0717,
+    -0.4316,
+    0.0002,
+    3,
+    ""
+   ],
+   [
+    0.0718,
+    0.3978,
+    0.0314,
+    3,
+    ""
+   ],
+   [
+    0.0732,
+    -0.6876,
+    0.8608,
+    3,
+    ""
+   ],
+   [
+    0.0733,
+    -0.6823,
+    0.9228,
+    5,
+    ""
+   ],
+   [
+    0.0759,
+    -0.6826,
+    0.8486,
+    3,
+    ""
+   ],
+   [
+    0.0765,
+    -0.3669,
+    0.0002,
+    3,
+    ""
+   ],
+   [
+    0.0817,
+    -0.5787,
+    1.1147,
+    3,
+    ""
+   ],
+   [
+    0.0868,
+    -0.5633,
+    1.1207,
+    3,
+    ""
+   ],
+   [
+    0.0904,
+    0.4677,
+    0.4797,
+    3,
+    ""
+   ],
+   [
+    0.0914,
+    -0.579,
+    1.1076,
+    3,
+    ""
+   ],
+   [
+    0.0931,
+    0.4718,
+    0.5947,
+    5,
+    ""
+   ],
+   [
+    0.095,
+    -0.5634,
+    1.1135,
+    3,
+    ""
+   ],
+   [
+    0.1072,
+    -0.5104,
+    0.9726,
+    5,
+    ""
+   ],
+   [
+    0.1127,
+    -0.5739,
+    0.9465,
+    5,
+    ""
+   ],
+   [
+    0.125,
+    -0.583,
+    0.9003,
+    5,
+    ""
+   ],
+   [
+    0.1259,
+    0.1237,
+    0.6345,
+    5,
+    ""
+   ],
+   [
+    0.1282,
+    0.3237,
+    0.0316,
+    3,
+    ""
+   ],
+   [
+    0.1308,
+    0.3948,
+    0.0,
+    3,
+    ""
+   ],
+   [
+    0.1355,
+    -0.3762,
+    0.0006,
+    3,
+    ""
+   ],
+   [
+    0.1375,
+    -0.4406,
+    0.0015,
+    3,
+    ""
+   ],
+   [
+    0.1432,
+    -0.1243,
+    0.6422,
+    5,
+    ""
+   ],
+   [
+    0.1722,
+    -0.4635,
+    0.6124,
+    3,
+    "neck"
+   ],
+   [
+    0.1801,
+    -0.3236,
+    0.6962,
+    5,
+    ""
+   ],
+   [
+    0.1806,
+    -0.4804,
+    0.6352,
+    5,
+    "neck"
+   ],
+   [
+    -0.0249,
+    -0.7964,
+    0.7559,
+    3,
+    ""
+   ],
+   [
+    -0.027,
+    -0.8111,
+    0.8056,
+    3,
+    ""
+   ],
+   [
+    -0.0316,
+    0.7692,
+    0.17,
+    3,
+    ""
+   ],
+   [
+    -0.0324,
+    -0.6998,
+    0.7449,
+    5,
+    ""
+   ],
+   [
+    -0.0339,
+    0.4574,
+    0.4405,
+    5,
+    ""
+   ],
+   [
+    -0.0355,
+    0.8242,
+    0.2225,
+    3,
+    ""
+   ],
+   [
+    -0.0383,
+    -0.7429,
+    0.8665,
+    6,
+    ""
+   ],
+   [
+    -0.0397,
+    0.1427,
+    0.4629,
+    5,
+    ""
+   ],
+   [
+    -0.0405,
+    -0.4532,
+    0.4519,
+    5,
+    "neck"
+   ],
+   [
+    -0.0468,
+    -0.6886,
+    0.9473,
+    5,
+    ""
+   ],
+   [
+    -0.0493,
+    -0.4841,
+    1.0303,
+    5,
+    ""
+   ],
+   [
+    -0.0503,
+    -0.7307,
+    0.8658,
+    3,
+    ""
+   ],
+   [
+    -0.0525,
+    -0.1776,
+    0.4207,
+    5,
+    "elbowL"
+   ],
+   [
+    -0.0529,
+    -0.73,
+    0.8414,
+    3,
+    ""
+   ],
+   [
+    -0.0561,
+    -0.7246,
+    0.8293,
+    3,
+    ""
+   ],
+   [
+    -0.0608,
+    -0.7204,
+    0.8158,
+    5,
+    ""
+   ],
+   [
+    -0.0632,
+    0.5222,
+    0.5704,
+    5,
+    ""
+   ],
+   [
+    -0.064,
+    -0.6999,
+    0.765,
+    3,
+    ""
+   ],
+   [
+    -0.068,
+    0.4878,
+    0.467,
+    5,
+    ""
+   ],
+   [
+    -0.0699,
+    0.3287,
+    0.0318,
+    3,
+    ""
+   ],
+   [
+    -0.0712,
+    0.4992,
+    0.5973,
+    3,
+    ""
+   ],
+   [
+    -0.0717,
+    -0.4316,
+    0.0002,
+    3,
+    ""
+   ],
+   [
+    -0.0718,
+    0.3978,
+    0.0314,
+    3,
+    ""
+   ],
+   [
+    -0.0732,
+    -0.6876,
+    0.8608,
+    3,
+    ""
+   ],
+   [
+    -0.0733,
+    -0.6823,
+    0.9228,
+    5,
+    ""
+   ],
+   [
+    -0.0759,
+    -0.6826,
+    0.8486,
+    3,
+    ""
+   ],
+   [
+    -0.0765,
+    -0.3669,
+    0.0002,
+    3,
+    ""
+   ],
+   [
+    -0.0817,
+    -0.5787,
+    1.1147,
+    3,
+    ""
+   ],
+   [
+    -0.0868,
+    -0.5633,
+    1.1207,
+    3,
+    ""
+   ],
+   [
+    -0.0904,
+    0.4677,
+    0.4797,
+    3,
+    ""
+   ],
+   [
+    -0.0914,
+    -0.579,
+    1.1076,
+    3,
+    ""
+   ],
+   [
+    -0.0931,
+    0.4718,
+    0.5947,
+    5,
+    ""
+   ],
+   [
+    -0.095,
+    -0.5634,
+    1.1135,
+    3,
+    ""
+   ],
+   [
+    -0.1072,
+    -0.5104,
+    0.9726,
+    5,
+    ""
+   ],
+   [
+    -0.1127,
+    -0.5739,
+    0.9465,
+    5,
+    ""
+   ],
+   [
+    -0.125,
+    -0.583,
+    0.9003,
+    5,
+    ""
+   ],
+   [
+    -0.1259,
+    0.1237,
+    0.6345,
+    5,
+    ""
+   ],
+   [
+    -0.1282,
+    0.3237,
+    0.0316,
+    3,
+    ""
+   ],
+   [
+    -0.1308,
+    0.3948,
+    0.0,
+    3,
+    ""
+   ],
+   [
+    -0.1355,
+    -0.3762,
+    0.0006,
+    3,
+    ""
+   ],
+   [
+    -0.1375,
+    -0.4406,
+    0.0015,
+    3,
+    ""
+   ],
+   [
+    -0.1432,
+    -0.1243,
+    0.6422,
+    5,
+    ""
+   ],
+   [
+    -0.1722,
+    -0.4635,
+    0.6124,
+    3,
+    "neck"
+   ],
+   [
+    -0.1801,
+    -0.3236,
+    0.6962,
+    5,
+    ""
+   ],
+   [
+    -0.1806,
+    -0.4804,
+    0.6352,
+    5,
+    "neck"
+   ]
+  ]
+ },
+ "roots": {
+  "fore": {
+   "loop": true,
+   "over_joint": true,
+   "t": 0.06,
+   "verts": 8,
+   "rings": 11,
+   "centre": [
+    0.1133,
+    -0.2743,
+    0.5477
+   ],
+   "flow": 0.38,
+   "fans": 0,
+   "caps": 0,
+   "poles": 6
+  },
+  "hind": {
+   "loop": true,
+   "over_joint": true,
+   "t": 0.25,
+   "verts": 8,
+   "rings": 11,
+   "centre": [
+    0.0937,
+    0.2974,
+    0.5052
+   ],
+   "flow": 0.5,
+   "fans": 0,
+   "caps": 0,
+   "poles": 4
+  }
+ },
+ "ring_stacks": [
+  {
+   "chain": "tail",
+   "rings": 9,
+   "outside_joints": 5,
+   "at": [
+    0.0,
+    0.554,
+    0.418
+   ],
+   "spacing_over_width": 0.27
+  }
+ ],
+ "chains": {
+  "fore": {
+   "rings": 11
+  },
+  "hind": {
+   "rings": 11
+  },
+  "tail": {
+   "rings": 9
+  }
+ },
+ "face_loops": {
+  "eye": "present",
+  "mouth": "present"
+ },
+ "template": {
+  "kind": "quadruped",
+  "counts": {
+   "trunk_mid": 3,
+   "neck": 1,
+   "head": 4,
+   "muzzle": 2,
+   "tail": 6,
+   "ear": 2,
+   "fore": {
+    "hinge": [
+     3,
+     2
+    ],
+    "mass": [
+     0,
+     1
+    ],
+    "cap": 2
+   },
+   "hind": {
+    "hinge": [
+     3,
+     3
+    ],
+    "mass": [
+     0,
+     0,
+     1
+    ],
+    "cap": 2
+   }
+  },
+  "sockets": {
+   "hind": {
+    "verts": 8,
+    "closed": true,
+    "valence": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "flow": 1.0
+   },
+   "fore": {
+    "verts": 8,
+    "closed": true,
+    "valence": [
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4,
+     4
+    ],
+    "flow": 1.0
+   }
+  },
+  "hinges": {
+   "elbowL": {
+    "rings": 3,
+    "flex": 0.0432,
+    "ext": 0.075,
+    "ratio": 0.58
+   },
+   "kneeL": {
+    "rings": 3,
+    "flex": 0.0407,
+    "ext": 0.0749,
+    "ratio": 0.54
+   },
+   "hockL": {
+    "rings": 3,
+    "flex": 0.0282,
+    "ext": 0.0515,
+    "ratio": 0.55
+   }
+  },
+  "pole_share": 0.124,
+  "poles": 90,
+  "signature_poles": 90,
+  "warp_pct": 14.48,
+  "joint_ring_poles": {
+   "neck": 0,
+   "elbowL": 0,
+   "wristL": 0,
+   "kneeL": 0,
+   "hockL": 0
+  },
+  "corner_share": 0.636,
+  "corner_share_by_part": {
+   "trunk": 0.75,
+   "neck": 0.88,
+   "head": 0.55,
+   "muzzle": 0.7,
+   "tail": 0.71,
+   "fore": 0.44,
+   "hind": 0.61
+  },
+  "signature": {
+   "kind": "quadruped",
+   "verts": 391,
+   "seam": 58,
+   "faces": 361,
+   "valence": {
+    "4": 346,
+    "5": 19,
+    "3": 25,
+    "6": 1
+   },
+   "loops": {
+    "ear.border": 6,
+    "ear.socket": 6,
+    "eye": 8,
+    "eye.border": 8,
+    "fore.border": 8,
+    "fore.socket": 8,
+    "hind.border": 8,
+    "hind.socket": 8,
+    "muzzle.border": 5,
+    "muzzle.socket": 5,
+    "neck.border": 7,
+    "neck.socket": 7,
+    "tail.border": 4,
+    "tail.socket": 4
+   },
+   "sides": {
+    "trunk": 14,
+    "neck": 12,
+    "head": 12,
+    "muzzle": 8,
+    "limb": 8,
+    "tail": 6,
+    "ear": 6,
+    "eye": 8
+   },
+   "rings": 54,
+   "conn": "0a2703d9b6f8b39f",
+   "hash": "113997bd6e2dab47",
+   "stored": "113997bd6e2dab47"
+  }
+ },
+ "checks": [
+  {
+   "kind": "gate",
+   "name": "even face size: edge length p90/p10 <= 4 in every region",
+   "ok": false,
+   "detail": "torso 4.3, head 6.72, fore 3.37, hind 2.64, tail 3.41"
+  },
+  {
+   "kind": "gate",
+   "name": "long faces: at most 5% of faces over 5:1",
+   "ok": false,
+   "detail": "15% (worst 49.6:1)"
+  },
+  {
+   "kind": "warn",
+   "name": "no pole (valence 3 or 5+) inside a joint band",
+   "ok": false,
+   "detail": "8 {'neck': 6, 'elbowL': 2} of 90 poles"
+  },
+  {
+   "kind": "gate",
+   "name": "a closed loop round every limb root, over its joint (shoulder / hip loop)",
+   "ok": true,
+   "detail": "fore: over the joint, hind: over the joint"
+  },
+  {
+   "kind": "gate",
+   "name": "limbs join the torso by edge flow: no fan (valence >= 6) and no non-quad face at the junction",
+   "ok": true,
+   "detail": "fore 0 fans 0 non-quads, hind 0 fans 0 non-quads"
+  },
+  {
+   "kind": "gate",
+   "name": "no ring-band stack (3+ parallel rings closer than 0.5 x the limb width outside a joint band)",
+   "ok": false,
+   "detail": "tail 9 rings at 0.27 x width"
+  },
+  {
+   "kind": "warn",
+   "name": "faces over 3:1 at most 20%",
+   "ok": false,
+   "detail": "25.2%"
+  },
+  {
+   "kind": "warn",
+   "name": "density per region within 0.5-2 x the body average (triangle share / area share)",
+   "ok": true,
+   "detail": "torso 0.64, head 1.12, fore 1.25, hind 1.26, tail 0.78"
+  },
+  {
+   "kind": "warn",
+   "name": "edge length p90/p10 over the whole body <= 6",
+   "ok": true,
+   "detail": "3.73"
+  },
+  {
+   "kind": "warn",
+   "name": "limb edges run on into the torso (flow >= 0.3)",
+   "ok": true,
+   "detail": "fore 0.38, hind 0.5"
+  },
+  {
+   "kind": "warn",
+   "name": "face loops round the eye and the mouth (META['landmarks'])",
+   "ok": true,
+   "detail": "eye present, mouth present"
+  },
+  {
+   "kind": "gate",
+   "name": "template: every limb socket is a closed loop of 8 vertices, all valence 4, flow >= 0.9",
+   "ok": true,
+   "detail": "hind 8 verts, valence [4], flow 1, fore 8 verts, valence [4], flow 1"
+  },
+  {
+   "kind": "gate",
+   "name": "template: poles at most 0.15 x the vertices, and exactly the template signature's count",
+   "ok": true,
+   "detail": "90 of 724 = 0.124 (signature: 90)"
+  },
+  {
+   "kind": "gate",
+   "name": "template: non-planar quads (warp over 12 degrees) at most 5% of the faces outside the hinges",
+   "ok": false,
+   "detail": "14.48% (86 of 594)"
+  },
+  {
+   "kind": "gate",
+   "name": "template: no pole on a joint ring (the hinge rings of every limb joint, the neck rings)",
+   "ok": true,
+   "detail": "neck 0, elbowL 0, wristL 0, kneeL 0, hockL 0"
+  },
+  {
+   "kind": "gate",
+   "name": "template: 3 converging rings at every hinge, flexion / extension spacing 0.4-0.7",
+   "ok": true,
+   "detail": "elbowL 0.58, kneeL 0.54, hockL 0.55"
+  },
+  {
+   "kind": "gate",
+   "name": "template: edge length p90/p10 <= 2.5 in every region",
+   "ok": false,
+   "detail": "torso 4.3, head 6.72, fore 3.37, hind 2.64, tail 3.41"
+  },
+  {
+   "kind": "gate",
+   "name": "template: density between regions 0.7-1.6 (triangle share / area share)",
+   "ok": false,
+   "detail": "torso 0.64, head 1.12, fore 1.25, hind 1.26, tail 0.78"
+  },
+  {
+   "kind": "gate",
+   "name": "template: section corner share >= 0.6 (ring vertices on a corner of the guide's section, as the sections placed them)",
+   "ok": true,
+   "detail": "0.636 of 231 (trunk 0.75, neck 0.88, head 0.55, muzzle 0.7, tail 0.71, fore 0.44, hind 0.61)"
+  },
+  {
+   "kind": "gate",
+   "name": "template: stage-1 triangles 1200-2200",
+   "ok": true,
+   "detail": "1444"
+  },
+  {
+   "kind": "gate",
+   "name": "template: the topology signature is the stored one (template_signatures.json)",
+   "ok": true,
+   "detail": "113997bd6e2dab47"
+  },
+  {
+   "kind": "gate",
+   "name": "template: range of motion folds at most 1% of the area in every pose",
+   "ok": false,
+   "detail": "fold 0.74%, swing 0.83%, crouch 1.2%"
+  }
+ ]
+}

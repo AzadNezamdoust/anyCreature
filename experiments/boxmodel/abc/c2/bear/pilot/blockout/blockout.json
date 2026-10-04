@@ -1,0 +1,271 @@
+{
+ "creature": "bear",
+ "gates_ok": true,
+ "tris": 636,
+ "verts": 320,
+ "joints": {
+  "elbowL": [
+   0.235,
+   -0.035,
+   0.25
+  ],
+  "wristL": [
+   0.23,
+   -0.07,
+   0.11
+  ],
+  "kneeL": [
+   0.235,
+   0.62,
+   0.285
+  ],
+  "hockL": [
+   0.23,
+   0.71,
+   0.12
+  ],
+  "neck": [
+   0.0,
+   -0.36,
+   0.68
+  ]
+ },
+ "poses": {
+  "fold": {
+   "elbow.L": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "hock.L": [
+    80.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "hock.R": [
+    80.0,
+    0,
+    0
+   ]
+  },
+  "swing": {
+   "shoulder.L": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    60.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    60.0,
+    0,
+    0
+   ]
+  },
+  "crouch": {
+   "elbow.L": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.L": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "hock.L": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    30.0,
+    0,
+    0
+   ],
+   "neck": [
+    -35.0,
+    0,
+    0
+   ],
+   "head": [
+    -25.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "hock.R": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    30.0,
+    0,
+    0
+   ]
+  }
+ },
+ "rom": {
+  "flip_tris": 26,
+  "triangles": 636,
+  "flip_area_pct": 3.32,
+  "stretch_tris": 4
+ },
+ "loops": {
+  "elbowL": 2,
+  "wristL": 2,
+  "kneeL": 2,
+  "hockL": 2,
+  "neck": 3
+ },
+ "quad_share": 0.987,
+ "iou": {
+  "side": 0.971,
+  "front": 0.957,
+  "top": 0.848
+ },
+ "iou_floor": {
+  "side": 0.9,
+  "front": 0.85,
+  "top": 0.8
+ },
+ "proportions": {
+  "body length / height": {
+   "model": 1.707,
+   "sheet": 1.704,
+   "diff_pct": 0.2
+  },
+  "head height / body height": {
+   "model": 0.353,
+   "sheet": 0.328,
+   "diff_pct": 7.7
+  },
+  "leg length / body height": {
+   "model": 0.277,
+   "sheet": 0.272,
+   "diff_pct": 1.9
+  },
+  "neck width / head width": {
+   "model": 0.897,
+   "sheet": 0.877,
+   "diff_pct": 2.2
+  },
+  "fore limb thickness / length": {
+   "model": 0.352,
+   "sheet": 0.357,
+   "diff_pct": -1.5
+  },
+  "hind limb thickness / length": {
+   "model": 0.411,
+   "sheet": 0.419,
+   "diff_pct": -1.9
+  }
+ },
+ "intended": {},
+ "frame": {
+  "centre": [
+   0.0,
+   0.0,
+   0.5
+  ],
+  "size": [
+   0.752,
+   1.704,
+   1.0
+  ],
+  "ortho": 2.0448
+ },
+ "limits": {
+  "joint_loops": 2,
+  "quad_share": 0.85,
+  "iou": {
+   "side": 0.9,
+   "front": 0.85,
+   "top": 0.8
+  },
+  "proportion_pct": 10.0
+ }
+}
