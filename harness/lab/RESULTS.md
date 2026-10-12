@@ -62,3 +62,15 @@ Kit removed artifacts but did not raise scores. Defects shifted to PROPORTION:
 barrel/sagging belly, stick legs, hollow back, hind leg too straight/small.
 Next: proportion canon (measurements from memory, written by a separate lane)
 + numeric landmark check before any visual judging.
+
+## Round 5 — kit + proportion canon (numbers before pictures), 10 animals
+
+| | recognised O / F | quality O / F |
+|---|---|---|
+| kit + canon (r5) | 9 / 10 | 3.9 / 3.6 |
+| freehand SDF v3 (r3) | 10 / 10 | 4.5 / 4.5 |
+
+Canon checks passed (most measures in range) but the judged look got WORSE.
+Matching numeric proportions does not make forms read better; freehand
+gesture beat measured stiffness. Five rounds: LLM-from-memory geometry
+ceiling ~5/10 on a strict AAA scale, regardless of representation.
