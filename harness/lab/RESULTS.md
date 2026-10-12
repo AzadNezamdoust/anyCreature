@@ -48,3 +48,17 @@ drifts between sessions — compare only within a round.
 
 Next: reusable SDF anatomy kit (parts built once and iterated), animals as
 parameters on it, and an independent Fable critic per animal.
+
+## Round 4a — SDF anatomy kit v3 (horse, wolf) vs freehand SDF v3
+
+| model | Opus | Fable |
+|---|---|---|
+| kit3 horse | 4 | 5 |
+| r3 horse | 4 | 6 |
+| kit3 wolf | 3 | 4 |
+| r3 wolf | 4 | 5 |
+
+Kit removed artifacts but did not raise scores. Defects shifted to PROPORTION:
+barrel/sagging belly, stick legs, hollow back, hind leg too straight/small.
+Next: proportion canon (measurements from memory, written by a separate lane)
++ numeric landmark check before any visual judging.
