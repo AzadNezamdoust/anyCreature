@@ -34,3 +34,17 @@ detached flat ears, soft heads and hooves, tube tails.
 
 Takeaway so far: implicit SDF with smooth blending is the only method that
 climbs with iteration; the engine's ring-section spec plateaus at ~3.
+
+## Round 3 — SDF v3, self-critique only
+
+| | recognised O / F | quality O / F |
+|---|---|---|
+| SDF v3 | 9 / 10 | 4.8 / 5.2 |
+| SDF v2 (same session baseline) | 10 / 10 | 4.6 / 5.1 |
+
+Plateau: one artist critiquing itself stops improving around 5/10. Same defects
+persist (tube limbs, lumpy muscles, crude heads/feet). Judges' absolute scale
+drifts between sessions — compare only within a round.
+
+Next: reusable SDF anatomy kit (parts built once and iterated), animals as
+parameters on it, and an independent Fable critic per animal.
