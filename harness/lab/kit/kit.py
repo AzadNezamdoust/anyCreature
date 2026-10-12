@@ -137,12 +137,26 @@ def loft(pts, secs, up=(0, 1, 0), sub=4, k=0.0):
     """pts: control points; secs: per point (half_depth, half_width[, depth_offset[, exponent]]).
     Returns list of segment prims (union them with group/blend)."""
     S = np.array([list(s) + [0.0, 2.0][len(s) - 2:] if len(s) < 4 else list(s) for s in secs], float)
-    P = catmull(pts, sub); Q = catmull(S, sub)
+    sub = max(sub * 3, 8); P = catmull(pts, sub); Q = catmull(S, sub)
     Q[:, 0:2] = np.maximum(Q[:, 0:2], 1e-3); Q[:, 3] = np.maximum(Q[:, 3], 1.2)
     ups = [up] * len(P) if np.ndim(up) == 1 else catmull(up, sub)
     m = len(P) - 1
-    out = _Prims(f_seg(P[i], P[i + 1], Q[i], Q[i + 1], ups[i], 0.6 if i > 0 else 0, 0.6 if i < m - 1 else 0) for i in range(m))
-    out.kin = 1e-6   # spans meet exactly (squashed interior caps): plain union, no joint rings
+    out = _Prims([_sweep(P, Q, ups)])
+    out.kin = 1e-6
+    return out
+
+def _sweep(P, Q, ups):
+    """single continuous swept field: per sample, pick the closest span and use the section
+    interpolated there (no per-span caps -> no joint rings / seam bands)."""
+    segs = [f_seg(P[i], P[i + 1], Q[i], Q[i + 1], ups[i], 0.0, 0.0) for i in range(len(P) - 1)]
+    def fn(X, Y, Z):
+        d = None
+        for f, lo, hi in segs:
+            e = f(X, Y, Z)
+            d = e if d is None else smin(d, e, 0.0)
+        return d
+    lo = np.min([s_[1] for s_ in segs], 0); hi = np.max([s_[2] for s_ in segs], 0)
+    return fn, lo, hi
     return out
 
 class _Prims(list):
@@ -167,8 +181,8 @@ def torso(b, stations, scap=None, keel=None, ridge=0.012, k=0.04, box=2.15):
         b.group(loft(rp, [(ridge * 2.2, ridge * 1.3)] * len(rp), sub=3), 0, ridge * 3)
     if scap:    # scapula: thin plate lying on ribcage, spine of scapula as low ridge
         top, pt, w = [np.asarray(scap[n], float) if n != 'width' else scap[n] for n in ('top', 'point', 'width')]
-        b.add(f_seg(top, pt, (w, w * 0.16, 0, 2.6), (w * 0.6, w * 0.25, 0, 2.2), up=(1, 0, 0)), k=w * 0.7, mirror=True)
-        cord(b, [lerp(top, pt, .1) + V(0, 0, w * .2), lerp(top, pt, .5) + V(0, 0, w * .3), lerp(top, pt, .85) + V(0, 0, w * .3)], w * .22, w * .12, up=(0, 0, 1))  # scapular spine
+        b.add(f_seg(top, pt, (w, w * 0.22, 0, 2.2), (w * 0.7, w * 0.3, 0, 2.2), up=(1, 0, 0)), k=w * 1.2, mirror=True)
+        if 0: cord(b, [lerp(top, pt, .1) + V(0, 0, w * .2), lerp(top, pt, .5) + V(0, 0, w * .3), lerp(top, pt, .85) + V(0, 0, w * .3)], w * .22, w * .12, up=(0, 0, 1))  # scapular spine
     if keel:    # sternum / chest keel: narrow deep blade under chest front
         fp, dep = keel[:2]; fp = np.asarray(fp, float); kl = keel[2] if len(keel) > 2 else dep * 4
         back = fp + V(-kl, -dep * 0.6, 0)
@@ -311,7 +325,10 @@ def foreleg(b, J, g, foot='hoof', k_body=0.08, toe=None):
               up=(1, 0, 0), sub=4)
     b.group(fa, 0, g * .6, mirror=True)
     bump(b, sh + V(g * .45, -g * .1, 0), (g * .7, g * .6, g * .6), k=g * .4)   # point of shoulder, forward
-    groove(b, [sh + V(-g * .6, -g * .4, g * 1.0), lerp(sh, el, .5) + V(-g * .1, 0, g * 1.05), el + V(g * .5, g * .5, g * .9)], g * .12, g * .5)  # triceps | deltoid groove
+    # triceps: big wedge mass between scapula and elbow (behind); deltoid/brachiocephalic head over shoulder
+    tc = lerp(lerp(st, sh, .6), el, .5) + V(-g * .7, 0, g * .25)
+    b.add(f_ell(tc, el - lerp(st, sh, .6), (1, 0, 0), (np.linalg.norm(el - lerp(st, sh, .6)) * .55, g * 1.3, g * 1.0)), k=g * .9, mirror=True)
+    b.add(f_ell(lerp(sh, el, .3) + V(g * .2, 0, g * .35), el - sh, (1, 0, 0), (np.linalg.norm(el - sh) * .45, g * .8, g * .7)), k=g * .8, mirror=True)
     # olecranon (point of elbow): bony knob protruding back/up
     b.add(f_ell(el + V(-g * .9, g * .45, 0), (-.3, 1, 0), (1, 0, 0), (g * .5, g * .38, g * .38)), k=g * .35, mirror=True)
     # carpus: flattened front, accessory carpal bone proud at back
@@ -338,7 +355,13 @@ def hindleg(b, J, g, foot='hoof', k_body=0.1, toe=None):
                  [(g * 1.8, g * 1.25, 0, 2.2), (g * 1.35, g * .95, 0, 2.2), (g * .8, g * .65, 0, 2.2)], up=(1, 0, 0), sub=4), 0, g * .9, mirror=True)
     # stifle patella knob (front)
     b.add(f_ell(sf + V(g * .6, 0, g * .25), (0, 1, 0), (1, 0, 0), (g * .6, g * .45, g * .5)), k=g * .3, mirror=True)
-    groove(b, [lerp(bt, sf, .15) + V(-g * .3, 0, g * 1.4), lerp(bt, hk, .35) + V(g * .2, 0, g * 1.25), lerp(sf, hk, .45) + V(-g * .1, 0, g * .9)], g * .12, g * .5)  # biceps femoris | semitendinosus
+    # big haunch masses: gluteal over hip, biceps femoris sweeping down the side of the thigh
+    b.add(f_ell(lerp(hp, bt, .4) + V(0, g * .6, -g * .2), (1, 0, 0), (0, 1, 0), (np.linalg.norm(bt - hp) * .7 + g, g * 1.3, g * 1.4)), k=g * 1.2, mirror=True)
+    bf0 = lerp(bt, sf, .35); bf1 = lerp(sf, hk, .3) + V(-g * .5, 0, 0)
+    b.add(f_ell(lerp(bf0, bf1, .5) + V(0, 0, g * .35), bf1 - bf0, (1, 0, 0), (np.linalg.norm(bf1 - bf0) * .6, g * 1.5, g * 1.1)), k=g * 1.0, mirror=True)
+    # fill mass sized from landmarks: closes thigh/gaskin/hamstring triangle (no holes)
+    fc = (hp + sf + bt + lerp(sf, hk, .45)) / 4
+    b.add(f_ell(fc, lerp(sf, hk, .45) - lerp(hp, bt, .5), (1, 0, 0), (np.linalg.norm(lerp(sf, hk, .45) - lerp(hp, bt, .5)) * .55, np.linalg.norm(bt - sf) * .45, g * 1.3)), k=g * 1.0, mirror=True)
     # tibia + gaskin: gaskin belly behind, thin front (tibia crest)
     tb = loft([sf, lerp(sf, hk, .4), lerp(sf, hk, .8), hk + V(g * .1, g * .2, 0)],
               [(g * 1.05, g * .85, -.15 * g, 2.2), (g * 1.15, g * .9, -.4 * g, 2.2), (g * .65, g * .5, -.15 * g, 2.4), (g * .55, g * .5, 0, 2.8)],
@@ -378,10 +401,10 @@ def paw(b, fe, ground, g, o):
     """digitigrade paw: 4 weight-bearing toes in a tight arch (3,4 lead), digital pads under each
     toe, heart-shaped metacarpal pad, short claws. fe = metacarpophalangeal point."""
     ground = np.asarray(ground, float); fe = np.asarray(fe, float)
-    pw = o.get('width', g * 1.8); tl = o.get('toe_len', g * 1.8); claw = o.get('claw', g * .5)
+    pw = o.get('width', g * 2.3); tl = o.get('toe_len', g * 2.2); claw = o.get('claw', g * .5)
     # metacarpal pad (palm) behind/under the toes
     mc = V(ground[0] - tl * .05, g * .35, ground[2])
-    b.add(f_ell(mc, (1, 0, 0), (0, 1, 0), (g * .55, g * .38, pw * .55)), k=g * .25, mirror=True)
+    b.add(f_ell(mc, (1, 0, 0), (0, 1, 0), (g * .7, g * .45, pw * .6)), k=g * .25, mirror=True)
     b.group(loft([fe + V(0, g * .1, 0), mc + V(0, g * .3, 0)], [(g * .4, g * .48, 0, 2.3), (g * .45, pw * .55, 0, 2.3)], up=(1, 0, 0), sub=2), 0, g * .2, mirror=True)
     toes = [(-.62, .82, .55), (-.2, 1.0, .7), (.2, 1.0, .7), (.62, .82, .55)]  # lateral pos, length, height
     for zf, lf, hf in toes:
@@ -389,9 +412,9 @@ def paw(b, fe, ground, g, o):
         root = V(mc[0] + g * .25, g * .55 * hf + g * .15, zc)
         knuckle = V(mc[0] + tl * .65 * lf, g * .55 * hf, zc + zf * g * .05)
         tipp = V(mc[0] + tl * lf, g * .22, zc + zf * g * .06)
-        b.group(loft([root, knuckle, tipp], [(g * .28, g * .24, 0, 2.2), (g * .3, g * .23, 0, 2.2), (g * .2, g * .18, -.03 * g, 2.2)], up=(0, 1, 0), sub=3), 0, g * .1)
+        b.group(loft([root, knuckle, tipp], [(g * .36, g * .32, 0, 2.2), (g * .38, g * .32, 0, 2.2), (g * .28, g * .26, -.03 * g, 2.2)], up=(0, 1, 0), sub=3), 0, g * .12)
         # digital pad under toe
-        b.add(f_ell(V(tipp[0] - g * .12, g * .17, zc), (1, 0, 0), (0, 1, 0), (g * .26, g * .17, g * .2)), k=g * .06)
+        b.add(f_ell(V(tipp[0] - g * .15, g * .2, zc), (1, 0, 0), (0, 1, 0), (g * .34, g * .22, g * .28)), k=g * .08)
         # claw: short downward-curving cone from toe tip
         c0 = tipp + V(g * .05, g * .03, 0); c1 = c0 + V(claw * .8, -claw * .55, 0)
         b.add(f_seg(c0, c1, (g * .1, g * .08, 0, 2), (g * .012, g * .012, 0, 2), up=(0, 1, 0)), k=g * .04)
@@ -468,7 +491,7 @@ def groove(b, pts, depth, width, normal=(0, 0, 1), k=None, mirror=True):
     secs = [(depth * (.25 + .75 * np.sin(np.pi * (i + .5) / n)), width * (.3 + .7 * np.sin(np.pi * (i + .5) / n)), 0, 2) for i in range(n)]
     secs[0] = (1e-3, 1e-3, 0, 2); secs[-1] = (1e-3, 1e-3, 0, 2)
     for pr in loft(P, secs, up=nrm_, sub=3):
-        b.sub(pr, k=k or width * .9, mirror=mirror)
+        b.sub(pr, k=max(k or 0, width * 1.2), mirror=mirror)   # wide, shallow, soft
 
 def cord(b, pts, height, width, k=None, mirror=True, up=(0, 0, 1)):
     """raised muscle cord / tendon ridge along a curve (trapezius, sternocephalic, flexor tendon)"""
@@ -486,7 +509,7 @@ def flatten(b, p0, normal, radius, k=0.01, mirror=True, axis=(1, 0, 0)):
         e = (np.sqrt((x / ra) ** 2 + (y / ru) ** 2) - 1) * min(ra, ru)
         return np.maximum(-pl(X, Y, Z), e)
     R = max(ra, ru) + 3 * radius[2] + 0.1
-    b.sub((fn, p0 - R, p0 + R), k=k, mirror=mirror)
+    b.sub((fn, p0 - R, p0 + R), k=max(k, radius[2] * .8), mirror=mirror)
 
 def bump(b, c, r, axis=(1, 0, 0), up=(0, 1, 0), k=None, mirror=True):
     """bony landmark / muscle head: oriented ellipsoid blended tight (point of shoulder, stifle)"""
@@ -502,4 +525,37 @@ def ruff(b, base, head, radius, count=14, length=None, k=None, seed=5):
         t = rng.uniform(.1, .8); a = rng.uniform(-2.4, 2.4)
         c = lerp(base, head, t); o = V(0, -np.cos(a), np.sin(a)) * radius * .8
         tip = c + o * 1.0 + nrm(o) * length + V(-length * .6, -length * .3, 0)
-        b.group(strand(c + o * .6, lerp(c + o, tip, .5), tip, radius * .35, flat=.7, up=(1, 0, 0)), 0, radius * .3, mirror=False)
+        b.add(f_ell(lerp(c + o * .6, tip, .45), tip - c - o * .6, (1, 0, 0), (np.linalg.norm(tip - c - o * .6) * .55, radius * .3, radius * .22)), k=radius * .35)
+
+
+# ------------------------------------------------------------------ SCULPT MASSES (iteration 4)
+def tail_locks(b, pts, r0, length, n=4, spread=0.35, k=None, seed=2):
+    """volumetric horse tail: thick dock + n thick tapering locks hanging from it, merged with
+    generous smooth-min so the tail reads as one hair mass with soft separations."""
+    P = [np.asarray(p, float) for p in pts]
+    b.group(loft(P, [(r0, r0 * .9), (r0 * .85, r0 * .8), (r0 * .7, r0 * .65)][:len(P)] + [(r0 * .6, r0 * .55)] * max(0, len(P) - 3), sub=4), 0, r0 * .6)
+    rng = np.random.RandomState(seed); root = P[-1]; ax = nrm(P[-1] - P[-2]); locks = []
+    for i in range(n):
+        zf = (i - (n - 1) / 2) / max(n - 1, 1)
+        top = lerp(P[-2], P[-1], .3 + .2 * rng.rand()) + V(-r0 * .2, 0, zf * r0 * 1.0)
+        L = length * (0.85 + 0.25 * rng.rand())
+        mid = top + V(-L * (.12 + .05 * rng.rand()), -L * .5, zf * r0 * spread * 3)
+        tip = top + V(-L * (.10 + .1 * rng.rand()), -L, zf * r0 * spread * 4.5)
+        rr = r0 * (1.05 - .15 * abs(zf))
+        locks += loft([top, mid, tip], [(rr * 1.0, rr * .8), (rr * .9, rr * .75), (rr * .25, rr * .2)], up=(1, 0, 0), sub=4)
+    b.group(_Prims(locks), k or r0 * .55, r0 * .8)
+
+def crest_mane(b, base, head, base_dw, head_dw, crest, thick, width, k=None):
+    """solid mane: broad crest mass riding the neck topline (sits ON the surface, blends wide)"""
+    base = np.asarray(base, float); head = np.asarray(head, float)
+    P = catmull([base, lerp(base, head, .5), head], 4); pts = []; secs = []
+    for i in range(1, len(P) - 1):
+        t = i / (len(P) - 1); ax = nrm(P[i + 1] - P[i - 1]); nup = nrm(np.cross(V(0, 0, 1), ax))
+        dd = lerp(base_dw, head_dw, t)[0] + crest * np.sin(np.pi * t)
+        env = np.sin(np.pi * min(1, t * 1.15)) ** .5
+        pts.append(P[i] + nup * (dd - thick * .3)); secs.append((thick * env + 1e-3, width * (.6 + .4 * env)))
+    b.group(loft(pts, secs, up=(0, 1, 0), sub=3), 0, k or width * .7)
+
+def mass(b, c, axis, r, k=None, up=(0, 1, 0), mirror=True):
+    """generic soft muscle mass (sculpt clay blob)"""
+    b.add(f_ell(c, axis, up, r), k=k or min(r) * .9, mirror=mirror)
