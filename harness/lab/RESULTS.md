@@ -158,3 +158,11 @@ GLB via the engine's own buildSkeleton/compileAnims/writeGLB, idle + walk.
 Walk is clean (no candy-wrapper, no collapse); remaining: belly/armpit
 stretch between legs (edge stretch up to ~2.4x), ~1.5 cm ground sink, jaw
 split unchecked. Scripts in harness/lab/rig.
+
+## Multi-view input test (Hunyuan3D-2mv; wolf, horse, eagle, frog)
+
+2mv runs without nvcc (~35 s/seed), but no open nvcc-free generator makes
+consistent front/side/back views; HunyuanDiT turnaround sheets repeat one
+angle and never draw a back. Using side + mirrored side (+ front): horse
+slightly better, wolf mixed, eagle same, frog worse vs r8. Not adopted.
+Next cheap test: r8 hero ref + its mirror in 2mv side slots.
