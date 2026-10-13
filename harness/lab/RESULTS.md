@@ -116,3 +116,18 @@ thin-sheet deletion by ray-cast thickness, curved hole patches. Remaining
 defects: soft/blobby generic forms, fused "pancake" toes (frog), open hoof
 soles, stringy mane/tail, fur noise. Single-image-to-3D shape tops out ~6/10
 on a strict AAA geometry scale; AAA also needs retopo, UVs, PBR textures, rig.
+
+## Round 10 — low-poly / quad retopo of r8 meshes (~1500 faces), judged on shape + topology sheet
+
+| method | recognised O / F | quality O / F |
+|---|---|---|
+| **QuadriFlow** (100% quads) | 10 / 9 | **5.1 / 5.8** |
+| Instant Meshes (100% quads) | 10 / 9 | 4.0 / 5.4 |
+| quadric decimate (tris) | 8 / 9 | 3.9 / 5.1 |
+| BPT (learned artist tris) | 9 / 8 | 4.0 / 4.7 |
+| MeshAnything V2 (learned) | 10 / 9 | 2.1 / 2.2 |
+
+Classical quad remesh beats the learned artist-mesh models today. No open
+quad-native learned generator has released weights (QuadGPT, Mesh-Pro).
+Every method breaks thin open parts (wings, toes, fins, tail strands).
+TRELLIS.2 and Hunyuan PBR texturing blocked on CUDA Toolkit (user installing).
