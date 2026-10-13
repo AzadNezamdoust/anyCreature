@@ -149,3 +149,12 @@ picks ref -> Hunyuan3D-2.1 shape -> mask-stage floor removal + faired cleanup
 -> QuadriFlow quad retopo for low-poly. Remaining AAA gaps: textures (PBR),
 TRELLIS.2 comparison (both need CUDA Toolkit), multi-view input, thin-part
 handling, rigging. Not AAA yet.
+
+## Rig stage prototype (wolf, horse; QuadriFlow 5000-quad input)
+
+Auto skeleton (34 joints, engine naming) fitted inside the voxelised volume
+(medial paths + leg-slab detection), geodesic 1/d^4 weights, 4 influences,
+GLB via the engine's own buildSkeleton/compileAnims/writeGLB, idle + walk.
+Walk is clean (no candy-wrapper, no collapse); remaining: belly/armpit
+stretch between legs (edge stretch up to ~2.4x), ~1.5 cm ground sink, jaw
+split unchecked. Scripts in harness/lab/rig.
