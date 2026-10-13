@@ -166,3 +166,12 @@ consistent front/side/back views; HunyuanDiT turnaround sheets repeat one
 angle and never draw a back. Using side + mirrored side (+ front): horse
 slightly better, wolf mixed, eagle same, frog worse vs r8. Not adopted.
 Next cheap test: r8 hero ref + its mirror in 2mv side slots.
+
+## Round 11 — PBR textured assets (Hunyuan3D-2.1 paint on r9 picks), full-asset judging
+
+Mean O / F: **4.9 / 5.6** (form + texture vs AAA). Best: elephant 6/7,
+giraffe 6/7, wolf 5/7. Weak: kangaroo 4/4 (flat red, cartoon), crocodile 4/4
+(dark, mushy), tortoise 3/5 (smeared shell). Judges' recurring texture
+defects: baked lighting in albedo, blurry/smeared detail (Lanczos instead of
+RealESRGAN), flat colour, seam smears on back views.
+Texturing runs with pip CUDA 13.4 + VS 18 MSVC, no system install.
