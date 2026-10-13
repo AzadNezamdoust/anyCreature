@@ -74,3 +74,18 @@ Canon checks passed (most measures in range) but the judged look got WORSE.
 Matching numeric proportions does not make forms read better; freehand
 gesture beat measured stiffness. Five rounds: LLM-from-memory geometry
 ceiling ~5/10 on a strict AAA scale, regardless of representation.
+
+## Round 6 — LLM-directed local text-to-3D (HunyuanDiT -> Hunyuan3D-2.0)
+
+LLM writes art-directed prompts, picks best of 3+ seeds from rendered sheets,
+pipeline cleans floor slab, decimates to <= 100k tris. Shape only, no texture.
+
+| | recognised O / F | quality O / F |
+|---|---|---|
+| **LLM-directed generator** | 10 / 10 | **6.3 / 6.8** |
+| freehand SDF v3 (r3) | 10 / 10 | 4.1 / 4.7 |
+
+Best: eagle 8/8, kangaroo 8/7, horse 6/8, wolf/tortoise/shark 7/7.
+Weak: crocodile 4/5 (stands upright, model ignores "sprawling"), giraffe 4/5
+(short neck, camel hump). Defects: open foot soles from slab removal, noisy
+fur geometry, bloated torsos. Peak VRAM ~9.6 GB (T2I) / 5.6 GB (shape).
