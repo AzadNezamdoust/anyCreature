@@ -103,3 +103,16 @@ cleanup hurt more: hole-filling the cut feet made flat planar caps/slabs
 fan tore (3/3), tortoise shell flap. Lesson: never cut the floor through the
 feet and planar-cap the hole; fix floors at the image/mask stage, fill holes
 with faired (curved) patches only.
+
+## Round 8 — Hunyuan3D-2.1, mask-stage floor removal, faired hole fill
+
+| | quality O / F |
+|---|---|
+| **r8** (2.1 + critic refs + clean8) | **5.6 / 6.1** |
+| r6 (2.0, seed-pick) | 5.3 / 5.9 |
+
+Best so far overall. Floors removed in the image mask (no foot slicing), only
+thin-sheet deletion by ray-cast thickness, curved hole patches. Remaining
+defects: soft/blobby generic forms, fused "pancake" toes (frog), open hoof
+soles, stringy mane/tail, fur noise. Single-image-to-3D shape tops out ~6/10
+on a strict AAA geometry scale; AAA also needs retopo, UVs, PBR textures, rig.
