@@ -131,3 +131,21 @@ Classical quad remesh beats the learned artist-mesh models today. No open
 quad-native learned generator has released weights (QuadGPT, Mesh-Pro).
 Every method breaks thin open parts (wings, toes, fins, tail strands).
 TRELLIS.2 and Hunyuan PBR texturing blocked on CUDA Toolkit (user installing).
+
+## Round 9 — best-of-12 Hunyuan3D-2.1 meshes per animal, Fable critic picks
+
+| | quality O / F |
+|---|---|
+| r9 (critic best-of-12) | 5.5 / 5.8 |
+| r8 (critic ref, best-of-2) | 5.6 / 5.5 |
+
+No real gain: more candidates do not lift the ceiling. Untextured
+single-image Hunyuan3D-2.1 shape plateaus ~5.5-6/10 on a strict AAA scale.
+
+## Status / next levers
+
+Best workflow so far: LLM art-directs prompts -> HunyuanDiT refs -> critic
+picks ref -> Hunyuan3D-2.1 shape -> mask-stage floor removal + faired cleanup
+-> QuadriFlow quad retopo for low-poly. Remaining AAA gaps: textures (PBR),
+TRELLIS.2 comparison (both need CUDA Toolkit), multi-view input, thin-part
+handling, rigging. Not AAA yet.
