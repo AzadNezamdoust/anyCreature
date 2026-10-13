@@ -175,3 +175,16 @@ giraffe 6/7, wolf 5/7. Weak: kangaroo 4/4 (flat red, cartoon), crocodile 4/4
 defects: baked lighting in albedo, blurry/smeared detail (Lanczos instead of
 RealESRGAN), flat colour, seam smears on back views.
 Texturing runs with pip CUDA 13.4 + VS 18 MSVC, no system install.
+
+## Round 12 — texture fixes (de-light refs, 9 views, true 4K, UV dilation)
+
+| | quality O / F |
+|---|---|
+| r12 | 5.0 / 5.1 |
+| r11 | 5.3 / 5.2 |
+
+No measurable gain at preview resolution (de-light hurt horse/eagle/shark
+colour, fixed by fallback; 768 views blurrier). Texture plateau ~5/10:
+limited by reference quality (cartoon/dark refs) and the Lanczos stand-in
+for RealESRGAN. Next levers need user decisions: RealESRGAN weights source,
+triton-windows + DINOv3 licence for TRELLIS.2.
