@@ -89,3 +89,17 @@ Best: eagle 8/8, kangaroo 8/7, horse 6/8, wolf/tortoise/shark 7/7.
 Weak: crocodile 4/5 (stands upright, model ignores "sprawling"), giraffe 4/5
 (short neck, camel hump). Defects: open foot soles from slab removal, noisy
 fur geometry, bloated torsos. Peak VRAM ~9.6 GB (T2I) / 5.6 GB (shape).
+
+## Round 7 — critic-picked references, octree 512, watertight cleanup
+
+| | quality O / F |
+|---|---|
+| r7 (critic refs + hole-fill/Taubin/remesh) | 4.9 / 5.4 |
+| r6 (seed-pick only) | 5.4 / 5.9 |
+
+Better references helped (elephant 7/7, giraffe 6/7, shark 7/7) but the
+cleanup hurt more: hole-filling the cut feet made flat planar caps/slabs
+(frog 3/4, crocodile, kangaroo, wolf "flat paw caps"), the eagle's thin tail
+fan tore (3/3), tortoise shell flap. Lesson: never cut the floor through the
+feet and planar-cap the hole; fix floors at the image/mask stage, fill holes
+with faired (curved) patches only.
