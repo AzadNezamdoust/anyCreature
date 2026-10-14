@@ -17,7 +17,7 @@ VENV_LP = f'{G}/venv_lp/Scripts/python.exe'  # pyquadriflow
 SYS_PY = sys.executable                      # system python: render.py / wire.py (numpy+PIL)
 NODE = 'node'
 CUDA13_DLL = f'{G}/cuda134/nvidia/cu13/bin/x86_64'   # paint21.py also add_dll_directory()s this
-NO_RIG = {'eagle', 'shark', 'frog', 'kangaroo'}      # non-quadrupeds: skeleton spec is quadruped-only
+RIG_EXIT_SKIP = 3                            # rig_robust.py: body plan is not a 2x2 quadruped stance -> documented skip
 VIEWS = ['hero', 'side', 'front', 'back']
 LV = f'{G}/lowvram/tests'                    # measured 8 GB stage code (paint.py, rigrun.py); shape/mv chain is inlined below
 
@@ -139,12 +139,18 @@ def stage_generate(c):
             subs.append((old, OFFLOAD_CHAIN.format(v='shp', ctor='Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1", device="cpu")')))
         c.templated('gen21', f'{G}/gen21.py', subs, VENV, [c.an], gpu=True)
     for s in seeds: cands.append(dict(name=f'h21_s{s}', raw=f'{W}/raw21_s{s}.obj', method='hunyuan2.1-single', seed=s))
-    # Hunyuan3D-2mv, multi-view
+    # Hunyuan3D-2mv, multi-view: slots front/left/back/right. side -> left, front -> front, back -> back,
+    # mirrored side -> right ONLY if there is no front/back view. Variant name = slot letters (l,f,b,r).
     if have_mv:
-        var = ['af', 'bf'] if os.path.exists(f'{c.inbox}/front.png') else ['a', 'b']
+        hv = lambda v: os.path.exists(f'{c.inbox}/{v}.png')
+        var = ['l' + ('f' if hv('front') else '') + ('b' if hv('back') else '')]
+        if var[0] == 'l': var = ['lr']
         if not all(os.path.exists(f'{W}/raw_{v}_s{s}.obj') for v in var for s in seeds) or a.force:
-            subs = [('D = "E:/gen3d/mv"', f'D = "{c.inbox}"'), ('for s in (0, 1):', f'for s in ({seed_t},):')]
-            if a.lowvram:   # same offload chain as 2.1 (untested: no 2mv inbox run yet); num_chunks 20000 -> 8000
+            subs = [('D = "E:/gen3d/mv"', f'D = "{c.inbox}"'), ('for s in (0, 1):', f'for s in ({seed_t},):'),
+                    ('ims = {"left": L("side"), "right": L("side_mirror")} if v[0] == "a" else {"left": L("side_mirror"), "right": L("side")}',
+                     'ims = {k: L(n) for ch, k, n in (("l", "left", "side"), ("f", "front", "front"), ("b", "back", "back"), ("r", "right", "side_mirror")) if ch in v}; print("2mv views", v, list(ims), flush=True)'),
+                    ('    if "f" in v: ims["front"] = L("front")\n', '')]
+            if a.lowvram:   # same offload chain as 2.1 (verified horse: bit-identical raw mesh, 3.19 GiB peak); num_chunks 20000 -> 8000
                 old = "p = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained('tencent/Hunyuan3D-2mv', subfolder='hunyuan3d-dit-v2-mv', variant='fp16')\n"
                 subs += [(old, OFFLOAD_CHAIN.format(v='p', ctor="Hunyuan3DDiTFlowMatchingPipeline.from_pretrained('tencent/Hunyuan3D-2mv', subfolder='hunyuan3d-dit-v2-mv', variant='fp16', device='cpu')")),
                          ('num_chunks=20000', 'num_chunks=8000')]
@@ -153,7 +159,6 @@ def stage_generate(c):
             for s in seeds: cands.append(dict(name=f'mv{v}_s{s}', raw=f'{W}/raw_{v}_s{s}.obj', method=f'hunyuan2mv-{v}', seed=s))
     else:
         print('no side.png -> single-view path only')
-    if os.path.exists(f'{c.inbox}/back.png'): print('NOTE: back.png is masked but gen_mv.py has no back slot; unused by 2mv.')
     # clean8 + render sheets
     for k in cands:
         k['clean'] = f'{W}/cand/{k["name"]}.obj'; k['sheet'] = f'{W}/sheets/{k["name"]}.png'
@@ -161,6 +166,12 @@ def stage_generate(c):
         if not os.path.exists(k['clean']) or a.force:
             c.run(f'clean8_{k["name"]}', [VENV, f'{G}/clean8.py', k['raw'], k['clean']], cpu=True)
         c.run(f'render_{k["name"]}', [SYS_PY, f'{LAB}/render.py', k['clean'], k['sheet']], cwd=LAB)
+    # keep earlier candidates (other seeds/variants) whose clean mesh still exists, so a `--all --seeds 0` run
+    # does not drop e.g. h21_s1 that a picks.txt still refers to
+    cj = f'{W}/candidates.json'
+    if os.path.exists(cj) and not a.force:
+        have = {k['name'] for k in cands}
+        cands += [k for k in json.load(open(cj))['candidates'] if k['name'] not in have and 'error' not in k and os.path.exists(k.get('clean', ''))]
     contact_sheet(c, [k for k in cands if 'error' not in k])
     json.dump(dict(animal=c.an, views=[v for v in VIEWS if os.path.exists(f'{c.inbox}/{v}.png')],
                    contact_sheet=f'{W}/contact_sheet.png', candidates=cands, chosen=None), open(f'{W}/candidates.json', 'w'), indent=1)
@@ -213,39 +224,70 @@ def stage_finish(c, pick):
         else: print(f'WARNING: missing lp_{b}')
     if os.path.exists(f'{O}/lp_5000.obj'):
         c.run('wire', [SYS_PY, f'{LAB}/wire.py', f'{O}/lp_5000.obj', f'{O}/wire.png'], cwd=LAB)
-    # rig (quadrupeds only)
+    # rig: rig_robust.py = rig.py (untouched) + leak-proof voxel fill + foot-contact leg detection + body-plan gate
     rigged = False
-    if c.an in NO_RIG or c.a.no_rig:
-        print(f'rig skipped: {c.an} is not a quadruped (quadruped-only skeleton).')
+    for f in ('rigged.glb', 'rig_skip.json'):
+        if os.path.exists(f'{O}/{f}'): os.remove(f'{O}/{f}')
+    if c.a.no_rig:
+        print('rig skipped: --no-rig')
     elif os.path.exists(f'{O}/lp_5000.obj'):
         nm = f'inbox_{c.an}'
-        # always rigrun.py's leak-proof voxel fill around rig.voxelize (rig.py itself untouched)
-        rc = c.templated('rig', f'{LV}/rigrun.py',
-                         [("a, src, here = sys.argv[1:4]; rig.SRC = src; rig.HERE = here; rig.main(a)",
-                           f"a = sys.argv[1]; rig.SRC = '{W}/lp/quadriflow/%s_5000.obj'; rig.HERE = '{G}/rig'; rig.main(a)")],
-                         VENV, [nm], cwd=f'{G}/rig', check=False)
-        if rc == 0:
+        rc = c.run('rig', [VENV, f'{G}/rig/rig_robust.py', nm, f'{W}/lp/quadriflow/%s_5000.obj', f'{G}/rig'], cwd=f'{G}/rig', check=False, cpu=True)
+        if rc == RIG_EXIT_SKIP:
+            shutil.copy(f'{G}/rig/out/{nm}_rigskip.json', f'{O}/rig_skip.json')
+            print(f'rig skipped: not a quadruped stance -> {O}/rig_skip.json (rig.py skeleton is quadruped-only)')
+        elif rc == 0:
             rc = c.run('rig_export', [NODE, f'{G}/rig/export_glb.js', f'{G}/rig/out/{nm}_build.json', f'{O}/rigged.glb'], cwd=f'{G}/rig', check=False, cpu=True)
             rigged = rc == 0
-        if not rigged: print('WARNING: rig failed (see logs/rig.log, logs/rig_export.log)')
+        if not rigged and rc != RIG_EXIT_SKIP: print('WARNING: rig failed (see logs/rig.log, logs/rig_export.log)')
     prev = f'{td}/{c.an}/preview.png'
     if os.path.exists(prev): shutil.copy(prev, f'{O}/textured_preview.png')
     files = sorted(os.listdir(O))
     json.dump(dict(animal=c.an, chosen=pick, files=files, timings=c.timings), open(f'{O}/manifest.json', 'w'), indent=1)
     print('peaks:', {k: v for k, v in c.timings.items() if k.startswith('peak_')})
-    print(f'[{ts()}] DONE assets in {O}: {files}')
+    print(f'[{ts()}] assets in {O}: {files}')
+    rc = c.run('validate', [SYS_PY, f'{G}/validate.py', O] + (['--no-rig'] if c.a.no_rig else []), check=False)
+    print(open(f'{c.logs}/validate.log', encoding='utf-8').read().strip())
+    if rc: sys.exit(f'VALIDATION FAILED for {c.an}: see {O}/report.json')
+    print(f'[{ts()}] DONE {c.an}')
+
+
+def batch(a):
+    """--all / --pick-file: run each animal in its own subprocess (one failure does not stop the rest)."""
+    if a.pick_file:
+        jobs = []
+        for ln in open(a.pick_file, encoding='utf-8'):
+            ln = ln.split('#')[0].split()
+            if ln: jobs.append((ln[0], ['--pick', ln[1]]))
+    else:
+        jobs = [(d, []) for d in sorted(os.listdir(f'{G}/inbox')) if os.path.isfile(f'{G}/inbox/{d}/hero.png')]
+    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else [])
+    res = {}
+    for an, extra in jobs:
+        print(f'\n[{ts()}] ===== {an} {" ".join(extra)}', flush=True); t = time.time()
+        rc = subprocess.run([sys.executable, os.path.abspath(__file__), an] + extra + flags).returncode
+        res[an] = dict(rc=rc, s=round(time.time() - t))
+    print(f'\n[{ts()}] batch summary:')
+    for k, v in res.items(): print(f'  {k:12s} rc {v["rc"]}  {v["s"]}s')
+    json.dump(res, open(f'{G}/inbox/batch_{"pick" if a.pick_file else "all"}.json', 'w'), indent=1)
+    sys.exit(1 if any(v['rc'] for v in res.values()) else 0)
 
 
 def main():
     if len(sys.argv) > 2 and sys.argv[1] == '--_mask': return mask_views(sys.argv[2])
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('animal'); ap.add_argument('--seeds', default='0,1')
+    ap.add_argument('animal', nargs='?'); ap.add_argument('--seeds', default='0,1')
+    ap.add_argument('--all', action='store_true', help='phase 1 for every inbox/<animal>/ with a hero.png')
+    ap.add_argument('--pick-file', help='phase 2 batch: text file, one "<animal> <candidate>" per line (# comments)')
     ap.add_argument('--lowvram', action='store_true', help='8 GB-class settings: offloaded shape, 6-view low-mem paint, CPU-only mask/clean/quadriflow/rig')
     ap.add_argument('--vram-cap', type=float, default=0, help='GiB; torch per-process memory cap in every GPU stage (verify --lowvram on a big card)')
     ap.add_argument('--pick', help='candidate name from candidates.json: texture + lowpoly + rig + assets')
     ap.add_argument('--force', action='store_true', help='regenerate even if outputs exist')
     ap.add_argument('--no-rig', action='store_true')
-    a = ap.parse_args(); c = Ctx(a)
+    a = ap.parse_args()
+    if a.all or a.pick_file: return batch(a)
+    if not a.animal: ap.error('animal required (or --all / --pick-file)')
+    c = Ctx(a)
     if not os.path.exists(f'{c.inbox}/hero.png'): sys.exit(f'missing {c.inbox}/hero.png')
     if not os.path.exists(f'{c.work}/candidates.json') or a.force or not a.pick: stage_generate(c)
     if a.pick: stage_finish(c, a.pick)
