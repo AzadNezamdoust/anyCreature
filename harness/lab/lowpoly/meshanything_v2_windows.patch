@@ -1,0 +1,114 @@
+﻿diff --git a/MeshAnything/models/meshanything_v2.py b/MeshAnything/models/meshanything_v2.py
+index 2713d12..0f3da2c 100644
+--- a/MeshAnything/models/meshanything_v2.py
++++ b/MeshAnything/models/meshanything_v2.py
+@@ -1,4 +1,4 @@
+-import torch
++﻿import torch
+ from torch import nn
+ from transformers import AutoModelForCausalLM
+ from MeshAnything.miche.encode import load_model
+@@ -29,7 +29,7 @@ class MeshAnythingV2(nn.Module, PyTorchModelHubMixin,
+             n_positions=self.max_length,
+             max_position_embeddings=self.max_length,
+             vocab_size=self.n_discrete_size + 4,
+-            _attn_implementation="flash_attention_2"
++            _attn_implementation="eager"
+         )
+ 
+         self.bos_token_id = 0
+@@ -39,7 +39,7 @@ class MeshAnythingV2(nn.Module, PyTorchModelHubMixin,
+         self.config.bos_token_id = self.bos_token_id
+         self.config.eos_token_id = self.eos_token_id
+         self.config.pad_token_id = self.pad_token_id
+-        self.config._attn_implementation="flash_attention_2"
++        self.config._attn_implementation="eager"
+         self.config.n_discrete_size = self.n_discrete_size
+         self.config.face_per_token = self.face_per_token
+         self.config.cond_length = self.cond_length
+@@ -47,9 +47,9 @@ class MeshAnythingV2(nn.Module, PyTorchModelHubMixin,
+         if self.config.word_embed_proj_dim != self.config.hidden_size:
+             self.config.word_embed_proj_dim = self.config.hidden_size
+         self.transformer = AutoModelForCausalLM.from_config(
+-            config=self.config, use_flash_attention_2 = True
++            config=self.config, 
+         )
+-        self.transformer.to_bettertransformer()
++        pass  # lowpoly lab: optimum/BetterTransformer dropped
+ 
+         self.cond_head_proj = nn.Linear(self.cond_dim, self.config.word_embed_proj_dim)
+         self.cond_proj = nn.Linear(self.cond_dim * 2, self.config.word_embed_proj_dim)
+diff --git a/MeshAnything/models/shape_opt.py b/MeshAnything/models/shape_opt.py
+index 5dbbcba..8fb9f0a 100644
+--- a/MeshAnything/models/shape_opt.py
++++ b/MeshAnything/models/shape_opt.py
+@@ -317,7 +317,12 @@ class ShapeOPTDecoder(OPTDecoder):
+                 else attention_mask
+             )
+         else:
+-            raise ValueError("Only flash_attention_2 is supported in MeshAnything")
++            # lowpoly lab: eager/sdpa path (no flash-attn wheel on Windows)
++            from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
++            if attention_mask is None:
++                attention_mask = torch.ones(batch_size, mask_seq_length, device=inputs_embeds.device)
++            causal_attention_mask = _prepare_4d_causal_attention_mask(
++                attention_mask, (batch_size, seq_length), inputs_embeds, past_key_values_length)
+ 
+         pos_embeds = self.embed_positions(attention_mask, past_key_values_length)
+ 
+diff --git a/main.py b/main.py
+index 46db392..fbe803d 100644
+--- a/main.py
++++ b/main.py
+@@ -1,4 +1,4 @@
+-import os, argparse
++﻿import os, argparse
+ import torch
+ import time
+ import trimesh
+@@ -9,7 +9,10 @@ from accelerate.utils import set_seed
+ from accelerate.utils import DistributedDataParallelKwargs
+ from safetensors.torch import load_model
+ 
+-from mesh_to_pc import process_mesh_to_pc
++if True:
++    from mesh_to_pc import process_mesh_to_pc
++if False:
++    process_mesh_to_pc = None
+ from huggingface_hub import hf_hub_download
+ from MeshAnything.models.meshanything_v2 import MeshAnythingV2
+ 
+@@ -25,7 +28,7 @@ class Dataset:
+                 assert cur_data.shape[0] >= 8192, "input pc_normal should have at least 4096 points"
+                 idx = np.random.choice(cur_data.shape[0], 8192, replace=False)
+                 cur_data = cur_data[idx]
+-                self.data.append({'pc_normal': cur_data, 'uid': input_path.split('/')[-1].split('.')[0]})
++                self.data.append({'pc_normal': cur_data, 'uid': os.path.splitext(os.path.basename(input_path))[0]})
+ 
+         elif input_type == 'mesh':
+             mesh_list = []
+@@ -37,7 +40,7 @@ class Dataset:
+                 print("First Marching Cubes and then sample point cloud, need several minutes...")
+             pc_list, _ = process_mesh_to_pc(mesh_list, marching_cubes=mc, mc_level=mc_level)
+             for input_path, cur_data in zip(input_list, pc_list):
+-                self.data.append({'pc_normal': cur_data, 'uid': input_path.split('/')[-1].split('.')[0]})
++                self.data.append({'pc_normal': cur_data, 'uid': os.path.splitext(os.path.basename(input_path))[0]})
+         print(f"dataset total data samples: {len(self.data)}")
+ 
+     def __len__(self):
+@@ -92,7 +95,7 @@ if __name__ == "__main__":
+     os.makedirs(checkpoint_dir, exist_ok=True)
+     kwargs = DistributedDataParallelKwargs(find_unused_parameters=True)
+     accelerator = Accelerator(
+-        mixed_precision="fp16",
++        mixed_precision="bf16",  # lowpoly lab: fp16 + eager attention overflows
+         project_dir=checkpoint_dir,
+         kwargs_handlers=[kwargs]
+     )
+@@ -159,4 +162,4 @@ if __name__ == "__main__":
+                 scene_mesh.export(save_path)
+                 print(f"{save_path} Over!!")
+     end_time = time.time()
+-    print(f"Total time: {end_time - begin_time}")
+\ No newline at end of file
++    print(f"Total time: {end_time - begin_time}")

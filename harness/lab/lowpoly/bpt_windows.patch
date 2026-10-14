@@ -1,0 +1,37 @@
+﻿diff --git a/utils.py b/utils.py
+index 72ca249..cb8d90f 100644
+--- a/utils.py
++++ b/utils.py
+@@ -1,4 +1,4 @@
+-import trimesh
++﻿import trimesh
+ import numpy as np
+ from x_transformers.autoregressive_wrapper import top_p, top_k
+ 
+@@ -18,7 +18,7 @@ class Dataset:
+                 assert cur_data.shape[0] >= 4096, "input pc_normal should have at least 4096 points"
+                 idx = np.random.choice(cur_data.shape[0], 4096, replace=False)
+                 cur_data = cur_data[idx]
+-                self.data.append({'pc_normal': cur_data, 'uid': input_path.split('/')[-1].split('.')[0]})
++                self.data.append({'pc_normal': cur_data, 'uid': __import__('os').path.splitext(__import__('os').path.basename(input_path))[0]})
+ 
+         elif input_type == 'mesh':
+             mesh_list, pc_list = [], []
+@@ -30,7 +30,7 @@ class Dataset:
+                 pc_list.append(sample_pc(cur_data, pc_num=4096, with_normal=True))
+ 
+             for input_path, cur_data in zip(input_list, pc_list):
+-                self.data.append({'pc_normal': cur_data, 'uid': input_path.split('/')[-1].split('.')[0]})
++                self.data.append({'pc_normal': cur_data, 'uid': __import__('os').path.splitext(__import__('os').path.basename(input_path))[0]})
+                 
+         print(f"dataset total data samples: {len(self.data)}")
+ 
+@@ -68,7 +68,7 @@ def apply_normalize(mesh):
+ 
+ def sample_pc(mesh_path, pc_num, with_normal=False):
+ 
+-    mesh = trimesh.load(mesh_path, force='mesh', process=False)
++    mesh = mesh_path if isinstance(mesh_path, trimesh.Trimesh) else trimesh.load(mesh_path, force='mesh', process=False)  # lowpoly lab: newer trimesh
+     mesh = apply_normalize(mesh)
+     
+     if not with_normal:
