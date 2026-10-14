@@ -188,3 +188,12 @@ colour, fixed by fallback; 768 views blurrier). Texture plateau ~5/10:
 limited by reference quality (cartoon/dark refs) and the Lanczos stand-in
 for RealESRGAN. Next levers need user decisions: RealESRGAN weights source,
 triton-windows + DINOv3 licence for TRELLIS.2.
+
+## Round 13 — real RealESRGAN x4plus super-resolution (official weights)
+
+r13 vs r12 with head close-ups: O 3.8 / 3.8, F 5.3 / 5.3. Both judges saw
+each pair as near-identical and scored them the same. Sharper fur/feather
+pixels are not what limits the score; close-ups exposed baked lighting,
+smeared texture and broken head geometry (giraffe, crocodile). Texture-side
+tweaks are exhausted; quality is bounded by the reference image and the
+generated geometry.
