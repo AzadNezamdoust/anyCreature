@@ -239,3 +239,12 @@ not mesh repair.
   rigged GLB. Tested end-to-end on wolf (~23 min on shared GPU).
 - harness/lab/PROMPTS_reference_images.md: per-animal prompts for hero +
   consistent side/front/back views.
+
+## 8 GB VRAM study (emulated cap 7.5 GiB per process)
+
+Whole workflow fits: T2I 4.0 GiB (CPU offload + VAE tiling, identical image),
+Hunyuan3D-2.1 shape 6.5 GiB (manual accelerate offload chain; bit-identical
+mesh), Paint 2.1 6.5/7.3 GiB at 6 views (9 views OOM; slight quality cost),
+mask/clean/QuadriFlow/rig CPU-only. Wolf end-to-end ~5 min. Texture headroom
+~0.2 GiB reserved: confirm on a real 8 GB card. GTX-1050-class (2-4 GB)
+cannot run it (shape weights alone 5.7 GiB). Details: harness/lab/lowvram/REPORT.md.
