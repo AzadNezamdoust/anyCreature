@@ -197,3 +197,28 @@ pixels are not what limits the score; close-ups exposed baked lighting,
 smeared texture and broken head geometry (giraffe, crocodile). Texture-side
 tweaks are exhausted; quality is bounded by the reference image and the
 generated geometry.
+
+## Round 14 — TRELLIS v1 (microsoft/TRELLIS-image-large, MIT) vs Hunyuan3D-2.1, same refs, untextured
+
+| | quality O / F |
+|---|---|
+| Hunyuan3D-2.1 (critic-picked r9) | 6.0 / 5.6 |
+| TRELLIS v1 | 5.2 / 5.6 |
+
+Tie-ish; Hunyuan slightly ahead per Opus. TRELLIS v1 runs nvcc-free on
+Blackwell (spconv-cu126 wheel, xformers->SDPA shim), ~10-11 GB, 10-40 s.
+TRELLIS.2 needs DINOv3 (gated) — blocked without the user's HF login.
+
+## Overall (14 rounds, ~400 models)
+
+| family | best judged quality (O / F) |
+|---|---|
+| LLM writes geometry from memory (SDF, Fourier, mesh text, primitives, engine spec, anatomy kit) | ~4.5-5.9 |
+| LLM directs open image->3D (Hunyuan3D-2.0/2.1, TRELLIS v1) | ~5.6-6.8 |
+| + PBR texture (Hunyuan Paint 2.1, de-light, RealESRGAN) | ~5.0-5.6 as full asset |
+| low-poly quad retopo (QuadriFlow best) | 5.1 / 5.8 |
+
+No configuration reached AAA (~9-10). Ceiling is set by the open
+generators and the single reference image; remaining gaps: thin parts,
+baked lighting, generic soft forms, open-source quad-native generators
+unavailable.
