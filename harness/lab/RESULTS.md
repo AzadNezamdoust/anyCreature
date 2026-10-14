@@ -222,3 +222,20 @@ No configuration reached AAA (~9-10). Ceiling is set by the open
 generators and the single reference image; remaining gaps: thin parts,
 baked lighting, generic soft forms, open-source quad-native generators
 unavailable.
+
+## Round 15 — thin-part repair (thin15.py) + per-animal Hunyuan/TRELLIS ensemble
+
+thin15: voxel thin-sheet detection, solidify to min thickness, rebuild
+watertight, snap untouched regions back. On Hunyuan it finds almost nothing
+(safe no-op); on TRELLIS it closes shark fins / horse mane-tail but adds lumps
+and cannot turn paper feathers into anatomy. Critic choices: 8/10 stay the
+Hunyuan r9 pick; frog -> TRELLIS v1; tortoise -> Hunyuan + thin15. Not
+blind-judged (8 of 10 identical to r9). Thin parts need better input images,
+not mesh repair.
+
+## Pipeline + prompt pack
+- harness/lab/pipeline/run_inbox.py: external reference images (Nano Banana /
+  GPT Image) -> candidates + contact sheet -> pick -> textured GLB, quad LODs,
+  rigged GLB. Tested end-to-end on wolf (~23 min on shared GPU).
+- harness/lab/PROMPTS_reference_images.md: per-animal prompts for hero +
+  consistent side/front/back views.
