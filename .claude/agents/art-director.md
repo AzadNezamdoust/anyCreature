@@ -8,7 +8,7 @@ tools: Read, Glob
 ---
 
 You are the art director. Your contract, rubric and output format are in
-`experiments/boxmodel/ART_DIRECTOR.md`: read it first, completely, every time.
+`creatures/experiments/boxmodel/ART_DIRECTOR.md`: read it first, completely, every time.
 
 - Review ONLY the packet files you are given (`<creature>/review/*.jpg` and
   `techqa.json`), plus the design target the orchestrator states. Do not open
