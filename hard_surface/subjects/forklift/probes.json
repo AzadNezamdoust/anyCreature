@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 705, "from": 60, "to": 960, "what": "front hub row: fork, carriage, front tyre, body, counterweight edges" },
+  { "id": "P2", "view": "side", "axis": "row", "index": 742, "from": 60, "to": 960, "what": "rear hub row: fork, carriage, front tyre, body, rear tyre, counterweight back" },
+  { "id": "P3", "view": "side", "axis": "col", "index": 464, "from": 140, "to": 820, "what": "front wheel centre column: body top, tyre top, hub, tyre bottom" },
+  { "id": "P4", "view": "side", "axis": "col", "index": 818, "from": 140, "to": 820, "what": "rear wheel centre column: counterweight top, tyre, hub, tyre bottom" },
+  { "id": "P5", "view": "side", "axis": "row", "index": 335, "from": 300, "to": 800, "what": "guard roof bar row: mast rail, roof front and rear ends" },
+  { "id": "P6", "view": "side", "axis": "col", "index": 390, "from": 140, "to": 820, "what": "mast column: rail top, carriage, fork blade, ground" },
+  { "id": "P7", "view": "front", "axis": "row", "index": 700, "from": 300, "to": 720, "what": "front tyre row: tyre outer edges, carriage / fork shanks" },
+  { "id": "P8", "view": "front", "axis": "col", "index": 512, "from": 200, "to": 820, "what": "centre column: mast top bar, mid bar, roof bar, steering wheel, body, carriage bars" },
+  { "id": "P9", "view": "rear", "axis": "row", "index": 700, "from": 300, "to": 720, "what": "tyre row: tyre outer edges, counterweight flanks" },
+  { "id": "P10", "view": "rear", "axis": "col", "index": 512, "from": 200, "to": 820, "what": "centre column: mast top bar, roof bar, seat / wheel top, counterweight top and bottom" },
+  { "id": "P11", "view": "top", "axis": "row", "index": 440, "from": 60, "to": 960, "what": "far fork row: fork tip, mast section, front tyre, body front, counterweight back" },
+  { "id": "P12", "view": "top", "axis": "col", "index": 460, "from": 320, "to": 700, "what": "front tyre column: tyre outer faces, body width" },
+  { "id": "P13", "view": "top", "axis": "col", "index": 820, "from": 320, "to": 700, "what": "rear tyre column: rear tyre outer faces, counterweight width" },
+  { "id": "P14", "view": "concept", "axis": "col", "index": 575, "from": 380, "to": 830, "what": "near front wheel column: body underside, tyre top, hub, tyre bottom" },
+  { "id": "P15", "view": "concept", "axis": "row", "index": 190, "from": 300, "to": 800, "what": "mast top / roof row: far and near rail tops, roof far edge, beacon" }
+]

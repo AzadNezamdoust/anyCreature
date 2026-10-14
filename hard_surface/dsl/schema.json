@@ -1,0 +1,489 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://checkout.local/llmmodeling/dsl/pg-1.schema.json",
+  "title": "pg/1 attachment program (M6)",
+  "description": "Hand-written companion to src/validate/v0.js. v0.js is the executable authority \u2014 this file documents the same shape for tooling and for the in-context DSL doc. Rules v0.js enforces that JSON Schema cannot express: attach.to must name an EARLIER part; every part.zone must be a key of palette; a part has exactly one of attach or ground:true; facade.on must name a declared part; a composite whose library derives its dims must be authored with those dims; attach.to may also name a composite id (its root sub-part) or \"<composite>.<sub>\".",
+  "type": "object",
+  "required": [
+    "schema",
+    "subject",
+    "seed",
+    "palette",
+    "parts"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "pg/1"
+    },
+    "subject": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seed": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "class": {
+      "type": "string",
+      "enum": [
+        "building",
+        "prop",
+        "vehicle",
+        "robot",
+        "furniture"
+      ]
+    },
+    "note": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "object",
+      "description": "The real-world anchor the whole spec is scaled against.",
+      "required": [
+        "part",
+        "m"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "part": {
+          "type": "string"
+        },
+        "m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "palette": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^#[0-9a-fA-F]{6}$"
+      }
+    },
+    "parts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/part"
+      }
+    },
+    "facades": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/facade"
+      }
+    }
+  },
+  "definitions": {
+    "axis": {
+      "type": "string",
+      "enum": [
+        "+X",
+        "-X",
+        "+Y",
+        "-Y",
+        "+Z",
+        "-Z"
+      ]
+    },
+    "part": {
+      "type": "object",
+      "required": [
+        "id",
+        "prim",
+        "dims",
+        "zone"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "prim": {
+          "type": "string",
+          "description": "A prim (genus in PRIM_GENUS: ring is 1, everything else 0) or a composite from src/parts/lib/.",
+          "enum": [
+            "box",
+            "bevelBox",
+            "plate",
+            "prism",
+            "wedge",
+            "tube",
+            "ring",
+            "stepStack",
+            "railing",
+            "railing_open",
+            "stairFlight",
+            "landing",
+            "pipe",
+            "vent",
+            "awning",
+            "trashcan",
+            "crate",
+            "acUnit",
+            "wheel"
+          ]
+        },
+        "dims": {
+          "type": "array",
+          "description": "[w, h, d] in metres. Local AABB is [-w/2,w/2] x [0,h] x [-d/2,d/2].",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "zone": {
+          "type": "string",
+          "description": "A key of palette."
+        },
+        "role": {
+          "type": "string",
+          "description": "Advisory, and keys the V7 scale table."
+        },
+        "ground": {
+          "const": true,
+          "description": "Present only on rooted parts, which carry no attach."
+        },
+        "bevel": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Optional chamfer, metres. bevelBox and plate only."
+        },
+        "attach": {
+          "$ref": "#/definitions/attach"
+        },
+        "repeat": {
+          "$ref": "#/definitions/repeat"
+        },
+        "mirror": {
+          "type": "boolean",
+          "description": "Duplicate at u -> 1-u on the same parent face."
+        },
+        "sides": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 64,
+          "description": "prism / tube / ring only: facet count."
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 40,
+          "description": "stepStack only: number of treads."
+        },
+        "wall": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "ring only: wall thickness in metres."
+        },
+        "axis": {
+          "type": "string",
+          "enum": [
+            "x",
+            "y"
+          ],
+          "default": "y",
+          "description": "ring only: which axis the bore runs along. \"x\" is the side-mounted wheel."
+        },
+        "params": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Composite prims only: overrides for that composite's declared params."
+        },
+        "zones": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Composite prims only: maps the composite's own zone keys to palette zones."
+        }
+      }
+    },
+    "attach": {
+      "type": "object",
+      "required": [
+        "to",
+        "face",
+        "contact"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "to": {
+          "type": "string",
+          "description": "id of an EARLIER part."
+        },
+        "face": {
+          "$ref": "#/definitions/axis"
+        },
+        "uv": {
+          "type": "array",
+          "description": "Point on the parent face, 0..1 along its u and v tangents. Default [0.5,0.5].",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "contact": {
+          "type": "string",
+          "description": "hangs-below is only legal on face \"-Y\" (v0.js enforces it); embedded places the child's CENTRE on the parent point.",
+          "enum": [
+            "flush",
+            "rests-on-top",
+            "socket",
+            "hangs-below",
+            "embedded"
+          ]
+        },
+        "embed": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Intended penetration in metres. Default 0, or 0.05 for socket."
+        },
+        "align": {
+          "type": "string",
+          "enum": [
+            "bottom",
+            "center",
+            "top"
+          ],
+          "default": "center"
+        },
+        "alignU": {
+          "type": "string",
+          "description": "align's twin on the face's u tangent: which child extreme lands on the parent point. \"center\" reproduces the pre-M6 algebra.",
+          "enum": [
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "center"
+        },
+        "instance": {
+          "description": "Which instances of a repeated/mirrored parent this child rides. Default (absent, or \"all\"): every one of them. 0: the anchor instance only.",
+          "enum": [
+            "all",
+            0
+          ]
+        },
+        "rot": {
+          "type": "number",
+          "description": "Degrees about the attach normal. The only rotation in v0 (08:A7)."
+        }
+      }
+    },
+    "repeat": {
+      "type": "object",
+      "required": [
+        "axis",
+        "count",
+        "pitch"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "axis": {
+          "$ref": "#/definitions/axis",
+          "description": "PARENT-local. The compiler writes the resolved world direction into solved.json."
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Total instances, including the original."
+        },
+        "pitch": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Metre spacing between instances."
+        }
+      }
+    },
+    "ruleEntry": {
+      "type": "array",
+      "description": "[name, size] | [name, size, \"*N\"] | [name, \"~\"]. Sizes are metres along the split axis; \"~\" fills what is left, shared equally between all \"~\" entries.",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "oneOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "const": "~"
+            }
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\*\\d+$"
+        }
+      ]
+    },
+    "split": {
+      "type": "object",
+      "required": [
+        "axis",
+        "rule"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "axis": {
+          "type": "string",
+          "enum": [
+            "X",
+            "Y"
+          ],
+          "description": "Y divides the face up its height, X across its width."
+        },
+        "rule": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/ruleEntry"
+          }
+        }
+      }
+    },
+    "element": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dims": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "description": "[width, height] on the face, in metres."
+        },
+        "inset": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Socket depth into the wall. Keep >= 0.04 so the part clears the style floor."
+        },
+        "zone": {
+          "type": "string"
+        },
+        "sill": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Sill overhang in metres; omit for no sill."
+        },
+        "sillZone": {
+          "type": "string"
+        },
+        "lintel": {
+          "type": "string",
+          "enum": [
+            "flat",
+            "arch"
+          ]
+        },
+        "lintelZone": {
+          "type": "string"
+        },
+        "awning": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "description": "storefront only: [w, h, d] of the awning wedge."
+        },
+        "awningZone": {
+          "type": "string"
+        },
+        "h": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "band only: band height, default the whole cell."
+        },
+        "depth": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "band only: how far it stands off the wall."
+        },
+        "role": {
+          "type": "string"
+        }
+      }
+    },
+    "facade": {
+      "type": "object",
+      "required": [
+        "id",
+        "on",
+        "face",
+        "split"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "on": {
+          "type": "string",
+          "description": "id of the part this facade is a face of."
+        },
+        "face": {
+          "$ref": "#/definitions/axis"
+        },
+        "occlude": {
+          "type": "boolean",
+          "default": true,
+          "description": "Blank any tile a solved part already stands proud of (08:G6)."
+        },
+        "zone": {
+          "type": "string",
+          "description": "Default zone for derived elements."
+        },
+        "trimZone": {
+          "type": "string",
+          "description": "Default zone for sills, lintels and bands."
+        },
+        "split": {
+          "$ref": "#/definitions/split"
+        },
+        "tile": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/split"
+          },
+          "description": "Keyed by band name: how each band of that name divides the other way."
+        },
+        "elements": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/definitions/element"
+            }
+          },
+          "description": "Keyed by cell name, then by element name (window, door, storefront, sill, lintel, band)."
+        }
+      }
+    }
+  }
+}

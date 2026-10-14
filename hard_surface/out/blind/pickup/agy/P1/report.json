@@ -1,0 +1,724 @@
+{
+  "pass": true,
+  "violations": [],
+  "advisories": [
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "bumper.rear.top UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"bumper.rear.top\" carries no measurement — the rear bumper's +X face is not on the flank plane (its front edge sits left of the flank rear corner): its inset and its z cannot be separated in one still, so its height above the ground is not rectifiable. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "chassis.clearance UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"chassis.clearance\" carries no measurement — the chassis underside is hidden under the body and bumpers at this elevation; VEH_GROUND still enforces limits.v7.ground_clearance. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "window.front.top UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"window.front.top\" carries no measurement — the windshield rakes back: its upper edge's height and its z cannot be separated in one still (no measured key fixes the roof's front edge), so only the lower edge and the width are measured. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    }
+  ],
+  "text": "PASS: V0-V7 + V10 clean.",
+  "measurements": {
+    "parts": 32,
+    "tris": 2360,
+    "triBudget": 4000,
+    "materials": 1,
+    "bounds": {
+      "w": 2.66976,
+      "h": 2.6208,
+      "d": 4.92,
+      "minY": 0,
+      "centre": [
+        0,
+        1.3104,
+        0
+      ],
+      "min": [
+        -1.33488,
+        0,
+        -2.46
+      ],
+      "max": [
+        1.33488,
+        2.6208,
+        2.46
+      ]
+    },
+    "minFeature": 0.04,
+    "eps": 0.01,
+    "census": "applied",
+    "layout": "applied",
+    "booleanPairs": 41,
+    "distancePairs": 0,
+    "inferredPairs": 41,
+    "perPart": [
+      {
+        "id": "chassis",
+        "role": "chassis",
+        "zone": "tyre",
+        "tris": 12,
+        "volume": 3.968863,
+        "aabb": {
+          "min": [
+            -0.6897999999999999,
+            0.3,
+            -2.4
+          ],
+          "max": [
+            0.6897999999999999,
+            0.9644544000000002,
+            1.9296000000000002
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "wheel_fl",
+        "role": "wheel",
+        "zone": "tyre",
+        "tris": 192,
+        "volume": 0.1712,
+        "aabb": {
+          "min": [
+            0.6888000029802321,
+            2.574920665576741e-9,
+            0.9792000025749206
+          ],
+          "max": [
+            0.9887999999999999,
+            0.9503999974250794,
+            1.9295999974250793
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "tread_fl",
+        "role": "tyre",
+        "zone": "tread",
+        "tris": 192,
+        "volume": 0.039988,
+        "aabb": {
+          "min": [
+            0.6888000029802321,
+            2.574920665576741e-9,
+            0.9792000025749206
+          ],
+          "max": [
+            0.929799999642372,
+            0.9503999974250794,
+            1.9295999974250793
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "hub_fl",
+        "role": "hub",
+        "zone": "hub",
+        "tris": 96,
+        "volume": 0.016176,
+        "aabb": {
+          "min": [
+            0.9877999976158143,
+            0.18057599921226503,
+            1.159775999212265
+          ],
+          "max": [
+            1.0478,
+            0.769824000787735,
+            1.749024000787735
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "wheel_fr",
+        "role": "wheel",
+        "zone": "tyre",
+        "tris": 192,
+        "volume": 0.1712,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            2.574920665576741e-9,
+            0.9792000025749206
+          ],
+          "max": [
+            -0.6888000029802321,
+            0.9503999974250794,
+            1.9295999974250793
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "tread_fr",
+        "role": "tyre",
+        "zone": "tread",
+        "tris": 192,
+        "volume": 0.039988,
+        "aabb": {
+          "min": [
+            -0.929799999642372,
+            2.574920665576741e-9,
+            0.9792000025749206
+          ],
+          "max": [
+            -0.6888000029802321,
+            0.9503999974250794,
+            1.9295999974250793
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "hub_fr",
+        "role": "hub",
+        "zone": "hub",
+        "tris": 96,
+        "volume": 0.016176,
+        "aabb": {
+          "min": [
+            -1.0478,
+            0.18057599921226503,
+            1.159775999212265
+          ],
+          "max": [
+            -0.9877999976158143,
+            0.769824000787735,
+            1.749024000787735
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "wheel_rl",
+        "role": "wheel",
+        "zone": "tyre",
+        "tris": 192,
+        "volume": 0.1712,
+        "aabb": {
+          "min": [
+            0.6888000029802321,
+            2.574920665576741e-9,
+            -2.011199997425079
+          ],
+          "max": [
+            0.9887999999999999,
+            0.9503999974250794,
+            -1.0608000025749202
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "tread_rl",
+        "role": "tyre",
+        "zone": "tread",
+        "tris": 192,
+        "volume": 0.039988,
+        "aabb": {
+          "min": [
+            0.6888000029802321,
+            2.574920665576741e-9,
+            -2.011199997425079
+          ],
+          "max": [
+            0.929799999642372,
+            0.9503999974250794,
+            -1.0608000025749202
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "hub_rl",
+        "role": "hub",
+        "zone": "hub",
+        "tris": 96,
+        "volume": 0.016176,
+        "aabb": {
+          "min": [
+            0.9877999976158143,
+            0.18057599921226503,
+            -1.8306240007877346
+          ],
+          "max": [
+            1.0478,
+            0.769824000787735,
+            -1.2413759992122646
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "wheel_rr",
+        "role": "wheel",
+        "zone": "tyre",
+        "tris": 192,
+        "volume": 0.1712,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            2.574920665576741e-9,
+            -2.011199997425079
+          ],
+          "max": [
+            -0.6888000029802321,
+            0.9503999974250794,
+            -1.0608000025749202
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "tread_rr",
+        "role": "tyre",
+        "zone": "tread",
+        "tris": 192,
+        "volume": 0.039988,
+        "aabb": {
+          "min": [
+            -0.929799999642372,
+            2.574920665576741e-9,
+            -2.011199997425079
+          ],
+          "max": [
+            -0.6888000029802321,
+            0.9503999974250794,
+            -1.0608000025749202
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "hub_rr",
+        "role": "hub",
+        "zone": "hub",
+        "tris": 96,
+        "volume": 0.016176,
+        "aabb": {
+          "min": [
+            -1.0478,
+            0.18057599921226503,
+            -1.8306240007877346
+          ],
+          "max": [
+            -0.9877999976158143,
+            0.769824000787735,
+            -1.2413759992122646
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "windshield",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.053322,
+        "aabb": {
+          "min": [
+            -0.8563007999999999,
+            1.6589664,
+            0.8148999999999998
+          ],
+          "max": [
+            0.8563007999999999,
+            2.437344,
+            0.8548999999999999
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "window_side_l",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.02091,
+        "aabb": {
+          "min": [
+            0.9732999999999999,
+            1.7480736000000001,
+            -0.07679999999999998
+          ],
+          "max": [
+            1.0132999999999999,
+            2.437344,
+            0.6816
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "window_side_r",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.02091,
+        "aabb": {
+          "min": [
+            -1.0132999999999999,
+            1.7480736000000001,
+            -0.07679999999999998
+          ],
+          "max": [
+            -0.9732999999999999,
+            2.437344,
+            0.6816
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "cab",
+        "role": "cab",
+        "zone": "body",
+        "tris": 92,
+        "volume": 4.022513,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            0.9634544,
+            -0.4079999999999999
+          ],
+          "max": [
+            0.9887999999999999,
+            2.6208,
+            0.8303999999999998
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "hood",
+        "role": "hood",
+        "zone": "body",
+        "tris": 28,
+        "volume": 1.814296,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            0.9634544,
+            0.8293999999999997
+          ],
+          "max": [
+            0.9887999999999999,
+            1.5488928,
+            2.4
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "grille",
+        "role": "grille",
+        "zone": "grille",
+        "tris": 12,
+        "volume": 0.010706,
+        "aabb": {
+          "min": [
+            -0.44792639999999995,
+            1.1164608,
+            2.3844999999999996
+          ],
+          "max": [
+            0.44792639999999995,
+            1.415232,
+            2.4244999999999997
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "headlight_l",
+        "role": "headlight",
+        "zone": "headlight",
+        "tris": 64,
+        "volume": 0.002448,
+        "aabb": {
+          "min": [
+            0.6100895999317169,
+            1.124447999931717,
+            2.3994999999999997
+          ],
+          "max": [
+            0.892886400068283,
+            1.4072448000682831,
+            2.43949999910593
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "headlight_r",
+        "role": "headlight",
+        "zone": "headlight",
+        "tris": 64,
+        "volume": 0.002448,
+        "aabb": {
+          "min": [
+            -0.892886400068283,
+            1.124447999931717,
+            2.3994999999999997
+          ],
+          "max": [
+            -0.6100895999317169,
+            1.4072448000682831,
+            2.43949999910593
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "mirror_head_l",
+        "role": "mirror",
+        "zone": "mirror",
+        "tris": 12,
+        "volume": 0.003971,
+        "aabb": {
+          "min": [
+            1.0857024,
+            1.6039295999999998,
+            0.7359999999999998
+          ],
+          "max": [
+            1.3348799999999998,
+            2.0022911999999997,
+            0.7759999999999998
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "mirror_head_r",
+        "role": "mirror",
+        "zone": "mirror",
+        "tris": 12,
+        "volume": 0.003971,
+        "aabb": {
+          "min": [
+            -1.3348799999999998,
+            1.6039295999999998,
+            0.7359999999999998
+          ],
+          "max": [
+            -1.0857024,
+            2.0022911999999997,
+            0.7759999999999998
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "mirror_arm_l",
+        "role": "mirror",
+        "zone": "mirror",
+        "tris": 12,
+        "volume": 0.000157,
+        "aabb": {
+          "min": [
+            0.9882999999999998,
+            1.7831103999999998,
+            0.7359999999999998
+          ],
+          "max": [
+            1.0862024,
+            1.8231103999999998,
+            0.7759999999999998
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "mirror_arm_r",
+        "role": "mirror",
+        "zone": "mirror",
+        "tris": 12,
+        "volume": 0.000157,
+        "aabb": {
+          "min": [
+            -1.0862024,
+            1.7831103999999998,
+            0.7359999999999998
+          ],
+          "max": [
+            -0.9882999999999998,
+            1.8231103999999998,
+            0.7759999999999998
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bed_floor",
+        "role": "bed",
+        "zone": "bed",
+        "tris": 12,
+        "volume": 0.389249,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            0.9634544,
+            -2.4
+          ],
+          "max": [
+            0.9887999999999999,
+            1.0644544,
+            -0.45120000000000005
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bed_side_l",
+        "role": "bed_wall",
+        "zone": "body",
+        "tris": 12,
+        "volume": 0.085897,
+        "aabb": {
+          "min": [
+            0.9087999999999998,
+            1.0634544000000001,
+            -2.4
+          ],
+          "max": [
+            0.9887999999999998,
+            1.6144128,
+            -0.45120000000000005
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bed_side_r",
+        "role": "bed_wall",
+        "zone": "body",
+        "tris": 12,
+        "volume": 0.085897,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            1.0634544000000001,
+            -2.4
+          ],
+          "max": [
+            -0.9087999999999999,
+            1.6144128,
+            -0.45120000000000005
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bed_bulkhead",
+        "role": "bed_wall",
+        "zone": "bed",
+        "tris": 12,
+        "volume": 0.080202,
+        "aabb": {
+          "min": [
+            -0.9097999999999999,
+            1.0634544000000001,
+            -0.5312
+          ],
+          "max": [
+            0.9097999999999999,
+            1.6144128,
+            -0.45120000000000005
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "tailgate",
+        "role": "tailgate",
+        "zone": "body",
+        "tris": 12,
+        "volume": 0.080202,
+        "aabb": {
+          "min": [
+            -0.9097999999999999,
+            1.0634544000000001,
+            -2.4
+          ],
+          "max": [
+            0.9097999999999999,
+            1.6144128,
+            -2.32
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bumper_front",
+        "role": "bumper",
+        "zone": "bumper",
+        "tris": 12,
+        "volume": 0.031932,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            0.6997536,
+            2.399
+          ],
+          "max": [
+            0.9887999999999999,
+            0.9644544,
+            2.46
+          ]
+        },
+        "touches": []
+      },
+      {
+        "id": "bumper_rear",
+        "role": "bumper",
+        "zone": "bumper",
+        "tris": 12,
+        "volume": 0.048056,
+        "aabb": {
+          "min": [
+            -0.9887999999999999,
+            0.5660928000000001,
+            -2.46
+          ],
+          "max": [
+            0.9887999999999999,
+            0.9644544,
+            -2.399
+          ]
+        },
+        "touches": []
+      }
+    ]
+  },
+  "timings": {
+    "merge": 25,
+    "V1": 3,
+    "V5": 0,
+    "V2": 33,
+    "V3": 35,
+    "V6": 0,
+    "V4": 0,
+    "V7": 0,
+    "VEH_GROUND": 0,
+    "VEH_WHEELS": 0,
+    "VEH_MIRROR": 1,
+    "V12": 0,
+    "V12_LAYOUT": 3,
+    "V10": 2,
+    "total": 104
+  }
+}

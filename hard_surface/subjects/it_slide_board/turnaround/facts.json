@@ -1,0 +1,40 @@
+{
+  "subject": "it_slide_board",
+  "noun": "chunky slide board game prop",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_slide_board.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_slide_board.png = out/concept-items30/28_slide_board/v4b_hero_2.png; FPS refs/it_slide_board.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: short wide sand-grey board with upturned nose + tail, a charcoal nose bumper block, a sunk charcoal grip mat with exactly 6 wide ribs, exactly 2 arched foot straps with square buckles, a bumper strip along each rail, exactly 2 carry clips near the tail, 1 lamp on the left rail near the nose; the v3 thin ribbing / slot in the bumper are NOT drawn and dropped). FRAME as the v3 subject: front +z = the nose, rear -z = the tail with the two carry clips; left flank +x = the flank shown (lamp); y up with y = 0 = the belly under the middle of the board. Dims estimated on the hero; re-measured after install.",
+  "description": "A fictional slope slide board game prop for riding sand pours and rubble slopes, chunky low-poly, shown alone, lying level on the ground with the nose forward. One short wide sand-grey painted shell board with wide chamfered edges: a flat middle, a nose that curves gently up at the front (about 0.05 m rise) ending in a thick charcoal bumper block, and a tail that curves up slightly at the back. One thick charcoal grip mat sunk into the centre of the deck with exactly six wide ribs running along it. Exactly two wide arched charcoal foot straps, each with one big rectangular dark steel buckle, cross the deck from rail to rail at an angle, one in the front half and one in the middle-rear, each arching about 0.06 m above the deck. One thick charcoal bumper strip along each side rail. Exactly two fat dark steel D-shaped carry clips stand up from the deck near the tail, one each side of the centre line. One small teal lamp window in a thick charcoal bezel on the left rail near the nose. The underside is a flat dark steel skid plate.",
+  "proportions": "About 1 m long, 0.4 m wide and 0.16 m tall. (length : width : height = 2.50 : 1 : 0.40)",
+  "sides": "the board is mirror-symmetric left to right: the two foot straps run across the deck, the clips are one each side of the centre line, the bumper strips are on both rails. The only left-right difference is the small teal lamp window, on the left rail only (flush).",
+  "shape": {
+    "side": "in this view the chunky slide board game prop is 6.25 times as long as it is tall",
+    "front": "in this view its width is 2.50 of its height",
+    "rear": "in this view its width is 2.50 of its height",
+    "top": "in this view it is 2.50 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Seen from the left flank, the nose to the image LEFT: a low long shape: the nose curving up at the left end with its thick charcoal bumper block, the sand-grey board edge with the charcoal bumper strip along it and the teal lamp window near the nose, the flat middle, the tail curving up at the right end, the two arched foot straps humping above the deck and the near carry clip standing up near the tail.",
+    "front": "Seen from the nose: a low wide shape: the charcoal nose bumper block in the middle, the sand-grey board edges wide on each side with the bumper strips, the two arched straps humping above the deck behind it, the two carry clips standing up at the far end.",
+    "rear": "Seen from the tail: the board's tail edge, the two dark steel carry clips standing up near it one each side of the centre line, the two arched straps behind them, the nose bumper behind; no lamp visible.",
+    "top": "Seen from above (nose to the LEFT, left flank at the BOTTOM): a wide board outline: the nose at the left with its bumper block, the sunk charcoal grip mat with six ribs along the centre, the two straps crossing the deck at an angle with their square buckles, the bumper strips along both rails, the two clips near the tail at the right end; the lamp window is flush on the left (bottom) rail near the nose."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "front",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 1,
+    "W": 0.4,
+    "H": 0.16,
+    "_": "ESTIMATE on the hero (v4 board is shorter and wider than v3: L 1.1 -> 1.0, W 0.34 -> 0.40); re-measure with hull.mjs after install"
+  },
+  "decided": [
+    "exactly two foot straps with one buckle each, six mat ribs, two carry clips, two bumper strips, one nose bumper block, one lamp",
+    "the underside is flat (skid plate), nothing hangs below the belly"
+  ]
+}

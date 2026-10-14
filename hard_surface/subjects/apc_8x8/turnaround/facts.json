@@ -1,0 +1,40 @@
+{
+  "subject": "apc_8x8",
+  "noun": "armoured personnel carrier",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28, v2 re-derived 2026-09-29: description + proportions = the concept prompt's paragraph (refs/apc_8x8.v2.README.md Full prompt = the v2 concept refs/apc_8x8.v2.png, owner 2026-09-29; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly eight-wheeled armoured personnel carrier parked on the ground, seen from the front-left, built with many small separate faceted parts like a detailed game unit. A long tall boxy armoured hull with a steeply sloped angular nose plate carrying two small tow hooks at its lower edge and two square headlights inside small cage guards, flat vertical side walls angled slightly inward at the top, and a flat roof with a small rectangular slatted engine grille at the front right beside the turret and two flat rectangular troop hatches with hinged lids toward the rear. A small low one-man turret on the roof just behind the nose, traversed about 30 degrees off the nose toward the right flank, carrying a short thick autocannon with a muzzle collar; a cluster of three short smoke-grenade launcher tubes on each side of the turret; a small round driver's hatch at the front left of the roof with three small vision blocks in front of it. Eight large chunky wheels in four evenly spaced axles along the hull, all the same size, set under slightly flared wheel arches, each tyre with chunky block tread and a raised round hub with bolt studs. Hull, wheel arches, hatches and turret painted one olive drab green; autocannon barrel, smoke launchers, tow hooks, headlight guards and grille slats dark gunmetal grey; tyres dark charcoal, hubs dark olive; vision blocks a single flat dark grey; headlight lenses pale grey. The rear troop door ramp on the rear face faces away and is hidden; the right-hand wheels are hidden behind the hull.",
+  "proportions": "About 7.8 m long, 2.9 m wide and 2.8 m tall; the eight treaded wheels clearly visible. (length : width : height = 2.69 : 1 : 0.97)",
+  "sides": "the eight-wheeled APC is symmetric left to right except the roof: the small one-man turret sits on the roof just behind the nose and is traversed about 30 degrees off the nose toward the RIGHT flank (its autocannon points forward-right; the turret yaw is a model knob, ~30 deg); the slatted engine grille is at the roof's front RIGHT beside the turret; the round driver's hatch with its three vision blocks is at the roof's front LEFT. Eight equal wheels on four evenly spaced axles.",
+  "shape": {
+    "side": "in this view the armoured personnel carrier is 2.79 times as long as it is tall",
+    "front": "in this view its width is 1.04 of its height",
+    "rear": "in this view its width is 1.04 of its height",
+    "top": "in this view it is 2.69 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the rear troop door ramp."
+  },
+  "asymmetric": [
+    {
+      "part": "the engine grille",
+      "plural": false,
+      "flank": "right",
+      "along": "front",
+      "protrudes": false
+    },
+    {
+      "part": "the driver's hatch and its vision blocks",
+      "plural": false,
+      "flank": "left",
+      "along": "front",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 5.435,
+    "W": 2.9,
+    "H": 2.424,
+    "_": "2026-09-29: the installed turnaround registered (hull.mjs --subject apc_8x8 --aniso: L / W = the body-family span, H = the foreground bbox height incl. the roof fittings); the stated size was 7.8 x 2.9 x 2.8 m"
+  }
+}

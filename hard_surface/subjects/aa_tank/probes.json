@@ -1,0 +1,17 @@
+[
+  {"id": "P1", "view": "side", "axis": "row", "index": 757, "from": 100, "to": 950, "what": "road-wheel hub row (5 hubs, sprocket, idler)"},
+  {"id": "P2", "view": "side", "axis": "row", "index": 677, "from": 100, "to": 950, "what": "return-roller row"},
+  {"id": "P3", "view": "side", "axis": "col", "index": 642, "from": 150, "to": 850, "what": "wheel 4 centre column: wheel top/bottom, guard, turret roof"},
+  {"id": "P4", "view": "side", "axis": "row", "index": 300, "from": 150, "to": 600, "what": "barrel crossing"},
+  {"id": "P5", "view": "side", "axis": "col", "index": 718, "from": 200, "to": 850, "what": "radar slab + post, turret rear, deck, idler"},
+  {"id": "P6", "view": "concept", "axis": "row", "index": 740, "from": 400, "to": 960, "what": "concept wheel row (sprocket, road wheels, idler)"},
+  {"id": "P7", "view": "front", "axis": "row", "index": 300, "from": 300, "to": 750, "what": "both barrels + radar slab"},
+  {"id": "P8", "view": "front", "axis": "col", "index": 512, "from": 180, "to": 820, "what": "centreline: slab, post, tracking box, turret, hull, ground"},
+  {"id": "P9", "view": "front", "axis": "row", "index": 640, "from": 230, "to": 800, "what": "headlight row: tracks, hull, lamps"},
+  {"id": "P10", "view": "rear", "axis": "row", "index": 300, "from": 300, "to": 750, "what": "both barrels + radar slab"},
+  {"id": "P11", "view": "rear", "axis": "col", "index": 512, "from": 180, "to": 820, "what": "centreline: slab, post base, turret, rear plate, ground"},
+  {"id": "P12", "view": "rear", "axis": "row", "index": 640, "from": 230, "to": 800, "what": "grille row: tracks, rear plate grilles"},
+  {"id": "P13", "view": "top", "axis": "row", "index": 510, "from": 80, "to": 950, "what": "plan centreline: hooks, tracking box, radar bar, tail"},
+  {"id": "P14", "view": "top", "axis": "col", "index": 500, "from": 220, "to": 800, "what": "across the turret and both track bands"},
+  {"id": "P15", "view": "concept", "axis": "col", "index": 650, "from": 150, "to": 820, "what": "radar post, turret, deck, near track"}
+]

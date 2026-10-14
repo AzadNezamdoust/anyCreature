@@ -1,0 +1,212 @@
+{
+  "class": "vehicle",
+  "_comment": "Class prior for single-body wheeled vehicles (WORKFLOW-V3 §5 pickup row, §7 item 10). Data only: the functions (VEH_GROUND, VEH_WHEELS, VEH_MIRROR, the layout measures) live in `rules`. Priors select rules; they never fabricate observations.",
+  "roles": [
+    "chassis", "body", "cab", "hood", "bed", "bed_wall", "tailgate", "wheel", "tyre", "hub",
+    "axle", "bumper", "headlight", "grille", "window", "mirror", "prop"
+  ],
+  "roleHint": "pick the nearest real one (a fender is \"body\", a door panel is \"cab\", a tread ring is \"tyre\", a lamp lens is \"headlight\")",
+  "nonStructuralRoles": ["prop"],
+  "bearingRoles": [],
+  "_ground_comment": "VEH_GROUND: only groundRoles may reach y = 0, every wheel assembly bottom sits on y = 0, the chassis underside is inside limits.v7.ground_clearance.",
+  "groundRoles": ["wheel", "tyre"],
+  "_frame_comment": "The layout frame: L = z extent of lengthRoles, W = their x extent, H = the model's max y. wheelRoles form one wheel assembly (VEH_WHEELS, LK/census).",
+  "lengthRoles": ["chassis", "body", "cab", "hood", "bed", "bed_wall", "tailgate"],
+  "wheelRoles": ["wheel", "tyre", "hub"],
+  "wheels": { "count": 4, "axles": 2 },
+  "triBudget": 4000,
+  "styleFloorKey": "vehicle",
+  "rules": "src/validate/rules/vehicle.mjs",
+  "authorRules": "classes/vehicle.md",
+  "measure": "scripts/measure-vehicle.mjs",
+  "template": "scripts/template-vehicle.mjs",
+  "censusRules": {
+    "wheels":     { "kind": "assembly", "role": "wheel",     "axes": [0, 1, 2], "label": "wheels" },
+    "bumpers":    { "kind": "assembly", "role": "bumper",    "axes": [0, 1, 2], "label": "bumpers" },
+    "headlights": { "kind": "assembly", "role": "headlight", "axes": [0, 1, 2], "label": "headlights" },
+    "mirrors":    { "kind": "assembly", "role": "mirror",    "axes": [0, 1, 2], "label": "mirrors" },
+    "windows":    { "kind": "assembly", "role": "window",    "axes": [0, 1, 2], "label": "windows", "by": "part" }
+  },
+  "_roleIdColours_comment": "Role -> flat id colour for the ID PASS. CLOSED: one entry per role; widely separated for an 8-bit sRGB round trip.",
+  "roleIdColours": {
+    "chassis": "#ff0000",
+    "body": "#00ff00",
+    "cab": "#0000ff",
+    "hood": "#ffff00",
+    "bed": "#ff00ff",
+    "bed_wall": "#00ffff",
+    "tailgate": "#ff8000",
+    "wheel": "#8000ff",
+    "tyre": "#00ff80",
+    "hub": "#ff0080",
+    "axle": "#80ff00",
+    "bumper": "#0080ff",
+    "headlight": "#804000",
+    "grille": "#408000",
+    "window": "#004080",
+    "mirror": "#800040",
+    "prop": "#c0c0c0"
+  },
+  "likeness": {
+    "_comment": "scripts/likeness.mjs. areaFamilies group the regions.json zones of a single-body vehicle. faceRole/faceZones/facePaletteKey name the two flat body tones (the +X flank the renderer presents is `front`, the +Z nose is `side`); faceRoles is the box app.js projects as the render's front quad (the flank from y 0 to the roof, bumpers and mirrors excluded, the same frame measure-vehicle emits as _frame.quadPx). visibleInstances: roles whose target shows FEWER instances than the census counts (2 wheels + the far-front tyre sliver = 3; windshield + near side window = 2). Wheel evidence, refs/pickup_truck.png (1024 px): dark tyre components near front x 318..546 (part of the 16958 px body-outline blob), near rear x 734..919 y 466..654 (15438 px), far front sliver under the front bumper x 122..237 y 691..746 (633 px); the far rear wheel is hidden. The template shows the sliver with a 0.06 m bumper depth (scripts/template-vehicle.mjs CLASS_DEFAULTS.bumperD).",
+    "inkOpen": 2,
+    "_inkOpen_comment": "V5-5 item 2 (scripts/accuracy.mjs targetOf): per family, target px that do not survive an opening of this radius (px) are ink strokes / AA slivers — don't care, never target.",
+    "areaFamilies": {
+      "body": ["body_side", "body_front", "bed_inside"],
+      "glass": ["glass", "mirror"],
+      "dark": ["tyre", "tread", "grille"],
+      "light": ["hub", "bumper"],
+      "lamp": ["headlight"]
+    },
+    "droppedAreaZones": [],
+    "censusRoles": ["wheel", "bumper", "headlight", "mirror", "window"],
+    "censusInstances": {
+      "wheel": "wheels",
+      "bumper": "bumpers",
+      "headlight": "headlights",
+      "mirror": "mirrors",
+      "window": "windows"
+    },
+    "visibleInstances": { "wheel": 3, "window": 2 },
+    "_instanceRoles_comment": "WF-R3 H2: the roles ONE instance is made of — a wheel's tyre ring and hub are part of that wheel: they count toward its visible px and blob and never occlude it (the far-front wheel shows only as a tyre sliver under the bumper).",
+    "_unmeasuredFamilies_comment": "WF-R3 R3-B item 6: LK_AREA lamp is UNVERIFIED on this target (the lamps are on the nose, outside the flank quad: share under 0.2 %), so the ACCEPTANCE block does not promise it.",
+    "unmeasuredFamilies": ["lamp"],
+    "instanceRoles": { "wheel": ["wheel", "tyre", "hub"] },
+    "_silhouette_comment": "WF-R3 R3-B item 5: LK_SILHOUETTE, blocking from P0. Region = rules/vehicle.mjs silhouetteBox (cab front corner above window.front.top, cab.start .. the measured rake at the roof). Band from the frozen start renders (test/fixtures/vehicle/silhouette-*): box cab 0.911, raked template 0.969.",
+    "silhouette": { "part": "cab", "iouMin": 0.94, "what": "the cab front does not follow the target's raked windshield (the roof's front edge sits where the rake meets the roof)" },
+    "ironRoles": [],
+    "overlapRoles": [],
+    "thinRoles": [],
+    "faceRole": "cab",
+    "faceRoles": ["chassis", "body", "cab", "hood", "bed", "bed_wall", "tailgate", "wheel", "tyre"],
+    "faceZones": { "front": "body_side", "side": "body_front" },
+    "_faceMinShare_comment": "WF-R5 R5-A: a face tone of role cab must cover >= 8 % of its px. The capture is flat unlit (sideTint 0): the cab is ONE tone, and the unconstrained reference's handle / door-groove inlays (bed tone, ~1-4 % of the cab px) were read as the return face (body_front/body_side 0.81, body_front 0.82x).",
+    "faceMinShare": 0.08,
+    "facePaletteKey": "body"
+  },
+  "_paletteZones_comment": "scripts/calibrate-palette.mjs: palette key -> regions.json zone; point/radius is the fallback sample, verified against the region median; for = what the key paints, printed in the prompt. WF-BLIND-R2 C10: CLOSED, one author key per material; a part in any other zone fails PALETTE_ZONE. The headlight lenses are `lamp` (region headlight) — blind Gemini's uncalibrated `headlight` zone rendered #828282. `closure: true` entries are likeness closure only, not author keys.",
+  "paletteZones": [
+    { "key": "body", "for": "cab, hood, bed walls, tailgate, door panels and strips: the painted body", "region": "body_side", "point": [600, 575], "radius": 2, "reads": "#8ab8d9", "source": "regions.json body_side" },
+    { "key": "bed", "for": "the bed floor and the inside of the bed", "region": "bed_inside", "point": [715, 324], "radius": 2, "reads": "#6d96b2", "source": "regions.json bed_inside" },
+    { "key": "glass", "for": "the windshield and the side windows", "region": "glass", "point": [410, 400], "radius": 2, "reads": "#b7c7e0", "source": "regions.json glass" },
+    { "key": "mirror", "for": "mirror heads and arms", "region": "mirror", "point": [251, 370], "radius": 2, "reads": "#bbdcf0", "source": "regions.json mirror" },
+    { "key": "tyre", "for": "tyre discs (sidewalls) and the chassis", "region": "tyre", "point": [487, 681], "radius": 2, "reads": "#5c5e5b", "source": "regions.json tyre" },
+    { "key": "hub", "for": "hub caps", "region": "hub", "point": [460, 733], "radius": 2, "reads": "#b5babe", "source": "regions.json hub" },
+    { "key": "bumper", "for": "the front and rear bumpers", "region": "bumper", "point": [68, 630], "radius": 2, "reads": "#bcbfc5", "source": "regions.json bumper" },
+    { "key": "lamp", "for": "the headlight lenses (role headlight) — the only lamp key; region headlight", "region": "headlight", "point": [113, 588], "radius": 2, "reads": "#f2eba9", "source": "regions.json headlight" },
+    { "key": "grille", "for": "the grille and its slots", "region": "grille", "point": [190, 603], "radius": 1, "reads": "#668296", "source": "regions.json grille" },
+    { "key": "tread", "for": "tyre tread rings", "region": "tread", "point": [396, 714], "radius": 2, "reads": "#3f3f3d", "source": "regions.json tread (median recorded there; palette closure)" },
+    { "key": "body_front", "closure": true, "material": "body", "region": "body_front", "point": [141, 597], "radius": 2, "reads": "#8ab8d9", "source": "regions.json body_front (median recorded there; palette closure)" }
+  ],
+  "_knobPriors_comment": "WORKFLOW v4 V4-2 (scripts/template-vehicle.mjs KNOBS, scripts/fit.mjs): the FIT range of every knob no verified layout key bounds, as start +/- span x L / W / H (of \"m\": metres), or explicit min / max (metres; exponent for the arch n). locked = never fitted (why). V5-9 EVIDENCE HIERARCHY (orchestrator ruling): a knob STARTED at a verified layout key is ranged here too (plausibility), never by the key's V12 tolerance (the keys were measured earlier at lower resolution; the per-feature accuracy report outranks them); _keyed = such a knob with no entry of its own; _readyCall = the +/- span of every READY-call rc_* knob (scripts/loop.mjs knobifyCalls; min clamped at 0.001). Spans cover the Opus 5.5 free-hand reads on refs/pickup_truck.png (out/ref/work/pickup.mjs: roof front 0.355 L, cab-back lean 0.573 L, body bottom 0.24 H, taper 0.079 m, arch 0.58 m half-width, bumper wraps). _unverifiedKey = a knob whose layout key is unverified.",
+  "knobPriors": {
+    "L": { "locked": "registration anchor: the template metric length (CLASS_DEFAULTS.length)" },
+    "clearance": { "locked": "the chassis underside is hidden from the solved camera (chassis.clearance unverified)" },
+    "_unverifiedKey": { "span": 0.03, "of": "L" },
+    "_keyed": { "span": 0.05, "of": "L" },
+    "_readyCall": { "span": 0.04, "of": "L" },
+    "W": { "span": 0.12, "of": "W" }, "H": { "span": 0.12, "of": "H" },
+    "hoodNoseY": { "span": 0.08, "of": "H" }, "wsBottomY": { "span": 0.06, "of": "H" },
+    "cabFrontZ": { "span": 0.04, "of": "L" }, "cabRearZ": { "span": 0.04, "of": "L" }, "bedFrontZ": { "span": 0.04, "of": "L" }, "bedWallTopY": { "span": 0.06, "of": "H" },
+    "wheelR": { "span": 0.1, "of": "m" }, "wheelFrontZ": { "span": 0.04, "of": "L" }, "wheelRearZ": { "span": 0.04, "of": "L" },
+    "bumperFTop": { "span": 0.08, "of": "H" }, "bumperFH": { "span": 0.05, "of": "H" }, "bumperRH": { "span": 0.05, "of": "H" },
+    "cowlY": { "span": 0.08, "of": "H" },
+    "roofFrontZ": { "span": 0.05, "of": "L" },
+    "cabRearTopZ": { "span": 0.03, "of": "L" },
+    "sillY": { "span": 0.03, "of": "H" },
+    "beltY": { "span": 0.06, "of": "H" },
+    "roofInset": { "span": 0.03, "of": "W" },
+    "wheelWidth": { "span": 0.06, "of": "m" },
+    "archFZ": { "span": 0.02, "of": "L" }, "archFHalf": { "span": 0.02, "of": "L" }, "archFRise": { "span": 0.05, "of": "H" }, "archFN": { "min": 2, "max": 6 },
+    "archRZ": { "span": 0.02, "of": "L" }, "archRHalf": { "span": 0.02, "of": "L" }, "archRRise": { "span": 0.05, "of": "H" }, "archRN": { "min": 2, "max": 6 },
+    "bumperFDepth": { "min": 0.04, "max": 0.2 },
+    "bumperFOut": { "min": 0.005, "max": 0.12 },
+    "bumperFWrap": { "min": 0.02, "max": 0.4 },
+    "bumperRTop": { "span": 0.1, "of": "H" },
+    "bumperRDepth": { "min": 0.02, "max": 0.3 },
+    "bumperROut": { "min": -0.12, "max": 0.15 },
+    "bumperRWrap": { "min": 0.02, "max": 0.4 },
+    "hubR": { "span": 0.08, "of": "m" },
+    "hubRing": { "min": 0.02, "max": 0.1 },
+    "hubCap": { "span": 0.06, "of": "m" },
+    "hoodPanelHalfNose": { "span": 0.1, "of": "W" },
+    "hoodPanelHalfCowl": { "span": 0.1, "of": "W" },
+    "hoodPanelInsetNose": { "min": 0, "max": 0.2 },
+    "hoodPanelInsetCowl": { "min": 0.01, "max": 0.3 }
+  },
+  "_zoneIouMin_comment": "WORKFLOW v4 V4-5A: the per-zone (area family) IoU BAND of the target stop (scripts/loop.mjs atTarget) and of FIT's shortfall term (scripts/fit.mjs). Calibrated on the Opus accuracy-ceiling module out/ref/work/pickup.mjs (= test/fixtures/v4/work-pickup.mjs), registered per-family IoU body 0.844, glass 0.847, dark 0.742, light 0.757, lamp 0.893, minus a 0.01 margin. Blind Luna's BUILD module (0.9779 whole) sits at dark 0.726, light 0.745, lamp 0.823: all three below band.",
+  "zoneIouMin": { "body": 0.834, "glass": 0.837, "dark": 0.732, "light": 0.747, "lamp": 0.883 },
+  "_zoneProposals_comment": "V4-5A: what a ZONE residual row (a family below its band) proposes to the seat — the knobs (template or READY-call rc_* prefixes) and helper calls that own that family's px.",
+  "zoneProposals": {
+    "body": { "knobs": ["hoodNoseY", "cowlY", "roofFrontZ", "cabRearTopZ", "sillY", "beltY"], "text": "the body outline: hood / cab / bed edges (knobs), the raised hood panel K.assemble.hoodPanel" },
+    "glass": { "knobs": ["rc_windshield", "rc_side"], "text": "the panes (K.assemble.pane poly corners) and the mirror heads (K.assemble.mirror head.w / h / round)" },
+    "dark": { "knobs": ["wheelR", "wheelWidth", "rc_grille"], "text": "tyre size and width (wheelR, wheelWidth), the grille slot field (K.assemble.grille bounds / slots), the arch liners (arch*Half / arch*Rise)" },
+    "light": { "knobs": ["hubR", "hubRing", "hubCap", "bumperFTop", "bumperRTop"], "text": "the dished hubs (wheels.hub r / ring / cap) and the bumpers (bumper*Top / H / Depth / Out)" },
+    "lamp": { "knobs": ["rc_headlights"], "text": "the headlight lenses (K.assemble.lamp centre / diameter, flush: true)" }
+  },
+  "_residualFloor_comment": "WORKFLOW v4 V4-2 ruling: the residual NOISE FLOOR (scripts/residuals.mjs). A row is SHOWN (result.shown, the text a seat reads) only when it is >= metres AND >= px (target px, refs 1024 px wide); every row over the 0.5 x tol cut stays in result.rows for diagnostics. Calibrated on the Opus accuracy-ceiling module out/ref/work/pickup.mjs (registered IoU 0.9733): 27 rows over the 0.5 x tol cut, all ink / AA edge bands of 0.05..0.14 m; px 900 leaves 4 (cab front -0.068 m 2044 px, windshield front +0.087 m 1881 px, cab bottom +0.061 m 1271 px, hood front -0.053 m 1067 px).",
+  "residualFloor": { "metres": 0.045, "px": 900 },
+  "layoutUnits": "L is your body length (the z extent of chassis/body/cab/hood/bed/bed_wall/tailgate), W their x extent, H the model's height: a value in L, W or H multiplies those. Fix L, W and H once, in P0.",
+  "_variants_comment": "V4-7: body VARIANTS. subject.json `variant` picks one; scripts/subject.mjs applies its `overrides` on top of this prior (top-level keys replace, likeness / knobPriors merge). The variant also picks the landmark set of scripts/measure-vehicle.mjs / measure-profile.mjs and the body of scripts/template-vehicle.mjs. No variant = pickup (open bed + hood + cab).",
+  "variants": {
+    "pickup": { "body": "hood + cab + open bed (K.assemble.vehicleBody bed / hood)", "overrides": null },
+    "bus": {
+      "body": "one flat-nosed box, role cab from the nose to the tail (no hood, no bed): K.assemble.vehicleBody({ hood: false, bed: null, plan: chamfered front corners }); details: K.assemble.windowRow (band + pane row, both flanks), pane x 2 on the nose (split windshield), lamp (headlights; turn lenses role prop), mirror (black heads), stopArm (near flank)",
+      "zones": "regions.json zones the bus instrument needs: body_side, body_front, roof, glass, tyre, black, hub, headlight (+ amber, orange, signal lenses)",
+      "overrides": {
+        "likeness": {
+          "areaFamilies": {
+            "body": ["body_side", "body_front", "roof"],
+            "glass": ["glass"],
+            "dark": ["tyre", "black"],
+            "light": ["hub"],
+            "lamp": ["headlight", "amber", "orange", "signal"]
+          },
+          "visibleInstances": { "wheel": 2, "window": 9 },
+          "unmeasuredFamilies": [],
+          "silhouette": null,
+          "_visible_comment": "refs/school_bus.png: the two near wheels only (no far tyre shows under the bumper); windows = the 2 windshield panes + the 7 near row panes (the entrance-door pane behind the near mirror is not built: window.door UNVERIFIED)"
+        },
+        "_paletteZones_comment": "The bus palette (CLOSED, replaces the pickup list): black is ONE paint on this target (bumpers, window band + pillars, mirror heads and arms, the stop-arm post); signal = the stop-sign face and the red marker lenses; amber = the turn lenses; orange = the amber marker lenses.",
+        "paletteZones": [
+          { "key": "body", "for": "the painted body (the bus box, its nose and cap)", "region": "body_side", "point": [600, 650], "radius": 2, "reads": "#f3b619", "source": "regions.json body_side" },
+          { "key": "glass", "for": "the windshield panes and the side panes", "region": "glass", "point": [150, 560], "radius": 2, "reads": "#83bae6", "source": "regions.json glass" },
+          { "key": "black", "for": "black paint: bumpers, the window band and pillars, mirror heads and arms, the stop-arm post, arch liners", "region": "black", "point": [197, 822], "radius": 2, "reads": "#272829", "source": "regions.json black" },
+          { "key": "tyre", "for": "tyre discs, tread rings and the chassis", "region": "tyre", "point": [790, 620], "radius": 2, "reads": "#303132", "source": "regions.json tyre" },
+          { "key": "hub", "for": "hub caps", "region": "hub", "point": [835, 615], "radius": 2, "reads": "#989899", "source": "regions.json hub" },
+          { "key": "lamp", "for": "the headlight lenses (role headlight)", "region": "headlight", "point": [100, 690], "radius": 2, "reads": "#fdf2dd", "source": "regions.json headlight" },
+          { "key": "signal", "for": "the stop-sign face and the red roof-marker lenses", "region": "signal", "point": [450, 700], "radius": 2, "reads": "#e32228", "source": "regions.json signal" },
+          { "key": "amber", "for": "the amber turn lenses under the headlights", "region": "amber", "point": [100, 730], "radius": 1, "reads": "#f28a12", "source": "regions.json amber" },
+          { "key": "orange", "for": "the amber roof-marker lenses", "region": "orange", "point": [144, 476], "radius": 1, "reads": "#e95f0f", "source": "regions.json orange" },
+          { "key": "body_front", "closure": true, "material": "body", "region": "body_front", "point": [200, 700], "radius": 2, "reads": "#f4b719", "source": "regions.json body_front (palette closure)" },
+          { "key": "roof", "closure": true, "material": "body", "region": "roof", "point": [600, 250], "radius": 2, "reads": "#fcc423", "source": "regions.json roof (the lit roof: palette closure)" }
+        ],
+        "knobPriors": {
+          "noseTopY": { "span": 0.03, "of": "H" },
+          "roofFrontZ": { "span": 0.03, "of": "L" },
+          "chamfer": { "span": 0.03, "of": "W" },
+          "roofR": { "min": 0, "max": 0.35 },
+          "capR": { "min": 0, "max": 0.8 },
+          "cornerR": { "min": 0, "max": 0.35 }
+        },
+        "zoneProposals": {
+          "body": { "knobs": ["noseTopY", "roofFrontZ", "chamfer", "sillY"], "text": "the box outline: nose top, the front cap's depth, the corner chamfer, the sill (knobs)" },
+          "glass": { "knobs": ["rc_windshield", "rc_window"], "text": "the split windshield (K.assemble.pane x 2) and the pane row (K.assemble.windowRow)" },
+          "dark": { "knobs": ["wheelR", "wheelWidth", "bumperFTop", "bumperRTop"], "text": "tyres, the black bumpers, the window band (K.assemble.windowRow band) and the mirror heads" },
+          "light": { "knobs": ["hubR", "hubRing", "hubCap"], "text": "the hubs (wheels.hub r / ring / cap)" },
+          "lamp": { "knobs": ["rc_headlights", "rc_turn"], "text": "headlight and turn lenses (K.assemble.lamp), the stop sign (K.assemble.stopArm)" }
+        },
+        "lookRows": [
+          ["orientation", "the +X flank (window row, near wheels, stop arm) faces the camera and RISES toward screen-right; the flat nose with the split windshield and lamps is on the screen-LEFT, as in the target"],
+          ["wheels", "four wheels on two axles; the two near wheels read as round black tyres with grey hubs under the body, and nothing else touches the ground"],
+          ["reads as the target", "at a glance, next to compare.png, this is the same school bus in the same idiom"]
+        ]
+      }
+    }
+  },
+  "lookRows": [
+    ["orientation", "the +X flank (doors, wheels, bed side) is the face turned toward the camera and RISES toward screen-right; the nose with grille and lamps is on the screen-LEFT, as in the target"],
+    ["wheels", "four wheels on two axles; the two near wheels read as round tyres with pale hubs under the body, standing on the ground, and nothing else touches the ground"],
+    ["reads as the target", "at a glance, next to compare.png, this is the same truck in the same idiom — not a different vehicle that passes every rule"]
+  ]
+}

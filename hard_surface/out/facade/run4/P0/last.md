@@ -1,0 +1,1 @@
+CHANGE: Replaced smoke geometry with closed massing, supported roof, perimeter parapet, and three roof fixtures; module gate passed; MISSING KEY massing.wallThickness, roof.thickness, crown.thickness, roof_fixture.size, roof_fixture.position.

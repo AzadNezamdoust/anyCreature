@@ -1,0 +1,1 @@
+CHANGE: Set `meta.shade.sideTint` to `-0.43`; module gate passes.

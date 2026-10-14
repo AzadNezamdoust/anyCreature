@@ -1,0 +1,24 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0], "shift": { "up": 0.149 }, "_shift": "2026-09-27: the awning + counter on the near flank are body-colour (pink / cream stripes) and stick out 0.28 / 0.44 m, so the body-span rule centres the top view on body + awning; the body alone spans up -0.772..1.070 m (measure.mjs profile --view top --axis col, every column clear of the awning), centre +0.149" }
+  },
+  "anchor": { "dim": "W", "m": 2.0 },
+  "families": {
+    "body": "body",
+    "enclosedFg": false,
+    "_enclosedFg": "off: no white parts (the cream is 211+ darkest channel, foreground under the default cut); the counter shelf brackets and mirror arms enclose see-through white",
+    "table": {
+      "body": ["#f399b4", "#f6ecd3"],
+      "glass": "#9eb8cd",
+      "grey": ["#babbbc", "#ced1d3"],
+      "dark": ["#3d3d3d", "#2c2c2c"],
+      "cone": "#d9ab6d",
+      "lamp": "#fbedad"
+    },
+    "_body": "body = pink + cream (the two-tone paint); the awning stripes and the scoop share these colours"
+  }
+}

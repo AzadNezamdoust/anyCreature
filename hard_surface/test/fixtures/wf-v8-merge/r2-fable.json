@@ -1,0 +1,28 @@
+{
+  "subject": "fixture",
+  "round": 2,
+  "seat": "fable",
+  "done": true,
+  "items": [
+    { "sev": "MAJOR", "key": "knob:signT", "now": 0.385, "want": 0.345, "unit": "m", "views": ["front", "concept"], "basis": "front",
+      "at": { "image": "concept", "rect": [10, 10, 20, 20], "claim": "ref-only" }, "evidence": ["measure.mjs profile front"], "reopens": null, "note": "sign top narrower" },
+    { "sev": "MINOR", "key": "def:br.bot", "now": 0.38, "want": 0.33, "unit": "m", "views": ["side"], "basis": "side",
+      "at": null, "evidence": [], "reopens": null, "note": "rear bumper lower" },
+    { "sev": "MINOR", "key": "def:hubR", "now": 0.23, "want": 0.22, "unit": "m", "views": ["side"], "basis": "side",
+      "at": null, "evidence": [], "reopens": null, "note": "hub a touch smaller" },
+    { "sev": "MAJOR", "key": "part:arch.colour", "now": "#8f6912", "want": "#2a2a20", "unit": "hex", "views": ["side"], "basis": "side",
+      "at": { "image": "side", "rect": [0, 0, 10, 10], "claim": "colour" }, "evidence": ["measure.mjs sample side"], "reopens": null, "note": "arch near-black" },
+    { "sev": "MAJOR", "key": "part:roof.pos.y", "now": 1.9, "want": 2.0, "unit": "m", "views": ["side"], "basis": "side",
+      "at": null, "evidence": [], "reopens": null, "note": "roof higher, no px location" },
+    { "sev": "MINOR", "key": "part:mirror_head_l.size.y", "now": 0.26, "want": 0.22, "unit": "m", "views": ["concept"], "basis": "concept",
+      "at": null, "evidence": [], "reopens": null, "note": "mirror head shorter" },
+    { "sev": "MINOR", "key": "part:tail.shape", "now": "square", "want": "chamfered", "unit": "text", "views": ["rear"], "basis": "rear",
+      "at": null, "evidence": [], "reopens": null, "note": "tail lamp shape" },
+    { "sev": "MAJOR", "key": "knob:paneZ", "now": 0, "want": 0.1, "unit": "m", "views": ["concept"], "basis": "side",
+      "at": { "image": "concept", "rect": [30, 30, 40, 40], "claim": "edge" }, "evidence": [], "reopens": null, "note": "panes back, read off the drifted flank" },
+    { "sev": "MINOR", "key": "def:zR", "now": -1.8, "want": -1.7, "unit": "m", "views": ["concept"], "basis": "concept",
+      "at": null, "evidence": [], "reopens": null, "note": "rear axle forward again" },
+    { "sev": "MINOR", "key": "def:mD", "now": 0.16, "want": 0.11, "unit": "m", "views": ["concept"], "basis": "concept",
+      "at": null, "evidence": [], "reopens": null, "note": "mirror head thinner" }
+  ]
+}

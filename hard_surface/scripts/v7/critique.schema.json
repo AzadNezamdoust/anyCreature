@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scripts/v7/critique.schema.json",
+  "title": "WF v8 critique (critique/rN-<seat>.json)",
+  "description": "One critic seat's review of one round (research/v7/WF-V8-PLAN.md \"Shared data\"; WF-REVIEW-opus.md C5). Rewrite the whole file after every item with done:false; set done:true when the list is complete. At most 10 items. Keys come from the packet's knob and part tables. A MAJOR needs `at` (machine-checkable evidence): merge.mjs merges a MAJOR without a verified `at` as MINOR. Rects are in the named image's OWN px (the turnaround view file or the concept image), never page px.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["subject", "round", "seat", "done", "items"],
+  "properties": {
+    "subject": { "type": "string", "minLength": 1, "description": "subject id (subjects/<s>)" },
+    "round": { "type": "integer", "minimum": 1, "description": "the round whose model is reviewed" },
+    "seat": { "type": "string", "enum": ["fable", "opus", "sonnet"] },
+    "done": { "type": "boolean", "description": "false while writing; true when the list is complete (merge.mjs refuses false)" },
+    "items": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sev", "key", "now", "want", "unit", "views", "basis", "at", "evidence", "reopens", "note"],
+        "properties": {
+          "sev": {
+            "type": "string",
+            "enum": ["MAJOR", "MINOR"],
+            "description": "MAJOR: a measured discrepancy >= 0.05 m or >= 3 % of the view's dimension, or a missing / extra / wrong-count feature; else MINOR"
+          },
+          "key": {
+            "type": "string",
+            "pattern": "^(knob:[A-Za-z_$][A-Za-z0-9_$]*|def:[A-Za-z_$][A-Za-z0-9_$]*(\\.[A-Za-z0-9_$]+)*|part:[A-Za-z0-9_]+\\.(pos\\.x|pos\\.y|pos\\.z|size\\.x|size\\.y|size\\.z|rot|colour|shape|count|add|remove)|drift:[A-Za-z0-9_]+)$",
+            "description": "knob:<KNOBS name> | def:<DEFAULTS path, dots> | part:<part family>.<pos.x|pos.y|pos.z|size.x|size.y|size.z|rot|colour|shape|count|add|remove> | drift:<view> (a drift-rect proposal: `at.rect` is the rect)"
+          },
+          "now": { "type": ["number", "string", "boolean", "null"], "description": "the model's current value (null when the key has none)" },
+          "want": { "type": ["number", "string", "boolean"], "description": "the value the references ask for (same unit as now)" },
+          "unit": { "type": "string", "enum": ["m", "deg", "hex", "count", "text"] },
+          "views": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 }, "description": "the images the item shows in (concept, side, front, rear, top)" },
+          "basis": { "type": "string", "minLength": 1, "description": "the image the want is measured on (concept | side | front | rear | top)" },
+          "at": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["image", "rect", "claim"],
+            "description": "where the claim can be checked: merge.mjs rebuilds the model's raster of `image` and tests `claim` inside `rect`",
+            "properties": {
+              "image": { "type": "string", "minLength": 1, "description": "concept | an ortho view name (views.json)" },
+              "rect": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "items": { "type": "number" },
+                "description": "[x0, y0, x1, y1] in that image's own px (half-open)"
+              },
+              "claim": {
+                "type": "string",
+                "enum": ["ref-only", "model-only", "colour", "edge"],
+                "description": "ref-only / model-only: >= 10 % of the rect's px are reference-only / model-only silhouette; colour: the reference's colour family in the rect differs from the model's, the reference shows want's family and the model now's (hex now / want); edge: >= 1 px differs"
+              }
+            }
+          },
+          "evidence": { "type": "array", "items": { "type": "string" }, "description": "the commands that measured it (node scripts/v7/measure.mjs ...)" },
+          "reopens": { "type": ["string", "null"], "description": "the decided key this item reopens (needs a verified `at` on the decided item's basis image), else null" },
+          "note": { "type": "string", "maxLength": 200 }
+        }
+      }
+    }
+  }
+}

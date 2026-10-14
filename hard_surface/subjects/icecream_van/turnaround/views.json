@@ -1,0 +1,330 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept; side / front / rear regenerated 2026-09-27 after the setup audit, top kept (turnaround/README.md; the first set is in ../turnaround-0-drifted). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "_note": "2026-09-27: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): front.shift, rear.shift, top.shift. Anchor re-derived for these images: {dim L, m 4.73} (see _anchor; the previous {dim L, m 4.66873} kept the previous images' scale).",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": {
+        "right": -0.165
+      },
+      "_shift": "2026-09-28 r1 boundary (orchestrator, marathon): the near-flank awning / shelf (body-coloured) skews the body-span centre; measured on model-r1: front agree .781 -> .906, rear .779 -> .925, side -0.009, concept unchanged (doctor centring candidate -0.127)"
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": {
+        "right": 1.041
+      },
+      "shift": {
+        "right": 0.165
+      },
+      "_shift": "2026-09-28 r1 boundary: mirror of front._shift (doctor candidate +0.141)"
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ],
+      "shift": {
+        "up": 0.152
+      }
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 4.73
+  },
+  "_anchor": "2026-09-27 turnaround regenerated (Gemini sheet): re-derived for these images. W is measured on the body-colour span of front / rear / top, and all three draw the body-colour awning beside the near flank (front / rear: the pink awning end, top: the pink / cream awning plan): at the L anchor the W spans read 2.72 m (front +1.8 / rear +6.4 / top -8.3 %) against the concept's 2.0 m body, so a W anchor of 2.0 would shrink every other dimension ~27 % (L 3.43 m). L (the side + top body spans, which the awning does not widen) = 4.73 m, the concept measurement (turnaround-1-gpt/README.md: body 4.73 x 2.0 m measured on the concept's edges with camera.json); prior.json's stylisation gives 4.66 (LoverW 2.33 at W 2.0, measured on the previous turnaround) and the previous anchor was 4.66873 (the previous images' scale).",
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "_spanOpen": "2026-09-28 (scripts/v6/README.md 'Span opening'): the x / z body spans are counted on the body mask opened with a 2 x 2 square, so the 1-px anti-alias halo columns / rows of dark outlines (mirror heads, lamps: greys classified as body) no longer widen W / L; setup auditors 2026-09-28",
+    "enclosedFg": false,
+    "_enclosedFg": "off: no white parts (the cream is 211+ darkest channel, foreground under the default cut); the counter shelf brackets and mirror arms enclose see-through white",
+    "table": {
+      "body": [
+        "#f399b4",
+        "#f6ecd3"
+      ],
+      "glass": "#9eb8cd",
+      "grey": [
+        "#babbbc",
+        "#ced1d3"
+      ],
+      "dark": [
+        "#3d3d3d",
+        "#2c2c2c"
+      ],
+      "cone": "#d9ab6d",
+      "lamp": "#fbedad"
+    },
+    "_body": "body = pink + cream (the two-tone paint); the awning stripes and the scoop share these colours",
+    "viewTable": {
+      "side": {
+        "body": [
+          "#f398b3",
+          "#f6ebd2",
+          "#fef9e4"
+        ],
+        "glass": [
+          "#9eb7cc"
+        ],
+        "grey": [
+          "#bababb",
+          "#ced0d2"
+        ],
+        "dark": [
+          "#3d3c3c",
+          "#2c2b2b",
+          "#3f3f3d",
+          "#282522"
+        ],
+        "cone": [
+          "#d9aa6c",
+          "#d5a86d"
+        ],
+        "lamp": [
+          "#fbecac"
+        ]
+      },
+      "front": {
+        "body": [
+          "#f399b4",
+          "#f6ecd3"
+        ],
+        "glass": [
+          "#9eb8cd"
+        ],
+        "grey": [
+          "#babbbc",
+          "#ced1d3"
+        ],
+        "dark": [
+          "#3d3d3d",
+          "#2c2c2c",
+          "#201f1d"
+        ],
+        "cone": [
+          "#d9ab6d",
+          "#d5a86d"
+        ],
+        "lamp": [
+          "#fbedad",
+          "#faedb2"
+        ]
+      },
+      "rear": {
+        "body": [
+          "#f59ab3",
+          "#f8edd2",
+          "#f394b0"
+        ],
+        "glass": [
+          "#a0b9cc"
+        ],
+        "grey": [
+          "#bcbcbb",
+          "#d0d2d2"
+        ],
+        "dark": [
+          "#3f3e3c",
+          "#2e2d2b"
+        ],
+        "cone": [
+          "#dbac6c",
+          "#d5a972"
+        ],
+        "lamp": [
+          "#fdeeac"
+        ]
+      },
+      "top": {
+        "body": [
+          "#f49ab3",
+          "#f7edd2",
+          "#fefae4"
+        ],
+        "glass": [
+          "#9fb9cc"
+        ],
+        "grey": [
+          "#bbbcbb",
+          "#cfd2d2"
+        ],
+        "dark": [
+          "#3e3e3c",
+          "#2d2d2b"
+        ],
+        "cone": [
+          "#daac6c"
+        ],
+        "lamp": [
+          "#fceeac"
+        ]
+      }
+    },
+    "_viewTable": "2026-09-27: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/icecream_van/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +0.4 -0.8 -0.5 · front +0.3 +0.4 +0.1 · rear +2.1 +1.1 -1.5 · top +1 +0.9 -0.5); ambiguous: front #aaa7a7 1.1 % grey (vs glass). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-28 gold-auditor, owner-approved 2026-09-27",
+    "side": [
+      {
+        "id": "D1",
+        "rect": [
+          510,
+          118,
+          670,
+          170
+        ],
+        "decides": "concept",
+        "why": "scoop drawn 0.70 m tall (top 4.53 m, rows 155..266); concept scoop is a 0.9 m ball to 4.76 m: unproject 560,20,x,0 -> y 4.764, 560,165 -> 3.858"
+      }
+    ],
+    "front": [
+      {
+        "id": "D2",
+        "rect": [
+          510,
+          118,
+          670,
+          170
+        ],
+        "decides": "concept",
+        "why": "scoop top 4.53 m here (row 155); concept 4.76 m (unproject 560,20,x,0); the 0.23 m cap above the drawn scoop"
+      }
+    ],
+    "rear": [
+      {
+        "id": "D3",
+        "rect": [
+          445,
+          118,
+          600,
+          170
+        ],
+        "decides": "concept",
+        "why": "scoop top 4.53 m here (row 155); concept 4.76 m (unproject 560,20,x,0)"
+      },
+      {
+        "id": "D4",
+        "rect": [
+          346,
+          383,
+          696,
+          400
+        ],
+        "decides": "side",
+        "why": "roof top 3.058 m here (row 388), side / front 2.982 (row 400), concept 3.0 (unproject 700,354,x,0.93 -> y 2.998): the rear draws the body 0.076 m taller"
+      },
+      {
+        "id": "D5",
+        "rect": [
+          278,
+          495,
+          345,
+          508
+        ],
+        "decides": "front",
+        "why": "awning profile hangs to 2.324 m here (row 504); front 2.381 / side 2.381 / concept end-cap 2.38 (unproject 640,505,z,0.2 -> y 2.377)"
+      }
+    ],
+    "top": [
+      {
+        "id": "D6",
+        "rect": [
+          480,
+          730,
+          810,
+          750
+        ],
+        "decides": "front",
+        "why": "awning plan 0.30 m proud here (rows 674..736 vs body edge 688); front / rear profiles 0.41 m (tip x 1.47-1.50 vs body 1.06-1.09), concept rear end x 1.35 (unproject 930,400,z,-1.75)"
+      }
+    ],
+    "concept": [
+      {
+        "id": "D7",
+        "rect": [
+          128,
+          500,
+          178,
+          572
+        ],
+        "decides": "front",
+        "why": "far mirror head at y 1.95 z 1.82 (unproject 155,537,x,-1) vs the near mirror 1.81 / 1.48 (455,670,x,1): not a mirrored pair; front / rear / side put both at 1.65..1.98, z 1.52..1.57"
+      },
+      {
+        "id": "D8",
+        "rect": [
+          360,
+          930,
+          490,
+          968
+        ],
+        "decides": "side",
+        "why": "front tyre drawn 7 % larger than the rear (152 vs 141 px tall) and its bottom 0.09 m higher (unproject 430,961,x,1 -> y 0.066; 848,777 -> -0.026); side: both R 0.43, bottoms on the ground"
+      },
+      {
+        "id": "D9",
+        "rect": [
+          855,
+          385,
+          905,
+          520
+        ],
+        "decides": "side",
+        "why": "serving window edges fan: top 2.36 -> 2.21 m, bottom 1.61 -> 1.54 m front to rear (unproject 615,497 / 880,395 / 625,612 / 885,500 on x 0.93); side draws it level 1.58..2.36"
+      },
+      {
+        "id": "D10",
+        "rect": [
+          590,
+          440,
+          650,
+          510
+        ],
+        "decides": "front",
+        "why": "awning end-cap only 0.18 m proud at the front end (unproject 640,505,z,0.2 -> x 1.11 vs flank 0.93-1.0) but 0.42 at the rear end (930,400,z,-1.75 -> x 1.35); front / rear views 0.41 m"
+      }
+    ]
+  }
+}

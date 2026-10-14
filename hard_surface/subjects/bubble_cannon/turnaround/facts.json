@@ -1,0 +1,36 @@
+{
+  "subject": "bubble_cannon",
+  "noun": "toy bubble gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/bubble_cannon.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/bubble_cannon.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours)",
+  "description": "A fictional cartoon science-fiction toy bubble-blower gadget carried on the shoulder, a long chunky toy-like game prop (not a real object, no working parts). A long fat round off-white tube lying along the axis. At the front a huge flared trumpet-shaped mid grey horn, far wider than the tube, with a flat bright pink inner face. On top of the tube at the middle a boxy mid grey block on a low grey saddle, with one round bright cyan lens on its front face. Around the rear half of the tube four bright pink rings wrapped round it, evenly spaced. Under the middle of the tube a dark navy handle raked backward, with a bright yellow curved finger lever inside a squarish mid grey loop in front of the handle. In front of that, under the tube, a dark navy front handle shaped like a short upright bar on a small grey bracket. At the rear the tube ends in a wide round mid grey cap, with a round bright cyan canister plugged into it from below, hanging straight down on a short grey neck. A bright yellow lever is on the right flank of the tube.",
+  "proportions": "About 1.00 m long, 0.24 m wide and 0.34 m tall. (length : width : height = 4.17 : 1 : 1.42)",
+  "sides": "the bright yellow lever is on the right flank only; the left flank has none; everything else is symmetric left to right (the lens block, both handles and the canister all on the centre line).",
+  "shape": {
+    "side": "in this view the prop is 2.94 times as long as it is tall",
+    "front": "in this view its width is 0.71 of its height",
+    "rear": "in this view its width is 0.71 of its height",
+    "top": "in this view it is 4.17 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the tube exactly horizontal, the flared grey horn at the left end of the image opening to the left, the long off-white tube, the grey lens block on top at the middle, the four pink rings round the rear half, the grey end cap at the right end of the image with the cyan canister hanging below it; the upright navy front handle hangs below the tube left of the middle, the raked navy handle with the yellow finger lever and grey loop hangs below the middle.",
+    "front": "Seen from the front end: the horn as a big full circle in the middle, a grey rim with the flat pink face filling it; the grey lens block with its round cyan lens stands just above the horn rim on the centre line; the navy front handle hangs below the horn on the centre line and hides the raked handle behind it.",
+    "rear": "Seen from the rear end: the round mid grey end cap in the middle, the big round grey back of the horn showing as a wide ring behind it all round, the grey lens block standing on top on the centre line (no lens on its rear face), the cyan canister hanging below the cap on the centre line and the navy handle below and behind it.",
+    "top": "Seen from above: a long narrow shape; the horn at the left end as a wide flared grey shape much wider than the tube, the off-white tube along the middle, the grey lens block as a rectangle on the centre line, the four pink rings as stripes across the rear half, the grey end cap at the right end; the handles and the canister are hidden under the tube."
+  },
+  "asymmetric": [
+    {
+      "part": "the bright yellow lever",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 1,
+    "W": 0.24,
+    "H": 0.34,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

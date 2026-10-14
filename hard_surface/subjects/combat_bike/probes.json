@@ -1,0 +1,20 @@
+{
+  "_note": "2026-09-29 gold-auditor proposal, re-audit: all px are the CURRENT images' (side / top flopped: nose at image LEFT; rear exhaust hex removed).",
+  "probes": [
+    { "id": "P1", "view": "side", "axis": "row", "index": 625, "from": 60, "to": 964, "what": "hub row: front tyre 114..369 (hub 241), rear tyre 655..910 (hub 782); wheelbase 541 px = 1.92 m, D 0.91 m" },
+    { "id": "P2", "view": "side", "axis": "row", "index": 748, "from": 60, "to": 964, "what": "tyre bottoms 8 px above the ground (row 756): tyre contact widths" },
+    { "id": "P3", "view": "side", "axis": "row", "index": 400, "from": 60, "to": 964, "what": "belt line: front mudguard (left), fork, fuel tank, seat, rear mudguard (right)" },
+    { "id": "P4", "view": "side", "axis": "row", "index": 285, "from": 60, "to": 964, "what": "handlebar / grip row (top of the bike, 1.67 m), fork top at image left" },
+    { "id": "P5", "view": "side", "axis": "row", "index": 480, "from": 60, "to": 964, "what": "engine / exhaust canister / saddlebag row (bag at image right 700..840)" },
+    { "id": "P6", "view": "front", "axis": "row", "index": 285, "from": 60, "to": 964, "what": "handlebar grip ends (front draws 320..700 = 1.35 m; rear / top 1.21 m)" },
+    { "id": "P7", "view": "front", "axis": "col", "index": 512, "from": 200, "to": 800, "what": "centre column: bar, headlight top / bottom, tank, mudguard, tyre bottom" },
+    { "id": "P8", "view": "front", "axis": "row", "index": 470, "from": 300, "to": 720, "what": "tank / mudguard / saddlebag row: the bag's outer edge at x 640 (0.455 m off centre)" },
+    { "id": "P9", "view": "rear", "axis": "row", "index": 470, "from": 300, "to": 720, "what": "saddlebag (image left, 396..452) / tail-light housing row; the housing's right edge ends at x 568 (the S3 hex is gone, bg from 569)" },
+    { "id": "P10", "view": "rear", "axis": "col", "index": 512, "from": 200, "to": 800, "what": "centre column: bar, tail light, mudguard, tyre bottom" },
+    { "id": "P11", "view": "top", "axis": "row", "index": 512, "from": 60, "to": 964, "what": "centre line nose (left) to tail (right): front tyre / mudguard / tank / seat / rear tyre extents" },
+    { "id": "P12", "view": "top", "axis": "row", "index": 600, "from": 60, "to": 964, "what": "left-flank row (image bottom = +x): the handlebar end (367..387) and the one saddlebag (675..839, rows 568..640)" },
+    { "id": "P13", "view": "concept", "axis": "col", "index": 245, "from": 100, "to": 900, "what": "concept front wheel column: mudguard top, tyre top (under the guard) / bottom 872" },
+    { "id": "P14", "view": "concept", "axis": "col", "index": 823, "from": 100, "to": 900, "what": "concept rear wheel column: saddlebag, tyre top 445 / bottom 762" },
+    { "id": "P15", "view": "concept", "axis": "row", "index": 690, "from": 40, "to": 1000, "what": "concept front hub row: front hub / spokes 182..377, rear tyre 705..888" }
+  ]
+}

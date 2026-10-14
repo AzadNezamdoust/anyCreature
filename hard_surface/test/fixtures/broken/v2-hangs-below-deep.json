@@ -1,0 +1,15 @@
+{
+  "schema": "pg/1",
+  "subject": "v2_hangs_below_deep",
+  "seed": 1,
+  "class": "prop",
+  "note": "V2: a lamp hung below a 0.05 m deck with embed 0.12 — its top face exits 0.07 m out through the deck, so the declared hangs-below contact is not the contact the solver built.",
+  "palette": { "wood": "#b98a4e", "iron": "#3b3f4a" },
+  "parts": [
+    { "id": "post", "prim": "box", "dims": [0.2, 1.0, 0.2], "ground": true, "role": "post", "zone": "wood" },
+    { "id": "deck", "prim": "plate", "dims": [1.2, 0.05, 0.6], "role": "deck", "zone": "wood",
+      "attach": { "to": "post", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" } },
+    { "id": "lamp", "prim": "box", "dims": [0.1, 0.2, 0.1], "role": "lamp", "zone": "iron",
+      "attach": { "to": "deck", "face": "-Y", "uv": [0.1, 0.5], "contact": "hangs-below", "embed": 0.12 } }
+  ]
+}

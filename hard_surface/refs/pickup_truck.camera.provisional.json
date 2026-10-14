@@ -1,0 +1,6 @@
+{
+  "theta_deg": 30,
+  "phi_deg": 45,
+  "provisional": true,
+  "note": "UNMEASURED. Copied verbatim from refs/tenement_block.camera.json (M5 item 7). The pickup target is TEXT, not an image (refs/pickup_truck.README.md), so there is nothing to solve a camera off yet — these stay the assumed 2:1-iso values and the manifest cameraId keeps its `:provisional` suffix."
+}

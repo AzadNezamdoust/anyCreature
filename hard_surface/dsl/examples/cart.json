@@ -1,0 +1,32 @@
+{
+  "schema": "pg/1",
+  "subject": "cart",
+  "seed": 1,
+  "class": "prop",
+  "note": "Worked example 3 (M5): the hand smoke spec for the vehicle vocabulary — a box body with two mirrored `wheel` composites hung underneath by `hangs-below`, each a ring tyre with its bore along X and a box hub `embedded` in it. Left/right is X and length is Z, the convention V9 mirrors about and V7 measures the wheel radius against. The M5 MVP-STUB here (a child of a mirrored part attached to instance 0, so the mirrored wheel had no hub) was closed in M6: per-instance children are the default, and this spec compiles to two tyres AND two hubs with no edit.",
+  "palette": {
+    "paint": "#c8543f",
+    "tyre": "#2b2e33",
+    "hub": "#b9b3a8"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [0.6, 0.5, 0.9],
+      "ground": true,
+      "role": "chassis",
+      "zone": "paint"
+    },
+    {
+      "id": "wheel",
+      "prim": "wheel",
+      "dims": [0.12, 0.27, 0.27],
+      "role": "wheel",
+      "zone": "tyre",
+      "zones": { "hub": "hub" },
+      "mirror": true,
+      "attach": { "to": "body", "face": "-Y", "uv": [0.1, 0.5], "contact": "hangs-below", "embed": 0 }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 0.9
+  },
+  "families": {
+    "body": "frame",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "frame": ["#434342", "#565655", "#666666"],
+      "tan": ["#bda57f", "#9d8969"],
+      "tyre": ["#2d2d2d", "#1a1b1a"]
+    },
+    "_table": "2026-09-29 (setup, from the concept's family masks: each proposed cluster tinted on the concept): frame = the gunmetal frame, fork, handlebars, engine block, exhaust and hubs (proposal body #434342 + its lit faces f4 #565655, f6 #666666); tan = fuel tank, mudguards and saddlebag (f5 lit #bda57f + f3 #9d8969); tyre = the knobbly tyres AND the black seat (f2 #2d2d2d + dark #1a1b1a: one colour, not separable). The handlebars are gunmetal, so the frame's x span is the handlebar width = the W anchor 0.9 m.",
+    "viewTable": {
+      "side": { "frame": ["#4b4b48", "#5e5e5b", "#6e6e6c", "#4e4e4c"], "tan": ["#c5ad85", "#a5916f", "#a28f6f"], "tyre": ["#353533", "#222320"] },
+      "front": { "frame": ["#45443f", "#585752", "#686763", "#3c3c3a", "#5c5b59", "#4d4c4a", "#786a53", "#737372"], "tan": ["#bfa67c", "#9f8a66", "#a28e6f", "#b49e7c"], "tyre": ["#2f2e2a", "#1c1c17", "#2b2a27"] },
+      "rear": { "frame": ["#3c3c39", "#4f4f4c", "#5f5f5d", "#5b5b5a", "#4c4c49", "#6d6d6b"], "tan": ["#b69e76", "#968260", "#ad9774", "#b8a281"], "tyre": ["#262624", "#131411"] },
+      "top": { "frame": ["#3a3a39", "#4d4d4c", "#5d5d5d", "#565653", "#656563", "#4c4942"], "tan": ["#b49c76", "#948060", "#b09a76", "#9d896a", "#8a7a5e"], "tyre": ["#242424", "#111211", "#2a2926", "#1d1c18", "#0d0b08"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/combat_bike/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +8.2 +8.1 +6.3 · front +2.5 +0.5 -3.4 · rear -7.1 -7.3 -8.6 · top -8.7 -8.8 -8.8); ambiguous: side #42413d 2.1 % frame (vs tyre); rear #31312d 2.9 % tyre (vs frame). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor (proposal, re-audit after the S1-S3 edits of commit 9507ae3), owner-approved 2026-09-29",
+    "_note": "all rects are in the CURRENT images' px (side / top already flopped: nose at image LEFT; rear exhaust hex removed).",
+    "side": [
+      { "id": "D1", "rect": [155, 415, 318, 468], "decides": "concept", "why": "front mudguard tip: the concept's reaches further forward and lower (hull conceptOnly blob 104..184 x 428..505 px, 0.59 %); the side draws it 0.59 m long x 0.17 m tall (tan comp 151..318 x 417..465)" }
+    ],
+    "front": [
+      { "id": "D2", "rect": [332, 272, 390, 294], "decides": "rear", "why": "left grip end: front bars span 320..700 px = 1.35 m; rear 340..684 = 1.22 m, top 340..680 = 1.21 m; concept grips unproject to a 0.64 x wheelbase = 1.22 m bar; hull viewOnly blob 324..345 x 273..298 is this grip tip" },
+      { "id": "D3", "rect": [634, 272, 692, 294], "decides": "rear", "why": "right grip end: same as D2 (hull viewOnly blob 673..700 x 272..297); the front's bars are 10 % too wide" }
+    ],
+    "rear": [
+      { "id": "D4", "rect": [466, 636, 498, 758], "decides": "front", "why": "rear tyre's lower left edge drawn 13 px (0.05 m) wider than the front view's tyre (front 485..540 at the ground, rear 472..540): hull viewOnly blob 472..492 x 644..751 (1.77 %)" }
+    ],
+    "top": [],
+    "concept": [
+      { "id": "D5", "rect": [82, 548, 176, 645], "decides": "side", "why": "the concept's front wheel is drawn 17 % bigger than its rear wheel (vertical extents 367 vs 317 px; unproject x=0: front D 2.27 vs rear 1.93 start-frame units) against the prompt 'two wheels of the same size'; the side draws them equal (255 / 257 px = 0.91 m): outer band of the front tyre, upper part" },
+      { "id": "D6", "rect": [82, 708, 176, 815], "decides": "side", "why": "same as D5, lower part of the oversized front tyre's outer band (hull conceptOnly blob 72..184 x 522..843, 2.12 %)" }
+    ]
+  }
+}

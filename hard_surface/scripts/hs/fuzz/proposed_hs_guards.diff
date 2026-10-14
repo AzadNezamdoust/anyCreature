@@ -1,0 +1,117 @@
+--- a/scripts/hs/hs.py
++++ b/scripts/hs/hs.py
+@@ -22,6 +22,7 @@
+ from mathutils import Vector
+ 
+ MATS = {}
++GUARD_WARN = []   # fuzz guards append here; run_pass-style callers may print them
+ ROOT = None  # every finished part is parented to this empty (run_pass scales it for views.json scale.right / up)
+ 
+ 
+@@ -108,6 +109,7 @@
+         me.materials.append(MATS[mn])
+     ob = bpy.data.objects.new(name, me)
+     ob["part"] = part
++    cleanup(ob)   # GUARD: weld/dissolve before the part can be a boolean target (octagon ch=0/0.5, collapsed lofts are raw-dirty)
+     return link(ob)
+ 
+ 
+@@ -116,6 +118,7 @@
+     target (both identity), so the boolean never sees a parent transform."""
+     me = bpy.data.meshes.new(name)
+     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
++    bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=1e-5)   # GUARD: welded cutter
+     bm.to_mesh(me)
+     bm.free()
+     ob = bpy.data.objects.new(name, me)
+@@ -151,6 +154,9 @@
+     ob.modifiers.clear()
+     ob.data = me
+     bpy.data.meshes.remove(old)
++    for i in reversed(range(len(me.materials))):   # GUARD: a Boolean with a slot-less cutter leaves an EMPTY slot behind
++        if me.materials[i] is None:
++            me.materials.pop(index=i)
+     return ob
+ 
+ 
+@@ -162,14 +168,38 @@
+     return m
+ 
+ 
+-def mirror_x(ob):
+-    """add_mirror_x + apply."""
++def mirror_x(ob, tol=2e-5):
++    """add_mirror_x + apply. GUARD: a part whose inner face lies within `tol` of x = 0 would keep a doubled internal wall
++    (4 faces on its border edges); snap those verts onto x = 0, weld, delete the in-plane faces."""
++    if ob.modifiers:
++        apply_modifiers(ob)
+     add_mirror_x(ob)
+-    return apply_modifiers(ob)
++    near = [v for v in ob.data.vertices if abs(v.co.x) < tol]
++    if not near:
++        return apply_modifiers(ob)
++    for v in near:
++        v.co.x = 0.0
++    apply_modifiers(ob)
++    bm = bmesh.new()
++    bm.from_mesh(ob.data)
++    bmesh.ops.remove_doubles(bm, verts=bm.verts[:], dist=2 * tol)
++    wall = [f for f in bm.faces if all(abs(v.co.x) < tol for v in f.verts)]
++    bmesh.ops.delete(bm, geom=wall, context="FACES")
++    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
++    bm.to_mesh(ob.data)
++    bm.free()
++    return ob
+ 
+ 
+ def bevel_mod(ob, width, angle_deg=30.0, segments=1):
+     """Angle-limited chamfer on every hard edge (1 segment = the Generals flat bevel)."""
++    dims = [max(v.co[i] for v in ob.data.vertices) - min(v.co[i] for v in ob.data.vertices) for i in range(3)] if ob.data.vertices else [1.0] * 3
++    md = min(dims)
++    if width > 0.45 * md:   # GUARD (hard): >= half the thinnest dimension inverts / self-intersects the part
++        GUARD_WARN.append(f"bevel_mod width {width:.4f} > 0.45 x thinnest dimension {md:.4f}: clamped")
++        width = 0.45 * md
++    if width / segments < 3e-4 or width > 0.1 * md:   # GUARD (soft): see FINDINGS.md safe ranges
++        GUARD_WARN.append(f"bevel_mod width {width:.4f} segments {segments} thinnest {md:.4f}: outside the safe range (width/seg >= 0.3 mm, width <= 0.1 x thinnest)")
+     m = ob.modifiers.new("chamfer", "BEVEL")
+     m.width = width
+     m.segments = segments
+@@ -183,6 +213,9 @@
+ def boolean(ob, cutter, op):
+     """Boolean modifier with the MANIFOLD solver (Blender 4.5+/5.x: manifold-in, manifold-out, fast). op is
+     'DIFFERENCE' | 'UNION' | 'INTERSECT'. Stack several, then apply_modifiers once."""
++    if not cutter.data.materials:   # GUARD: cutter carries the target's slots (no empty slot, no out-of-range cutter faces)
++        for mat in ob.data.materials:
++            cutter.data.materials.append(mat)
+     m = ob.modifiers.new("bool_" + op.lower(), "BOOLEAN")
+     m.operation = op
+     m.object = cutter
+@@ -194,7 +227,7 @@
+     """One-shot boolean: bmesh cutter -> temp object -> MANIFOLD boolean -> apply -> cutter deleted.
+     (Any modifiers already on `ob` are applied too, in stack order.)"""
+     cutter = temp_object(cutter_bm, name)
+-    boolean(ob, cutter, op)
++    boolean(ob, cutter, op)   # boolean() copies the target's material slots onto the slot-less cutter
+     apply_modifiers(ob)
+     kill(cutter)
+     return ob
+@@ -254,6 +287,7 @@
+     ring = lambda y: [A(cx - sx, y, cz - sz), A(cx + sx, y, cz - sz), A(cx + sx, y, cz + sz), A(cx - sx, y, cz + sz)]
+     vs, faces = loft(bm, [ring(cy - sy), ring(cy + sy)], mat=mat)
+     if chamfer > 0:
++        chamfer = min(chamfer, 0.45 * min(size))   # GUARD: chamfer >= 0.49 x the thinnest side breaks 92% of boxes
+         edges = list({e for f in faces for e in f.edges})
+         bmesh.ops.bevel(bm, geom=edges, offset=chamfer, offset_type="OFFSET", segments=1, profile=0.5,
+                         affect="EDGES", clamp_overlap=True)
+@@ -367,8 +401,9 @@
+     """Default chamfered tyre cross-section (radius, u along the axle from the tyre centre plane), scaled from the
+     apc pilot (R 0.468, hw 0.20: bore 0.285, shoulder 0.425, 0.045 tread-edge chamfer, 0.01 sidewall draft)."""
+     k = r / 0.468
+-    return [(0.285 * k, -hw + 0.01), (0.425 * k, -hw), (r, -hw + 0.045), (r, 0.0),
+-            (r, hw - 0.045), (0.425 * k, hw), (0.285 * k, hw - 0.01)]
++    kw = min(1.0, hw / 0.20)   # GUARD: the 0.01 / 0.045 offsets were absolute; hw < 0.045 inverted the section (neg. volume 91%)
++    return [(0.285 * k, -hw + 0.01 * kw), (0.425 * k, -hw), (r, -hw + 0.045 * kw), (r, 0.0),
++            (r, hw - 0.045 * kw), (0.425 * k, hw), (0.285 * k, hw - 0.01 * kw)]
+ 
+ 
+ def tyre(bm, centre, r, hw, tread_h=0.042, nseg=16, section=None, lug_len=0.8, lug_drop=0.03, side=1):

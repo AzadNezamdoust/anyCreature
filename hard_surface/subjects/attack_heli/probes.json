@@ -1,0 +1,17 @@
+[
+  {"id":"P1","view":"side","axis":"row","index":394,"from":60,"to":960,"what":"main rotor fore/aft blade row: blade tips 121 / 776, hub 428..463"},
+  {"id":"P2","view":"side","axis":"row","index":646,"from":200,"to":520,"what":"skid runner row: runner 253..466 (ground contact)"},
+  {"id":"P3","view":"side","axis":"row","index":520,"from":120,"to":960,"what":"fuselage / boom mid row: nose 175 .. fin trailing edge 909, stabiliser strip"},
+  {"id":"P4","view":"side","axis":"col","index":445,"from":340,"to":630,"what":"mast column: hub top 371, mast, engine pod top 469, belly 607"},
+  {"id":"P5","view":"side","axis":"col","index":860,"from":370,"to":570,"what":"fin column: fin top 395, boom bottom ~540"},
+  {"id":"P6","view":"side","axis":"row","index":594,"from":90,"to":300,"what":"chin gun row: muzzle 112, turret 185..228, nose belly"},
+  {"id":"P7","view":"front","axis":"row","index":391,"from":150,"to":880,"what":"lateral blade row: tips 209 / 824, hub"},
+  {"id":"P8","view":"front","axis":"col","index":512,"from":350,"to":670,"what":"centreline: hub top 371, mast, canopy 464..544, fuselage, chin turret bottom 623"},
+  {"id":"P9","view":"front","axis":"row","index":552,"from":300,"to":720,"what":"stub wing row: wing tips 347 / 678, fuselage"},
+  {"id":"P10","view":"rear","axis":"row","index":552,"from":300,"to":720,"what":"stub wing row: wing tips 347 / 676, fin/boom column 500..525"},
+  {"id":"P11","view":"rear","axis":"col","index":512,"from":350,"to":670,"what":"centreline: hub top 373, fin, boom, chin turret bottom 624"},
+  {"id":"P12","view":"top","axis":"col","index":450,"from":130,"to":900,"what":"lateral blade column: tips 171 / 853, hub, wings 360..682"},
+  {"id":"P13","view":"top","axis":"row","index":512,"from":80,"to":940,"what":"fore/aft blade row (the S1 bar, 14 px on row 512): tips 109 / 791 (341 px each side of the hub 450), over the nose 178 and the boom; boom tip 892"},
+  {"id":"P14","view":"top","axis":"col","index":828,"from":380,"to":650,"what":"stabiliser column: plate 423..616, tail rotor line 540"},
+  {"id":"P15","view":"concept","axis":"col","index":477,"from":240,"to":820,"what":"mast column: hub cap 380, mast, fuselage top ~470, belly, skid"}
+]

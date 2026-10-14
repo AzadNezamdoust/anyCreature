@@ -1,0 +1,282 @@
+[
+  {
+    "id": "P0",
+    "title": "massing: closed block, roof, perimeter parapet, roof fixtures",
+    "requiredLayoutKeys": [
+      "massing.depthOverW",
+      "crown.height"
+    ],
+    "item": "Build the massing only, as a CLOSED BLOCK. The brick middle building is a full-depth box: a front wall, two side walls that run the WHOLE depth, and a back wall. The roof slab bears on all four of them - nothing may overhang more than {BEARING_SPAN} m past something that carries it. The parapet is a PERIMETER WALL standing on the roof slab, not a solid cap: the roof interior stays visible over it from the solved camera, and its height is inside the {PARAPET_H} m band (role parapet). Add the three plain roof solids the target shows - one vent box and two pipes, 3 roof fixtures in total - as simple boxes and a revolve, nothing shaped. No openings, no trims, no ironwork, no colour work beyond putting each part in the right palette zone. Roles for this pass: massing for the walls, roof for the slab, parapet for the perimeter wall, roof_fixture for the vent and the pipes. Dimensions from subjects/facade_brick/layout.json: the W (your massing's x extent) and H (its y extent) you fix here are what the whole building is measured against, and the block's depth is the key massing.depthOverW - read it and multiply, do not invent a metre. Layout keys this pass must satisfy: massing.depthOverW, crown.height. Done looks like: the silhouette of the middle building in image 1, in the right proportions, standing on the ground, closed on every side, with a parapet you can see over. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+    "instructionRows": [
+      {
+        "match": "Build the massing only, as a CLOSED BLOCK",
+        "rows": [
+          "V11_BEARING",
+          "V12_LAYOUT:massing.depthOverW"
+        ]
+      },
+      {
+        "match": "full-depth box",
+        "rows": [
+          "V11_BEARING",
+          "V12_LAYOUT:massing.depthOverW"
+        ]
+      },
+      {
+        "match": "The roof slab bears on all four",
+        "rows": [
+          "V11_BEARING"
+        ]
+      },
+      {
+        "match": "The parapet is a PERIMETER WALL",
+        "rows": [
+          "V7",
+          "V12_LAYOUT:crown.height",
+          "LK_VALUE:roof"
+        ]
+      },
+      {
+        "match": "Add the three plain roof solids",
+        "rows": [
+          "V12_CENSUS:vent",
+          "V12_CENSUS:pipes"
+        ]
+      },
+      {
+        "match": "No openings, no trims, no ironwork",
+        "rows": [
+          "PALETTE_ZONE"
+        ]
+      },
+      {
+        "match": "Roles for this pass",
+        "rows": [
+          "V7_ROLE"
+        ]
+      },
+      {
+        "match": "Dimensions from subjects/facade_brick/layout.json",
+        "rows": [
+          "V12_LAYOUT:massing.depthOverW"
+        ]
+      },
+      {
+        "match": "Layout keys this pass must satisfy",
+        "rows": [
+          "V12_LAYOUT:massing.depthOverW",
+          "V12_LAYOUT:crown.height"
+        ]
+      },
+      {
+        "match": "Done looks like",
+        "rows": [
+          "V12_LAYOUT:crown.height",
+          "LK_VALUE:brick_front",
+          "LOOK:reads as the target"
+        ]
+      },
+      {
+        "match": "You may reopen any earlier part",
+        "exempt": "process: the previous review's failed rows come back as the review's own rows"
+      }
+    ]
+  },
+  {
+    "id": "P1",
+    "title": "openings + trims: 2 bays x 2 rows of windows, storefront, door, cornice, sills, awning, sign box, AC - four separate ground-floor bands",
+    "requiredLayoutKeys": [
+      "window.w",
+      "window.h",
+      "window.centreX",
+      "window.headBelowCoping",
+      "window.rowPitch",
+      "storefront.h",
+      "door.h",
+      "crown.height",
+      "signbox.h",
+      "signbox.top",
+      "awning.span",
+      "awning.top",
+      "awning.bottom",
+      "storefront.w",
+      "storefront.centreX",
+      "door.w",
+      "door.centreX",
+      "signbox.w",
+      "signbox.centreX",
+      "ac.w",
+      "ac.h",
+      "ac.top",
+      "ac.centreX",
+      "ac.depth",
+      "face.aspect"
+    ],
+    "item": "Cut the openings and add every trim that hangs off the face, in ONE pass - the openings and the things that frame them are the same measurement. The target's brick front has 2 BAYS and 2 upper window ROWS - 4 windows, counted and frozen in subjects/facade_brick/census.json, so do not count them off the image - plus one storefront opening across the ground floor (role storefront) and a RECTANGULAR glazed shop entrance beside it (role door; this building has no arch anywhere). Cut each opening through the wall and put the frame and the glass in it. The frame's width and how far it stands proud are UNVERIFIED in layout.json: nothing gates them, so build what reads and do not pretend a number. Then the trims: a cornice built with K.profile.stepped and extruded ALONG the run of the parapet (role cornice, bearing on the parapet under it); a sill under each UPPER window only (role sill); one awning over the storefront, built as an extruded K.profile.wedge section (role awning); the sign box over the awning (role signbox) and the AC unit beside it, on the sign box's street-left side and VISIBLE at the solved camera, not tucked under a deck (role ac). In the target the deck, the sign, the AC and the awning are four SEPARATE bands, and awning.top, awning.bottom, signbox.top and signbox.h are what keeps them apart - read all four and stack them, do not let one swallow another. Every trim carries load: none may overhang more than {BEARING_SPAN} m past the thing it bears on. Layout keys this pass must satisfy: window.w, window.h, window.centreX, window.headBelowCoping, window.rowPitch, storefront.h, door.h, crown.height, signbox.h, signbox.top, awning.span, awning.top, awning.bottom, storefront.w, storefront.centreX, door.w, door.centreX, signbox.w, signbox.centreX, ac.w, ac.h, ac.top, ac.centreX, ac.depth, face.aspect. Every one of them is a fraction of the W or H you built in P0 - read the number off subjects/facade_brick/layout.json and multiply, do not invent a metre. window.centreX is measured from the STREET-RIGHT edge of the face, which is your massing's MIN x. No ironwork yet. Done looks like: from the solved camera the window pairs sit where the target's do, the top of the building reads as a thin moulded coping, and the shopfront reads as a wide canopy with a sign band clear above it. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+    "instructionRows": [
+      {
+        "match": "Cut the openings and add every trim",
+        "exempt": "scope: what this pass builds or leaves out, not an appearance demand"
+      },
+      {
+        "match": "The target's brick front has 2 BAYS",
+        "rows": [
+          "V12_CENSUS:windows",
+          "V12_CENSUS:bays",
+          "V12_CENSUS:windowRows",
+          "V12_CENSUS:storefront",
+          "V12_CENSUS:doors",
+          "LOOK:door side"
+        ]
+      },
+      {
+        "match": "Cut each opening through the wall and put the frame and the glass in it",
+        "rows": [
+          "LK_VALUE:glass",
+          "LK_VALUE:frame",
+          "V12_LAYOUT:window.w",
+          "V12_LAYOUT:window.h"
+        ]
+      },
+      {
+        "match": "The frame's width and how far it stands proud are UNVERIFIED",
+        "exempt": "states that a key is UNVERIFIED and ungated; asks for nothing measurable"
+      },
+      {
+        "match": "Then the trims",
+        "rows": [
+          "V7_ROLE",
+          "V11_BEARING",
+          "V12_LAYOUT:awning.span",
+          "V12_LAYOUT:signbox.centreX",
+          "V12_LAYOUT:ac.centreX",
+          "LK_VISIBLE:ac",
+          "LK_VISIBLE:signbox",
+          "V12_CENSUS:signbox",
+          "V12_CENSUS:ac"
+        ]
+      },
+      {
+        "match": "four SEPARATE bands",
+        "rows": [
+          "V12_LAYOUT:awning.top",
+          "V12_LAYOUT:awning.bottom",
+          "V12_LAYOUT:signbox.top",
+          "V12_LAYOUT:signbox.h"
+        ]
+      },
+      {
+        "match": "Every trim carries load",
+        "rows": [
+          "V11_BEARING"
+        ]
+      },
+      {
+        "match": "Layout keys this pass must satisfy",
+        "rows": [
+          "V12_LAYOUT:window.w",
+          "V12_LAYOUT:storefront.h",
+          "V12_LAYOUT:face.aspect"
+        ]
+      },
+      {
+        "match": "window.centreX is measured from the STREET-RIGHT edge",
+        "rows": [
+          "V12_LAYOUT:window.centreX"
+        ]
+      },
+      {
+        "match": "No ironwork yet",
+        "exempt": "scope: what this pass builds or leaves out, not an appearance demand"
+      },
+      {
+        "match": "Done looks like",
+        "rows": [
+          "V12_LAYOUT:window.centreX",
+          "V12_LAYOUT:crown.height",
+          "LK_AREA:green",
+          "LK_VALUE:coping",
+          "LOOK:reads as the target"
+        ]
+      },
+      {
+        "match": "You may reopen any earlier part",
+        "exempt": "process: the previous review's failed rows come back as the review's own rows"
+      }
+    ]
+  },
+  {
+    "id": "P2",
+    "title": "ironwork: one K.assemble.fireEscape call + the roof ladder on the SIDE wall",
+    "requiredLayoutKeys": [
+      "landing.rowY",
+      "landing.span",
+      "landing.centreX",
+      "awning.top",
+      "ladder.topBelowCoping",
+      "ladder.roof.face",
+      "ladder.roof.backFromCorner",
+      "ladder.roof.bottom"
+    ],
+    "item": "Add the fire escape with ONE call, every argument a datum from MEASURED NUMBERS: parts.push(...K.assemble.fireEscape({ wall: parts, centreX: <landing.centreX x>, span: <landing.span>, depth: <landing.depth construction default>, levels: [<landing.rowY deck top y, lower>, <upper>], dropLadder: { bottom: <awning.top y> }, idPrefix: \"fe\" })). Then the roof ladder on the street-left SIDE wall: parts.push(...K.assemble.ladder({ face: \"side\", base: [<street-left side x>, <ladder.roof.bottom y>, <ladder.roof.backFromCorner z>], height: <ladder.topBelowCoping ladder top y> - <ladder.roof.bottom y>, width: <roofLadder.width construction default>, idPrefix: \"roof\" })). Layout keys this pass must satisfy: landing.rowY, landing.span, landing.centreX, awning.top, ladder.topBelowCoping, ladder.roof.face, ladder.roof.backFromCorner, ladder.roof.bottom. Done looks like: the ironwork in image 1 - two open landings under the window sills joined by one flight, the drop ladder ending above the awning, the roof ladder on the side wall behind the corner.",
+    "instructionRows": [
+      {
+        "match": "Add the fire escape with ONE call",
+        "rows": [
+          "V11_HANDBUILT",
+          "V11_FLIGHT_ON_DECK",
+          "V11_RAIL_COVERAGE",
+          "V11_DROP_LADDER",
+          "V11_LANDING_GUARD",
+          "V11_LADDER_ACCESS",
+          "V12_LAYOUT:landing.rowY",
+          "V12_LAYOUT:landing.span",
+          "V12_LAYOUT:landing.centreX",
+          "V12_CENSUS:landings",
+          "V12_CENSUS:flights"
+        ]
+      },
+      {
+        "match": "Then the roof ladder on the street-left SIDE wall",
+        "rows": [
+          "V12_LAYOUT:ladder.roof.face",
+          "V12_LAYOUT:ladder.roof.backFromCorner",
+          "V12_LAYOUT:ladder.roof.bottom",
+          "V12_LAYOUT:ladder.topBelowCoping",
+          "V12_CENSUS:ladders"
+        ]
+      },
+      {
+        "match": "Layout keys this pass must satisfy",
+        "rows": [
+          "V12_LAYOUT:landing.rowY",
+          "V12_LAYOUT:landing.span",
+          "V12_LAYOUT:landing.centreX",
+          "V12_LAYOUT:awning.top",
+          "V12_LAYOUT:ladder.roof.bottom"
+        ]
+      },
+      {
+        "match": "Done looks like",
+        "rows": [
+          "LK_AREA:iron",
+          "LK_VISIBLE:ladder",
+          "V11_DROP_LADDER",
+          "LOOK:reads as the target"
+        ]
+      }
+    ],
+    "constructionDefaults": {
+      "landing.depth": {
+        "value": 1.4,
+        "unit": "m",
+        "why": "landing.depth is UNVERIFIED in layout.json; a deck deep enough for the flight and a walkway behind it"
+      },
+      "roofLadder.width": {
+        "value": 0.5,
+        "unit": "m",
+        "why": "stile centres; no layout key measures it"
+      }
+    }
+  }
+]

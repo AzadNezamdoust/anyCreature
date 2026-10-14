@@ -1,0 +1,57 @@
+{
+  "pass": "P1",
+  "dry": false,
+  "item": "Cut the openings and add every trim that hangs off the face, in ONE pass - the openings and the things that frame them are the same measurement. The target's brick front has 2 BAYS and 2 upper window ROWS - 4 windows, counted and frozen in subjects/facade_brick/census.json, so do not count them off the image - plus one storefront opening across the ground floor (role storefront) and a RECTANGULAR glazed shop entrance beside it (role door; this building has no arch anywhere). Cut each opening through the wall and put the frame and the glass in it, with the FRAME STANDING PROUD of the brick and the glass just behind the frame's front face. There is no reveal rule and no 'nothing sits proud' rule - the target's frames are proud with a lit inner face. are UNVERIFIED in layout.json: nothing gates them, so build what reads and do not pretend a number. Then the trims: a cornice built with K.profile.stepped and extruded ALONG the run of the parapet (role cornice, bearing on the parapet under it); a sill under each UPPER window only, projecting 0.05-0.15 m from the brick (role sill) - the storefront gets a flush stall riser, never a knee-height ledge; one awning over the storefront, built as an extruded K.profile.wedge section, projecting no more than 1.5 m (role awning); the sign box over the awning (role signbox) and the AC unit beside it, on the sign box's street-left side and VISIBLE at the solved camera, not tucked under a deck (role ac). In the target the deck, the sign, the AC and the awning are four SEPARATE bands, and awning.top, awning.bottom, signbox.top and signbox.h are what keeps them apart - read all four and stack them, do not let one swallow another. Every trim carries load: none may overhang more than 1.0 m past the thing it bears on. Layout keys this pass must satisfy: window.w, window.h, window.centreX, window.headBelowCoping, window.rowPitch, storefront.h, door.h, crown.height, signbox.h, signbox.top, awning.span, awning.top, awning.bottom. Every one of them is a fraction of the W or H you built in P0 - read the number off subjects/facade_brick/layout.json and multiply, do not invent a metre. window.centreX is measured from the STREET-RIGHT edge of the face, which is your massing's MIN x. No ironwork yet. Done looks like: from the solved camera the window pairs sit where the target's do, their frames catch the light in front of the brick, the top of the building reads as a thin moulded coping, and the shopfront reads as a wide canopy with a sign band clear above it. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+  "gatePass": true,
+  "likenessPass": true,
+  "likenessMs": 847,
+  "likenessCodes": [],
+  "codexSeconds": 441.5,
+  "tokens": 106997,
+  "repairs": 1,
+  "kernelBuildMs": 7,
+  "booleans": 3,
+  "toThreeMs": 10,
+  "validatorMs": 99,
+  "validatorTimings": {
+    "merge": 10,
+    "V1": 2,
+    "V5": 0,
+    "V2": 37,
+    "V3": 40,
+    "V6": 0,
+    "V4": 1,
+    "V7": 0,
+    "V11_BEARING": 5,
+    "V11_LANDING_GAP": 0,
+    "V11_LADDER_ACCESS": 0,
+    "V11_DECK_GAP": 0,
+    "V12": 1,
+    "V12_LAYOUT": 0,
+    "V10": 1,
+    "total": 99
+  },
+  "captureMs": 3564,
+  "captures": {
+    "target": {
+      "ok": true,
+      "ms": 660,
+      "out": "out/facade/P1/target.png"
+    },
+    "threeQuarter": {
+      "ok": true,
+      "ms": 426,
+      "out": "out/facade/P1/threeQuarter.png"
+    },
+    "idpass": {
+      "ok": true,
+      "ms": 378,
+      "out": "out/facade/P1/idpass.png"
+    }
+  },
+  "moduleChanged": true,
+  "answer": "CHANGE: Added four framed windows, sills, glazed shopfront and door, stepped coping, awning, sign, and AC; MISSING KEY storefront.w, storefront.centreX, storefront.bottom, door.w, door.centreX, awning.centreX, awning.depth, signbox.w, signbox.centreX, signbox.depth, ac.size, ac.position.",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "sessionId": "01a0981f-e5b0-7e01-ab3e-9510ffef8a21"
+}

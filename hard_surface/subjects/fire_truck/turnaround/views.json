@@ -1,0 +1,62 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept and the turnaround; families.body names the body family.",
+  "_note": "2026-09-27: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.5 },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "_spanOpen": "2026-09-28 (scripts/v6/README.md 'Span opening'): the x / z body spans are counted on the body mask opened with a 2 x 2 square, so the 1-px anti-alias halo columns / rows of dark outlines (mirror heads, lamps: greys classified as body) no longer widen W / L; setup auditors 2026-09-28",
+    "fgMax": 252,
+    "enclosedFg": false,
+    "_enclosedFg": "OFF: the roof ladder has see-through openings (between the rungs in front / rear, under the rails in the side view) that enclosedFg would fill (research/v7/EYES-EXPERIMENT.md B, tractor)",
+    "_fgMax": "the white stripe is near-white (concept 244-245 darkest channel, turnaround 246-249): the default bg cut (235) would punch it out of the red body; 252 keeps it foreground while the page white (253-255, also inside the ladder gaps) stays background",
+    "table": {
+      "body": ["#d9241c", "#c8271b", "#e32d20", "#b92418"],
+      "grey": "#a6a7a9",
+      "ladder": "#bbbbbc",
+      "glass": "#8aaec8",
+      "dark": ["#333435", "#252527"],
+      "stripe": "#f5f5f5",
+      "lamp": "#fbf9ec"
+    },
+    "viewTable": {
+      "side": { "body": ["#da251d", "#c9281c", "#e42e21", "#ba2519", "#c92b1e", "#b83429"], "grey": ["#a7a8aa"], "ladder": ["#bcbcbd", "#b8bcc0"], "glass": ["#8bafc9", "#8aa8ba"], "dark": ["#343536", "#262628", "#373636"], "stripe": ["#f6f6f6"], "lamp": ["#fcfaed"] },
+      "front": { "body": ["#d91e16", "#c82115", "#e3271a", "#b91e12", "#c82c1f", "#ac2120"], "grey": ["#a6a1a3"], "ladder": ["#bbb5b6", "#b0b3b6", "#c4c1c2"], "glass": ["#8aa8c2", "#8aa8bb"], "dark": ["#332e2f", "#251f21", "#363636", "#1d1c1d"], "stripe": ["#f5efef"], "lamp": ["#fbf3e6"] },
+      "rear": { "body": ["#d42019", "#c32318", "#de291d", "#b42015", "#c9241a", "#a91719", "#b72e26"], "grey": ["#a1a3a6"], "ladder": ["#b6b7b9", "#c5c5c6"], "glass": ["#85aac5"], "dark": ["#2e3032", "#202124", "#343434"], "stripe": ["#f0f1f2"], "lamp": ["#f6f5e9"] },
+      "top": { "body": ["#df281e", "#ce2b1d", "#e93122", "#bf281a", "#bb372b", "#b0211f"], "grey": ["#acabab"], "ladder": ["#c1bfbe", "#c7c2c3"], "glass": ["#90b2ca", "#8faabb"], "dark": ["#393837", "#2b2929"], "stripe": ["#fbf9f7"], "lamp": ["#fffdee"] }
+    },
+    "_viewTable": "2026-09-27: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/fire_truck/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +1.5 +1.3 +1.1 · front -0.4 -5.5 -5.9 · rear -4.9 -3.8 -2.5 · top +6.3 +3.8 +1.9); ambiguous: side #f6f5f4 7.3 % stripe (vs lamp); side #b1b2b5 1.2 % ladder (vs grey); front #f4efdd 2.6 % lamp (vs stripe); front #e1e1e0 1.5 % stripe (vs lamp); rear #f9f8f8 3.6 % stripe (vs lamp); rear #99b3c4 1.8 % glass (vs ladder); rear #ecebea 1.4 % stripe (vs lamp); top #b4b7ba 10.2 % ladder (vs grey). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-28 gold-auditor (proposal, re-audit after the S1 / S2 edits), owner-approved 2026-09-27",
+    "side": [
+      { "id": "D1", "rect": [262, 326, 884, 339], "decides": "concept", "why": "ladder rails 2.97..3.07 m here, z +1.49..-3.02; concept rail top 2.95 (+-0.05: supports ~0.14, rails 0.1 on the 2.75 roof) and z +2.05..-3.11 (front end 1.35 m ahead of the first support at col 500 = z +0.7; unproject 362,382 x 0.43..0.7 -> z 2.0..2.23; 876,240 x 0.7 -> z -3.11): the ladder overhangs the cab by 0.8 m, not 0.3" },
+      { "id": "D3", "rect": [66, 600, 102, 646], "decides": "concept", "why": "front bumper 0.49..0.79 m here; concept 0.34..0.74 at the near corner (unproject 282,769 / 282,722 at z 3.57), 0.23..0.56 at the far end (57,690 / 57,650); front view 0.36..0.66" },
+      { "id": "D4", "rect": [897, 614, 956, 651], "decides": "concept", "why": "rear bumper 0.48 m deep here (z -3.14..-3.62); concept 0.18 (rear corner 965,546,z,-3.53 vs the body rear z -3.35 from 930,282,x,1.25), top view 0.21" }
+    ],
+    "front": [
+      { "id": "D5", "rect": [355, 618, 380, 662], "decides": "concept", "why": "bumper end at -1.26 m here (bumper 2.51 wide, nearly flush with the 2.45 cab); concept bumper 2.70 wide, 0.12 proud per side (unproject 57,690,z,3.57 -> x -1.42; 282,769,z,3.57 -> +1.28)" },
+      { "id": "D6", "rect": [646, 618, 672, 662], "decides": "concept", "why": "bumper end at +1.25 m here; concept +1.28..1.35 (bumper 2.70 wide, 0.12 proud of the 2.46 cab: cab edges at concept cols 82 / 288)" },
+      { "id": "D7", "rect": [545, 324, 596, 352], "decides": "concept", "why": "ladder bar end-on spans -0.27..+0.26 here (post to +0.40); concept ladder x -0.2..+0.65 (near rail outer face 0.55..0.75: col 700 rail bottom 44 px above the roof edge = 0.346 m -> x 0.71; rail tops 44 px apart at col 500 = 0.73 c-to-c): the bar should reach +0.65" }
+    ],
+    "rear": [
+      { "id": "D8", "rect": [428, 324, 475, 352], "decides": "concept", "why": "ladder bar end-on -0.32..+0.32 here (image right = -x: the near flank is image left); concept ladder x -0.2..+0.65 = image cols 433..536: the bar should reach col 433 (post 457..470 moves out with it)" },
+      { "id": "D9", "rect": [536, 324, 570, 345], "decides": "concept", "why": "far post at x -0.34..-0.45 (cols 553..567) and the bar to -0.32 here; concept far rail outer at x -0.2 (col 536): nothing beyond col 536" }
+    ],
+    "top": [
+      { "id": "D10", "rect": [128, 305, 172, 352], "decides": "front", "why": "far mirror head outer edge 1.65 m from the centre here (up +1.368..1.647, z 2.92, angled 30 deg forward); front view 1.47 (comps ladder 665..692 = +1.249..1.470), concept ~1.43" },
+      { "id": "D11", "rect": [128, 668, 172, 715], "decides": "front", "why": "near mirror head outer edge 1.66 m here (up -1.655..-1.384); front view 1.48 (333..360 = -1.479..-1.257), concept ~1.43" }
+    ],
+    "concept": [
+      { "id": "C1", "rect": [95, 425, 210, 470], "decides": "front", "why": "fanning: the front face's top edge slopes 0.24 (windshield top 102,447 -> 300,495) against the bumper bottom's 0.41 (camera mX 0.412): the far-front roof corner unprojects to 2.36..2.47 (105,432 / 300,358 x -1.25) vs the near-front 2.58 (306,493 x 1.25); the front view's level roof line settles it" },
+      { "id": "C2", "rect": [740, 590, 800, 680], "decides": "side", "why": "rear tyre pair drawn touching: hub centres z -1.37 / -2.25 (unproject 760,608 / 858,588 at y 0.47) = 0.88 m apart for a 1.03 m tyre; side view hubs 1.08 m apart (z -1.275 / -2.358), same pair centre -1.82" },
+      { "id": "C3", "rect": [60, 460, 100, 535], "decides": "side", "why": "far mirror hung at the A-pillar, z 3.39, head centre 1.84 m (80,495 x -1.35) while the near mirror is on the door, z 3.13, 1.92 m (330,570 x 1.35): prompt 'a side mirror on each door'; side view mirror z 3.17, head 1.82..2.28" }
+    ]
+  }
+}

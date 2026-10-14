@@ -1,0 +1,25 @@
+{
+  "subject": "light_tank",
+  "noun": "light tank",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28, v2 re-derived 2026-09-29: description + proportions = the concept prompt's paragraph (refs/light_tank.v2.README.md Full prompt = the v2 concept refs/light_tank.v2.png, owner 2026-09-29; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly light tank parked on the ground, seen from the front-left, built with many small separate faceted parts like a detailed game unit. A short compact boxy hull with a steep sloped front plate carrying two small tow hooks at its lower edge and two small flat headlight blocks each inside a small cage guard, a thin flat track guard over each track with no side skirts, and a flat rear engine deck with one raised rectangular grille box made of parallel slats. A small rounded angular turret set a little forward of the middle with a short mantlet block and a medium-length gun barrel pointing straight forward past the nose with a small muzzle collar; on the turret roof a small square hatch with a hinged lid and a small periscope block in front of it; a cluster of three short smoke-grenade launcher tubes on each front corner of the turret, angled forward and up. Along each side a track loop of clearly separate segmented track links over five road wheels each with a raised round hub cap, two small return rollers along the top run of the track, a toothed drive sprocket at the front end and a smooth idler at the rear end. Hull, turret, hatch, track guards and grille box painted one desert tan; gun barrel, mantlet, smoke launchers, tow hooks, headlight guards, tracks, road wheels, return rollers, sprocket and idler dark gunmetal grey, hub caps a slightly lighter grey; headlight lenses pale tan. The engine grille on the rear face faces away and is hidden; the right-hand track and right-hand smoke launchers are hidden behind the hull and turret.",
+  "proportions": "About 6.5 m long including the gun, 2.9 m wide and 2.3 m tall; the five road wheels, return rollers and track links clearly visible. (length : width : height = 2.24 : 1 : 0.79)",
+  "sides": "the light tank is symmetric left to right; the turret, its hatch and periscope block sit on the centre line and the gun points straight forward. Five road wheels per side, no side skirts.",
+  "shape": {
+    "side": "in this view the light tank is 2.83 times as long as it is tall",
+    "front": "in this view its width is 1.26 of its height",
+    "rear": "in this view its width is 1.26 of its height",
+    "top": "in this view it is 2.24 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the engine grille on the hull's rear plate."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 4.906,
+    "W": 2.9,
+    "H": 2.869,
+    "_": "2026-09-29: the installed turnaround registered (hull.mjs --subject light_tank --aniso: L / W = the body-family span, H = the foreground bbox height incl. the roof fittings); the stated size was 6.5 x 2.9 x 2.3 m"
+  }
+}

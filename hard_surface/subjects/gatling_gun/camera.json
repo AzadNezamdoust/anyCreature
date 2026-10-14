@@ -1,0 +1,18 @@
+{
+  "theta_deg": 26.5,
+  "phi_deg": 66,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/gatling_gun.png",
+  "sha256": "de2e566c73a92a69406bf07f33e030cd86db07ce5b0c3b1cf0c6cf19f7b2a7ae",
+  "solved": "2026-10-04T19:46:54.499Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.722,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.551
+  }
+}

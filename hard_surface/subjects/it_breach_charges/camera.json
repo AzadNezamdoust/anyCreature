@@ -1,0 +1,18 @@
+{
+  "theta_deg": 31.75,
+  "phi_deg": 50.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_breach_charges.png",
+  "sha256": "adfe442441a6d5a66a365be188d635c12364a1a7ec2bd44d5ee565c479de5daa",
+  "solved": "2026-10-11T10:38:53.469Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.837,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.812
+  }
+}

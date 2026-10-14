@@ -1,0 +1,81 @@
+{
+  "_ratify": "defaults, owner ratification pending",
+  "_doc": "WF v8 WP5 (research/v7/WF-V8-PLAN.md): the numbers scripts/v7/gold.mjs and the doctor's hull row run on. Every section is a default until the owner ratifies it (validation zone: round / review / budget numbers, the bar, the setup gate). gold.mjs --config <file> runs on another copy (a replay).",
+  "rounds": {
+    "_ratify": "defaults, owner ratification pending",
+    "cap": 3,
+    "types": {
+      "build": { "calls": 100, "rule": "the first round: build the model from the setup's decided facts, the drift rects and the blob table; structure may change" },
+      "list": { "calls": 60, "rule": "the worksheet round: A, B, CONFLICT and X items of the merged worksheet first, then C; structure changes only where an item asks" },
+      "polish": { "calls": 40, "rule": "the last round: A / B / C items only, no structural change (an open X or CONFLICT goes to the owner packet); no critic review follows" }
+    }
+  },
+  "critics": {
+    "_ratify": "defaults, owner ratification pending",
+    "seats": ["opus", "sonnet"],
+    "maxTurns": 40,
+    "maxItems": 10,
+    "_seats": "owner 2026-10-02: Opus 5.5 + Sonnet is the standard pair; fable is a rare tie-break seat only (gold-critic-fable), run in parallel at the owner's call, never the default brief."
+  },
+  "agents": {
+    "modeller": "gold-modeller",
+    "critic": { "opus": "gold-critic-opus", "sonnet": "gold-critic-sonnet", "fable": "gold-critic-fable" },
+    "auditor": "gold-auditor",
+    "_maxTurns": "modeller 120, critic opus 55 / sonnet 55 (fable 40, rare tie-break seat), auditor 60: the briefs read .claude/agents/gold-*.md frontmatter maxTurns (critics.maxTurns is the fallback when a frontmatter has none)"
+  },
+  "bar": {
+    "_ratify": "defaults, owner ratification pending",
+    "agree": 0.97,
+    "_rule": "agree IoU (the drift rects masked as don't-care) >= agree in every turnaround view and the concept; merge.mjs's STOP line uses it"
+  },
+  "setupHull": {
+    "_ratify": "defaults, owner ratification pending",
+    "viewOnly": { "warn": 0.03, "block": 0.06 },
+    "conceptOnlyBlob": { "warn": 0.025, "block": 0.04 },
+    "aspect": { "warn": 0.03, "block": 0.06 },
+    "keep": { "viewOnlyDrop": 0.003, "conceptOnlyBlobRise": 0.0025, "aspectGrow": 0.005 },
+    "_rule": "doctor.mjs `hull` row (hull.mjs): a view's viewOnly (its foreground the other views carve away) above warn -> WARN, above block -> BLOCK; the concept's conceptOnlyBlob (concept foreground outside the views' hull, in >= 20 px blobs) likewise. doctor.mjs `aspect` row (hull.mjs --aniso): |aspect| H/W or L/W (the views' object's proportions against the concept's) above warn -> WARN, above block -> BLOCK. turnaround.mjs: the setup targets are the warn numbers + no residual BLOCK (the doctor's +-3 % band); its repair KEEP rule is set-level: KEEP when every target is met, else KEEP only when the set's worst viewOnly drops >= keep.viewOnlyDrop AND conceptOnlyBlob rises <= keep.conceptOnlyBlobRise AND no |aspect| ratio grows by > keep.aspectGrow AND no new residual BLOCK. aspect warn 3 % and the keep numbers: the orchestrator's 2026-09-28 defaults; aspect block 6 % (2 x warn, as viewOnly): this worker's default."
+  },
+  "setupStop": {
+    "_ratify": "defaults, owner ratification pending",
+    "sets": 3,
+    "view": 3,
+    "_rule": "the setup stop rule (2026-09-28; the marathon needed two re-audit passes to reach it): after `sets` failed whole-set regenerations (turnaround.mjs attempts that errored or missed a setupHull target) or `view` failed repairs of one view (REVERT / FAILED), turnaround.mjs gen / repair refuse (that view / the sheet) and the setup audit's verdict is READY with explicit target-wins rulings (drift rects, decided facts, audit.json acceptBlocks for apply-audit --accept-blocks audit) instead of REGENERATE (goldlib.mjs setupStopOf)."
+  },
+  "eyes": {
+    "_doc": "The files that judge a model (WF-REVIEW-opus.md C11): gold.mjs brief records their hashes (state.json eyesHash), close / merge refuse when one changed during the round, eyes-check re-renders every subject's reference snapshot. Subject templates: {s} subject id, {class}, {target} / {camera} / {layoutMeasured} / {layout} / {census} = subject.json paths (dropped when absent), {views} = every turnaround view image.",
+    "files": [
+      "scripts/v6/judge.mjs",
+      "scripts/v6/ortho.mjs",
+      "scripts/v6/view.mjs",
+      "scripts/v6/rules.mjs",
+      "scripts/registered.mjs",
+      "scripts/project.mjs",
+      "scripts/subject.mjs",
+      "scripts/check-module.mjs",
+      "scripts/v7/lib.mjs",
+      "scripts/v7/step.mjs",
+      "scripts/v7/steplib.mjs",
+      "src/kernel/index.mjs",
+      "src/kernel/profile.mjs",
+      "src/kernel/toThree.mjs",
+      "src/kernel/assemblies.mjs",
+      "src/validate/kernel-chain.mjs",
+      "src/validate/rules/vehicle.mjs",
+      "src/validate/limits.json"
+    ],
+    "subject": [
+      "subjects/{s}/subject.json",
+      "subjects/{s}/prior.json",
+      "subjects/{s}/probes.json",
+      "subjects/{s}/turnaround/views.json",
+      "{views}",
+      "{target}",
+      "{camera}",
+      "{layoutMeasured}",
+      "{layout}",
+      "{census}",
+      "classes/{class}.json"
+    ]
+  }
+}

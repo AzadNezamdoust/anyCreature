@@ -1,0 +1,57 @@
+{
+  "pass": "P0",
+  "dry": false,
+  "item": "Build the massing only, as a CLOSED BLOCK. The brick middle building is a full-depth box: a front wall, two side walls that run the WHOLE depth, and a back wall. The roof slab bears on all four of them - nothing may overhang more than 1.0 m past something that carries it. The parapet is a PERIMETER WALL standing on the roof slab, not a solid cap: the roof interior stays visible over it from the solved camera, and it is 0.3-1.2 m tall (role parapet). Add the three plain roof solids the target shows - one vent box and two pipes, 3 roof fixtures in total - as simple boxes and a revolve, nothing shaped. No openings, no trims, no ironwork, no colour work beyond putting each part in the right palette zone. Roles for this pass: massing for the walls, roof for the slab, parapet for the perimeter wall, roof_fixture for the vent and the pipes. Dimensions from subjects/facade_brick/layout.json: the W (your massing's x extent) and H (its y extent) you fix here are what the whole building is measured against, and the block's depth is the key massing.depthOverW - read it and multiply, do not invent a metre. Layout keys this pass must satisfy: massing.depthOverW, crown.height. Done looks like: the silhouette of the middle building in image 1, in the right proportions, standing on the ground, closed on every side, with a parapet you can see over. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+  "gatePass": true,
+  "likenessPass": true,
+  "likenessMs": 840,
+  "likenessCodes": [],
+  "codexSeconds": 381.8,
+  "tokens": 95902,
+  "repairs": 1,
+  "kernelBuildMs": 1,
+  "booleans": 1,
+  "toThreeMs": 4,
+  "validatorMs": 39,
+  "validatorTimings": {
+    "merge": 4,
+    "V1": 1,
+    "V5": 1,
+    "V2": 11,
+    "V3": 15,
+    "V6": 0,
+    "V4": 0,
+    "V7": 0,
+    "V11_BEARING": 6,
+    "V11_LANDING_GAP": 0,
+    "V11_LADDER_ACCESS": 0,
+    "V11_DECK_GAP": 0,
+    "V12": 0,
+    "V12_LAYOUT": 0,
+    "V10": 1,
+    "total": 39
+  },
+  "captureMs": 3275,
+  "captures": {
+    "target": {
+      "ok": true,
+      "ms": 598,
+      "out": "out/facade/P0/target.png"
+    },
+    "threeQuarter": {
+      "ok": true,
+      "ms": 313,
+      "out": "out/facade/P0/threeQuarter.png"
+    },
+    "idpass": {
+      "ok": true,
+      "ms": 302,
+      "out": "out/facade/P0/idpass.png"
+    }
+  },
+  "moduleChanged": true,
+  "answer": "CHANGE: Replaced smoke geometry with closed massing, supported roof, perimeter parapet, and three roof fixtures; module gate passed; MISSING KEY massing.wallThickness, roof.thickness, crown.thickness, roof_fixture.size, roof_fixture.position.",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "sessionId": "01a09814-bcfc-73f3-9f57-36906670db5f"
+}

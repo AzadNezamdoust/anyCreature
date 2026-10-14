@@ -1,0 +1,25 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "trashcan",
+  "note": "Street bin: a genus-1 `ring` body with a lid plate resting on it. dims = [diameter, height, diameter]. The body is the only place in the subject where the hole is real geometry rather than a painted zone — V1 checks it against the DECLARED genus 1, never against 2.",
+  "params": { "wall": 0.06, "lidThickness": 0.08, "lidOverhang": 0.04, "sides": 12 },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "ring",
+      "dims": ["$w", "$h - $lidThickness", "$d"],
+      "wall": "$wall",
+      "sides": "$sides",
+      "role": "bin"
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": ["$w + 2 * $lidOverhang", "$lidThickness", "$d + 2 * $lidOverhang"],
+      "role": "bin_lid",
+      "zoneKey": "lid",
+      "attach": { "to": "body", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" }
+    }
+  ]
+}

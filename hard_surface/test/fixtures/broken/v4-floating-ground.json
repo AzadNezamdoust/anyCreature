@@ -1,0 +1,50 @@
+{
+  "schema": "pg/1",
+  "subject": "v4_floating_ground",
+  "seed": 1,
+  "class": "prop",
+  "note": "V4: the ground part is repeated upward, so body#1 is a ground part with min y = 0.45 m.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood",
+      "repeat": {
+        "axis": "+Y",
+        "count": 2,
+        "pitch": 0.45
+      }
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": [
+        0.64,
+        0.05,
+        0.64
+      ],
+      "role": "lid",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    }
+  ]
+}

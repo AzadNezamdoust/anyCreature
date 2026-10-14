@@ -1,0 +1,36 @@
+{
+  "subject": "pump_shotgun",
+  "noun": "game pump prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/pump_shotgun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04: shape lines corrected after the sheet (a setup helper had garbled one word in them and left the subject name in shape.side; the generated sheet prompt carried that typo — see out/turnaround/pump_shotgun/attempt-0/prompt.txt)",
+  "description": "A fictional stylised low-poly video-game prop, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). Two long round dark grey tubes, one directly above the other: the upper tube thick with an open front end and a small orange bead on top near that end, the lower tube almost as long and ending in an orange cap; the two joined near the front end by a flat dark grey clamp plate. Round the lower tube, about a third of the way back, a chunky matte black sleeve with four deep vertical grooves on its side. Behind the tubes a slab-sided dark grey main body block with a flat top. Behind the block a matte black handle raked backward, a small curved lever inside a rounded dark grey loop under the block, and a matte black shoulder piece with a straight top line widening to a tall flat end pad. Bright orange accents: the cap on the front end of the lower tube, the small bead on top of the upper tube, and a small round button on the left flank of the main body at its rear end. The right flank is plain.",
+  "proportions": "About 1.00 m long, 0.06 m wide and 0.20 m tall. (length : width : height = 16.67 : 1 : 3.33)",
+  "sides": "the small orange round button is on the left flank; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 5.00 times as long as it is tall",
+    "front": "in this view its width is 0.30 of its height",
+    "rear": "in this view its width is 0.30 of its height",
+    "top": "in this view it is 16.67 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the two tubes exactly horizontal, the open end of the upper tube and the orange cap of the lower tube at the left end of the image, the grooved black sleeve on the lower tube, the main body block right of the middle, the loop and the raked handle below it, the shoulder piece with its end pad at the right end of the image.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the round open end of the upper tube with a dark centre, the small orange bead on top of it, directly below it the round orange cap of the lower tube, the clamp plate round both, the slightly wider black sleeve outline behind the lower tube, and the handle hanging below.",
+    "rear": "Seen from the rear end: the tall flat black end pad is in front of everything on the centre line, the top edge of the main body block shows just above it, the handle hangs below it.",
+    "top": "Seen from above the prop is a long thin strip: the upper tube runs along the centre line from the left end with the small orange bead near that end, the black sleeve shows as a slightly wider band on both sides, the main body block, then the shoulder piece narrowing and widening to the end pad at the right end; the handle and the loop are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small orange round button",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 1,
+    "W": 0.06,
+    "H": 0.2,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

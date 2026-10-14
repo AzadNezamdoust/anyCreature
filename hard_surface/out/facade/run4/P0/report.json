@@ -1,0 +1,303 @@
+{
+  "pass": true,
+  "violations": [],
+  "advisories": [],
+  "text": "PASS: V0-V7 + V10 clean.",
+  "measurements": {
+    "parts": 10,
+    "tris": 244,
+    "triBudget": 3000,
+    "materials": 1,
+    "bounds": {
+      "w": 7.5,
+      "h": 17.5065,
+      "d": 6.555,
+      "minY": 0,
+      "centre": [
+        0,
+        8.75325,
+        3.2775
+      ],
+      "min": [
+        -3.75,
+        0,
+        0
+      ],
+      "max": [
+        3.75,
+        17.5065,
+        6.555
+      ]
+    },
+    "minFeature": 0.06,
+    "eps": 0.01,
+    "census": "applied",
+    "layout": "applied",
+    "booleanPairs": 20,
+    "distancePairs": 19,
+    "perPart": [
+      {
+        "id": "wall_front",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 34.155,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.45,
+            16.5,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_back",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 34.155,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            6.254999999999999
+          ],
+          "max": [
+            3.45,
+            16.5,
+            6.554999999999999
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_left",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.75,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_right",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            -3.75,
+            0,
+            0
+          ],
+          "max": [
+            -3.45,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "block_core",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 677.97675,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            0.2999999999999998
+          ],
+          "max": [
+            3.45,
+            16.5,
+            6.255
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "roof_slab",
+        "role": "roof",
+        "zone": "roof",
+        "tris": 12,
+        "volume": 4.867088,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.5,
+            0
+          ],
+          "max": [
+            3.75,
+            16.599,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "parapet",
+          "vent_box",
+          "pipe_0",
+          "pipe_1"
+        ]
+      },
+      {
+        "id": "parapet",
+        "role": "parapet",
+        "zone": "brick",
+        "tris": 32,
+        "volume": 3.330113,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.599,
+            0
+          ],
+          "max": [
+            3.75,
+            17.0115,
+            6.555
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "vent_box",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 12,
+        "volume": 2.041875,
+        "aabb": {
+          "min": [
+            -2.625,
+            16.599,
+            3.8385
+          ],
+          "max": [
+            -1.125,
+            17.5065,
+            5.3385
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_0",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.032733,
+        "aabb": {
+          "min": [
+            2.205000002682209,
+            16.599,
+            2.305350002682209
+          ],
+          "max": [
+            2.444999997317791,
+            17.341499999701977,
+            2.545349997317791
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_1",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.023655,
+        "aabb": {
+          "min": [
+            2.2125000029802324,
+            16.599,
+            1.4607000029802322
+          ],
+          "max": [
+            2.437499997019768,
+            17.209500000417233,
+            1.6856999970197677
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      }
+    ]
+  },
+  "timings": {
+    "merge": 4,
+    "V1": 1,
+    "V5": 1,
+    "V2": 11,
+    "V3": 15,
+    "V6": 0,
+    "V4": 0,
+    "V7": 0,
+    "V11_BEARING": 6,
+    "V11_LANDING_GAP": 0,
+    "V11_LADDER_ACCESS": 0,
+    "V11_DECK_GAP": 0,
+    "V12": 0,
+    "V12_LAYOUT": 0,
+    "V10": 1,
+    "total": 39
+  }
+}

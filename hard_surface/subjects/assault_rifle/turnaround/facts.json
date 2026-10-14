@@ -1,0 +1,36 @@
+{
+  "subject": "assault_rifle",
+  "noun": "game rifle prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/assault_rifle.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/assault_rifle.png (charging handle knob + selector on the visible left flank; ejection port + bolt release hidden on the right); 2026-10-04: sheet attempt-0 was rejected by the GPT image safety system (safety_violations=[illicit]) with the concept paragraph verbatim — noun / description / sides / faces / asymmetric reworded as a fictional low-poly video-game prop described by its shapes and colours only (same parts, same colours; mechanism names dropped)",
+  "description": "A fictional stylised low-poly video-game prop in the shape of a rifle, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A long dark grey main body block with a flat ridged strip along its whole top, a small boxy block standing at the back end of the strip and a small triangular frame standing above the thin front tube near the front end. A straight round dark grey tube sticking out of the front and ending in a chunky cylinder with two side slots. A matte black front cover, octagonal in section, wrapping the rear two thirds of the tube, with three oval slots along its side. Under the main body a matte black handle raked backward, a small curved lever inside a rounded black loop, and in front of the loop a curved matte black box hanging down and forward. At the rear a matte black shoulder piece: a straight bar from the main body to a tall flat end plate with a triangular lower strut. Bright orange accents: the bottom plate of the curved box, a small knob on the left flank of the main body, and a thin band round the front end of the octagonal cover. A small dark grey lever on the left flank above the handle. The right flank is plain.",
+  "proportions": "About 0.90 m long, 0.07 m wide and 0.26 m tall. (length : width : height = 12.86 : 1 : 3.71)",
+  "sides": "the small orange knob and the small dark grey lever are on the left flank; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the assault rifle is 3.46 times as long as it is tall",
+    "front": "in this view its width is 0.27 of its height",
+    "rear": "in this view its width is 0.27 of its height",
+    "top": "in this view it is 12.86 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the tube and the top strip exactly horizontal, the curved box and the handle hanging below, the end plate at the right end of the image.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the round end of the chunky cylinder with a dark centre hole in the middle, the triangular frame above it, the octagonal end of the front cover with its orange band behind it, the curved box and the handle hanging below.",
+    "rear": "Seen from the rear end: the tall flat end plate is in front of everything on the centre line, the small boxy block shows above it, the handle and the curved box below it.",
+    "top": "Seen from above the prop is a long thin strip: the ridged strip runs along the centre line, the chunky cylinder at the left end, the shoulder piece and end plate at the right end; the handle and the curved box are hidden under the main body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small orange knob and the small dark grey lever",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.9,
+    "W": 0.07,
+    "H": 0.26,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

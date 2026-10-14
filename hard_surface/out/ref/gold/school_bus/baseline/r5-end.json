@@ -1,0 +1,1336 @@
+{
+  "subject": "school_bus",
+  "module": "out/ref/gold/school_bus/model.mjs",
+  "at": "2026-09-27T19:09:28.673Z",
+  "baseline": null,
+  "note": null,
+  "views": {
+    "side": {
+      "iou": 0.9643,
+      "agree": 0.9643,
+      "drift": 0,
+      "zone": 0.3258,
+      "fam": {
+        "glass": 0.8119,
+        "tyre+black": 0.5688,
+        "hub": 0.563,
+        "headlight": 0,
+        "amber": 0,
+        "signal": 0.1787,
+        "orange": 0.1578
+      }
+    },
+    "front": {
+      "iou": 0.9687,
+      "agree": 0.9687,
+      "drift": 0,
+      "zone": 0.3749,
+      "fam": {
+        "glass": 0.7666,
+        "tyre+black": 0.6132,
+        "hub": 0,
+        "headlight": 0.6839,
+        "amber": 0.4953,
+        "signal": 0.0549,
+        "orange": 0.0106
+      }
+    },
+    "rear": {
+      "iou": 0.9411,
+      "agree": 0.9411,
+      "drift": 0,
+      "zone": 0.4756,
+      "fam": {
+        "glass": 0.9913,
+        "tyre+black": 0.7871,
+        "hub": 0,
+        "headlight": 0,
+        "amber": 0.7094,
+        "signal": 0.8413,
+        "orange": 0
+      }
+    },
+    "top": {
+      "iou": 0.9709,
+      "agree": 0.9709,
+      "drift": 0,
+      "zone": 0.1786,
+      "fam": {
+        "glass": 1,
+        "tyre+black": 0.2505,
+        "hub": 0,
+        "headlight": 0,
+        "amber": 0,
+        "signal": 0,
+        "orange": 0
+      }
+    },
+    "concept": {
+      "iou": 0.9638,
+      "agree": 0.9638,
+      "drift": 0
+    }
+  },
+  "minAgree": 0.9411,
+  "minOrtho": 0.9411,
+  "minView": 0.9411,
+  "score": 0.9621,
+  "sigma": 1.0027,
+  "symmetry": 1,
+  "tris": 3742,
+  "budget": 4000,
+  "checks": {
+    "groups": [
+      {
+        "name": "bumper_front",
+        "parts": [
+          "bumper_front"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.9)"
+      },
+      {
+        "name": "bumper_rear",
+        "parts": [
+          "bumper_rear"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.9)"
+      },
+      {
+        "name": "mirror_l",
+        "parts": [
+          "mirror_head_l",
+          "mirror_arm_l0",
+          "mirror_arm_l1",
+          "mirror_arm_l2",
+          "mirror_arm_l3"
+        ],
+        "float": false,
+        "why": "chain ok"
+      },
+      {
+        "name": "mirror_r",
+        "parts": [
+          "mirror_head_r",
+          "mirror_arm_r0",
+          "mirror_arm_r1",
+          "mirror_arm_r2",
+          "mirror_arm_r3"
+        ],
+        "float": false,
+        "why": "chain ok"
+      },
+      {
+        "name": "stopArm",
+        "parts": [
+          "stopArm_rim",
+          "stopArm_border",
+          "stopArm_sign",
+          "stopArm_post",
+          "stopArm_hinge"
+        ],
+        "backed": 0.843,
+        "float": false,
+        "why": "min backed fraction 0.843 (rule >= 0.5)"
+      },
+      {
+        "name": "headlights",
+        "parts": [
+          "lamp_l",
+          "lamp_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "turn",
+        "parts": [
+          "turn_l",
+          "turn_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "markers",
+        "parts": [
+          "marker_housing_l",
+          "marker_l0",
+          "marker_l1",
+          "marker_housing_r",
+          "marker_r0",
+          "marker_r1"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "rearLamps",
+        "parts": [
+          "rearLamp_l",
+          "rearLamp_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      }
+    ],
+    "clips": [],
+    "mirror": {
+      "armLength": 0.256,
+      "reach": 0.509,
+      "swept": {
+        "gap": 0.023,
+        "yOverlap": false,
+        "clip": false
+      },
+      "armOk": true
+    },
+    "pass": true
+  },
+  "placementRows": [],
+  "blobs": {
+    "side": [
+      {
+        "kind": "missing",
+        "px": 5062,
+        "share": 0.0191,
+        "bbox": {
+          "right": [
+            -3.317,
+            -2.993
+          ],
+          "up": [
+            1.265,
+            2.754
+          ]
+        },
+        "centroid": [
+          -3.138,
+          1.953
+        ],
+        "bboxPx": [
+          88,
+          335,
+          130,
+          528
+        ],
+        "part": "mirror_head_l"
+      },
+      {
+        "kind": "missing",
+        "px": 1186,
+        "share": 0.0045,
+        "bbox": {
+          "right": [
+            -1.651,
+            1.358
+          ],
+          "up": [
+            0.363,
+            0.417
+          ]
+        },
+        "centroid": [
+          -0.142,
+          0.405
+        ],
+        "bboxPx": [
+          304,
+          638,
+          694,
+          645
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "missing",
+        "px": 189,
+        "share": 0.0007,
+        "bbox": {
+          "right": [
+            3.193,
+            3.224
+          ],
+          "up": [
+            0.363,
+            0.733
+          ]
+        },
+        "centroid": [
+          3.209,
+          0.549
+        ],
+        "bboxPx": [
+          932,
+          597,
+          936,
+          645
+        ],
+        "part": "bumper_rear"
+      },
+      {
+        "kind": "missing",
+        "px": 159,
+        "share": 0.0006,
+        "bbox": {
+          "right": [
+            2.26,
+            2.669
+          ],
+          "up": [
+            0.393,
+            0.417
+          ]
+        },
+        "centroid": [
+          2.464,
+          0.405
+        ],
+        "bboxPx": [
+          811,
+          638,
+          864,
+          641
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "missing",
+        "px": 135,
+        "share": 0.0005,
+        "bbox": {
+          "right": [
+            -2.9,
+            -2.553
+          ],
+          "up": [
+            0.393,
+            0.417
+          ]
+        },
+        "centroid": [
+          -2.727,
+          0.405
+        ],
+        "bboxPx": [
+          142,
+          638,
+          187,
+          641
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "extra",
+        "px": 90,
+        "share": 0.0003,
+        "bbox": {
+          "right": [
+            2.669,
+            2.785
+          ],
+          "up": [
+            0.347,
+            0.393
+          ]
+        },
+        "centroid": [
+          2.727,
+          0.37
+        ],
+        "bboxPx": [
+          864,
+          641,
+          879,
+          647
+        ],
+        "part": "bumper_rear"
+      }
+    ],
+    "front": [
+      {
+        "kind": "missing",
+        "px": 301,
+        "share": 0.0027,
+        "bbox": {
+          "right": [
+            1.265,
+            1.311
+          ],
+          "up": [
+            1.088,
+            1.512
+          ]
+        },
+        "centroid": [
+          1.288,
+          1.294
+        ],
+        "bboxPx": [
+          676,
+          496,
+          682,
+          551
+        ],
+        "part": "stopArm_post"
+      },
+      {
+        "kind": "extra",
+        "px": 255,
+        "share": 0.0023,
+        "bbox": {
+          "right": [
+            -1.211,
+            -1.111
+          ],
+          "up": [
+            0,
+            0.285
+          ]
+        },
+        "centroid": [
+          -1.153,
+          0.151
+        ],
+        "bboxPx": [
+          355,
+          655,
+          368,
+          692
+        ],
+        "part": "wheel_fr"
+      },
+      {
+        "kind": "extra",
+        "px": 254,
+        "share": 0.0022,
+        "bbox": {
+          "right": [
+            1.111,
+            1.211
+          ],
+          "up": [
+            0,
+            0.285
+          ]
+        },
+        "centroid": [
+          1.153,
+          0.151
+        ],
+        "bboxPx": [
+          656,
+          655,
+          669,
+          692
+        ],
+        "part": "wheel_fl"
+      },
+      {
+        "kind": "missing",
+        "px": 140,
+        "share": 0.0012,
+        "bbox": {
+          "right": [
+            -1.396,
+            -1.242
+          ],
+          "up": [
+            2.198,
+            2.252
+          ]
+        },
+        "centroid": [
+          -1.319,
+          2.225
+        ],
+        "bboxPx": [
+          331,
+          400,
+          351,
+          407
+        ],
+        "part": "mirror_arm_r0"
+      },
+      {
+        "kind": "missing",
+        "px": 120,
+        "share": 0.0011,
+        "bbox": {
+          "right": [
+            1.242,
+            1.396
+          ],
+          "up": [
+            2.206,
+            2.252
+          ]
+        },
+        "centroid": [
+          1.319,
+          2.229
+        ],
+        "bboxPx": [
+          673,
+          400,
+          693,
+          406
+        ],
+        "part": "mirror_arm_l0"
+      },
+      {
+        "kind": "extra",
+        "px": 119,
+        "share": 0.0011,
+        "bbox": {
+          "right": [
+            -0.779,
+            -0.74
+          ],
+          "up": [
+            0,
+            0.285
+          ]
+        },
+        "centroid": [
+          -0.753,
+          0.134
+        ],
+        "bboxPx": [
+          411,
+          655,
+          416,
+          692
+        ],
+        "part": "wheel_rr"
+      },
+      {
+        "kind": "extra",
+        "px": 119,
+        "share": 0.0011,
+        "bbox": {
+          "right": [
+            0.74,
+            0.779
+          ],
+          "up": [
+            0,
+            0.285
+          ]
+        },
+        "centroid": [
+          0.753,
+          0.134
+        ],
+        "bboxPx": [
+          608,
+          655,
+          613,
+          692
+        ],
+        "part": "wheel_rl"
+      },
+      {
+        "kind": "missing",
+        "px": 94,
+        "share": 0.0008,
+        "bbox": {
+          "right": [
+            -1.427,
+            -1.242
+          ],
+          "up": [
+            1.504,
+            1.535
+          ]
+        },
+        "centroid": [
+          -1.333,
+          1.52
+        ],
+        "bboxPx": [
+          327,
+          493,
+          351,
+          497
+        ],
+        "part": "mirror_arm_r1"
+      },
+      {
+        "kind": "extra",
+        "px": 89,
+        "share": 0.0008,
+        "bbox": {
+          "right": [
+            -1.45,
+            -1.242
+          ],
+          "up": [
+            2.252,
+            2.291
+          ]
+        },
+        "centroid": [
+          -1.354,
+          2.278
+        ],
+        "bboxPx": [
+          324,
+          395,
+          351,
+          400
+        ],
+        "part": "mirror_arm_r0"
+      },
+      {
+        "kind": "missing",
+        "px": 60,
+        "share": 0.0005,
+        "bbox": {
+          "right": [
+            1.242,
+            1.396
+          ],
+          "up": [
+            1.574,
+            1.597
+          ]
+        },
+        "centroid": [
+          1.319,
+          1.585
+        ],
+        "bboxPx": [
+          673,
+          485,
+          693,
+          488
+        ],
+        "part": "mirror_arm_l1"
+      }
+    ],
+    "rear": [
+      {
+        "kind": "extra",
+        "px": 1840,
+        "share": 0.0164,
+        "bbox": {
+          "right": [
+            -0.71,
+            0.71
+          ],
+          "up": [
+            0.293,
+            0.37
+          ]
+        },
+        "centroid": [
+          0,
+          0.332
+        ],
+        "bboxPx": [
+          420,
+          644,
+          604,
+          654
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "extra",
+        "px": 376,
+        "share": 0.0033,
+        "bbox": {
+          "right": [
+            1.118,
+            1.28
+          ],
+          "up": [
+            0,
+            0.37
+          ]
+        },
+        "centroid": [
+          1.185,
+          0.24
+        ],
+        "bboxPx": [
+          657,
+          644,
+          678,
+          692
+        ],
+        "part": "wheel_rr"
+      },
+      {
+        "kind": "extra",
+        "px": 375,
+        "share": 0.0033,
+        "bbox": {
+          "right": [
+            -1.28,
+            -1.118
+          ],
+          "up": [
+            0,
+            0.37
+          ]
+        },
+        "centroid": [
+          -1.185,
+          0.241
+        ],
+        "bboxPx": [
+          346,
+          644,
+          367,
+          692
+        ],
+        "part": "wheel_rl"
+      },
+      {
+        "kind": "missing",
+        "px": 275,
+        "share": 0.0024,
+        "bbox": {
+          "right": [
+            -1.311,
+            -1.265
+          ],
+          "up": [
+            1.157,
+            1.535
+          ]
+        },
+        "centroid": [
+          -1.289,
+          1.344
+        ],
+        "bboxPx": [
+          342,
+          493,
+          348,
+          542
+        ],
+        "part": "stopArm_rim"
+      },
+      {
+        "kind": "missing",
+        "px": 220,
+        "share": 0.002,
+        "bbox": {
+          "right": [
+            -1.311,
+            -1.242
+          ],
+          "up": [
+            0.386,
+            0.71
+          ]
+        },
+        "centroid": [
+          -1.286,
+          0.576
+        ],
+        "bboxPx": [
+          342,
+          600,
+          351,
+          642
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "missing",
+        "px": 219,
+        "share": 0.0019,
+        "bbox": {
+          "right": [
+            1.242,
+            1.311
+          ],
+          "up": [
+            0.386,
+            0.71
+          ]
+        },
+        "centroid": [
+          1.286,
+          0.576
+        ],
+        "bboxPx": [
+          673,
+          600,
+          682,
+          642
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "extra",
+        "px": 159,
+        "share": 0.0014,
+        "bbox": {
+          "right": [
+            1.242,
+            1.45
+          ],
+          "up": [
+            1.535,
+            1.604
+          ]
+        },
+        "centroid": [
+          1.358,
+          1.559
+        ],
+        "bboxPx": [
+          673,
+          484,
+          700,
+          493
+        ],
+        "part": "mirror_arm_r1"
+      },
+      {
+        "kind": "missing",
+        "px": 138,
+        "share": 0.0012,
+        "bbox": {
+          "right": [
+            -1.396,
+            -1.242
+          ],
+          "up": [
+            1.597,
+            1.666
+          ]
+        },
+        "centroid": [
+          -1.308,
+          1.625
+        ],
+        "bboxPx": [
+          331,
+          476,
+          351,
+          485
+        ],
+        "part": "mirror_head_l"
+      },
+      {
+        "kind": "missing",
+        "px": 138,
+        "share": 0.0012,
+        "bbox": {
+          "right": [
+            1.242,
+            1.396
+          ],
+          "up": [
+            1.597,
+            1.666
+          ]
+        },
+        "centroid": [
+          1.308,
+          1.625
+        ],
+        "bboxPx": [
+          673,
+          476,
+          693,
+          485
+        ],
+        "part": "mirror_head_r"
+      },
+      {
+        "kind": "extra",
+        "px": 117,
+        "share": 0.001,
+        "bbox": {
+          "right": [
+            -1.45,
+            -1.304
+          ],
+          "up": [
+            1.535,
+            1.604
+          ]
+        },
+        "centroid": [
+          -1.388,
+          1.561
+        ],
+        "bboxPx": [
+          324,
+          484,
+          343,
+          493
+        ],
+        "part": "mirror_arm_l1"
+      }
+    ],
+    "top": [
+      {
+        "kind": "missing",
+        "px": 2065,
+        "share": 0.0076,
+        "bbox": {
+          "right": [
+            3.19,
+            3.244
+          ],
+          "up": [
+            -1.145,
+            1.145
+          ]
+        },
+        "centroid": [
+          3.216,
+          0
+        ],
+        "bboxPx": [
+          926,
+          363,
+          933,
+          660
+        ],
+        "part": "bumper_rear"
+      },
+      {
+        "kind": "missing",
+        "px": 1728,
+        "share": 0.0063,
+        "bbox": {
+          "right": [
+            -3.483,
+            -3.051
+          ],
+          "up": [
+            -1.493,
+            -1.084
+          ]
+        },
+        "centroid": [
+          -3.344,
+          -1.292
+        ],
+        "bboxPx": [
+          61,
+          652,
+          117,
+          705
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "missing",
+        "px": 1553,
+        "share": 0.0057,
+        "bbox": {
+          "right": [
+            -3.483,
+            -3.228
+          ],
+          "up": [
+            1.014,
+            1.415
+          ]
+        },
+        "centroid": [
+          -3.364,
+          1.22
+        ],
+        "bboxPx": [
+          61,
+          328,
+          94,
+          380
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "missing",
+        "px": 620,
+        "share": 0.0023,
+        "bbox": {
+          "right": [
+            -2.858,
+            -2.241
+          ],
+          "up": [
+            -1.323,
+            -1.246
+          ]
+        },
+        "centroid": [
+          -2.565,
+          -1.287
+        ],
+        "bboxPx": [
+          142,
+          673,
+          222,
+          683
+        ],
+        "part": "door_leaf"
+      },
+      {
+        "kind": "extra",
+        "px": 492,
+        "share": 0.0018,
+        "bbox": {
+          "right": [
+            -3.213,
+            -2.927
+          ],
+          "up": [
+            1.215,
+            1.547
+          ]
+        },
+        "centroid": [
+          -3.003,
+          1.356
+        ],
+        "bboxPx": [
+          96,
+          311,
+          133,
+          354
+        ],
+        "part": "mirror_head_r"
+      },
+      {
+        "kind": "extra",
+        "px": 423,
+        "share": 0.0015,
+        "bbox": {
+          "right": [
+            -3.259,
+            -3.112
+          ],
+          "up": [
+            -1.261,
+            -0.991
+          ]
+        },
+        "centroid": [
+          -3.191,
+          -1.133
+        ],
+        "bboxPx": [
+          90,
+          640,
+          109,
+          675
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "extra",
+        "px": 421,
+        "share": 0.0015,
+        "bbox": {
+          "right": [
+            -3.051,
+            -2.927
+          ],
+          "up": [
+            -1.547,
+            -1.215
+          ]
+        },
+        "centroid": [
+          -2.982,
+          -1.371
+        ],
+        "bboxPx": [
+          117,
+          669,
+          133,
+          712
+        ],
+        "part": "mirror_head_l"
+      },
+      {
+        "kind": "extra",
+        "px": 332,
+        "share": 0.0012,
+        "bbox": {
+          "right": [
+            -3.259,
+            -3.136
+          ],
+          "up": [
+            0.96,
+            1.184
+          ]
+        },
+        "centroid": [
+          -3.192,
+          1.074
+        ],
+        "bboxPx": [
+          90,
+          358,
+          106,
+          387
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "extra",
+        "px": 162,
+        "share": 0.0006,
+        "bbox": {
+          "right": [
+            -2.233,
+            -1.817
+          ],
+          "up": [
+            -1.261,
+            -1.238
+          ]
+        },
+        "centroid": [
+          -2.025,
+          -1.25
+        ],
+        "bboxPx": [
+          223,
+          672,
+          277,
+          675
+        ],
+        "part": "stopArm_rim"
+      },
+      {
+        "kind": "missing",
+        "px": 53,
+        "share": 0.0002,
+        "bbox": {
+          "right": [
+            -3.143,
+            -3.051
+          ],
+          "up": [
+            1.184,
+            1.223
+          ]
+        },
+        "centroid": [
+          -3.101,
+          1.205
+        ],
+        "bboxPx": [
+          105,
+          353,
+          117,
+          358
+        ],
+        "part": "bumper_front"
+      }
+    ],
+    "concept": [
+      {
+        "kind": "extra",
+        "px": 5471,
+        "share": 0.0116,
+        "bbox": [
+          23,
+          472,
+          80,
+          776
+        ],
+        "centroid": [
+          48.9,
+          636.8
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "missing",
+        "px": 2616,
+        "share": 0.0056,
+        "bbox": [
+          406,
+          784,
+          491,
+          879
+        ],
+        "centroid": [
+          458.7,
+          835.2
+        ],
+        "part": "wheel_fl"
+      },
+      {
+        "kind": "missing",
+        "px": 1967,
+        "share": 0.0042,
+        "bbox": [
+          478,
+          112,
+          794,
+          235
+        ],
+        "centroid": [
+          646,
+          156.6
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "missing",
+        "px": 1146,
+        "share": 0.0024,
+        "bbox": [
+          759,
+          639,
+          870,
+          683
+        ],
+        "centroid": [
+          810.2,
+          667.5
+        ],
+        "part": "wheel_rl"
+      },
+      {
+        "kind": "missing",
+        "px": 1144,
+        "share": 0.0024,
+        "bbox": [
+          300,
+          853,
+          360,
+          903
+        ],
+        "centroid": [
+          337,
+          879.8
+        ],
+        "part": "bumper_front"
+      },
+      {
+        "kind": "extra",
+        "px": 1120,
+        "share": 0.0024,
+        "bbox": [
+          68,
+          369,
+          199,
+          482
+        ],
+        "centroid": [
+          101.8,
+          430
+        ],
+        "part": "cab"
+      },
+      {
+        "kind": "missing",
+        "px": 852,
+        "share": 0.0018,
+        "bbox": [
+          56,
+          491,
+          68,
+          579
+        ],
+        "centroid": [
+          62.6,
+          534.8
+        ],
+        "part": "windshield_frame"
+      },
+      {
+        "kind": "extra",
+        "px": 564,
+        "share": 0.0012,
+        "bbox": [
+          68,
+          492,
+          81,
+          578
+        ],
+        "centroid": [
+          76.8,
+          538.8
+        ],
+        "part": "windshield_frame"
+      },
+      {
+        "kind": "extra",
+        "px": 185,
+        "share": 0.0004,
+        "bbox": [
+          364,
+          858,
+          399,
+          874
+        ],
+        "centroid": [
+          380.6,
+          866
+        ],
+        "part": "wheel_fl"
+      },
+      {
+        "kind": "extra",
+        "px": 58,
+        "share": 0.0001,
+        "bbox": [
+          203,
+          359,
+          220,
+          369
+        ],
+        "centroid": [
+          211.5,
+          364
+        ],
+        "part": "cab"
+      }
+    ]
+  },
+  "chain": {
+    "pass": true,
+    "tris": 3742,
+    "budget": 4000,
+    "rows": []
+  },
+  "checkModule": {
+    "pass": true,
+    "line": "PASS out/ref/gold/school_bus/model.mjs — 86 parts, 3742 tris, 110 booleans"
+  },
+  "frame": {
+    "knobs": {
+      "scale": 0.8173,
+      "tx": -24.35,
+      "ty": 26.85
+    },
+    "fit": {
+      "scale": 0.8173,
+      "tx": -24.35,
+      "ty": 26.85
+    },
+    "knobIoU": 0.9638,
+    "fitIoU": 0.9638
+  },
+  "probes": [],
+  "verdict": {
+    "keep": true,
+    "reasons": [],
+    "notes": []
+  }
+}

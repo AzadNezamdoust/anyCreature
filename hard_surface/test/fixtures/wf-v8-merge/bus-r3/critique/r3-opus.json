@@ -1,0 +1,10 @@
+{
+  "subject": "school_bus",
+  "round": 3,
+  "seat": "opus",
+  "done": true,
+  "items": [
+    { "sev": "MINOR", "key": "def:br.bot", "now": 0.38, "want": 0.35, "unit": "m", "views": ["rear", "side"], "basis": "rear",
+      "at": null, "evidence": [], "reopens": null, "note": "school_bus r3 Opus item 1: rear bumper bottom 0.38 -> 0.35" }
+  ]
+}

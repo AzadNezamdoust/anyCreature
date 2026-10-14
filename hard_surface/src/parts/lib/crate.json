@@ -1,0 +1,30 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "crate",
+  "note": "Stackable wooden crate: a chamfered body with one banding plate across its front face. The band is ZONE-ONLY relief (one plate, half embedded), not a repeat of slats: at the frozen 900 px capture a 3 cm slat gap is sub-pixel and V5 would collapse the repeat anyway.",
+  "params": { "bandHeight": 0.14, "bandThickness": 0.06, "bandInset": 0.08, "bevel": 0.04 },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": ["$w", "$h", "$d"],
+      "bevel": "$bevel",
+      "role": "crate"
+    },
+    {
+      "id": "band",
+      "prim": "plate",
+      "dims": ["$w - 2 * $bandInset", "$bandHeight", "$bandThickness"],
+      "role": "crate_band",
+      "zoneKey": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Z",
+        "uv": [0.5, 0.5],
+        "contact": "flush",
+        "embed": "$bandThickness / 2"
+      }
+    }
+  ]
+}

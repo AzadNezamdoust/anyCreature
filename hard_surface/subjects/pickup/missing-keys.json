@@ -1,0 +1,72 @@
+{
+  "cab.windshieldRun": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "wheel.width": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "chassis.deckAboveWheel": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "bed.wallThickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "bed.floorThickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "bumper.depth": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:10:57.347Z"
+  },
+  "wheel.tread.thickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:12:39.013Z"
+  },
+  "wheel.sidewall.thickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:12:39.013Z"
+  },
+  "hub.diameterOverWheel": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:12:39.013Z"
+  },
+  "hub.depth": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T19:12:39.013Z"
+  }
+}

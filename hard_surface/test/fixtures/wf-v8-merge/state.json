@@ -1,0 +1,22 @@
+{
+  "subject": "fixture",
+  "round": 2,
+  "phase": "review",
+  "roundType": "list",
+  "baseline": null,
+  "modelHash": null,
+  "eyesHash": null,
+  "items": {
+    "decided": [{ "key": "def:zR", "value": -1.8, "basis": "side", "round": 1, "evidence": "side view hub -1.80" }],
+    "tried": [
+      { "key": "def:mD", "dir": "-", "round": 1, "result": "concept -0.001, front -0.004" },
+      { "key": "def:roofR", "dir": "+", "round": 1, "result": "front -0.001" },
+      { "key": "def:roofR", "dir": "+", "round": 2, "result": "concept -0.0015" },
+      { "key": "def:hubR", "dir": "+", "round": 1, "result": "the other direction: not this item" }
+    ],
+    "parked": [{ "key": "def:planR", "reason": "measured worse twice", "round": 1 }],
+    "open": []
+  },
+  "runs": [],
+  "ledger": []
+}

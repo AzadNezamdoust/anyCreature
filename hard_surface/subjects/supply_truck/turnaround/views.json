@@ -1,0 +1,101 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "right": 0.928, "up": 1.132 }
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": { "right": -0.043 },
+      "scale": { "up": 1.132 }
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "up": 1.132 }
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ],
+      "scale": { "right": 0.928 }
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.5
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#a1916a", "#c4b185", "#837653", "#948560"],
+      "glass": "#3f4a54",
+      "tyre": ["#3c3c3d", "#29292a"]
+    },
+    "_table": "2026-09-29 (setup, from the concept family masks): body = the desert-tan cab, cargo-bed side boards AND the darker khaki canvas tilt (proposal body #a1916a + f4 #c4b185 lit cab + f2 #837653 canvas flanks + f6 #948560 canvas top): one family because the concept's lit canvas top shares #a1916a with the cab flank, and because a separate canvas family left the W span to the narrower cab in the top view and to the bed in the rear view (first measurement: residual W rear +14.4 %, top -9.9 %); glass = windows (+ bumper, fuel tank: one blue-grey gunmetal) (f5 #3f4a54); tyre = tyres and the chassis gunmetal (f3 #3c3c3d + dark #29292a).",
+    "viewTable": {
+      "side": { "body": ["#9c8964", "#bfa97f", "#7e6e4d", "#8f7d5a", "#b9a077", "#a18d66", "#746345", "#c3ac88"], "glass": ["#3a424e"], "tyre": ["#373437", "#242124", "#262625", "#343433", "#423622"] },
+      "front": { "body": ["#b39a6c", "#d6ba87", "#957f55", "#a68e62", "#b49d76", "#d5ba8e", "#8a795a", "#c3aa82", "#a08a64"], "glass": ["#515356", "#5e6062"], "tyre": ["#4e453f", "#3b322c", "#2b2b2a", "#3d3c3a", "#524a3a"] },
+      "rear": { "body": ["#98865c", "#bba677", "#7a6b45", "#8b7a52", "#bca379", "#8d7c5b", "#695c45", "#9d8b67", "#7a6c51"], "glass": ["#363f46", "#49494b"], "tyre": ["#33312f", "#201e1c", "#1c1a12", "#2b2b29", "#463a27"] },
+      "top": { "body": ["#a69269", "#c9b284", "#887752", "#99865f", "#c6aa7f", "#837255", "#a4916f"], "glass": ["#444b53", "#494c50"], "tyre": ["#413d3c", "#2e2a29", "#252523", "#353534", "#493c26"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/supply_truck/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -5.1 -8.1 -5.8 · front +17.8 +8.8 +2 · rear -8.8 -10.8 -14.3 · top +4.8 +0.8 -1.4); ambiguous: side #414143 13.3 % glass (vs tyre); front #786b54 1.6 % body (vs glass); front #645840 1.3 % tyre (vs glass); rear #3d3d3e 4.8 % glass (vs tyre); rear #554936 1.3 % glass (vs tyre); top #5b4d35 3.0 % tyre (vs glass); top #414142 1.6 % tyre (vs glass). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor, owner-approved 2026-09-29",
+    "side": [
+      { "id": "D1", "rect": [386, 340, 440, 545], "decides": "concept", "why": "cab rear -> canvas front gap 0.24 m here (x 396 -> 427, z 1.00 -> 0.76) vs top 0.42 m (x 418 -> 471) and concept ~0.8 m (unproject cab rear 440,430,x,1.25 z 2.27 -> canvas front-bottom 527,537,x,1.25 z 1.48); the spare strip y 360-540 = 1.43 m tall vs the road wheels 1.23 m (top spare 0.99 m)" }
+    ],
+    "front": [],
+    "rear": [],
+    "top": [
+      { "id": "D2", "rect": [416, 516, 470, 640], "decides": "front", "why": "near (left, image-lower) spare spans x +0.04..+0.92 m here (y 520-630); the front puts its outer rim at +0.89..+1.04 m (x 630-649, y 375-447) beside the cab's tapered pillar and the concept shows its outer face flush with the cab flank (c_nose: tread at concept x 450-520 seen past the cab's rear-left corner)" },
+      { "id": "D3", "rect": [462, 372, 478, 648], "decides": "concept", "why": "canvas front edge at x 471 (z 0.41 m) here vs side x 427 (z 0.76 m): the two views put the cab/canvas junction 0.35 m apart; concept cab-rear -> canvas-front gap ~0.8 m (unproject 440,430 z 2.27 / 527,537 z 1.48), i.e. the canvas front sits further back than either view" }
+    ],
+    "concept": [
+      { "id": "D4", "rect": [290, 760, 470, 830], "decides": "side", "why": "front tyre bottom (360,822) sits ~45 px (0.3 m) below the ortho ground line through the middle / rear tyre bottoms (760,718), (880,675) (camera mZ 0.387: expected ~773); hub->hub front->middle dx 394 says 3.8 m, dy -108 says 2.7 m: the front wheel is drawn low / forward; the side view has all three tyres on one ground row 692 with equal 1.23 m tyres" }
+    ]
+  }
+}

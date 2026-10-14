@@ -1,0 +1,9 @@
+{
+  "subject": "pickup",
+  "pass": "P1",
+  "seat": "agy",
+  "from": "out/blind/pickup/start-P1.mjs",
+  "prepPrevious": true,
+  "exit": 1,
+  "at": "2026-09-13T20-32-21-835Z"
+}

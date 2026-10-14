@@ -1,0 +1,56 @@
+{
+  "_comment": "MEASURED (no regions.json / census / layout for this subject): the VISUAL HULL of the registered turnaround (side / front / rear / top foregrounds, 0.03 m voxels, 626947 kept) projected through subjects/icecream_van/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 29.6895 deg, phi 46.1722 deg",
+    "conceptBboxPx": [
+      52,
+      20,
+      977,
+      967
+    ],
+    "sPxPerM": {
+      "x": 205.881,
+      "y": 221.454,
+      "used": 213.667,
+      "xOverY": 0.9297
+    },
+    "quadPx": [
+      [
+        296.9,
+        599.8
+      ],
+      [
+        1007.2,
+        262
+      ],
+      [
+        1007.2,
+        689.7
+      ],
+      [
+        296.9,
+        1027.5
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit",
+    "hullQuadPx": [
+      [
+        284.1,
+        568.4
+      ],
+      [
+        1024,
+        216.6
+      ],
+      [
+        1024,
+        662.1
+      ],
+      [
+        284.1,
+        1013.9
+      ]
+    ],
+    "refined": "2026-09-27: quadPx = the hull quad (hullQuadPx) under the start blockout's fitted concept similarity (scripts/v7/frame.mjs on out/ref/gold/icecream_van/start.mjs: scale 0.96, shift -2 / +29.5 px about the quad centre) — the cone sign and the concept's taller proportions (drift) move the hull bbox fit; the start's frame knobs are reset to identity"
+  }
+}

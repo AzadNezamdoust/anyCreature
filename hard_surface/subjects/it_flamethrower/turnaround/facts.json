@@ -1,0 +1,47 @@
+{
+  "subject": "it_flamethrower",
+  "noun": "chunky heat-lance game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_flamethrower.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_flamethrower.png = out/concept-items30/04_flamethrower/v4d_2.png, owner pick after redo; no FPS frame exists for v4d_2). Facts from the NEW hero (counts as drawn: 1 lance + shroud with 3 raised blocks on top, 1 flared square mouth, 1 pilot tube + 1 clamp + igniter, 1 body block, 1 octagonal cylinder in a saddle with 2 clamp bands, 1 carry handle on the bands, 1 round gauge at the cylinder's rear end facing the left flank, 1 segmented hose (about 7 segments) from the cylinder rear down into the body rear, 1 front grip, 1 pistol grip + trigger guard, 1 teal lamp on the body's left flank). FRAME (classes/weapon.md): front +z = the lance mouth, left flank +x = the flank the hero shows. Hidden right flank: plain slate body, no lamp, no gauge. Dims estimated on the hero: L 0.95 (mouth to grip / hose back), W 0.16 (the cylinder), H 0.42 (handle top to front-grip bottom).",
+  "description": "A fictional heavy heat-lance game prop for a cave warden, chunky low-poly, carried level at the hip with the lance mouth forward. The front half is one long thick dark steel lance, its rear half covered by an angular dark steel shroud box with big chamfers and three wide raised blocks along its top, ending at the tip in one flared square dark steel mouth with a thick chamfered rim and a dark throat that closes a short way in. Under the lance one fat dark steel pilot tube held by one chunky clamp, ending just behind the mouth in one chunky igniter block with a short fat stub. Behind the lance one angular slate blue-grey painted body block with wide chamfers, one small rectangular teal lamp window in a thick raised charcoal bezel on its left flank. Lying lengthwise on top of the body one fat octagonal slate blue-grey cylinder with flat chamfered ends, in a dark steel saddle, with two wide charcoal clamp bands, a thick angular charcoal carry handle standing on the two bands, and one large round dark steel gauge with a thick bezel and one chunky needle on its rear end. One fat segmented charcoal hose coils from the rear end of the cylinder down into the rear of the body. Under the front of the body one fat charcoal vertical front grip with thick ribbed segments; at the rear one chunky charcoal pistol grip with big diagonal ribs and a squared trigger guard. No stock.",
+  "proportions": "About 0.95 m long, 0.16 m wide and 0.42 m tall. (length : width : height = 5.94 : 1 : 2.63)",
+  "sides": "on the LEFT flank only: the teal lamp window on the body and the round gauge face at the rear end of the cylinder (its bezel stands a little proud of the cylinder on the left). The right flank is plain slate body and cylinder. The lance, the mouth, the pilot tube under the lance, the cylinder, its bands and carry handle, the hose behind, the front grip and the pistol grip are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky heat-lance game prop is 2.26 times as long as it is tall",
+    "front": "in this view its width is 0.38 of its height",
+    "rear": "in this view its width is 0.38 of its height",
+    "top": "in this view it is 5.94 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the lance mouth to the LEFT of the image: the flared square mouth at the left end, the long dark steel lance with its angular shroud and three raised blocks on top, the pilot tube with its igniter block and clamp running under the lance; behind it the slate body block with the teal lamp window; on top of the body the long octagonal slate cylinder in its saddle with its two charcoal bands, the angular carry handle arching over it, the round gauge face with its needle at the cylinder's rear end; the segmented charcoal hose curving from the cylinder's rear end down into the back of the body at the right; under the body the ribbed front grip hanging straight down near the front and the raked pistol grip with its squared trigger guard at the rear.",
+    "front": "Seen from the lance end: the flared square mouth in the middle low with its dark throat, the pilot tube igniter just below it; behind it the slate body face, the octagonal cylinder end above it with its two bands' edges, the carry handle on top, the gauge bezel sticking out a little on the left-flank side (image RIGHT) of the cylinder; the front grip hanging below on the centre line.",
+    "rear": "Seen from the back end: the segmented hose loop on the centre line coming out of the cylinder's rear end and going down into the body, the octagonal cylinder outline with the carry handle on top, the gauge bezel sticking out on the left-flank side (image LEFT), the slate body below with the pistol grip under it and the front grip edge behind; the lance hidden.",
+    "top": "Seen from above, the lance mouth to the LEFT: the square mouth, the lance with its three raised shroud blocks, the slate body, the octagonal cylinder along the middle with its two bands and the carry handle across them, the gauge sticking out a little at the bottom edge (left flank) near the rear, the hose loop at the right end on the centre line."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    },
+    {
+      "part": "the large round dark steel gauge with its thick bezel and one needle",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.95,
+    "W": 0.16,
+    "H": 0.42,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the mouth throat is dark and closes a short way in: never see-through",
+    "no stock: the hose is the rearmost part above the pistol grip"
+  ]
+}

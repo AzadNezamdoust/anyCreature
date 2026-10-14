@@ -1,0 +1,18 @@
+{
+  "theta_deg": 24.25,
+  "phi_deg": 41.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_jetpack.png",
+  "sha256": "7771f68e3a8583a4182073a89512655a4f33868e461719a2d21ecf429cf11522",
+  "solved": "2026-10-11T09:01:39.267Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.846,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.824
+  }
+}

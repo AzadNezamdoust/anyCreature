@@ -1,0 +1,18 @@
+{
+  "theta_deg": 35.5,
+  "phi_deg": 66.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/light_machine_gun.png",
+  "sha256": "feb2a55c10dd205e4a531e0eaeca6eee74b79b0fe85d544c25ffcff28ce1762a",
+  "solved": "2026-10-04T20:15:51.852Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.695,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.476
+  }
+}

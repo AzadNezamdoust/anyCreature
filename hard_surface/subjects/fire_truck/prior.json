@@ -1,0 +1,8 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only (the turnaround wins); stylisation measured on subjects/fire_truck/turnaround at the W anchor after the 2026-09-27 setup audit (front / rear regenerated narrower; 119.6 px/m; L = cab nose .. body rear; H = overall incl. wheels and the roof ladder).",
+  "class": "vehicle",
+  "real": { "source": "custom-cab fire engine (pumper, one front axle + rear tandem, roof ladder)", "W": 2.5, "H": [3.0, 3.4], "L": [8.5, 10.5], "wheelD": [1.0, 1.1], "wheelbaseOverL": [0.5, 0.6], "LoverW": [3.4, 4.2], "HoverW": [1.2, 1.36] },
+  "anchor": { "dim": "W", "m": 2.5, "why": "legal road width of a fire engine; fixes px/m of the turnaround" },
+  "stylisation": { "_comment": "CHIBI: short and wide (the concept at the solved camera: hull stretch fit kW 0.985, kL 0.995; concept bbox fit sx/sy 0.943)", "LoverW": 2.89, "HoverW": 1.085, "wheelDoverH": 0.35, "wheelbaseOverL": 0.58 },
+  "softRanges": { "L": [6.2, 8.6], "W": [2.2, 2.8], "H": [2.1, 2.9], "wheelR": [0.4, 0.56] }
+}

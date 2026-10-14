@@ -1,0 +1,18 @@
+{
+  "theta_deg": 29.75,
+  "phi_deg": 55.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_rotary_drill.png",
+  "sha256": "4b8fe794c98b66481f5969ffc164f9fe87686d49437da341a8ae55967c60643d",
+  "solved": "2026-10-11T10:25:44.471Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.812,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.754
+  }
+}

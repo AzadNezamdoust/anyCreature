@@ -1,0 +1,15 @@
+# TARGET provenance — gatling_gun
+
+- date: 2026-10-04
+- generator: GPT image generation through scripts/v7/imagegen.mjs --gen gpt (text to image, no reference; agent gpt-6-astra); GPT / Gemini are used only to generate the image
+- raw output: 1536 x 1024 px, 1244385 bytes, sha256 6d51c6b2f17279ab59be61f8a22d2f4134e3e4e73b21a50c0e6ccdf574543d09 (out/concept/gatling_gun/raw.png)
+- image: refs/gatling_gun.png = the raw output padded with white to a square (centred) and resized to 1024 x 1024 (lanczos3); nothing else changed
+- bytes: 527006
+- sha256: de2e566c73a92a69406bf07f33e030cd86db07ce5b0c3b1cf0c6cf19f7b2a7ae
+- style: fps (scripts/v7/styles.json styles.fps.text), after the description and the hidden-face rule (RUNBOOK 2026-09-27; gold.mjs new --style fps)
+
+## Full prompt (image prompt, verbatim)
+
+```
+A stylised hand-carried rotary minigun, one game weapon model. At the front a cluster of six long round dark gunmetal barrels arranged in a circle around one axis, held together by two flat round clamp discs, one at the muzzle end and one halfway along. Behind the barrels a fat cylindrical dark gunmetal motor and receiver housing with a flat rear cap. On top of the housing a matte black polymer carrying handle shaped like a long flat arch running front to back. At the rear a matte black polymer spade grip: a vertical D-shaped handle with a gunmetal trigger paddle inside it. Under the housing a big round matte black ammunition drum lying on its side, its flat faces facing left and right, joined to the housing by a short gunmetal feed chute at its front. Safety-orange accents: the front barrel clamp disc, a band round the rim of the ammunition drum, and the trigger paddle. The motor's power cable socket and the feed chute latch are on the right flank, hidden in this view. About 1.05 m long, 0.24 m wide and 0.42 m tall. Anything on a face this view cannot show (the rear face, the far flank, the underside) faces away and is not visible in this view: never move it onto a visible face; the visible faces are drawn exactly as described. Orthographic isometric view, 30 degree elevation, 45 degree azimuth from front-left, no perspective, vertical edges perfectly vertical. Stylised first-person-shooter weapon model: one single handheld weapon held level in the air, its barrel horizontal, the muzzle end being its front. Chunky, readable low-poly forms with slightly exaggerated proportions, crisp facets and chamfers, flat cel shading, one solid flat colour per surface, thin dark outlines. Dark gunmetal for the metal parts, matte black polymer for the furniture, and the one accent colour described. No textures, no gradients, no wear, no scratches, no decals, no text, no numbers, no logos or markings. Lenses are a single flat colour with no reflections, streaks, highlights or glass shine. No hands, no people, no animals, no stand, no table, no other weapons, no props beyond those described, no ground shadow. Solid white background, whole object in frame with margin, centred.
+```

@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 688, "from": 90, "to": 940, "what": "tyre bottoms / ground: three 1.23 m tyres x 175-330, 585-740, 733-888" },
+  { "id": "P2", "view": "side", "axis": "row", "index": 621, "from": 90, "to": 940, "what": "hub row: tan hubs 211-290, 624-702, 771-850 (centres 250 / 663 / 811), fuel tank 420-545" },
+  { "id": "P3", "view": "side", "axis": "col", "index": 253, "from": 300, "to": 720, "what": "front wheel column: cab roof 349, window, belt line, fender, tyre top 545 / bottom 700" },
+  { "id": "P4", "view": "side", "axis": "row", "index": 340, "from": 90, "to": 940, "what": "canvas top 332-345 vs cab roof 349: canvas x 427-909, cab 146-396" },
+  { "id": "P5", "view": "side", "axis": "row", "index": 470, "from": 90, "to": 940, "what": "belt line: mirror 217-232, window bottom, door, spare strip 395-430, side-board top / straps" },
+  { "id": "P6", "view": "front", "axis": "row", "index": 587, "from": 320, "to": 710, "what": "bumper band: fender flares, bumper 372-663, two tow hooks 447-462 / 578-593" },
+  { "id": "P7", "view": "front", "axis": "col", "index": 512, "from": 300, "to": 710, "what": "centre column: canvas apex 334, cab roof 355, windscreen 385-455, grille bars 489-561, bumper 571-631, axle" },
+  { "id": "P8", "view": "front", "axis": "row", "index": 425, "from": 320, "to": 710, "what": "mirror-head row: heads 340-370 / 655-685 (+-1.35 m), windscreen panes, near spare rim 630-649" },
+  { "id": "P9", "view": "rear", "axis": "row", "index": 592, "from": 320, "to": 710, "what": "tail-lamp row: bumper, lamps 435-475 / 550-590, tyres 342-420 / 606-684" },
+  { "id": "P10", "view": "rear", "axis": "col", "index": 512, "from": 300, "to": 710, "what": "centre column: canvas apex 334, open canvas interior 345-476, tailgate 477-545, bumper 556-631" },
+  { "id": "P11", "view": "rear", "axis": "row", "index": 510, "from": 320, "to": 710, "what": "tailgate row: tailgate 385-639 vs canvas 375-651, mirror arms outside" },
+  { "id": "P12", "view": "top", "axis": "row", "index": 510, "from": 90, "to": 940, "what": "centre line: bumper 125-150, cab 154-418, spare gap 420-470, canvas 471-905, ribs 585 / 690 / 790 / 890" },
+  { "id": "P13", "view": "top", "axis": "col", "index": 255, "from": 300, "to": 720, "what": "front wheel column: tyres 335-380 / 650-690 (+-1.42 m), cab 372-646 (2.17 m)" },
+  { "id": "P14", "view": "top", "axis": "col", "index": 700, "from": 300, "to": 720, "what": "rear wheels column: canvas 370-648, tyres 335-360 / 660-690" },
+  { "id": "P15", "view": "concept", "axis": "row", "index": 740, "from": 20, "to": 1000, "what": "concept front-hub row: hub 345-409 (65 px = hub 0.63 m -> 103 px per m along z), far front wheel, fuel tank, rear tyres" }
+]

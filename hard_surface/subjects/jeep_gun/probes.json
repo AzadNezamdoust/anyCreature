@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 669, "from": 120, "to": 940, "what": "hub row: tyres 178-370 / 701-897 (D 0.94 m), rims 218-328 / 745-853, hub caps" },
+  { "id": "P2", "view": "side", "axis": "col", "index": 273, "from": 520, "to": 800, "what": "front hub column: arch flare 530, tyre top 571, rim 616-722, tyre bottom 767" },
+  { "id": "P3", "view": "side", "axis": "col", "index": 799, "from": 520, "to": 800, "what": "rear hub column: tyre top 571, rim, tyre bottom 767" },
+  { "id": "P4", "view": "side", "axis": "row", "index": 440, "from": 100, "to": 950, "what": "window row: mirror head 384-404, door glass 410-539 / 584-709, jerry can 808-880" },
+  { "id": "P5", "view": "side", "axis": "row", "index": 657, "from": 100, "to": 950, "what": "step plate row: bumper 131-164, tyres, step plate 407-671 (0.48-0.61 m)" },
+  { "id": "P6", "view": "side", "axis": "col", "index": 540, "from": 240, "to": 700, "what": "gun / roof column: gun 264-347, ring 350-365, roof 363, glass 404-476, belt, step 643-671" },
+  { "id": "P7", "view": "front", "axis": "row", "index": 575, "from": 260, "to": 760, "what": "grille row: 8 bars 406-618, headlight cages 328-382 / 638-703, arch flares to 275 / 745" },
+  { "id": "P8", "view": "front", "axis": "col", "index": 512, "from": 240, "to": 780, "what": "centre column: gun 257-345, ring 343-361, roof 356, windscreen 401-461, bonnet, grille 546-618, bumper 620-674, ground 769" },
+  { "id": "P9", "view": "front", "axis": "row", "index": 450, "from": 250, "to": 770, "what": "windscreen row: -x mirror 270-309, panes 353-498 / 523-670, +x mirror 716-753" },
+  { "id": "P10", "view": "front", "axis": "row", "index": 720, "from": 260, "to": 760, "what": "tyre row: front tyres 283-326 / 695-737 seen head-on (0.42 m wide)" },
+  { "id": "P11", "view": "rear", "axis": "col", "index": 512, "from": 240, "to": 780, "what": "centre column: gun 256-357, roof 355, rear glass 401-467, spare wheel 435-623, bumper 621-671, ground 769" },
+  { "id": "P12", "view": "rear", "axis": "row", "index": 545, "from": 260, "to": 760, "what": "tail-lamp row: jerry can 300-340, lamps 340-377 / 660-699, spare hub 500-543" },
+  { "id": "P13", "view": "top", "axis": "row", "index": 512, "from": 90, "to": 930, "what": "centreline: bumper + winch 114-160, bonnet, windscreen 355-400, barrel 290-470, shield 470-490, ring 465-662, roof, tail 874-910" },
+  { "id": "P14", "view": "top", "axis": "col", "index": 512, "from": 250, "to": 770, "what": "ring column: -x step plate 326-338, cab side 323, ring 437-607, +x cab side 699, step plate 684-694, arches" },
+  { "id": "P15", "view": "top", "axis": "row", "index": 300, "from": 100, "to": 930, "what": "-x flank row: front arch 200-359, mirror 370-404, step plate 435-709, rear arch 682-871" }
+]

@@ -1,0 +1,43 @@
+{
+  "subject": "plasma_rifle",
+  "noun": "toy plasma gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/plasma_rifle.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/plasma_rifle.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours)",
+  "description": "A fictional cartoon science-fiction toy plasma gadget, a long chunky toy-like game prop (not a real object, no working parts). A long off-white rounded body, thicker at the rear. In front of it a long round mid grey tube wrapped by four evenly spaced bright cyan rings, ending in a flared mid grey trumpet cone with a dark open centre. On top of the body a horizontal clear glass cylinder tank lying lengthwise, filled flat bright magenta, with mid grey end caps, held above the body by two mid grey clamp bands. Under the middle of the body a dark purple handle raked backward with a flared foot, and in front of it a small bright orange curved finger lever inside a rounded mid grey loop. Further forward, under the rearmost cyan ring of the tube, a short dark purple upright round front handle with a flared foot. At the rear, behind a mid grey collar, a stubby dark purple shoulder piece that widens to a rounded end pad. On the left flank of the body near the rear, three short bright orange slots stacked one above the other. A small bright orange round knob is on the right flank of the body.",
+  "proportions": "About 0.85 m long, 0.12 m wide and 0.28 m tall. (length : width : height = 7.08 : 1 : 2.33)",
+  "sides": "the three orange slots are on the left flank only; the small orange round knob is on the right flank only; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 3.04 times as long as it is tall",
+    "front": "in this view its width is 0.43 of its height",
+    "rear": "in this view its width is 0.43 of its height",
+    "top": "in this view it is 7.08 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the grey tube exactly horizontal, the flared trumpet cone at the left end of the image, the four cyan rings along the tube, the off-white body right of the middle with the magenta glass tank lying on top in its two grey clamps, the three orange slots on the body near its rear, the dark purple shoulder piece at the right end of the image; the short upright front handle hangs below the tube, and the raked handle with the orange finger lever and grey loop hangs below the body.",
+    "front": "Seen from the front end: the round flared grey cone with a dark centre in the middle, a cyan ring and the round off-white body outline showing just around it, the round end of the magenta tank with its grey cap above on the centre line, the upright front handle hanging below on the centre line and hiding the raked handle behind it.",
+    "rear": "Seen from the rear end: the rounded dark purple end pad in the middle, the off-white body outline around it, the round grey end cap of the tank above on the centre line, the raked dark purple handle hanging below on the centre line.",
+    "top": "Seen from above: a long narrow shape; the flared cone at the left end, the grey tube with the four cyan rings as stripes across it, the off-white body with the magenta tank and its two grey clamps along the centre line, the dark purple shoulder piece at the right end; both handles are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the three bright orange slots",
+      "plural": true,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": false
+    },
+    {
+      "part": "the small bright orange round knob",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.85,
+    "W": 0.12,
+    "H": 0.28,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

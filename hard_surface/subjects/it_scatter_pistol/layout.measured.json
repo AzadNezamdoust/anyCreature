@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-11): the VISUAL HULL of the registered turnaround (subjects/it_scatter_pistol/turnaround: side / front / rear / top foregrounds, 0.00113 m voxels refined x4, 2407350 surface / shell points) projected through subjects/it_scatter_pistol/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 26.5 deg, phi 63.25 deg",
+    "conceptBboxPx": [
+      32,
+      129,
+      997,
+      902
+    ],
+    "sPxPerM": {
+      "x": 3325.788,
+      "y": 3085.736,
+      "used": 3205.762,
+      "xOverY": 1.0778
+    },
+    "quadPx": [
+      [
+        153.6,
+        910.2
+      ],
+      [
+        1012.4,
+        717
+      ],
+      [
+        1012.4,
+        803.1
+      ],
+      [
+        153.6,
+        996.2
+      ]
+    ],
+    "fit": {
+      "s": 3205.7620744533524,
+      "ox": 518.0937152424179,
+      "oy": 842.194055416541,
+      "refined": {
+        "frame": {
+          "scale": 1,
+          "tx": 0,
+          "ty": 0
+        },
+        "identity": true,
+        "by": "off"
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

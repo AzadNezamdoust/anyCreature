@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 802, "from": 100, "to": 950, "what": "hub row: front bumper, tyre / hub edges (hubs 220..285, 717..782), rear bumper" },
+  { "id": "P2", "view": "side", "axis": "row", "index": 860, "from": 100, "to": 950, "what": "tyre bottoms (ground row 871): tyre runs only" },
+  { "id": "P3", "view": "side", "axis": "row", "index": 465, "from": 100, "to": 950, "what": "awning row (2.57 m): cab roof edge, awning 466..819, rear roof corner" },
+  { "id": "P4", "view": "side", "axis": "row", "index": 642, "from": 100, "to": 950, "what": "counter shelf row (1.45 m): nose, door, shelf 473..820, rear face" },
+  { "id": "P5", "view": "side", "axis": "col", "index": 600, "from": 140, "to": 880, "what": "sign column (z -0.5): scoop top 155, cone, base, roof 400, awning, window, shelf, body bottom 806" },
+  { "id": "P6", "view": "front", "axis": "row", "index": 713, "from": 250, "to": 780, "what": "headlamp row (1.0 m): body edges, lamps 358..407 / 603..652, grille" },
+  { "id": "P7", "view": "front", "axis": "row", "index": 584, "from": 250, "to": 780, "what": "mirror heads row (1.82 m): mirrors 288..334 / 676..722, windshield" },
+  { "id": "P8", "view": "front", "axis": "col", "index": 512, "from": 140, "to": 880, "what": "centre line: scoop top 155, cone / base, roof 400, windshield 486..603, grille, bumper 765..812" },
+  { "id": "P9", "view": "rear", "axis": "row", "index": 584, "from": 250, "to": 780, "what": "mirror heads row: mirrors 299..343 / 699..744, body edges (rear drawn +4 % wide)" },
+  { "id": "P10", "view": "rear", "axis": "row", "index": 710, "from": 250, "to": 780, "what": "tail lamp row (1.0 m): body edges 346 / 696, lamps 363..396 / 646..679" },
+  { "id": "P11", "view": "rear", "axis": "col", "index": 520, "from": 140, "to": 880, "what": "centre line: scoop top, cone, base 367..384, roof 388 (front 400), bumper 765..812" },
+  { "id": "P12", "view": "top", "axis": "row", "index": 512, "from": 80, "to": 950, "what": "centre line along L: front bumper 116..134, bonnet 138..226, windshield 238..296, roof, cone disc 512..656, rear bumper 884..907" },
+  { "id": "P13", "view": "top", "axis": "col", "index": 584, "from": 250, "to": 780, "what": "across at the cone: far flank 337, disc, near flank 688, awning 674..736" },
+  { "id": "P14", "view": "concept", "axis": "col", "index": 560, "from": 0, "to": 400, "what": "sign column: scoop 23..162, cone 166..279, base 282..321, roof" },
+  { "id": "P15", "view": "concept", "axis": "col", "index": 433, "from": 600, "to": 1000, "what": "front wheel column: body, tyre 809..961 (hub 852..927)" }
+]

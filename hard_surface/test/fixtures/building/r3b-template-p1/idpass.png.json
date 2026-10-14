@@ -1,0 +1,197 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&idpass=1&subject=facade_brick&seed=1&view=target&size=900",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-25T17:21:07.431Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 880,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 6.11195,
+      "h": 14.64265,
+      "d": 6.394,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          435.21,
+          278.93
+        ],
+        [
+          629.26,
+          177.75
+        ],
+        [
+          629.26,
+          726.27
+        ],
+        [
+          435.21,
+          827.46
+        ]
+      ],
+      "world": [
+        [
+          0,
+          13.88,
+          3.137
+        ],
+        [
+          0,
+          13.88,
+          -3.137
+        ],
+        [
+          0,
+          0,
+          -3.137
+        ],
+        [
+          0,
+          0,
+          3.137
+        ]
+      ],
+      "bbox": {
+        "x0": 435.21,
+        "y0": 177.75,
+        "x1": 629.26,
+        "y1": 827.46
+      },
+      "source": "5 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          253.93,
+          196.2
+        ],
+        [
+          435.21,
+          278.93
+        ],
+        [
+          435.21,
+          827.46
+        ],
+        [
+          253.93,
+          744.72
+        ]
+      ],
+      "world": [
+        [
+          -5.483,
+          13.88,
+          3.137
+        ],
+        [
+          0,
+          13.88,
+          3.137
+        ],
+        [
+          0,
+          0,
+          3.137
+        ],
+        [
+          -5.483,
+          0,
+          3.137
+        ]
+      ],
+      "bbox": {
+        "x0": 253.93,
+        "y0": 196.2,
+        "x1": 435.21,
+        "y1": 827.46
+      },
+      "source": "5 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -5.483,
+        0,
+        -3.137
+      ],
+      "max": [
+        0,
+        13.88,
+        3.137
+      ]
+    },
+    "subject": "facade_brick",
+    "view": "target",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:918fe1f5",
+    "dslVersion": "pg/1",
+    "validatorPass": false,
+    "frontRotationDeg": -90,
+    "lit": false,
+    "idpass": true,
+    "idColours": {
+      "massing": "#ff0000",
+      "roof": "#00ff00",
+      "parapet": "#0000ff",
+      "cornice": "#ffff00",
+      "sill": "#ff00ff",
+      "window": "#00ffff",
+      "storefront": "#ff8000",
+      "door": "#8000ff",
+      "awning": "#00ff80",
+      "signbox": "#ff0080",
+      "ac": "#80ff00",
+      "landing": "#0080ff",
+      "support": "#804000",
+      "stringer": "#408000",
+      "step": "#004080",
+      "railing": "#800040",
+      "baluster": "#408040",
+      "ladder": "#404080",
+      "rung": "#808040",
+      "roof_fixture": "#408080",
+      "prop": "#c0c0c0"
+    },
+    "palette": {
+      "brick": "#a85643",
+      "roof": "#918680",
+      "coping": "#a77b6f",
+      "frame": "#8b7e73",
+      "sill": "#be9589",
+      "glass": "#80a9ac",
+      "awning": "#538c54",
+      "signbox": "#668865",
+      "ac": "#c0c0bf",
+      "fixture": "#939395",
+      "iron": "#887768",
+      "brick_side": "#843b2e",
+      "iron_lower": "#887568",
+      "door": "#81acaf",
+      "storefront": "#85adb2"
+    },
+    "violationCount": 3,
+    "violations": "FAIL: 3 violation(s) [V12_CENSUS].\n- V12_CENSUS: the target has 2 landing levels and the model has 0 — add 2 (role \"landing\"; the count is taken off the role, not the part name) (measured 0 landing levels, limit 2)\n- V12_CENSUS: the target has 1 stair flights and the model has 0 — add 1 (role \"stringer\"; the count is taken off the role, not the part name) (measured 0 stair flights, limit 1)\n- V12_CENSUS: the target has 2 ladder assemblies and the model has 0 — add 2 (role \"ladder\"; the count is taken off the role, not the part name) (measured 0 ladder assemblies, limit 2)",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "ortho:theta29.1981:phi43.0925"
+  },
+  "bytes": 12061
+}

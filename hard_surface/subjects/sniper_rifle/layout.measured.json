@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/sniper_rifle/turnaround: side / front / rear / top foregrounds, 0.00451 m voxels refined x4, 527766 surface / shell points) projected through subjects/sniper_rifle/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 35.5 deg, phi 61.5 deg",
+    "conceptBboxPx": [
+      18,
+      269,
+      1010,
+      709
+    ],
+    "sPxPerM": {
+      "x": 909.583,
+      "y": 898.188,
+      "used": 929.543,
+      "xOverY": 1.0127
+    },
+    "quadPx": [
+      [
+        62,
+        587.4
+      ],
+      [
+        1042.2,
+        278.3
+      ],
+      [
+        1042.2,
+        505.3
+      ],
+      [
+        62,
+        814.4
+      ]
+    ],
+    "fit": {
+      "s": 929.5430817444543,
+      "ox": 532.129041953824,
+      "oy": 638.5229948734893,
+      "refined": {
+        "frame": {
+          "scale": 1.02838592106753,
+          "tx": 14.99158977665994,
+          "ty": -0.02088902875047438
+        },
+        "iou": 0.6952,
+        "bboxIou": 0.6754
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "light_tank",
+  "class": "vehicle",
+  "title": "RTS-style light tank (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/light_tank.v2.png",
+    "camera": "subjects/light_tank/camera.json",
+    "layoutMeasured": "subjects/light_tank/layout.measured.json"
+  },
+  "outDir": "out/light_tank",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 10,
+        "axles": 5,
+        "diameters": "equal",
+        "running": "tracks"
+      },
+      "evidence": "concept refs/light_tank.v2.png + side turnaround: a tracked light tank, five equal road wheels per side (10 on 5 stations), no side skirts"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "turret",
+          "gun",
+          "mantlet",
+          "hatch",
+          "periscope",
+          "smoke_launcher",
+          "sprocket",
+          "idler",
+          "return_roller",
+          "track_guard",
+          "engine_grille",
+          "tow_hook"
+        ]
+      },
+      "evidence": "the concept draws a rounded turret with a mantlet and gun, a roof hatch + periscope block, three-tube smoke launchers per turret corner, sprocket (front), idler (rear), two return rollers, thin track guards, one engine-deck grille box, tow hooks (refs/light_tank.v2.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "metal",
+          "track"
+        ]
+      },
+      "evidence": "the concept paints the gun, mantlet, smoke launchers, tow hooks, headlight guards (metal) and the tracks, road wheels, rollers, sprocket, idler (track) one dark gunmetal grey (views.json families.metal #4c4b4b / #393938), the hull desert tan (body)"
+    }
+  }
+}

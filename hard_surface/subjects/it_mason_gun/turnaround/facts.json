@@ -1,0 +1,40 @@
+{
+  "subject": "it_mason_gun",
+  "noun": "chunky ochre foam nozzle and tank tool game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_mason_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_mason_gun.png = out/concept-items30/18_mason_gun/v4b_hero_1.png; FPS refs/it_mason_gun.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: 2 nozzles (slot above, ring below) on a dark steel head block, 1 tank with exactly 2 bands + a vertical front strap + top cap, 1 arched top handle, 1 short ribbed hose tank-to-body, 1 grip + guard, 1 lamp on the left flank, 1 rear end block). The v3 vent slots, pivot disc + lever, screw cap and end-block slot are NOT drawn and dropped. FRAME (classes/weapon.md): front +z = the nozzles, left flank +x = the flank the hero shows, y up with y = 0 at the tank bottom. Dims = the old stated size, re-measured after install.",
+  "description": "A fictional ochre foam nozzle and tank tool game prop for an engineer, chunky low-poly, held level in two hands with the nozzles forward. One long ochre painted body with wide chamfers and a thick charcoal end block closing its rear. At its front one thick dark steel head block carrying two nozzles stacked: above, one wide flat rectangular slot nozzle about 0.12 m wide with thick lips and a hollow opening; below, one fat round ring nozzle about 0.08 m across with a hollow opening. Hanging under the body ahead of the grip one large ochre cylindrical mix tank with a domed bottom, exactly two wide charcoal bands round it, one thick vertical charcoal strap down its front and a charcoal cap on its top where it meets the body. On top of the body one thick charcoal arched carry handle with two blocky feet. One short fat ribbed charcoal feed hose runs from the back of the tank curving up into the underside of the body. One diagonal-ribbed charcoal pistol grip with a squared charcoal trigger guard at the rear. One small teal lamp window in a thick charcoal bezel on the left flank above the tank. The hidden right flank is plain ochre shell.",
+  "proportions": "About 0.7 m long, 0.2 m wide and 0.4 m tall. (length : width : height = 3.50 : 1 : 2.00)",
+  "sides": "only the teal lamp window (flush, in its bezel) is on one flank: it sits on the LEFT flank of the body above the tank; the right flank is plain ochre shell. The head block with both nozzles, the tank with its bands and strap, the hose, the carry handle, the grip, the trigger guard and the rear end block are on the centre line (symmetric left to right).",
+  "shape": {
+    "side": "in this view the chunky ochre foam nozzle and tank tool game prop is 1.75 times as long as it is tall",
+    "front": "in this view its width is 0.50 of its height",
+    "rear": "in this view its width is 0.50 of its height",
+    "top": "in this view it is 3.50 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The tool is level, pointing to the LEFT of the image: the thick dark steel head block at the left end with the wide flat rectangular slot nozzle above and the fat round ring nozzle below, the long ochre body with wide chamfers, the thick charcoal arched carry handle on top, the teal lamp window in its bezel on the flank, the large ochre mix tank hanging below with its two wide charcoal bands, the vertical strap down its front face and the charcoal cap on its top, the short ribbed hose from the tank back curving up into the body underside, the charcoal end block at the right end, the diagonal-ribbed charcoal pistol grip with its squared trigger guard under the rear.",
+    "front": "Seen from the nozzle end: the dark steel head block in the middle with the wide flat slot nozzle (hollow) above and the round ring nozzle (hollow) below, the ochre body wider behind it, the arched handle on top on the centre line, the tank below behind the nozzles with its bands, the grip hidden behind the tank.",
+    "rear": "Seen from the butt end: the thick charcoal end block in the middle, the ochre body edges, the arched handle on top, the pistol grip below on the centre line, the tank edges and bands below, the hose partly visible beside the tank; no lamp visible.",
+    "top": "Seen from above (nozzles to the LEFT, left flank at the BOTTOM): the dark steel head block at the left end, the long ochre body, the arched carry handle across the centre line with its two feet, the charcoal end block at the right end, the tank edges just proud of the body sides; the lamp window is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.7,
+    "W": 0.2,
+    "H": 0.4,
+    "_": "ESTIMATE on the hero (perspective); after turnaround.mjs install re-measure with hull.mjs"
+  },
+  "decided": [
+    "exactly two nozzles (slot above, ring below), one tank with exactly two bands, one top handle, one lamp",
+    "the hidden right flank is plain ochre shell; no vents, no lever, no screw cap"
+  ]
+}

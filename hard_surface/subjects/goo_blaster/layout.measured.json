@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/goo_blaster/turnaround: side / front / rear / top foregrounds, 0.00205 m voxels refined x4, 2538428 surface / shell points) projected through subjects/goo_blaster/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 4.25 deg, phi 84.75 deg",
+    "conceptBboxPx": [
+      76,
+      114,
+      947,
+      909
+    ],
+    "sPxPerM": {
+      "x": 1794.884,
+      "y": 1778.533,
+      "used": 1752.842,
+      "xOverY": 1.0092
+    },
+    "quadPx": [
+      [
+        108.6,
+        253.9
+      ],
+      [
+        946.5,
+        248.3
+      ],
+      [
+        946.5,
+        912.5
+      ],
+      [
+        108.6,
+        918.2
+      ]
+    ],
+    "fit": {
+      "s": 1752.8420647144744,
+      "ox": 513.1032634804603,
+      "oy": 903.7432296339618,
+      "refined": {
+        "frame": {
+          "scale": 0.9810452245015487,
+          "tx": 3.997494878419962,
+          "ty": 4.986123081703937
+        },
+        "iou": 0.8682,
+        "bboxIou": 0.8567
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

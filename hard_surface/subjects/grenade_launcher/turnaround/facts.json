@@ -1,0 +1,36 @@
+{
+  "subject": "grenade_launcher",
+  "noun": "game launcher prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/grenade_launcher.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/grenade_launcher.png (orange latch on the left flank of the butt pad; the concept also drew the reflex sight's window orange); noun / description / faces worded as a fictional low-poly video-game prop described by shapes and colours only (same parts, same colours; mechanism names dropped) — the wording that passed the image safety system for assault_rifle",
+  "description": "A fictional stylised low-poly video-game prop, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). In the middle a big dark grey drum, as wide as it is long, lying along the prop's axis, with six large round holes in its front face around a small orange centre cap and six shallow flat grooves along its outside. In front of the drum a short fat round dark grey tube with a thick orange ring round its open front end; under the tube a matte black vertical front handle with ribbed sides. A slim dark grey frame bar runs over the top of the drum from the tube to the rear, carrying a short flat ridged strip with a boxy matte black sight box on it; the sight box has a flat orange window. Behind the drum a matte black handle raked backward with a small curved lever inside a rounded loop, and a matte black open shoulder piece: two thin bars spreading from the frame to a tall flat ribbed end pad. Bright orange accents: the ring round the front end of the tube, the small centre cap on the drum's front face, the window of the sight box, and a small latch on the left flank of the end pad. The right flank is plain.",
+  "proportions": "About 0.78 m long, 0.16 m wide and 0.27 m tall. (length : width : height = 4.88 : 1 : 1.69)",
+  "sides": "the small orange latch on the end pad is on the left flank; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 2.89 times as long as it is tall",
+    "front": "in this view its width is 0.59 of its height",
+    "rear": "in this view its width is 0.59 of its height",
+    "top": "in this view it is 4.88 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the fat tube and the frame bar exactly horizontal, the tube's orange ring at the left end of the image, the front handle hanging below the tube, the drum in the middle with the raked handle behind it, the two thin bars and the end pad at the right end of the image; the sight box stands on top above the front of the drum.",
+    "front": "Seen from the front end: the round open end of the fat tube with its orange ring and a dark centre is in the upper middle, the wide round drum outline shows behind and below it, the sight box stands on top on the centre line, the vertical front handle hangs below on the centre line and hides the raked handle behind it.",
+    "rear": "Seen from the rear end: the tall flat ribbed end pad is in front on the centre line, the wide round outline of the drum shows left and right of it, the sight box with its orange window stands on top, the raked handle hangs below on the centre line.",
+    "top": "Seen from above: the frame bar with the ridged strip and the sight box runs along the centre line, the round drum bulges out to both sides in the middle, the fat tube with its orange ring is at the left end, the two thin bars and the end pad are at the right end; both handles are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small orange latch on the end pad",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.78,
+    "W": 0.16,
+    "H": 0.27,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

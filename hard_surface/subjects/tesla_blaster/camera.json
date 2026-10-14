@@ -1,0 +1,18 @@
+{
+  "theta_deg": 22.5,
+  "phi_deg": 73.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/tesla_blaster.png",
+  "sha256": "c70002cd9f0b0c938538ab0238ab9c436afa20113024895ab9071f0e0aa1bd37",
+  "solved": "2026-10-04T21:32:10.732Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.788,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.507
+  }
+}

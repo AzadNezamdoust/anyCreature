@@ -1,0 +1,18 @@
+{
+  "theta_deg": 26.5,
+  "phi_deg": 62.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/plasma_rifle.png",
+  "sha256": "c04b415b594aca4ebb21737374ad9a8119b6f5426a705678bd6456d943e26f38",
+  "solved": "2026-10-04T20:50:17.742Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.79,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.533
+  }
+}

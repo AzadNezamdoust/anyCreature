@@ -1,0 +1,18 @@
+{
+  "theta_deg": 21.75,
+  "phi_deg": 57,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/bubble_cannon.png",
+  "sha256": "6a23b2aa033551bbeee473b68e7205a6ff159ee9e54fc55731a4ba99dbda6329",
+  "solved": "2026-10-04T21:36:59.992Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.794,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.561
+  }
+}

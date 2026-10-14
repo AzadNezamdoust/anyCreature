@@ -1,0 +1,828 @@
+{
+  "advisories": [],
+  "rows": [
+    {
+      "v": "LK_VALUE",
+      "part": "brick_front/palette",
+      "verdict": "PASS",
+      "measured": "0.967x (#af3f2d vs #b5412f)",
+      "limit": "0.9-1.05",
+      "hint": "the capture must show the palette hex on the populated face",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "brick_side/front",
+      "verdict": "PASS",
+      "measured": "0.789x",
+      "limit": "0.736-0.836 (target 0.786 +-0.05, measured at runtime)",
+      "hint": "the return must read exactly as much darker than the front as the target's does",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "brick_front",
+      "verdict": "PASS",
+      "measured": "1.04x (#af3f2d vs #a85643)",
+      "limit": "0.85-1.15",
+      "hint": "zone brick_front renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "brick_front",
+      "verdict": "PASS",
+      "measured": "3 deg (#af3f2d vs #a85643)",
+      "limit": "<= 12 deg",
+      "hint": "zone brick_front renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "brick_side_strip",
+      "verdict": "PASS",
+      "measured": "1.04x (#8a2f21 vs #843b2e)",
+      "limit": "0.85-1.15",
+      "hint": "zone brick_side_strip renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "brick_side_strip",
+      "verdict": "PASS",
+      "measured": "1 deg (#8a2f21 vs #843b2e)",
+      "limit": "<= 12 deg",
+      "hint": "zone brick_side_strip renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "roof",
+      "verdict": "PASS",
+      "measured": "0.99x (#8f8883 vs #918680)",
+      "limit": "0.85-1.15",
+      "hint": "zone roof renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "roof",
+      "verdict": "PASS",
+      "measured": "4 deg (#8f8883 vs #918680)",
+      "limit": "<= 12 deg",
+      "hint": "zone roof renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "coping",
+      "verdict": "PASS",
+      "measured": "1.05x (#af3f2d vs #a77b6f)",
+      "limit": "0.85-1.15",
+      "hint": "zone coping renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "coping",
+      "verdict": "PASS",
+      "measured": "5 deg (#af3f2d vs #a77b6f)",
+      "limit": "<= 12 deg",
+      "hint": "zone coping renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "glass",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"window\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "frame",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"window\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "sill",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"sill\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "iron_landing_upper",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"landing\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "iron_landing_lower",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"landing\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "awning",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"awning\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "signbox",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"signbox\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "ac",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"ac\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "door",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"door\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "storefront",
+      "verdict": "FAIL",
+      "measured": "0 mask px",
+      "limit": ">= 50 px",
+      "hint": "role \"storefront\" is not on screen at the solved camera",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "brick",
+      "verdict": "FAIL",
+      "measured": "100.0% vs 55.8% (1.79x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family brick covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "glass",
+      "verdict": "FAIL",
+      "measured": "0.0% vs 11.5% (0.00x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family glass covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "iron",
+      "verdict": "FAIL",
+      "measured": "0.0% vs 12.3% (0.00x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family iron covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "green",
+      "verdict": "FAIL",
+      "measured": "0.0% vs 19.4% (0.00x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family green covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "grey",
+      "verdict": "FAIL",
+      "measured": "0.0% vs 1.0% (0.00x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family grey covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_OVERLAP",
+      "part": "window",
+      "verdict": "PASS",
+      "measured": "0 iron px inside 0 window rect(s)",
+      "limit": "0 px",
+      "hint": "ironwork must not cross a window opening on screen (target keeps them apart)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "window",
+      "verdict": "FAIL",
+      "measured": "0 of 4 instance(s) >= 50 px (0 px total)",
+      "limit": "4 instance(s), each >= 50 px",
+      "hint": "4 window assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "storefront",
+      "verdict": "FAIL",
+      "measured": "0 of 1 instance(s) >= 50 px (0 px total)",
+      "limit": "1 instance(s), each >= 50 px",
+      "hint": "1 storefront assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "door",
+      "verdict": "FAIL",
+      "measured": "0 of 1 instance(s) >= 50 px (0 px total)",
+      "limit": "1 instance(s), each >= 50 px",
+      "hint": "1 door assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "landing",
+      "verdict": "FAIL",
+      "measured": "0 of 2 instance(s) >= 50 px (0 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "2 landing assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "stringer",
+      "verdict": "FAIL",
+      "measured": "0 of 1 instance(s) >= 50 px (0 px total)",
+      "limit": "1 instance(s), each >= 50 px",
+      "hint": "1 stringer assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "ladder",
+      "verdict": "FAIL",
+      "measured": "0 of 2 instance(s) >= 50 px (0 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "2 ladder assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "signbox",
+      "verdict": "FAIL",
+      "measured": "0 of 1 instance(s) >= 50 px (0 px total)",
+      "limit": "1 instance(s), each >= 50 px",
+      "hint": "1 signbox assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "ac",
+      "verdict": "FAIL",
+      "measured": "0 of 1 instance(s) >= 50 px (0 px total)",
+      "limit": "1 instance(s), each >= 50 px",
+      "hint": "1 ac assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "roof_fixture",
+      "verdict": "PASS",
+      "measured": "3 of 3 instance(s) >= 50 px (4432 px total)",
+      "limit": "3 instance(s), each >= 50 px",
+      "hint": "0 roof_fixture assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    }
+  ],
+  "unverified": [],
+  "pass": true,
+  "violations": [],
+  "zones": {
+    "brick_front": {
+      "role": "massing",
+      "targetHex": "#a85643",
+      "renderHex": "#af3f2d",
+      "targetV": 0.659,
+      "renderV": 0.686,
+      "valueRatio": 1.042,
+      "hueDelta": 3,
+      "targetAreaShare": 0.2891,
+      "renderAreaShare": 0.8379,
+      "maskPx": 210095,
+      "rectPx": 1140,
+      "sharesRoleWith": [
+        "brick_side_strip"
+      ]
+    },
+    "brick_side_strip": {
+      "role": "massing",
+      "targetHex": "#843b2e",
+      "renderHex": "#8a2f21",
+      "targetV": 0.518,
+      "renderV": 0.541,
+      "valueRatio": 1.045,
+      "hueDelta": 1.1,
+      "targetAreaShare": 0.1377,
+      "renderAreaShare": 0.8379,
+      "maskPx": 210095,
+      "rectPx": 1560,
+      "sharesRoleWith": [
+        "brick_front"
+      ]
+    },
+    "roof": {
+      "role": "roof",
+      "targetHex": "#918680",
+      "renderHex": "#8f8883",
+      "targetV": 0.569,
+      "renderV": 0.561,
+      "valueRatio": 0.986,
+      "hueDelta": 3.8,
+      "targetAreaShare": 0.2018,
+      "renderAreaShare": 0.0865,
+      "maskPx": 21695,
+      "rectPx": 2400,
+      "sharesRoleWith": []
+    },
+    "coping": {
+      "role": "parapet",
+      "targetHex": "#a77b6f",
+      "renderHex": "#af3f2d",
+      "targetV": 0.655,
+      "renderV": 0.686,
+      "valueRatio": 1.048,
+      "hueDelta": 4.5,
+      "targetAreaShare": 0.0545,
+      "renderAreaShare": 0.0579,
+      "maskPx": 14525,
+      "rectPx": 168,
+      "sharesRoleWith": []
+    },
+    "glass": {
+      "role": "window",
+      "targetHex": "#80a9ac",
+      "renderHex": null,
+      "targetV": 0.675,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0161,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 1772,
+      "sharesRoleWith": [
+        "frame"
+      ]
+    },
+    "frame": {
+      "role": "window",
+      "targetHex": "#8b7e73",
+      "renderHex": null,
+      "targetV": 0.545,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0359,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 35,
+      "sharesRoleWith": [
+        "glass"
+      ]
+    },
+    "sill": {
+      "role": "sill",
+      "targetHex": "#be9589",
+      "renderHex": null,
+      "targetV": 0.745,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.051,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 120,
+      "sharesRoleWith": []
+    },
+    "iron_landing_upper": {
+      "role": "landing",
+      "targetHex": "#887768",
+      "renderHex": null,
+      "targetV": 0.533,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0149,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 48,
+      "sharesRoleWith": [
+        "iron_landing_lower"
+      ]
+    },
+    "iron_landing_lower": {
+      "role": "landing",
+      "targetHex": "#887568",
+      "renderHex": null,
+      "targetV": 0.533,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0467,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 48,
+      "sharesRoleWith": [
+        "iron_landing_upper"
+      ]
+    },
+    "awning": {
+      "role": "awning",
+      "targetHex": "#538c54",
+      "renderHex": null,
+      "targetV": 0.549,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0613,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 800,
+      "sharesRoleWith": []
+    },
+    "signbox": {
+      "role": "signbox",
+      "targetHex": "#668865",
+      "renderHex": null,
+      "targetV": 0.533,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0369,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 96,
+      "sharesRoleWith": []
+    },
+    "ac": {
+      "role": "ac",
+      "targetHex": "#c0c0bf",
+      "renderHex": null,
+      "targetV": 0.753,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0081,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 80,
+      "sharesRoleWith": []
+    },
+    "door": {
+      "role": "door",
+      "targetHex": "#81acaf",
+      "renderHex": null,
+      "targetV": 0.686,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0155,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 196,
+      "sharesRoleWith": []
+    },
+    "storefront": {
+      "role": "storefront",
+      "targetHex": "#85adb2",
+      "renderHex": null,
+      "targetV": 0.698,
+      "renderV": null,
+      "valueRatio": null,
+      "hueDelta": null,
+      "targetAreaShare": 0.0305,
+      "renderAreaShare": 0,
+      "maskPx": 0,
+      "rectPx": 720,
+      "sharesRoleWith": []
+    }
+  },
+  "faces": {
+    "frontHex": "#af3f2d",
+    "sideHex": "#8a2f21",
+    "frontVsPalette": 0.967,
+    "targetSideOverFront": 0.786,
+    "sideOverFrontBand": [
+      0.736,
+      0.836
+    ],
+    "sideOverFront": 0.789
+  },
+  "areas": {
+    "targetByRole": {
+      "massing": 68838,
+      "roof": 32546,
+      "parapet": 8795,
+      "window": 8383,
+      "sill": 8234,
+      "landing": 9932,
+      "awning": 9889,
+      "signbox": 5952,
+      "ac": 1309,
+      "door": 2502,
+      "storefront": 4921
+    },
+    "targetRoleTotal": 161301,
+    "renderByRole": {
+      "massing": 210095,
+      "roof": 21695,
+      "parapet": 14525,
+      "roof_fixture": 4432
+    },
+    "renderTotal": 250747
+  },
+  "areaFamilies": {
+    "target": {
+      "counts": {
+        "brick": 44407,
+        "glass": 9135,
+        "iron": 9793,
+        "green": 15430,
+        "grey": 831
+      },
+      "share": {
+        "brick": 0.5579049198452184,
+        "glass": 0.11476707372229761,
+        "iron": 0.12303382079501482,
+        "green": 0.19385396251067893,
+        "grey": 0.01044022312679029
+      },
+      "total": 79596,
+      "quad": [
+        [
+          556,
+          345
+        ],
+        [
+          764,
+          236.5375006347433
+        ],
+        [
+          764,
+          786.5375006347433
+        ],
+        [
+          556,
+          895
+        ]
+      ],
+      "inside": 114400,
+      "classified": 86338,
+      "provenance": "FALLBACK — no measured face quad in subjects/facade_brick/layout.measured.json; Fable r3 audit x 556-764, wall top y 345, ground y 895 at x 556; parallelogram, face slope 0.521 px/px taken from the render's own front quad",
+      "measuredQuad": false
+    },
+    "render": {
+      "counts": {
+        "brick": 621,
+        "glass": 0,
+        "iron": 0,
+        "green": 0,
+        "grey": 0
+      },
+      "share": {
+        "brick": 1,
+        "glass": 0,
+        "iron": 0,
+        "green": 0,
+        "grey": 0
+      },
+      "total": 621,
+      "quad": [
+        [
+          443.52,
+          283.42
+        ],
+        [
+          640.45,
+          180.73
+        ],
+        [
+          640.45,
+          734.31
+        ],
+        [
+          443.52,
+          837
+        ]
+      ],
+      "inside": 108501,
+      "classified": 682,
+      "provenance": "capture manifest frontQuad",
+      "measuredQuad": true
+    },
+    "rows": {
+      "brick": {
+        "tShare": 0.5579,
+        "rShare": 1,
+        "ratio": 1.792,
+        "verdict": "FAIL"
+      },
+      "glass": {
+        "tShare": 0.1148,
+        "rShare": 0,
+        "ratio": 0,
+        "verdict": "FAIL"
+      },
+      "iron": {
+        "tShare": 0.123,
+        "rShare": 0,
+        "ratio": 0,
+        "verdict": "FAIL"
+      },
+      "green": {
+        "tShare": 0.1939,
+        "rShare": 0,
+        "ratio": 0,
+        "verdict": "FAIL"
+      },
+      "grey": {
+        "tShare": 0.0104,
+        "rShare": 0,
+        "ratio": 0,
+        "verdict": "FAIL"
+      }
+    }
+  },
+  "quads": {
+    "target": {
+      "px": [
+        [
+          556,
+          345
+        ],
+        [
+          764,
+          236.5375006347433
+        ],
+        [
+          764,
+          786.5375006347433
+        ],
+        [
+          556,
+          895
+        ]
+      ],
+      "measured": false,
+      "provenance": "FALLBACK — no measured face quad in subjects/facade_brick/layout.measured.json; Fable r3 audit x 556-764, wall top y 345, ground y 895 at x 556; parallelogram, face slope 0.521 px/px taken from the render's own front quad"
+    },
+    "render": {
+      "axis": "+x",
+      "px": [
+        [
+          443.52,
+          283.42
+        ],
+        [
+          640.45,
+          180.73
+        ],
+        [
+          640.45,
+          734.31
+        ],
+        [
+          443.52,
+          837
+        ]
+      ],
+      "world": [
+        [
+          0,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          16.5,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 443.52,
+        "y0": 180.73,
+        "x1": 640.45,
+        "y1": 837
+      },
+      "source": "5 massing part(s)"
+    }
+  },
+  "windows": 0,
+  "overlapPx": 0,
+  "visible": {
+    "window": {
+      "px": 0,
+      "instances": 0,
+      "expected": 4,
+      "componentPx": []
+    },
+    "storefront": {
+      "px": 0,
+      "instances": 0,
+      "expected": 1,
+      "componentPx": []
+    },
+    "door": {
+      "px": 0,
+      "instances": 0,
+      "expected": 1,
+      "componentPx": []
+    },
+    "landing": {
+      "px": 0,
+      "instances": 0,
+      "expected": 2,
+      "componentPx": []
+    },
+    "stringer": {
+      "px": 0,
+      "instances": 0,
+      "expected": 1,
+      "componentPx": []
+    },
+    "ladder": {
+      "px": 0,
+      "instances": 0,
+      "expected": 2,
+      "componentPx": []
+    },
+    "signbox": {
+      "px": 0,
+      "instances": 0,
+      "expected": 1,
+      "componentPx": []
+    },
+    "ac": {
+      "px": 0,
+      "instances": 0,
+      "expected": 1,
+      "componentPx": []
+    },
+    "roof_fixture": {
+      "px": 4432,
+      "instances": 3,
+      "expected": 3,
+      "componentPx": [
+        4024,
+        222,
+        186
+      ]
+    }
+  },
+  "text": "PASS: likeness clean (LK_VALUE, LK_HUE, LK_AREA, LK_OVERLAP, LK_VISIBLE).\n(partial pass: colour rows only — LK_AREA / LK_OVERLAP / LK_VISIBLE are judged on the finished assembly)",
+  "pass_label": "P0",
+  "inputs": {
+    "target": "refs/tenement-iso.png",
+    "still": "out/facade/P0/target.png",
+    "idpass": "out/facade/P0/idpass.png",
+    "regions": "subjects/facade_brick/regions.json",
+    "census": "subjects/facade_brick/census.json",
+    "measuredLayout": "subjects/facade_brick/layout.measured.json",
+    "targetQuad": "FALLBACK — no measured face quad in subjects/facade_brick/layout.measured.json; Fable r3 audit x 556-764, wall top y 345, ground y 895 at x 556; parallelogram, face slope 0.521 px/px taken from the render's own front quad",
+    "renderQuad": "capture manifest frontQuad"
+  },
+  "staged": "partial"
+}

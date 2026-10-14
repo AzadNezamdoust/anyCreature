@@ -1,0 +1,176 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&subject=facade_brick&seed=1&view=threeQuarter&size=900",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-13T00:40:11.674Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 2980,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 8.05925,
+      "h": 17.4867,
+      "d": 7.79,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          477.35,
+          181.14
+        ],
+        [
+          622.27,
+          112.21
+        ],
+        [
+          601.94,
+          721.38
+        ],
+        [
+          473.7,
+          861.99
+        ]
+      ],
+      "world": [
+        [
+          0,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          16.501,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 473.7,
+        "y0": 112.21,
+        "x1": 622.27,
+        "y1": 861.99
+      },
+      "source": "5 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          212.64,
+          146.65
+        ],
+        [
+          477.35,
+          181.14
+        ],
+        [
+          473.7,
+          861.99
+        ],
+        [
+          242.53,
+          792.27
+        ]
+      ],
+      "world": [
+        [
+          -6.555,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ],
+        [
+          -6.555,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 212.64,
+        "y0": 146.65,
+        "x1": 477.35,
+        "y1": 861.99
+      },
+      "source": "5 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -6.555,
+        0,
+        -3.75
+      ],
+      "max": [
+        0,
+        16.501,
+        3.75
+      ]
+    },
+    "subject": "facade_brick",
+    "view": "threeQuarter",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:873fb088",
+    "dslVersion": "pg/1",
+    "validatorPass": true,
+    "frontRotationDeg": -90,
+    "lit": false,
+    "idpass": false,
+    "idColours": null,
+    "palette": {
+      "brick": "#a85643",
+      "trim": "#8b7e73",
+      "glass": "#80a9ac",
+      "iron": "#887768",
+      "roof": "#918680",
+      "fixture": "#999f9d",
+      "ac": "#c0c0bf",
+      "coping": "#a77b6f",
+      "surround": "#ad8067",
+      "canopy": "#528b50",
+      "frame": "#8b7e73",
+      "sill": "#be9589",
+      "awning": "#538c54",
+      "signbox": "#668865",
+      "parapet": "#a77b6f",
+      "metal": "#c0c0bf"
+    },
+    "violationCount": 0,
+    "violations": "PASS: V0-V7 + V10 clean.",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "persp:28/22/26"
+  },
+  "bytes": 47674
+}

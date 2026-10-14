@@ -1,0 +1,15 @@
+{
+  "theta_deg": 17.0644,
+  "phi_deg": 44.8562,
+  "slopes": {
+    "mX": 0.291976,
+    "mZ": 0.294923
+  },
+  "residual_px": 0.8811,
+  "vertical_tilt_deg": null,
+  "source": "refs/main_battle_tank.v2.png",
+  "sha256": "c5f08f5ddff490ecb321728e13d619811904e53d59206365ebe112cb163544b2",
+  "solved": "2026-09-29T18:00:13.880Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

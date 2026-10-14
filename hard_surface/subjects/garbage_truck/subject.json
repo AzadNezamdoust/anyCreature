@@ -1,0 +1,14 @@
+{
+  "id": "garbage_truck",
+  "class": "vehicle",
+  "title": "Cartoon garbage truck (cab-over rear loader; WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered visual hull's bbox to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/garbage_truck.v2.png",
+    "camera": "subjects/garbage_truck/camera.json",
+    "module": "subjects/garbage_truck/module.mjs",
+    "layoutMeasured": "subjects/garbage_truck/layout.measured.json"
+  },
+  "outDir": "out/garbage_truck",
+  "missingKeyPolicy": "report"
+}

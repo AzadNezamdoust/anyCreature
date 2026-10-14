@@ -1,0 +1,36 @@
+{
+  "subject": "ray_pistol",
+  "noun": "toy ray gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/ray_pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/ray_pistol.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours)",
+  "description": "A fictional cartoon science-fiction toy ray gadget, a chunky toy-like game prop (not a real object, no working parts). A fat rounded off-white body like a short egg lying on its side. At the front a mid grey cone-shaped emitter that narrows forward through three stacked mid grey rings of shrinking size to a thin stem with a small bright red ball tip. On top of the body a clear pale blue glass dome in a flat mid grey collar ring, showing flat bright lime-green fluid. At the rear of the body a round mid grey end cap with a small bright yellow ribbed dial knob sticking out backward on the axis. Underneath, toward the rear, a chunky dark teal handle raked backward, with an oversized bright red curved finger lever inside a rounded mid grey loop in front of the handle. Two small off-white swept-back tail fins at the rear of the body, one sticking out from each flank. A small bright yellow switch is on the right flank of the body.",
+  "proportions": "About 0.30 m long, 0.09 m wide and 0.20 m tall. (length : width : height = 3.33 : 1 : 2.22)",
+  "sides": "the small bright yellow switch is on the right flank only; the left flank has no switch; everything else is symmetric left to right (one tail fin on each flank).",
+  "shape": {
+    "side": "in this view the prop is 1.50 times as long as it is tall",
+    "front": "in this view its width is 0.45 of its height",
+    "rear": "in this view its width is 0.45 of its height",
+    "top": "in this view it is 3.33 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the emitter axis exactly horizontal, the red ball tip at the left end of the image, then the three grey rings and the grey cone, the off-white egg body in the middle with the glass dome on top, the grey end cap and the yellow dial knob at the right end of the image; one tail fin lies on the flank at the rear; the dark teal handle hangs below the rear half of the body, raked toward the right, with the red finger lever and the grey loop in front of it. No yellow switch in this view.",
+    "front": "Seen from the front end: everything is round and concentric on the centre line: the small red ball in the centre, the three grey rings and the grey cone around it, the round off-white body outline behind them; the glass dome with its green fluid stands on top on the centre line, the two tail fins stick out left and right of the body, the grey loop with the red finger lever and the dark teal handle hang below on the centre line.",
+    "rear": "Seen from the rear end: the round mid grey end cap with the small yellow dial knob in its centre, the round off-white body outline around it, the glass dome on top on the centre line, the two tail fins sticking out left and right, the dark teal handle hanging below on the centre line and hiding the red finger lever.",
+    "top": "Seen from above: the off-white egg body in the middle with the round glass dome and its grey collar as a circle on the centre line, the grey cone, the three rings and the red ball tip at the left end, the grey end cap and yellow dial knob at the right end, the two swept-back tail fins sticking out to both sides near the right end; the handle is hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small bright yellow switch",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.3,
+    "W": 0.09,
+    "H": 0.2,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

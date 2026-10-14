@@ -1,0 +1,9 @@
+{
+  "_comment": "WF-R3-B item 8 — frozen inputs + capture of the building template through P1 (facade_brick). layout/layout.measured/census/passes/regions are copies of subjects/facade_brick/* after `node scripts/measure-target.mjs --freeze` (storefront.h 0.111 H, _frame.proudDrop 0.355). target.png / idpass.png (+ .json manifests) are the P1 gate-only capture of that template (scripts/pass.mjs P1 --gate-only --no-repair, dev server 127.0.0.1:4210, seed 1, size 900); rendered-module.mjs.txt is the module that capture rendered (the template after gate-only palette calibration — only `meta` differs). The TARGET image is refs/tenement-iso.png (frozen reference). If the template's bytes change, templateSha256 stops matching and this capture must be re-taken.",
+  "subject": "facade_brick",
+  "through": "P1",
+  "templateSha256": "6f4e8ca5906833c2bf5dc31b45c184f1391090d725769e0ac526cfa21945c9e8",
+  "renderedSha256": "f9680c1dda43c17c686d30a9356b3c0e8603a49d24bcd042ce9e7693a611a00f",
+  "target": "refs/tenement-iso.png",
+  "gateOnlyRow": "P1 PASS (gate PASS, likeness PASS, layout PASS); LK_AREA P1 glass 9.43% vs 13.01% (0.725x; 0.577x before item 8), grey 1.14% vs 1.20% (0.951x)"
+}

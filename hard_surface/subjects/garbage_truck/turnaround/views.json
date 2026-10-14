@@ -1,0 +1,115 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept; front / rear / top regenerated 2026-09-27 after the setup audit (turnaround/README.md; the first set is in ../turnaround-0-drifted). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "_note": "2026-09-27: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.5
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "_spanOpen": "2026-09-28 (scripts/v6/README.md 'Span opening'): the x / z body spans are counted on the body mask opened with a 2 x 2 square, so the 1-px anti-alias halo columns / rows of dark outlines (mirror heads, lamps: greys classified as body) no longer widen W / L; setup auditors 2026-09-28",
+    "enclosedFg": false,
+    "_enclosedFg": "off: no white parts (lamps are pale yellow, the grab bar / mirror brackets enclose see-through white loops)",
+    "table": {
+      "body": ["#43863b", "#367131"],
+      "hopper": "#2d5c34",
+      "mouth": "#153b21",
+      "glass": "#a1b4c4",
+      "bumper": "#adacac",
+      "dark": ["#36393c", "#26292c"],
+      "grille": "#7e848a",
+      "lamp": "#feeaa4"
+    },
+    "_body": "body = the cab + refuse-body green; the rear-loader hopper (darker green) and its loading mouth are their own families, so the side / top body span (L, z origin) runs from the cab nose to the hopper's green front frame. The concept draws the cab WIDER than the refuse body (cab ~1.13 x): the widest green is the cab in the front / rear views and the cab / body in the top view, so the W anchor (2.5 m) is their mean and the W residuals (front +3.7 %, rear +0.4 %, top -4.1 %) are that design, not drift",
+    "viewTable": {
+      "side": { "body": ["#498840", "#3c7336"], "hopper": ["#335e39", "#2f5b37"], "mouth": ["#1b3d26", "#233e25"], "glass": ["#a7b6c9", "#9fb1c1"], "bumper": ["#b3aeb1", "#acacac"], "dark": ["#3c3b41", "#2c2b31", "#3a3f41"], "grille": ["#84868f"], "lamp": ["#ffeca9"] },
+      "front": { "body": ["#488540", "#3b7036", "#4d7547"], "hopper": ["#325b39", "#345431"], "mouth": ["#1a3a26", "#214620"], "glass": ["#a6b3c9", "#a0b1c1"], "bumper": ["#b2abb1", "#ababab"], "dark": ["#3b3841", "#2b2831", "#3e4549", "#2e3236"], "grille": ["#83838f", "#7d8385"], "lamp": ["#ffe9a9", "#fceca7"] },
+      "rear": { "body": ["#4a8042", "#3d6b38", "#4d8644"], "hopper": ["#34563b"], "mouth": ["#1c3528", "#20391d"], "glass": ["#a8aecb"], "bumper": ["#b4a6b3", "#aaaaa9"], "dark": ["#3d3343", "#2d2333"], "grille": ["#857e91"], "lamp": ["#ffe4ab"] },
+      "top": { "body": ["#4a8a41", "#3d7537"], "hopper": ["#34603a", "#2e5936"], "mouth": ["#1c3f27", "#21521c"], "glass": ["#a8b8ca"], "bumper": ["#b4b0b2", "#adaeac"], "dark": ["#3d3d42", "#2d2d32"], "grille": ["#858890"], "lamp": ["#ffeeaa"] }
+    },
+    "_viewTable": "2026-09-27: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/garbage_truck/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +5.8 +2.4 +4.9 · front +4.9 -0.6 +5 · rear +6.8 -6.5 +6.6 · top +7.5 +3.6 +5.8); ambiguous: rear #303537 3.7 % dark (vs mouth); rear #30562c 2.2 % hopper (vs body); rear #9baaba 2.1 % glass (vs bumper); rear #474c4c 1.1 % hopper (vs dark); top #3c6c37 2.4 % body (vs hopper); top #1a2e1a 2.2 % mouth (vs dark); top #9eb2bd 1.1 % glass (vs bumper). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-28 gold-auditor (proposal, re-audit after S1 fix + owner ruling), owner-approved 2026-09-28",
+    "side": [
+      { "id": "D6", "rect": [828, 458, 882, 540], "decides": "rear", "why": "grab-bar profile on the tailgate slope at up 1.29..1.85 m (bumper comp r 3.35..3.69); the rear view puts both bars at up 0.99..1.74 m (r +-0.99..1.05): 0.2 m higher here" }
+    ],
+    "front": [
+      { "id": "D7", "rect": [355, 339, 375, 418], "decides": "concept", "why": "S2 ruled drift (above the mirror head): the body is drawn 0.10 m proud of the cab on this side (body x 368..657 = 2.46 m, cab face 379..644 = 2.25 m) while the ruled widths are cab 2.65 > body 2.35: the model's cab flank strip covers x 356..374 (background here), its body edge sits at 374 (comps front body 2.457 / 2.253 m)" },
+      { "id": "D8", "rect": [355, 505, 375, 645], "decides": "concept", "why": "S2, same strip below the mirror head (y 419..504 left out: the mirror arm / head is right where it is)" },
+      { "id": "D9", "rect": [649, 339, 669, 418], "decides": "concept", "why": "S2, +x side above the mirror: the model's cab strip x 650..668 over background, body edge at 650 vs the drawn 657" },
+      { "id": "D10", "rect": [649, 505, 669, 645], "decides": "concept", "why": "S2, +x side below the mirror head" }
+    ],
+    "rear": [
+      { "id": "D11", "rect": [355, 339, 375, 422], "decides": "concept", "why": "S2 ruled drift (above the mirror head): no cab flank strip outside the body (body outer x 367..657 = 2.47 m, nothing beyond); at cab 2.65 > body 2.35 the model's cab shows 0.15 m per side outside the body, x 356..374 here (up ~0.65..3.0)" },
+      { "id": "D12", "rect": [355, 501, 375, 645], "decides": "concept", "why": "S2, same strip below the mirror head (y 423..500 left out: the mirror head with its rearward glass stays)" },
+      { "id": "D13", "rect": [649, 339, 669, 422], "decides": "concept", "why": "S2, -x side above the mirror: the model's cab strip x 650..668 over background, body edge at 650 vs the drawn 657" },
+      { "id": "D14", "rect": [649, 501, 669, 645], "decides": "concept", "why": "S2, -x side below the mirror head" }
+    ],
+    "top": [
+      { "id": "D15", "rect": [352, 363, 702, 378], "decides": "concept", "why": "S2 ruled drift: the refuse body's far-flank rounded-edge band (y 363..389; body outer 2.60 m over y 363..669) is drawn 0.13 m proud of the ruled body width 2.35 m (model edge y 378); the tailgate behind it (col 800: y 381..659 = 2.36 m) already agrees" },
+      { "id": "D16", "rect": [352, 656, 702, 670], "decides": "concept", "why": "S2, near flank: the body's rounded-edge band y 643..669 vs the model's body edge at y 655" },
+      { "id": "D17", "rect": [150, 357, 340, 372], "decides": "concept", "why": "S2: the cab's far flank (outline y 372, core 389) is drawn 2.49 m outer / 2.08 m core; the ruled cab 2.65 m puts the model's cab edge at y 361 over background" },
+      { "id": "D18", "rect": [150, 667, 340, 680], "decides": "concept", "why": "S2: the cab's near flank (outline y 665) vs the model's cab edge at y 672 over background" }
+    ],
+    "concept": [
+      { "id": "C1", "rect": [58, 655, 92, 712], "decides": "front", "why": "front bumper's far end at x 64 is 0.28 m proud of the cab's far edge (x 87) while the near end (x 300) is flush with the cab's near edge; the front view has it 0.07 m proud per side (bumper r +-1.16 vs cab +-1.09)" },
+      { "id": "C2", "rect": [80, 418, 210, 472], "decides": "front", "why": "the cab face fans: far vertical edge 212 px (y 448-660) vs near edge 240 px (y 512-752); the roof's front edge slopes 0.30 (64/213 px) where the x axis projects at 0.46 and the bumper line at 0.43, so the far roof corner sits ~0.2 m too low; the front view's cab face is a rectangle (up 0.65..2.635)" }
+    ]
+  }
+}

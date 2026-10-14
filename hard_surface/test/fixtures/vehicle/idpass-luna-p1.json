@@ -1,0 +1,22 @@
+{
+  "source": "out/blind/pickup/luna/P1/attempt-2/idpass.png (frozen copy, WF-R3 H2)",
+  "idColours": {
+    "chassis": "#ff0000",
+    "body": "#00ff00",
+    "cab": "#0000ff",
+    "hood": "#ffff00",
+    "bed": "#ff00ff",
+    "bed_wall": "#00ffff",
+    "tailgate": "#ff8000",
+    "wheel": "#8000ff",
+    "tyre": "#00ff80",
+    "hub": "#ff0080",
+    "axle": "#80ff00",
+    "bumper": "#0080ff",
+    "headlight": "#804000",
+    "grille": "#408000",
+    "window": "#004080",
+    "mirror": "#800040",
+    "prop": "#c0c0c0"
+  }
+}

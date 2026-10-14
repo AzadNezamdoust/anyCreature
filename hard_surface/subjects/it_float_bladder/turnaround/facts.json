@@ -1,0 +1,40 @@
+{
+  "subject": "it_float_bladder",
+  "noun": "chunky hip-worn float bladder with belt (game prop)",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_float_bladder.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_float_bladder.png = out/concept-items30/30_float_bladder/v4b_hero_2.png; FPS refs/it_float_bladder.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: belt loop with two buckle blocks on the right side, boxy pouch, short charcoal neck, one smooth egg-shaped bladder with exactly 1 wide band and a dark steel vent cap on its crown, 1 sideways gas cartridge in exactly 2 clips on the pouch front, 1 lamp at the left end of the pouch front). FRAME as the v3 subject: standard weapon frame, no turn: +z = the pouch FRONT (cartridge + lamp), -z = the back (belt loops), +x = the LEFT flank (the pouch side on the image right, where the belt goes round behind), -x = the right flank (the two buckle blocks of the belt, image left), y up, the bladder on top; y = 0 at the belt / pouch lowest edge; anchor H 0.52, W 0.46 the belt ring; re-measured after install.",
+  "description": "A fictional hip-worn float bladder game prop, chunky low-poly, shown alone and inflated: a tall balloon on a short neck above a small belt pouch, like a light bulb standing on a belt. One wide charcoal webbing hip belt, a loop running round behind the pouch and closed at the weapon's right side by two thick rectangular charcoal buckle blocks, carries one small boxy sand-grey painted shell pouch with wide chamfers. One short thick charcoal neck rises from the pouch top. On it stands one tall smooth rounded bladder of matte sand-grey rubberised fabric, about 0.30 m across and 0.36 m tall, drawn as one smooth faceted volume, with exactly one wide charcoal band round it above its middle and one fat dark steel vent cap on its crown. On the pouch front one fat dark steel gas cartridge, a capsule with domed ends, lies sideways held in exactly two thick charcoal clips. One small teal lamp window in a thick charcoal bezel on the pouch front at its left end. The hidden back carries the belt loop.",
+  "proportions": "About 0.24 m long, 0.46 m wide and 0.52 m tall. (length : width : height = 0.52 : 1 : 1.13)",
+  "sides": "the float bladder is symmetric about its centre plane (x = 0) except the belt closure: the two rectangular charcoal buckle blocks of the belt are on the RIGHT flank (-x) at the pouch side, and the teal lamp window sits at the left end (+x) of the pouch front. Frame words: the FRONT is the pouch face with the sideways gas cartridge in two clips and the lamp window; the REAR is the back (the belt running round behind); the LEFT flank is the pouch side seen on the image right.",
+  "shape": {
+    "side": "in this view the chunky hip-worn float bladder with belt (game prop) is 0.46 times as long as it is tall",
+    "front": "in this view its width is 0.88 of its height",
+    "rear": "in this view its width is 0.88 of its height",
+    "top": "in this view it is 0.52 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Seen from the left flank: the tall smooth sand-grey bladder with its charcoal band and the dark steel vent cap on top, the short charcoal neck, the small boxy pouch, the charcoal belt going away behind it; the gas cartridge and its clips are on the front face and seen only edge-on at the left edge.",
+    "front": "Seen from the front: the bladder with its band and crown cap above the neck, the pouch below with the teal lamp window at its left end (image right) and the sideways gas cartridge in its two clips across the front, the belt running out both sides behind the pouch with the two buckle blocks at the image LEFT end (the right flank).",
+    "rear": "Seen from the back: the bladder and band, the neck, the pouch's plain back with the belt wrapping across it, the buckle blocks at the image RIGHT end (the right flank); no cartridge, no lamp.",
+    "top": "Seen from above: the round bladder with the vent cap in its centre, the pouch just visible below it toward the front, the belt loop ring running round it, the two buckle blocks at the right-flank side."
+  },
+  "asymmetric": [
+    {
+      "part": "the two rectangular charcoal belt buckle blocks",
+      "plural": true,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.24,
+    "W": 0.46,
+    "H": 0.52,
+    "_": "ESTIMATE on the hero (perspective); after turnaround.mjs install re-measure with hull.mjs"
+  },
+  "decided": [
+    "exactly one bladder, one band, one vent cap, one cartridge with two clips, one lamp, two buckle blocks",
+    "the belt is one loop closed at the right side; no loose ends hanging"
+  ]
+}

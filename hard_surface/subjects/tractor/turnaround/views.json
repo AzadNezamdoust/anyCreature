@@ -1,0 +1,20 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.2 },
+  "_anchor": "overall width over the rear wheels; the body family's x span is the rear fenders, which sit flush over the rear tyres in the front / rear / top views",
+  "families": {
+    "body": "body",
+    "table": {
+      "body": ["#c9312d", "#a72421"],
+      "dark": ["#323231", "#454545", "#1b1b1b"],
+      "grey": ["#a4a4a4", "#909090", "#7e7f7f"],
+      "lamp": "#f4f4f4"
+    }
+  }
+}

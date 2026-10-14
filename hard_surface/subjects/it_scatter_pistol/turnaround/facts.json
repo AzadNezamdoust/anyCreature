@@ -1,0 +1,40 @@
+{
+  "subject": "it_scatter_pistol",
+  "noun": "chunky drum scatter pistol game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_scatter_pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_scatter_pistol.png = out/concept-items30/05_scatter_pistol/v4b_hero_1.png; FPS refs/it_scatter_pistol.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 slide block with 1 long top rib, 2 rear sight blocks, 1 duckbill muzzle, 1 drum magazine (axis left-right) with 1 hub cap per flat face, 1 latch block over the drum, 1 trigger guard + trigger, 1 grip with 4 ribs and a flared base, 1 teal lamp on the left flank at the rear). FRAME (classes/weapon.md): front +z = the duckbill muzzle, left flank +x = the flank the hero shows. Hidden right flank: plain red-brown slide, no lamp; the drum's right face mirrors its left face (hub cap). Dims estimated on the hero: L 0.30, W 0.12 (the drum; the slide about 0.07), H 0.24.",
+  "description": "A fictional stubby heavy scatter pistol game prop for a tunnel breaker, chunky low-poly, one hand, held level with the muzzle forward. One short thick brick red-brown painted slide block with wide chamfers and one long raised flat rib along the middle of its top. At the rear of the top two thick raised charcoal sight blocks side by side. Under the front of the frame one fat round brick red-brown drum magazine about 0.11 m across, a faceted short cylinder whose axis runs left to right, its flat faces on the flanks, each flat face with one big octagonal dark steel hub cap, held by one fat charcoal latch block above it. Behind the drum one squared charcoal trigger guard with a thick charcoal trigger. At the rear one chunky charcoal pistol grip raked back with four fat diagonal ribs and a fat flared base. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank of the slide at its rear.",
+  "proportions": "At the front one wide flat dark steel duckbill muzzle, a flat rectangular tube about 0.09 m wide and 0.03 m tall with a thick chamfered rim and a dark inside that closes a short way in. About 0.30 m long, 0.12 m wide and 0.24 m tall. (length : width : height = 3.33 : 1 : 0.33)",
+  "sides": "only the teal lamp window is on one flank: on the LEFT flank of the slide at its rear; the right flank of the slide is plain red-brown. The drum is symmetric: both its flat faces (left and right flank) carry one big octagonal hub cap; the drum is wider than the slide and sticks out on both sides equally. The slide, its top rib, the two rear sight blocks (side by side, mirrored), the muzzle, the latch block, the trigger guard and the grip are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky drum scatter pistol game prop is 10.00 times as long as it is tall",
+    "front": "in this view its width is 3.00 of its height",
+    "rear": "in this view its width is 3.00 of its height",
+    "top": "in this view it is 3.33 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the muzzle to the LEFT of the image: the flat dark steel duckbill muzzle sticking out at the left end of the short red-brown slide; the long raised rib along the slide top; the two charcoal sight blocks at the rear end of the top (one hiding most of the other); the teal lamp window on the slide flank at the rear; under the front of the slide the big round drum seen face on as a circle with its octagonal hub cap in the middle and the charcoal latch block above it; behind the drum the squared trigger guard with the trigger; at the right the raked ribbed charcoal grip with its flared base.",
+    "front": "Seen from the muzzle end: the wide flat duckbill opening with its thick rim in the upper middle, the slide face around and behind it, the two sight blocks peeking up side by side at the top; below, the drum seen edge on as a wide faceted band, wider than the slide, its two hub caps sticking out a little on both sides; the grip hidden behind.",
+    "rear": "Seen from the back end: the slide's rear face on top with the two sight blocks side by side on it, the grip below on the centre line with its flared base, the drum edge showing past both sides of the grip lower down with its two hub caps. No lamp visible.",
+    "top": "Seen from above, the muzzle to the LEFT: the duckbill muzzle at the left end, the slide with its long top rib along the middle and the two sight blocks side by side at the right end; the drum sticking out on both sides of the slide near the front, with its hub caps; the grip base just showing at the rear. The lamp is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.3,
+    "W": 0.09,
+    "H": 0.03,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the duckbill opening is dark inside and closes a short way in: never see-through",
+    "the drum is a closed faceted cylinder, axis left to right, one hub cap per flat face"
+  ]
+}

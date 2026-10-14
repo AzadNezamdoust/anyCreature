@@ -1,0 +1,56 @@
+{
+  "_comment": "MEASURED (no regions.json / census / layout for this subject): the VISUAL HULL of the registered turnaround (side / front / rear / top foregrounds, 0.03 m voxels, 127537 kept) projected through subjects/forklift/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 25.0818 deg, phi 44.8899 deg",
+    "conceptBboxPx": [
+      98,
+      150,
+      881,
+      859
+    ],
+    "sPxPerM": {
+      "x": 267.725,
+      "y": 230.712,
+      "used": 249.218,
+      "xOverY": 1.1604
+    },
+    "quadPx": [
+      [
+        388,
+        406.7
+      ],
+      [
+        1134.1,
+        89.2
+      ],
+      [
+        1134.1,
+        568
+      ],
+      [
+        388,
+        885.4
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit",
+    "hullQuadPx": [
+      [
+        321.9,
+        429.6
+      ],
+      [
+        1166.2,
+        70.3
+      ],
+      [
+        1166.2,
+        612.1
+      ],
+      [
+        321.9,
+        971.3
+      ]
+    ],
+    "refined": "2026-09-27: quadPx = the hull quad (hullQuadPx) under the start blockout's fitted concept similarity (scripts/v7/frame.mjs on out/ref/gold/forklift/start.mjs: scale 0.8837, shift +17 / -33.5 px about the quad centre) — the see-through mast, guard and forks make the visual hull fat, so its bbox fit left the frame knobs near their limits; the start's frame knobs are reset to identity"
+  }
+}

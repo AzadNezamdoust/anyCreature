@@ -1,0 +1,114 @@
+{
+  "subject": "school_bus",
+  "module": "out/v6/bus-start.mjs",
+  "out": "out/v6/CONTROL.mjs",
+  "views": {
+    "concept": 2
+  },
+  "size": 256,
+  "stages": [
+    {
+      "stage": "body",
+      "knobs": [
+        "L",
+        "W",
+        "H",
+        "capDrop",
+        "capRun",
+        "chamfer",
+        "sillY",
+        "wheelR",
+        "axleF",
+        "axleR",
+        "roofR",
+        "capR",
+        "bumperFTop",
+        "bumperFH",
+        "bumperRTop",
+        "bumperRH",
+        "frameScale",
+        "frameX",
+        "frameY"
+      ],
+      "evals": 299,
+      "accepted": 67,
+      "start": {
+        "score": 0.9401,
+        "views": {
+          "concept": {
+            "iou": 0.9401
+          }
+        }
+      },
+      "end": {
+        "score": 0.9699,
+        "views": {
+          "concept": {
+            "iou": 0.9699
+          }
+        }
+      }
+    },
+    {
+      "stage": "feature",
+      "knobs": [
+        "wsY0",
+        "wsY1",
+        "bandY0",
+        "bandY1",
+        "paneY0",
+        "paneY1",
+        "paneFront",
+        "panePitch"
+      ],
+      "evals": 70,
+      "accepted": 6,
+      "start": {
+        "score": 0.9699,
+        "views": {
+          "concept": {
+            "iou": 0.9699
+          }
+        }
+      },
+      "end": {
+        "score": 0.9701,
+        "views": {
+          "concept": {
+            "iou": 0.9701
+          }
+        }
+      }
+    }
+  ],
+  "knobs": {
+    "L": 5,
+    "W": 2.0683,
+    "H": 2.2405,
+    "capDrop": 0.4583,
+    "capRun": 0.4728,
+    "chamfer": 0.1422,
+    "sillY": 0.3641,
+    "wheelR": 0.42,
+    "axleF": 0.8427,
+    "axleR": 1.1656,
+    "roofR": 0.1597,
+    "capR": 0.66,
+    "bumperFTop": 0.4701,
+    "bumperFH": 0.2773,
+    "bumperRTop": 0.6978,
+    "bumperRH": 0.3341,
+    "frameScale": 1,
+    "frameX": 4.05,
+    "frameY": 3.75,
+    "wsY0": 0.62,
+    "wsY1": 0.807,
+    "bandY0": 0.543,
+    "bandY1": 0.884,
+    "paneY0": 0.595,
+    "paneY1": 0.833,
+    "paneFront": 0.1121,
+    "panePitch": 0.1233
+  },
+  "ms": 211341
+}

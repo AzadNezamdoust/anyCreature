@@ -1,0 +1,68 @@
+{
+  "subject": "school_bus",
+  "at": "2026-10-02T20:21:34Z",
+  "by": "eyes-check --update",
+  "module": "out/ref/gold/school_bus/model-r5.mjs",
+  "moduleSha256": "e2fadab323daf62ba1ce208a62a68a0332ba77b69de24e70e2b08c125882dbae",
+  "eyesHash": "sha256:8982c08499b2b76b9b46f15ede36ce7566c1a9e29a1bad3254496bdaf1930a34",
+  "render": {
+    "json": "b0912db1f1de180f742ec8e8900b547e344d60e2971cd2badc54b3ce10df5a54",
+    "png": "efc704d76c6202a433e2b66b66ae2b7cb7f25165f87af114df58f8df1e70365e",
+    "views": {
+      "side": {
+        "iou": 0.9643,
+        "agree": 0.9643
+      },
+      "front": {
+        "iou": 0.9687,
+        "agree": 0.9687
+      },
+      "rear": {
+        "iou": 0.9411,
+        "agree": 0.9411
+      },
+      "top": {
+        "iou": 0.9709,
+        "agree": 0.9709
+      },
+      "concept": {
+        "iou": 0.9638,
+        "agree": 0.9638
+      }
+    }
+  },
+  "files": {
+    "scripts/v6/judge.mjs": "1be61cbd983de6fc3faf5c7d189a78def9aad991ab51a44136989dc4aee44f34",
+    "scripts/v6/ortho.mjs": "cab430e501c9ae3395ba3ea93dfcf85f2f77bb73adb07fe41e47ac110ac7f110",
+    "scripts/v6/view.mjs": "e819e4c2cd36907ede8ab8e11393c74b94aacd3335d06559ef703b9453bcada2",
+    "scripts/v6/rules.mjs": "7a9063bf43a3b977c68f9802409af4663e798187db35e997a1c8c932eaae074c",
+    "scripts/registered.mjs": "4443bdb8612ab42c9bb70c2a945aa34173d8f4290d21579128e71e42d6031ab3",
+    "scripts/project.mjs": "cea08e64f258fdacf193990f366264c9b0a4a987581475be153ce015fea51f67",
+    "scripts/subject.mjs": "0576edc6a469ddaf1d06d11c0ad7c4125ecc475174e35a92b0bf611dcb70c864",
+    "scripts/check-module.mjs": "da7a2471a5a1b172d5e457bc4f4a3e46404a4b2a5f2fd80e9cb025f3f15e2c15",
+    "scripts/v7/lib.mjs": "8b2c8259aa91862648240ac117e3ab518a6cff71d4fe9f4ec5bd5eeb64f5acfe",
+    "scripts/v7/step.mjs": "a926b4c641a3830d25e209e487612f8542a376f734e906f9099fb85850dd32e0",
+    "scripts/v7/steplib.mjs": "d46bc6365a1f29d8808fde4dd7662f1e709e411c06c399b7823aa19d6011362a",
+    "src/kernel/index.mjs": "268b6cb915847c550717b4cb09fdb92b9940a9f4b06e3310869024ba6fca3fe6",
+    "src/kernel/profile.mjs": "d559a1815d7b951e786539a60066aa60ed3e59a884855956e7f84c8153d22359",
+    "src/kernel/toThree.mjs": "63e6f567692e5fa1ca7aa4133a6807d94242ceff58733247657a9170b9ca7ddc",
+    "src/kernel/assemblies.mjs": "3583a4861eef982872a1e3d8fa064485d0c95a4aa0ebe812096b8a69d4bfbb8d",
+    "src/validate/kernel-chain.mjs": "3936584308c2a2e8b7c61c015aa8e3d0390fe6a52f6615fd11d9c780cb1e359e",
+    "src/validate/rules/vehicle.mjs": "3afd88e8a50ab9c78daa04ccb8f4ed7a2d11b5fe24e3235ba90bdd72c4c4c2a5",
+    "src/validate/limits.json": "06b860b3fc562aa655e39c130bb51aa8dfd2e3cf4b7a768ef7210fc0189159af",
+    "subjects/school_bus/subject.json": "1fa4e53fd60ccf6453529947454959202efcc3e06032b1fb681cb11facb05e96",
+    "subjects/school_bus/prior.json": "f399e3c749c11925ccaa9f78e8f91c02318fa5b8401320359b1b8328b43c27f4",
+    "subjects/school_bus/probes.json": null,
+    "subjects/school_bus/turnaround/views.json": "9f2b177437ddfa8285e160248a0bb2bb36bca15a939895c99021e2e13b82d2d4",
+    "subjects/school_bus/turnaround/side_right.png": "47b08ece5e7b821538a1a32e407b621436e71da706883b9ea8cf45a7793b1270",
+    "subjects/school_bus/turnaround/front.png": "ab9153edb914c3922305338dd466be0f4482cc09e59449b2b2101329025dc3c8",
+    "subjects/school_bus/turnaround/rear.png": "3dbc151d54643b3741d85930ecb192216b7534f8c14abc129308f8bba1d80f0f",
+    "subjects/school_bus/turnaround/top.png": "7d7328da06be580f27a5f5d9c64fdc28726305ce545e296958e9cfac8c06d079",
+    "refs/school_bus.png": "559866f23f11d55d21ce084b53a7d74974e42f79eb7dc10c392b9d60a47dea28",
+    "refs/school_bus.camera.json": "7b74f92a179f44a122104d9501966b38f0ee907e821e82f201092874bb1f72de",
+    "subjects/school_bus/layout.measured.json": "b98c1eb2361182db6a6ed75933c6da2f1daf54d62b4c09a9e4f846bb199cbb4e",
+    "subjects/school_bus/layout.json": "fc60effd053ebe1757ea4d5f6f337fea29ee1c1bbfc9fbbc061c9abf939e5e7d",
+    "subjects/school_bus/census.json": "3139f71042265cbab2b07051f0b1547fa507af398b2ecb31a545d28d7d5b4c5a",
+    "classes/vehicle.json": "fef859bad93c1b2ba6c9a9df900f419001588b2de53130b27bcc1aca5a3d9087"
+  }
+}

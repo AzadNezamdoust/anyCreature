@@ -1,0 +1,63 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only (the turnaround wins); stylisation measured on subjects/garbage_truck/turnaround at the W anchor (L = green span cab nose .. hopper frame, 7.46 bumper to step; H = ground to the hopper lip). Setup audit 2026-09-27: the first front / rear views drew the cab 18 / 10 % too narrow (the concept's cab is ~13 % wider than the refuse body); front / rear / top regenerated, remaining drift in out/ref/gold/garbage_truck/LEDGER.md.",
+  "class": "vehicle",
+  "real": {
+    "source": "cab-over rear-loader refuse truck (Mack LR / Peterbilt 520 + Heil rear loader class, rounded)",
+    "W": 2.5,
+    "H": [
+      3.4,
+      3.9
+    ],
+    "L": [
+      8.5,
+      10.5
+    ],
+    "wheelD": [
+      1,
+      1.1
+    ],
+    "wheelbaseOverL": [
+      0.45,
+      0.55
+    ],
+    "LoverW": [
+      3.4,
+      4.2
+    ],
+    "HoverW": [
+      1.35,
+      1.55
+    ]
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.5,
+    "why": "body width of a refuse truck; fixes px/m of the turnaround"
+  },
+  "stylisation": {
+    "_comment": "short and tall, big wheels, cab wider than the refuse body",
+    "LoverW": 2.84,
+    "HoverW": 1.37,
+    "cabOverBodyW": 1.13,
+    "wheelDoverH": 0.35,
+    "wheelbaseOverL": 0.52
+  },
+  "softRanges": {
+    "L": [
+      6.5,
+      10
+    ],
+    "W": [
+      2.2,
+      2.8
+    ],
+    "H": [
+      3.2,
+      4.3
+    ],
+    "wheelR": [
+      0.5,
+      0.75
+    ]
+  }
+}

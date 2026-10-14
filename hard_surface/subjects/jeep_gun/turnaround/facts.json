@@ -1,0 +1,33 @@
+{
+  "subject": "jeep_gun",
+  "noun": "jeep gun",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28: description + proportions = the concept prompt's paragraph (refs/jeep_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly four-by-four light military utility vehicle parked on the ground, no crew, seen from the front-left. A wide low boxy angular body with a flat bonnet, a flat vertical grille with a wide slatted front, square flat headlights at the corners, a short upright windscreen of two flat panes, four doors with small square flat windows and a flat hard roof; a round ring mount on the middle of the roof carrying a heavy machine gun on a short post with a small flat gun shield in front of it, the gun pointing forward. Four large chunky wheels of the same size on two axles under wide flared wheel arches. Body, doors, roof and wheel arches painted one desert tan; grille slats, bumper, gun, gun mount and gun shield dark gunmetal grey; windows a single flat dark blue-grey; tyres dark charcoal, hubs dark tan; headlights pale grey. The spare wheel on the rear face faces away and is hidden; the right-hand wheels are hidden behind the body.",
+  "proportions": "About 4.6 m long, 2.2 m wide and 2.6 m tall including the roof gun; the four wheels clearly visible. (length : width : height = 2.09 : 1 : 1.18)",
+  "sides": "the jeep gun is symmetric left to right except the jerry can, which hangs on the LEFT flank at its rear corner only; the roof gun ring sits on the centre line, the gun points forward.",
+  "shape": {
+    "side": "in this view the jeep gun is 1.77 times as long as it is tall",
+    "front": "in this view its width is 0.85 of its height",
+    "rear": "in this view its width is 0.85 of its height",
+    "top": "in this view it is 2.09 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the spare wheel mounted upright on the middle of the flat tan rear door, and the roof gun's back behind its shield."
+  },
+  "asymmetric": [
+    {
+      "part": "the jerry can",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 3.8,
+    "W": 2.2,
+    "H": 2.479,
+    "_": "2026-09-29: the registered dims of the installed turnaround (attempt-2, gpt; hull.mjs --subject jeep_gun --aniso; W = the anchor); the concept prompt stated 4.6 x 2.2 x 2.6 m"
+  }
+}

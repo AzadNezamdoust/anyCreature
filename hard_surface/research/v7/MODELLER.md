@@ -1,0 +1,1 @@
+# v7 MODELLER — moved (WF v8, 2026-09-27): the role text is `D:\Git\checkout\.claude\agents\gold-modeller.md` (pinned seat, launched only with a `node scripts/v7/gold.mjs brief --role modeller` brief; procedure: `.claude/skills/gold-model/SKILL.md`).

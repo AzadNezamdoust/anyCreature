@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/rocket_launcher/turnaround: side / front / rear / top foregrounds, 0.00492 m voxels refined x4, 679431 surface / shell points) projected through subjects/rocket_launcher/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 29.25 deg, phi 67.5 deg",
+    "conceptBboxPx": [
+      14,
+      273,
+      1004,
+      684
+    ],
+    "sPxPerM": {
+      "x": 797.04,
+      "y": 789.072,
+      "used": 757.369,
+      "xOverY": 1.0101
+    },
+    "quadPx": [
+      [
+        99.1,
+        535.6
+      ],
+      [
+        1008.8,
+        351.5
+      ],
+      [
+        1008.8,
+        563.1
+      ],
+      [
+        99.1,
+        747.1
+      ]
+    ],
+    "fit": {
+      "s": 757.3685173291899,
+      "ox": 530.7471309892394,
+      "oy": 627.7155329037248,
+      "refined": {
+        "frame": {
+          "scale": 0.955,
+          "tx": 30,
+          "ty": -14
+        },
+        "iou": 0.7824,
+        "bboxIou": 0.6828
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

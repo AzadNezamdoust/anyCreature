@@ -1,0 +1,101 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "up": 0.914 }
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "right": 1.049, "up": 0.914 }
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "up": 0.914 }
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.9
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#cbad80", "#ba9d71", "#a48a62", "#6c5c44"],
+      "metal": ["#4c4b4b", "#393938", "#5d5d5d"],
+      "dark": ["#252523"]
+    },
+    "_table": "2026-09-29 (v2 concept refs/light_tank.v2.png): named from the concept's foreground colour clusters >= 2 % (newsubject.mjs proposeFamilies on the v2 image) + measure.mjs sample of each part: hull, turret, hatch, track guards and grille box desert tan (lit / shade / deep shade under the guards); metal = gun, mantlet, smoke launchers, tow hooks, headlight guards, tracks, road wheels, rollers, sprocket, idler gunmetal; dark = track shadow gaps and outlines",
+    "viewTable": {
+      "side": { "body": ["#caab7c", "#b99b6d", "#a3885e", "#6b5a40", "#ad9369", "#695a43", "#c6a97c", "#99835e", "#b99d73"], "metal": ["#4b4947", "#383734", "#5c5b59", "#403c34", "#4e4b45", "#524737"], "dark": ["#24231f", "#1e1c16"] },
+      "front": { "body": ["#c8a97c", "#b7996d", "#a1865e", "#695840", "#af946a", "#776548", "#9e8661"], "metal": ["#494747", "#363534", "#5a5959", "#575653", "#45433f", "#656461"], "dark": ["#22211f", "#18150f"] },
+      "rear": { "body": ["#d4b487", "#c3a478", "#ad9169", "#75634b", "#b1956c", "#7b684a"], "metal": ["#555252", "#42403f", "#666464", "#3d3d39", "#6e6e6c", "#5c5b57", "#4d4c48"], "dark": ["#2e2c2a", "#2c2b26"] },
+      "top": { "body": ["#c5a779", "#b4976a", "#9e845b", "#66563d", "#a18a63", "#8d7958", "#b19972", "#614e31", "#cab38e"], "metal": ["#464544", "#333331", "#575756"], "dark": ["#1f1f1c", "#251c0e"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/light_tank/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -1.4 -1.9 -4.2 · front -3.3 -3.8 -4.5 · rear +8.8 +7.2 +7.4 · top -6 -6.5 -7.4); ambiguous: side #2d2b26 4.7 % dark (vs metal); front #5b4f3a 3.9 % body (vs metal); front #3a2e19 1.1 % metal (vs dark); rear #66563f 4.7 % body (vs metal); rear #4b3b22 1.6 % metal (vs dark); top #7f6c4c 6.3 % body (vs metal). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor, owner-approved 2026-09-29",
+    "side": [
+      { "id": "D1", "rect": [405, 360, 470, 425], "decides": "concept", "why": "side draws the near smoke launcher as one solid slab 0.36 x 0.35 m (metal comp px 410-461 x 368-418); concept shows a 2 x 2 cluster of four open tubes angled forward-up (concept px 290-350 x 280-340)" },
+      { "id": "D2", "rect": [858, 536, 906, 650], "decides": "concept", "why": "side draws the rear wheel smooth (r 0.386 m, px 791-900 x 538-647); concept's rear wheel is toothed like the front sprocket (12 teeth, concept px 870-1000 x 455-600, tip dia ~1.14 x a road wheel) - the tooth ring is missing on the rear rim" }
+    ],
+    "front": [
+      { "id": "D3", "rect": [395, 645, 632, 668], "decides": "rear", "why": "front belly plate bottom at up 0.37 m (px 663), rear hull bottom at up 0.44 m (px 653); the concept cannot see the belly and its lower front edge is hidden by the sprocket, the rear view decides the hull bottom height" }
+    ],
+    "rear": [
+      { "id": "D4", "rect": [440, 447, 590, 465], "decides": "top", "why": "deck grille box in rear silhouette 1.0 m wide x 0.09 m tall (body comp px 443-585 x 450-462); top view box 1.35 m across (px 415-605), side box 0.14 m tall (px 460-480): the rear draws it too narrow and too low" }
+    ],
+    "top": [],
+    "concept": [
+      { "id": "D5", "rect": [640, 650, 715, 725], "decides": "side", "why": "hub caps drawn as upright hex nuts with their lit face pointing up (concept px 640-715 x 650-725 on road wheel 3) although they sit on the wheel face; the prompt says raised round hub caps and the side view draws round caps (px 639-664 at col 542) - the side decides the hub shape" }
+    ]
+  }
+}

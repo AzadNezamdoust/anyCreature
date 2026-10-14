@@ -1,0 +1,18 @@
+{
+  "theta_deg": 20.25,
+  "phi_deg": 78.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/ray_pistol.png",
+  "sha256": "b04cc17a142aa3ccf66696ae0e47093cf8c3e79ba03fc7484ab1a70690c3d114",
+  "solved": "2026-10-04T20:35:21.425Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.793,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.56
+  }
+}

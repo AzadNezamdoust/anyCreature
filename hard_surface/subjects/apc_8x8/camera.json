@@ -1,0 +1,15 @@
+{
+  "theta_deg": 23.052,
+  "phi_deg": 43.315,
+  "slopes": {
+    "mX": 0.369188,
+    "mZ": 0.415303
+  },
+  "residual_px": 1.2284,
+  "vertical_tilt_deg": null,
+  "source": "refs/apc_8x8.v2.png",
+  "sha256": "e73ad3d225ed9622869aba4d0d6f5f94c23dfc95d5074246fe111856eab40663",
+  "solved": "2026-09-29T18:00:14.322Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

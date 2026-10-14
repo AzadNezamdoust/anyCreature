@@ -1,0 +1,1 @@
+CHANGE: Set shared glazing to calibrated `#80a9ac` and the AC case to a separate `#c0c0bf` palette entry; module gate passed.

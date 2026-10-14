@@ -1,0 +1,21 @@
+{
+  "id": "pistol",
+  "class": "weapon",
+  "title": "FPS-style pistol (WF v10 direct subject; gold.mjs new --style fps)",
+  "style": "fps",
+  "pipeline": "direct",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-10-04): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/pistol.png",
+    "camera": "subjects/pistol/camera.json",
+    "layoutMeasured": "subjects/pistol/layout.measured.json"
+  },
+  "outDir": "out/pistol",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "tris": {
+      "value": 8000,
+      "evidence": "WF v10 weapon class budget (owner 2026-10-04: tri budget 8000 each)"
+    }
+  }
+}

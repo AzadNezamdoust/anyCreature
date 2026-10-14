@@ -1,0 +1,82 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new --class weapon 2026-10-04 (WF v10, pipeline direct). Author frame: muzzle +z, the weapon's left flank +x, y up, y = 0 at its lowest point, x and z centred (classes/weapon.md). Views: side = the left flank with the muzzle to the image left, front = muzzle on, rear = butt on, top = plan with the muzzle to the image left.",
+  "_note": "2026-10-04: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 1.2
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off: a trigger-guard opening / skeleton stock is background",
+    "table": {
+      "body": [
+        "#323232",
+        "#4a4a4c",
+        "#1c1c1c",
+        "#6a696b",
+        "#0a0a0a",
+        "#5b5b5c",
+        "#f77b20",
+        "#e7711c",
+        "#184071"
+      ]
+    },
+    "_table": "ONE family (classes/weapon.json _anchor_comment): body = every foreground colour cluster >= 2 % of the concept (share % {\"f2\":44.4,\"body\":17.15,\"f3\":16.19,\"f4\":8.3,\"dark\":2.87,\"f5\":2.29}); the registration's spans are then the whole foreground. Add a colour here when a view's part classifies as \"other\" (> 120 RGB from every listed colour)."
+  }
+}

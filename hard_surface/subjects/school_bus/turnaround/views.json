@@ -1,0 +1,66 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Class author frame (vehicle): nose +z, near flank +x, y up, ground y = 0, x and z centred on the body. right / up = the world axes the image's +X / -Y run along; right x up points at the camera.",
+  "views": {
+    "side": {
+      "file": "side_right.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.44
+  },
+  "families": {
+    "body": "body_side",
+    "enclosedFg": false,
+    "_enclosedFg": "2026-09-27 decided: off — the enclosed near-white regions are the see-through loops between the mirror arms and the body (front 1.30 %, rear 1.04 %, doctor.mjs); counting them as foreground lowers the front/rear IoU (EYES-EXPERIMENT.md B)"
+  }
+}

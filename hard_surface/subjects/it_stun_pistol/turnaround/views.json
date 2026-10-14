@@ -1,0 +1,122 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new --class weapon 2026-10-10 (WF v10, pipeline direct). Author frame: muzzle +z, the weapon's left flank +x, y up, y = 0 at its lowest point, x and z centred (classes/weapon.md). Views: side = the left flank with the muzzle to the image left, front = muzzle on, rear = butt on, top = plan with the muzzle to the image left.",
+  "_note": "2026-10-11: turnaround regenerated (image-generated sheet + repairs, scripts/v7/turnaround.mjs; generator recorded per attempt in out/turnaround/<s>/state.json; any previous set is kept beside it); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": {
+        "right": -0.00744
+      }
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": {
+        "right": 0.00744
+      }
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ],
+      "shift": {
+        "up": 0.00743
+      }
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 0.36
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off: a trigger-guard opening / skeleton stock is background",
+    "table": {
+      "body": [
+        "#444443",
+        "#4a6476",
+        "#323333",
+        "#626262",
+        "#7999ad",
+        "#354854",
+        "#5b798d",
+        "#7c7c7b",
+        "#00c0c1"
+      ]
+    },
+    "_table": "ONE family (classes/weapon.json _anchor_comment): body = every foreground colour cluster >= 2 % of the concept (share % {\"body\":26.6,\"f2\":12.84,\"dark\":10.11,\"f3\":8.73,\"f4\":7.39,\"f5\":6.76,\"f6\":5.73,\"f7\":4.75}); the registration's spans are then the whole foreground. Add a colour here when a view's part classifies as \"other\" (> 120 RGB from every listed colour).",
+    "_note_accent": "2026-10-11: #00c0c1 = the teal lamp window (< 2 %, measure.mjs sample refs/it_stun_pistol.png 600,488,40,12)."
+  },
+  "_boreplane": {
+    "at": "2026-10-11",
+    "by": "scripts/v7/boreplane.mjs --write",
+    "why": "x = 0 on the bore plane (classes/weapon.md): the views' x origin moved from the silhouette bbox centre to its mirror-symmetry axis (protruding one-flank parts: the fat two-part charcoal slider block)",
+    "mode": "shared (the mean of the front / rear mirror axes, every x-seeing view)",
+    "boreXmm": -7.4,
+    "views": {
+      "front": {
+        "mirrorAxisPx": 496,
+        "bboxCentrePx": 512,
+        "mirrorIoU": 0.9432,
+        "ownBoreXmm": -7.2,
+        "shift.right": -0.00744
+      },
+      "rear": {
+        "mirrorAxisPx": 529,
+        "bboxCentrePx": 512,
+        "mirrorIoU": 0.9444,
+        "ownBoreXmm": -7.7,
+        "shift.right": 0.00744
+      },
+      "top": {
+        "mirrorAxisPx": 494,
+        "bboxCentrePx": 512,
+        "mirrorIoU": 0.902,
+        "ownBoreXmm": -8.1,
+        "shift.up": 0.00743
+      }
+    }
+  }
+}

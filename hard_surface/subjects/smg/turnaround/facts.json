@@ -1,0 +1,36 @@
+{
+  "subject": "smg",
+  "noun": "game compact prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/smg.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04: shape lines corrected after the sheet (a setup helper had garbled one word in them and left the subject name in shape.side; the generated sheet prompt carried that typo — see out/turnaround/smg/attempt-0/prompt.txt)",
+  "description": "A fictional stylised low-poly video-game prop, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A short boxy dark grey main body block with a flat ridged strip along its top and a low notched block standing at the back end of the strip. In front of the main body a stubby dark grey front box with rows of small round holes in its side, a short round dark grey tube sticking out of its front end, and on its top an upright orange hoop. Under the front box a matte black vertical front handle with ribbed lower rings. Under the middle of the main body a long straight matte black bar-shaped box hanging straight down from a square socket, with an orange bottom plate. Behind it a small curved lever inside a rounded dark grey loop and a matte black handle raked backward. At the rear a matte black wire shoulder piece: two thin parallel rods, one above the other, running straight back from a small hinge block to a small flat end plate. Bright orange accents: the bottom plate of the long box, a round knob on the left flank of the main body, and the upright hoop on the front box. A small dark grey lever on the left flank above the raked handle. The right flank is plain.",
+  "proportions": "About 0.62 m long, 0.06 m wide and 0.28 m tall. (length : width : height = 10.33 : 1 : 4.67)",
+  "sides": "the round orange knob and the small dark grey lever are on the left flank; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 2.21 times as long as it is tall",
+    "front": "in this view its width is 0.21 of its height",
+    "rear": "in this view its width is 0.21 of its height",
+    "top": "in this view it is 10.33 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the top strip and the short front tube exactly horizontal, the short tube at the left end of the image, the orange hoop on top of the front box, the front handle below the front box, the long straight box with its orange bottom plate hanging down from the middle, the loop and the raked handle behind it, the two thin rods and the small end plate at the right end of the image.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the small round end of the short tube with a dark centre in the square face of the front box, the orange hoop standing above it, the front handle hanging below it and hiding the long box and the raked handle behind it; the orange bottom plate of the long box shows below the front handle.",
+    "rear": "Seen from the rear end: the small flat end plate is in front on the centre line, the square rear face of the main body shows around it with the notched block on top, the raked handle and the long box with its orange bottom plate hang below on the centre line.",
+    "top": "Seen from above the prop is a thin strip: the ridged strip runs along the centre line of the main body, the front box and the short tube at the left end with the orange hoop on the centre line, the two rods (one hidden under the other) as one thin line to the small end plate at the right end; the handles and the long box are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the round orange knob and the small dark grey lever",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.62,
+    "W": 0.06,
+    "H": 0.28,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

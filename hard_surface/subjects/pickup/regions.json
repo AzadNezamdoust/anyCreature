@@ -1,0 +1,233 @@
+{
+  "_comment": "FROZEN sampling patches on refs/pickup_truck.png. Each rect was placed by sliding a w x h window inside the zone's colour-family component (components of the nearest-reference classifier) and keeping the most uniform placement whose median sits within 20/255 of the family reference; `median` is the record of what was measured, scripts/measure-vehicle.mjs and scripts/likeness.mjs recompute it from the pixels every run (the pixels stay the authority) and measure-vehicle prints median + purity per zone. Every zone samples >= 25 px. Rects are [x, y, w, h], origin top-left, in the 1024x1024 target. `role` is the vehicle-class role whose id-pass mask the zone is compared against; `face` marks the two flat body tones likeness reads (front = the +X flank the renderer presents, side = the +Z nose face).",
+  "_source": "refs/pickup_truck.png",
+  "_frozen": "2026-09-13",
+  "image": {
+    "w": 1024,
+    "h": 1024
+  },
+  "_subjectBoxes_comment": "Union of rects that contains the truck and its wheels; the white ground abstains by areaTolerance. Used by likeness.mjs for the whole-picture share (informational).",
+  "subjectBoxes": [
+    [
+      55,
+      195,
+      930,
+      660
+    ]
+  ],
+  "areaTolerance": 32,
+  "zones": {
+    "body_side": {
+      "role": "cab",
+      "face": "front",
+      "median": "#8ab8d9",
+      "rects": [
+        [
+          587,
+          560,
+          30,
+          30
+        ],
+        [
+          789,
+          420,
+          30,
+          20
+        ]
+      ],
+      "note": "the +X flank: door panel below the side window, and the bed side; purity 1.000"
+    },
+    "body_front": {
+      "role": "hood",
+      "face": "side",
+      "median": "#8ab8d9",
+      "rects": [
+        [
+          136,
+          587,
+          10,
+          20
+        ],
+        [
+          277,
+          629,
+          10,
+          20
+        ]
+      ],
+      "note": "the +Z nose face, either side of the grille between the lamps; same tone as the flank (flat cel paint, side/front 1.0)"
+    },
+    "bed_inside": {
+      "role": "bed",
+      "median": "#6d96b2",
+      "rects": [
+        [
+          707,
+          319,
+          16,
+          10
+        ],
+        [
+          866,
+          333,
+          30,
+          12
+        ]
+      ],
+      "note": "the bed floor / inner walls, the one darker body tone"
+    },
+    "glass": {
+      "role": "window",
+      "median": "#b7c7e0",
+      "rects": [
+        [
+          380,
+          380,
+          60,
+          40
+        ],
+        [
+          600,
+          410,
+          30,
+          40
+        ]
+      ],
+      "note": "windshield centre and the near side window"
+    },
+    "mirror": {
+      "role": "mirror",
+      "median": "#bbdcf0",
+      "rects": [
+        [
+          243,
+          355,
+          16,
+          30
+        ],
+        [
+          560,
+          495,
+          12,
+          30
+        ]
+      ],
+      "note": "far and near mirror heads (paler and bluer than the glazing)"
+    },
+    "tyre": {
+      "role": "wheel",
+      "median": "#5c5e5b",
+      "rects": [
+        [
+          484,
+          679,
+          6,
+          5
+        ],
+        [
+          880,
+          499,
+          6,
+          5
+        ]
+      ],
+      "note": "outer tyre face ring, front and rear visible wheels"
+    },
+    "tread": {
+      "role": "tyre",
+      "median": "#3f3f3d",
+      "rects": [
+        [
+          394,
+          711,
+          5,
+          6
+        ],
+        [
+          779,
+          530,
+          5,
+          6
+        ]
+      ],
+      "note": "the visible tread band left of each tyre face",
+      "roleRuling": "Opus 5 2026-09-13: classes/vehicle.md makes a tread ring role tyre; likeness colours a zone from its role pixels, so role wheel could never see tread pixels"
+    },
+    "hub": {
+      "role": "hub",
+      "median": "#b5babe",
+      "rects": [
+        [
+          457,
+          730,
+          6,
+          6
+        ],
+        [
+          837,
+          544,
+          6,
+          6
+        ]
+      ],
+      "note": "hub cap faces"
+    },
+    "bumper": {
+      "role": "bumper",
+      "median": "#bcbfc5",
+      "rects": [
+        [
+          62,
+          628,
+          12,
+          5
+        ],
+        [
+          956,
+          452,
+          5,
+          8
+        ]
+      ],
+      "note": "front bumper top at the far end, rear bumper block"
+    },
+    "headlight": {
+      "role": "headlight",
+      "median": "#f2eba9",
+      "rects": [
+        [
+          105,
+          580,
+          16,
+          16
+        ],
+        [
+          300,
+          672,
+          14,
+          14
+        ]
+      ],
+      "note": "both lamp discs"
+    },
+    "grille": {
+      "role": "grille",
+      "median": "#668296",
+      "rects": [
+        [
+          180,
+          602,
+          20,
+          3
+        ],
+        [
+          156,
+          622,
+          20,
+          3
+        ]
+      ],
+      "note": "the two recessed grille slots (3 px tall bands between the slats)"
+    }
+  }
+}

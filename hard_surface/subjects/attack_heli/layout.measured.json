@@ -1,0 +1,37 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-09-29): the VISUAL HULL of the registered turnaround (subjects/attack_heli/turnaround: side / front / rear / top foregrounds, 0.06009 m voxels refined x3, 935571 surface / shell points) projected through subjects/attack_heli/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 17.1119 deg, phi 34.9122 deg",
+    "conceptBboxPx": [
+      117,
+      232,
+      980,
+      798
+    ],
+    "sPxPerM": {
+      "x": 72.432,
+      "y": 64.708,
+      "used": 68.57,
+      "xOverY": 1.1194
+    },
+    "quadPx": [
+      [
+        541.3,
+        589.5
+      ],
+      [
+        729.7,
+        510.1
+      ],
+      [
+        729.7,
+        667.4
+      ],
+      [
+        541.3,
+        746.8
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

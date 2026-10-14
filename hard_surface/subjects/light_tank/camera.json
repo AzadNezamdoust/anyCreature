@@ -1,0 +1,15 @@
+{
+  "theta_deg": 20.8691,
+  "phi_deg": 42.3932,
+  "slopes": {
+    "mX": 0.325209,
+    "mZ": 0.390219
+  },
+  "residual_px": 0.6217,
+  "vertical_tilt_deg": null,
+  "source": "refs/light_tank.v2.png",
+  "sha256": "effcbfe578ceb6258ddcdb123238d3210e79051129a567521d0710f490297765",
+  "solved": "2026-09-29T18:00:14.106Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

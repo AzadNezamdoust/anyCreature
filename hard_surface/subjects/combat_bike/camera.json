@@ -1,0 +1,15 @@
+{
+  "theta_deg": 13.7619,
+  "phi_deg": 42.8247,
+  "slopes": {
+    "mX": 0.220477,
+    "mZ": 0.256673
+  },
+  "residual_px": 0.7962,
+  "vertical_tilt_deg": null,
+  "source": "refs/combat_bike.png",
+  "sha256": "c4efd38ef40f3e6ae8d6a46b643f48e94d59ecba23273ecb7a5320c0fdc2bb7c",
+  "solved": "2026-09-29T17:55:34.412Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

@@ -1,0 +1,36 @@
+{
+  "subject": "gravity_gun",
+  "noun": "toy gravity gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/gravity_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/gravity_gun.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours); attempt-0 drew the rear pipes side by side as first written here; the concept stacks them one above the other: corrected, sheet regenerated",
+  "description": "A fictional cartoon science-fiction toy gravity gadget, a chunky toy-like game prop (not a real object, no working parts). A rounded mid grey cylindrical body lying along the axis. At the front a wide off-white collar ring, and in front of it a clear glass ball filled flat bright orange sitting in a short grey socket on the axis. Three thick curved off-white claw prongs grow from the collar, spread evenly around the axis (one at the top, two lower left and lower right), reaching forward around the ball and bending inward at their tips. Around the middle of the body a thick bright orange ring, slightly larger than the body. On top of the body a mid grey carry handle: a straight bar on two legs, arching from just behind the collar to the rear. At the rear a wide round off-white end cap with two short mid grey round pipes pointing straight back, stacked one above the other on the centre line. Underneath at the rear a dark teal handle raked backward, with a bright orange curved finger lever inside a rounded mid grey loop in front of the handle. A bright yellow lever is on the right flank of the body.",
+  "proportions": "About 0.62 m long, 0.24 m wide and 0.30 m tall. (length : width : height = 2.58 : 1 : 1.25)",
+  "sides": "the bright yellow lever is on the right flank only; the left flank has none; everything else is symmetric left to right (the top prong on the centre line, the two lower prongs mirrored, the two rear pipes stacked one above the other on the centre line).",
+  "shape": {
+    "side": "in this view the prop is 2.07 times as long as it is tall",
+    "front": "in this view its width is 0.80 of its height",
+    "rear": "in this view its width is 0.80 of its height",
+    "top": "in this view it is 2.58 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the body axis exactly horizontal, the orange ball and the off-white claw prongs at the left end of the image (the top prong above the ball, a lower prong below it, their tips bending toward the axis), the off-white collar, the grey body with the orange ring round its middle, the off-white end cap and the two grey pipes, one above the other, pointing right at the right end of the image; the grey carry handle bar runs above the body; the dark teal handle hangs below the rear of the body, raked toward the right, with the orange finger lever and grey loop in front of it.",
+    "front": "Seen from the front end: the round orange ball in the centre, the three off-white prong tips around it at the top, lower left and lower right like a three-pointed star, the round off-white collar behind them, the orange ring showing as a thin circle around the collar, the grey carry handle standing above on the centre line, the grey loop and the dark teal handle hanging below on the centre line.",
+    "rear": "Seen from the rear end: the round off-white end cap in the middle with the two round grey pipe ends one above the other on its centre line, the orange ring showing as a thin circle around the cap, the grey carry handle standing above on the centre line, the dark teal handle hanging below on the centre line and hiding the finger lever.",
+    "top": "Seen from above: the orange ball at the left end with the top prong lying over it on the centre line and the two lower prongs curving round it on both sides, the off-white collar, the grey body with the carry handle bar along the centre line and the orange ring as a stripe across it bulging slightly beyond the body on both sides, the off-white end cap and a single grey pipe on the centre line (the upper pipe hides the lower one) at the right end; the teal handle is hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the bright yellow lever",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.62,
+    "W": 0.24,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

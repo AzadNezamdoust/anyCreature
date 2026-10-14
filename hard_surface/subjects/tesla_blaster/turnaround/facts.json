@@ -1,0 +1,50 @@
+{
+  "subject": "tesla_blaster",
+  "noun": "toy lightning gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/tesla_blaster.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/tesla_blaster.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours); the concept draws the two purple tubes in a row along the top (the description: side by side) and the lever pivoted on the left flank at the rear (the description: at the rear): facts follow the concept",
+  "description": "A fictional cartoon science-fiction toy lightning gadget, a chunky toy-like game prop (not a real object, no working parts). A boxy off-white body with rounded corners, longer than it is tall. On its front face a round riveted mid grey flange and a stepped grey neck, from which a straight mid grey rod points forward, wrapped in a wide spiral of four turns of thick bright copper orange wire, and ending in a large mid grey ball. On top of the body two upright clear glass tubes with rounded tops and small grey tip caps, each filled flat bright purple, standing in round mid grey base sockets, in a row one behind the other on the centre line. On the left flank of the body a big round mid grey riveted gauge rim with a flat bright yellow face and a small grey needle. Underneath at the rear a dark brown handle raked backward, with a bright red curved finger lever inside a rounded mid grey loop in front of the handle. At the rear of the left flank, near the top, a mid grey round pivot carrying a flat grey lever arm that stands upright above the body and ends in a bright red ball. A bright yellow round cap is on the right flank of the body.",
+  "proportions": "About 0.50 m long, 0.16 m wide and 0.30 m tall. (length : width : height = 3.13 : 1 : 1.88)",
+  "sides": "the big round gauge with the yellow face and the pivot of the upright lever with the red ball are on the left flank only; the bright yellow round cap is on the right flank only; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 1.67 times as long as it is tall",
+    "front": "in this view its width is 0.53 of its height",
+    "rear": "in this view its width is 0.53 of its height",
+    "top": "in this view it is 3.13 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the rod exactly horizontal, the big grey ball at the left end of the image, the orange spiral round the rod, the grey flange, the off-white box body with the big round yellow gauge on its flank, the two purple glass tubes standing on top one behind the other, the upright grey lever with its red ball standing above the rear top corner at the right end of the image; the dark brown handle hangs below the rear of the body, raked toward the right, with the red finger lever and grey loop in front of it.",
+    "front": "Seen from the front end: the big grey ball in the centre with the orange spiral as a ring around it and the round grey flange around that, on the rounded off-white box outline of the body; one purple glass tube stands on top on the centre line (it hides the second); the grey loop and the dark brown handle hang below on the centre line.",
+    "rear": "Seen from the rear end: the plain rounded off-white box outline of the body, one purple glass tube standing on top on the centre line, the dark brown handle hanging below on the centre line and hiding the finger lever.",
+    "top": "Seen from above: the grey ball at the left end, the rod with the orange spiral as slanted stripes across it, the grey flange, the off-white body with the two round tube sockets as two circles in a row on the centre line with purple centres; the upright lever is seen from straight above as a small grey pivot with the round red ball directly over it, tight against the body edge: it stands vertical and does not lean out sideways; the handle is hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the big round gauge with the yellow face",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    },
+    {
+      "part": "the upright grey lever with the red ball",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    },
+    {
+      "part": "the bright yellow round cap",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.5,
+    "W": 0.16,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

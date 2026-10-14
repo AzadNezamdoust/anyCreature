@@ -1,0 +1,70 @@
+{
+  "id": "combat_bike",
+  "class": "vehicle",
+  "title": "RTS-style combat bike (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/combat_bike.png",
+    "camera": "subjects/combat_bike/camera.json",
+    "layoutMeasured": "subjects/combat_bike/layout.measured.json"
+  },
+  "outDir": "out/combat_bike",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 2,
+        "axles": 2,
+        "diameters": "equal",
+        "diameterFrac": [
+          0.28,
+          0.36
+        ]
+      },
+      "evidence": "motorbike: wheel D 0.91 m over L 2.668 m = 0.34 (side view, audit decided); band 0.28..0.36"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "frame",
+          "fork",
+          "handlebar",
+          "seat",
+          "fuel_tank",
+          "engine",
+          "mudguard",
+          "saddlebag",
+          "exhaust",
+          "headlight"
+        ]
+      },
+      "evidence": "the concept draws a motorbike: tubular frame, front fork, handlebars, seat, fuel tank, engine block, two mudguards, a left saddlebag, a left exhaust pipe, a fork headlight (refs/combat_bike.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "frame",
+          "seat",
+          "red"
+        ]
+      },
+      "evidence": "the concept paints the frame / fork / handlebars / engine / exhaust dark gunmetal (family frame) and the seat black, next to the tan body (tank, mudguards, saddlebag); concept + rear turnaround paint the tail-light lens red (#a31314 / #a41214, both r2 critics); r2 modeller had to repaint it pale (zone lamp) only because no red zone was allowed"
+    },
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "mirror": {
+      "value": {
+        "centred": [
+          "tyre_fr",
+          "tyre_rr",
+          "headlight"
+        ]
+      },
+      "evidence": "single-track motorbike: one front tyre, one rear tyre, one headlight on the centreline (concept + all views)"
+    }
+  }
+}

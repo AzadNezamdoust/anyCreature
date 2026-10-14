@@ -1,0 +1,15 @@
+{
+  "theta_deg": 18.6391,
+  "phi_deg": 44.294,
+  "slopes": {
+    "mX": 0.311825,
+    "mZ": 0.32758
+  },
+  "residual_px": 0.88,
+  "vertical_tilt_deg": null,
+  "source": "refs/rocket_truck.v2.png",
+  "sha256": "25b279b525fc203d73ecbb1b11a56d7290cc891a5810ef63e8ad063372c711cf",
+  "solved": "2026-09-29T17:55:35.326Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

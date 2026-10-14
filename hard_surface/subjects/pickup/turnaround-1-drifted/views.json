@@ -1,0 +1,11 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views generated from refs/pickup_truck.png (turnaround/README.md). Anchor: a full-size pickup's road width (~2.0 m) fixes px/m; the model's uniform scale is fitted by the judge anyway.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.0 },
+  "families": { "body": "body_side" }
+}

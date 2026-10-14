@@ -1,0 +1,17 @@
+{
+  "theta_deg": 29.1981,
+  "phi_deg": 46.9075,
+  "slopes": {
+    "mX": 0.521443,
+    "mZ": 0.456383
+  },
+  "residual_px": 0.4345,
+  "vertical_tilt_deg": 0.0044,
+  "source": "refs/tenement-iso.png",
+  "sha256": "fec54178dc52c92a90cf67e119049d1c1fa55b85fb14eb614f625a85d0898c28",
+  "solved": "2026-09-26T17:56:35.682Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left",
+  "_why": "V5-8 R1: --x-edge left. The render turns meta.front onto +X, whose horizontals run along Z and draw at mZ; the target front (right family) is the SHALLOW one (0.456, front ink 0.458-0.484), so mZ must be 0.456 -> phi 46.91 (refs/facade_brick.camera.json auto-picked 43.09 and drew the front at 0.521). refs/** is read-only, hence this file."
+}

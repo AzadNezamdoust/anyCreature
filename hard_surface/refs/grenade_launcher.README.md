@@ -1,0 +1,15 @@
+# TARGET provenance — grenade_launcher
+
+- date: 2026-10-04
+- generator: GPT image generation through scripts/v7/imagegen.mjs --gen gpt (text to image, no reference; agent gpt-6-astra); GPT / Gemini are used only to generate the image
+- raw output: 1536 x 1024 px, 1212384 bytes, sha256 5aaa94f53771a737d7bd531252a55324e24ed49b2d8bc9afaa6608a6fc95eac5 (out/concept/grenade_launcher/raw.png)
+- image: refs/grenade_launcher.png = the raw output padded with white to a square (centred) and resized to 1024 x 1024 (lanczos3); nothing else changed
+- bytes: 505558
+- sha256: a475f9120659a53da8ffb4ab3396b20f8cd5c5021a687965a05c19ab81dbf557
+- style: fps (scripts/v7/styles.json styles.fps.text), after the description and the hidden-face rule (RUNBOOK 2026-09-27; gold.mjs new --style fps)
+
+## Full prompt (image prompt, verbatim)
+
+```
+A stylised six-shot revolver grenade launcher, one game weapon model. In the middle a big dark gunmetal revolving cylinder, as wide as it is long, with six large round chambers around its axis and six shallow flutes on its outside. In front of the cylinder a short fat round gunmetal barrel with a thick muzzle ring, under the barrel a matte black polymer vertical fore grip. A slim dark gunmetal frame runs over the top of the cylinder from the barrel to the rear, carrying a short flat rail with a boxy reflex sight housing. Behind the cylinder a matte black polymer pistol grip raked backward with a gunmetal trigger inside a rounded trigger guard, and a matte black polymer skeleton stock: two thin tubes to a flat rubber butt pad. Safety-orange accents: a ring round the muzzle, the front face of the cylinder's centre pin cap, and the stock's adjustment latch on the left flank. The cylinder release lever is on the right flank, hidden in this view. About 0.78 m long, 0.16 m wide and 0.27 m tall. Anything on a face this view cannot show (the rear face, the far flank, the underside) faces away and is not visible in this view: never move it onto a visible face; the visible faces are drawn exactly as described. Orthographic isometric view, 30 degree elevation, 45 degree azimuth from front-left, no perspective, vertical edges perfectly vertical. Stylised first-person-shooter weapon model: one single handheld weapon held level in the air, its barrel horizontal, the muzzle end being its front. Chunky, readable low-poly forms with slightly exaggerated proportions, crisp facets and chamfers, flat cel shading, one solid flat colour per surface, thin dark outlines. Dark gunmetal for the metal parts, matte black polymer for the furniture, and the one accent colour described. No textures, no gradients, no wear, no scratches, no decals, no text, no numbers, no logos or markings. Lenses are a single flat colour with no reflections, streaks, highlights or glass shine. No hands, no people, no animals, no stand, no table, no other weapons, no props beyond those described, no ground shadow. Solid white background, whole object in frame with margin, centred.
+```

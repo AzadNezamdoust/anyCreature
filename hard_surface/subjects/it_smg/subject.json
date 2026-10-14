@@ -1,0 +1,21 @@
+{
+  "id": "it_smg",
+  "class": "weapon",
+  "title": "Chunky weapon chunky compact carbine game prop (WF v10 direct subject; gold.mjs new --style chunky_weapon)",
+  "style": "chunky_weapon",
+  "pipeline": "direct",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-10-10): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/it_smg.png",
+    "camera": "subjects/it_smg/camera.json",
+    "layoutMeasured": "subjects/it_smg/layout.measured.json"
+  },
+  "outDir": "out/it_smg",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "tris": {
+      "value": 8000,
+      "evidence": "WF v10 weapon class budget (owner 2026-10-04: tri budget 8000 each)"
+    }
+  }
+}

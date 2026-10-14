@@ -1,0 +1,170 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&subject=facade_brick&seed=1&view=threeQuarter&size=900",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-13T00:24:26.153Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 928,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 7.515,
+      "h": 17.4867,
+      "d": 7.62,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          487.86,
+          179.48
+        ],
+        [
+          633.9,
+          109.57
+        ],
+        [
+          611.86,
+          728.45
+        ],
+        [
+          482.71,
+          872.48
+        ]
+      ],
+      "world": [
+        [
+          0,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          16.5,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 482.71,
+        "y0": 109.57,
+        "x1": 633.9,
+        "y1": 872.48
+      },
+      "source": "5 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          217.42,
+          144.46
+        ],
+        [
+          487.86,
+          179.48
+        ],
+        [
+          482.71,
+          872.48
+        ],
+        [
+          247.19,
+          800.99
+        ]
+      ],
+      "world": [
+        [
+          -6.555,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ],
+        [
+          -6.555,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 217.42,
+        "y0": 144.46,
+        "x1": 487.86,
+        "y1": 872.48
+      },
+      "source": "5 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -6.555,
+        0,
+        -3.75
+      ],
+      "max": [
+        0,
+        16.5,
+        3.75
+      ]
+    },
+    "subject": "facade_brick",
+    "view": "threeQuarter",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:ed4e20d1",
+    "dslVersion": "pg/1",
+    "validatorPass": false,
+    "frontRotationDeg": -90,
+    "lit": false,
+    "idpass": false,
+    "idColours": null,
+    "palette": {
+      "brick": "#b5412f",
+      "trim": "#5a2a22",
+      "glass": "#80a9ac",
+      "iron": "#2b2e33",
+      "roof": "#88817c",
+      "fixture": "#999f9d",
+      "ac": "#c0c0bf",
+      "coping": "#bc8c7e",
+      "surround": "#ad8067",
+      "canopy": "#528b50"
+    },
+    "violationCount": 3,
+    "violations": "FAIL: 3 violation(s) [V12_CENSUS].\n- V12_CENSUS: the target has 2 landing levels and the model has 0 — add 2 (role \"landing\"; the count is taken off the role, not the part name) (measured 0 landing levels, limit 2)\n- V12_CENSUS: the target has 1 stair flights and the model has 0 — add 1 (role \"stringer\"; the count is taken off the role, not the part name) (measured 0 stair flights, limit 1)\n- V12_CENSUS: the target has 2 ladder assemblies and the model has 0 — add 2 (role \"ladder\"; the count is taken off the role, not the part name) (measured 0 ladder assemblies, limit 2)",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "persp:28/22/26"
+  },
+  "bytes": 20133
+}

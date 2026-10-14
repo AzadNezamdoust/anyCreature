@@ -1,0 +1,266 @@
+{
+  "schema": "pg/1",
+  "subject": "tenement_block",
+  "seed": 1,
+  "class": "building",
+  "note": "M2 FULL SUBJECT. Hand-authored against refs/README.md (the reference image itself is refs/tenement-iso.png, owner to save it, PLAN.md 8.6). Three masses, five facades, a fire escape, a storefront, two balconies, a clothesline and the street props. Every window, sill, lintel, cornice band, storefront and arched door is DERIVED by the facade grammar — the parts list below contains no opening at all except the hand-placed mint entrance door, which stands on its own stoop and therefore does not sit on a cell floor. Two facades share the +Z face of the brick and of the tan mass: the lower one runs with occlude:false so the hand-placed awning and stoop cannot blank the very cells they belong to, the upper one with occlude:true so the fire-escape landings, the stair and the AC unit really do suppress the windows they cover (08:G6).",
+  "unit": { "part": "door_l", "m": 2.0 },
+  "palette": {
+    "mint": "#9fd3b8",
+    "brick": "#c9573f",
+    "tan": "#c9b391",
+    "stone": "#b9b3a8",
+    "iron": "#3b3f4a",
+    "foundation": "#8f7f8c",
+    "glass": "#3d4a57",
+    "trim": "#efe6d8",
+    "wood": "#8a6a45",
+    "awning": "#4e8f5f",
+    "awning_trim": "#e8e2d5",
+    "cloth_a": "#e8e2d5",
+    "cloth_b": "#7fb2d9"
+  },
+  "parts": [
+    { "id": "mass_l", "prim": "box", "dims": [6.0, 9.6, 8.0], "ground": true, "role": "massing", "zone": "mint" },
+
+    { "id": "mass_m", "prim": "box", "dims": [5.2, 10.4, 8.0], "role": "massing", "zone": "brick",
+      "attach": { "to": "mass_l", "face": "+X", "uv": [0.5, 0.0], "contact": "flush", "align": "bottom" } },
+
+    { "id": "mass_r", "prim": "box", "dims": [5.6, 9.6, 8.0], "role": "massing", "zone": "tan",
+      "attach": { "to": "mass_m", "face": "+X", "uv": [0.5, 0.0], "contact": "flush", "align": "bottom" } },
+
+    { "id": "parapet_l", "prim": "plate", "dims": [6.2, 0.3, 8.2], "role": "parapet", "zone": "stone",
+      "attach": { "to": "mass_l", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" } },
+
+    { "id": "parapet_m", "prim": "plate", "dims": [5.4, 0.3, 8.2], "role": "parapet", "zone": "stone",
+      "attach": { "to": "mass_m", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" } },
+
+    { "id": "parapet_r", "prim": "plate", "dims": [5.8, 0.3, 8.2], "role": "parapet", "zone": "stone",
+      "attach": { "to": "mass_r", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" } },
+
+    { "id": "foundation_l", "prim": "bevelBox", "dims": [6.2, 0.9, 0.3], "role": "trim", "zone": "foundation",
+      "attach": { "to": "mass_l", "face": "+Z", "uv": [0.5, 0.0], "contact": "socket", "embed": 0.15, "align": "bottom" } },
+
+    { "id": "foundation_l_side", "prim": "bevelBox", "dims": [0.3, 0.9, 8.2], "role": "trim", "zone": "foundation",
+      "attach": { "to": "mass_l", "face": "-X", "uv": [0.5, 0.0], "contact": "socket", "embed": 0.15, "align": "bottom" } },
+
+    { "id": "stoop_step_1", "prim": "bevelBox", "dims": [1.6, 0.16, 0.9], "role": "step", "zone": "stone",
+      "attach": { "to": "mass_l", "face": "+Z", "uv": [0.5, 0.0], "contact": "socket", "embed": 0.1, "align": "bottom" } },
+
+    { "id": "stoop_step_2", "prim": "bevelBox", "dims": [1.3, 0.16, 0.45], "role": "step", "zone": "stone",
+      "attach": { "to": "stoop_step_1", "face": "+Y", "uv": [0.5, 0.25], "contact": "rests-on-top" } },
+
+    { "id": "stoop_rail_l", "prim": "railing", "dims": [0.7, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 4 },
+      "attach": { "to": "stoop_step_1", "face": "+Y", "uv": [0.08, 0.555556], "contact": "rests-on-top", "rot": 90 } },
+
+    { "id": "stoop_rail_r", "prim": "railing", "dims": [0.7, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 4 },
+      "attach": { "to": "stoop_step_1", "face": "+Y", "uv": [0.92, 0.555556], "contact": "rests-on-top", "rot": 90 } },
+
+    { "id": "door_l", "prim": "box", "dims": [1.0, 2.0, 0.12], "role": "door", "zone": "iron",
+      "attach": { "to": "mass_l", "face": "+Z", "uv": [0.5, 0.033333], "contact": "socket", "embed": 0.08, "align": "bottom" } },
+
+    { "id": "bulkhead_l", "prim": "vent", "dims": [2.2, 1.8, 2.0], "role": "bulkhead", "zone": "mint",
+      "zones": { "louvre": "iron" },
+      "attach": { "to": "parapet_l", "face": "+Y", "uv": [0.35, 0.45], "contact": "rests-on-top" } },
+
+    { "id": "chimney_l", "prim": "pipe", "dims": [0.34, 1.2, 0.34], "role": "pipe", "zone": "iron",
+      "attach": { "to": "parapet_l", "face": "+Y", "uv": [0.75, 0.32], "contact": "rests-on-top" } },
+
+    { "id": "awning_m", "prim": "awning", "dims": [4.0, 0.5, 0.9], "role": "awning", "zone": "awning",
+      "zones": { "valance": "awning_trim" },
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.5, 0.235577], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "ac_m", "prim": "acUnit", "dims": [0.8, 0.6, 0.5], "role": "hvac", "zone": "iron",
+      "zones": { "grille": "stone" },
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.168269, 0.3125], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "bench_m", "prim": "bevelBox", "dims": [1.7, 0.5, 0.55], "role": "bench", "zone": "wood",
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.173077, 0.0], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "fe_land_2", "prim": "landing", "dims": [1.6, 1.07, 1.2], "role": "landing", "zone": "iron",
+      "params": { "postCount": 3 },
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.846154, 0.288462], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "fe_land_3", "prim": "landing", "dims": [1.6, 1.07, 1.2], "role": "landing", "zone": "iron",
+      "params": { "postCount": 3 },
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.846154, 0.519231], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "fe_stair", "prim": "stairFlight", "dims": [0.8, 2.4, 1.68], "role": "stair", "zone": "iron",
+      "params": { "steps": 12, "rise": 0.2, "run": 0.14, "width": 0.8 },
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.576923, 0.3], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "vent_m", "prim": "vent", "dims": [1.1, 0.9, 0.8], "role": "vent", "zone": "brick",
+      "zones": { "louvre": "iron" },
+      "attach": { "to": "parapet_m", "face": "+Y", "uv": [0.55, 0.55], "contact": "rests-on-top" } },
+
+    { "id": "pipe_m_1", "prim": "pipe", "dims": [0.3, 1.1, 0.3], "role": "pipe", "zone": "iron",
+      "attach": { "to": "parapet_m", "face": "+Y", "uv": [0.18, 0.3], "contact": "rests-on-top" } },
+
+    { "id": "pipe_m_2", "prim": "pipe", "dims": [0.3, 0.9, 0.3], "role": "pipe", "zone": "iron",
+      "attach": { "to": "parapet_m", "face": "+Y", "uv": [0.34, 0.24], "contact": "rests-on-top" } },
+
+    { "id": "balcony_2", "prim": "bevelBox", "dims": [1.4, 0.16, 1.0], "role": "balcony", "zone": "tan",
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.491071, 0.510417], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "balcony_2_rail", "prim": "railing", "dims": [1.4, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 5 },
+      "attach": { "to": "balcony_2", "face": "+Y", "uv": [0.5, 0.96], "contact": "rests-on-top" } },
+
+    { "id": "balcony_3", "prim": "bevelBox", "dims": [1.4, 0.16, 1.0], "role": "balcony", "zone": "tan",
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.491071, 0.739583], "contact": "flush", "embed": 0.05, "align": "bottom" } },
+
+    { "id": "balcony_3_rail", "prim": "railing", "dims": [1.4, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 5 },
+      "attach": { "to": "balcony_3", "face": "+Y", "uv": [0.5, 0.96], "contact": "rests-on-top" } },
+
+    { "id": "r_step", "prim": "bevelBox", "dims": [1.5, 0.16, 0.6], "role": "step", "zone": "stone",
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.321429, 0.0], "contact": "socket", "embed": 0.1, "align": "bottom" } },
+
+    { "id": "r_rail_l", "prim": "railing", "dims": [0.5, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 3 },
+      "attach": { "to": "r_step", "face": "+Y", "uv": [0.06, 0.5], "contact": "rests-on-top", "rot": 90 } },
+
+    { "id": "r_rail_r", "prim": "railing", "dims": [0.5, 0.95, 0.06], "role": "railing", "zone": "iron",
+      "params": { "postCount": 3 },
+      "attach": { "to": "r_step", "face": "+Y", "uv": [0.94, 0.5], "contact": "rests-on-top", "rot": 90 } },
+
+    { "id": "trashcan_r", "prim": "trashcan", "dims": [0.6, 0.9, 0.6], "role": "prop", "zone": "iron",
+      "params": { "sides": 8 },
+      "zones": { "lid": "stone" },
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.089286, 0.0], "contact": "flush", "embed": 0.03, "align": "bottom" } },
+
+    { "id": "crate_1", "prim": "crate", "dims": [0.7, 0.5, 0.7], "role": "crate", "zone": "wood",
+      "zones": { "band": "stone" },
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.678571, 0.0], "contact": "flush", "embed": 0.03, "align": "bottom" } },
+
+    { "id": "crate_2", "prim": "crate", "dims": [0.55, 0.4, 0.55], "role": "crate", "zone": "wood",
+      "zones": { "band": "stone" },
+      "attach": { "to": "mass_r", "face": "+Z", "uv": [0.678571, 0.052083], "contact": "flush", "embed": 0.03, "align": "bottom" } },
+
+    { "id": "pipe_r", "prim": "pipe", "dims": [0.3, 1.0, 0.3], "role": "pipe", "zone": "iron",
+      "attach": { "to": "parapet_r", "face": "+Y", "uv": [0.3, 0.4], "contact": "rests-on-top" } },
+
+    { "id": "clothesline", "prim": "box", "dims": [8.2, 0.06, 0.06], "role": "rope", "zone": "iron",
+      "attach": { "to": "mass_m", "face": "+Z", "uv": [0.240385, 0.807692], "contact": "flush", "embed": 0.0 } },
+
+    { "id": "shirt_1", "prim": "plate", "dims": [0.45, 0.55, 0.06], "role": "cloth", "zone": "cloth_a",
+      "attach": { "to": "clothesline", "face": "-Y", "uv": [0.25, 0.5], "contact": "flush", "embed": 0.0 } },
+
+    { "id": "shirt_2", "prim": "plate", "dims": [0.45, 0.5, 0.06], "role": "cloth", "zone": "cloth_b",
+      "attach": { "to": "clothesline", "face": "-Y", "uv": [0.42, 0.5], "contact": "flush", "embed": 0.0 } },
+
+    { "id": "shirt_3", "prim": "plate", "dims": [0.45, 0.55, 0.06], "role": "cloth", "zone": "cloth_b",
+      "attach": { "to": "clothesline", "face": "-Y", "uv": [0.59, 0.5], "contact": "flush", "embed": 0.0 } },
+
+    { "id": "shirt_4", "prim": "plate", "dims": [0.45, 0.5, 0.06], "role": "cloth", "zone": "cloth_a",
+      "attach": { "to": "clothesline", "face": "-Y", "uv": [0.76, 0.5], "contact": "flush", "embed": 0.0 } }
+  ],
+  "facades": [
+    {
+      "id": "fac_l_front",
+      "on": "mass_l",
+      "face": "+Z",
+      "occlude": true,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["plinth", 0.9], ["base", 1.5], ["floor", 2.3, "*3"], ["cornice", 0.3]] },
+      "tile": {
+        "base": { "axis": "X", "rule": [["pier", 0.6], ["cellar", 1.6], ["stoopbay", 1.6], ["cellar", 1.6], ["pier", 0.6]] },
+        "floor": { "axis": "X", "rule": [["pier", 0.6], ["bay", 1.6, "*3"], ["pier", 0.6]] }
+      },
+      "elements": {
+        "bay": { "window": { "dims": [1.0, 1.5], "inset": 0.12, "zone": "glass", "sill": 0.08 } },
+        "cellar": { "window": { "dims": [0.9, 0.5], "inset": 0.1, "zone": "glass" } },
+        "cornice": { "band": { "h": 0.4, "depth": 0.18, "zone": "stone", "role": "cornice" } }
+      }
+    },
+    {
+      "id": "fac_l_side",
+      "on": "mass_l",
+      "face": "-X",
+      "occlude": true,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["plinth", 0.9], ["base", 1.5], ["floor", 2.3, "*3"], ["cornice", 0.3]] },
+      "tile": {
+        "floor": { "axis": "X", "rule": [["pier", 2.0], ["bay", 2.0, "*2"], ["pier", 2.0]] }
+      },
+      "elements": {
+        "bay": { "window": { "dims": [1.0, 1.5], "inset": 0.12, "zone": "glass" } },
+        "cornice": { "band": { "h": 0.4, "depth": 0.18, "zone": "stone", "role": "cornice" } }
+      }
+    },
+    {
+      "id": "fac_m_shop",
+      "on": "mass_m",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["shopband", 3.0], ["upper", "~"]] },
+      "tile": {
+        "shopband": { "axis": "X", "rule": [["pier", 0.5], ["shop", 4.2], ["pier", 0.5]] }
+      },
+      "elements": {
+        "shop": { "storefront": { "dims": [3.6, 2.2], "inset": 0.14, "zone": "glass" } }
+      }
+    },
+    {
+      "id": "fac_m_upper",
+      "on": "mass_m",
+      "face": "+Z",
+      "occlude": true,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["skirt", 3.0], ["floor", 2.4, "*2"], ["top", "~"]] },
+      "tile": {
+        "floor": { "axis": "X", "rule": [["pier", 0.35], ["bay", 1.05, "*4"], ["pier", 0.65]] }
+      },
+      "elements": {
+        "bay": { "window": { "dims": [0.85, 1.4], "inset": 0.12, "zone": "glass", "sill": 0.08 } }
+      }
+    },
+    {
+      "id": "fac_m_top",
+      "on": "mass_m",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["lower", 7.8], ["floor", 2.4], ["cornice", 0.2]] },
+      "tile": {
+        "floor": { "axis": "X", "rule": [["pier", 0.35], ["bay", 1.05, "*4"], ["pier", 0.65]] }
+      },
+      "elements": {
+        "bay": { "window": { "dims": [0.85, 1.4], "inset": 0.12, "zone": "glass", "sill": 0.08 } },
+        "cornice": { "band": { "h": 0.2, "depth": 0.18, "zone": "stone", "role": "cornice" } }
+      }
+    },
+    {
+      "id": "fac_r_base",
+      "on": "mass_r",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["base", 2.7], ["upper", "~"]] },
+      "tile": {
+        "base": { "axis": "X", "rule": [["pier", 1.0], ["doorbay", 1.6], ["pier", 3.0]] }
+      },
+      "elements": {
+        "doorbay": { "door": { "dims": [1.1, 2.1], "inset": 0.12, "zone": "iron", "lintel": "arch" } }
+      }
+    },
+    {
+      "id": "fac_r_upper",
+      "on": "mass_r",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": { "axis": "Y", "rule": [["skirt", 2.7], ["floor", 2.2, "*3"], ["cornice", 0.3]] },
+      "tile": {
+        "floor": { "axis": "X", "rule": [["pier", 0.5], ["bay", 1.5, "*3"], ["pier", 0.6]] }
+      },
+      "elements": {
+        "bay": { "window": { "dims": [1.0, 1.4], "inset": 0.12, "zone": "glass", "sill": 0.08 } },
+        "cornice": { "band": { "h": 0.3, "depth": 0.18, "zone": "stone", "role": "cornice" } }
+      }
+    }
+  ]
+}

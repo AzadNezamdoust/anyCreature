@@ -1,0 +1,36 @@
+{
+  "subject": "laser_smg",
+  "noun": "toy rapid laser gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/laser_smg.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/laser_smg.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours); the concept draws the yellow selector dial on the LEFT flank (the description: on the right flank, hidden) and the stock as two rods: facts follow the concept, the right flank is plain",
+  "description": "A fictional cartoon science-fiction toy rapid-laser gadget, a compact chunky toy-like game prop (not a real object, no working parts). A compact rounded light grey body. In front of it a short bundle of three thin mid grey tubes with dark open ends, packed in a triangle (one on top, two below), held by a thick bright red ring at the front end and another thick bright red ring where the tubes meet the body. On top of the body a low off-white rounded cover, with a small upright bright red rounded fin at its front and a mid grey notched block at its rear. Under the body, in front of the handle, a straight clear glass stick pointing straight down, filled flat bright yellow, with a mid grey collar at the top and a mid grey foot cap. Behind it a dark teal handle raked backward, with a bright red curved finger lever inside a rounded mid grey loop in front of the handle. At the rear two thin mid grey rods run back from one point on the body, spreading apart, to a small flat upright off-white end pad. On the left flank of the body near the rear a round bright yellow dial with a raised bar across it, in a grey rim.",
+  "proportions": "About 0.52 m long, 0.08 m wide and 0.26 m tall. (length : width : height = 6.50 : 1 : 3.25)",
+  "sides": "the round bright yellow dial is on the left flank only; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 2.00 times as long as it is tall",
+    "front": "in this view its width is 0.31 of its height",
+    "rear": "in this view its width is 0.31 of its height",
+    "top": "in this view it is 6.50 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the three grey tubes exactly horizontal with their open ends and a red ring at the left end of the image, the second red ring where they meet the light grey body, the off-white cover on top with the red fin at its front and the grey notched block at its rear, the round yellow dial on the flank near the rear, the two thin grey rods spreading to the off-white end pad at the right end of the image; the yellow glass stick with its grey foot cap hangs straight down under the front of the body, and the dark teal handle hangs below the rear, raked toward the right, with the red finger lever and grey loop in front of it.",
+    "front": "Seen from the front end: a narrow tall shape; the three round grey tube ends in a triangle inside a red ring in the upper middle, the rounded light grey body outline just around the ring, the small red fin on top on the centre line, the yellow glass stick with its grey foot cap hanging below on the centre line and hiding the handle behind it.",
+    "rear": "Seen from the rear end: a narrow tall shape, exactly as narrow as the front view; the flat upright off-white end pad in front on the centre line, the rounded light grey body outline only slightly wider than the pad, the grey notched block on top on the centre line with the tip of the taller red fin showing above it, the dark teal handle hanging below on the centre line with the grey foot cap of the yellow stick showing at the same low level.",
+    "top": "Seen from above: a long narrow shape; the red ring and the grey tubes at the left end, the second red ring, the off-white cover on the body with the thin red fin at its front and the grey notched block at its rear on the centre line, the thin grey rods and the flat end pad as a short crossbar at the right end; the handle and the yellow stick are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the round bright yellow dial",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.52,
+    "W": 0.08,
+    "H": 0.26,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

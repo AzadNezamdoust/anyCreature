@@ -1,0 +1,18 @@
+{
+  "theta_deg": 18,
+  "phi_deg": 55.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_grenade_launcher.png",
+  "sha256": "63ef3311862e46d962650f88fc186bdf716200456f55565ed918c495fe0e77e8",
+  "solved": "2026-10-11T08:21:44.713Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.802,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.609
+  }
+}

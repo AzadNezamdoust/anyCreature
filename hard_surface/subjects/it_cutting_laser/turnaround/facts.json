@@ -1,0 +1,40 @@
+{
+  "subject": "it_cutting_laser",
+  "noun": "chunky cutting beam tool game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_cutting_laser.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_cutting_laser.png = out/concept-items30/13_cutting_laser/v4b_hero_1.png; FPS refs/it_cutting_laser.fps.png = v4b_fps.png). Facts from the NEW hero (counts as drawn: 1 olive body with 1 charcoal top strip, 1 rear end cap, 1 emitter barrel with 4 square fins (the hero prompt asked five; the hero draws four), 1 square lens hood + lens, 1 front handle, 1 trigger guard + trigger, 1 ribbed grip, 1 cell pack, 1 teal lamp on the left flank). FRAME (classes/weapon.md): front +z = the lens hood, left flank +x = the flank the hero shows. Hidden right flank: plain olive body, no lamp. Dims estimated on the hero: L 0.80, W 0.10 (end cap / fins), H 0.28 (top strip to the front handle / grip base).",
+  "description": "A fictional cutting beam tool game prop for a builder, chunky low-poly, held level with the lens hood forward. One slim flat-topped muted olive painted body with wide chamfers and one thick flat charcoal strip along the full length of its top; at its rear end one thick chamfered octagonal dark steel end cap. The front half is one dark steel emitter barrel threaded through exactly four thick square dark steel cooling fins with even gaps, ending at the tip in one thick chamfered square dark steel lens hood with a recessed round dark lens. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank of the body. Under the front of the body one fat squared charcoal vertical front handle with a thick base block; under the middle one squared charcoal trigger guard with a thick trigger and one chunky charcoal pistol grip raked back with big diagonal ribs; under the rear one thick boxy charcoal cell pack.",
+  "proportions": "About 0.80 m long, 0.10 m wide and 0.28 m tall. (length : width : height = 8.00 : 1 : 2.80)",
+  "sides": "only the teal lamp window is on one flank: on the LEFT flank of the body; the right flank is plain olive. The barrel, the four fins, the lens hood, the top strip, the end cap, the front handle, the trigger guard, the grip and the cell pack are on the centre line (symmetric left to right).",
+  "shape": {
+    "side": "in this view the chunky cutting beam tool game prop is 2.86 times as long as it is tall",
+    "front": "in this view its width is 0.36 of its height",
+    "rear": "in this view its width is 0.36 of its height",
+    "top": "in this view it is 8.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the lens hood to the LEFT of the image: the thick square lens hood at the left end, the emitter barrel running right through four thick square fins with even gaps, the slim olive body with the charcoal strip along its top and the teal lamp window on its flank, the octagonal dark steel end cap at the right end; under the body the squared front handle near the front, the trigger guard with the trigger and the raked ribbed grip in the middle, and the boxy cell pack under the rear.",
+    "front": "Seen from the lens end: the square lens hood in the middle with its round dark lens, the square fins just showing around it, the body and end cap outline behind, the front handle and the cell pack below on the centre line.",
+    "rear": "Seen from the back end: the octagonal dark steel end cap in the middle, the cell pack below it, the grip below on the centre line, the fins and hood edges hidden behind. No lamp visible.",
+    "top": "Seen from above, the lens hood to the LEFT: the square hood, the barrel with its four square fins, the body with the charcoal strip along its middle and the end cap at the right end. The lamp is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.8,
+    "W": 0.1,
+    "H": 0.28,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "exactly four cooling fins (as the hero draws them)",
+    "the lens is recessed dark inside the hood: never see-through"
+  ]
+}

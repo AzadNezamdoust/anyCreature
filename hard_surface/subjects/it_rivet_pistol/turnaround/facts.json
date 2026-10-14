@@ -1,0 +1,47 @@
+{
+  "subject": "it_rivet_pistol",
+  "noun": "chunky rivet driver pistol game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_rivet_pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_rivet_pistol.png = out/concept-items30/07_rivet_pistol/v4b_hero_2.png; FPS refs/it_rivet_pistol.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 head block with a raised top step, 1 octagonal nose plate, 1 firing tube, 1 two-tier air-cell cap at the top rear, 1 ribbed grip, 1 trigger, 1 magazine post with 4 rivet heads on its LEFT side, 1 bottom bar + 1 guard bar framing two open windows, 1 teal lamp on the left flank of the head). FRAME (classes/weapon.md): front +z = the firing tube, left flank +x = the flank the hero shows. Hidden right flank: plain ochre head, plain magazine side (decided: the four rivet heads show on the left side only, as drawn), no lamp. Dims estimated on the hero: L 0.34 (firing tube tip to the air-cell cap back), W 0.09 (the cap / nose plate), H 0.30.",
+  "description": "A fictional heavy rivet driver pistol game prop for a builder, chunky low-poly, one hand, held level with the firing tube forward. One tall ochre painted head block with wide chamfers and a raised ochre step along its top. On the front of the head one thick flat octagonal dark steel nose plate with one fat round dark steel firing tube sticking out of its centre, a dark round opening in its tip. Closing the top rear of the head one big round charcoal air-cell cap, a fat two-tier octagonal cylinder lying along the axis and sticking out behind the head. Under the rear of the head one chunky charcoal pistol grip raked back with big diagonal ribs and one thick charcoal trigger. Under the nose one thick straight dark charcoal rivet magazine post running down to the grip base, with exactly four big round dark steel rivet heads in a row along its left side; one thick charcoal bar joins the magazine bottom to the grip base and one thick charcoal guard bar crosses from the magazine to the grip under the trigger, so the magazine, the bars and the grip frame two open windows. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank of the head.",
+  "proportions": "About 0.34 m long, 0.09 m wide and 0.30 m tall. (length : width : height = 3.78 : 1 : 3.33)",
+  "sides": "on the LEFT flank only: the teal lamp window on the head and the four round rivet heads along the magazine post (domes standing a little proud of it). The right flank is plain: smooth ochre head, plain magazine side. The nose plate, the firing tube, the air-cell cap, the grip, the trigger, the magazine post and the two bars are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky rivet driver pistol game prop is 1.13 times as long as it is tall",
+    "front": "in this view its width is 0.30 of its height",
+    "rear": "in this view its width is 0.30 of its height",
+    "top": "in this view it is 3.78 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the firing tube to the LEFT of the image: the fat round firing tube sticking out of the octagonal nose plate at the left, the tall ochre head with its raised top step and the teal lamp window, the big two-tier charcoal air-cell cap sticking out at the top right; below the head the straight magazine post under the nose with its four round rivet heads in a column, the bottom bar joining its foot to the grip base, the guard bar across under the trigger, the trigger, and the raked ribbed grip at the right; the background shows through the two windows framed by the post, the bars and the grip.",
+    "front": "Seen from the firing-tube end: the round firing tube with its dark opening in the middle of the octagonal nose plate, the head and the air-cell cap outline behind it, the magazine post below on the centre line with the rivet heads peeking out on its left-flank side (image RIGHT), the grip base and bottom bar behind it.",
+    "rear": "Seen from the back end: the big round octagonal air-cell cap end on top, the ochre head behind it, the grip below on the centre line with its base; the rivet heads peeking out on the left-flank side (image LEFT) of the magazine post behind. No lamp visible.",
+    "top": "Seen from above, the firing tube to the LEFT: the firing tube, the nose plate, the ochre head with its raised step, the air-cell cap at the right end; the grip base and bars hidden below. The lamp is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    },
+    {
+      "part": "the four round dark steel rivet heads along the magazine post",
+      "plural": true,
+      "flank": "left",
+      "along": "front",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.34,
+    "W": 0.09,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the magazine post, the bottom bar, the guard bar and the grip frame two open windows: the white background shows through them",
+    "the four rivet heads are on the left side of the magazine post only"
+  ]
+}

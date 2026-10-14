@@ -1,0 +1,198 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&subject=facade_brick&seed=1&size=900&module=out%2Fref%2Fv4%2Frun4-facade.mjs&view=target&idpass=1",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-26T18:17:03.411Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 2980,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 8.05925,
+      "h": 17.4867,
+      "d": 7.79,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          416.02,
+          277.17
+        ],
+        [
+          620.49,
+          183.86
+        ],
+        [
+          620.49,
+          721.61
+        ],
+        [
+          416.02,
+          814.93
+        ]
+      ],
+      "world": [
+        [
+          0,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          16.501,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 416.02,
+        "y0": 183.86,
+        "x1": 620.49,
+        "y1": 814.93
+      },
+      "source": "5 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          248.83,
+          189.99
+        ],
+        [
+          416.02,
+          277.17
+        ],
+        [
+          416.02,
+          814.93
+        ],
+        [
+          248.83,
+          727.75
+        ]
+      ],
+      "world": [
+        [
+          -6.555,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          16.501,
+          3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ],
+        [
+          -6.555,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 248.83,
+        "y0": 189.99,
+        "x1": 416.02,
+        "y1": 814.93
+      },
+      "source": "5 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -6.555,
+        0,
+        -3.75
+      ],
+      "max": [
+        0,
+        16.501,
+        3.75
+      ]
+    },
+    "subject": "facade_brick",
+    "view": "target",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:2ffd67c1",
+    "dslVersion": "pg/1",
+    "validatorPass": false,
+    "frontRotationDeg": -90,
+    "lit": false,
+    "idpass": true,
+    "idColours": {
+      "massing": "#ff0000",
+      "roof": "#00ff00",
+      "parapet": "#0000ff",
+      "cornice": "#ffff00",
+      "sill": "#ff00ff",
+      "window": "#00ffff",
+      "storefront": "#ff8000",
+      "door": "#8000ff",
+      "awning": "#00ff80",
+      "signbox": "#ff0080",
+      "ac": "#80ff00",
+      "landing": "#0080ff",
+      "support": "#804000",
+      "stringer": "#408000",
+      "step": "#004080",
+      "railing": "#800040",
+      "baluster": "#408040",
+      "ladder": "#404080",
+      "rung": "#808040",
+      "roof_fixture": "#408080",
+      "prop": "#c0c0c0"
+    },
+    "palette": {
+      "brick": "#a85643",
+      "trim": "#8b7e73",
+      "glass": "#80a9ac",
+      "iron": "#887768",
+      "roof": "#918680",
+      "fixture": "#999f9d",
+      "ac": "#c0c0bf",
+      "coping": "#a77b6f",
+      "surround": "#ad8067",
+      "canopy": "#528b50",
+      "frame": "#8b7e73",
+      "sill": "#be9589",
+      "awning": "#538c54",
+      "signbox": "#668865",
+      "parapet": "#a77b6f",
+      "metal": "#c0c0bf"
+    },
+    "violationCount": 9,
+    "violations": "FAIL: 9 violation(s) [V12_LAYOUT].\n- V12_LAYOUT shop_frame: layout.json \"storefront.h\" wants 0.111 +/- 0.020 H and \"shop_frame\" measures 0.091 — increase it by 0.020 H (measured storefront.h 0.091 H, limit 0.111 +/- 0.020 H)\n- V12_LAYOUT shop_glass: layout.json \"storefront.bottom\" wants 0.080 +/- 0.020 H and \"shop_glass\" measures 0.037 — increase it by 0.043 H (measured storefront.bottom 0.037 H, limit 0.080 +/- 0.020 H)\n- V12_LAYOUT entrance_glass: layout.json \"door.w\" wants 0.125 +/- 0.020 W and \"entrance_glass\" measures 0.160 — reduce it by 0.035 W (measured door.w 0.160 W, limit 0.125 +/- 0.020 W)\n- V12_LAYOUT entrance_frame: layout.json \"door.centreX\" wants 0.320 +/- 0.048 W and \"entrance_frame\" measures 0.210 — increase it by 0.110 W (measured door.centreX 0.210 W, limit 0.320 +/- 0.048 W)\n- V12_LAYOUT: layout.json \"signbox.w\" wants 0.913 +/- 0.137 W and the model measures 0.610 — increase it by 0.303 W (measured signbox.w 0.610 W, limit 0.913 +/- 0.137 W)\n- V12_LAYOUT: layout.json \"signbox.centreX\" wants 0.522 +/- 0.078 W and the model measures 0.385 — increase it by 0.137 W (measured signbox.centreX 0.385 W, limit 0.522 +/- 0.078 W)\n- … and 3 more of the same class.",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "ortho:theta29.1981:phi46.9075"
+  },
+  "bytes": 33294
+}

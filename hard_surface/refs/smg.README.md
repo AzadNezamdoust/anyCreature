@@ -1,0 +1,15 @@
+# TARGET provenance — smg
+
+- date: 2026-10-04
+- generator: GPT image generation through scripts/v7/imagegen.mjs --gen gpt (text to image, no reference; agent gpt-6-astra); GPT / Gemini are used only to generate the image
+- raw output: 1536 x 1024 px, 1234392 bytes, sha256 7ac15486f82c62e48a70c72953c2708185f9d047450cf324edc173968cf8303d (out/concept/smg/raw.png)
+- image: refs/smg.png = the raw output padded with white to a square (centred) and resized to 1024 x 1024 (lanczos3); nothing else changed
+- bytes: 502113
+- sha256: 03ae5219cee08274b9949f3ab9fc8a29ee99f3a317d2b641b7b89f5994abeca7
+- style: fps (scripts/v7/styles.json styles.fps.text), after the description and the hidden-face rule (RUNBOOK 2026-09-27; gold.mjs new --style fps)
+
+## Full prompt (image prompt, verbatim)
+
+```
+A stylised compact submachine gun, one game weapon model. A short boxy dark gunmetal receiver with a flat rail along its top, a low rear sight notch block at the back and a hooded front sight post at the front. A short round gunmetal barrel sticking out of the front, wrapped by a stubby cylindrical barrel shroud with two rows of round vent holes. Under the front of the receiver a matte black polymer vertical fore grip. Under the middle a matte black polymer pistol grip raked backward with a gunmetal trigger inside a rounded trigger guard, and in front of the guard a long straight matte black stick magazine hanging straight down from a square magazine well. At the rear a matte black folding wire stock extended straight back: two thin parallel rods to a small flat butt plate. Safety-orange accents: the magazine's floor plate, the charging handle knob on the left flank of the receiver, and the front sight hood. A small gunmetal fire selector lever on the left flank above the grip. The ejection port is on the right flank, hidden in this view. About 0.62 m long, 0.06 m wide and 0.28 m tall. Anything on a face this view cannot show (the rear face, the far flank, the underside) faces away and is not visible in this view: never move it onto a visible face; the visible faces are drawn exactly as described. Orthographic isometric view, 30 degree elevation, 45 degree azimuth from front-left, no perspective, vertical edges perfectly vertical. Stylised first-person-shooter weapon model: one single handheld weapon held level in the air, its barrel horizontal, the muzzle end being its front. Chunky, readable low-poly forms with slightly exaggerated proportions, crisp facets and chamfers, flat cel shading, one solid flat colour per surface, thin dark outlines. Dark gunmetal for the metal parts, matte black polymer for the furniture, and the one accent colour described. No textures, no gradients, no wear, no scratches, no decals, no text, no numbers, no logos or markings. Lenses are a single flat colour with no reflections, streaks, highlights or glass shine. No hands, no people, no animals, no stand, no table, no other weapons, no props beyond those described, no ground shadow. Solid white background, whole object in frame with margin, centred.
+```

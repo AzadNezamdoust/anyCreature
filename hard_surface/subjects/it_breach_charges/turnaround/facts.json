@@ -1,0 +1,40 @@
+{
+  "subject": "it_breach_charges",
+  "noun": "chunky rack of three breaching charges game prop",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_breach_charges.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_breach_charges.png = out/concept-items30/14_breach_charges/v4b_hero_2.png; FPS refs/it_breach_charges.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 tray with 3 cups and short square posts around each cup, 2 end blocks, 1 angular carry handle along the full length, 3 identical charge discs each with 1 fuse cap, 1 arrow moulding on the near (left-flank) side and 1 pad underneath, 1 teal lamp in the middle of the near long face). FRAME (as v3: classes/weapon.md axes for a placed rack): the long axis is z, front +z = the tray end on the image LEFT of the hero, left flank +x = the near long face with the lamp (the face the hero shows), y up. Hidden far long face: a plain charcoal wall. Dims estimated on the hero: L 0.66, W 0.22, H 0.30 (tray bottom to handle top; the v3 rack was 0.16 tall, this hero's handle stands much higher).",
+  "description": "A fictional rack of three breaching charges game prop for a driller, chunky low-poly, the rack lying flat with its long axis left to right. One thick flat charcoal tray with chamfered edges and solid side walls holding three round cups in a row, short thick square charcoal posts standing around each cup, and one thick raised charcoal end block at each end of the tray. One thick angular charcoal carry handle rises from the two end blocks and runs along the full length of the tray high above the charges, made of straight chamfered segments. In the three cups sit exactly three identical squat ochre painted charge discs, each about 0.20 m across and 0.08 m thick, with wide chamfered edges and a shallow faceted domed top, one big round octagonal dark steel fuse cap at the centre of each dome, one fat raised ochre arrow moulding on each dome on the near side pointing at the fuse cap, and one thick charcoal pad underneath. One small rectangular teal lamp window in a thick raised charcoal bezel in the middle of the tray's near long face.",
+  "proportions": "About 0.66 m long, 0.22 m wide and 0.30 m tall. (length : width : height = 3.00 : 1 : 1.36)",
+  "sides": "on the LEFT flank (the near long face, +x) only: the teal lamp window in the middle of the tray's long face, and the three raised arrow mouldings, which sit on the near (left-flank) side of each dome pointing at its fuse cap. The far long face (right flank) is a plain charcoal wall. The three charges, the cups, the posts, the two end blocks and the carry handle are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky rack of three breaching charges game prop is 2.20 times as long as it is tall",
+    "front": "in this view its width is 0.73 of its height",
+    "rear": "in this view its width is 0.73 of its height",
+    "top": "in this view it is 3.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Seen from the near long face (the left flank), the tray end that is the front to the LEFT of the image: the long low charcoal tray wall with the teal lamp window in its middle, the two raised end blocks at both ends, the tops of the three ochre charge domes with their fuse caps rising just above the tray wall between the short square posts, and the angular carry handle rising from the two end blocks and running straight along high above the charges.",
+    "front": "Seen from the tray end: the end block and the tray's short end face at the bottom, the handle's end leg rising from the end block on the centre line to the top, the nearest charge dome edge showing just above the tray on both sides of the leg; narrow (about 0.22 m) and taller than wide.",
+    "rear": "Seen from the other tray end: the same as the front view mirrored: the end block and short end face at the bottom, the handle leg rising on the centre line; no lamp visible.",
+    "top": "Seen from above, the front end to the LEFT, the near long face (left flank) at the BOTTOM: the long tray with the three round ochre charge domes in a row, each with its round fuse cap in the centre and its arrow moulding on the side toward the bottom of the image pointing at the cap, the short square posts around each cup, the two end blocks, and the handle as a thick straight bar along the centre line over the charges."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.66,
+    "W": 0.22,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "exactly three identical charges in three cups; the white background shows only through the opening between the handle and the tray",
+    "the arrow mouldings are on the near (left-flank) side of each dome"
+  ]
+}

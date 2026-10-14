@@ -1,0 +1,305 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ],
+      "scale": {
+        "up": 1.17
+      },
+      "_scale": "2026-10-02 orchestrator correction at the r1 boundary: the audit's 0.853 was the inverse (scale k = drawn k x too long); doctor sweep k 0.853/1.0/1.17/1.3 -> residual-W top +22.5/+11.1/clear/-6.5 %, hull top 11.2/9.3/7.6/6.3 %; 1.17 clears the width residual"
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 3.8,
+    "_why": "2026-09-29: the W anchor = the body family (fuselage) width, 3.8 m = a CH-47-class fuselage (the real-size sentence of the concept prompt gives the 18.3 m ROTOR diameter, not a fuselage width). Re-derived on the installed set the stated sizes disagree: rotor span / fuselage W (front view ~2.1) would give ~8.7 m, the side view rotor tip-to-tip / fuselage L (~1.4 of 30 m) ~6.2 m — the generated rotors are drawn short; kept 3.8 m pending the setup audit / owner."
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": [
+        "#4f553a",
+        "#646a4b",
+        "#3c4031"
+      ],
+      "rotor": "#545556",
+      "glass": "#40464f",
+      "dark": "#2c2e2a"
+    },
+    "_table": "2026-09-29 (setup, from the concept family masks): body = the olive fuselage, pylons and flank fairings (proposal body #4f553a flanks + f2 #646a4b lit roof / nose + f5 #3c4031 edges); rotor = the gunmetal rotor blades and hubs (f3 #545556); glass = cockpit and cabin windows (f4 #40464f); dark = tyres, gear legs and the engine intake grilles (#2c2e2a). The body family is the FUSELAGE, so the W anchor is the fuselage width, not the 18.3 m rotor diameter of the concept prompt (see anchor._why).",
+    "viewTable": {
+      "side": {
+        "body": [
+          "#4c4f34",
+          "#616445",
+          "#393a2b",
+          "#494b35",
+          "#6f7252",
+          "#363733",
+          "#3d402b"
+        ],
+        "rotor": [
+          "#514f50"
+        ],
+        "glass": [
+          "#3d4049"
+        ],
+        "dark": [
+          "#292824",
+          "#242420"
+        ]
+      },
+      "front": {
+        "body": [
+          "#53553b",
+          "#686a4c",
+          "#404032",
+          "#3c3e39",
+          "#454830"
+        ],
+        "rotor": [
+          "#585557",
+          "#5a5b59"
+        ],
+        "glass": [
+          "#444650"
+        ],
+        "dark": [
+          "#302e2b",
+          "#2b2e28"
+        ]
+      },
+      "rear": {
+        "body": [
+          "#55593b",
+          "#6a6e4c",
+          "#424432",
+          "#50533c",
+          "#3e3f39",
+          "#454830"
+        ],
+        "rotor": [
+          "#5a5957",
+          "#5d5e59"
+        ],
+        "glass": [
+          "#464a50",
+          "#4b4b4b"
+        ],
+        "dark": [
+          "#32322b",
+          "#34362b",
+          "#22241f"
+        ]
+      },
+      "top": {
+        "body": [
+          "#54573a",
+          "#696c4b",
+          "#414231",
+          "#50533a",
+          "#3f412d"
+        ],
+        "rotor": [
+          "#595756",
+          "#5a5a59"
+        ],
+        "glass": [
+          "#45484f",
+          "#45494c"
+        ],
+        "dark": [
+          "#31302a",
+          "#2a2c1f"
+        ]
+      }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/transport_heli/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -2.8 -6.3 -6.3 · front +3.9 +0.2 +1.2 · rear +6.3 +3.5 +1.3 · top +5.4 +2 -0.2); ambiguous: side #484c4e 7.5 % rotor (vs glass); side #46525d 1.1 % rotor (vs glass); side #5e5e5d 1.1 % rotor (vs body); front #4c4e44 8.1 % body (vs glass); front #434f59 7.8 % glass (vs rotor); front #5e6143 1.9 % body (vs rotor); top #34352f 2.7 % dark (vs body). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor (proposal, re-audit after S1-S3), owner-approved 2026-10-02",
+    "side": [
+      {
+        "id": "D1",
+        "rect": [
+          84,
+          396,
+          116,
+          426
+        ],
+        "decides": "concept",
+        "why": "front rotor forward tip: drawn to x 112 (R 4.15 m from the hub at 310); concept blade R 4.6 m (mean of its six blades 3.9-5.3 m, unproject 40,570 / 125,363 / 604,430 vs hub 300,455) at yaw 12 deg -> tip at x ~94"
+      },
+      {
+        "id": "D2",
+        "rect": [
+          455,
+          394,
+          545,
+          416
+        ],
+        "decides": "concept",
+        "why": "front rotor aft blade drawn to x 540 (4.8 m); with the concept's yaw (132 / 252 deg aft) the side projection is 0.67 R = 3.1 m -> x ~458"
+      },
+      {
+        "id": "D3",
+        "rect": [
+          866,
+          372,
+          916,
+          394
+        ],
+        "decides": "concept",
+        "why": "rear rotor aft blade drawn to x 912 (4.0 m from the hub at 720); concept yaw gives 0.67 R = 3.1 m -> x ~869"
+      }
+    ],
+    "front": [
+      {
+        "id": "D4",
+        "rect": [
+          548,
+          412,
+          606,
+          446
+        ],
+        "decides": "concept",
+        "why": "a blade drawn descending from the hub to 600,440 (up 4.35 m): a projection error (blades are level in every other view and in the concept); the concept's forward blade (12 deg) is a 0.2 R stub here"
+      },
+      {
+        "id": "D5",
+        "rect": [
+          686,
+          366,
+          716,
+          414
+        ],
+        "decides": "concept",
+        "why": "near-side (image right) blades drawn full length to x 707 (R 4.0 m); concept yaw 132 deg -> 0.74 R = 3.4 m -> tip at x ~678"
+      },
+      {
+        "id": "D6",
+        "rect": [
+          294,
+          366,
+          326,
+          396
+        ],
+        "decides": "concept",
+        "why": "far-side tip zone: drawn to x 324 (R 4.0 m); concept R 4.6 m at 252 deg -> 0.95 R = 4.4 m -> tip at x ~305"
+      }
+    ],
+    "rear": [
+      {
+        "id": "D7",
+        "rect": [
+          286,
+          376,
+          352,
+          412
+        ],
+        "decides": "concept",
+        "why": "near-side (+x = image left) blades drawn full length to x 291 (R 4.6 m); concept yaw 132 deg -> 0.74 R = 3.4 m -> tip at x ~349"
+      }
+    ],
+    "top": [],
+    "concept": [
+      {
+        "id": "D8",
+        "rect": [
+          226,
+          742,
+          290,
+          804
+        ],
+        "decides": "front",
+        "why": "front-left wheel drawn under the nose centre: by the solved camera (hub 300,455 at 5.2-5.5 m up) its x is 0.2-0.7 m; the front view's legs stand at +-1.25 m (455 / 575 px) -> the model's wheel sits ~50 px further right-down here"
+      },
+      {
+        "id": "D9",
+        "rect": [
+          696,
+          640,
+          752,
+          696
+        ],
+        "decides": "rear",
+        "why": "rear-left wheel: same camera reading gives x 0-0.4 m (a drawing licence: it looks under the fairing edge); the rear view's legs stand at +-1.3 m (447 / 580 px)"
+      },
+      {
+        "id": "D10",
+        "rect": [
+          545,
+          424,
+          612,
+          462
+        ],
+        "decides": "top",
+        "why": "front rotor rear-near blade drawn at 147 deg (plan, from +z toward +x); the model's equal-spaced set 12 / 132 / 252 deg puts it at 132 deg (the top view draws it at 150 deg): the tip moves ~1.2 m"
+      },
+      {
+        "id": "D11",
+        "rect": [
+          895,
+          266,
+          1000,
+          318
+        ],
+        "decides": "top",
+        "why": "rear rotor rear-near blade drawn at 148 deg; modelled at 132 deg (see D10)"
+      }
+    ]
+  }
+}

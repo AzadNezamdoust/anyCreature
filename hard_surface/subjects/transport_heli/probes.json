@@ -1,0 +1,17 @@
+[
+  {"id": "P1", "view": "side", "axis": "row", "index": 630, "from": 180, "to": 740, "what": "wheel hub row: front / rear tyre extents (centres 264 / 668 px)"},
+  {"id": "P2", "view": "side", "axis": "col", "index": 264, "from": 360, "to": 665, "what": "front wheel column: roof, belly (up ~1.0 m), tyre bottom"},
+  {"id": "P3", "view": "side", "axis": "col", "index": 668, "from": 360, "to": 665, "what": "rear wheel column: roof, fairing bottom, tyre bottom"},
+  {"id": "P4", "view": "side", "axis": "row", "index": 532, "from": 150, "to": 860, "what": "cabin window row (belt): nose tip to tail end"},
+  {"id": "P5", "view": "side", "axis": "col", "index": 310, "from": 340, "to": 665, "what": "front pylon / mast column: hub top (5.6 m), blade, pylon, roof, belly"},
+  {"id": "P6", "view": "side", "axis": "col", "index": 725, "from": 340, "to": 665, "what": "rear pylon / mast column: hub top, blade row, pod, tail bottom"},
+  {"id": "P7", "view": "front", "axis": "row", "index": 540, "from": 380, "to": 660, "what": "cabin flat-side width (2.66 m) with the side windows"},
+  {"id": "P8", "view": "front", "axis": "row", "index": 580, "from": 380, "to": 660, "what": "fairing row: full width 3.54 m"},
+  {"id": "P9", "view": "front", "axis": "col", "index": 515, "from": 340, "to": 665, "what": "centreline: hub top, blade rows, pylon, cockpit glass, belly (0.8-1.0 m)"},
+  {"id": "P10", "view": "rear", "axis": "row", "index": 580, "from": 380, "to": 660, "what": "fairing row: full width 3.74 m, ramp door"},
+  {"id": "P11", "view": "rear", "axis": "col", "index": 512, "from": 340, "to": 665, "what": "centreline: hub top, blades, pylon, ramp door, belly"},
+  {"id": "P12", "view": "top", "axis": "col", "index": 560, "from": 380, "to": 700, "what": "mid-fuselage fairing span (drawn 4.26 m; scaled x0.853 -> 3.64 m)"},
+  {"id": "P13", "view": "top", "axis": "row", "index": 535, "from": 120, "to": 880, "what": "centreline nose to tail through both hubs (290 / 690 px)"},
+  {"id": "P14", "view": "concept", "axis": "col", "index": 253, "from": 560, "to": 820, "what": "front wheel column: nose bottom, leg, tyre bottom (797)"},
+  {"id": "P15", "view": "concept", "axis": "col", "index": 723, "from": 440, "to": 720, "what": "rear wheel column: fairing bottom, leg, tyre bottom (686)"}
+]

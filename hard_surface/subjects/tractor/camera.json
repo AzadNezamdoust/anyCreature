@@ -1,0 +1,16 @@
+{
+  "theta_deg": 26.6381,
+  "phi_deg": 45.7103,
+  "slopes": {
+    "mX": 0.45961,
+    "mZ": 0.437373
+  },
+  "residual_px": 0.8483,
+  "vertical_tilt_deg": null,
+  "source": "refs/tractor.png",
+  "sha256": "51d70ca6bc17cd96d20ae8058f0edae6100a7c0a943759fc0a8020db7042271d",
+  "solved": "2026-09-26T20:00:42.477Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left"
+}

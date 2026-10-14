@@ -1,0 +1,97 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 3.6
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#6e724f", "#4c5035"],
+      "metal": ["#444446", "#32332f", "#545457", "#656569"],
+      "dark": ["#23241e", "#141511"]
+    },
+    "_table": "2026-09-29 (v2 concept refs/main_battle_tank.v2.png): named from the concept's foreground colour clusters >= 2 % (newsubject.mjs proposeFamilies on the v2 image) + measure.mjs sample of each part: hull, turret, cupola, hatches, track guards and grille boxes olive drab (lit / shade); metal = gun barrel, mantlet, MG, smoke launchers, tow hooks, headlight guards, tracks, road wheels, rollers, sprocket, idler gunmetal (hub caps the lightest tone); dark = track shadow gaps and outlines",
+    "viewTable": {
+      "side": { "body": ["#767b51", "#545937", "#585b3f"], "metal": ["#4c4d48", "#3a3c31", "#5c5d59", "#6d6e6b", "#505150", "#444442", "#646566"], "dark": ["#2b2d20", "#1c1e13", "#1a1b14"] },
+      "front": { "body": ["#696d4f", "#474b35"], "metal": ["#3f3f46", "#2d2e2f", "#4f4f57", "#606069", "#363730", "#4f4f4c"], "dark": ["#1e1f1e", "#0f1011", "#24251e", "#151611"] },
+      "rear": { "body": ["#696c4b", "#474a31", "#64684b"], "metal": ["#3f3e42", "#2d2d2b", "#4f4e53", "#605f65", "#303225", "#4f4f4f", "#5c5c5b"], "dark": ["#1e1e1a", "#0f0f0d", "#22241a", "#191c0f"] },
+      "top": { "body": ["#666a48", "#44482e"], "metal": ["#3c3c3f", "#2a2b28", "#4c4c50", "#5d5d62", "#2d2f21", "#5d5d5a"], "dark": ["#1b1c17", "#0c0d0a", "#141609", "#1e2013"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/main_battle_tank/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +8.2 +8.8 +2.4 · front -5.2 -5.5 -0.1 · rear -5.1 -6.1 -3.7 · top -8.4 -7.7 -6.8); ambiguous: side #696d4d 8.9 % body (vs metal); side #494c33 1.9 % body (vs metal); front #595c42 5.2 % body (vs metal); front #5d5d5c 1.6 % metal (vs body); rear #3a3b37 10.0 % metal (vs body); rear #55593f 6.7 % metal (vs body); top #575b3d 11.5 % body (vs metal); top #424532 10.4 % body (vs metal); top #484845 1.7 % metal (vs body). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor, owner-approved 2026-09-29",
+    "side": [],
+    "front": [],
+    "rear": [
+      { "id": "D1", "rect": [349, 502, 359, 667], "decides": "front", "why": "rear hull/track outer edge at -1.86 m (comps body w 3.72 m); front 1.75 m, top body 1.73 m, concept aniso ~1.75: rear 0.11 m = 10 px too wide on this side while the turret width agrees (rear 3.06 vs front 3.08)" },
+      { "id": "D2", "rect": [666, 502, 676, 667], "decides": "front", "why": "same on the +x side: rear +1.86 m vs front +1.74 m (10 px); the rear is not uniformly scaled (turret 3.06 = front 3.08), only its hull band is drawn wide" }
+    ],
+    "top": [
+      { "id": "D3", "rect": [300, 660, 850, 678], "decides": "front", "why": "top draws the near (+x) road wheels/track proud of the guard to up -1.90 m (hull body ends at -1.66); the far side is flush and front/rear draw the tracks flush under the hull (front tracks -1.78..1.76 = hull): a one-sided plan artefact (hull.mjs top viewOnly blob 336,665,835,675 2.1 %)" }
+    ],
+    "concept": [
+      { "id": "D4", "rect": [27, 484, 175, 559], "decides": "side", "why": "concept barrel unprojected on x=0 rises from the mantlet (y 2.52, z 1.8) to the muzzle (y 2.87, z 5.79) or yaws to -x at constant height (image slope 0.208 vs the length axis 0.295); side draws it horizontal y 2.19..2.55, z 2.0..5.54, top on the centre line (hull.mjs conceptOnly blob 27,484,210,559 1.84 %)" },
+      { "id": "D5", "rect": [934, 483, 988, 596], "decides": "side", "why": "concept tail corner + sprocket project beyond the views' hull (conceptOnly blob 934,483,988,596 0.51 %); side: sprocket centre z -2.96 up 0.79 r 0.45, hull tail z -3.50" }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "theta_deg": 35.5,
+  "phi_deg": 61.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/sniper_rifle.png",
+  "sha256": "51bfd6de1522aea7d7fbc91786c88a21b5e84e523aea7f5662f6c192fb145aa6",
+  "solved": "2026-10-04T20:12:18.546Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.682,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.425
+  }
+}

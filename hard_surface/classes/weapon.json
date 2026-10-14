@@ -1,0 +1,78 @@
+{
+  "class": "weapon",
+  "_comment": "WF v10 (2026-10-04): handheld FPS weapons. A `pipeline: \"direct\"` class — no JS-kernel module, no validator chain, no gold rounds: setup (concept, turnaround, registration) -> Blender build (scripts/hs/run_pass.py, out/blender-hs/BUILD-DIRECT.md) -> Fable review + one polish -> function stage (scripts/hs/rig_pass.py physics.mode handheld). Only the fields the setup chain and the HS harness read are here; the kernel gate keys of classes/vehicle.json (rules, wheels, likeness, knobPriors ...) do not exist for this class. Rules for the builder: classes/weapon.md.",
+  "pipeline": "direct",
+  "_frame_comment": "Author frame (the vehicle convention with muzzle = nose): muzzle +z, the weapon's LEFT flank +x (the flank the concept shows), y up, y = 0 at the weapon's lowest point (magazine / grip / bipod foot), x centred on the bore plane, z centred on the overall length. Views: side = the left flank with the muzzle to the image LEFT, front = muzzle on, rear = butt on, top = plan with the muzzle to the image LEFT.",
+  "anchor": "L",
+  "_anchor_comment": "views.json anchor = the stated overall length L (side + top measure it over ~800 px); a weapon's width is 3-8 cm, too few px to fix the scale. families.table holds ONE family (body = every flat colour of the concept) so the L / W spans are the whole foreground, stock and barrel included.",
+  "concept": {
+    "camera": { "theta_deg": 30, "phi_deg": 45 },
+    "_comment": "No ground quad to solve a camera from: the concept camera is the style's fixed isometric (scripts/v7/conceptreg.mjs); scale / offset are fitted to the concept's foreground box (hull.mjs --write-frame)."
+  },
+  "triBudget": 8000,
+  "roles": ["receiver", "barrel", "handguard", "stock", "grip", "magazine", "trigger", "trigger_guard", "bolt", "charging_handle", "slide", "pump", "cylinder", "barrel_cluster", "drum", "belt_box", "feed_cover", "sight", "optic", "rail", "muzzle_device", "bipod", "selector", "sling_mount", "tube", "rocket", "prop"],
+  "paletteZones": ["gunmetal", "polymer", "accent", "steel", "dark", "glass", "brass", "wood"],
+  "joints": ["trigger", "slide", "magazine", "barrel_spin", "cylinder", "hinge", "selector", "fixed"],
+  "sockets": ["muzzle", "ejection_port", "grip_r", "grip_l", "sight_rear", "sight_front", "optic_mount", "magazine_well"],
+  "gold": {
+    "_comment": "GOLD pipeline (owner 2026-10-12: the 30 game items run gold v8, scripts/v7/gold.mjs): read ONLY for a subject whose subject.json says `pipeline: \"gold\"` (scripts/subject.mjs loadSubject merges this block over the class; a direct subject never sees it). No wheels / running gear / ground contact (grounded false: kernel-chain V3 load path + V4 footprint off; V4 min y = 0 kept: the frame's lowest point), one Opus critic seat per round.",
+    "rules": "src/validate/rules/weapon.mjs",
+    "styleFloorKey": "weapon",
+    "minFeat": 0.008,
+    "_minFeat_comment": "Hand-held min part / cut-wall size in metres (limits.json styleFloor has no weapon key and is frozen; the vehicle floor 0.04 forced hidden filler blocks and capped bevels on the SMG run). 0.008 = the smallest chunky feature the item rules keep as its own part (out/blender-hs/BUILD-DIRECT.md: grip ribs >= 8 mm, plates >= 6 mm, other visible bevels 4-10 mm, silhouette chamfers 12-20 mm): a 12-20 mm chamfer on a 30-60 mm receiver leaves >= 8 mm walls. At capture (900 px, fill 0.86, L ~0.6 m) 8 mm ~ 10 px > minFeaturePx 3.",
+    "grounded": false,
+    "lengthRoles": [
+      "receiver",
+      "barrel",
+      "handguard",
+      "stock",
+      "grip",
+      "magazine",
+      "slide",
+      "tube"
+    ],
+    "roleHint": "pick the nearest real one (a top rail is \"rail\", a front post is \"sight\", a mag base plate is \"magazine\", a buttpad is \"stock\", anything else \"prop\")",
+    "nonStructuralRoles": ["prop"],
+    "bearingRoles": [],
+    "paletteZones": [
+      {
+        "key": "gunmetal",
+        "for": "receiver, slide, barrel shroud: the main painted / blued metal"
+      },
+      {
+        "key": "polymer",
+        "for": "grip, stock, handguard furniture: the moulded plastic"
+      },
+      {
+        "key": "accent",
+        "for": "the concept's accent colour (stripes, emitter, coloured panel)"
+      },
+      {
+        "key": "steel",
+        "for": "bare / bright steel: barrel, bolt, pins, muzzle device"
+      },
+      {
+        "key": "dark",
+        "for": "recesses, bores, vents, the darkest flat colour"
+      },
+      {
+        "key": "glass",
+        "for": "optic lenses, emitter windows"
+      },
+      {
+        "key": "brass",
+        "for": "brass / bronze: cartridges, fittings"
+      },
+      {
+        "key": "wood",
+        "for": "wooden furniture"
+      }
+    ],
+    "critics": {
+      "seats": [
+        "opus"
+      ],
+      "_seats": "owner 2026-10-12: Opus builds and critiques; one gold-critic-opus seat per round, no Sonnet seat (gold.mjs merge works with the one critique)."
+    }
+  }
+}

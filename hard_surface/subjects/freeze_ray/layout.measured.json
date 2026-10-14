@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/freeze_ray/turnaround: side / front / rear / top foregrounds, 0.00207 m voxels refined x4, 1834897 surface / shell points) projected through subjects/freeze_ray/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 22.25 deg, phi 68.75 deg",
+    "conceptBboxPx": [
+      67,
+      187,
+      948,
+      814
+    ],
+    "sPxPerM": {
+      "x": 1613.3,
+      "y": 1598.819,
+      "used": 1591.83,
+      "xOverY": 1.0091
+    },
+    "quadPx": [
+      [
+        154.3,
+        463.5
+      ],
+      [
+        970.3,
+        343.3
+      ],
+      [
+        970.3,
+        814.7
+      ],
+      [
+        154.3,
+        934.9
+      ]
+    ],
+    "fit": {
+      "s": 1591.8302125470493,
+      "ox": 521.9917282681293,
+      "oy": 835.5087779302132,
+      "refined": {
+        "frame": {
+          "scale": 0.9911403533477725,
+          "tx": 1.9941169283551048,
+          "ty": -3.0157651848951446
+        },
+        "iou": 0.7745,
+        "bboxIou": 0.7724
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

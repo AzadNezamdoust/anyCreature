@@ -1,0 +1,15 @@
+{
+  "theta_deg": 19.3069,
+  "phi_deg": 39.9546,
+  "slopes": {
+    "mX": 0.276984,
+    "mZ": 0.394661
+  },
+  "residual_px": 0.6241,
+  "vertical_tilt_deg": null,
+  "source": "refs/aa_tank.v2.png",
+  "sha256": "0e162ee68fdef7d1daa12f1bd624c9d022588f72de7b7134767e331e14a557a9",
+  "solved": "2026-09-29T18:00:14.560Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

@@ -1,0 +1,27 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0], "shift": { "right": 0.11 }, "_shift": "2026-09-27: the rear drawing’s box (door slats -0.868..1.087, side posts -1.032..1.246 in rear-view m) is centred at +0.107..0.110 because an asymmetric body-colour attachment skews the span rule; measured on the reference only (measure.mjs comps). Rear IoU of model-v33: 0.867 -> 0.935" },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.4 },
+  "families": {
+    "body": "body",
+    "fgMax": 252,
+    "enclosedFg": true,
+    "_enclosedFg": "2026-09-27 (research/v7/EYES-EXPERIMENT.md B): background = the near-white region connected to the border; enclosed near-white (1-2 px highlight seams inside the white body) is foreground",
+    "_fgMax": "the box body is near-white (concept 232-236, turnaround 236-246 darkest channel): the default bg cut (235) would erase it; 252 keeps the box solid (bg is 253-255)",
+    "table": {
+      "body": ["#e8e7e2", "#f5f5f3"],
+      "glass": "#5a7487",
+      "stripe": "#378a47",
+      "dark": ["#3b3f40", "#2c2e2f"],
+      "bumper": "#818181",
+      "light": "#d0d0d0",
+      "fringe": "#f8f8f8"
+    },
+    "_light": "light = the concept #cfcfce cluster (lamp rims, trims) and the 214-220 outline fringe; fringe (#f8f8f8) = the 247-252 anti-alias band along the mirror edges; body carries the turnaround white #f5f5f3 too. Without light / fringe the mirror edges join the body W span in front / rear"
+  }
+}

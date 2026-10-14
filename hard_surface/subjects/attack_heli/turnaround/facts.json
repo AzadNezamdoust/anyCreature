@@ -1,0 +1,33 @@
+{
+  "subject": "attack_heli",
+  "noun": "attack helicopter",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28, v2 re-derived 2026-09-29: description + proportions = the concept prompt's paragraph (refs/attack_heli.v2.README.md Full prompt = the v2 concept refs/attack_heli.v2.png, owner 2026-09-29; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly attack helicopter parked on the ground on its landing skids, rotors stopped, seen from the front-left, built with many small separate faceted parts like a detailed game unit. A slim angular fuselage with a narrow pointed nose; a tandem cockpit of two stepped flat-panelled canopies one behind the other, the rear seat higher than the front, each canopy divided into flat panes by thick dark frame bars; a small chin turret under the nose with a short gun barrel pointing forward; a short stub wing on each side of the fuselage behind the cockpit, each wing carrying one fat cylindrical rocket pod under its tip whose front face shows a ring of small round tube openings; two boxy engine pods on the fuselage top above the wings with slatted intake grilles on their front faces; two thin whip antennas on the fuselage spine behind the rotor mast; a long thin tail boom ending in an upright tail fin with a small two-blade tail rotor on a small hub on the fin's left side and a small flat horizontal stabiliser. A short thick rotor mast on top with a chunky rotor hub, carrying exactly four separate long thin flat main rotor blades of equal length at right angles in a \"+\" shape (not an X): one blade pointing straight forward above the cockpit and nose, one straight back directly above the tail boom and one straight out to each side, all four blades clearly visible. Two tubular landing skids under the fuselage, each a straight runner on two angled struts, both skid runners resting flat on the ground. Fuselage, tail boom, fin, stub wings and engine pods painted one dark olive green; canopy panels a single flat dark blue-grey; canopy frame bars, rotor blades, rotor hub and mast, tail rotor, chin gun, rocket pods, intake grilles, antennas and skids dark gunmetal grey. The exhaust outlets on the rear face of the engine pods face away and are hidden; the right stub wing and its rocket pod are partly hidden behind the fuselage.",
+  "proportions": "About 15.5 m long from the nose to the tail rotor, 14.6 m wide across the main rotor blades and 4.6 m tall; the skids, stub wings, rocket pods and both rotors clearly visible, the whole helicopter drawn small enough that every rotor blade tip stays well inside the frame with a wide white margin on all four sides. (length : width : height = 1.06 : 1 : 0.32)",
+  "sides": "the attack helicopter is symmetric left to right except the tail: the small two-blade tail rotor sits on a hub on the tail fin's LEFT side. The four main rotor blades form a '+' (one forward over the nose, one back over the boom, one out to each side), not an X.",
+  "shape": {
+    "side": "in this view the attack helicopter is 3.37 times as long as it is tall",
+    "front": "in this view its width is 3.17 of its height",
+    "rear": "in this view its width is 3.17 of its height",
+    "top": "in this view it is 1.06 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the exhaust outlets on the back of the two engine pods."
+  },
+  "asymmetric": [
+    {
+      "part": "the tail rotor",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 15,
+    "W": 6.343,
+    "H": 5.958,
+    "_": "2026-09-29: the installed turnaround registered (hull.mjs --subject attack_heli --aniso: L / W = the body-family span, H = the foreground bbox height incl. the rotor mast); the stated size was 15.5 x 14.6 x 4.6 m"
+  }
+}

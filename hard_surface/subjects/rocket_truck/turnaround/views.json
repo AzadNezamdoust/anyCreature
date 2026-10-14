@@ -1,0 +1,98 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.5
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#4b5135", "#6c744d"],
+      "glass": "#49535c",
+      "gunmetal": "#42464a",
+      "tyre": ["#383a3c", "#2a2c2a", "#1f211b"],
+      "bore": "#0e0f0e"
+    },
+    "_table": "2026-09-29 (setup, from the concept's family masks: each proposed cluster tinted on the concept): body = the olive cab, launcher box and chassis bed (proposal body #4b5135 shaded flanks + f2 #6c744d lit tops / fronts); glass = windscreen and cab windows (+ the tube rims, one blue-grey) (f5); gunmetal = bumper, turntable, fuel tank, grille slats (f4); tyre = tyres and tube shading (f7 #383a3c + f3 #2a2c2a + f6 #1f211b); bore = the dark tube bores (dark #0e0f0e).",
+    "viewTable": {
+      "side": { "body": ["#4f5430", "#707748", "#676c46", "#797d56"], "glass": ["#4d5657", "#52575c"], "gunmetal": ["#464945"], "tyre": ["#3c3d37", "#2e2f25", "#232416", "#353725", "#23241d"], "bore": ["#121209"] },
+      "front": { "body": ["#525433", "#73774b", "#787d54", "#676c48"], "glass": ["#50565a", "#565655"], "gunmetal": ["#494948"], "tyre": ["#3f3d3a", "#312f28", "#262419", "#3d3e37", "#383b24"], "bore": ["#15120c"] },
+      "rear": { "body": ["#555536", "#76784e", "#72784e", "#585d3b", "#7a8153"], "glass": ["#53575d"], "gunmetal": ["#4c4a4b"], "tyre": ["#423e3d", "#34302b", "#29251c", "#2f2f2a", "#3f403f"], "bore": ["#18130f"] },
+      "top": { "body": ["#505435", "#71774d", "#4d5134", "#595d3d"], "glass": ["#4e565c"], "gunmetal": ["#47494a"], "tyre": ["#3d3d3c", "#2f2f2a", "#24241b", "#3b3d2a", "#2a2c23", "#212216"], "bore": ["#13120e"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/rocket_truck/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +3.8 +2.6 -4.6 · front +7.3 +3.4 -2.5 · rear +10.3 +4.5 +0.8 · top +5.1 +2.9 -0.4); ambiguous: side #4b4b4a 17.9 % gunmetal (vs glass); side #56593b 2.8 % body (vs gunmetal); side #45482c 2.6 % body (vs tyre); front #52563d 6.5 % body (vs gunmetal); front #1e1f19 4.1 % tyre (vs bore); front #656562 2.9 % glass (vs body); rear #42462e 15.8 % tyre (vs body); rear #565655 7.7 % glass (vs gunmetal); rear #222416 3.0 % tyre (vs bore); top #616643 6.2 % body (vs glass); top #424647 4.0 % gunmetal (vs tyre); top #565653 2.5 % glass (vs gunmetal). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor (proposal, re-audit after S1 apply 7e84cee), owner-approved 2026-09-29",
+    "side": [
+      { "id": "D1", "rect": [852, 550, 928, 690], "decides": "concept", "why": "bed / mudguard tail ends at right 2.56 m (z -2.56) here; concept bed rear-top corner unproject 940,480,x,1.18 -> z -2.86, flare tip 960,577 -> z -3.04: the concept's tail is 0.3-0.45 m longer" }
+    ],
+    "front": [],
+    "rear": [],
+    "top": [
+      { "id": "D2", "rect": [880, 340, 928, 700], "decides": "concept", "why": "bed end at right 2.58 m (px 908, z -2.58) here; concept tail z -2.86..-3.04 (unproject 940,480 / 960,577 on x=1.18): the tail is 0.3-0.45 m longer in the concept" },
+      { "id": "D3", "rect": [195, 678, 242, 715], "decides": "front", "why": "near-flank mirror head drawn 0.07 m long (up -1.27..-1.20) vs the far one 0.19 m (up 1.24..1.43) and the front view's heads at |x| 1.20..1.40 (px 306-333 / 692-717): the front decides" }
+    ],
+    "concept": [
+      { "id": "D6", "rect": [700, 680, 960, 760], "decides": "side", "why": "mid / rear wheel hubs at y 675 / 645 vs the isometric line from the front hub (742 - 0.328 x 322 / 452 px = 636 / 594): the rear wheels are drawn 40-50 px low (hull conceptOnly blob 717-814 x 691-754); the side view's ground line (tyre bottoms y 766, three equal wheels) settles it" }
+    ]
+  }
+}

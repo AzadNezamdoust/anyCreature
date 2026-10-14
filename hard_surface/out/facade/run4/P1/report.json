@@ -1,0 +1,1058 @@
+{
+  "pass": true,
+  "violations": [],
+  "advisories": [
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "frame.widthRatio UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"frame.widthRatio\" carries no measurement — the target's surround reads as one ink-outlined band whose left/right members are the same brick tone as the wall: a side width cannot be separated from the wall at 19 px of pane (astra-audit C2). Measure it off a crop the owner ratifies, or drop the key.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "frame.proud UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"frame.proud\" carries no measurement — how far the frame stands in FRONT of the brick is a depth along z; one elevation of a flat-shaded still carries no z for a 0.05 m feature. r2 read it off a lit inner face, which is a shading cue, not a measurement.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "cornice.projection UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"cornice.projection\" carries no measurement — the target's crown reads as ONE coping band; no cornice course projects far enough to separate from it in the still. r2's 0.02 W was already marked UNVERIFIED.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    }
+  ],
+  "text": "PASS: V0-V7 + V10 clean.",
+  "measurements": {
+    "parts": 42,
+    "tris": 928,
+    "triBudget": 3000,
+    "materials": 1,
+    "bounds": {
+      "w": 7.62,
+      "h": 17.4867,
+      "d": 7.515,
+      "minY": 0,
+      "centre": [
+        0,
+        8.74335,
+        2.8575
+      ],
+      "min": [
+        -3.81,
+        0,
+        -0.9
+      ],
+      "max": [
+        3.81,
+        17.4867,
+        6.615
+      ]
+    },
+    "minFeature": 0.06,
+    "eps": 0.01,
+    "census": "applied",
+    "layout": "applied",
+    "booleanPairs": 84,
+    "distancePairs": 43,
+    "perPart": [
+      {
+        "id": "wall_front",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 128,
+        "volume": 29.499311,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.45,
+            16.5,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_back",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 34.155,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            6.254999999999999
+          ],
+          "max": [
+            3.45,
+            16.5,
+            6.554999999999999
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_left",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.75,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_right",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            -3.75,
+            0,
+            0
+          ],
+          "max": [
+            -3.45,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "block_core",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 677.97675,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            0.2999999999999998
+          ],
+          "max": [
+            3.45,
+            16.5,
+            6.255
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "roof_slab",
+        "role": "roof",
+        "zone": "roof",
+        "tris": 12,
+        "volume": 3.89367,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.5,
+            0
+          ],
+          "max": [
+            3.75,
+            16.5792,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "parapet",
+          "vent_box",
+          "pipe_0",
+          "pipe_1"
+        ]
+      },
+      {
+        "id": "parapet",
+        "role": "parapet",
+        "zone": "brick",
+        "tris": 32,
+        "volume": 2.521198,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.5792,
+            0
+          ],
+          "max": [
+            3.75,
+            16.8915,
+            6.555
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "coping_front",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.329184,
+        "aabb": {
+          "min": [
+            -3.81,
+            16.8915,
+            -0.06000000089406968
+          ],
+          "max": [
+            3.81,
+            17.01149999731779,
+            0.3600000008940697
+          ]
+        },
+        "touches": [
+          "parapet",
+          "coping_left",
+          "coping_right"
+        ]
+      },
+      {
+        "id": "coping_back",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.329184,
+        "aabb": {
+          "min": [
+            -3.81,
+            16.8915,
+            6.19499999910593
+          ],
+          "max": [
+            3.81,
+            17.01149999731779,
+            6.615000000894069
+          ]
+        },
+        "touches": [
+          "parapet",
+          "coping_left",
+          "coping_right"
+        ]
+      },
+      {
+        "id": "coping_left",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.252072,
+        "aabb": {
+          "min": [
+            3.3899999991059304,
+            16.8915,
+            0.36
+          ],
+          "max": [
+            3.8100000008940698,
+            17.01149999731779,
+            6.195
+          ]
+        },
+        "touches": [
+          "parapet"
+        ]
+      },
+      {
+        "id": "coping_right",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.252072,
+        "aabb": {
+          "min": [
+            -3.8100000008940698,
+            16.8915,
+            0.36
+          ],
+          "max": [
+            -3.3899999991059304,
+            17.01149999731779,
+            6.195
+          ]
+        },
+        "touches": [
+          "parapet"
+        ]
+      },
+      {
+        "id": "window_0_0_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            -2.4412499982118607,
+            13.713,
+            -0.12
+          ],
+          "max": [
+            -1.5937500017881394,
+            15.87299999642372,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_0_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            -2.352,
+            13.802249999999999,
+            -0.03075
+          ],
+          "max": [
+            -1.6829999999999998,
+            15.78375,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_0_0_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_0_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            -2.352,
+            14.748,
+            -0.12
+          ],
+          "max": [
+            -1.6829999999999998,
+            14.838,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_0_0_frame",
+          "window_0_0_glass"
+        ]
+      },
+      {
+        "id": "window_0_0_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            -2.53125,
+            13.623,
+            -0.12000000000000001
+          ],
+          "max": [
+            -1.5037500000000001,
+            13.713,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_0_0_frame"
+        ]
+      },
+      {
+        "id": "window_0_1_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            -2.4412499982118607,
+            9.0435,
+            -0.12
+          ],
+          "max": [
+            -1.5937500017881394,
+            11.203499996423721,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_1_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            -2.352,
+            9.13275,
+            -0.03075
+          ],
+          "max": [
+            -1.6829999999999998,
+            11.11425,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_0_1_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_1_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            -2.352,
+            10.0785,
+            -0.12
+          ],
+          "max": [
+            -1.6829999999999998,
+            10.1685,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_0_1_frame",
+          "window_0_1_glass"
+        ]
+      },
+      {
+        "id": "window_0_1_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            -2.53125,
+            8.9535,
+            -0.12000000000000001
+          ],
+          "max": [
+            -1.5037500000000001,
+            9.0435,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_0_1_frame"
+        ]
+      },
+      {
+        "id": "window_1_0_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            1.8862500017881398,
+            13.713,
+            -0.12
+          ],
+          "max": [
+            2.733749998211861,
+            15.87299999642372,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_0_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            13.802249999999999,
+            -0.03075
+          ],
+          "max": [
+            2.6445000000000003,
+            15.78375,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_1_0_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_0_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            14.748,
+            -0.12
+          ],
+          "max": [
+            2.6445000000000003,
+            14.838,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_1_0_frame",
+          "window_1_0_glass"
+        ]
+      },
+      {
+        "id": "window_1_0_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            1.7962500000000006,
+            13.623,
+            -0.12000000000000001
+          ],
+          "max": [
+            2.8237500000000004,
+            13.713,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_1_0_frame"
+        ]
+      },
+      {
+        "id": "window_1_1_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            1.8862500017881398,
+            9.0435,
+            -0.12
+          ],
+          "max": [
+            2.733749998211861,
+            11.203499996423721,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_1_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            9.13275,
+            -0.03075
+          ],
+          "max": [
+            2.6445000000000003,
+            11.11425,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_1_1_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_1_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            10.0785,
+            -0.12
+          ],
+          "max": [
+            2.6445000000000003,
+            10.1685,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_1_1_frame",
+          "window_1_1_glass"
+        ]
+      },
+      {
+        "id": "window_1_1_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            1.7962500000000006,
+            8.9535,
+            -0.12000000000000001
+          ],
+          "max": [
+            2.8237500000000004,
+            9.0435,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_1_1_frame"
+        ]
+      },
+      {
+        "id": "shop_frame",
+        "role": "storefront",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.36855,
+        "aabb": {
+          "min": [
+            -0.6525000035762787,
+            0.5205,
+            -0.12
+          ],
+          "max": [
+            2.9025000035762787,
+            2.0205,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "shop_glass",
+        "role": "storefront",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 1.475821,
+        "aabb": {
+          "min": [
+            -0.56325,
+            0.6097499999999999,
+            -0.03075
+          ],
+          "max": [
+            2.81325,
+            1.93125,
+            0.3
+          ]
+        },
+        "touches": [
+          "shop_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "entrance_frame",
+        "role": "door",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.24914,
+        "aabb": {
+          "min": [
+            -2.864999997615814,
+            0,
+            -0.12
+          ],
+          "max": [
+            -1.4850000023841856,
+            2.095499999821186,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "entrance_glass",
+        "role": "door",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.761808,
+        "aabb": {
+          "min": [
+            -2.77575,
+            0.08925,
+            -0.03075
+          ],
+          "max": [
+            -1.57425,
+            2.00625,
+            0.3
+          ]
+        },
+        "touches": [
+          "entrance_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "shop_awning",
+        "role": "awning",
+        "zone": "canopy",
+        "tris": 12,
+        "volume": 6.561176,
+        "aabb": {
+          "min": [
+            -3.2775000000000003,
+            2.6895000000000002,
+            -0.8999999999999999
+          ],
+          "max": [
+            3.5025,
+            4.58700000089407,
+            0.06000000089406976
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_left"
+        ]
+      },
+      {
+        "id": "shop_sign",
+        "role": "signbox",
+        "zone": "canopy",
+        "tris": 12,
+        "volume": 1.061543,
+        "aabb": {
+          "min": [
+            -3.1500000000000004,
+            4.8345,
+            -0.1875
+          ],
+          "max": [
+            1.4249999999999998,
+            6.072,
+            0
+          ]
+        },
+        "touches": [
+          "wall_front"
+        ]
+      },
+      {
+        "id": "shop_ac",
+        "role": "ac",
+        "zone": "ac",
+        "tris": 12,
+        "volume": 1.252969,
+        "aabb": {
+          "min": [
+            1.4249999999999998,
+            4.8345,
+            -0.6749999999999999
+          ],
+          "max": [
+            2.925,
+            6.072,
+            0
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "shop_sign"
+        ]
+      },
+      {
+        "id": "ac_grille_0",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.032500000000001,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.0925,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_1",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.218125000000001,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.278125,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_2",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.4037500000000005,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.46375,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_3",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.589375,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.649375,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_4",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.775,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.835,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "vent_box",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 12,
+        "volume": 2.041875,
+        "aabb": {
+          "min": [
+            -2.625,
+            16.5792,
+            3.8385
+          ],
+          "max": [
+            -1.125,
+            17.4867,
+            5.3385
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_0",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.032733,
+        "aabb": {
+          "min": [
+            2.205000002682209,
+            16.5792,
+            2.305350002682209
+          ],
+          "max": [
+            2.444999997317791,
+            17.321699999701977,
+            2.545349997317791
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_1",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.023655,
+        "aabb": {
+          "min": [
+            2.2125000029802324,
+            16.5792,
+            1.4607000029802322
+          ],
+          "max": [
+            2.437499997019768,
+            17.189700000417233,
+            1.6856999970197677
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      }
+    ]
+  },
+  "timings": {
+    "merge": 10,
+    "V1": 2,
+    "V5": 0,
+    "V2": 37,
+    "V3": 40,
+    "V6": 0,
+    "V4": 1,
+    "V7": 0,
+    "V11_BEARING": 5,
+    "V11_LANDING_GAP": 0,
+    "V11_LADDER_ACCESS": 0,
+    "V11_DECK_GAP": 0,
+    "V12": 1,
+    "V12_LAYOUT": 0,
+    "V10": 1,
+    "total": 99
+  }
+}

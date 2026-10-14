@@ -1,0 +1,108 @@
+{
+  "subject": "pickup_truck",
+  "runner": "file",
+  "startedAt": "2026-09-11T21:30:51.986Z",
+  "dslVersion": "ddece208d0c7",
+  "seats": {
+    "lister": "claude-fable-5-1",
+    "builder-a": "claude-opus-5",
+    "builder-b": "claude-opus-5",
+    "builder-c": "claude-opus-5",
+    "repair": "claude-opus-5"
+  },
+  "deviations": [
+    "refs/pickup_truck.png absent — the LISTER was fed refs/pickup_truck.README.md's structural inventory text instead of the image (04:T6 assumes a VLM reading a picture). Re-run the lister when the PNG lands; its cache key changes with the prompt inputs, so nothing stale survives.",
+    "MEASURE (Grounded SAM / operator-clicked boxes, PLAN 3) is NOT implemented in M3. Every rel_size the LISTER returns stays a hypothesis; only V0-V7 + V10 constrain the metres."
+  ],
+  "calls": [
+    {
+      "seat": "lister",
+      "model": "claude-fable-5-1",
+      "tier": "-",
+      "attempt": 0,
+      "hash": "a2d7e4e26d6108b5e0a29ff841bf534a37af117708fd3355cd25fb0a9f62dbb2",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": null,
+      "violations": []
+    },
+    {
+      "seat": "builder-a",
+      "model": "claude-opus-5",
+      "tier": "A",
+      "attempt": 0,
+      "hash": "5ec8fdadcc525c3ddf567658f56a7d7eedd8bf0f01b30a5580c3a657e5727783",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "seat": "builder-b",
+      "model": "claude-opus-5",
+      "tier": "B",
+      "attempt": 0,
+      "hash": "eaf300afb5d081230cc272824280b44788f750fcefc0a50ac4b51556e2f7d1a0",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "seat": "builder-c",
+      "model": "claude-opus-5",
+      "tier": "C",
+      "attempt": 0,
+      "hash": "62f3fc1bb0da8fa405ef3d68e77b368d1f8a5691720d8bfc53f2fd1e5a9d8e7d",
+      "cached": false,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    }
+  ],
+  "tiers": [
+    {
+      "tier": "A",
+      "seat": "builder-a",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V3 clean (tier gate)."
+    },
+    {
+      "tier": "B",
+      "seat": "builder-b",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V3 clean (tier gate)."
+    },
+    {
+      "tier": "C",
+      "seat": "builder-c",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V7 + V10 clean."
+    }
+  ],
+  "inventory": "refs/pickup_truck.README.md",
+  "pass": true,
+  "violations": [],
+  "totals": {
+    "calls": 4,
+    "cached": 3,
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "ms": 0
+  },
+  "summary": "4 call(s) (3 cached), 0/0 tokens in/out, 0 repair prompt(s), FINAL PASS (0 violation(s))"
+}

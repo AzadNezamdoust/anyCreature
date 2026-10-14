@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/bubble_cannon/turnaround: side / front / rear / top foregrounds, 0.00376 m voxels refined x4, 1189680 surface / shell points) projected through subjects/bubble_cannon/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 21.75 deg, phi 57 deg",
+    "conceptBboxPx": [
+      30,
+      238,
+      994,
+      733
+    ],
+    "sPxPerM": {
+      "x": 1017.937,
+      "y": 1016.41,
+      "used": 995.558,
+      "xOverY": 1.0015
+    },
+    "quadPx": [
+      [
+        185.9,
+        505.4
+      ],
+      [
+        1020.8,
+        304.5
+      ],
+      [
+        1020.8,
+        618.9
+      ],
+      [
+        185.9,
+        819.8
+      ]
+    ],
+    "fit": {
+      "s": 995.5581190189371,
+      "ox": 538.2783109294841,
+      "oy": 682.2297680656735,
+      "refined": {
+        "frame": {
+          "scale": 0.97875,
+          "tx": 9,
+          "ty": -13
+        },
+        "iou": 0.8056,
+        "bboxIou": 0.7948
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

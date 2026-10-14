@@ -1,0 +1,21 @@
+{
+  "subject": "forklift",
+  "noun": "forklift",
+  "sources": "description: refs/forklift.README.md Full prompt (parts / colours; its size sentence dropped) + refs/forklift.png (steering console, beacon at the rear edge of the guard roof on the left-flank side, three roof slats running front to back, spaced across the width; the 2026-09-28 setup audit S1 corrected the earlier four front-to-back reading), as in the image-generator A/B (research/v7/IMAGEGEN-AB.md; its Gemini sheet had no feature defect); proportions: prior.json stylisation (LoverW 1.81 body, overallLoverW 3.16 incl. forks, front R 0.36 / rear R 0.27, wheelbaseOverL 0.81) at the W anchor 1.2 m, the mast top from the concept (out/ref/gold/forklift/LEDGER.md drift: the concept's mast rail tops at y 2.90 vs 2.68 in the old views; the A/B Gemini sheet's second conceptOnly blob is that mast top), the guard roof ~1.0 m long (same LEDGER: 1.02 m in the concept vs 1.28 m in the old views)",
+  "description": "A chunky cartoon warehouse forklift. At the front a tall upright mast of two dark vertical rails joined by cross bars, a dark carriage plate on the mast and two long flat dark forks pointing forward at ground level. Behind the mast a compact yellow body with a black driver seat and a black steering wheel on a dark console in front of the seat, an open yellow overhead guard above the seat made of four thin posts and a roof grid of three roof slats running front to back, spaced across the width (from the left flank to the right flank) that you can see through, one small orange beacon on the rear edge of the guard roof toward the left flank, and a big rounded yellow counterweight block at the rear. Two large front wheels under the mast end and two smaller rear wheels under the counterweight, with dark charcoal tyres and light grey hubs. Body, counterweight and overhead guard bright yellow; mast, carriage and forks dark charcoal grey; seat and steering wheel black.",
+  "proportions": "at a width of 1.2 m (the yellow body and guard), the yellow body is 2.17 m long from its front to the back of the counterweight (forks excluded), the forklift is 3.8 m long overall including the forks, and 2.9 m tall from the ground to the top of the mast, which stands clearly higher than the guard roof (body length : width : height = 1.81 : 1 : 2.42); the guard roof is about 1.0 m long; the front wheels are 0.72 m in diameter, the rear wheels 0.54 m; the wheelbase is 1.76 m (0.81 of the body length).",
+  "sides": "the forklift is symmetric left to right except the orange beacon, which sits on the rear edge of the guard roof toward the LEFT flank.",
+  "shape": {
+    "side": "in this view the forklift is 1.31 times as long (fork tips to counterweight) as it is tall (to the top of the mast), the yellow body alone 0.75 of the height long",
+    "front": "in this view its width is 0.41 of its height",
+    "rear": "in this view its width is 0.41 of its height",
+    "top": "in this view it is 3.16 times as long (with the forks) as it is wide, the yellow body alone 1.81 times"
+  },
+  "faces": {
+    "top": "The three roof slats run front to back (image left-right), spaced across the width; the seat and the steering wheel show through the open roof grid."
+  },
+  "asymmetric": [
+    { "part": "the orange beacon", "plural": false, "flank": "left", "along": "rear", "protrudes": false }
+  ],
+  "dims": { "L": 2.17, "W": 1.2, "H": 2.9, "_": "registration measures: L = the yellow body span, body front .. counterweight back (forks excluded); W = the yellow span (the anchor); H = the foreground bbox height, ground .. mast top (the concept's 2.9 m)" }
+}

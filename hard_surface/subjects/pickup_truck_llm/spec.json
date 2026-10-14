@@ -1,0 +1,609 @@
+{
+  "schema": "pg/1",
+  "subject": "pickup_truck",
+  "seed": 1,
+  "parts": [
+    {
+      "id": "chassis",
+      "prim": "box",
+      "dims": [
+        1.95,
+        0.4,
+        5.4
+      ],
+      "ground": true,
+      "role": "chassis",
+      "zone": "body"
+    },
+    {
+      "id": "hood",
+      "prim": "bevelBox",
+      "dims": [
+        1.88,
+        0.5,
+        1.3
+      ],
+      "bevel": 0.06,
+      "role": "hood",
+      "zone": "body",
+      "attach": {
+        "to": "chassis",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.87963
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "cab",
+      "prim": "bevelBox",
+      "dims": [
+        1.9,
+        1,
+        1.65
+      ],
+      "bevel": 0.07,
+      "role": "cab",
+      "zone": "body",
+      "attach": {
+        "to": "chassis",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.606481
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "bed_floor",
+      "prim": "plate",
+      "dims": [
+        1.95,
+        0.1,
+        2.45
+      ],
+      "bevel": 0.02,
+      "role": "bed_floor",
+      "zone": "bedliner",
+      "attach": {
+        "to": "chassis",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.226852
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "bed_wall_l",
+      "prim": "bevelBox",
+      "dims": [
+        0.12,
+        0.48,
+        2.35
+      ],
+      "bevel": 0.03,
+      "role": "bed_wall",
+      "zone": "body",
+      "attach": {
+        "to": "bed_floor",
+        "face": "+Y",
+        "uv": [
+          0.030769,
+          0.520408
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "bed_wall_r",
+      "prim": "bevelBox",
+      "dims": [
+        0.12,
+        0.48,
+        2.35
+      ],
+      "bevel": 0.03,
+      "role": "bed_wall",
+      "zone": "body",
+      "attach": {
+        "to": "bed_floor",
+        "face": "+Y",
+        "uv": [
+          0.969231,
+          0.520408
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "bed_bulkhead",
+      "prim": "box",
+      "dims": [
+        1.71,
+        0.48,
+        0.12
+      ],
+      "role": "bed_bulkhead",
+      "zone": "body",
+      "attach": {
+        "to": "bed_floor",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.97551
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "tailgate",
+      "prim": "bevelBox",
+      "dims": [
+        1.95,
+        0.48,
+        0.1
+      ],
+      "bevel": 0.02,
+      "role": "tailgate",
+      "zone": "body",
+      "attach": {
+        "to": "bed_floor",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.020408
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "wheel_fl",
+      "prim": "wheel",
+      "dims": [
+        0.28,
+        0.76,
+        0.76
+      ],
+      "role": "wheel",
+      "zone": "rubber",
+      "zones": {
+        "hub": "chrome"
+      },
+      "attach": {
+        "to": "chassis",
+        "face": "-Y",
+        "uv": [
+          0.079487,
+          0.166667
+        ],
+        "contact": "hangs-below",
+        "embed": 0.3
+      }
+    },
+    {
+      "id": "wheel_fr",
+      "prim": "wheel",
+      "dims": [
+        0.28,
+        0.76,
+        0.76
+      ],
+      "role": "wheel",
+      "zone": "rubber",
+      "zones": {
+        "hub": "chrome"
+      },
+      "attach": {
+        "to": "chassis",
+        "face": "-Y",
+        "uv": [
+          0.920513,
+          0.166667
+        ],
+        "contact": "hangs-below",
+        "embed": 0.3
+      }
+    },
+    {
+      "id": "wheel_rl",
+      "prim": "wheel",
+      "dims": [
+        0.28,
+        0.76,
+        0.76
+      ],
+      "role": "wheel",
+      "zone": "rubber",
+      "zones": {
+        "hub": "chrome"
+      },
+      "attach": {
+        "to": "chassis",
+        "face": "-Y",
+        "uv": [
+          0.079487,
+          0.805556
+        ],
+        "contact": "hangs-below",
+        "embed": 0.3
+      }
+    },
+    {
+      "id": "wheel_rr",
+      "prim": "wheel",
+      "dims": [
+        0.28,
+        0.76,
+        0.76
+      ],
+      "role": "wheel",
+      "zone": "rubber",
+      "zones": {
+        "hub": "chrome"
+      },
+      "attach": {
+        "to": "chassis",
+        "face": "-Y",
+        "uv": [
+          0.920513,
+          0.805556
+        ],
+        "contact": "hangs-below",
+        "embed": 0.3
+      }
+    },
+    {
+      "id": "headlight_l",
+      "prim": "box",
+      "dims": [
+        0.34,
+        0.18,
+        0.09
+      ],
+      "role": "headlight",
+      "zone": "lamp",
+      "attach": {
+        "to": "hood",
+        "face": "+Z",
+        "uv": [
+          0.819149,
+          0.6
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "headlight_r",
+      "prim": "box",
+      "dims": [
+        0.34,
+        0.18,
+        0.09
+      ],
+      "role": "headlight",
+      "zone": "lamp",
+      "attach": {
+        "to": "hood",
+        "face": "+Z",
+        "uv": [
+          0.180851,
+          0.6
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "mirror_arm_l",
+      "prim": "box",
+      "dims": [
+        0.18,
+        0.07,
+        0.07
+      ],
+      "role": "mirror",
+      "zone": "trim",
+      "attach": {
+        "to": "cab",
+        "face": "-X",
+        "uv": [
+          0.121212,
+          0.78
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "mirror_head_l",
+      "prim": "bevelBox",
+      "dims": [
+        0.07,
+        0.2,
+        0.13
+      ],
+      "bevel": 0.02,
+      "role": "mirror",
+      "zone": "trim",
+      "attach": {
+        "to": "mirror_arm_l",
+        "face": "-X",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.03
+      }
+    },
+    {
+      "id": "mirror_arm_r",
+      "prim": "box",
+      "dims": [
+        0.18,
+        0.07,
+        0.07
+      ],
+      "role": "mirror",
+      "zone": "trim",
+      "attach": {
+        "to": "cab",
+        "face": "+X",
+        "uv": [
+          0.878788,
+          0.78
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "mirror_head_r",
+      "prim": "bevelBox",
+      "dims": [
+        0.07,
+        0.2,
+        0.13
+      ],
+      "bevel": 0.02,
+      "role": "mirror",
+      "zone": "trim",
+      "attach": {
+        "to": "mirror_arm_r",
+        "face": "+X",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.03
+      }
+    },
+    {
+      "id": "bumper_front",
+      "prim": "bevelBox",
+      "dims": [
+        2,
+        0.22,
+        0.14
+      ],
+      "bevel": 0.03,
+      "role": "bumper",
+      "zone": "chrome",
+      "attach": {
+        "to": "chassis",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "bumper_rear",
+      "prim": "bevelBox",
+      "dims": [
+        2,
+        0.22,
+        0.14
+      ],
+      "bevel": 0.03,
+      "role": "bumper",
+      "zone": "chrome",
+      "attach": {
+        "to": "chassis",
+        "face": "-Z",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.05
+      }
+    }
+  ],
+  "class": "vehicle",
+  "unit": {
+    "part": "chassis",
+    "m": 5.4
+  },
+  "palette": {
+    "body": "#a8402f",
+    "bedliner": "#4b4e54",
+    "glass": "#3b4753",
+    "chrome": "#c2c6cc",
+    "rubber": "#232529",
+    "trim": "#3a3d42",
+    "lamp": "#f4e8c6",
+    "lamp_red": "#8e1f19"
+  },
+  "facades": [
+    {
+      "id": "fac_windshield",
+      "on": "cab",
+      "face": "+Z",
+      "occlude": false,
+      "zone": "glass",
+      "trimZone": "chrome",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "belt",
+            0.44
+          ],
+          [
+            "glassband",
+            0.56
+          ]
+        ]
+      },
+      "tile": {
+        "glassband": {
+          "axis": "X",
+          "rule": [
+            [
+              "pillar",
+              0.22
+            ],
+            [
+              "win",
+              "~"
+            ],
+            [
+              "pillar",
+              0.22
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "win": {
+          "window": {
+            "dims": [
+              1.3,
+              0.44
+            ],
+            "inset": 0.06,
+            "zone": "glass",
+            "role": "windshield"
+          }
+        }
+      }
+    },
+    {
+      "id": "fac_side_l",
+      "on": "cab",
+      "face": "-X",
+      "occlude": false,
+      "zone": "glass",
+      "trimZone": "chrome",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "belt",
+            0.44
+          ],
+          [
+            "glassband",
+            0.56
+          ]
+        ]
+      },
+      "tile": {
+        "glassband": {
+          "axis": "X",
+          "rule": [
+            [
+              "a_pillar",
+              0.2
+            ],
+            [
+              "win",
+              "~"
+            ],
+            [
+              "c_pillar",
+              0.22
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "win": {
+          "window": {
+            "dims": [
+              1.05,
+              0.44
+            ],
+            "inset": 0.05,
+            "zone": "glass",
+            "role": "side_window"
+          }
+        }
+      }
+    },
+    {
+      "id": "fac_side_r",
+      "on": "cab",
+      "face": "+X",
+      "occlude": false,
+      "zone": "glass",
+      "trimZone": "chrome",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "belt",
+            0.44
+          ],
+          [
+            "glassband",
+            0.56
+          ]
+        ]
+      },
+      "tile": {
+        "glassband": {
+          "axis": "X",
+          "rule": [
+            [
+              "c_pillar",
+              0.22
+            ],
+            [
+              "win",
+              "~"
+            ],
+            [
+              "a_pillar",
+              0.2
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "win": {
+          "window": {
+            "dims": [
+              1.05,
+              0.44
+            ],
+            "inset": 0.05,
+            "zone": "glass",
+            "role": "side_window"
+          }
+        }
+      }
+    }
+  ]
+}

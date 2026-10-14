@@ -1,0 +1,34 @@
+{
+  "_comment": "PRIOR CARD, gold.mjs new --class weapon 2026-10-10 (WF v10): real = the description's stated size; the L anchor fixes px/m of the turnaround; a direct build is blocked out from these metres (out/blender-hs/BUILD-DIRECT.md).",
+  "class": "weapon",
+  "real": {
+    "source": "the concept prompt's stated size (gold.mjs new)",
+    "L": 0.62,
+    "W": 0.09,
+    "H": 0.34
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 0.62,
+    "why": "the stated overall length; fixes px/m of the turnaround"
+  },
+  "stylisation": {
+    "_comment": "ESTIMATE from the stated size: re-measure after install (hull.mjs prints the registered dims)",
+    "WoverL": 0.1452,
+    "HoverL": 0.5484
+  },
+  "softRanges": {
+    "L": [
+      0.5,
+      0.78
+    ],
+    "W": [
+      0.07,
+      0.11
+    ],
+    "H": [
+      0.27,
+      0.43
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "subject": "it_rotary_drill",
+  "noun": "chunky handheld rotary rock drill game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_rotary_drill.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_rotary_drill.png = out/concept-items30/12_rotary_drill/v4b_hero_2.png; FPS refs/it_rotary_drill.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 octagonal housing, 1 stepped cone bit with 3 bright flute rings + 1 tip, 1 two-tier dust collar, 1 top carry handle, 1 rear D-handle + trigger, 1 side handle out of the LEFT side, 1 octagonal gearbox cover on the left flank, 1 teal lamp on the left flank). FRAME (classes/weapon.md): front +z = the bit tip, left flank +x = the flank the hero shows. Hidden right flank: plain red-brown housing (no side handle, no gearbox cover, no lamp). Dims estimated on the hero: L 1.00, W 0.42 (housing about 0.28 + the side handle sticking out about 0.20 on the left), H 0.42 (carry handle top to housing / collar bottom).",
+  "description": "A fictional heavy handheld rotary rock drill game prop for a driller, chunky low-poly, held level with the drill bit forward. One big octagonal brick red-brown painted motor housing with wide chamfers. On top of the housing one thick charcoal arched carry handle running front to back on two big feet. At the rear one thick closed charcoal D-handle with a thick trigger inside. Out of the housing's left side one fat octagonal charcoal side handle sticks straight out sideways, its end open with a dark hole. On the left flank behind the side handle one big round octagonal brick red-brown gearbox cover, and ahead of it near the top one small rectangular teal lamp window in a thick raised charcoal bezel.",
+  "proportions": "At the front one big cone-shaped dark steel drill bit made of three stacked steps, each step edged by one fat bright steel spiral flute ring, ending in a blunt pointed tip, about 0.45 m long and 0.30 m across its base; around the base of the bit one wide thick two-tier charcoal dust collar ring. About 1.00 m long, 0.42 m wide and 0.42 m tall. (length : width : height = 1.07 : 1 : 1.00)",
+  "sides": "on the LEFT flank only: the fat side handle sticking straight out sideways (far past the housing), the round octagonal gearbox cover behind it and the teal lamp window ahead of it. The right flank is plain red-brown housing. The bit, the dust collar, the housing, the top carry handle and the rear D-handle are on the centre line, so the object is NOT symmetric: its width is mostly housing plus the side handle on the left.",
+  "shape": {
+    "side": "in this view the chunky handheld rotary rock drill game prop is 1.07 times as long as it is tall",
+    "front": "in this view its width is 1.00 of its height",
+    "rear": "in this view its width is 1.00 of its height",
+    "top": "in this view it is 1.07 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the bit to the LEFT of the image: the stepped dark steel cone bit with its three bright flute rings and blunt tip at the left, the wide two-tier charcoal dust collar around its base, the octagonal red-brown housing with the teal lamp window near its top front, the side handle seen end-on as a fat octagon with its dark hole in the middle of the flank, the round gearbox cover behind it, the arched carry handle on top on its two feet, and the closed D-handle with its trigger at the right end.",
+    "front": "Seen from the bit end: the bit tip in the middle with the stepped cone rings around it, the wide round dust collar behind, the housing outline and the carry handle above, and the long side handle sticking far out to the left-flank side (image RIGHT) with the gearbox cover edge behind it; nothing sticks out on the image left.",
+    "rear": "Seen from the back end: the closed D-handle in the middle, the housing behind it, the carry handle on top, the dust collar outline around, and the long side handle sticking far out to the left-flank side (image LEFT) with the gearbox cover just behind it. No lamp visible.",
+    "top": "Seen from above, the bit to the LEFT: the cone bit with its rings, the dust collar, the housing with the carry handle along its middle, the D-handle at the right end; the long side handle sticking straight out at the BOTTOM edge (left flank) from the middle of the housing, the gearbox cover a little behind it."
+  },
+  "asymmetric": [
+    {
+      "part": "the fat octagonal charcoal side handle sticking straight out sideways",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    },
+    {
+      "part": "the big round octagonal red-brown gearbox cover",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    },
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "front",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.45,
+    "W": 0.42,
+    "H": 0.42,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "one side handle only, on the left; the right flank is plain",
+    "the D-handle is closed: background shows only inside its hand hole and inside the carry handle arch"
+  ]
+}

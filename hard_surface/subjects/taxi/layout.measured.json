@@ -1,0 +1,37 @@
+{
+  "_comment": "MEASURED (no regions.json / census / layout for this subject): the VISUAL HULL of the registered turnaround (side / front / rear / top foregrounds, 0.03 m voxels, 290271 kept) projected through subjects/taxi/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 29.93 deg, phi 48.9438 deg",
+    "conceptBboxPx": [
+      27,
+      201,
+      997,
+      821
+    ],
+    "sPxPerM": {
+      "x": 225.402,
+      "y": 205.286,
+      "used": 215.344,
+      "xOverY": 1.098
+    },
+    "quadPx": [
+      [
+        254.1,
+        467.1
+      ],
+      [
+        1033.6,
+        128.4
+      ],
+      [
+        1033.6,
+        576.3
+      ],
+      [
+        254.1,
+        915
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "theta_deg": 28.4998,
+  "phi_deg": 45.1228,
+  "slopes": {
+    "mX": 0.479205,
+    "mZ": 0.475115
+  },
+  "residual_px": 0.4325,
+  "vertical_tilt_deg": 0.7989,
+  "source": "refs/school_bus.png",
+  "sha256": "559866f23f11d55d21ce084b53a7d74974e42f79eb7dc10c392b9d60a47dea28",
+  "solved": "2026-09-26T08:04:09.875Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left"
+}

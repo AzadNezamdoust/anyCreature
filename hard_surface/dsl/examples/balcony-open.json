@@ -1,0 +1,47 @@
+{
+  "schema": "pg/1",
+  "subject": "balcony_open",
+  "seed": 1,
+  "class": "building",
+  "note": "Worked example 4 (M6): the three gaps the blind builder seats reported, in one file. `balcony` repeats twice up the face, and ONE authored `rail` lands on EVERY balcony — per-instance children are the default in M6, so nothing has to be said for it to happen (`attach.instance: 0` is how you ask for the anchor only, as railing_open's top rail does). The railing is `railing_open` — bottom rail, six posts, top rail, no infill web — which is authorable at all only because `alignU` lets the top rail butt its edge to a point on the face's u axis.",
+  "palette": {
+    "brick": "#c9573f",
+    "iron": "#3b3f4a",
+    "stone": "#b9b3a8"
+  },
+  "parts": [
+    {
+      "id": "mass",
+      "prim": "box",
+      "dims": [5.0, 8.0, 4.0],
+      "ground": true,
+      "role": "massing",
+      "zone": "brick"
+    },
+    {
+      "id": "parapet",
+      "prim": "plate",
+      "dims": [5.2, 0.3, 4.2],
+      "role": "parapet",
+      "zone": "stone",
+      "attach": { "to": "mass", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" }
+    },
+    {
+      "id": "balcony",
+      "prim": "bevelBox",
+      "dims": [2.4, 0.14, 1.0],
+      "role": "balcony",
+      "zone": "iron",
+      "attach": { "to": "mass", "face": "+Z", "uv": [0.5, 0.35], "contact": "flush", "embed": 0.05 },
+      "repeat": { "axis": "+Y", "count": 2, "pitch": 3.0 }
+    },
+    {
+      "id": "rail",
+      "prim": "railing_open",
+      "dims": [2.4, 0.95, 0.06],
+      "role": "railing",
+      "zone": "iron",
+      "attach": { "to": "balcony", "face": "+Y", "uv": [0.5, 0.97], "contact": "rests-on-top" }
+    }
+  ]
+}

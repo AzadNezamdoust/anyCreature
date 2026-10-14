@@ -1,0 +1,37 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-09-29): the VISUAL HULL of the registered turnaround (subjects/light_tank/turnaround: side / front / rear / top foregrounds, 0.03 m voxels refined x5, 2016847 surface / shell points) projected through subjects/light_tank/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 20.8691 deg, phi 42.3932 deg",
+    "conceptBboxPx": [
+      48,
+      213,
+      999,
+      808
+    ],
+    "sPxPerM": {
+      "x": 174.148,
+      "y": 162.629,
+      "used": 168.389,
+      "xOverY": 1.0708
+    },
+    "quadPx": [
+      [
+        378.6,
+        444.5
+      ],
+      [
+        923.6,
+        231.9
+      ],
+      [
+        923.6,
+        609.5
+      ],
+      [
+        378.6,
+        822.1
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

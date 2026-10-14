@@ -1,0 +1,35 @@
+{
+  "id": "forklift",
+  "class": "vehicle",
+  "title": "Cartoon warehouse forklift (mast, forks, open overhead guard; WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered visual hull's bbox to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/forklift.png",
+    "camera": "subjects/forklift/camera.json",
+    "module": "subjects/forklift/module.mjs",
+    "layoutMeasured": "subjects/forklift/layout.measured.json"
+  },
+  "outDir": "out/forklift",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Added 2026-09-28 at the r1 boundary (orchestrator, owner 'go marathon'); kernel-chain prints it as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 4,
+        "axles": 2,
+        "diameters": "per-axle"
+      },
+      "evidence": "a forklift has large front drive tyres and small rear steer tyres: setup audit decided wheelR 0.365 (front) / 0.26 (rear) from the side turnaround (out/ref/gold/forklift/audit/audit.json); model-r1 wheel diameters 0.73 / 0.52 m"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "mast",
+          "beacon",
+          "seat"
+        ]
+      },
+      "evidence": "the target draws a charcoal mast / carriage / forks / guard posts, an orange roof beacon and a black seat — parts a road vehicle does not have; setup audit gate-class WARN (out/ref/gold/forklift/audit/AUDIT.md) named these zones"
+    }
+  }
+}

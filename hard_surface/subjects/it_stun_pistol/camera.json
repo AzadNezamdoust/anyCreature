@@ -1,0 +1,18 @@
+{
+  "theta_deg": 22.5,
+  "phi_deg": 55,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_stun_pistol.png",
+  "sha256": "f96f74ae47ec55e04c2d3e99738de3e092d8c2b53a95d569d487cc69816bd19d",
+  "solved": "2026-10-11T09:38:48.961Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.852,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.703
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json), gold.mjs new 2026-09-28: real = the concept prompt's stated size (soft plausibility only; the turnaround wins); stylisation to re-measure on the installed turnaround at the W anchor (scripts/v6/README.md 'bus card'; wheelDoverH is what scaffold.mjs reads).",
+  "class": "vehicle",
+  "real": {
+    "source": "the concept prompt's stated size (gold.mjs new)",
+    "L": 15.5,
+    "W": 14.6,
+    "H": 4.6
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 15,
+    "why": "2026-09-29: the stated 14.6 m width is the main-rotor span (gunmetal, not the body family), so W cannot anchor; L = the olive body family nose-to-fin span, the stated 15.5 m nose-to-tail-rotor less the tail rotor / chin gun (~0.5 m)"
+  },
+  "stylisation": {
+    "_comment": "2026-09-29: re-measured on the installed turnaround at the L anchor (hull.mjs --aniso registered dims L 15 W 6.343 H 5.958 m); no wheels (skids)",
+    "LoverW": 2.36,
+    "HoverW": 0.94
+  },
+  "softRanges": {
+    "L": [
+      12.4,
+      19.38
+    ],
+    "W": [
+      11.68,
+      18.25
+    ],
+    "H": [
+      3.68,
+      5.75
+    ]
+  }
+}

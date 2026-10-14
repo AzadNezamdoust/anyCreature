@@ -1,0 +1,5301 @@
+{
+  "pass": true,
+  "violations": [],
+  "advisories": [
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "frame.widthRatio UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"frame.widthRatio\" carries no measurement — the target's surround reads as one ink-outlined band whose left/right members are the same brick tone as the wall: a side width cannot be separated from the wall at 19 px of pane (astra-audit C2). Measure it off a crop the owner ratifies, or drop the key.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "frame.proud UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"frame.proud\" carries no measurement — how far the frame stands in FRONT of the brick is a depth along z; one elevation of a flat-shaded still carries no z for a 0.05 m feature. r2 read it off a lit inner face, which is a shading cue, not a measurement.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "cornice.projection UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"cornice.projection\" carries no measurement — the target's crown reads as ONE coping band; no cornice course projects far enough to separate from it in the still. r2's 0.02 W was already marked UNVERIFIED.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    },
+    {
+      "v": "V12_LAYOUT",
+      "part": null,
+      "measured": "landing.depth UNVERIFIED",
+      "limit": "not enforced",
+      "hint": "layout.json \"landing.depth\" carries no measurement — a deck's depth projects as d*sin(phi)*mZ of vertical band, inseparable at this resolution from the deck fascia and the railing feet inside the same band (fable-audit L6: the decks are open grilles). r2's 0.15 W was already flagged UNVERIFIED and stays out of the gate.. Nothing gates this dimension; do not read a number into the silence.",
+      "blocking": false
+    }
+  ],
+  "text": "PASS: V0-V7 + V10 clean.",
+  "measurements": {
+    "parts": 213,
+    "tris": 2980,
+    "triBudget": 3000,
+    "materials": 1,
+    "bounds": {
+      "w": 7.79,
+      "h": 17.4867,
+      "d": 8.05925,
+      "minY": 0,
+      "centre": [
+        0.085,
+        8.74335,
+        2.585375
+      ],
+      "min": [
+        -3.81,
+        0,
+        -1.44425
+      ],
+      "max": [
+        3.98,
+        17.4867,
+        6.615
+      ]
+    },
+    "minFeature": 0.06,
+    "eps": 0.01,
+    "census": "applied",
+    "layout": "applied",
+    "booleanPairs": 561,
+    "distancePairs": 219,
+    "perPart": [
+      {
+        "id": "wall_front",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 128,
+        "volume": 29.499311,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.45,
+            16.5,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_back",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 34.155,
+        "aabb": {
+          "min": [
+            -3.45,
+            0,
+            6.254999999999999
+          ],
+          "max": [
+            3.45,
+            16.5,
+            6.554999999999999
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_left",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            3.45,
+            0,
+            0
+          ],
+          "max": [
+            3.75,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "wall_right",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 32.44725,
+        "aabb": {
+          "min": [
+            -3.75,
+            0,
+            0
+          ],
+          "max": [
+            -3.45,
+            16.5,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "block_core",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "block_core",
+        "role": "massing",
+        "zone": "brick",
+        "tris": 12,
+        "volume": 678.32578,
+        "aabb": {
+          "min": [
+            -3.45075,
+            0,
+            0.2992499999999998
+          ],
+          "max": [
+            3.45075,
+            16.50075,
+            6.25575
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "roof_slab",
+        "role": "roof",
+        "zone": "roof",
+        "tris": 12,
+        "volume": 3.89367,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.5,
+            0
+          ],
+          "max": [
+            3.75,
+            16.5792,
+            6.555
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_back",
+          "wall_left",
+          "wall_right",
+          "block_core",
+          "parapet",
+          "vent_box",
+          "pipe_0",
+          "pipe_1"
+        ]
+      },
+      {
+        "id": "parapet",
+        "role": "parapet",
+        "zone": "brick",
+        "tris": 32,
+        "volume": 2.521198,
+        "aabb": {
+          "min": [
+            -3.75,
+            16.5792,
+            0
+          ],
+          "max": [
+            3.75,
+            16.8915,
+            6.555
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "coping_front",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.329184,
+        "aabb": {
+          "min": [
+            -3.81,
+            16.8915,
+            -0.06000000089406968
+          ],
+          "max": [
+            3.81,
+            17.01149999731779,
+            0.3600000008940697
+          ]
+        },
+        "touches": [
+          "parapet",
+          "coping_left",
+          "coping_right"
+        ]
+      },
+      {
+        "id": "coping_back",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.329184,
+        "aabb": {
+          "min": [
+            -3.81,
+            16.8915,
+            6.19499999910593
+          ],
+          "max": [
+            3.81,
+            17.01149999731779,
+            6.615000000894069
+          ]
+        },
+        "touches": [
+          "parapet",
+          "coping_left",
+          "coping_right"
+        ]
+      },
+      {
+        "id": "coping_left",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.252072,
+        "aabb": {
+          "min": [
+            3.3899999991059304,
+            16.8915,
+            0.36
+          ],
+          "max": [
+            3.8100000008940698,
+            17.01149999731779,
+            6.195
+          ]
+        },
+        "touches": [
+          "parapet"
+        ]
+      },
+      {
+        "id": "coping_right",
+        "role": "cornice",
+        "zone": "coping",
+        "tris": 28,
+        "volume": 0.252072,
+        "aabb": {
+          "min": [
+            -3.8100000008940698,
+            16.8915,
+            0.36
+          ],
+          "max": [
+            -3.3899999991059304,
+            17.01149999731779,
+            6.195
+          ]
+        },
+        "touches": [
+          "parapet"
+        ]
+      },
+      {
+        "id": "window_0_0_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            -2.4412499982118607,
+            13.713,
+            -0.12
+          ],
+          "max": [
+            -1.5937500017881394,
+            15.87299999642372,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_0_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            -2.352,
+            13.802249999999999,
+            -0.03075
+          ],
+          "max": [
+            -1.6829999999999998,
+            15.78375,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_0_0_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_0_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            -2.352,
+            14.748,
+            -0.12
+          ],
+          "max": [
+            -1.6829999999999998,
+            14.838,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_0_0_frame",
+          "window_0_0_glass"
+        ]
+      },
+      {
+        "id": "window_0_0_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            -2.53125,
+            13.623,
+            -0.12000000000000001
+          ],
+          "max": [
+            -1.5037500000000001,
+            13.713,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_0_0_frame"
+        ]
+      },
+      {
+        "id": "window_0_1_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            -2.4412499982118607,
+            9.0435,
+            -0.12
+          ],
+          "max": [
+            -1.5937500017881394,
+            11.203499996423721,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_1_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            -2.352,
+            9.13275,
+            -0.03075
+          ],
+          "max": [
+            -1.6829999999999998,
+            11.11425,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_0_1_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_0_1_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            -2.352,
+            10.0785,
+            -0.12
+          ],
+          "max": [
+            -1.6829999999999998,
+            10.1685,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_0_1_frame",
+          "window_0_1_glass"
+        ]
+      },
+      {
+        "id": "window_0_1_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            -2.53125,
+            8.9535,
+            -0.12000000000000001
+          ],
+          "max": [
+            -1.5037500000000001,
+            9.0435,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_0_1_frame"
+        ]
+      },
+      {
+        "id": "window_1_0_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            1.8862500017881398,
+            13.713,
+            -0.12
+          ],
+          "max": [
+            2.733749998211861,
+            15.87299999642372,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_0_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            13.802249999999999,
+            -0.03075
+          ],
+          "max": [
+            2.6445000000000003,
+            15.78375,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_1_0_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_0_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            14.748,
+            -0.12
+          ],
+          "max": [
+            2.6445000000000003,
+            14.838,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_1_0_frame",
+          "window_1_0_glass"
+        ]
+      },
+      {
+        "id": "window_1_0_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            1.7962500000000006,
+            13.623,
+            -0.12000000000000001
+          ],
+          "max": [
+            2.8237500000000004,
+            13.713,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_1_0_frame"
+        ]
+      },
+      {
+        "id": "window_1_1_frame",
+        "role": "window",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.213759,
+        "aabb": {
+          "min": [
+            1.8862500017881398,
+            9.0435,
+            -0.12
+          ],
+          "max": [
+            2.733749998211861,
+            11.203499996423721,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_1_glass",
+        "role": "window",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.43845,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            9.13275,
+            -0.03075
+          ],
+          "max": [
+            2.6445000000000003,
+            11.11425,
+            0.3
+          ]
+        },
+        "touches": [
+          "window_1_1_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "window_1_1_sash",
+        "role": "window",
+        "zone": "trim",
+        "tris": 12,
+        "volume": 0.005419,
+        "aabb": {
+          "min": [
+            1.9755000000000005,
+            10.0785,
+            -0.12
+          ],
+          "max": [
+            2.6445000000000003,
+            10.1685,
+            -0.03
+          ]
+        },
+        "touches": [
+          "window_1_1_frame",
+          "window_1_1_glass"
+        ]
+      },
+      {
+        "id": "window_1_1_sill",
+        "role": "sill",
+        "zone": "surround",
+        "tris": 12,
+        "volume": 0.024968,
+        "aabb": {
+          "min": [
+            1.7962500000000006,
+            8.9535,
+            -0.12000000000000001
+          ],
+          "max": [
+            2.8237500000000004,
+            9.0435,
+            0.15000000000000002
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "window_1_1_frame"
+        ]
+      },
+      {
+        "id": "shop_frame",
+        "role": "storefront",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.36855,
+        "aabb": {
+          "min": [
+            -0.6525000035762787,
+            0.5205,
+            -0.12
+          ],
+          "max": [
+            2.9025000035762787,
+            2.0205,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "shop_glass",
+        "role": "storefront",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 1.475821,
+        "aabb": {
+          "min": [
+            -0.56325,
+            0.6097499999999999,
+            -0.03075
+          ],
+          "max": [
+            2.81325,
+            1.93125,
+            0.3
+          ]
+        },
+        "touches": [
+          "shop_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "entrance_frame",
+        "role": "door",
+        "zone": "surround",
+        "tris": 32,
+        "volume": 0.24914,
+        "aabb": {
+          "min": [
+            -2.864999997615814,
+            0,
+            -0.12
+          ],
+          "max": [
+            -1.4850000023841856,
+            2.095499999821186,
+            0.3
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "block_core"
+        ]
+      },
+      {
+        "id": "entrance_glass",
+        "role": "door",
+        "zone": "glass",
+        "tris": 12,
+        "volume": 0.761808,
+        "aabb": {
+          "min": [
+            -2.77575,
+            0.08925,
+            -0.03075
+          ],
+          "max": [
+            -1.57425,
+            2.00625,
+            0.3
+          ]
+        },
+        "touches": [
+          "entrance_frame",
+          "block_core"
+        ]
+      },
+      {
+        "id": "shop_awning",
+        "role": "awning",
+        "zone": "canopy",
+        "tris": 12,
+        "volume": 6.561176,
+        "aabb": {
+          "min": [
+            -3.2775000000000003,
+            2.6895000000000002,
+            -0.8999999999999999
+          ],
+          "max": [
+            3.5025,
+            4.58700000089407,
+            0.06000000089406976
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "wall_left"
+        ]
+      },
+      {
+        "id": "shop_sign",
+        "role": "signbox",
+        "zone": "canopy",
+        "tris": 12,
+        "volume": 1.061543,
+        "aabb": {
+          "min": [
+            -3.1500000000000004,
+            4.8345,
+            -0.1875
+          ],
+          "max": [
+            1.4249999999999998,
+            6.072,
+            0
+          ]
+        },
+        "touches": [
+          "wall_front"
+        ]
+      },
+      {
+        "id": "shop_ac",
+        "role": "ac",
+        "zone": "ac",
+        "tris": 12,
+        "volume": 1.252969,
+        "aabb": {
+          "min": [
+            1.4249999999999998,
+            4.8345,
+            -0.6749999999999999
+          ],
+          "max": [
+            2.925,
+            6.072,
+            0
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "shop_sign"
+        ]
+      },
+      {
+        "id": "ac_grille_0",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.032500000000001,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.0925,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_1",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.218125000000001,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.278125,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_2",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.4037500000000005,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.46375,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_3",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.589375,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.649375,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "ac_grille_4",
+        "role": "ac",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.004212,
+        "aabb": {
+          "min": [
+            1.5899999999999999,
+            5.775,
+            -0.73425
+          ],
+          "max": [
+            2.76,
+            5.835,
+            -0.67425
+          ]
+        },
+        "touches": [
+          "shop_ac"
+        ]
+      },
+      {
+        "id": "vent_box",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 12,
+        "volume": 2.041875,
+        "aabb": {
+          "min": [
+            -2.625,
+            16.5792,
+            3.8385
+          ],
+          "max": [
+            -1.125,
+            17.4867,
+            5.3385
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_0",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.032733,
+        "aabb": {
+          "min": [
+            2.205000002682209,
+            16.5792,
+            2.305350002682209
+          ],
+          "max": [
+            2.444999997317791,
+            17.321699999701977,
+            2.545349997317791
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "pipe_1",
+        "role": "roof_fixture",
+        "zone": "fixture",
+        "tris": 64,
+        "volume": 0.023655,
+        "aabb": {
+          "min": [
+            2.2125000029802324,
+            16.5792,
+            1.4607000029802322
+          ],
+          "max": [
+            2.437499997019768,
+            17.189700000417233,
+            1.6856999970197677
+          ]
+        },
+        "touches": [
+          "roof_slab"
+        ]
+      },
+      {
+        "id": "lower_ledger",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0198,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.735499999999999,
+            -0.08
+          ],
+          "max": [
+            2.75,
+            7.795499999999999,
+            -0.020000000000000004
+          ]
+        },
+        "touches": [
+          "lower_grate_0",
+          "lower_grate_1",
+          "lower_grate_2",
+          "lower_grate_3",
+          "lower_grate_4",
+          "lower_grate_5",
+          "lower_grate_6",
+          "lower_grate_7",
+          "lower_grate_8",
+          "lower_grate_9",
+          "lower_grate_10",
+          "lower_grate_11",
+          "lower_grate_12",
+          "lower_grate_13",
+          "lower_grate_14",
+          "lower_grate_15",
+          "lower_grate_16",
+          "lower_grate_17",
+          "lower_grate_18",
+          "lower_grate_19",
+          "lower_grate_20",
+          "lower_grate_21",
+          "lower_grate_22",
+          "lower_grate_23",
+          "lower_bearer_right",
+          "lower_bearer_left"
+        ]
+      },
+      {
+        "id": "lower_edge",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0198,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.735499999999999,
+            -1.385
+          ],
+          "max": [
+            2.75,
+            7.795499999999999,
+            -1.325
+          ]
+        },
+        "touches": [
+          "lower_grate_0",
+          "lower_grate_1",
+          "lower_grate_2",
+          "lower_grate_3",
+          "lower_grate_4",
+          "lower_grate_5",
+          "lower_grate_6",
+          "lower_grate_7",
+          "lower_grate_8",
+          "lower_grate_9",
+          "lower_grate_10",
+          "lower_grate_11",
+          "lower_grate_12",
+          "lower_grate_13",
+          "lower_grate_14",
+          "lower_grate_15",
+          "lower_grate_16",
+          "lower_grate_17",
+          "lower_grate_18",
+          "lower_grate_19",
+          "lower_grate_20",
+          "lower_grate_21",
+          "lower_grate_22",
+          "lower_grate_23",
+          "lower_bearer_right",
+          "lower_bearer_left",
+          "lower_front_upright_0_0",
+          "lower_front_upright_0_1",
+          "lower_front_upright_1_0",
+          "lower_front_upright_1_1",
+          "lower_front_upright_1_2",
+          "lower_front_upright_1_3",
+          "lower_threshold",
+          "flight_upright_0",
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "lower_grate_0",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_right_upright_0",
+          "lower_right_upright_1"
+        ]
+      },
+      {
+        "id": "lower_grate_1",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.513478260869565,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -2.453478260869565,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_front_upright_0_0"
+        ]
+      },
+      {
+        "id": "lower_grate_2",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.2769565217391303,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -2.2169565217391303,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_3",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.0404347826086955,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -1.9804347826086954,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_front_upright_0_1"
+        ]
+      },
+      {
+        "id": "lower_grate_4",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -1.8039130434782609,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -1.7439130434782608,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_5",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -1.5673913043478263,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -1.5073913043478262,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_6",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -1.3308695652173914,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -1.2708695652173914,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_7",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -1.0943478260869566,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -1.0343478260869565,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_8",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -0.8578260869565217,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -0.7978260869565217,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "lower_grate_9",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -0.6213043478260871,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -0.5613043478260871,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_10",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -0.3847826086956523,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -0.3247826086956523,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_11",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -0.14826086956521742,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            -0.08826086956521742,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_12",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            0.08826086956521742,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            0.14826086956521742,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_13",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            0.32478260869565223,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            0.38478260869565223,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_14",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            0.5613043478260871,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            0.6213043478260871,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_15",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            0.7978260869565219,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            0.857826086956522,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_16",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            1.0343478260869567,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            1.0943478260869568,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_17",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            1.2708695652173911,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            1.3308695652173912,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_18",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            1.507391304347826,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            1.567391304347826,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_front_upright_1_2"
+        ]
+      },
+      {
+        "id": "lower_grate_19",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            1.7439130434782608,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            1.8039130434782609,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_threshold"
+        ]
+      },
+      {
+        "id": "lower_grate_20",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            1.9804347826086957,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            2.0404347826086955,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_threshold"
+        ]
+      },
+      {
+        "id": "lower_grate_21",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.2169565217391307,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            2.2769565217391308,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_22",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.4534782608695656,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            2.5134782608695656,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_grate_23",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            7.7955,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            7.855499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge",
+          "lower_left_upright_0",
+          "lower_left_upright_1"
+        ]
+      },
+      {
+        "id": "lower_bearer_right",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.6754999999999995,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            7.735499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_return_right",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            8.795499999999999,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            8.8555,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_right_upright_0",
+          "lower_right_upright_1",
+          "lower_front_rail_0"
+        ]
+      },
+      {
+        "id": "lower_right_upright_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.825499999999999,
+            -0.06
+          ],
+          "max": [
+            -2.69,
+            8.825499999999998,
+            0
+          ]
+        },
+        "touches": [
+          "lower_grate_0",
+          "lower_return_right"
+        ]
+      },
+      {
+        "id": "lower_right_upright_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            -2.75,
+            7.825499999999999,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            8.825499999999998,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_grate_0",
+          "lower_return_right",
+          "lower_front_rail_0"
+        ]
+      },
+      {
+        "id": "lower_bearer_left",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            7.6754999999999995,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            7.735499999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_ledger",
+          "lower_edge"
+        ]
+      },
+      {
+        "id": "lower_return_left",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            8.795499999999999,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            8.8555,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "lower_left_upright_0",
+          "lower_left_upright_1",
+          "lower_front_rail_1"
+        ]
+      },
+      {
+        "id": "lower_left_upright_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            7.825499999999999,
+            -0.06
+          ],
+          "max": [
+            2.7500000000000004,
+            8.825499999999998,
+            0
+          ]
+        },
+        "touches": [
+          "lower_grate_23",
+          "lower_return_left"
+        ]
+      },
+      {
+        "id": "lower_left_upright_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            7.825499999999999,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            8.825499999999998,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_grate_23",
+          "lower_return_left",
+          "lower_front_rail_1"
+        ]
+      },
+      {
+        "id": "lower_front_rail_0",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            -2.75,
+            8.795499999999999,
+            -1.4
+          ],
+          "max": [
+            -1.7500000000000002,
+            8.8555,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_return_right",
+          "lower_right_upright_1",
+          "lower_front_upright_0_0",
+          "lower_front_upright_0_1"
+        ]
+      },
+      {
+        "id": "lower_front_upright_0_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -2.53,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            -2.4699999999999998,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_grate_1",
+          "lower_front_rail_0"
+        ]
+      },
+      {
+        "id": "lower_front_upright_0_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -2.03,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            -1.9699999999999998,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_grate_3",
+          "lower_front_rail_0"
+        ]
+      },
+      {
+        "id": "lower_front_rail_1",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.01152,
+        "aabb": {
+          "min": [
+            -0.4500000000000002,
+            8.795499999999999,
+            -1.4
+          ],
+          "max": [
+            2.75,
+            8.8555,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_return_left",
+          "lower_left_upright_1",
+          "lower_front_upright_1_0",
+          "lower_front_upright_1_1",
+          "lower_front_upright_1_2",
+          "lower_front_upright_1_3",
+          "flight_upright_0"
+        ]
+      },
+      {
+        "id": "lower_front_upright_1_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -0.07999999999999999,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            -0.01999999999999999,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_front_rail_1"
+        ]
+      },
+      {
+        "id": "lower_front_upright_1_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            0.72,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            0.78,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_front_rail_1"
+        ]
+      },
+      {
+        "id": "lower_front_upright_1_2",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            1.52,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            1.58,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_grate_18",
+          "lower_front_rail_1",
+          "flight_step_1",
+          "flight_step_2"
+        ]
+      },
+      {
+        "id": "lower_front_upright_1_3",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            2.3200000000000007,
+            7.765499999999999,
+            -1.4
+          ],
+          "max": [
+            2.380000000000001,
+            8.8255,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_front_rail_1"
+        ]
+      },
+      {
+        "id": "upper_ledger",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0198,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.405,
+            -0.08
+          ],
+          "max": [
+            2.75,
+            12.465,
+            -0.020000000000000004
+          ]
+        },
+        "touches": [
+          "upper_grate_0",
+          "upper_grate_1",
+          "upper_grate_2",
+          "upper_grate_3",
+          "upper_grate_4",
+          "upper_grate_5",
+          "upper_grate_6",
+          "upper_grate_7",
+          "upper_grate_8",
+          "upper_grate_9",
+          "upper_grate_10",
+          "upper_grate_11",
+          "upper_grate_12",
+          "upper_grate_13",
+          "upper_grate_14",
+          "upper_grate_15",
+          "upper_grate_16",
+          "upper_grate_17",
+          "upper_grate_18",
+          "upper_grate_19",
+          "upper_grate_20",
+          "upper_grate_21",
+          "upper_grate_22",
+          "upper_grate_23",
+          "upper_bearer_right",
+          "upper_bearer_left"
+        ]
+      },
+      {
+        "id": "upper_edge",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0198,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.405,
+            -1.385
+          ],
+          "max": [
+            2.75,
+            12.465,
+            -1.325
+          ]
+        },
+        "touches": [
+          "upper_grate_0",
+          "upper_grate_1",
+          "upper_grate_2",
+          "upper_grate_3",
+          "upper_grate_21",
+          "upper_grate_22",
+          "upper_grate_23",
+          "upper_bearer_right",
+          "upper_bearer_left",
+          "upper_front_upright_0_0",
+          "upper_front_upright_0_1",
+          "upper_front_upright_0_2",
+          "upper_front_upright_0_3",
+          "upper_front_upright_0_4",
+          "upper_front_upright_0_5",
+          "upper_front_upright_0_6",
+          "upper_threshold",
+          "flight_upright_2"
+        ]
+      },
+      {
+        "id": "upper_grate_0",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge",
+          "upper_right_upright_0",
+          "upper_right_upright_1"
+        ]
+      },
+      {
+        "id": "upper_grate_1",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.513478260869565,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            -2.453478260869565,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_grate_2",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.2769565217391303,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            -2.2169565217391303,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_grate_3",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.0404347826086955,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            -1.9804347826086954,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge",
+          "upper_threshold"
+        ]
+      },
+      {
+        "id": "upper_grate_4",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -1.8039130434782609,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -1.7439130434782608,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_threshold"
+        ]
+      },
+      {
+        "id": "upper_grate_5",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -1.5673913043478263,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -1.5073913043478262,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_6",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -1.3308695652173914,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -1.2708695652173914,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_7",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -1.0943478260869566,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -1.0343478260869565,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_8",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -0.8578260869565217,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -0.7978260869565217,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_9",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -0.6213043478260871,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -0.5613043478260871,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_10",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -0.3847826086956523,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -0.3247826086956523,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_11",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            -0.14826086956521742,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            -0.08826086956521742,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_12",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            0.08826086956521742,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            0.14826086956521742,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_13",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            0.32478260869565223,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            0.38478260869565223,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_14",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            0.5613043478260871,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            0.6213043478260871,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_15",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            0.7978260869565219,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            0.857826086956522,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_16",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            1.0343478260869567,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            1.0943478260869568,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_17",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            1.2708695652173911,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            1.3308695652173912,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_18",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            1.507391304347826,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            1.567391304347826,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_19",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            1.7439130434782608,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            1.8039130434782609,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_20",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002163,
+        "aabb": {
+          "min": [
+            1.9804347826086957,
+            12.464999999999998,
+            -0.6
+          ],
+          "max": [
+            2.0404347826086955,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger"
+        ]
+      },
+      {
+        "id": "upper_grate_21",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.2169565217391307,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            2.2769565217391308,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_grate_22",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.4534782608695656,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            2.5134782608695656,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_grate_23",
+        "role": "landing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            12.464999999999998,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            12.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge",
+          "upper_left_upright_0",
+          "upper_left_upright_1"
+        ]
+      },
+      {
+        "id": "upper_bearer_right",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.344999999999999,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            12.405,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_return_right",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            -2.75,
+            13.464999999999998,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            13.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_right_upright_0",
+          "upper_right_upright_1",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_right_upright_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.495,
+            -0.06
+          ],
+          "max": [
+            -2.69,
+            13.495,
+            0
+          ]
+        },
+        "touches": [
+          "upper_grate_0",
+          "upper_return_right"
+        ]
+      },
+      {
+        "id": "upper_right_upright_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            -2.75,
+            12.495,
+            -1.4
+          ],
+          "max": [
+            -2.69,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_grate_0",
+          "upper_return_right",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_bearer_left",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            12.344999999999999,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            12.405,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_ledger",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "upper_return_left",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.005043,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            13.464999999999998,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            13.524999999999999,
+            0.0007500000000000284
+          ]
+        },
+        "touches": [
+          "wall_front",
+          "upper_left_upright_0",
+          "upper_left_upright_1",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_left_upright_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            12.495,
+            -0.06
+          ],
+          "max": [
+            2.7500000000000004,
+            13.495,
+            0
+          ]
+        },
+        "touches": [
+          "upper_grate_23",
+          "upper_return_left"
+        ]
+      },
+      {
+        "id": "upper_left_upright_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0036,
+        "aabb": {
+          "min": [
+            2.6900000000000004,
+            12.495,
+            -1.4
+          ],
+          "max": [
+            2.7500000000000004,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_grate_23",
+          "upper_return_left",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_rail_0",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.0198,
+        "aabb": {
+          "min": [
+            -2.75,
+            13.464999999999998,
+            -1.4
+          ],
+          "max": [
+            2.75,
+            13.524999999999999,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_return_right",
+          "upper_right_upright_1",
+          "upper_return_left",
+          "upper_left_upright_1",
+          "upper_front_upright_0_0",
+          "upper_front_upright_0_1",
+          "upper_front_upright_0_2",
+          "upper_front_upright_0_3",
+          "upper_front_upright_0_4",
+          "upper_front_upright_0_5",
+          "upper_front_upright_0_6",
+          "flight_upright_2"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -2.387142857142857,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            -2.327142857142857,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -1.6014285714285716,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            -1.5414285714285716,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_2",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -0.8157142857142858,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            -0.7557142857142858,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_3",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -0.03,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            0.03,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_4",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            0.7557142857142856,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            0.8157142857142856,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_5",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            1.5414285714285711,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            1.6014285714285712,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "upper_front_upright_0_6",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            2.3271428571428574,
+            12.434999999999999,
+            -1.4
+          ],
+          "max": [
+            2.3871428571428575,
+            13.495,
+            -1.3399999999999999
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_front_rail_0"
+        ]
+      },
+      {
+        "id": "lower_threshold",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.013104,
+        "aabb": {
+          "min": [
+            1.7599999999999998,
+            7.7955,
+            -1.3599999999999999
+          ],
+          "max": [
+            2.04,
+            7.855499999999999,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_grate_19",
+          "lower_grate_20",
+          "flight_upright_0"
+        ]
+      },
+      {
+        "id": "upper_threshold",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.013104,
+        "aabb": {
+          "min": [
+            -2.04,
+            12.464999999999998,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.76,
+            12.524999999999999,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "upper_edge",
+          "upper_grate_3",
+          "upper_grate_4",
+          "flight_upright_2"
+        ]
+      },
+      {
+        "id": "flight_string_back",
+        "role": "stringer",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.021673,
+        "aabb": {
+          "min": [
+            -1.9232687039519634,
+            7.7765641235640945,
+            -0.64
+          ],
+          "max": [
+            1.9232687039519631,
+            12.483935876435904,
+            -0.5800000000000001
+          ]
+        },
+        "touches": [
+          "lower_threshold",
+          "upper_threshold"
+        ]
+      },
+      {
+        "id": "flight_string_front",
+        "role": "stringer",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.021673,
+        "aabb": {
+          "min": [
+            -1.9232687039519634,
+            7.7765641235640945,
+            -1.36
+          ],
+          "max": [
+            1.9232687039519631,
+            12.483935876435904,
+            -1.3
+          ]
+        },
+        "touches": [
+          "lower_threshold",
+          "upper_threshold",
+          "lower_edge",
+          "lower_front_rail_1",
+          "lower_front_upright_1_2",
+          "upper_edge"
+        ]
+      },
+      {
+        "id": "flight_step_0",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            1.6507692307692308,
+            7.975096153846153,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.856923076923077,
+            8.035096153846153,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_1",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            1.5046153846153847,
+            8.154692307692306,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.7107692307692308,
+            8.214692307692307,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front",
+          "lower_front_upright_1_2"
+        ]
+      },
+      {
+        "id": "flight_step_2",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            1.3584615384615386,
+            8.33428846153846,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.5646153846153847,
+            8.39428846153846,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front",
+          "lower_front_upright_1_2"
+        ]
+      },
+      {
+        "id": "flight_step_3",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            1.2123076923076923,
+            8.513884615384613,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.4184615384615384,
+            8.573884615384614,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_4",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            1.0661538461538462,
+            8.693480769230767,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.2723076923076924,
+            8.753480769230768,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_5",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.9200000000000002,
+            8.87307692307692,
+            -1.3599999999999999
+          ],
+          "max": [
+            1.1261538461538463,
+            8.933076923076921,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_6",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.773846153846154,
+            9.052673076923076,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.9800000000000001,
+            9.112673076923077,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_7",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.6276923076923078,
+            9.23226923076923,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.8338461538461539,
+            9.29226923076923,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_8",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.4815384615384617,
+            9.411865384615384,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.6876923076923078,
+            9.471865384615384,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_9",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.3353846153846156,
+            9.591461538461537,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.5415384615384617,
+            9.651461538461538,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_10",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.18923076923076954,
+            9.771057692307691,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.39538461538461567,
+            9.831057692307692,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_11",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            0.043076923076923235,
+            9.950653846153845,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.24923076923076937,
+            10.010653846153845,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_12",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.10307692307692284,
+            10.130249999999998,
+            -1.3599999999999999
+          ],
+          "max": [
+            0.10307692307692329,
+            10.190249999999999,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front",
+          "flight_upright_1"
+        ]
+      },
+      {
+        "id": "flight_step_13",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.24923076923076892,
+            10.309846153846152,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.04307692307692279,
+            10.369846153846153,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_14",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.3953846153846152,
+            10.489442307692306,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.1892307692307691,
+            10.549442307692306,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_15",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.5415384615384613,
+            10.66903846153846,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.33538461538461517,
+            10.72903846153846,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_16",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.6876923076923074,
+            10.848634615384613,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.48153846153846125,
+            10.908634615384614,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_17",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.8338461538461535,
+            11.028230769230769,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.6276923076923073,
+            11.08823076923077,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_18",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -0.9799999999999995,
+            11.20782692307692,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.7738461538461534,
+            11.267826923076921,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_19",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.1261538461538456,
+            11.387423076923076,
+            -1.3599999999999999
+          ],
+          "max": [
+            -0.9199999999999995,
+            11.447423076923076,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_20",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.2723076923076917,
+            11.56701923076923,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.0661538461538456,
+            11.62701923076923,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_21",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.4184615384615382,
+            11.746615384615383,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.212307692307692,
+            11.806615384615384,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_22",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.5646153846153843,
+            11.926211538461537,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.3584615384615382,
+            11.986211538461538,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_23",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.7107692307692304,
+            12.10580769230769,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.5046153846153842,
+            12.165807692307691,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_step_24",
+        "role": "step",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009648,
+        "aabb": {
+          "min": [
+            -1.8569230769230765,
+            12.285403846153844,
+            -1.3599999999999999
+          ],
+          "max": [
+            -1.6507692307692303,
+            12.345403846153845,
+            -0.5799999999999998
+          ]
+        },
+        "touches": [
+          "flight_string_back",
+          "flight_string_front"
+        ]
+      },
+      {
+        "id": "flight_handrail",
+        "role": "railing",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.021673,
+        "aabb": {
+          "min": [
+            -1.9232687039519634,
+            8.776564123564093,
+            -1.36
+          ],
+          "max": [
+            1.9232687039519631,
+            13.483935876435904,
+            -1.3
+          ]
+        },
+        "touches": [
+          "lower_front_rail_1",
+          "upper_edge",
+          "upper_front_rail_0",
+          "upper_front_upright_0_1"
+        ]
+      },
+      {
+        "id": "flight_upright_0",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            1.8699999999999999,
+            7.7955,
+            -1.36
+          ],
+          "max": [
+            1.93,
+            8.8555,
+            -1.3
+          ]
+        },
+        "touches": [
+          "flight_string_front",
+          "flight_handrail",
+          "lower_edge",
+          "lower_front_rail_1",
+          "lower_threshold"
+        ]
+      },
+      {
+        "id": "flight_upright_1",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -0.03,
+            10.13025,
+            -1.36
+          ],
+          "max": [
+            0.03,
+            11.19025,
+            -1.3
+          ]
+        },
+        "touches": [
+          "flight_string_front",
+          "flight_handrail",
+          "flight_step_12"
+        ]
+      },
+      {
+        "id": "flight_upright_2",
+        "role": "baluster",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.003816,
+        "aabb": {
+          "min": [
+            -1.93,
+            12.465,
+            -1.36
+          ],
+          "max": [
+            -1.8699999999999999,
+            13.525,
+            -1.3
+          ]
+        },
+        "touches": [
+          "flight_string_front",
+          "flight_handrail",
+          "upper_edge",
+          "upper_front_rail_0",
+          "upper_threshold"
+        ]
+      },
+      {
+        "id": "drop_stile_0",
+        "role": "ladder",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009504,
+        "aabb": {
+          "min": [
+            -1.4200000000000002,
+            5.215499999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -1.36,
+            7.855499999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "drop_rung_0",
+          "drop_rung_1",
+          "drop_rung_2",
+          "drop_rung_3",
+          "drop_rung_4",
+          "drop_rung_5",
+          "drop_rung_6",
+          "drop_rung_7"
+        ]
+      },
+      {
+        "id": "drop_stile_1",
+        "role": "ladder",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.009504,
+        "aabb": {
+          "min": [
+            -0.8400000000000001,
+            5.215499999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.78,
+            7.855499999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "lower_edge",
+          "lower_grate_8",
+          "drop_rung_0",
+          "drop_rung_1",
+          "drop_rung_2",
+          "drop_rung_3",
+          "drop_rung_4",
+          "drop_rung_5",
+          "drop_rung_6",
+          "drop_rung_7"
+        ]
+      },
+      {
+        "id": "drop_rung_0",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            5.335499999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            5.395499999999998,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_1",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            5.634249999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            5.6942499999999985,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_2",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            5.932999999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            5.9929999999999986,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_3",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            6.231749999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            6.291749999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_4",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            6.530499999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            6.590499999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_5",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            6.829249999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            6.889249999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_6",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            7.127999999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            7.187999999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "drop_rung_7",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            -1.3900000000000001,
+            7.426749999999999,
+            -1.4442499999999998
+          ],
+          "max": [
+            -0.8100000000000002,
+            7.486749999999999,
+            -1.3842499999999998
+          ]
+        },
+        "touches": [
+          "drop_stile_0",
+          "drop_stile_1"
+        ]
+      },
+      {
+        "id": "roof_stile_0",
+        "role": "ladder",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.04657,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            3.465,
+            1.0074999999999998
+          ],
+          "max": [
+            3.9800000000000004,
+            16.401000000000003,
+            1.0675
+          ]
+        },
+        "touches": [
+          "roof_mount_0_0",
+          "roof_mount_0_1",
+          "roof_rung_0",
+          "roof_rung_1",
+          "roof_rung_2",
+          "roof_rung_3",
+          "roof_rung_4",
+          "roof_rung_5",
+          "roof_rung_6",
+          "roof_rung_7",
+          "roof_rung_8",
+          "roof_rung_9",
+          "roof_rung_10",
+          "roof_rung_11",
+          "roof_rung_12",
+          "roof_rung_13",
+          "roof_rung_14",
+          "roof_rung_15",
+          "roof_rung_16",
+          "roof_rung_17",
+          "roof_rung_18",
+          "roof_rung_19",
+          "roof_rung_20",
+          "roof_rung_21",
+          "roof_rung_22",
+          "roof_rung_23",
+          "roof_rung_24",
+          "roof_rung_25",
+          "roof_rung_26",
+          "roof_rung_27",
+          "roof_rung_28",
+          "roof_rung_29",
+          "roof_rung_30",
+          "roof_rung_31",
+          "roof_rung_32",
+          "roof_rung_33",
+          "roof_rung_34",
+          "roof_rung_35",
+          "roof_rung_36",
+          "roof_rung_37"
+        ]
+      },
+      {
+        "id": "roof_mount_0_0",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.00072,
+        "aabb": {
+          "min": [
+            3.75,
+            3.645,
+            1.0074999999999998
+          ],
+          "max": [
+            3.95,
+            3.705,
+            1.0675
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "roof_stile_0",
+          "roof_rung_0"
+        ]
+      },
+      {
+        "id": "roof_mount_0_1",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.00072,
+        "aabb": {
+          "min": [
+            3.75,
+            16.181000000000004,
+            1.0074999999999998
+          ],
+          "max": [
+            3.95,
+            16.241000000000003,
+            1.0675
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "roof_stile_0",
+          "roof_rung_37"
+        ]
+      },
+      {
+        "id": "roof_stile_1",
+        "role": "ladder",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.04657,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            3.465,
+            1.5875
+          ],
+          "max": [
+            3.9800000000000004,
+            16.401000000000003,
+            1.6475
+          ]
+        },
+        "touches": [
+          "roof_mount_1_0",
+          "roof_mount_1_1",
+          "roof_rung_0",
+          "roof_rung_1",
+          "roof_rung_2",
+          "roof_rung_3",
+          "roof_rung_4",
+          "roof_rung_5",
+          "roof_rung_6",
+          "roof_rung_7",
+          "roof_rung_8",
+          "roof_rung_9",
+          "roof_rung_10",
+          "roof_rung_11",
+          "roof_rung_12",
+          "roof_rung_13",
+          "roof_rung_14",
+          "roof_rung_15",
+          "roof_rung_16",
+          "roof_rung_17",
+          "roof_rung_18",
+          "roof_rung_19",
+          "roof_rung_20",
+          "roof_rung_21",
+          "roof_rung_22",
+          "roof_rung_23",
+          "roof_rung_24",
+          "roof_rung_25",
+          "roof_rung_26",
+          "roof_rung_27",
+          "roof_rung_28",
+          "roof_rung_29",
+          "roof_rung_30",
+          "roof_rung_31",
+          "roof_rung_32",
+          "roof_rung_33",
+          "roof_rung_34",
+          "roof_rung_35",
+          "roof_rung_36",
+          "roof_rung_37"
+        ]
+      },
+      {
+        "id": "roof_mount_1_0",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.00072,
+        "aabb": {
+          "min": [
+            3.75,
+            3.645,
+            1.5875
+          ],
+          "max": [
+            3.95,
+            3.705,
+            1.6475
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "roof_stile_1",
+          "roof_rung_0"
+        ]
+      },
+      {
+        "id": "roof_mount_1_1",
+        "role": "support",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.00072,
+        "aabb": {
+          "min": [
+            3.75,
+            16.181000000000004,
+            1.5875
+          ],
+          "max": [
+            3.95,
+            16.241000000000003,
+            1.6475
+          ]
+        },
+        "touches": [
+          "wall_left",
+          "roof_stile_1",
+          "roof_rung_37"
+        ]
+      },
+      {
+        "id": "roof_rung_0",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            3.585,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            3.645,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_mount_0_0",
+          "roof_stile_1",
+          "roof_mount_1_0"
+        ]
+      },
+      {
+        "id": "roof_rung_1",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            3.9265135135135134,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            3.9865135135135135,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_2",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            4.268027027027027,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            4.3280270270270265,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_3",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            4.609540540540541,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            4.669540540540541,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_4",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            4.951054054054055,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            5.011054054054054,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_5",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            5.292567567567568,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            5.352567567567568,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_6",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            5.6340810810810815,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            5.694081081081081,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_7",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            5.975594594594595,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            6.035594594594595,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_8",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            6.317108108108108,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            6.377108108108108,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_9",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            6.658621621621622,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            6.7186216216216215,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_10",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            7.000135135135136,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            7.060135135135136,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_11",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            7.34164864864865,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            7.401648648648649,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_12",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            7.683162162162163,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            7.743162162162163,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_13",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            8.024675675675677,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            8.084675675675678,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_14",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            8.36618918918919,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            8.426189189189191,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_15",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            8.707702702702704,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            8.767702702702705,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_16",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            9.049216216216218,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            9.109216216216218,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_17",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            9.390729729729731,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            9.450729729729732,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_18",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            9.732243243243245,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            9.792243243243245,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_19",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            10.073756756756758,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            10.133756756756759,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_20",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            10.415270270270273,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            10.475270270270274,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_21",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            10.756783783783785,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            10.816783783783785,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_22",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            11.0982972972973,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            11.1582972972973,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_23",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            11.439810810810812,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            11.499810810810812,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_24",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            11.781324324324327,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            11.841324324324328,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_25",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            12.122837837837839,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            12.18283783783784,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_26",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            12.464351351351354,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            12.524351351351354,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_27",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            12.80586486486487,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            12.86586486486487,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_28",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            13.14737837837838,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            13.207378378378381,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_29",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            13.488891891891896,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            13.548891891891897,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_30",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            13.830405405405408,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            13.890405405405408,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_31",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            14.171918918918923,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            14.231918918918923,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_32",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            14.513432432432435,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            14.573432432432435,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_33",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            14.85494594594595,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            14.91494594594595,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_34",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            15.196459459459462,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            15.256459459459462,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_35",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            15.537972972972977,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            15.597972972972977,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_36",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            15.879486486486488,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            15.939486486486489,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_stile_1"
+        ]
+      },
+      {
+        "id": "roof_rung_37",
+        "role": "rung",
+        "zone": "iron",
+        "tris": 12,
+        "volume": 0.002088,
+        "aabb": {
+          "min": [
+            3.9200000000000004,
+            16.221000000000004,
+            1.0374999999999999
+          ],
+          "max": [
+            3.9800000000000004,
+            16.281000000000002,
+            1.6174999999999997
+          ]
+        },
+        "touches": [
+          "roof_stile_0",
+          "roof_mount_0_1",
+          "roof_stile_1",
+          "roof_mount_1_1"
+        ]
+      }
+    ]
+  },
+  "timings": {
+    "merge": 66,
+    "V1": 9,
+    "V5": 2,
+    "V2": 430,
+    "V3": 344,
+    "V6": 4,
+    "V4": 2,
+    "V7": 2,
+    "V11_BEARING": 25,
+    "V11_LANDING_GAP": 1,
+    "V11_LADDER_ACCESS": 7,
+    "V11_DECK_GAP": 1,
+    "V12": 3,
+    "V12_LAYOUT": 6,
+    "V10": 6,
+    "total": 924
+  }
+}
