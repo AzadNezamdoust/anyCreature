@@ -1,0 +1,10 @@
+341: eagle | 6 | heavy baked lighting, blurry feather detail, stubby legs
+385: crocodile | 4 | tiny, dark, low-detail; soft mushy scute texture
+410: horse | 5 | odd rib striping, painted-on mane/tail, flat shading
+468: kangaroo | 4 | flat cartoon red, no fur, melted hands
+570: turtle | 5 | smeared shell, back view washed out, wobbly outline
+635: shark | 5 | wrong caudal fin, cartoony seam-split mouth, bent tail
+637: elephant | 7 | baked wrinkle smears, slightly blurry; good form
+665: giraffe | 7 | patches blur on neck join; body slightly squat
+868: tree frog | 6 | toes ragged/dissolved, plastic smooth skin, no texture
+949: wolf | 7 | fur photo-smeared, muddy rear view, soft silhouette

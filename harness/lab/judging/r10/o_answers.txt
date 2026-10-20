@@ -1,0 +1,50 @@
+110: kangaroo | 3 | tail collapsed into twisted ribbon, quad grid uneven
+123: kangaroo | 5 | uniform triangle soup, no edge loops
+145: shark | 3 | tail fin broken, floating fragment, holes
+158: horse | 2 | detached hoof fragments, shredded lower legs
+169: wolf | 6 | decent quads, messy pole clusters at hips
+180: eagle | 3 | jagged wing shards, chaotic tri density
+212: frog | 3 | feet shredded into floating shards
+235: elephant | 5 | silhouette ok, random triangle flow, no loops
+254: tortoise | 5 | shell rim ragged, otherwise clean quads
+258: tortoise | 4 | tri soup, jagged shell spikes
+260: shark | 6 | clean silhouette, but isotropic triangle soup
+276: crocodile | 6 | clean quads, feet loops lacking
+282: shark | 2 | tail broken into twisted ribbon
+292: frog | 1 | huge slivers, shard spikes, silhouette destroyed
+347: eagle | 1 | overlapping shards, detached floating feet
+357: wolf | 5 | intact but uniform triangle soup
+363: eagle | 1 | detached perch, stray long triangles, holes
+390: giraffe | 2 | stray stretched triangles, holes in body
+431: elephant | 5 | intact silhouette, unstructured triangles
+463: frog | 1 | unrecognizable shredded mess, fragments
+477: crocodile | 2 | stretched sliver strips across body
+516: frog | 1 | holes, stray loops and shards
+523: elephant | 4 | ear torn with hole, floating speck
+524: kangaroo | 1 | giant stray planar slivers
+536: frog | 4 | feet ragged and shredded
+539: tortoise | 1 | shell shredded into strips
+555: giraffe | 3 | tail detached floating fragment
+560: eagle | 4 | wavy uneven quad flow, ragged tail
+573: crocodile | 5 | intact, triangle soup, no loops
+586: shark | 5 | clean shape, grid triangulated, no loops
+622: horse | 6 | good quads, tail end tangled
+649: horse | 4 | tail shredded into spikes, tri soup
+666: frog | 1 | head torn, holes, shredded feet
+668: kangaroo | 6 | good quads, ears/arms slightly frayed
+669: elephant | 1 | massive stray slivers, shredded
+674: crocodile | 5 | intact, unstructured triangles
+679: tortoise | 6 | clean quads, slight shell rim ragged
+680: horse | 2 | holes and stray shard on back
+703: wolf | 7 | clean quad flow, minor hip tangle
+708: horse | 4 | spiky tail, triangle soup
+715: giraffe | 7 | clean quads, minor tail/ear tangle
+740: shark | 5 | intact, sparse tri soup, dense fin
+770: crocodile | 7 | clean quads, good silhouette, minor foot mess
+775: wolf | 5 | intact, unstructured triangles
+800: giraffe | 5 | intact, irregular triangle density
+877: elephant | 5 | floating cube fragment, ear tangle
+899: wolf | 5 | intact, uniform triangle soup
+909: giraffe | 5 | intact, triangle soup no loops
+932: tortoise | 4 | jagged shell spikes, tri soup
+945: eagle | 2 | shredded tail feathers, floating shards

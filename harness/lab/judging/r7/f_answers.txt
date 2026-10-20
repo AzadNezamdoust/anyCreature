@@ -1,0 +1,20 @@
+129: horse | 6 | overweight barrel, stubby neck, shredded mane/tail
+176: crocodile / alligator | 4 | upright dinosaur-like legs, crude paddle hands
+259: elephant | 4 | hollow tube legs, head sunk into body, front mangled
+269: alligator | 5 | flat planar belly cap, feet intersecting ground plane
+289: eagle on stump | 7 | tail feathers splintered into spikes, soft form
+329: frog | 6 | toes stringy spikes, feet intersect, flat shin plane
+354: kangaroo | 5 | no face front, stick arms, flat paddle feet
+359: great white shark | 7 | overly round body, pectoral fins poorly attached
+390: giraffe | 7 | faceted low-res body, weak head and ossicones
+466: tortoise / turtle | 3 | lumpy blob legs, hollow shell, fin spike
+492: eagle | 3 | tail/wing feathers fragmented, hollow back, no legs
+530: tortoise | 6 | lumpy legs, hollow shell underside, boxy carapace
+561: kangaroo | 7 | flat paddle feet, soft arm anatomy, flat tail end
+580: horse | 7 | chunky barrel, shredded tail, weak hooves
+769: wolf | 6 | noisy fur noise, hollow ears, flat paw caps
+888: elephant | 7 | thin trunk, mangled ear/tusk area, stiff legs
+908: great white shark | 7 | barrel-round body, pectoral fin edge jagged
+909: frog | 4 | feet exploded into flat intersecting planes
+933: giraffe | 5 | faceted polygonal body, tail blob, stiff neck
+987: wolf | 7 | noisy fur, flat paw caps, hollow fur strips

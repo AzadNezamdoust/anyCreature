@@ -1,0 +1,4 @@
+257: horse | 4 | lumpy torso, stubby tubular legs, flat ribbon tail, crude head
+547: horse | 4 | blobby saggy body, thin stick legs, mushy head
+561: wolf | 3 | bloated humped chest, spindly legs, flat human-like feet
+842: wolf | 4 | thick lumpy body, balloon tail, stubby forelegs

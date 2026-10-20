@@ -1,0 +1,40 @@
+105: wolf | 5 | tail and neck tubular, legs disconnected from torso
+132: frog | 2 | faceted blob body, floating stick limbs, no feet
+161: giraffe | 2 | boxy prism torso, tube neck, no anatomy
+162: crocodile | 2 | spindle body with stub legs, no head or tail definition
+172: tortoise | 3 | shell is a blob, stump legs unattached to shell
+181: elephant | 3 | ears flat discs, legs disconnected cylinders, head intersects body
+204: crocodile | 3 | flat spindle body, tiny stub legs, no jaw
+236: horse | 7 | hind leg joints weak, mane and hooves soft
+259: kangaroo | 3 | cylinder torso, stick limbs, pieces floating
+294: kangaroo | 5 | balloon body, tube limbs, tiny arms
+325: kangaroo | 3 | low-poly box body, stick legs, intersecting parts
+356: giraffe | 3 | blob torso, tube neck, no joints
+368: elephant | 3 | faceted boxy body, ears flat plates, legs cylinders
+374: horse | 2 | box torso, stick legs, pieces not joined
+379: tortoise | 3 | faceted box shell, stump legs, head hole
+416: giraffe | 4 | toy-like tube neck, stick legs, no ossicone or joints
+436: shark | 3 | faceted tube body, paper-thin fins, ring seam
+447: wolf | 3 | low-poly box torso, floating stick legs and paws
+475: frog | 6 | body a sphere, limbs tubular, toes unrefined
+533: elephant | 7 | ears flat and detached, trunk tube, legs soft
+546: kangaroo | 5 | balloon torso, tube tail and legs, sketchy feet
+564: shark | 3 | smooth spindle, thin fins, seam ring on body
+574: tortoise | 7 | legs stumpy with sloppy intersections, head small
+576: elephant | 5 | ears flat discs, body balloon, trunk tube
+578: tortoise | 4 | dome shell lacks structure, legs stubs, head crude
+584: eagle | 3 | body is two flat discs, cartoonish, floating perch
+600: eagle | 3 | head cylinder, body blob, legs stick, floating parts
+605: shark | 4 | blobby body, fins lumps, tail too thin
+615: crocodile | 4 | flat spindle body, stub legs, bead scutes, no jaw
+636: eagle | 3 | low-poly stacked prisms, floating detached parts
+651: frog | 6 | body a sphere, limbs tubular, toes crude
+687: wolf | 4 | tube body and limbs, no anatomy, floating legs
+756: eagle | 7 | wings simplified flat, tail thin, perch rough
+798: wolf | 4 | tube body, disconnected limbs, flat paws
+868: shark | 6 | body too round, fins thin plates, tail stiff
+883: frog | 2 | faceted blob body, floating stick limbs, no feet
+889: giraffe | 5 | balloon joints, neck tube, no muscle definition
+901: crocodile | 3 | faceted spindle body, stub legs, flat scutes
+902: horse | 4 | tube body, disconnected limbs, neck intersects
+935: horse | 4 | balloon body, tube legs, neck flat disc intersect

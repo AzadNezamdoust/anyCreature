@@ -1,0 +1,20 @@
+108: kangaroo | 5 | flat unrealistic red albedo, cartoon face, blurry tail tip
+182: great white shark | 6 | glossy plasticky shading, simplified teeth, low texture detail
+350: horse | 5 | ribbed body streaks, blocky tail, baked dark shading
+374: giraffe | 6 | smeared leg texture, dark baked hind patch
+375: red-eyed tree frog | 5 | flat plain texture, ragged toe edges, no skin detail
+432: elephant | 6 | heavy baked lighting, painterly smears on legs
+494: crocodile | 4 | squat blobby limbs, dark muddy texture, odd head
+579: turtle | 4 | baked highlights, smeared shell, hybrid anatomy
+583: crocodile | 4 | squat blobby body, muddy dark texture
+586: giraffe | 6 | blurry leg texture, smeared back view
+589: kangaroo | 5 | flat saturated red, no fur detail, cartoon face
+615: great white shark | 6 | plasticky glossy shading, low-detail mouth
+676: horse | 5 | streaky ribbed texture, baked shading, chunky tail
+724: red-eyed tree frog | 4 | random stamped blotches on thighs, flat texture
+783: elephant | 5 | black trunk mismatch, heavy baked lighting
+804: turtle | 4 | baked lighting smears, inconsistent shell, hybrid anatomy
+812: wolf | 6 | blurry front view, smeared tail, inconsistent face
+856: wolf | 5 | head turned asymmetry, smeared front/back views
+858: eagle | 6 | baked lighting, blurry tail feathers, clumpy wings
+922: eagle | 6 | baked lighting, blurry tail feathers, clumpy wings

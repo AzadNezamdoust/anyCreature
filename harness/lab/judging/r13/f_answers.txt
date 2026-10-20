@@ -1,0 +1,20 @@
+144: elephant | 6 | tusks fused flat, trunk tip black smear, painterly skin
+188: horse | 5 | flat smooth texture, hard-edged painted mane, baked shading
+236: turtle | 5 | head blotchy smeared scales, eye unreadable, shell gradients painted
+300: crocodile | 4 | flat pancake body, blurry snout, white jaw smear, baked lighting
+303: kangaroo | 4 | cartoon flat red, smeared eyes/mouth, no fur detail
+327: shark | 6 | baked specular highlights, mouth edge smeared, low detail head
+335: kangaroo | 4 | cartoon flat red, smeared eyes/mouth, no fur detail
+541: wolf | 6 | painterly fur, smeared eye, visible seam on head
+558: shark | 6 | baked specular highlights, mouth edge smeared, low detail head
+582: eagle | 7 | wing feathers mushy at close range, blurred cheek region
+598: horse | 5 | flat smooth texture, hard-edged painted mane, baked shading
+611: frog | 6 | stylised smooth, white belly hard seam, baked gradients
+614: wolf | 6 | painterly fur, smeared eye, visible seam on head
+664: turtle | 5 | head blotchy smeared scales, eye unreadable, shell gradients painted
+682: giraffe | 4 | head mangled: ears/ossicones blobs, face unreadable close-up
+697: giraffe | 4 | head mangled: ears/ossicones blobs, face unreadable close-up
+813: crocodile | 4 | flat pancake body, blurry snout, white jaw smear, baked lighting
+864: eagle | 7 | wing feathers mushy at close range, blurred cheek region
+909: elephant | 6 | tusks fused flat, trunk tip black smear, painterly skin
+968: frog | 6 | stylised smooth, white belly hard seam, baked gradients

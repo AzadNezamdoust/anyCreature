@@ -1,0 +1,82 @@
+{
+ "164": {
+  "method": "hy21",
+  "animal": "crocodile"
+ },
+ "279": {
+  "method": "hy21",
+  "animal": "eagle"
+ },
+ "134": {
+  "method": "hy21",
+  "animal": "elephant"
+ },
+ "121": {
+  "method": "hy21",
+  "animal": "frog"
+ },
+ "290": {
+  "method": "hy21",
+  "animal": "giraffe"
+ },
+ "581": {
+  "method": "hy21",
+  "animal": "horse"
+ },
+ "584": {
+  "method": "hy21",
+  "animal": "kangaroo"
+ },
+ "275": {
+  "method": "hy21",
+  "animal": "shark"
+ },
+ "261": {
+  "method": "hy21",
+  "animal": "tortoise"
+ },
+ "267": {
+  "method": "hy21",
+  "animal": "wolf"
+ },
+ "266": {
+  "method": "trellis",
+  "animal": "crocodile"
+ },
+ "307": {
+  "method": "trellis",
+  "animal": "eagle"
+ },
+ "767": {
+  "method": "trellis",
+  "animal": "elephant"
+ },
+ "340": {
+  "method": "trellis",
+  "animal": "frog"
+ },
+ "593": {
+  "method": "trellis",
+  "animal": "giraffe"
+ },
+ "812": {
+  "method": "trellis",
+  "animal": "horse"
+ },
+ "407": {
+  "method": "trellis",
+  "animal": "kangaroo"
+ },
+ "258": {
+  "method": "trellis",
+  "animal": "shark"
+ },
+ "451": {
+  "method": "trellis",
+  "animal": "tortoise"
+ },
+ "367": {
+  "method": "trellis",
+  "animal": "wolf"
+ }
+}

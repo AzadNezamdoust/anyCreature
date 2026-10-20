@@ -1,0 +1,42 @@
+{
+ "385": {
+  "method": "tex",
+  "animal": "crocodile"
+ },
+ "341": {
+  "method": "tex",
+  "animal": "eagle"
+ },
+ "637": {
+  "method": "tex",
+  "animal": "elephant"
+ },
+ "868": {
+  "method": "tex",
+  "animal": "frog"
+ },
+ "665": {
+  "method": "tex",
+  "animal": "giraffe"
+ },
+ "410": {
+  "method": "tex",
+  "animal": "horse"
+ },
+ "468": {
+  "method": "tex",
+  "animal": "kangaroo"
+ },
+ "635": {
+  "method": "tex",
+  "animal": "shark"
+ },
+ "570": {
+  "method": "tex",
+  "animal": "tortoise"
+ },
+ "949": {
+  "method": "tex",
+  "animal": "wolf"
+ }
+}

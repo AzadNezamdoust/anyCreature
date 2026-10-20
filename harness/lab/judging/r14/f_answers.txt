@@ -1,0 +1,20 @@
+﻿121: frog | 7 | fused open-mouth jaw, flat hand webbing artifacts
+134: elephant | 6 | legs misaligned, back feet splayed, flat ears
+164: crocodile | 6 | low detail, tiny legs, soft scute definition
+258: shark | 7 | open mouth hole, flat tail fin, stiff fins
+261: tortoise | 6 | lumpy legs, shell edge unclear, blobby feet
+266: crocodile | 4 | flat-cut belly plane, broken hind leg geometry
+267: wolf | 7 | flattened ears, bulky tail, lumpy fur surface
+275: shark | 7 | notched tail fin, rough mouth, flat pectoral fins
+279: eagle | 7 | wing feathers as flat shells, rear feather clipping
+290: giraffe | 6 | pencil-thin legs, no neck mane, blobby ears
+307: eagle | 5 | broken intersecting feather shells, holes across wings
+340: frog | 7 | fused jaw lump, flat under-hand webbing
+367: wolf | 6 | tail tip ragged, ear chunks, lumpy legs
+407: kangaroo | 5 | soft blobby forms, clipped arms, toy-like proportions
+451: tortoise | 5 | holes in shell, lumpy legs, muddled head
+581: horse | 6 | tail flat ragged sheets, soft hooves
+584: kangaroo | 5 | blob body, rough face, merged leg bits
+593: giraffe | 5 | faceted low-poly neck, ears blob, thin legs
+767: elephant | 6 | flat ears sheets, misaligned legs, soft trunk
+812: horse | 6 | ragged sheet tail, intersecting legs, bulgy belly

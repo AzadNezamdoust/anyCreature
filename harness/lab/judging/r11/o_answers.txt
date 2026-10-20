@@ -1,0 +1,10 @@
+341: golden eagle | 5 | painterly baked lighting, smeared feather texture, stubby tail
+385: crocodile | 4 | blobby limbs, dark muddy texture, toy-like head
+410: horse | 5 | flat tail cards, banding streaks, crude mane
+468: kangaroo | 4 | flat red untextured body, cartoon proportions
+570: turtle | 3 | shell texture smeared, fake baked highlights, odd legs
+635: great white shark | 6 | plain colour, little skin detail
+637: elephant | 6 | baked lighting, blurry ear and trunk detail
+665: giraffe | 6 | blurry lower legs, back view smears
+868: red-eyed tree frog | 5 | flat plain texture, fused toes, seam artifacts
+949: wolf | 5 | blotchy coat smears, odd orange patches, stiff

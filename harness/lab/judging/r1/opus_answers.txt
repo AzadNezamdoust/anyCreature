@@ -1,0 +1,50 @@
+109: horse | 2 | primitive capsules, floating box mane, ball hooves
+117: kangaroo | 2 | stacked cylinders, gaps between torso, hips, tail
+118: frog | 2 | flat-capped cylinder limbs, no head definition
+141: wolf | 3 | crude low-poly boxes, stiff limbs, no anatomy
+151: wolf | 2 | sphere-and-capsule assembly, visible seams
+214: frog | 4 | blobby smooth form, surface noise artifacts, crude feet
+220: bird | 2 | flat disc wings, box tail, plank perch
+221: elephant | 4 | toy-like inflated forms, stubby legs, scan artifacts
+223: horse | 3 | tube limbs, floating mane disc, no musculature
+258: shark | 2 | cone fins, ellipsoid body, stick gills
+275: shark | 2 | segmented hull, flat fin planes, thin tail stalk
+277: crocodile | 3 | featureless tube body, stubby legs, noisy surface
+299: crocodile | 2 | flat faceted slab, pipe legs
+303: turtle | 2 | boxy shell, floating slab scutes, faceted
+322: unknown (empty) | 1 | empty render, no geometry visible
+375: crocodile | 2 | faceted spindle body, spiky broken feet
+399: kangaroo | 3 | trapezoid torso shell, broken interpenetrations
+440: horse | 3 | low-poly boxes, flat plane mane, stick legs
+442: shark | 3 | crude low-poly, flat paddle fins
+447: frog | 3 | faceted blocky limbs, coarse low-poly
+448: giraffe | 3 | tube legs, seam at neck-body join
+468: elephant | 2 | sphere assembly, disc ears, cylinder legs
+474: crocodile | 2 | featureless tube, tiny pipe legs
+485: bird | 3 | faceted blocks, slab wings, no feet
+509: turtle | 3 | egg shell, holes/artifacts, rubbery limbs
+530: eagle | 3 | faceted, detached slab wings, odd egg feet
+534: giraffe | 3 | stick legs, boxy torso, low detail
+548: elephant | 3 | faceted low-poly, flat ears, stiff legs
+568: dolphin | 3 | smooth hull but fins flat blades
+602: kangaroo | 2 | ellipsoid blobs, disc feet, rabbit-like head
+632: turtle | 3 | sphere bumps on shell, capsule legs
+671: shark | 3 | round disc dorsal fin, blob pectoral fins
+711: wolf | 3 | segmented tubes, broken ankle joints
+717: wolf | 3 | interpenetrating parts, egg feet, faceting
+726: horse | 3 | box torso, broken joints, stiff limbs
+739: tortoise | 3 | faceted dome, block legs, no detail
+747: frog | 2 | ellipsoid assembly, flat disc feet
+762: parrot | 4 | disc wings, noisy surface, flat tail
+764: falcon | 3 | lathe body, slab wings, seams
+772: giraffe | 2 | ellipsoid body, stick legs, capsule head
+796: giraffe | 3 | boxy torso, broken seams, thin legs
+816: kangaroo | 3 | faceted low-poly, boxy legs, flat feet
+867: kangaroo | 4 | blobby smooth form, weak anatomy, surface noise
+876: elephant | 3 | messy ear geometry, cone feet, seams
+883: giraffe | 4 | smooth but tubular legs, no musculature
+895: elephant | 3 | faceted, broken ear planes, box body
+921: frog | 3 | faceted, flat spiky feet, stick forelegs
+946: tortoise | 3 | banded shell, z-fighting plastron, tube legs
+963: horse | 3 | tube limbs, seams, flat mane-less neck
+994: wolf | 4 | smooth but tubular limbs, no musculature, artifacts

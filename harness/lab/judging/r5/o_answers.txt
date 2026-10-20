@@ -1,0 +1,20 @@
+138: shark | 5 | tail fin thin spikes, fins flat, no musculature
+144: wolf | 4 | stick legs, blobby hindquarter, flat slab torso
+182: eagle/hawk | 4 | tube body, wings barely defined, plank tail
+232: eagle | 5 | bulbous legs, wing slab, beak detached look
+288: horse/donkey | 3 | lumpy hindquarter, stubby head, stiff tube legs
+305: kangaroo | 4 | heavy lower body blob, thin toothpick feet
+366: wolf/fox | 3 | wasp waist, misplaced hind leg, sausage tail
+384: giraffe | 4 | boxy torso, knob joints, stringy tail
+417: horse | 5 | knobby joints, weak barrel, flat tail slab
+495: frog | 3 | malformed blob, flat paddle limbs, broken face
+535: crocodile/gharial | 4 | tiny limbs, overlong tail, flat featureless body
+667: hammerhead shark | 5 | weak hammer, plank fins, gill slits crude
+694: gharial | 3 | body tube, limbs splayed thin, no head form
+785: kangaroo | 5 | flat plank feet, stiff tube limbs
+801: tortoise | 3 | cylinder stump legs, flat plate underside
+804: elephant | 4 | flat disc ears, stiff pipe tusks, tube legs
+855: giraffe | 5 | stick legs, saggy rear, thin head detail
+860: frog | 5 | cartoon proportions, lumpy limbs, ball toes
+936: tortoise | 5 | stump cylinder legs, flat plastron, plate seams
+961: elephant | 5 | segmented tube legs, lumpy body, flat ears

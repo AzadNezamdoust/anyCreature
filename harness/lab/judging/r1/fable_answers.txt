@@ -1,0 +1,50 @@
+109: horse | 3 | primitive-assembled parts, disconnected legs, blob body
+117: kangaroo | 3 | floating detached tail, stacked cylinder torso, stub arms
+118: frog | 3 | boxy body, tube limbs, no toes, intersecting parts
+141: fox | 5 | coherent low-poly, stiff legs, body too long
+151: wolf | 3 | separate primitive head/neck/body, no blended anatomy
+214: frog | 6 | fused organic blob, decent proportions, legs weak
+220: bird | 2 | sphere head, disc wings, floating perch and box
+221: elephant | 6 | smooth fused mass, oversized round head, tube legs
+223: horse | 5 | smooth fused, odd neck blob, tube legs
+258: shark | 5 | clean fish body, fins fine, under-defined head
+275: shark | 5 | clean low-poly body, fins thin, head too pointed
+277: crocodile | 3 | flat fusiform body, tiny stub legs, no head
+299: crocodile | 2 | flat spindle body, stick legs, no head/jaw
+303: tortoise | 4 | chunky shell ok, boxy legs, flat head, scutes floating
+322: unknown | 1 | empty sheet, nothing rendered
+375: crocodile | 2 | wedge body with tooth spikes, legs broken shards
+399: kangaroo | 5 | decent low-poly pose, cylinder torso, split body seam
+440: horse | 4 | boxy prism body, tube legs, no joints
+442: shark | 5 | clean fuselage, no gills/mouth, thin fins
+447: frog | 4 | faceted blocky body, angular limbs, box toes
+448: giraffe | 4 | cylinder body stacked, stick legs, pin horns
+468: elephant | 3 | sphere head on blob body, segmented tube legs
+474: crocodile | 2 | spindle body, bent-tube legs, no head
+485: parrot/hornbill bird | 5 | strong beak silhouette, boxy wings, low detail
+509: turtle | 5 | smooth fused shell, legs/head tiny, gap under shell
+530: eagle | 5 | decent raptor silhouette, boxy body, flat tail
+534: giraffe | 4 | stick legs, box body, no muscle
+548: elephant | 6 | coherent low-poly, good proportions, stiff legs
+568: shark/whale | 5 | smooth body, fins thin, no mouth
+602: kangaroo | 2 | sphere/cylinder primitives, cone tail, stick limbs
+632: turtle | 4 | sphere bumps on shell, tube legs, separate plate
+671: shark | 4 | organic body but round dorsal, disc pectorals
+711: wolf | 5 | fused smooth body, segmented legs, no feet
+717: wolf | 4 | hollow cylinder body, floating legs, gap at neck
+726: horse | 3 | open cylinder body, mane as hole, broken neck
+739: tortoise | 5 | clean dome shell, box legs, no scutes
+747: frog | 3 | all spheres, ball eyes, disc feet
+762: eagle | 3 | disc wings, flat tail, perch, fused body
+764: parrot | 5 | nice perch pose, panel wings, boxy tail
+772: giraffe | 2 | disc head, tube neck, pipe legs
+796: giraffe | 4 | low-poly, better neck, stick legs and tail
+816: kangaroo | 5 | solid low-poly pose, stiff limbs, tail seam
+867: kangaroo | 6 | smooth fused anatomy, good pose, stubby arms
+876: elephant | 3 | floating head, hollow seam, cone feet, gaps
+883: giraffe | 5 | smooth fused, pipe legs, tiny tail
+895: elephant | 3 | head floats from body, ear boxes, gaps
+921: frog | 4 | faceted body, hex eyes, thin angular limbs
+946: tortoise | 4 | smooth shell, legs/head weak, visible shell seam
+963: horse | 5 | fused smooth body, neck/body seam, pipe legs
+994: fox | 6 | fused organic body, good silhouette, tube legs

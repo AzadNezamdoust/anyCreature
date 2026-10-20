@@ -1,0 +1,20 @@
+134: elephant | 7 | feet bulge inward, trunk tip clubbed, tail missing
+144: great white shark | 7 | body too plump, tail fin lobes stubby
+192: eagle (bald eagle) | 5 | tube-like body, flat plank wings, thin tail
+210: tree frog | 7 | front limbs stiff rods, toe pads undersized
+222: hammerhead shark | 4 | flat tube body, fins paper-thin planes, no hammer width
+307: kangaroo | 4 | balloon torso, noodle arms/legs, cartoony snout
+308: horse | 8 | mane/tail chunky, hind legs slightly short
+356: crocodile | 4 | flattened noodle body, legs undersized, no neck
+364: giraffe | 5 | faceted barrel, camel hump back, clubbed tail
+385: tortoise | 5 | legs stubby cylinders, carapace scutes crude relief
+423: frog | 6 | lumpy body, hind legs splay, crude toe beads
+502: elephant | 4 | sausage legs, lumpy back bumps, cartoon head
+511: tortoise | 7 | chunky knee lumps, shell edge rough
+526: wolf / dog | 3 | collapsed belly, stick legs, paddle tail
+581: wolf | 7 | noisy fur chunks, boxy chest, blunt muzzle
+600: crocodile | 5 | too chunky, bear-like legs, stubby snout
+650: eagle | 8 | tail feathers thin blades, perch block crude
+670: horse | 7 | thin rear, mannequin smooth, odd tail wisps
+771: giraffe | 5 | thin tube neck, tail flat rectangle, weak body mass
+952: kangaroo | 7 | arms skeletal, feet thin, legs merge with tail

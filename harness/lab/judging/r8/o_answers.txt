@@ -1,0 +1,20 @@
+170: kangaroo | 6 | tail/feet show open shading seams; noisy mesh
+171: tortoise | 5 | lumpy limbs, ragged shell rim, floating plastron
+175: horse | 5 | bloated barrel belly, noisy fragmented mane/tail
+199: elephant | 4 | balloon body, open leg bottoms, stubby legs
+217: elephant | 6 | tail tuft clubby, open foot soles, loose ears
+240: kangaroo | 6 | blobby smooth forms, weak head detail
+329: crocodile (upright, dinosaur-like) | 4 | crocodile on erect mammal legs, wrong posture
+346: crocodile | 5 | bloated body, odd curled tail, flat limbs
+389: tree frog | 6 | broken stretched toe geometry near hind feet
+456: giraffe | 6 | torso blobby; ragged tail tuft
+498: giraffe | 4 | camel hump back, faceted belly, odd tail
+517: frog | 5 | toes fused into melted pancake plates
+533: great white shark | 6 | lumpy surface, open hole on flank
+669: bald eagle on perch | 6 | wing feathers cracked; seams on back
+791: eagle | 5 | head misaligned, melted feet, lumpy feathers
+869: tortoise | 6 | lumpy limbs, open shell edge seam
+887: great white shark | 7 | slightly bloated belly; minor flank artifacts
+929: wolf / arctic fox | 6 | blocky fur noise; head undersized
+939: horse | 6 | tail/mane fragmented strands; open hoof soles
+999: wolf | 5 | noisy fur patches, open feet, thick tail

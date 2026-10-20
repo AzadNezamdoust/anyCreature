@@ -1,0 +1,162 @@
+{
+ "901": {
+  "method": "r1eng",
+  "animal": "crocodile"
+ },
+ "636": {
+  "method": "r1eng",
+  "animal": "eagle"
+ },
+ "368": {
+  "method": "r1eng",
+  "animal": "elephant"
+ },
+ "883": {
+  "method": "r1eng",
+  "animal": "frog"
+ },
+ "161": {
+  "method": "r1eng",
+  "animal": "giraffe"
+ },
+ "374": {
+  "method": "r1eng",
+  "animal": "horse"
+ },
+ "325": {
+  "method": "r1eng",
+  "animal": "kangaroo"
+ },
+ "436": {
+  "method": "r1eng",
+  "animal": "shark"
+ },
+ "379": {
+  "method": "r1eng",
+  "animal": "tortoise"
+ },
+ "447": {
+  "method": "r1eng",
+  "animal": "wolf"
+ },
+ "204": {
+  "method": "r1sdf",
+  "animal": "crocodile"
+ },
+ "584": {
+  "method": "r1sdf",
+  "animal": "eagle"
+ },
+ "576": {
+  "method": "r1sdf",
+  "animal": "elephant"
+ },
+ "475": {
+  "method": "r1sdf",
+  "animal": "frog"
+ },
+ "416": {
+  "method": "r1sdf",
+  "animal": "giraffe"
+ },
+ "935": {
+  "method": "r1sdf",
+  "animal": "horse"
+ },
+ "546": {
+  "method": "r1sdf",
+  "animal": "kangaroo"
+ },
+ "605": {
+  "method": "r1sdf",
+  "animal": "shark"
+ },
+ "578": {
+  "method": "r1sdf",
+  "animal": "tortoise"
+ },
+ "687": {
+  "method": "r1sdf",
+  "animal": "wolf"
+ },
+ "162": {
+  "method": "r2eng",
+  "animal": "crocodile"
+ },
+ "600": {
+  "method": "r2eng",
+  "animal": "eagle"
+ },
+ "181": {
+  "method": "r2eng",
+  "animal": "elephant"
+ },
+ "132": {
+  "method": "r2eng",
+  "animal": "frog"
+ },
+ "356": {
+  "method": "r2eng",
+  "animal": "giraffe"
+ },
+ "902": {
+  "method": "r2eng",
+  "animal": "horse"
+ },
+ "259": {
+  "method": "r2eng",
+  "animal": "kangaroo"
+ },
+ "564": {
+  "method": "r2eng",
+  "animal": "shark"
+ },
+ "172": {
+  "method": "r2eng",
+  "animal": "tortoise"
+ },
+ "798": {
+  "method": "r2eng",
+  "animal": "wolf"
+ },
+ "615": {
+  "method": "r2sdf",
+  "animal": "crocodile"
+ },
+ "756": {
+  "method": "r2sdf",
+  "animal": "eagle"
+ },
+ "533": {
+  "method": "r2sdf",
+  "animal": "elephant"
+ },
+ "651": {
+  "method": "r2sdf",
+  "animal": "frog"
+ },
+ "889": {
+  "method": "r2sdf",
+  "animal": "giraffe"
+ },
+ "236": {
+  "method": "r2sdf",
+  "animal": "horse"
+ },
+ "294": {
+  "method": "r2sdf",
+  "animal": "kangaroo"
+ },
+ "868": {
+  "method": "r2sdf",
+  "animal": "shark"
+ },
+ "574": {
+  "method": "r2sdf",
+  "animal": "tortoise"
+ },
+ "105": {
+  "method": "r2sdf",
+  "animal": "wolf"
+ }
+}

@@ -1,0 +1,20 @@
+121: tree frog | 6 | flat webbed feet plates, ground-fused base artifacts
+134: african elephant | 6 | ear seams, belly skirt artifacts, flat foot pads
+164: crocodile | 5 | bloated barrel body, limbs pasted flat on sides
+258: great white shark | 6 | mouth area noisy, fins thin/clipped, head blobby
+261: tortoise | 5 | lumpy melted legs, shell/plastron seams, ground artifacts
+266: crocodile | 3 | tail detached/doubled, flat underside disc, broken limbs
+267: wolf | 6 | front limbs overlapping, noisy fur blobs, stiff stance
+275: great white shark | 7 | minor fin thinness, slightly soft mouth detail
+279: bald eagle | 6 | flat stubby talons, layered wing shell artifacts
+290: giraffe | 7 | soft generic head, ragged tail tuft
+307: eagle/hawk | 4 | torn feather patches, holes, shell-like wing layers
+340: tree frog | 6 | front legs merged with body, toe tangle
+367: wolf | 5 | broken jaw/neck seam, ragged tail tip
+407: kangaroo | 6 | cartoonish head, tail blends tube, thin arms
+451: tortoise | 4 | holes in shell, floating limbs, broken feet
+581: horse | 6 | ragged layered tail, mane seam crack
+584: kangaroo | 6 | blobby simplified anatomy, mushy hands/feet
+593: giraffe | 6 | thin flat-sided neck, ossicones mushy, legs spindly
+767: african elephant | 6 | ear edge seams, flat sock-like feet
+812: horse | 6 | blocky clumped tail, stray floor geometry near hoof

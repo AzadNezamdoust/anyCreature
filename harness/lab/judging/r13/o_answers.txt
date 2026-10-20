@@ -1,0 +1,20 @@
+144: elephant | 4 | painted/baked lighting, trunk tip flat black, smeared ears
+188: horse | 3 | blocky head, mane seams, flat smeared texture
+236: turtle (sea/tortoise hybrid) | 3 | hybrid anatomy, smeared plastron, baked highlights
+300: crocodile | 2 | lumpy blob body, smeared mouth texture
+303: kangaroo | 4 | cartoon face smear, flat red albedo, ear artifacts
+327: great white shark | 5 | glossy plastic look, mouth/teeth smeared
+335: kangaroo | 4 | cartoon face smear, flat red albedo, ear artifacts
+541: wolf | 4 | orange color errors, blurry eyes, smeared fur
+558: great white shark | 5 | glossy plastic look, mouth/teeth smeared
+582: golden eagle | 5 | blurry feathers, baked lighting, smeared head
+598: horse | 3 | blocky head, mane seams, flat smeared texture
+611: red-eyed tree frog | 5 | flat texture, mushy limb details, toy-like
+614: wolf | 4 | orange color errors, blurry eyes, smeared fur
+664: turtle (sea/tortoise hybrid) | 3 | hybrid anatomy, smeared plastron, baked highlights
+682: giraffe | 3 | broken head geometry, chrome smear on face
+697: giraffe | 3 | broken head geometry, chrome smear on face
+813: crocodile | 2 | lumpy blob body, smeared mouth texture
+864: golden eagle | 5 | blurry feathers, baked lighting, smeared head
+909: elephant | 4 | painted/baked lighting, trunk tip flat black, smeared ears
+968: red-eyed tree frog | 5 | flat texture, mushy limb details, toy-like

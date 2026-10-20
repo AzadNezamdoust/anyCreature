@@ -1,0 +1,20 @@
+108: kangaroo | 5 | flat untextured red body, cartoon proportions, stubby arms
+182: great white shark | 4 | blurry mouth, undersized pectoral fins, dark baked shading
+350: horse | 5 | dark baked shading, blurry muscle streaks, stiff mane block
+374: giraffe | 6 | soft blurry pattern, blobby ossicones, muddy face
+375: red-eyed tree frog | 5 | flat plastic shading, missing toe pads, no skin detail
+432: elephant | 6 | smeared wrinkle texture, glossy baked highlights, front seam
+494: crocodile | 3 | tiny, muddy dark texture, no scute detail, blurry
+579: tortoise | 5 | stylised cartoon shell, warped head, inconsistent scute pattern
+583: crocodile | 3 | tiny, muddy dark texture, blurry details
+586: giraffe | 6 | soft pattern, muddy face, blurry hooves
+589: kangaroo | 5 | flat untextured red body, cartoon proportions, baked dark shading
+615: great white shark | 4 | blurry mouth, small fins, dark baked shading
+676: horse | 5 | dark baked shading, blurry muscle streaks, hard mane block
+724: red-eyed tree frog | 5 | odd leaf-like decals on legs, flat plastic shading
+783: elephant | 6 | smeared wrinkles, glossy baked highlights, tail colour mismatch
+804: tortoise | 5 | cartoon shell, warped head, front neck seam
+812: wolf | 7 | photo-projected fur smears, head turned sideways, blurry rear
+856: wolf | 6 | head turned sideways, baked fur smears, legs merge rear
+858: golden eagle | 6 | clay-like feathers, dark baked shadows, tail stub
+922: golden eagle | 6 | clay-like feathers, dark baked shadows, tail stub

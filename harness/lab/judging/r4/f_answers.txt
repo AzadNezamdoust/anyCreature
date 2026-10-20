@@ -1,0 +1,4 @@
+257: horse | 6 | hind legs bent/collapsed, puppet-like kink at hocks
+547: horse | 5 | sagging barrel belly, hollow back, tiny straight hind
+561: wolf | 4 | bloated barrel chest, stick legs, flat ribs
+842: wolf/dog | 5 | spindly legs, hollow lower back, flat boxy neck

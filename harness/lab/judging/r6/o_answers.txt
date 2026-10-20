@@ -1,0 +1,20 @@
+134: elephant | 6 | bloated body, open cut leg bottoms, ears stuck flat
+144: great white shark | 7 | bloated torso, odd pectoral placement, chunky caudal joint
+192: eagle | 5 | blobby fused legs, stiff wing slab, crude feathering
+210: frog | 6 | hindlimb/foot intersections and clipping on ground
+222: hammerhead shark | 4 | head barely hammer-shaped, blobby, stiff flat fins
+307: kangaroo | 4 | dragon-like head, unicorn ear, spindly pointed tail
+308: horse | 6 | obese belly bulges, noisy shredded mane/tail
+356: gharial / crocodile | 4 | flat stretched body, tiny limbs, tail spikes crude
+364: giraffe | 4 | camel hump, faceted belly, short neck, horse proportions
+385: tortoise | 5 | stump legs with cut ends, segmented ribbed shell artifacts
+423: frog | 4 | blobby toy forms, bulbous hips, crude limbs
+502: elephant | 4 | tube legs, flat panel ears, no head-body definition
+511: tortoise | 7 | rough surfaces, clipped leg underside, slightly lumpy
+526: wolf / fox | 3 | disjointed blob anatomy, broken hindquarters, sausage tail
+581: wolf | 7 | noisy fur artifacts, bloated torso, open feet
+600: crocodile-dinosaur hybrid | 4 | upright mammal legs, ambiguous species, blocky head
+650: bald eagle | 8 | minor noisy feather surface, slightly stiff tail
+670: horse | 4 | lumpy torso bulges, oversized head, crude tail slab
+771: giraffe | 4 | thin stick legs, weak body mass, lumpy joints
+952: kangaroo / wallaby | 8 | tail too flat-ended, minor shading seams

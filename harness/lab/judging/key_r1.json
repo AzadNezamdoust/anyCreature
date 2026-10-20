@@ -1,0 +1,202 @@
+{
+ "299": {
+  "method": "m1",
+  "animal": "crocodile"
+ },
+ "485": {
+  "method": "m1",
+  "animal": "eagle"
+ },
+ "548": {
+  "method": "m1",
+  "animal": "elephant"
+ },
+ "921": {
+  "method": "m1",
+  "animal": "frog"
+ },
+ "534": {
+  "method": "m1",
+  "animal": "giraffe"
+ },
+ "440": {
+  "method": "m1",
+  "animal": "horse"
+ },
+ "816": {
+  "method": "m1",
+  "animal": "kangaroo"
+ },
+ "442": {
+  "method": "m1",
+  "animal": "shark"
+ },
+ "739": {
+  "method": "m1",
+  "animal": "tortoise"
+ },
+ "141": {
+  "method": "m1",
+  "animal": "wolf"
+ },
+ "322": {
+  "method": "m2",
+  "animal": "crocodile"
+ },
+ "220": {
+  "method": "m2",
+  "animal": "eagle"
+ },
+ "468": {
+  "method": "m2",
+  "animal": "elephant"
+ },
+ "747": {
+  "method": "m2",
+  "animal": "frog"
+ },
+ "772": {
+  "method": "m2",
+  "animal": "giraffe"
+ },
+ "109": {
+  "method": "m2",
+  "animal": "horse"
+ },
+ "602": {
+  "method": "m2",
+  "animal": "kangaroo"
+ },
+ "258": {
+  "method": "m2",
+  "animal": "shark"
+ },
+ "632": {
+  "method": "m2",
+  "animal": "tortoise"
+ },
+ "151": {
+  "method": "m2",
+  "animal": "wolf"
+ },
+ "277": {
+  "method": "m3",
+  "animal": "crocodile"
+ },
+ "762": {
+  "method": "m3",
+  "animal": "eagle"
+ },
+ "221": {
+  "method": "m3",
+  "animal": "elephant"
+ },
+ "214": {
+  "method": "m3",
+  "animal": "frog"
+ },
+ "883": {
+  "method": "m3",
+  "animal": "giraffe"
+ },
+ "223": {
+  "method": "m3",
+  "animal": "horse"
+ },
+ "867": {
+  "method": "m3",
+  "animal": "kangaroo"
+ },
+ "671": {
+  "method": "m3",
+  "animal": "shark"
+ },
+ "509": {
+  "method": "m3",
+  "animal": "tortoise"
+ },
+ "994": {
+  "method": "m3",
+  "animal": "wolf"
+ },
+ "474": {
+  "method": "m4",
+  "animal": "crocodile"
+ },
+ "764": {
+  "method": "m4",
+  "animal": "eagle"
+ },
+ "876": {
+  "method": "m4",
+  "animal": "elephant"
+ },
+ "118": {
+  "method": "m4",
+  "animal": "frog"
+ },
+ "448": {
+  "method": "m4",
+  "animal": "giraffe"
+ },
+ "963": {
+  "method": "m4",
+  "animal": "horse"
+ },
+ "117": {
+  "method": "m4",
+  "animal": "kangaroo"
+ },
+ "568": {
+  "method": "m4",
+  "animal": "shark"
+ },
+ "946": {
+  "method": "m4",
+  "animal": "tortoise"
+ },
+ "711": {
+  "method": "m4",
+  "animal": "wolf"
+ },
+ "375": {
+  "method": "m5",
+  "animal": "crocodile"
+ },
+ "530": {
+  "method": "m5",
+  "animal": "eagle"
+ },
+ "895": {
+  "method": "m5",
+  "animal": "elephant"
+ },
+ "447": {
+  "method": "m5",
+  "animal": "frog"
+ },
+ "796": {
+  "method": "m5",
+  "animal": "giraffe"
+ },
+ "726": {
+  "method": "m5",
+  "animal": "horse"
+ },
+ "399": {
+  "method": "m5",
+  "animal": "kangaroo"
+ },
+ "275": {
+  "method": "m5",
+  "animal": "shark"
+ },
+ "303": {
+  "method": "m5",
+  "animal": "tortoise"
+ },
+ "717": {
+  "method": "m5",
+  "animal": "wolf"
+ }
+}

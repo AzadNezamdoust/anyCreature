@@ -1,0 +1,40 @@
+105: wolf | 5 | blobby lumpy limbs, tube tail, crude head
+132: frog | 3 | faceted primitives, detached slab limbs, no face
+161: giraffe | 2 | box torso, stick limbs, primitive assembly
+162: crocodile | 2 | cylinder body, stubby floating legs, no head
+172: tortoise | 3 | inflated shell blob, open-ended tube legs
+181: elephant | 3 | disjoint flat ears, segmented primitive parts
+204: crocodile | 3 | flat paddle snout, tiny legs, smooth tube
+236: horse | 6 | lumpy musculature, stiff mane-less neck, odd hooves
+259: kangaroo | 3 | primitive cones, stick feet, seams visible
+294: kangaroo | 5 | bulbous belly, thin tube limbs, smooth blob
+325: kangaroo | 2 | faceted box primitives, cylinder feet
+356: giraffe | 4 | bloated torso, stick legs, crude head
+368: elephant | 2 | faceted boxes, slab legs, disjoint head
+374: horse | 2 | box torso, faceted stick legs, split tail
+379: tortoise | 2 | box shell, tube legs, stuck-on plates
+416: giraffe | 5 | simple tube anatomy, smooth but generic
+436: shark | 3 | faceted, plank fins, segmented tail seam
+447: wolf | 2 | box body, card fins as feet
+475: frog | 6 | good silhouette, noisy surface, crude face
+533: elephant | 6 | decent mass, flat ears, noisy surface artifacts
+546: kangaroo | 5 | blobby body, tube limbs, simple head
+564: shark | 4 | smooth but flat card fins, tail seam
+574: tortoise | 6 | good scute shell, mesh noise, blunt legs
+576: elephant | 5 | toy proportions, pipe legs, flat cut feet
+578: tortoise | 4 | plain dome shell, pipe legs, holes
+584: eagle | 3 | disc wings stuck on, perch rod
+600: parrot | 2 | misoriented, faceted, broken geometry
+605: whale shark | 3 | round paddle fin, odd forked tail
+615: crocodile | 5 | decent silhouette, blobby limbs, crude scutes
+636: eagle | 2 | faceted, misoriented, paper feet
+651: frog | 7 | strong form, soft head, slight blob
+687: wolf | 4 | tube legs, stiff tail, crude head
+756: eagle | 7 | good silhouette, plank wing, soft detail
+798: wolf | 3 | segmented primitives, card feet, seams
+868: hammerhead shark | 6 | good fins, blunt head, simple surface
+883: frog | 2 | faceted primitives, slab legs
+889: giraffe | 6 | lumpy legs, uneven surface, decent silhouette
+901: crocodile | 2 | faceted primitives, floating card scutes
+902: horse | 3 | disjoint segmented parts, card tail
+935: horse | 4 | tube limbs, disc artifact behind head

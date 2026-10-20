@@ -1,0 +1,20 @@
+113: frog | 5 | feet flattened into blobby webs, toes fused
+132: tortoise | 5 | shell bulbous/lumpy, legs amorphous, mushy scute edges
+143: frog | 6 | hands/feet flat plates, toe tips fused flat
+192: giraffe | 5 | tail/ears blobby, lumpy neck, hooves soft
+194: wolf | 6 | tail detached from body, feet blobby, noisy fur
+319: eagle | 6 | feather overlaps as clean plates, legs/talon joints mushy
+364: eagle | 6 | tail feathers thin plates, talons soft, fused crest
+513: horse | 7 | tail flat jagged strip, mane fused, faces coarse
+519: elephant | 7 | ears intersect body, trunk/tail tips blobby
+634: giraffe | 4 | ears/ossicones malformed, bulging body, tail split
+653: kangaroo | 5 | pose asymmetric, blobby hands/feet, limbs twisted
+667: wolf | 6 | tail detached, head/neck asymmetric, feet blobby
+696: shark | 6 | pectorals bent mismatched, tail joint pinched, gills crude
+724: kangaroo | 5 | twisted/asymmetric limbs, blobby paws, mushy face
+725: crocodile | 5 | low-detail blobby limbs, flat scutes, pinched tail tip
+764: elephant | 7 | tusk-to-ear intersections, trunk tip pinched/curled
+790: tortoise | 5 | shell puffy/undefined, legs lumpy, head blobby
+805: crocodile | 5 | limbs crude, scutes soft, toes lumpy
+890: horse | 7 | tail flat serrated strip, mane crude, hooves soft
+953: shark | 5 | pectorals asymmetric, hole-like patch on belly, tail pinched

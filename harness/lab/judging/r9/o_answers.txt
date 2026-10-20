@@ -1,0 +1,20 @@
+113: frog | 5 | Feet fused into flat ragged ground slab
+132: tortoise | 4 | Shell plates detached/flapping; legs lumpy, malformed
+143: tree frog | 5 | Webbed feet flat cutouts merged with ground plane
+192: giraffe | 6 | Tail tuft ragged; ossicones and hooves soft, undefined
+194: wolf | 6 | Lumpy fur noise; tail blobby, paws mushy
+319: eagle | 6 | Feathers shallow relief; talons fused blobs
+364: eagle | 6 | Feather layers floating shells; feet merged with perch
+513: horse | 6 | Tail stringy fragments; mane flat relief
+519: elephant | 6 | Ear thin floating shell; feet flat discs
+634: giraffe | 6 | Tail tuft torn; belly bloated, legs thin
+653: kangaroo | 6 | Cartoonish face; feet/tail smooth, low detail
+667: wolf | 5 | Noisy lumpy surface; tail sausage-like
+696: great white shark | 6 | Pectoral fins float off body; ragged fin edges
+724: kangaroo | 6 | Arms thin and stiff; feet flat
+725: crocodile | 5 | Belly bloated, legs splayed flat, tail curled
+764: elephant | 6 | Ear shell detached; feet blobby
+790: tortoise | 4 | Legs lumpy bloated; shell skirt torn, scaly mess
+805: crocodile | 5 | Belly bloated, legs splayed flat, tail curled
+890: horse | 6 | Tail layered torn shards; mane seam cracks
+953: great white shark | 6 | Pectoral fin hole/disc artifact; head lumpy

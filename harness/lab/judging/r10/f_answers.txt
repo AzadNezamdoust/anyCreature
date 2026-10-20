@@ -1,0 +1,50 @@
+110: kangaroo | 4 | tail flattened into twisted ribbon, broken silhouette
+123: kangaroo | 6 | tri soup, uneven density, no loops
+145: shark | 3 | tail fin shredded, floating fragments, torn pectoral
+158: horse | 3 | legs shattered, floating chunks, detached tail
+169: fox | 8 | minor pinch under belly, otherwise clean quads
+180: eagle | 3 | wing shards, layered flaps, jagged tri mesh
+212: frog | 4 | toes shattered into slivers and floating shards
+235: elephant | 5 | tri soup, dense messy ear, no loops
+254: tortoise | 8 | slight head/shell seam noise, quads good
+258: tortoise | 6 | tri soup, dense legs vs sparse shell
+260: shark | 6 | tri soup, dense pectoral fin, no loops
+276: crocodile | 7 | sparse toes, slight tail twist, otherwise clean quads
+282: shark | 2 | tail fin stretched into thin broken strands
+292: kangaroo | 6 | tri soup, dense head vs sparse body
+347: frog | 2 | giant faceted tris, hands/feet shredded slivers
+357: fox | 6 | tri soup, uneven leg density
+363: eagle | 1 | over budget, hollow shell holes, floating feet
+390: giraffe | 2 | over budget, body holes, stray edge strings
+431: elephant | 5 | tri soup, ear mess, dense head
+463: unknown (dragon head?) | 1 | shattered unrecognizable fragments, floating chunks
+477: crocodile | 3 | over budget, legs sliced flat, shards under belly
+516: frog | 1 | over budget, body riddled with holes and strips
+523: elephant | 5 | ear torn with holes, floating specks, decent quads
+524: kangaroo | 1 | over budget, huge intersecting planar shards
+536: frog | 6 | slightly over budget, toes shredded into shards
+539: tortoise | 1 | over budget, shell hollowed into web of strips
+555: giraffe | 7 | floating fragment, quads otherwise clean
+560: eagle | 4 | tail feathers torn, feet messy, dense tangled wing
+573: crocodile | 5 | tri soup, legs sliced, uneven density
+586: shark | 5 | slightly over budget, tri soup, sparse pectoral
+622: horse | 6 | tail knotted/pinched, legs decent quads
+649: horse | 5 | tri soup, tail shredded into strands
+666: frog | 2 | head/feet blocky shards, spikes on back
+668: kangaroo | 6 | ears torn, hands shredded, body quads good
+669: elephant | 1 | over budget, giant intersecting planes, hollow
+674: crocodile | 6 | tri soup, jagged back ridge, toes blobby
+679: tortoise | 7 | ok quads, slight head pinch
+680: horse | 1 | over budget, body riddled with holes, intersecting planes
+703: fox | 8 | small pinch at belly, quads clean
+708: horse | 5 | tri soup, tail shredded strands
+715: giraffe | 8 | ossicones lumpy, quads clean
+740: shark | 6 | under budget tri soup, dense pectoral
+770: crocodile | 7 | sparse toes, slight tail twist
+775: fox | 6 | tri soup, uneven density
+800: giraffe | 5 | tri soup, uneven density, tail spiky
+877: elephant | 6 | floating cube fragment, ear ragged, quads ok
+899: fox | 6 | tri soup, uneven density
+909: giraffe | 6 | tri soup, ossicones ragged
+932: tortoise | 6 | tri soup, dense legs vs sparse shell
+945: eagle | 3 | wing/tail torn with holes, floating shard

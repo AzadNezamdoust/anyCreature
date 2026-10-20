@@ -1,0 +1,20 @@
+170: kangaroo | 7 | Spindly undersized forearms, flat paddle tail tip
+171: tortoise | 5 | Soft blobby limbs, lumpy shell edges, stubby neck
+175: horse | 6 | Bloated barrel belly, ragged stringy mane and tail
+199: elephant | 4 | Balloon body, tubular legs no feet, head detached
+217: elephant | 7 | Thin legs, weak feet, tail knob lumpy
+240: kangaroo | 6 | Smooth featureless body, oversized tail, tiny arms
+329: crocodile | 5 | Bulky upright mammal stance, thick limbs, short tail
+346: crocodile | 6 | Soft low-detail limbs, blobby feet, generic body
+389: frog | 6 | Spindly stick fingers, limbs float off body
+456: giraffe | 6 | Short neck, blunt head, thick clubby tail
+498: giraffe | 4 | Faceted low-poly body, camel hump, lumpy joints
+517: frog | 5 | Flat slab feet, detached toes, bloated body
+533: shark | 6 | Soft fins, snout flat cut, weak gill detail
+669: eagle | 7 | Pole base fused, mushy talons, tail splinters
+791: eagle | 7 | Thick clumsy feet, crude feather clumps
+869: tortoise | 6 | Pudgy limbs, stubby neck, crude claws
+887: shark | 7 | Tail notch thin, pectoral fins overlong, soft mouth
+929: wolf | 6 | Noisy lumpy surface, stiff legs, blobby tail
+939: horse | 7 | Thin frozen legs, stringy tail, soft hooves
+999: wolf | 7 | Noisy fur blobs, thick neck, crude paws

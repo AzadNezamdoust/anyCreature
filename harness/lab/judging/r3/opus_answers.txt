@@ -1,0 +1,20 @@
+126: crocodile | 4 | blobby limbs, bulbous body, crude block spikes, weak head
+134: wolf | 4 | lumpy torso, tube legs, thin rod ears, crude paws
+191: horse | 5 | lumpy muscles, blobby hooves, crude mane and tail
+389: frog | 5 | fused blobby body, ball-tipped toes, weak eye bulges
+439: wolf | 4 | lumpy body, stiff tube legs, crude head and paws
+458: giraffe | 4 | blobby joints, stick legs, bulbous chest, crude ossicones
+464: shark | 5 | blunt bulbous snout, stiff flat fins, simplistic gills
+567: giraffe | 4 | stick legs with knobby joints, boxy torso
+612: horse | 5 | lumpy musculature, blobby hooves, slab tail
+613: kangaroo | 4 | balloon haunches, stick tail, tiny crude forelimbs
+670: eagle | 5 | slab wings, stray rod artifact, crude feet
+706: gharial | 5 | flat stiff body, crude limbs, low detail
+794: tortoise | 5 | flat-cut stump feet, panel shell seams, plate gaps
+810: tortoise | 5 | flat-cut stump feet, panel shell seams, plate gaps
+820: eagle | 5 | slab wings, stray rod artifact, crude feet
+825: kangaroo | 5 | bulbous haunches, thin stick tail, crude head
+858: elephant | 5 | tube legs, flat-cut feet, stiff slab ears
+872: elephant | 5 | tube legs, lumpy back, flat-cut feet
+882: frog | 5 | fused blobby body, ball-tipped toes, weak eye bulges
+911: shark | 5 | blunt bulbous snout, stiff flat fins, simplistic gills

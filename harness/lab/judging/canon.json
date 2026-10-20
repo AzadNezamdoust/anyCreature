@@ -1,0 +1,438 @@
+{
+  "_meta": {
+    "unit": "BODY LENGTH = 1.0 (point of chest / base of neck to point of buttock / ischium, side view, adult, neutral standing or resting pose). For shark: snout tip to caudal fin base. For frog: snout-vent length. For tortoise: straight carapace length. For crocodile: back of skull to vent (trunk only).",
+    "heights": "vertical from ground; lengths are straight bone/segment lengths unless noted. Ranges are [lo, hi] across typical adults of the reference species.",
+    "reference_species": {
+      "wolf": "grey wolf (Canis lupus)",
+      "horse": "light riding horse (Thoroughbred / warmblood), not draft or pony",
+      "elephant": "African bush elephant; Asian notes inline",
+      "giraffe": "adult giraffe (sexes averaged)",
+      "crocodile": "Nile / saltwater crocodile, resting with belly down",
+      "eagle": "bald / golden eagle, perched",
+      "shark": "great white; requiem-shark notes inline",
+      "frog": "bullfrog / true frog (Rana/Lithobates), sitting",
+      "tortoise": "sulcata / Galapagos-type land tortoise, head out, standing",
+      "kangaroo": "red kangaroo, resting upright on hind feet + tail tripod"
+    },
+    "source": "written from memory by an anatomy-for-game-art pass; values are canonical artist proportions, not measured specimens"
+  },
+
+  "wolf": {
+    "measures": {
+      "head_length": [0.28, 0.33],
+      "head_height": [0.16, 0.19],
+      "muzzle_length_fraction_of_head": [0.45, 0.5],
+      "neck_length": [0.28, 0.33],
+      "withers_height": [0.85, 1.0],
+      "hip_height": [0.82, 0.97],
+      "chest_depth": [0.38, 0.42],
+      "belly_clearance": [0.48, 0.58],
+      "fore_scapula": [0.2, 0.23],
+      "fore_upper_arm": [0.2, 0.23],
+      "fore_forearm": [0.23, 0.26],
+      "fore_cannon": [0.11, 0.13],
+      "fore_paw": [0.06, 0.08],
+      "elbow_height": [0.5, 0.56],
+      "hind_thigh": [0.22, 0.25],
+      "hind_shin": [0.24, 0.27],
+      "hind_cannon": [0.14, 0.17],
+      "hind_paw": [0.07, 0.09],
+      "hock_height": [0.28, 0.32],
+      "tail_length": [0.42, 0.52],
+      "tail_base_girth_diameter": [0.08, 0.1],
+      "ear_length": [0.09, 0.11],
+      "body_width_ribs": [0.22, 0.26],
+      "body_width_hips": [0.18, 0.22],
+      "chest_width_front": [0.18, 0.22],
+      "paw_width_fore": [0.07, 0.09]
+    },
+    "must_have": [
+      "Leg length (ground to elbow) >= chest depth: elbow sits at or above the vertical midpoint of withers height. Wolves are leggy; a husky-like 50/50 split reads as a dog.",
+      "Tail hangs straight or slightly curved, tip reaching the hock; carried below the backline in neutral. Never curled over the back.",
+      "Narrow, deep chest viewed from the front (front legs close together, elbows tucked), big front paws (~0.08 wide), slightly sloping croup."
+    ],
+    "mistakes": [
+      "Too stocky and broad-chested (sled-dog / German-shepherd build) with short legs.",
+      "Tail curled or carried high; tail too thin at the base.",
+      "Head too round with a short muzzle and oversized pointed ears; wolf muzzle is ~half the head length and ears are small (~1/3 head length) and rounded."
+    ]
+  },
+
+  "horse": {
+    "measures": {
+      "head_length": [0.38, 0.42],
+      "head_height_at_jowl": [0.17, 0.2],
+      "muzzle_depth": [0.08, 0.1],
+      "neck_length_poll_to_withers": [0.38, 0.44],
+      "withers_height": [0.98, 1.04],
+      "hip_height_croup": [0.96, 1.02],
+      "chest_depth": [0.48, 0.52],
+      "belly_clearance": [0.48, 0.52],
+      "elbow_height": [0.5, 0.54],
+      "fore_scapula": [0.26, 0.3],
+      "fore_upper_arm": [0.18, 0.22],
+      "fore_forearm": [0.28, 0.32],
+      "fore_cannon": [0.18, 0.21],
+      "fore_pastern": [0.07, 0.09],
+      "hoof_height": [0.06, 0.08],
+      "hoof_width": [0.11, 0.13],
+      "knee_height": [0.28, 0.32],
+      "hind_thigh": [0.28, 0.32],
+      "hind_gaskin": [0.3, 0.34],
+      "hind_cannon": [0.2, 0.24],
+      "hind_pastern": [0.08, 0.1],
+      "hock_height": [0.3, 0.36],
+      "stifle_height": [0.6, 0.66],
+      "tail_dock_length": [0.26, 0.32],
+      "tail_hair_total_length": [0.65, 0.8],
+      "tail_base_girth_diameter": [0.07, 0.09],
+      "ear_length": [0.12, 0.15],
+      "eye_position_from_poll_fraction_of_head": [0.3, 0.36],
+      "body_width_ribs": [0.28, 0.32],
+      "body_width_hips": [0.3, 0.36],
+      "shoulder_slope_degrees": [45, 55]
+    },
+    "must_have": [
+      "Square canon: withers height ~= body length ~= 2.5 head lengths; chest depth = half the height, elbow at that midpoint.",
+      "Knee (carpus) and hock at matching heights (~0.3); cannon bones are short and straight, ~half the forearm/gaskin.",
+      "Head length ~= chest depth; eye sits ~1/3 down from the poll; ear ~1/3 head length."
+    ],
+    "mistakes": [
+      "Legs too short / barrel too deep (pony or cartoon proportions) and cannons too long relative to forearm.",
+      "Neck too short, too thick at the throat, or set too low; neck should be ~1 head long and tie in high at the withers.",
+      "Hooves too small and pasterns vertical; hoof width ~0.12 and pastern slopes ~45-50 degrees matching the shoulder."
+    ]
+  },
+
+  "elephant": {
+    "measures": {
+      "head_length_forehead_to_occiput": [0.32, 0.38],
+      "head_height": [0.38, 0.45],
+      "trunk_length": [0.62, 0.72],
+      "neck_length": [0.08, 0.12],
+      "withers_height": [0.9, 1.05],
+      "hip_height": [0.84, 0.95],
+      "chest_depth": [0.52, 0.58],
+      "belly_clearance": [0.38, 0.45],
+      "fore_upper_arm": [0.28, 0.32],
+      "fore_forearm": [0.26, 0.3],
+      "fore_foot_height": [0.08, 0.1],
+      "fore_foot_diameter": [0.14, 0.17],
+      "wrist_height": [0.2, 0.25],
+      "hind_thigh": [0.32, 0.36],
+      "hind_shin": [0.22, 0.26],
+      "hind_foot_diameter": [0.12, 0.15],
+      "hock_height": [0.22, 0.28],
+      "knee_stifle_height": [0.45, 0.52],
+      "tail_length": [0.55, 0.65],
+      "tail_base_girth_diameter": [0.06, 0.08],
+      "ear_length_african": [0.42, 0.5],
+      "ear_width_african": [0.32, 0.4],
+      "ear_area_african_fraction_of_body_length_squared": [0.12, 0.18],
+      "ear_length_asian": [0.24, 0.3],
+      "tusk_visible_length_african_male": [0.3, 0.55],
+      "body_width_ribs": [0.45, 0.55],
+      "body_width_hips": [0.38, 0.45],
+      "leg_column_diameter_fore": [0.14, 0.17]
+    },
+    "must_have": [
+      "African: highest point at the shoulder with a concave 'saddle' back; ear top reaches above the eye and ear bottom reaches the jaw/neck line; ear area ~0.15 body-length squared. Asian: domed twin-lobed forehead, convex back highest at the middle, ears ~half the size.",
+      "Trunk reaches the ground (~0.65-0.7) with the tip just clearing it in neutral stance; trunk base is as wide as the face.",
+      "Forelimb joints: elbow bends backward, wrist (the visible front 'knee') bends forward like a human wrist, hind limb has a true knee (stifle) high under the body and the hock low. Front feet round, hind feet oval, both nearly flush-sided cylinders."
+    ],
+    "mistakes": [
+      "Legs too short and stubby with 'knees' bending the wrong way or both pairs bending the same way.",
+      "Ears too small (or African ears on an Asian body shape and vice versa); forgetting ears attach along the whole side of the head, not just at a point.",
+      "Trunk too short or too thin at the base; tusks sprouting from the mouth instead of from the upper jaw above and ahead of the mouth."
+    ]
+  },
+
+  "giraffe": {
+    "measures": {
+      "head_length": [0.28, 0.33],
+      "head_height": [0.14, 0.17],
+      "neck_length": [0.95, 1.15],
+      "neck_base_diameter": [0.28, 0.34],
+      "ossicone_length": [0.06, 0.1],
+      "withers_height": [1.3, 1.5],
+      "hip_height": [1.15, 1.3],
+      "total_height_to_crown": [2.2, 2.6],
+      "chest_depth": [0.48, 0.55],
+      "belly_clearance": [0.85, 1.0],
+      "fore_upper_arm": [0.32, 0.38],
+      "fore_forearm": [0.42, 0.48],
+      "fore_cannon": [0.38, 0.44],
+      "fore_pastern": [0.09, 0.12],
+      "knee_height": [0.55, 0.62],
+      "hind_thigh": [0.38, 0.44],
+      "hind_shin": [0.38, 0.44],
+      "hind_cannon": [0.36, 0.42],
+      "hock_height": [0.5, 0.58],
+      "tail_dock_length": [0.35, 0.45],
+      "tail_with_tuft_length": [0.8, 1.0],
+      "tail_base_girth_diameter": [0.05, 0.07],
+      "ear_length": [0.11, 0.14],
+      "hoof_width": [0.1, 0.13],
+      "body_width_ribs": [0.32, 0.38],
+      "body_width_hips": [0.26, 0.32]
+    },
+    "must_have": [
+      "Neck ~= body length and the shoulder/withers hump is a tall spine-process ridge well forward; the back slopes steeply down to the croup (hip ~85-90% of withers).",
+      "Front legs only slightly longer than hind (the slope comes from the withers ridge, not from drastically different leg lengths); cannons are as long as the forearm/gaskin.",
+      "Ossicones 0.06-0.1 body length with knobbed tips, a median bump on the forehead; big dark eyes with long lashes set high and wide."
+    ],
+    "mistakes": [
+      "Neck emerging from the middle of the back or too low on the chest; it should rise from the withers ridge with the chest sloping into it.",
+      "Hind legs drawn far shorter than front; hock placed too low (hock sits ~0.55, i.e. around belly height).",
+      "Horse-like head and horse-like leg joints; giraffe legs are thin and straight with very long cannons and the knee/hock far above the midpoint."
+    ]
+  },
+
+  "crocodile": {
+    "measures": {
+      "head_length": [0.38, 0.48],
+      "head_height": [0.09, 0.12],
+      "head_width_at_jaw_joint": [0.22, 0.28],
+      "snout_width_at_tip_fraction_of_head": [0.3, 0.4],
+      "neck_length": [0.12, 0.18],
+      "withers_height_resting": [0.18, 0.24],
+      "withers_height_high_walk": [0.3, 0.38],
+      "hip_height_resting": [0.18, 0.24],
+      "chest_depth": [0.22, 0.28],
+      "belly_clearance_resting": [0.0, 0.03],
+      "belly_clearance_high_walk": [0.15, 0.22],
+      "fore_upper_arm": [0.13, 0.16],
+      "fore_forearm": [0.11, 0.14],
+      "fore_hand": [0.09, 0.12],
+      "hind_thigh": [0.18, 0.22],
+      "hind_shin": [0.15, 0.19],
+      "hind_foot": [0.18, 0.24],
+      "hock_height_resting": [0.06, 0.1],
+      "tail_length": [1.3, 1.5],
+      "tail_base_girth_height": [0.24, 0.3],
+      "tail_base_girth_width": [0.18, 0.24],
+      "tail_single_keel_starts_at_fraction_of_tail": [0.35, 0.45],
+      "body_width_ribs": [0.4, 0.48],
+      "body_width_hips": [0.28, 0.34],
+      "eye_height_above_skull_table": [0.02, 0.03],
+      "total_length_head_to_tail_tip": [2.7, 3.0]
+    },
+    "must_have": [
+      "Tail ~45-50% of total length, oval-tall at the base (taller than wide), with two rows of raised scutes that merge into a single keel ~40% down the tail.",
+      "Hind limbs much larger than fore (thigh+shin ~0.4 vs arm ~0.3), sprawled outward at rest; 5 fingers front (3 clawed), 4 toes hind (webbed).",
+      "Flat skull table with eyes, ears and nostrils on one plane; 4th lower tooth sits outside the upper jaw in a notch (crocodile), snout tapers to a V (vs alligator U)."
+    ],
+    "mistakes": [
+      "Tail too short or too round in section; it should be about 1.4x the trunk and laterally flattened.",
+      "Legs too long and tucked under the body like a dinosaur or lizard; limbs stay low with the belly on the ground at rest.",
+      "Head too narrow and tall, teeth hidden; skull is wide and flat with the width ~2.5x the height and teeth visible when the mouth is closed."
+    ]
+  },
+
+  "eagle": {
+    "measures": {
+      "head_length_bill_tip_to_occiput": [0.36, 0.42],
+      "head_height": [0.18, 0.22],
+      "bill_length_exposed_culmen": [0.13, 0.17],
+      "bill_depth": [0.08, 0.1],
+      "neck_length": [0.22, 0.28],
+      "perched_height_perch_to_crown": [1.4, 1.65],
+      "chest_depth": [0.48, 0.55],
+      "body_width_at_breast": [0.42, 0.5],
+      "tibia_feathered_trouser": [0.32, 0.38],
+      "tarsus_length": [0.28, 0.33],
+      "tarsus_exposed_above_toes": [0.18, 0.24],
+      "toe_span_front_to_hallux": [0.28, 0.34],
+      "hallux_talon_length": [0.08, 0.11],
+      "tail_length": [0.75, 0.9],
+      "tail_base_width": [0.2, 0.25],
+      "folded_wing_wrist_to_tip": [1.5, 1.7],
+      "wingtip_vs_tail_tip_bald": [-0.05, 0.03],
+      "wingtip_vs_tail_tip_golden": [-0.12, -0.05],
+      "wingspan": [5.5, 6.5],
+      "wing_chord_at_secondaries": [0.9, 1.05],
+      "eye_diameter": [0.06, 0.075],
+      "body_axis_angle_from_vertical_degrees": [35, 55],
+      "primary_feather_count": 10
+    },
+    "must_have": [
+      "Folded wingtips reach to about the tail tip (bald eagle: level to slightly short; golden eagle: short by ~0.1).",
+      "Legs are mostly hidden: feathered tibia 'trousers' cover down to the tarsus; exposed yellow tarsus ~0.2 plus massive toes with the hallux talon ~0.1. Golden eagles are feathered to the toes.",
+      "Head: heavy hooked bill ~0.15 with a prominent brow ridge over a forward-set eye; head width ~0.6 of head length; perched body leans ~45 degrees, not vertical."
+    ],
+    "mistakes": [
+      "Body too vertical with long exposed bare legs (chicken stance); eagles perch leaning forward on short-looking feathered legs.",
+      "Head and bill too small; eagle head is ~0.4 body length and the bill is deep and hooked, not a small songbird beak.",
+      "Folded wings too short and tail too long, or primaries drawn as a smooth blob instead of stacked, pointed feather tips crossing near the tail."
+    ]
+  },
+
+  "shark": {
+    "measures": {
+      "head_length_snout_to_5th_gill": [0.26, 0.3],
+      "head_height": [0.16, 0.2],
+      "snout_tip_to_eye": [0.07, 0.09],
+      "snout_tip_to_mouth": [0.08, 0.1],
+      "mouth_width": [0.1, 0.13],
+      "eye_diameter": [0.012, 0.018],
+      "body_max_depth": [0.22, 0.26],
+      "body_max_depth_requiem_shark": [0.16, 0.2],
+      "body_width_at_pectorals": [0.17, 0.21],
+      "position_of_max_depth": [0.32, 0.4],
+      "caudal_peduncle_depth": [0.05, 0.07],
+      "gill_slit_region_length": [0.07, 0.09],
+      "pectoral_fin_length": [0.19, 0.23],
+      "pectoral_fin_base": [0.07, 0.09],
+      "pectoral_origin": [0.27, 0.3],
+      "first_dorsal_height": [0.1, 0.13],
+      "first_dorsal_base": [0.11, 0.14],
+      "first_dorsal_origin": [0.34, 0.4],
+      "second_dorsal_height": [0.02, 0.035],
+      "second_dorsal_origin": [0.72, 0.78],
+      "pelvic_fin_origin": [0.55, 0.6],
+      "pelvic_fin_length": [0.07, 0.09],
+      "anal_fin_origin": [0.74, 0.8],
+      "caudal_upper_lobe_length": [0.28, 0.33],
+      "caudal_lower_lobe_fraction_of_upper_white_shark": [0.65, 0.8],
+      "caudal_lower_lobe_fraction_of_upper_requiem_shark": [0.4, 0.55],
+      "caudal_keel_present_white_shark": 1,
+      "total_length_including_tail": [1.28, 1.33]
+    },
+    "must_have": [
+      "First dorsal origin just behind the pectoral insertion (~0.36), height ~0.12; second dorsal and anal tiny (~0.03) and opposite each other at ~0.75.",
+      "Heterocercal tail: upper lobe 0.3, lower lobe 0.5-0.8 of upper (near-symmetric lunate only for white/mako); strong lateral keels on a narrow peduncle (~0.06 deep).",
+      "Five gill slits immediately ahead of the pectoral, mouth under the snout at ~0.09 with the eye just above and ahead of it; conical snout, max body depth at ~0.35."
+    ],
+    "mistakes": [
+      "First dorsal too far forward over the head or too tall and sickle-like; body too uniformly tubular with a fat tail base.",
+      "Tail lobes drawn symmetrical (fish-like) on a requiem/tiger shark, or lower lobe missing entirely.",
+      "Mouth drawn at the snout tip or too wide, eyes too large, pectorals too small (they should be ~0.2, as long as the head is tall)."
+    ]
+  },
+
+  "frog": {
+    "measures": {
+      "head_length_snout_to_occiput": [0.35, 0.4],
+      "head_width": [0.38, 0.45],
+      "head_height": [0.18, 0.22],
+      "eye_diameter": [0.09, 0.12],
+      "eye_protrusion_above_skull": [0.04, 0.06],
+      "tympanum_diameter": [0.07, 0.12],
+      "interorbital_width": [0.08, 0.1],
+      "neck_length": 0.0,
+      "sitting_height_ground_to_sacral_hump": [0.45, 0.55],
+      "sitting_height_ground_to_eye_top": [0.4, 0.5],
+      "body_width_max": [0.55, 0.65],
+      "belly_clearance_sitting": [0.0, 0.05],
+      "fore_upper_arm": [0.22, 0.26],
+      "fore_forearm": [0.2, 0.24],
+      "fore_hand_with_fingers": [0.22, 0.27],
+      "hind_thigh": [0.45, 0.52],
+      "hind_shin_tibiofibula": [0.5, 0.58],
+      "hind_tarsus": [0.24, 0.3],
+      "hind_foot_with_toes": [0.48, 0.56],
+      "hind_limb_total": [1.7, 1.95],
+      "hind_limb_total_toad": [1.25, 1.45],
+      "tail_length": 0.0,
+      "ear_length": 0.0,
+      "knee_position_sitting_fraction_along_body": [0.75, 0.95],
+      "heel_position_sitting_fraction_along_body": [0.9, 1.05]
+    },
+    "must_have": [
+      "Hind limb ~1.8x SVL with tibia >= femur; when sitting the folded leg forms a Z with the knee pointing out-and-forward beside the flank and the heel at the vent.",
+      "Eyes bulge above the skull profile and are set wide; tympanum visible behind the eye (bullfrog male: larger than the eye); dorsolateral folds / sacral hump break the back silhouette.",
+      "Forelimbs short (~0.7 SVL total) with 4 unwebbed fingers; hind feet fully webbed with 5 toes, foot ~0.5 SVL."
+    ],
+    "mistakes": [
+      "Hind legs too short and straight (toad-like) with the knee tucked under the body instead of folded out to the side.",
+      "Front legs too long and used like arms; the frog's chest sits almost on the ground with the forearms vertical.",
+      "Head too narrow and pointed with small eyes; frog head is nearly as wide as the body and the eyes are the dominant feature."
+    ]
+  },
+
+  "tortoise": {
+    "measures": {
+      "carapace_length": 1.0,
+      "carapace_width": [0.72, 0.85],
+      "carapace_height": [0.42, 0.55],
+      "plastron_length": [0.82, 0.92],
+      "head_length": [0.2, 0.25],
+      "head_height": [0.11, 0.14],
+      "head_width": [0.12, 0.15],
+      "neck_length_extended": [0.3, 0.4],
+      "standing_height_ground_to_shell_top": [0.55, 0.68],
+      "belly_clearance_plastron_to_ground": [0.1, 0.16],
+      "fore_upper_arm": [0.18, 0.22],
+      "fore_forearm": [0.14, 0.18],
+      "fore_foot_height": [0.06, 0.08],
+      "forelimb_exposed_length_shell_edge_to_ground": [0.2, 0.28],
+      "forelimb_column_width": [0.15, 0.2],
+      "hind_thigh": [0.16, 0.2],
+      "hind_shin": [0.12, 0.15],
+      "hind_foot_diameter": [0.1, 0.14],
+      "hindlimb_exposed_length": [0.15, 0.22],
+      "tail_length": [0.08, 0.16],
+      "tail_base_girth_diameter": [0.05, 0.07],
+      "ear_length": 0.0,
+      "scutes_vertebral": 5,
+      "scutes_costal_per_side": 4,
+      "scutes_marginal_per_side": 11,
+      "body_width_ribs": [0.72, 0.85],
+      "body_width_hips": [0.6, 0.72]
+    },
+    "must_have": [
+      "Elephantine columnar legs directly under the shell: forelimbs flattened and armoured with large scales, bending at the elbow so the foot plants forward; hind legs round pillars. Not paddles.",
+      "Scute map: 5 vertebral, 4 costal each side, 11 marginals each side, 1 nuchal; growth rings on each scute; shell front edge flares over the neck, rear marginals flare over the tail.",
+      "Head is small (~0.22) with a blunt beaked snout and eye ~0.3 of head length; neck retracts straight back (S-curve vertical), not sideways."
+    ],
+    "mistakes": [
+      "Turtle legs (splayed, flippery) and a turtle-flat shell; tortoise shell is high-domed (~0.5 of length) and legs are vertical pillars.",
+      "Head too big and lizard-like with a long neck; head stays ~1/5 of shell length.",
+      "Shell drawn as a smooth hemisphere with random hexagons; the plastron also too small or shell too narrow (width ~0.8 of length)."
+    ]
+  },
+
+  "kangaroo": {
+    "measures": {
+      "head_length": [0.34, 0.4],
+      "head_height": [0.18, 0.22],
+      "muzzle_length_fraction_of_head": [0.5, 0.6],
+      "ear_length": [0.2, 0.26],
+      "neck_length": [0.28, 0.34],
+      "resting_height_ground_to_crown": [1.7, 2.0],
+      "hip_height_resting": [0.85, 1.0],
+      "shoulder_height_resting": [1.25, 1.45],
+      "chest_depth": [0.4, 0.48],
+      "belly_clearance_resting": [0.5, 0.65],
+      "fore_upper_arm": [0.26, 0.3],
+      "fore_forearm": [0.26, 0.3],
+      "fore_hand": [0.13, 0.16],
+      "forelimb_total": [0.68, 0.76],
+      "hind_thigh": [0.45, 0.52],
+      "hind_shin": [0.72, 0.85],
+      "hind_metatarsus": [0.45, 0.55],
+      "hind_toes_4th_toe": [0.18, 0.24],
+      "hind_foot_total_heel_to_claw": [0.62, 0.75],
+      "hindlimb_total": [1.8, 2.1],
+      "hind_to_fore_limb_ratio": [2.5, 2.9],
+      "hock_height_resting": [0.0, 0.05],
+      "tail_length": [1.0, 1.2],
+      "tail_base_girth_diameter": [0.22, 0.28],
+      "tail_base_girth_height": [0.26, 0.32],
+      "thigh_width_side_view": [0.3, 0.36],
+      "body_width_ribs": [0.28, 0.34],
+      "body_width_hips": [0.38, 0.45],
+      "spine_angle_from_vertical_resting_degrees": [35, 50]
+    },
+    "must_have": [
+      "Hind foot ~0.65 lying flat on the ground from heel to the 4th-toe claw; tibia ~0.8 (the longest bone); massive thigh ~0.5 long and ~0.33 wide in side view.",
+      "Tail ~= body length, very thick at the base (~0.25 diameter) tapering evenly; it rests on the ground as the third leg of the tripod with the body weight on the heels.",
+      "Forelimbs tiny (~0.7 total, 1/2.7 of hind), held bent against the chest with 5 clawed fingers; long narrow muzzle, big upright ears ~0.23, spine curved and leaning forward ~40 degrees."
+    ],
+    "mistakes": [
+      "Forearms too large and human-like, or shoulders too broad; the chest is narrow and the arms are small (big arms only on boomer males, and still < hind limb/2).",
+      "Tail too thin at the base or lifted off the ground at rest; base girth is almost as thick as the thigh.",
+      "Posture too vertical with the hock lifted (dog-like), hind foot too short; at rest the whole foot from heel to toe is planted and the spine curves forward."
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+138: shark | 4 | tube body, flat stuck-on fins, no gill/head sculpt
+144: dog (wolf-like) | 3 | stick legs, blobby muzzle, no paws or facial form
+182: eagle on perch | 3 | stiff bullet body, no wing separation, tiny feet
+232: eagle on branch | 5 | decent head/beak; wings stiff slabs, legs crude
+288: horse | 4 | sausage barrel, rectangular top silhouette, weak legs
+305: kangaroo | 5 | good silhouette; soft tail root, crude arms and feet
+366: dog/wolf | 3 | lumpy sausage torso, pipe legs, rigid tail
+384: giraffe | 4 | tube neck, blocky barrel, no ossicones/head form
+417: horse | 5 | readable but soft; weak joints, bland head
+495: frog | 3 | blob body, sticks for limbs, eyes as nubs
+535: crocodile | 4 | flat uniform body, spike row, limbs barely formed
+667: hammerhead shark | 5 | good read; fins paper-thin, body uniform tube
+694: crocodile/gharial | 3 | featureless tube, legs tiny, no head form
+785: kangaroo | 5 | clean silhouette; tube limbs, knob hands, soft anatomy
+801: tortoise | 3 | dome on disc, tube legs, no shell structure
+804: elephant | 4 | correct proportions but inflated balloon body, cylinder legs
+855: giraffe | 4 | tube neck, no joints, head lacks ossicones definition
+860: frog | 4 | better limbs than 495; blobby torso, ball toes
+936: tortoise | 5 | scute panels read; legs stub cylinders, stiff head
+961: elephant | 5 | ears and trunk read; puffy lumpy body, piped legs

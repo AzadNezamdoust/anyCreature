@@ -1,0 +1,20 @@
+129: horse | 6 | bloated barrel belly, noisy shredded tail mesh
+176: crocodile (upright-legged croc hybrid) | 4 | mammalian upright legs, bulbous limbs, odd proportions
+259: elephant | 5 | inflated round torso, stubby head, sliced flat feet
+269: alligator | 4 | huge flat cut underside, belly cap artifact
+289: bald eagle | 6 | built-in perch stump, ragged wing edges
+329: tree frog | 5 | broken toe geometry, floating stray limb fragments
+354: kangaroo | 5 | sliced flat feet/tail, soft cartoon head
+359: great white shark | 7 | slightly bloated body, small artifacting at fins
+390: giraffe | 6 | short neck, muscle bulges too lumpy
+466: turtle | 3 | shell detached, stray plate fin, cut feet
+492: eagle | 3 | torn tail slab, shredded noisy feather mesh
+530: tortoise | 6 | tubular limbs, hollow shell underside
+561: kangaroo | 6 | cut-off foot/tail planes, thin forearms
+580: horse | 6 | bloated torso, melted noisy tail
+769: wolf | 5 | head turned/hidden, cut flat paws, noisy fur
+888: elephant | 7 | sliced flat feet, slightly stiff legs
+908: great white shark | 7 | bloated rear torso, mild fin artifacts
+909: frog | 3 | huge flat ground slab fused to feet
+933: giraffe | 4 | camel-like hump, faceted torso, short neck
+987: wolf | 5 | lumpy noisy fur, cut flat paws

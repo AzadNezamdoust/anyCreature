@@ -1,0 +1,20 @@
+126: crocodile | 4 | stub legs, no feet, bloated flat body, weak head
+134: wolf | 5 | tubular limbs, lumpy muscle blobs, thin neck-to-head join
+191: horse | 6 | soft lumpy musculature, blobby tail, weak hoof/fetlock detail
+389: frog | 6 | overly smooth blobby body, bead-like toes, flat face
+439: wolf | 5 | lumpy chest blobs, tubular legs, thin neck
+458: giraffe | 4 | legs too thick, blob knees, no ossicone/face definition
+464: hammerhead shark | 5 | hammer barely present, flat plate fins, tube body
+567: giraffe | 4 | thick tube legs, blob joints, weak face/ossicones
+612: horse | 6 | lumpy shoulder/hip masses, blobby tail, soft hooves
+613: kangaroo | 4 | spherical belly, tube limbs, stiff feet, blunt head
+670: eagle | 6 | wing tips thin slab, talons weak, perch crude
+706: crocodile | 5 | too flat, thin tube legs, floating belly, weak head
+794: tortoise | 6 | stubby legs, shell scutes uneven, face crude
+810: tortoise | 6 | stubby legs, uneven scutes, crude head
+820: eagle | 6 | flat slab wings, weak talons, crude branch
+825: kangaroo | 5 | ball belly, tube arms, stiff flat feet
+858: elephant | 5 | balloon body, tube legs, flat paddle ears, pinched trunk
+872: elephant | 4 | lumpy bumps on back/hips, tube legs, balloon body
+882: frog | 6 | blobby smooth body, bead toes, flat face
+911: hammerhead shark | 5 | weak hammer, flat slab fins, tubular body
