@@ -1,0 +1,87 @@
+{
+ "name": "r20",
+ "pack": "C:\\Users\\DELL\\AppData\\Local\\Temp\\judge_201e909a",
+ "made": "2026-10-20 13:21:02",
+ "sheets": {
+  "cd6792": {
+   "src": "r20/octopus/stage4/sheet.jpg",
+   "sha256": "6c3a815b5b9e31ee49d9a80e26433395aec093b54b49acc47272b97e03a611ca"
+  },
+  "b31521": {
+   "src": "r20/griffin/stage4/sheet.jpg",
+   "sha256": "40cb2683cbdcae3f7bd6059e3cc8561d542c79e63d08cb9aab5fa49a3135ecb7"
+  },
+  "0c022f": {
+   "src": "r20/penguin/stage4/sheet.jpg",
+   "sha256": "a04c9afd2fe79b46a04552d0fec40bdeb57c0a8d2955820199adbbdf23f02f69"
+  },
+  "e0a3b2": {
+   "src": "r20/crocodile/stage4/sheet.jpg",
+   "sha256": "e648da804d82685db4567c6aff3106b174d0e019be8ad8feb489a2c1c4c9d8d3"
+  },
+  "a90f5a": {
+   "src": "r20/cyclops/stage4/sheet.jpg",
+   "sha256": "217f7b95831d9ac53e24b4f078fe5478d8b6128bf523eac20b32cddec57f2907"
+  },
+  "1269b0": {
+   "src": "r20/drake/stage4/sheet.jpg",
+   "sha256": "cd0eb5b8836f869970b747a9ed36570a28c63665a702f0a714dd6ee5adc59f2a"
+  },
+  "dbe669": {
+   "src": "r20/tortoise/stage4/sheet.jpg",
+   "sha256": "4ca20bb26605e199c3277502afebe65066ec4176abeb7b9904e2e23512921ff4"
+  },
+  "d72d56": {
+   "src": "r20/crystal_beetle/stage4/sheet.jpg",
+   "sha256": "f73f0d94fc89a5e6c7ec829006f021139610d99dc2a413ec6cbfa92162553259"
+  },
+  "bf7ce2": {
+   "src": "r20/wyrm/stage3/sheet.jpg",
+   "sha256": "cef7fcac5ac2eae64b49af88f99a1d764f09494f95e5e467fe720131e0baa78d"
+  },
+  "e294ae": {
+   "src": "r20/scorpion/stage4/sheet.jpg",
+   "sha256": "72883614cfa753d5bb47c8cb306ce1b74be455c10151b0da33773e9e6bdd1593"
+  },
+  "071a8d": {
+   "src": "r20/kraken_hound/stage1/sheet.jpg",
+   "sha256": "43deb998d687dfd4cfb14e62d828583ef98e0094fe4c65213e4d0afa0b918162"
+  },
+  "287fe5": {
+   "src": "r20/rhino/stage4/sheet.jpg",
+   "sha256": "7af73c1cd374b7566cf243d457d0db98ddbb03e4167522af395e7b846f1b4f7f"
+  },
+  "e0a5fe": {
+   "src": "r20/mushroom_golem/stage4/sheet.jpg",
+   "sha256": "7d90cce6add8eb4c1e4725fb6d466feee37e9f163e787401c542550b8574399f"
+  },
+  "8e23c9": {
+   "src": "r20/swamp_troll/stage4/sheet.jpg",
+   "sha256": "24bf79c850f26b4d8bbc204920f8e6fea8b273e0f3eddc2486646433fffc7bab"
+  },
+  "14718b": {
+   "src": "r20/gorilla/stage4/sheet.jpg",
+   "sha256": "379488405027cde83cc32be091f20cb6356469f93450a127bb7f76863d76cc03"
+  },
+  "effd02": {
+   "src": "r20/harpy/stage4/sheet.jpg",
+   "sha256": "742518357790edce7007b501253c645b68515cc2ccd7c198e7358a1a10d54b11"
+  },
+  "40c712": {
+   "src": "r20/chimera/stage4/sheet.jpg",
+   "sha256": "0209b9603e9255f2e8e95be89916cafe21f256dfdc9e30ec1aeeba2957094408"
+  },
+  "506ce5": {
+   "src": "r20/camel/stage4/sheet.jpg",
+   "sha256": "63dceef067a499f34792e4fdc7aa5bdd588ae04e0ac9571ece489631a82c4522"
+  },
+  "31a1f8": {
+   "src": "r20/lion/stage4/sheet.jpg",
+   "sha256": "6b7fd335984782de5bd47b02c54ae4784192fd08a3ac9ba6faee1658f0a156d0"
+  },
+  "a272fb": {
+   "src": "r20/horse/stage4/sheet.jpg",
+   "sha256": "0e83026cb68bf81fe06705c07d42c7b6d481cc3a1e93b887ebcb4445f40196f4"
+  }
+ }
+}
