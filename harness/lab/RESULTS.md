@@ -248,3 +248,10 @@ mesh), Paint 2.1 6.5/7.3 GiB at 6 views (9 views OOM; slight quality cost),
 mask/clean/QuadriFlow/rig CPU-only. Wolf end-to-end ~5 min. Texture headroom
 ~0.2 GiB reserved: confirm on a real 8 GB card. GTX-1050-class (2-4 GB)
 cannot run it (shape weights alone 5.7 GiB). Details: harness/lab/lowvram/REPORT.md.
+
+## UniForge3D check (2026-10-20)
+
+Multi-view unposed images -> 3D (TRELLIS.2 + VGGT based). Blocked: needs gated
+DINOv3 (same as TRELLIS.2). Weights CC BY-NC 4.0 (non-commercial). Pipeline has
+low_vram mode (per-stage GPU loading), 8 GB fit untested. Details:
+harness/lab/UniForge3D_TEST.md.
