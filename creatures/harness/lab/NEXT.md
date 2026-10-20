@@ -24,3 +24,23 @@
 5. Optional: TRELLIS.2 needs the user's DINOv3 HF login.
 
 Machine-side assets live in E:\gen3d (venvs, ~40 GB weights, outputs); not in git.
+
+## Pause 2026-10-20 (evening)
+
+Done today: repo split creatures/ + hard_surface/; boxmodel kit on Blender 5.2.2
+(E:\gen3d\blender, portable) + census gate + PARAMS/patch prompt; 20 new box-model
+creatures (r20, gallery_r20.jpg; blind judging leaked titles - rerun with
+judge_pack.py blanking titles); rounds 16-19 + part-aware test in RESULTS.md;
+RTX 2070M mode (pipeline/RTX2070M.md, --turing, sm_75 rasterizer, low-RAM load);
+--bake-normals (adopt, make default on).
+
+Decisions (Azad): Hunyuan3D-2.1 = shape; Hunyuan Paint 2.1 = texture (only one
+with unlit albedo); MV-Adapter = commercial-safe fallback needing delight.
+No Fable unless Azad asks.
+
+Stopped mid-run (resume these):
+- Pixal3D test (TencentARC, MIT) -> E:\gen3d\pixal\ (was in setup/download).
+- Direct3D-S2 test -> E:\gen3d\d3ds2\ (setup done, first runs).
+Then: blind Opus judge vs Hunyuan r9pick; if one wins, mesh refinement vs refs
+(needs non-nvdiffrast renderer). Item 7 needs Azad's multi-view refs in
+E:\gen3d\inbox\<animal>\.
