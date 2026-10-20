@@ -45,7 +45,66 @@ COUNTS = dict(quadruped=dict(
     fore=dict(hinge=(3, 2), mass=(1, 1)),        # per inner joint: rings (3 = converging hinge, 2 = wrist / ankle); per bone
     hind=dict(hinge=(3, 3), mass=(1, 1, 1)),     # before it: mass rings (the last bone's is the cannon); + paw and sole rings
 ))
+
+# ================================================================ PARAMS
+# Every shape dimension of the fit lives here (fractions of the local width / depth / part length unless noted).
+# A PATCH (REPAIR.md) changes values in this block only. quadruped_spec(**over) still overrides per creature.
 OFFSET_CLAMP = 0.25          # a named offset is at most this x the local width
+SPEC_TOP = dict(fore=0.4, hind=0.4)          # scapula / haunch border height up the flank (0 root joint .. 1 back)
+SPEC_PAD = dict(fore=0.15, hind=0.15)        # border margin round the limb root, x limb width
+SPEC_SPAN = dict(fore=(1.0, 1.0), hind=(1.0, 1.0))   # block reach (front, rear) round the root, x default
+SPEC_ROOT = dict(fore=0.62, hind=0.62)       # first free ring along the first bone
+SPEC_BLOCK = dict(fore=0.32, hind=0.38)      # block reach floor, x trunk depth at the root
+SPEC_SOCKET = (0.4, 0.75)
+HINGE_RATIO = 0.55           # flexion / extension gap at a 3-ring hinge
+PAW_HEIGHT = 0.62            # paw ring height, x the last ring's centre z
+EYE_SIZE = 0.13              # eye loop, x head width
+TAIL_BORDER = (0.4, 0.75)    # rump row / tail border blend toward the tail socket
+EAR = dict(a=0.16, b=0.07, f=None, s=None)   # ear loop half-axes x head width; f/s ring stations / scales
+LIMB_SAMPLE_T = 0.3          # where on the first bone the limb section is read (x first bone length)
+LEAN_RAMP = (0.1, 0.3, 0.6, 0.9, 1.0)        # shoulder rows sh-2..sh+2: fraction of the neck's rise they lean
+RUMP_ROW = 0.45              # rump row behind row 1, x haunch reach
+CHEST_ROW = (0.4, 0.03, 0.25)                # chest row: x fore reach behind; neck t; x fore reach ahead
+EYE_FALLBACK, EAR_FALLBACK = 0.12, 0.4       # head t behind the stop when no landmark
+STOP_MIN_GAP, BROW_GAP_MAX, EAR_GAP_MIN = 0.1, 0.16, 0.12
+HEAD_STEP = (0.18, 0.3)      # head ring spacing clamp (min, max), head t
+EAR_FRAC_DEFAULT, EYE_FRAC_DEFAULT = 0.2, 0.36
+EAR_BLOCK, EYE_BLOCK = 0.11, 0.10            # ear / eye block half-size, round the head section
+HEAD_FRACS = (0.0, 0.09, 0.30, 0.5, 0.69, 0.86, 1.0)   # head half-ring points, 0 top seam .. 1 chin
+HEAD_FRAC_MIN_EAR = 0.04
+HEAD_EAR_EYE_W = (0.65, 0.35)                # brow line blend on the ear+eye rings (ring n-3, others)
+HEAD_STOP_FRACS = (0.15, 0.85)
+HEAD_FRAC_CLAMP = dict(f1_max=0.16, f2_gap=0.09, f2_max=0.42, f3_gap=0.1, f3_max=0.6, f4_gap=0.1, f5_gap=0.08)
+NECK_T0 = 0.03               # neck border t
+MUZZLE_SOCKET_GAP, MUZZLE_END = 0.07, 0.97
+NOSE_T = 0.85                # the nose end is sized as the muzzle at this t: a blunt block
+TAIL_T0, TAIL_SPAN = 0.14, 0.78
+TRUNK_LOW = 1.03             # under a limb root the lower half returns to this x the part's own section
+TRUNK_BELLY_X = (0.5, 0.3, 0.4)              # belly-line pin: root x - (a + b) x limb width, floor c x root x
+SECTION_LIM = dict(trunk=(0.6, 1.25), tube=(0.5, 1.6), muzzle=(0.6, 1.4), tail=(0.6, 1.4), limb=(0.7, 1.3), sole=(0.05, 1.0))
+NECK_RING_GAP = 0.07         # neck/head rings stay this x head width apart
+MUZZLE_RING_GAP = 0.05
+NOSE_CAP = 0.1               # nose cap ahead of the last ring, x its span
+LEAN_FAN_RINGS = 4           # head rings fan from the neck plane to the head's own over this many
+HEAD_LEAN_T = 0.3
+TAIL_LEAN0 = 0.75            # the tail socket loop keeps this x its station lean
+RUMP_RAY = (0.25, 0.12)      # rump fan origin behind row 1 (x depth); max ray hit distance
+TAIL_BEHIND = 0.02
+HINGE_SIZE = (0.5, 0.4, 0.45, 0.5)           # hinge reach: x section size, x shorter bone; 2-ring: x size, x shorter bone
+MASS_RING = (0.6, 0.4)       # first mass ring before the first hinge; last mass ring toward the end
+JOINT_BLEND = 0.6            # tangent blend range round a joint, x shorter bone
+SOLE = dict(z_min=0.012, z_frac=0.25, spread=1.5, heel=0.5, paw_shrink=0.94, toe_drop=0.45)
+UNDER_BORDER = 0.02          # first free limb ring stays this far below the border under the body
+LOWER_RING_GAP = 0.004
+SOCKET_FAN = {1: (0.5,), 2: (0.4, 0.75), 3: (0.22, 0.5, 0.78)}
+SOCKET_SNAP = (0.015, 0.06, 0.7, 1.8)        # armpit snap; other snap; accepted ray hit range x blend distance
+EYE_LOOP = (1.25, 0.8)       # eye loop half-axes x EYE_SIZE x head width (along, across)
+LOOP_ROOM = 1.25
+EAR_TIP_LEN, EAR_TIP_TILT = 0.5, 0.15        # ear tip without a landmark: x head width, outward tilt
+EAR_STATION_END, EAR_TAPER = 0.92, 0.75
+FAIR_ITERS, PLANAR, PLANAR_ITERS = 3, 0.04, 40
+RELAX_ITERS, RELAX_SNAP = 4, 0.03
+MIN_X = 0.004                # off-seam vertices keep at least this x
 
 
 # ---------------------------------------------------------------- connectivity (no Blender needed)
@@ -307,9 +366,9 @@ def quadruped_spec(tm, k, **over):
     C, R = tm.counts, tm.rows['n']
     T = {n: Tab(gp, n) for n in ('torso', 'neck', 'head')}
     lm = k.meta.get('landmarks') or {}
-    S = dict(top=dict(fore=0.4, hind=0.4), pad=dict(fore=0.15, hind=0.15), span=dict(fore=(1.0, 1.0), hind=(1.0, 1.0)), root=dict(fore=0.62, hind=0.62),
-             block=dict(fore=0.32, hind=0.38),
-             socket=(0.4, 0.75), hinge_ratio=0.55, paw=0.62, eye=0.13, tail_border=(0.4, 0.75), ear=dict(a=0.16, b=0.07, f=None, s=None), offsets={})
+    S = dict(top=dict(SPEC_TOP), pad=dict(SPEC_PAD), span=dict(SPEC_SPAN), root=dict(SPEC_ROOT),
+             block=dict(SPEC_BLOCK),
+             socket=SPEC_SOCKET, hinge_ratio=HINGE_RATIO, paw=PAW_HEIGHT, eye=EYE_SIZE, tail_border=TAIL_BORDER, ear=dict(EAR), offsets={})
     for k_ in ('pad', 'span', 'top', 'root', 'block'):
         S[k_].update(over.get(k_, {}))
     dn = (Vector(J[plan['head']]) - Vector(J[plan['neck']])).normalized()
@@ -319,14 +378,14 @@ def quadruped_spec(tm, k, **over):
     for name, mid in (('hind', tm.rows['hip']), ('fore', tm.rows['shoulder'])):
         c = plan['limbs'][name]
         L = Tab(gp, name)
-        r = L.at(0.3 * (Vector(J[c[1]]) - Vector(J[c[0]])).length / sum((Vector(J[b]) - Vector(J[a])).length for a, b in zip(c, c[1:])))
+        r = L.at(LIMB_SAMPLE_T * (Vector(J[c[1]]) - Vector(J[c[0]])).length / sum((Vector(J[b]) - Vector(J[a])).length for a, b in zip(c, c[1:])))
         ry = max(0.5 * r['depth'] + S['pad'][name] * r['width'],        # the block spans the UPPER limb's mass (scapula, thigh),
                  S['block'][name] * T['torso'].at_y(J[c[0]][1])['depth'])   # not the leg under it: x the trunk's depth at the root
         for i, sg in ((mid - 1, S['span'][name][1]), (mid, 0), (mid + 1, -S['span'][name][0])):
             rows[i] = J[c[0]][1] + sg * ry
         S.setdefault('limb', {})[name] = dict(width=r['width'], depth=r['depth'], ry=ry)
     sh = tm.rows['shoulder']
-    for i, f in ((sh - 2, 0.1), (sh - 1, 0.3), (sh, 0.6), (sh + 1, 0.9), (sh + 2, 1.0)):
+    for i, f in zip(range(sh - 2, sh + 3), LEAN_RAMP):
         if 0 <= i < R:
             lean[i] = f * Ln
     for i, l in zip((tm.rows['hip'] - 1, tm.rows['hip'], tm.rows['hip'] + 1), over.get('hip_lean', (0.0, 0.0, 0.0))):
@@ -337,8 +396,8 @@ def quadruped_spec(tm, k, **over):
     a, b = tm.rows['hip'] + 1, sh - 1
     for i in range(a + 1, b):
         rows[i] = rows[a] + (rows[b] - rows[a]) * (i - a) / (b - a)
-    rows[0] = rows[1] + 0.45 * S['limb']['hind']['ry']
-    rows[R - 1] = min(rows[R - 2] - 0.4 * S['limb']['fore']['ry'], T['neck'].at(0.03)['centre'].y + 0.25 * S['limb']['fore']['ry'])
+    rows[0] = rows[1] + RUMP_ROW * S['limb']['hind']['ry']
+    rows[R - 1] = min(rows[R - 2] - CHEST_ROW[0] * S['limb']['fore']['ry'], T['neck'].at(CHEST_ROW[1])['centre'].y + CHEST_ROW[2] * S['limb']['fore']['ry'])
     S['rows'] = list(zip(rows, lean))
     # head rings from the landmarks: the stop, the brow ring as far behind the eye as the stop is ahead of it, the ear line
     # on the ear, the occiput one step behind; neck rings evenly from the neck's border to the occiput
@@ -346,15 +405,15 @@ def quadruped_spec(tm, k, **over):
     h0, h1 = Vector(J[plan['head']]), Vector(J[plan['snout']])
     tl = lambda p: (Vector(p) - h0).dot(h1 - h0) / (h1 - h0).length_squared
     stop = hp['stations'][hp.get('cut', 3)]['s']
-    ty = tl(lm['eye']) if 'eye' in lm else stop - 0.12
-    te = tl(lm['ear']) if 'ear' in lm else ty - 0.4
-    stop = max(stop, ty + 0.1)
+    ty = tl(lm['eye']) if 'eye' in lm else stop - EYE_FALLBACK
+    te = tl(lm['ear']) if 'ear' in lm else ty - EAR_FALLBACK
+    stop = max(stop, ty + STOP_MIN_GAP)
     n = C['head']
     hs = [0.0] * n
     hs[n - 1] = stop
-    hs[n - 2] = ty - min(stop - ty, 0.16)
-    hs[n - 3] = min(te, hs[n - 2] - 0.12)
-    step = min(0.3, max(0.18, hs[n - 2] - hs[n - 3]))
+    hs[n - 2] = ty - min(stop - ty, BROW_GAP_MAX)
+    hs[n - 3] = min(te, hs[n - 2] - EAR_GAP_MIN)
+    step = min(HEAD_STEP[1], max(HEAD_STEP[0], hs[n - 2] - hs[n - 3]))
     for q in range(n - 4, -1, -1):
         hs[q] = hs[q + 1] - step
     S['head'] = hs
@@ -363,17 +422,18 @@ def quadruped_spec(tm, k, **over):
         c = T['head'].at(t)['centre']
         return (math.pi / 2 - math.atan2(p[2] - c.z, max(1e-6, p[0]))) / math.pi
 
-    fe = afrac(lm['ear'], hs[n - 3]) if 'ear' in lm else 0.2
-    fy = afrac(lm['eye'], ty) if 'eye' in lm else 0.36
-    he, hy = over.get('ear_block', 0.11), over.get('eye_block', 0.10)
+    fe = afrac(lm['ear'], hs[n - 3]) if 'ear' in lm else EAR_FRAC_DEFAULT
+    fy = afrac(lm['eye'], ty) if 'eye' in lm else EYE_FRAC_DEFAULT
+    he, hy = over.get('ear_block', EAR_BLOCK), over.get('eye_block', EYE_BLOCK)
+    HC = HEAD_FRAC_CLAMP
     HF = []
     for q in range(n):                                                   # half-ring points: the ear block's two lines either side of the
-        f = [0.0, 0.09, 0.30, 0.5, 0.69, 0.86, 1.0]                      # ear (rings n-4 .. n-2), the brow and cheek lines either side of
+        f = list(HEAD_FRACS)                                             # ear (rings n-4 .. n-2), the brow and cheek lines either side of
         ear_r, eye_r = n - 4 <= q <= n - 2, q >= n - 3                   # the eye (rings n-3 .. n-1)
         if ear_r:
-            f[1] = max(0.04, fe - he)
+            f[1] = max(HEAD_FRAC_MIN_EAR, fe - he)
         if ear_r and eye_r:
-            wg = 0.65 if q == n - 3 else 0.35
+            wg = HEAD_EAR_EYE_W[0] if q == n - 3 else HEAD_EAR_EYE_W[1]
             f[2] = wg * (fe + he) + (1 - wg) * (fy - hy)
         elif ear_r:
             f[2] = fe + he
@@ -382,22 +442,22 @@ def quadruped_spec(tm, k, **over):
         if eye_r:
             f[3] = fy + hy
         if q == n - 1:
-            f[1], f[5] = 0.15, 0.85
-        f[1] = min(f[1], 0.16)
-        f[2] = min(max(f[2], f[1] + 0.09), 0.42)
-        f[3] = min(max(f[3], f[2] + 0.1), 0.6)
-        f[4] = max(f[4], f[3] + 0.1)
-        f[5] = max(f[5], f[4] + 0.08)
+            f[1], f[5] = HEAD_STOP_FRACS
+        f[1] = min(f[1], HC['f1_max'])
+        f[2] = min(max(f[2], f[1] + HC['f2_gap']), HC['f2_max'])
+        f[3] = min(max(f[3], f[2] + HC['f3_gap']), HC['f3_max'])
+        f[4] = max(f[4], f[3] + HC['f4_gap'])
+        f[5] = max(f[5], f[4] + HC['f5_gap'])
         HF.append(f)
     S['head_fracs'] = HF
     n = C['neck']
     t_end = 1.0 + hs[0] * (h1 - h0).length / max(1e-6, (h0 - Vector(J[plan['neck']])).length)
-    S['neck'] = [0.03 + (t_end - 0.03) * i / (n + 2) for i in range(n + 2)]
+    S['neck'] = [NECK_T0 + (t_end - NECK_T0) * i / (n + 2) for i in range(n + 2)]
     n = C['muzzle']
-    S['muzzle'] = [stop + 0.07] + [stop + (0.97 - stop) * (i + 1) / n for i in range(n)]
-    S['nose'] = 0.85                                                    # the nose end is sized as the muzzle at this t: a blunt block
+    S['muzzle'] = [stop + MUZZLE_SOCKET_GAP] + [stop + (MUZZLE_END - stop) * (i + 1) / n for i in range(n)]
+    S['nose'] = NOSE_T                                                  # the nose end is sized as the muzzle at this t: a blunt block
     n = C['tail']
-    S['tail'] = [0.14] + [0.14 + 0.78 * (i + 1) / n for i in range(n)]
+    S['tail'] = [TAIL_T0] + [TAIL_T0 + TAIL_SPAN * (i + 1) / n for i in range(n)]
     for k_, v in over.items():
         if isinstance(v, dict) and isinstance(S.get(k_), dict):
             S[k_].update(v)
@@ -466,10 +526,11 @@ def fit_template(tm, k, guide, spec=None):
         for i in tm.limbs[name]['rows']:
             st = rowr[i]
             top = st['centre'].z + st['depth'] / 2
-            pins[i] = {4: ('z', Jr.z + S['top'][name] * (top - Jr.z)), 6: ('x', max(Jr.x - 0.5 * lw['width'] - 0.3 * lw['width'], 0.4 * Jr.x))}
+            bx = TRUNK_BELLY_X
+            pins[i] = {4: ('z', Jr.z + S['top'][name] * (top - Jr.z)), 6: ('x', max(Jr.x - bx[0] * lw['width'] - bx[1] * lw['width'], bx[2] * Jr.x))}
     fr = {}
     for i in sorted(pins):
-        fr[i] = section(('trunk', i), tm.rings[('trunk', i)], rowr[i], 7, half=True, pins=pins[i], lim=(0.6, 1.25), low=S.get('low', 1.03))['fracs']
+        fr[i] = section(('trunk', i), tm.rings[('trunk', i)], rowr[i], 7, half=True, pins=pins[i], lim=SECTION_LIM['trunk'], low=S.get('low', TRUNK_LOW))['fracs']
     hip, sh = tm.rows['hip'], tm.rows['shoulder']
     for m_ in (hip, sh):                                                 # the block's middle row cuts through the limb: its belly-line
         i = N('trunk', m_, 6)                                            # point is read off the rows either side of the limb
@@ -485,9 +546,9 @@ def fit_template(tm, k, guide, spec=None):
         else:
             q = (i - (hip + 1)) / (sh - 1 - (hip + 1))
             f = [(1 - q) * a + q * b for a, b in zip(fr[hip + 1], fr[sh - 1])]
-        section(('trunk', i), tm.rings[('trunk', i)], rowr[i], 7, half=True, fracs=f, lim=(0.6, 1.25))
+        section(('trunk', i), tm.rings[('trunk', i)], rowr[i], 7, half=True, fracs=f, lim=SECTION_LIM['trunk'])
 
-    def tube(part, tab, ts, ids_of, n, leans=None, lim=(0.5, 1.6), fracs=None, size_t=None, snap=0.4):
+    def tube(part, tab, ts, ids_of, n, leans=None, lim=SECTION_LIM['tube'], fracs=None, size_t=None, snap=0.4):
         """Midline rings of a part at ts; leans (degrees) override the stations' own planes."""
         out = []
         for q, t in enumerate(ts):
@@ -522,8 +583,8 @@ def fit_template(tm, k, guide, spec=None):
     seq = [(TT['neck'], t) for t in S['neck']] + [(TT['head'], t) for t in S['head']]
     nn = len(S['neck'])
     lean_of = lambda w: math.degrees(math.atan2(w.y, w.z))
-    l0, l1 = lean_of(TT['neck'].at(S['neck'][0])['w']), lean_of(TT['head'].at(0.3)['w'])
-    ls = S.get('leans') or [l0 + (l1 - l0) * min(1.0, max(0.0, (q - nn + 1) / 4)) for q in range(len(seq))]     # the neck's rings keep
+    l0, l1 = lean_of(TT['neck'].at(S['neck'][0])['w']), lean_of(TT['head'].at(HEAD_LEAN_T)['w'])
+    ls = S.get('leans') or [l0 + (l1 - l0) * min(1.0, max(0.0, (q - nn + 1) / LEAN_FAN_RINGS)) for q in range(len(seq))]     # the neck's rings keep
     #                                                         the neck's plane; the head's fan from it to the head's own by the fourth
     tube('neck', TT['neck'], S['neck'], lambda q: nb if q == 0 else tm.rings[('neck', q - 1)], 6, ls[:nn])
     tube('head', TT['head'], S['head'], lambda q: tm.rings[('head', q)], 6, ls[nn:], fracs=S.get('head_fracs'), snap=0.2)
@@ -544,33 +605,33 @@ def fit_template(tm, k, guide, spec=None):
 
     chain = [nb] + [tm.rings[('neck', q)] for q in range(C['neck'] + 1)] + [tm.rings[('head', q)] for q in range(C['head'])]
     for a_, b_ in zip(chain, chain[1:]):
-        keep_ahead(a_, b_, 0.07 * hw)
+        keep_ahead(a_, b_, NECK_RING_GAP * hw)
     H = C['head'] - 1
     tm.joint_rings[plan['neck']] = [('neck', q) for q in range(C['neck'] + 1)]
     # ---- muzzle: socket loop and rings on the head part; the nose plane closes it
-    mz = tube('muzzle', TT['head'], S['muzzle'], lambda q: tm.rings[('muzzle', q)], 4, lim=(0.6, 1.4),
+    mz = tube('muzzle', TT['head'], S['muzzle'], lambda q: tm.rings[('muzzle', q)], 4, lim=SECTION_LIM['muzzle'],
               size_t=[None] * C['muzzle'] + [S['nose']])
     P[N('face', 'side', 0)] = section_corners(guide, dict(TT['head'].at((S['head'][-1] + S['muzzle'][0]) / 2), u=X), 4, half=True,
-                                              lim=(0.6, 1.4))['points'][2]
+                                              lim=SECTION_LIM['muzzle'])['points'][2]
     chain = [tm.loops['muzzle.border']] + [tm.rings[('muzzle', q)] for q in range(C['muzzle'] + 1)]
     for a_, b_ in zip(chain, chain[1:]):
-        keep_ahead(a_, b_, 0.05 * hw)
+        keep_ahead(a_, b_, MUZZLE_RING_GAP * hw)
     last = tm.rings[('muzzle', C['muzzle'])]
     hd = (Vector(J[plan['snout']]) - Vector(J[plan['head']])).normalized()
-    P[N('muzzle', 'cap', 0)] = (P[last[0]] + P[last[-1]]) / 2 + hd * 0.1 * (P[last[0]] - P[last[-1]]).length
+    P[N('muzzle', 'cap', 0)] = (P[last[0]] + P[last[-1]]) / 2 + hd * NOSE_CAP * (P[last[0]] - P[last[-1]]).length
     # ---- tail: border on the rump (row 0's top two points and two rump points), socket loop, rings
     if 'extra0' in gp:
         tl = Tab(gp, 'extra0')
         tb = [N('trunk', 0, 0), N('trunk', 0, 1), N('rump', 1, 2), N('rump', 0, 2)]
         tls = smooth_leans([(tl, t) for t in S['tail']])
-        tls[0] *= 0.75
-        tube('tail', tl, S['tail'], lambda q: tm.rings[('tail', q)], 3, tls, lim=(0.6, 1.4))
+        tls[0] *= TAIL_LEAN0
+        tube('tail', tl, S['tail'], lambda q: tm.rings[('tail', q)], 3, tls, lim=SECTION_LIM['tail'])
     else:                                                                # MVP-STUB: no tail in J: a short stub off the rump
         raise ValueError('the quadruped template needs a tail chain in J (tail0, tail1)')
     # the rump: row 0 and the tail's border are straight blends from the haunch's rear row to the tail's socket loop (two
     # nested loops: their blends cannot fold over each other), each pushed OUT to the guide where the guide bulges past
     # the blend (a bear's rump) and left alone where the guide has a crevice there (between a wolf's thigh and tail)
-    O = rowr[1]['centre'] + Vector((0, -0.25 * rowr[1]['depth'], 0))
+    O = rowr[1]['centre'] + Vector((0, -RUMP_RAY[0] * rowr[1]['depth'], 0))
     ts_ = [P[o] for o in tm.rings[('tail', 0)]]
     r1 = [P[N('trunk', 1, j)] for j in range(8)]
 
@@ -578,7 +639,7 @@ def fit_template(tm, k, guide, spec=None):
         q = a.lerp(b, f)
         d = (q - O).normalized()
         hit = tree.ray_cast(q, d)
-        return hit[0] if hit[0] is not None and hit[3] < 0.12 and hit[1].dot(d) > 0 else q
+        return hit[0] if hit[0] is not None and hit[3] < RUMP_RAY[1] and hit[1].dot(d) > 0 else q
 
     tgt = {2: ts_[1], 3: ts_[1], 4: ts_[2], 5: ts_[2], 6: (ts_[2] + ts_[3]) / 2, 7: ts_[3]}
     f0, f1 = S['tail_border']
@@ -587,7 +648,7 @@ def fit_template(tm, k, guide, spec=None):
         P[i] = fan(r1[j], tgt[j], f0)
         owner[i] = None
     dt = (Vector(J[gp['extras']['extra0'][1]]) - Vector(J[gp['extras']['extra0'][0]])).normalized()
-    behind = lambda q, *ids: q + dt * max([0.0] + [(P[i] - q).dot(dt) + 0.02 for i in ids])     # further along the tail than these
+    behind = lambda q, *ids: q + dt * max([0.0] + [(P[i] - q).dot(dt) + TAIL_BEHIND for i in ids])     # further along the tail than these
     for i, a_, b_, ids in ((tb[0], r1[0], ts_[0], [N('trunk', 1, 0)]), (tb[1], (r1[1] + r1[2]) / 2, ts_[1], [N('trunk', 1, 1), N('trunk', 0, 2)]),
                            (tb[2], (r1[4] + r1[5]) / 2, ts_[2], [N('trunk', 0, 4), N('trunk', 0, 5)]), (tb[3], r1[7], ts_[3], [N('trunk', 0, 7)])):
         P[i] = behind(fan(a_, b_, f1), *ids)
@@ -617,13 +678,13 @@ def fit_template(tm, k, guide, spec=None):
         HG = {}
         for b, hn in enumerate(hinge_n):
             dj = cum[b + 1]
-            e = min(0.5 * size(dj), 0.4 * min(seg[b], seg[b + 1]))
+            e = min(HINGE_SIZE[0] * size(dj), HINGE_SIZE[1] * min(seg[b], seg[b + 1]))
             fl = S['hinge_ratio'] * e
             flex = s * (1 if b % 2 == 0 else -1)                         # +1: the joint closes at the front
             if hn == 3:
                 HG[b] = [(dj - (e + fl) / 2, +(e - fl) / 2 * flex), (dj, 0.0), (dj + (e + fl) / 2, -(e - fl) / 2 * flex)]
             else:
-                g = min(0.45 * size(dj), 0.5 * min(seg[b], seg[b + 1]))
+                g = min(HINGE_SIZE[2] * size(dj), HINGE_SIZE[3] * min(seg[b], seg[b + 1]))
                 HG[b] = [(dj - g / 2, 0.0), (dj + g / 2, 0.0)][:hn]
         zl = None
         ring_d = []
@@ -635,11 +696,11 @@ def fit_template(tm, k, guide, spec=None):
             elif role == 'mass':
                 nxt = next((x for x in roles[ri + 1:] if x != 'mass'), None)
                 if bone == 0:
-                    d = min(prev_end, HG[0][0][0] - 0.6 * (HG[0][1][0] - HG[0][0][0])) if HG else prev_end
+                    d = min(prev_end, HG[0][0][0] - MASS_RING[0] * (HG[0][1][0] - HG[0][0][0])) if HG else prev_end
                 elif isinstance(nxt, tuple):
                     d = 0.5 * (prev_end + HG[nxt[1]][0][0])
                 else:
-                    d = prev_end + 0.4 * (tot - prev_end)
+                    d = prev_end + MASS_RING[1] * (tot - prev_end)
                 ring_d.append((d, 0.0))
                 prev_end = d
             elif isinstance(role, tuple):
@@ -660,7 +721,7 @@ def fit_template(tm, k, guide, spec=None):
             tau = dirs[bi].copy()
             for ji in range(1, len(Jp) - 1):
                 dj = d - cum[ji]
-                rng = 0.6 * min(seg[ji - 1], seg[ji])
+                rng = JOINT_BLEND * min(seg[ji - 1], seg[ji])
                 if abs(dj) < rng:
                     other = dirs[ji - 1] if dj >= 0 else dirs[ji]
                     tau = (dirs[bi] * (1 - 0.5 * (1 - abs(dj) / rng)) + other * 0.5 * (1 - abs(dj) / rng)).normalized()
@@ -672,7 +733,7 @@ def fit_template(tm, k, guide, spec=None):
         foot = gp.get(name + '_foot')
         fs = foot['stations'] if foot else None
         fc = (Vector(fs[0]['centre']) + Vector(fs[-1]['centre'])) / 2 if fs else Jp[-1].copy()
-        flen = (Vector(fs[0]['centre']) - Vector(fs[-1]['centre'])).length + 0.5 * fs[0]['depth'] if fs else seg[-1]
+        flen = (Vector(fs[0]['centre']) - Vector(fs[-1]['centre'])).length + SOLE['heel'] * fs[0]['depth'] if fs else seg[-1]
         lastc = None
         frames = {}
         for ri, rd in enumerate(ring_d):
@@ -682,9 +743,9 @@ def fit_template(tm, k, guide, spec=None):
             if rd == 'paw':
                 continue
             if rd == 'sole':                                             # the footprint, read off the guide just above the ground;
-                cc = Vector((fc.x, fc.y, max(0.012, 0.25 * fc.z)))       # the paw ring is the same outline lifted: a block, toes lower
-                r = dict(centre=cc, u=X, w=Vector((0, -1, 0)), width=1.5 * flen, depth=1.5 * flen, p=2.0)
-                section((name, ri + 1), ids, r, 8, lim=(0.05, 1.0))
+                cc = Vector((fc.x, fc.y, max(SOLE['z_min'], SOLE['z_frac'] * fc.z)))   # the paw ring is the same outline lifted: a block, toes lower
+                r = dict(centre=cc, u=X, w=Vector((0, -1, 0)), width=SOLE['spread'] * flen, depth=SOLE['spread'] * flen, p=2.0)
+                section((name, ri + 1), ids, r, 8, lim=SECTION_LIM['sole'])
                 tm.corners.pop((name, ri + 1))
                 if os.environ.get('BMK_TMPL_DBG'):
                     B.say('DBG sole', name, 'centre', tuple(round(q, 3) for q in cc), 'flen', round(flen, 3), 'last', tuple(round(q, 3) for q in lastc),
@@ -693,7 +754,8 @@ def fit_template(tm, k, guide, spec=None):
                 for i, i2 in zip(ids, tm.rings[(name, ri)]):
                     P[i].z = 0.0
                     fwd = max(0.0, (cc.y - P[i].y) / ext)
-                    P[i2] = Vector((cc.x + (P[i].x - cc.x) * 0.94, cc.y + (P[i].y - cc.y) * 0.94, S['paw'] * lastc.z * (1 - 0.45 * fwd)))
+                    ps = SOLE['paw_shrink']
+                    P[i2] = Vector((cc.x + (P[i].x - cc.x) * ps, cc.y + (P[i].y - cc.y) * ps, S['paw'] * lastc.z * (1 - SOLE['toe_drop'] * fwd)))
                     owner[i2] = None
                 P[N(name, 'cap', 0)] = sum((P[i] for i in ids), Vector()) / 8
                 continue
@@ -704,7 +766,7 @@ def fit_template(tm, k, guide, spec=None):
                 st['centre'] = Jp[-2] + dirs[-1] * (d - cum[-2]) + (st['centre'] - Jp[-2])
             tau, u, w = frame(d)
             r = dict(st, u=u, w=w)
-            section((name, ri + 1), ids, r, 8, lim=(0.7, 1.3))
+            section((name, ri + 1), ids, r, 8, lim=SECTION_LIM['limb'])
             if shr:
                 rw = max(1e-6, max(abs((P[i] - st['centre']).dot(w)) for i in ids))
                 for i in ids:
@@ -731,17 +793,17 @@ def fit_template(tm, k, guide, spec=None):
         free = tm.rings[(name, first_free + 1)]
         n_between = first_free + 1                                       # socket loop + the 'cap' rings before the first free ring
         for k_ in (3, 4, 5):                                             # under the body the first free ring stays below the border
-            P[free[k_]].z = min(P[free[k_]].z, P[bd[k_]].z - 0.02)
+            P[free[k_]].z = min(P[free[k_]].z, P[bd[k_]].z - UNDER_BORDER)
         lastj = len(hinge_n) - 1                                         # below the last joint a ring never dips under the next one
         q0 = next(ri for ri, x in enumerate(roles) if isinstance(x, tuple) and x[1] == lastj)
         for q in range(len(roles) - 1, q0, -1):
             for a_, b_ in zip(tm.rings[(name, q)], tm.rings[(name, q + 1)]):
-                if P[a_].z < P[b_].z + 0.004:
-                    P[a_].z = P[b_].z + 0.004
+                if P[a_].z < P[b_].z + LOWER_RING_GAP:
+                    P[a_].z = P[b_].z + LOWER_RING_GAP
         # the upper limb: the socket loop and the cap rings fan from the border on the body's side to the first free ring.
         # The outer five lines take the guide's surface as seen from the first bone (the scapula / thigh mass swells, then
         # tapers to the hinge); the three armpit lines stay a straight blend (they keep their order under the body)
-        SOCK = {1: (0.5,), 2: (0.4, 0.75), 3: (0.22, 0.5, 0.78)}
+        SOCK = SOCKET_FAN
         fr_ = (S.get('fan') or {}).get(name) or SOCK.get(n_between) or [(q + 1) / (n_between + 1) for q in range(n_between)]
         a0, a1 = Jp[0], Jp[1]
         for q in range(n_between):
@@ -749,12 +811,12 @@ def fit_template(tm, k, guide, spec=None):
             for k_, i in enumerate(tm.rings[(name, q)]):
                 m_ = P[bd[k_]].lerp(P[free[k_]], f)
                 if k_ in (3, 4, 5):
-                    P[i] = near(m_, 0.015)
+                    P[i] = near(m_, SOCKET_SNAP[0])
                     continue
                 ax = a0 + (a1 - a0) * min(1.0, max(0.0, (m_ - a0).dot(a1 - a0) / (a1 - a0).length_squared))
                 d_ = m_ - ax
                 hit = tree.ray_cast(ax, d_.normalized()) if d_.length > 1e-6 else (None,)
-                P[i] = hit[0].copy() if hit[0] is not None and 0.7 * d_.length <= hit[3] <= 1.8 * d_.length else near(m_, 0.06)
+                P[i] = hit[0].copy() if hit[0] is not None and SOCKET_SNAP[2] * d_.length <= hit[3] <= SOCKET_SNAP[3] * d_.length else near(m_, SOCKET_SNAP[1])
             tm.pinned.update(tm.rings[(name, q)])
     # ---- the eye loop and the ear, pinned to the landmarks
     hw = TT['head'].at(0.0)['width']
@@ -775,8 +837,8 @@ def fit_template(tm, k, guide, spec=None):
         if os.environ.get('BMK_TMPL_DBG'):
             B.say('DBG loop', tm.names[ids[0]][0], 'centre', tuple(round(q, 3) for q in c), 'n', tuple(round(q, 2) for q in n), 'a b room', round(a, 3), round(b, 3), round(room, 2),
                   'border', [tuple(round(q, 3) for q in P[o]) for o in border])
-        if room < 1.25:                                                   # the loop stays inside its block
-            a, b = a * room / 1.25, b * room / 1.25
+        if room < LOOP_ROOM:                                              # the loop stays inside its block
+            a, b = a * room / LOOP_ROOM, b * room / LOOP_ROOM
         for q, i in enumerate(ids):                                       # evenly round the centre, turned to face the border
             th = th0 + sg * 2 * math.pi * q / m
             P[i] = near(c + t1 * (a * math.cos(th)) + t2 * (b * math.sin(th)), 0.04)
@@ -784,7 +846,7 @@ def fit_template(tm, k, guide, spec=None):
         return c, n
 
     if 'eye' in lm:
-        loop_on(tm.loops['eye'], tm.loops['eye.border'], Vector(lm['eye']), 1.25 * S['eye'] * hw, 0.8 * S['eye'] * hw, hd)
+        loop_on(tm.loops['eye'], tm.loops['eye.border'], Vector(lm['eye']), EYE_LOOP[0] * S['eye'] * hw, EYE_LOOP[1] * S['eye'] * hw, hd)
     else:                                                                # no landmark: the loop sits inside its block
         cb = sum((P[o] for o in tm.loops['eye.border']), Vector()) / 8
         for i, o in zip(tm.loops['eye'], tm.loops['eye.border']):
@@ -795,11 +857,11 @@ def fit_template(tm, k, guide, spec=None):
         root, tip = Vector(lm['ear']), Vector(lm['ear_tip'])
     else:
         root = sum((P[o] for o in eb), Vector()) / len(eb)
-        tip = root + Vector((0.15, 0, 1)).normalized() * 0.5 * hw
+        tip = root + Vector((EAR_TIP_TILT, 0, 1)).normalized() * EAR_TIP_LEN * hw
     c, n = loop_on(tm.loops['ear.socket'], eb, root, E['a'] * hw, E['b'] * hw, Vector((0, 1, 0)))
     ne = C['ear']
-    ef = E['f'] or [(q + 1) / ne * 0.92 for q in range(ne)]
-    es = E['s'] or [1.0 - 0.75 * (q + 1) / ne for q in range(ne)]
+    ef = E['f'] or [(q + 1) / ne * EAR_STATION_END for q in range(ne)]
+    es = E['s'] or [1.0 - EAR_TAPER * (q + 1) / ne for q in range(ne)]
     for q in range(ne):
         cc = c.lerp(tip, ef[q])
         for i, o in zip(tm.rings[('ear', q + 1)], tm.loops['ear.socket']):
@@ -839,12 +901,12 @@ def fit_template(tm, k, guide, spec=None):
     for i in free:
         if P[i] is None:
             P[i] = sum((P[j] for j in nbs[i] if P[j] is not None), Vector()) / max(1, sum(1 for j in nbs[i] if P[j] is not None))
-    for q in range(4):
+    for q in range(RELAX_ITERS):
         for i in free:
             avg = sum((P[j] for j in nbs[i]), Vector()) / len(nbs[i])
             P[i] = P[i].lerp(avg, 0.5)
-            if q == 3 and tm.names[i][0] != 'rump':                      # (the rump's two inner points stay a flat cap under the tail)
-                P[i] = near(P[i], 0.03)
+            if q == RELAX_ITERS - 1 and tm.names[i][0] != 'rump':        # (the rump's two inner points stay a flat cap under the tail)
+                P[i] = near(P[i], RELAX_SNAP)
     tm.co0 = {tm.names[i]: tuple(P[i]) for i in range(len(P))}           # as the sections placed them (the corner gate reads these)
     # ---- lengthwise lines run straight between landmarks: a vertex slides ALONG ITS RING toward the chord of its line
     hinge_v = {i for keys in tm.joint_rings.values() for key in keys if key[0] in tm.limbs for i in tm.rings[key]}
@@ -871,7 +933,7 @@ def fit_template(tm, k, guide, spec=None):
                 best = c_
         return best
 
-    for _ in range(S.get('fair', 3)):
+    for _ in range(S.get('fair', FAIR_ITERS)):
         for ln in lines:
             for q in range(1, len(ln) - 1):
                 i = ln[q]
@@ -894,8 +956,8 @@ def fit_template(tm, k, guide, spec=None):
         fixed |= set(tm.rings[(name, len(tm.limbs[name]['roles']))]) | {N(name, 'cap', 0)}
     hingeF = [all(v in hinge_v for v in f) for f in tm.F]
     home = [p.copy() for p in P]
-    mm = S.get('planar', 0.04) * rowr[mid]['depth']
-    for _ in range(S.get('planar_iters', 40)):
+    mm = S.get('planar', PLANAR) * rowr[mid]['depth']
+    for _ in range(S.get('planar_iters', PLANAR_ITERS)):
         acc = {}
         for fi, f in enumerate(tm.F):
             if hingeF[fi]:
@@ -918,7 +980,7 @@ def fit_template(tm, k, guide, spec=None):
             d_ = q_ - home[i]
             P[i] = home[i] + d_ * (mm / d_.length) if d_.length > mm else q_
     for i in range(len(P)):
-        P[i].x = 0.0 if i in tm.seam else max(P[i].x, 0.004)             # only seam vertices lie on the mirror plane
+        P[i].x = 0.0 if i in tm.seam else max(P[i].x, MIN_X)           # only seam vertices lie on the mirror plane
         P[i].z = max(P[i].z, 0.0)
     for name in ('fore', 'hind'):
         owner[N(name, 'cap', 0)] = None

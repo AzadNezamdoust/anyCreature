@@ -117,6 +117,20 @@ clip's first frame, not the rest pose. Hanging pieces and folds that looked
 right at rest have failed there. The reviewers check every item against the
 packet, not against your report.
 
+## PATCH prompt (constant-only fixes)
+
+For a fix that is a proportion or a size, not a structural change, send the
+builder this prompt instead of a full repair pass:
+
+> PATCH. Change constants in PARAMS only (the `PARAMS` block at the top of the
+> creature program, or of `kit/template.py` for a template build). No
+> restructure, no rename, no new geometry, no new functions, no edits outside
+> the PARAMS block. Items: <list: what reads wrong, which view>. Return a
+> unified diff of the PARAMS block only, plus one line per changed constant:
+> old -> new, why. Then rebuild `--stage 4` and report the gate lines.
+
+A PATCH that needs anything outside PARAMS is not a PATCH: say so and stop.
+
 ## Done when
 
 - Every gate passes on the final stage-4 run.

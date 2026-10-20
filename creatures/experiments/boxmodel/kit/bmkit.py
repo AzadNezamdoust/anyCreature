@@ -629,6 +629,72 @@ def report(ob, intersections=True):
     return r
 
 
+CENSUS_AREA_EPS = 1e-10          # m^2: a face below this is degenerate (zero-area)
+
+
+def census(ob):
+    """Static mesh census on the evaluated (mirrored, world-space) mesh: flipped normals
+    (a manifold edge whose two faces walk it the same way), loose verts (no face),
+    zero-area faces, and per connected piece the is_volume test: closed (every edge has
+    2 faces), consistent winding and outward normals (signed volume > 0)."""
+    bm = evaluated_bm(ob)
+    neg = ob.matrix_world.determinant() < 0          # bm.transform mirrors the points, not the winding
+    flipped = 0
+    for e in bm.edges:
+        if len(e.link_faces) == 2:
+            a, b = e.verts
+            dirs = []
+            for f in e.link_faces:
+                vs = f.verts[:]
+                i = vs.index(a)
+                dirs.append(vs[(i + 1) % len(vs)] is b)
+            flipped += dirs[0] == dirs[1]
+    loose = sum(1 for v in bm.verts if not v.link_faces)
+    zero = sum(1 for f in bm.faces if f.calc_area() < CENSUS_AREA_EPS)
+    seen, pieces = set(), []
+    for f0 in bm.faces:                               # face islands via shared edges
+        if f0 in seen:
+            continue
+        isl, stack = [], [f0]; seen.add(f0)
+        while stack:
+            f = stack.pop(); isl.append(f)
+            for e in f.edges:
+                for g in e.link_faces:
+                    if g not in seen:
+                        seen.add(g); stack.append(g)
+        edges = {e for f in isl for e in f.edges}
+        closed = all(len(e.link_faces) == 2 for e in edges)
+        vol = 0.0
+        for f in isl:
+            v0 = f.verts[0].co
+            for k_ in range(1, len(f.verts) - 1):
+                vol += v0.dot(f.verts[k_].co.cross(f.verts[k_ + 1].co)) / 6.0
+        pieces.append(dict(closed=closed, vol=-vol if neg else vol))
+    bm.free()
+    closed = [p for p in pieces if p['closed']]
+    inverted = sum(1 for p in closed if p['vol'] <= 0)
+    return dict(flipped_edges=flipped, loose_verts=loose, zero_area_faces=zero, pieces=len(pieces),
+                closed_pieces=len(closed), open_pieces=len(pieces) - len(closed), inverted_pieces=inverted)
+
+
+def census_gate(tag, objs):
+    """Sum the census over objs; FAIL on flipped / loose / zero-area / inside-out closed pieces.
+    Open pieces are reported (stage 1/2 already gate the body closed; cards may be open)."""
+    tot, bad = {}, []
+    for o in objs:
+        c = census(o)
+        for key, v in c.items():
+            tot[key] = tot.get(key, 0) + v
+        if c['flipped_edges'] or c['loose_verts'] or c['zero_area_faces'] or c['inverted_pieces']:
+            bad.append(o.name)
+    ok = not bad
+    _gate(f'{tag} census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces', ok,
+          f"flipped {tot['flipped_edges']} edges, loose {tot['loose_verts']} verts, zero-area {tot['zero_area_faces']} faces, "
+          f"{tot['closed_pieces']}/{tot['pieces']} pieces closed, {tot['inverted_pieces']} inside-out"
+          + (f"; bad: {bad[:6]}" if bad else ''))
+    return ok, tot
+
+
 def geometry_hash(ob):
     """Positions + connectivity of the object's own mesh (not evaluated)."""
     me = ob.data
@@ -1462,6 +1528,7 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     ok &= _gate('s1 no self-intersection', r1['self_intersections'] == 0, f"{r1['self_intersections']} face pairs" + (f" near {r1['intersections_at']}" if r1['self_intersections'] else ''))
     ok &= _gate('s1 triangles in budget', tri_lo <= r1['tris'] <= tri_hi, f"{r1['tris']} (budget {tri_lo}-{tri_hi})")
     ok &= _gate('s1 mirrored', has_mirror(body))
+    _c, r1['census'] = census_gate('s1', [body]); ok &= _c
     cage = None
     if meta.get('cage') and N == 1:              # a cage build: joint loops, silhouette and proportion vs the sheet
         cok, cage = cage_gates(k, body, bpfile)
@@ -1518,6 +1585,7 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     ok &= _gate('s2 one closed shell, no self-intersection',
                 r2['components'] == 1 and r2['nonmanifold_edges'] == 0 and r2['self_intersections'] == 0,
                 f"{r2['components']} comp, {r2['nonmanifold_edges']} open edges, {r2['self_intersections']} hits")
+    _c, r2['census'] = census_gate('s2', [body]); ok &= _c
     m1 = dict(np.load(k.path('stage1', 'masks.npz')))
     m2 = masks(k.frame, objs=[body])
     ious = {v: round(iou(m1[v], m2[v]), 3) for v in ORBIT}
@@ -1551,7 +1619,8 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     tris = report(body, False)['tris'] + sum(report(p, False)['tris'] for p in pieces)
     t_lo, t_hi = meta.get('total_tris', (500, 3000))
     ok &= _gate('s3 total triangles in budget', t_lo <= tris <= t_hi, f'{tris} (budget {t_lo}-{t_hi})')
-    _dump(k.path('stage3', 'stats.json'), dict(lock_assert=la3, colours=sorted(mats), colour_count=len(cols), tris=tris,
+    _c, cen3 = census_gate('s3', [body] + pieces); ok &= _c
+    _dump(k.path('stage3', 'stats.json'), dict(census=cen3, lock_assert=la3, colours=sorted(mats), colour_count=len(cols), tris=tris,
                                                attach=k.log.attach,
                                                pieces={p.name: report(p, False)['tris'] for p in pieces}))
     _dump(k.path('lock_assert.json'), dict(stage=3, **la3))
@@ -1585,6 +1654,7 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
         rig.animation_data.action = None
     rest(rig)
     bpy.context.scene.frame_set(1)
+    _c, cen4 = census_gate('s4 final', [body] + pieces); ok &= _c
     vf = frame_of([body] + pieces, k.frame)
     if meta.get('cage'):
         topology_final(k, 4, body, pieces, vf)
@@ -1607,7 +1677,7 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     rest(rig)
     bpy.context.scene.frame_set(1)
     _dump(k.path('stage4', 'stats.json'), dict(clips={n: list(a_.frame_range) for n, a_ in acts.items()},
-                                               bones=len(rig.data.bones), unweighted=unweighted, lock_assert=la4))
+                                               bones=len(rig.data.bones), unweighted=unweighted, lock_assert=la4, census=cen4))
     say('SUMMARY', json.dumps(dict(ok=bool(ok), stage=4, glb=glb)))
     return _finish(ok, t0)
 

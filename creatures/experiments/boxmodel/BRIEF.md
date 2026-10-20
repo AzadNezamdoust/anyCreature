@@ -1,9 +1,28 @@
 # Box-model build brief
 
 You are building ONE creature as a hand-made-looking, stylised low-poly game
-asset, by writing a box-modelling program for headless Blender 5.1 with the kit
+asset, by writing a box-modelling program for headless Blender 5.2 LTS with the kit
 in `experiments/boxmodel/kit/`. This brief is the whole contract; read it all
 before writing code.
+
+**Target: Blender 5.2 LTS (Python 3.13).** run.py takes the binary from the
+`BLENDER` env var (e.g. the portable `E:\gen3d\blender\blender-5.2.2-windows-x64\blender.exe`).
+Build geometry with `bpy.data` + `bmesh` (and the kit's helpers), never with
+`bpy.ops`: operators depend on context, selection and mode, break across
+versions and are slow. The kit itself still calls these operators, each because
+no data-API equivalent exists or it would be a re-implementation:
+
+| operator | where | why |
+|---|---|---|
+| `wm.read_factory_settings(use_empty=True)` | bmkit `run`, render_glb, selftest | clean empty scene per run |
+| `object.modifier_apply` | bmkit `apply_mirror`, piece mirror / DataTransfer weights, carve | applying a modifier stack (evaluated mesh would drop vertex groups / layers) |
+| `object.mode_set` | bmkit rig build | `EditBone`s exist only in armature edit mode |
+| `object.parent_set(type='ARMATURE_AUTO')` | bmkit rig bind | Blender's heat-map automatic weights |
+| `render.render(write_still=True)` | bmkit `shoot` | renders |
+| `export_scene.gltf` / `import_scene.gltf` | bmkit `export_glb`, render_glb, selftest | glTF IO add-on |
+| `mesh.primitive_plane_add` | render_glb ground plane | render helper only, not creature geometry |
+
+Run every operator inside `bpy.context.temp_override(...)` as the kit does.
 
 ## 1. The bar, and what failed before
 
