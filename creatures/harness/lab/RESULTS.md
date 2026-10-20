@@ -277,7 +277,9 @@ download stalled). Scripts: trellis_cpp/.
 | Hunyuan Paint 2.1 (tex13) | Tencent (EU/UK/KR excluded) | 5.4 / 4.8 | 7.3 GiB |
 | Sequential inpaint (SDXL depth CN + IP-Adapter) | Apache-2.0 + OpenRAIL++ | 2.8 / 2.4 | 6.3 GiB, 8-13 min |
 
-MV-Adapter matches or slightly beats Hunyuan Paint and is commercially safe:
-new default texturer. Defects shared by both: baked shading/specular, flat
+Judges scored MV-Adapter slightly higher, but owner review (Azad): only Hunyuan
+Paint gives a true unlit albedo; MV-Adapter and seq-inpaint bake lighting/sheen
+into the colour map, which breaks in-engine lighting. Hunyuan Paint stays default;
+MV-Adapter is the commercial-safe fallback and needs a delighting pass. Defects shared by both: baked shading/specular, flat
 cartoon kangaroo. Seq-inpaint views drift (one side bleached white). Albedo
 only (fixed metallic/roughness). Scripts + report: texc/.
