@@ -1,0 +1,67 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow ring: the elbow bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee ring: the stifle bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck-skull ring: the head nod",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "wrist ring: the wrist bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "hock ring: the hock bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "belly ring: the back bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "chest ring: the spine bend behind the shoulder",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "lower neck ring: the neck bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "inset",
+   "reason": "eye socket: a ring in the brow face, its floor pushed in",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "e5419f0e0fdd2798d93d978563b5b457f01a54b3d354e8e470a7e6c76192f1d7",
+  "collapsed_edge_hash": "e5419f0e0fdd2798d93d978563b5b457f01a54b3d354e8e470a7e6c76192f1d7",
+  "logged_ops": 8,
+  "logged_new_verts": 84,
+  "errors": []
+ },
+ "colours": [
+  "blue",
+  "brass",
+  "bright",
+  "leather",
+  "mail",
+  "steel"
+ ],
+ "colour_count": 6,
+ "tris": 3036,
+ "attach": [],
+ "pieces": {
+  "piece_tabard": 76,
+  "piece_cape": 176,
+  "piece_shield": 120,
+  "piece_belt": 168,
+  "piece_sword": 100,
+  "piece_pauldron": 56,
+  "piece_knee_cop": 40,
+  "piece_visor_ridge": 56,
+  "piece_crest": 36
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
+  "collapsed_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
+  "logged_ops": 26,
+  "logged_new_verts": 254,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "cream",
+  "nose",
+  "orange",
+  "pupil",
+  "stripe"
+ ],
+ "colour_count": 6,
+ "tris": 3116,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_claws": 320
+ }
+}

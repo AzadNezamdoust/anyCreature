@@ -1,0 +1,67 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "knee ring: the bend under the thigh feathers",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "tarsus ring: the hock bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck loop in CN-N0: the long neck bends",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "neck loop in N0-NN0: the long neck bends",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "neck loop in NH-H0: the long neck bends",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "tail loop in T4-RT: shorter spans, a bend",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "tail loop in T35-T4: shorter spans, a bend",
+   "new_verts": 11,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "tail loop in T2-T3: shorter spans, a bend",
+   "new_verts": 40,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "inset",
+   "reason": "eye socket",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,81 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "leg 1 knee: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "leg 1 wrist: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "leg 2 knee: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "leg 2 wrist: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "leg 3 knee: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "leg 3 wrist: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "leg 4 knee: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "leg 4 wrist: a joint ring, the segment bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "claw carpus: a joint ring, the claw bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "claw wrist: a joint ring, the claw bend",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "extrude",
+   "reason": "claw dactyl: the movable finger, a quad tube grown from the palm front top face",
+   "new_verts": 16,
+   "extra_base_edges": []
+  }
+ ]
+}

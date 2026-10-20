@@ -1,0 +1,40 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "d859bb62aac9b4a7735125d0c250951435d0afc983400f4455a96ea72ec9c7b4",
+  "collapsed_edge_hash": "d859bb62aac9b4a7735125d0c250951435d0afc983400f4455a96ea72ec9c7b4",
+  "logged_ops": 6,
+  "logged_new_verts": 61,
+  "errors": []
+ },
+ "colours": [
+  "brass",
+  "dark",
+  "eye",
+  "fur",
+  "horn",
+  "leather",
+  "tuft"
+ ],
+ "colour_count": 7,
+ "tris": 4142,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_hornL": 70,
+  "piece_hornR": 70,
+  "piece_nostrils": 64,
+  "piece_tuft": 46,
+  "piece_belt": 256,
+  "piece_buckle": 28,
+  "piece_kilt0L": 92,
+  "piece_kilt1L": 92,
+  "piece_kilt1R": 92,
+  "piece_kilt2L": 92,
+  "piece_kilt2R": 92,
+  "piece_kilt3L": 92,
+  "piece_kilt3R": 92,
+  "piece_kilt4L": 92,
+  "piece_kilt4R": 92
+ }
+}

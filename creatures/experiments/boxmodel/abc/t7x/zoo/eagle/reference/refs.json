@@ -1,0 +1,139 @@
+{
+ "source": "sheet_gutter.png",
+ "layout": "2x2",
+ "views": [
+  "side",
+  "front",
+  "rear",
+  "top"
+ ],
+ "sheet_size": [
+  1336,
+  1314
+ ],
+ "background_rgb": [
+  254.0,
+  254.0,
+  254.0
+ ],
+ "thresh": 40.0,
+ "height_m": 0.85,
+ "length_arg": null,
+ "metres_per_pixel": {
+  "side": 0.002285,
+  "front": 0.002285,
+  "rear": 0.002285,
+  "top": 0.002285
+ },
+ "figure_px_w_h": {
+  "side": [
+   370,
+   372
+  ],
+  "front": [
+   799,
+   338
+  ],
+  "rear": [
+   742,
+   347
+  ],
+  "top": [
+   415,
+   671
+  ]
+ },
+ "cells_rows_cols": {
+  "side": [
+   89,
+   478,
+   66,
+   453
+  ],
+  "front": [
+   89,
+   478,
+   510,
+   1325
+  ],
+  "rear": [
+   561,
+   1249,
+   12,
+   771
+  ],
+  "top": [
+   561,
+   1249,
+   812,
+   1243
+  ]
+ },
+ "traced": {
+  "side_points": 40,
+  "front_points": 23,
+  "top_points": 22,
+  "length_m": 0.845,
+  "width_m": 1.824,
+  "head_end_z": 0.756
+ },
+ "crops": {
+  "side": {
+   "box_rows_cols": [
+    97,
+    469,
+    74,
+    444
+   ],
+   "crop_origin": [
+    50,
+    74
+   ],
+   "crop_size": 418
+  },
+  "front": {
+   "box_rows_cols": [
+    131,
+    469,
+    518,
+    1317
+   ],
+   "crop_origin": [
+    470,
+    -148
+   ],
+   "crop_size": 896
+  },
+  "rear": {
+   "box_rows_cols": [
+    787,
+    1134,
+    20,
+    762
+   ],
+   "crop_origin": [
+    -26,
+    544
+   ],
+   "crop_size": 833
+  },
+  "top": {
+   "box_rows_cols": [
+    569,
+    1240,
+    819,
+    1234
+   ],
+   "crop_origin": [
+    650,
+    528
+   ],
+   "crop_size": 753,
+   "rotated": "CW 90 (head up, left flank on the image left, as the kit top view)"
+  }
+ },
+ "warnings": [
+  "top-view length 0.95 m vs side length 0.85 m (1.12 x)",
+  "top-view width 1.53 m vs front width 1.82 m (0.84 x)"
+ ]
+}

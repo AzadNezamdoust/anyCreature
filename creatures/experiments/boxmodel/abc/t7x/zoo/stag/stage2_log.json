@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow ring: the foreleg bends here",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "stifle ring: the hind leg bends here",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "knee ring (poly pass 3): the fore cannon bends here",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "hock ring (poly pass 3): the hind cannon bends here",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "neck ring: the head nods here",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "inset",
+   "reason": "eye socket in the stop face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "5e4de9c36c3515ec1780f4f40eef1a5dc24bf486271a8577dca1a817f461672c",
+  "collapsed_edge_hash": "5e4de9c36c3515ec1780f4f40eef1a5dc24bf486271a8577dca1a817f461672c",
+  "logged_ops": 2,
+  "logged_new_verts": 97,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "black",
+  "brown",
+  "cream",
+  "tan"
+ ],
+ "colour_count": 5,
+ "tris": 3092,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_tongue": 56
+ }
+}

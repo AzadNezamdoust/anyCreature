@@ -1,0 +1,27 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "bd79e12d8e21dfcdbba0db72d505ea10c059e2f20f5befdec695f506d1531a02",
+  "collapsed_edge_hash": "bd79e12d8e21dfcdbba0db72d505ea10c059e2f20f5befdec695f506d1531a02",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "dark",
+  "green",
+  "lime",
+  "pale",
+  "spine",
+  "wing"
+ ],
+ "colour_count": 6,
+ "tris": 4780,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_wing": 1004,
+  "piece_spines": 84,
+  "piece_antenna": 156
+ }
+}

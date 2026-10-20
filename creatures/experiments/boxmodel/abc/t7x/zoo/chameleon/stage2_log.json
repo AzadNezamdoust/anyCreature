@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: a second ring between elbow and forearm so the elbow bends, not kinks",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee: a second ring between knee and shin for the hind-leg bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck: a ring between the shoulder ring and the casque back so the head turns",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the four side faces round H1b[3] under the casque rim",
+   "new_verts": 16,
+   "extra_base_edges": []
+  }
+ ]
+}

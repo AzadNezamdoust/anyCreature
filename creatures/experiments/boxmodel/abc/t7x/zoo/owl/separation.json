@@ -1,0 +1,20 @@
+{
+ "leg_L_vs_R": 0.0312,
+ "counts": {
+  "legL": 282,
+  "legR": 306,
+  "wing": 384
+ },
+ "wing_L": {
+  "outside_share": 0.729,
+  "max_standoff": 0.0545,
+  "median": 0.0258
+ },
+ "wing_R": {
+  "outside_share": 0.729,
+  "max_standoff": 0.0545,
+  "median": 0.0258
+ },
+ "wing_L_vs_R": 0.1,
+ "verdict": "PASS"
+}

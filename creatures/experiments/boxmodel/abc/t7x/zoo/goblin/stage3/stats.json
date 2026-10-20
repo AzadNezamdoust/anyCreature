@@ -1,0 +1,27 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "3faa300f2ea5e294d04905f7bc49c48c4e12c648c95816d65d5bd17deacc64ae",
+  "collapsed_edge_hash": "3faa300f2ea5e294d04905f7bc49c48c4e12c648c95816d65d5bd17deacc64ae",
+  "logged_ops": 8,
+  "logged_new_verts": 76,
+  "errors": []
+ },
+ "colours": [
+  "black",
+  "eye",
+  "leather",
+  "rope",
+  "skin"
+ ],
+ "colour_count": 5,
+ "tris": 3308,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_vest": 332,
+  "piece_loincloth": 384,
+  "piece_fingers": 200,
+  "piece_toes": 200
+ }
+}

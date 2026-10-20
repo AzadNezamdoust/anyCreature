@@ -1,0 +1,55 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "4026fa21b68dbb0e9aaefdcc6b52602bb99e6086226188a54ba8d45dfe677df8",
+  "collapsed_edge_hash": "4026fa21b68dbb0e9aaefdcc6b52602bb99e6086226188a54ba8d45dfe677df8",
+  "logged_ops": 3,
+  "logged_new_verts": 32,
+  "errors": []
+ },
+ "colours": [
+  "eye",
+  "fur",
+  "inner",
+  "nail",
+  "shade",
+  "skin"
+ ],
+ "colour_count": 6,
+ "tris": 5142,
+ "attach": [
+  {
+   "kind": "piece_attach",
+   "piece": "hand_L",
+   "cage_ring": 10,
+   "part_ring": 10,
+   "new_faces": 13,
+   "reason": "parts-library 4-finger hand in the wrist ring under the fur cuff"
+  },
+  {
+   "kind": "piece_attach",
+   "piece": "hand_R",
+   "cage_ring": 10,
+   "part_ring": 10,
+   "new_faces": 13,
+   "reason": "parts-library 4-finger hand in the wrist ring under the fur cuff"
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_hand_L": 196,
+  "piece_hand_R": 196,
+  "piece_toes_L": 100,
+  "piece_toes_R": 100,
+  "piece_ear": 92,
+  "piece_fur_0": 318,
+  "piece_fur_1": 178,
+  "piece_fur_2": 122,
+  "piece_fur_3": 150,
+  "piece_fur_4": 122,
+  "piece_fur_5": 336,
+  "piece_fur_6": 336,
+  "piece_fur_7": 336,
+  "piece_fur_8": 392
+ }
+}

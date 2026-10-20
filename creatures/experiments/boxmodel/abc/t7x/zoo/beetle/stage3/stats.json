@@ -1,0 +1,27 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "b0465dbf5d547896a749d7d5e4d032016f9aacabf9662c2846a67e9def704e22",
+  "collapsed_edge_hash": "b0465dbf5d547896a749d7d5e4d032016f9aacabf9662c2846a67e9def704e22",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "belly",
+  "chitin",
+  "eye",
+  "leg",
+  "pupil",
+  "shell"
+ ],
+ "colour_count": 6,
+ "tris": 5566,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 80,
+  "piece_horn_thorax": 58,
+  "piece_mandible": 76,
+  "piece_claws": 456
+ }
+}

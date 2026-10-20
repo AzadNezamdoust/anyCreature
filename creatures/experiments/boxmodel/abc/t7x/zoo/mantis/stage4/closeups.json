@@ -1,0 +1,22 @@
+[
+ {
+  "name": "raptorial foreleg",
+  "colour": "close_0_colour.png",
+  "wire": "close_0_wire.png"
+ },
+ {
+  "name": "face and eyes",
+  "colour": "close_1_colour.png",
+  "wire": "close_1_wire.png"
+ },
+ {
+  "name": "leg roots",
+  "colour": "close_2_colour.png",
+  "wire": "close_2_wire.png"
+ },
+ {
+  "name": "wings",
+  "colour": "close_3_colour.png",
+  "wire": "close_3_wire.png"
+ }
+]

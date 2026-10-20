@@ -1,0 +1,138 @@
+{
+ "source": "sheet_1.png",
+ "layout": "2x2",
+ "views": [
+  "side",
+  "front",
+  "rear",
+  "top"
+ ],
+ "sheet_size": [
+  1536,
+  1024
+ ],
+ "background_rgb": [
+  254.0,
+  254.0,
+  254.0
+ ],
+ "thresh": 40.0,
+ "height_m": 1.6,
+ "length_arg": null,
+ "metres_per_pixel": {
+  "side": 0.003712,
+  "front": 0.003712,
+  "rear": 0.003712,
+  "top": 0.003712
+ },
+ "figure_px_w_h": {
+  "side": [
+   866,
+   431
+  ],
+  "front": [
+   377,
+   436
+  ],
+  "rear": [
+   372,
+   437
+  ],
+  "top": [
+   797,
+   331
+  ]
+ },
+ "cells_rows_cols": {
+  "side": [
+   23,
+   476,
+   26,
+   909
+  ],
+  "front": [
+   23,
+   476,
+   1057,
+   1451
+  ],
+  "rear": [
+   530,
+   984,
+   168,
+   557
+  ],
+  "top": [
+   530,
+   984,
+   690,
+   1504
+  ]
+ },
+ "traced": {
+  "side_points": 46,
+  "front_points": 24,
+  "top_points": 26,
+  "length_m": 3.215,
+  "width_m": 1.396,
+  "head_end_z": 1.013
+ },
+ "crops": {
+  "side": {
+   "box_rows_cols": [
+    35,
+    466,
+    34,
+    900
+   ],
+   "crop_origin": [
+    -18,
+    -235
+   ],
+   "crop_size": 971
+  },
+  "front": {
+   "box_rows_cols": [
+    31,
+    467,
+    1065,
+    1442
+   ],
+   "crop_origin": [
+    1008,
+    4
+   ],
+   "crop_size": 490
+  },
+  "rear": {
+   "box_rows_cols": [
+    538,
+    975,
+    176,
+    548
+   ],
+   "crop_origin": [
+    116,
+    511
+   ],
+   "crop_size": 491
+  },
+  "top": {
+   "box_rows_cols": [
+    585,
+    916,
+    698,
+    1495
+   ],
+   "crop_origin": [
+    650,
+    304
+   ],
+   "crop_size": 894,
+   "rotated": "CW 90 (head up, left flank on the image left, as the kit top view)"
+  }
+ },
+ "warnings": [
+  "top-view width 1.23 m vs front width 1.40 m (0.88 x)"
+ ]
+}

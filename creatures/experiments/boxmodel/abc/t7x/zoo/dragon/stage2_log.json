@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow ring: the bend",
+   "new_verts": 14,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "stifle ring: the bend",
+   "new_verts": 14,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck-skull ring: the head turn",
+   "new_verts": 14,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

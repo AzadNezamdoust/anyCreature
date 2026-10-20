@@ -1,0 +1,24 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "45cf899081ee773b7192ae241e0d87af3b1687fca9334df28bb3de7d66bb271a",
+  "collapsed_edge_hash": "45cf899081ee773b7192ae241e0d87af3b1687fca9334df28bb3de7d66bb271a",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "dark",
+  "eye",
+  "nail",
+  "pink",
+  "skin"
+ ],
+ "colour_count": 5,
+ "tris": 3192,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_nails": 512
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\minotaur\\stage3\\s3.glb",
+ "tag": "s3_r23",
+ "ok": true,
+ "size_m": 2.524,
+ "limits": {
+  "REGION_K": 2.0,
+  "EXPOSED": 2,
+  "WELD": 1e-05,
+  "KNIFE_DEG": 90.0,
+  "KNIFE_LEN_K": 1.0,
+  "STRIP_W": 0.4,
+  "STRIP_ASPECT": 3.0,
+  "STRIP_CREASE_DEG": 30.0,
+  "STRIP_LEN_K": 1.0,
+  "SLIT_K": 0.1,
+  "SLIT_PCT": 1.5,
+  "GAP_K": 1.0,
+  "PINCH_RAD": 2.2,
+  "CLIP_PCT": 1.0,
+  "EYE_VIS": {
+   "front": 0.15,
+   "threeq": 0.35,
+   "side": 0.4
+  },
+  "EYE_SIZE": [
+   0.06,
+   0.24
+  ],
+  "EYE_ROUND": 0.7,
+  "SEAT_LIFT": 0.004,
+  "SEAT_FAR": 0.05,
+  "SEAT_PCT": 10.0,
+  "MEMBRANE_ABS": 0.006,
+  "MEMBRANE_REL": 0.004
+ },
+ "body": {
+  "open_edges": 0,
+  "nonmanifold_edges": 0
+ },
+ "junctions": [],
+ "eyes": [
+  {
+   "side": "L",
+   "centre": [
+    0.132,
+    -0.272,
+    2.099
+   ],
+   "diam_mm": 43.6,
+   "round": 1.0,
+   "embed_mm": 20.0,
+   "proud_mm": 9.9,
+   "visible": {
+    "front": 0.22,
+    "threeq": 0.52,
+    "side": 0.48
+   },
+   "unoccluded": {
+    "front": 0.42,
+    "threeq": 0.64,
+    "side": 0.64
+   },
+   "fail": [],
+   "ok": true
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.132,
+    -0.272,
+    2.099
+   ],
+   "diam_mm": 43.6,
+   "round": 1.0,
+   "embed_mm": 20.0,
+   "proud_mm": 9.9,
+   "visible": {
+    "front": 0.22,
+    "threeq": 0.52,
+    "side": 0.48
+   },
+   "unoccluded": {
+    "front": 0.42,
+    "threeq": 0.64,
+    "side": 0.64
+   },
+   "fail": [],
+   "ok": true
+  }
+ ],
+ "membranes": [],
+ "seats": [
+  {
+   "piece": "piece_belt",
+   "lifted_pct": 55.0,
+   "ok": false,
+   "fail": [
+    "55.0% of the inner face lifts off the skin (> 10.0%)"
+   ]
+  }
+ ],
+ "crops": [
+  "s3_r23_eyeL_front_beauty.png",
+  "s3_r23_eyeL_threeq_beauty.png",
+  "s3_r23_eyeL_side_beauty.png",
+  "s3_r23_eyeR_front_beauty.png",
+  "s3_r23_eyeR_threeq_beauty.png",
+  "s3_r23_eyeR_side_beauty.png"
+ ],
+ "views": {}
+}

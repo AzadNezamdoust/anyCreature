@@ -1,0 +1,52 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "108165445d564e59abee340cb228f1866c998abf7ecee564f25435daf00d7668",
+  "collapsed_edge_hash": "108165445d564e59abee340cb228f1866c998abf7ecee564f25435daf00d7668",
+  "logged_ops": 2,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "belly",
+  "dark",
+  "iris",
+  "skin",
+  "tip"
+ ],
+ "colour_count": 5,
+ "tris": 3488,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 2,
+   "cuts": 10,
+   "relaxed": 38,
+   "undone": 20,
+   "max_move": 0.01227,
+   "mean_move": 0.00253,
+   "before": {
+    "border_edges": 53,
+    "length": 1.0178,
+    "paths": 1,
+    "corners": 25,
+    "corner_quads": 16,
+    "corners_per_m": 24.6
+   },
+   "after": {
+    "border_edges": 39,
+    "length": 0.8057,
+    "paths": 1,
+    "corners": 3,
+    "corner_quads": 0,
+    "corners_per_m": 3.7
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 80,
+  "piece_fingers": 288,
+  "piece_feet": 652
+ }
+}

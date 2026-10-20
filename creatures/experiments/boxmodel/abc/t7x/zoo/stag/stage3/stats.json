@@ -1,0 +1,27 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "c8e5692f70240a7e64fb8c9a486b6a5129192a07151b2282c812b1d31277ef9a",
+  "collapsed_edge_hash": "c8e5692f70240a7e64fb8c9a486b6a5129192a07151b2282c812b1d31277ef9a",
+  "logged_ops": 6,
+  "logged_new_verts": 54,
+  "errors": []
+ },
+ "colours": [
+  "antler",
+  "black",
+  "coat",
+  "cream",
+  "dark",
+  "tip"
+ ],
+ "colour_count": 6,
+ "tris": 2972,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_mane": 80,
+  "piece_mane_neck": 120,
+  "piece_tines": 360
+ }
+}

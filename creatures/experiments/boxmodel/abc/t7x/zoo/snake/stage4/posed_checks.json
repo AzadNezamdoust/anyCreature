@@ -1,0 +1,6 @@
+{
+ "plan_iou_vs_top_png": 0.84,
+ "side_iou_vs_side_png": 0.619,
+ "self_gap_m": "> 0.08",
+ "verdict": "PASS"
+}

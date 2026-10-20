@@ -1,0 +1,29 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "52d9e4771e22dfa8ef91eae399bf44912c0f7154025c8ddfb9ab3f64ab5ec991",
+  "collapsed_edge_hash": "52d9e4771e22dfa8ef91eae399bf44912c0f7154025c8ddfb9ab3f64ab5ec991",
+  "logged_ops": 6,
+  "logged_new_verts": 56,
+  "errors": []
+ },
+ "colours": [
+  "cream",
+  "eye",
+  "fur",
+  "hoof",
+  "leg",
+  "saddle",
+  "snout",
+  "tusk"
+ ],
+ "colour_count": 8,
+ "tris": 2508,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_tusk": 64,
+  "piece_crest": 296,
+  "piece_toes": 160
+ }
+}

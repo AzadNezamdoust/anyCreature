@@ -1,0 +1,23 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "83c27f43c719d39189ac74211ffdf5cc0c5e2f7b84f7d3ea7592a2ce8bcb9462",
+  "collapsed_edge_hash": "83c27f43c719d39189ac74211ffdf5cc0c5e2f7b84f7d3ea7592a2ce8bcb9462",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "back",
+  "belly",
+  "eye",
+  "fin",
+  "mouth"
+ ],
+ "colour_count": 5,
+ "tris": 2050,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64
+ }
+}

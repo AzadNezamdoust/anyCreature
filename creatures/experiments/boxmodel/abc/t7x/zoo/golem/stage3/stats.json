@@ -1,0 +1,25 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "280e2315811c7a8d6f99287eed468fefc3b1314bb88a1eecb0f7995732f0fca3",
+  "collapsed_edge_hash": "280e2315811c7a8d6f99287eed468fefc3b1314bb88a1eecb0f7995732f0fca3",
+  "logged_ops": 6,
+  "logged_new_verts": 68,
+  "errors": []
+ },
+ "colours": [
+  "dark",
+  "glow",
+  "light",
+  "moss",
+  "stone"
+ ],
+ "colour_count": 5,
+ "tris": 2300,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_plates": 168,
+  "piece_toes": 72
+ }
+}

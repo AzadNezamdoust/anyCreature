@@ -11,6 +11,15 @@
           orbit (harness/outline.py) runs on the stage GLB; at stage 4 glbcheck
           runs on the final GLB.
 --blueprint  draws blueprint.json (the orthographic design) to blueprint.png.
+--junctions  alone: probe the latest stageN GLB without rebuilding (stageN/junctions/sN_review_*).
+             With --stage: the junction probe, eye check and membrane check on the stage GLB
+             (junction_gate.py / junctions.py): numbers per limb/ear/tail/wing root, zoomed crops
+             from three angles plus a flag heatmap, rounds/sN_rRR_junctions.jpg. Gates the round.
+--details    the chunky-detail gate (kit/detail_gate.py): fingers, toes, claws, horns, spines,
+             antennae, tail tips thick enough for game distance (>= 1.2% H, x2 on tier-1 small
+             creatures, >= 3 px at a 256 px creature height), digit length / thickness, and the
+             detail count per size tier; game-distance thumbnails; rounds/sN_rRR_details.jpg.
+             Gates the round. Alone: probe the latest stage GLB without rebuilding.
 --compare    side_by_side.jpg: the shipped engine creature | the stage-1 grey
              base | the final, each from the same three views.
 --review     the art director's packet, review/: 1_beauty.jpg (four EEVEE views),
@@ -643,6 +652,12 @@ def main():
     ap.add_argument('--no-orbit', action='store_true')
     ap.add_argument('--review', action='store_true')
     ap.add_argument('--blockout', action='store_true')
+    ap.add_argument('--junctions', action='store_true',
+                    help='also run the junction probe, eye and membrane checks (kit/junction_gate.py) on the stage GLB: '
+                         'stageN/junctions/ crops + rounds/sN_rRR_junctions.jpg; a FAIL makes the round NOT OK')
+    ap.add_argument('--details', action='store_true',
+                    help='also run the chunky-detail gate (kit/detail_gate.py) on the stage GLB: '
+                         'rounds/sN_rRR_details.jpg; a FAIL makes the round NOT OK')
     a = ap.parse_args()
     prog = os.path.abspath(a.program)
     cdir = os.path.dirname(prog)
@@ -688,6 +703,32 @@ def main():
         return 0
 
     N = a.stage
+    if N < 1 and a.details and not a.junctions:   # detail gate on the latest built stage, no rebuild
+        import detail_gate
+        for n in (4, 3, 2, 1):
+            g = sorted(glob.glob(os.path.join(cdir, f'stage{n}', '*.glb')))
+            if g:
+                dok, dlines, _, dsheet = detail_gate.gate(g[0], os.path.join(cdir, f'stage{n}', 'details'), scr,
+                                                          tag=f's{n}_review', title=f'{os.path.basename(cdir)} stage {n}',
+                                                          prog=prog)
+                for l in dlines:
+                    print(l)
+                print('BMK detail sheet:', dsheet)
+                return 0 if dok else 1
+        ap.error('no stage GLB to probe')
+    if N < 1 and a.junctions:              # probe the latest built stage without rebuilding (a review pass)
+        import junction_gate
+        for n in (4, 3, 2, 1):
+            g = sorted(glob.glob(os.path.join(cdir, f'stage{n}', '*.glb')))
+            if g:
+                jtag = f's{n}_review'
+                jok, jlines, _, jsheet = junction_gate.gate(g[0], os.path.join(cdir, f'stage{n}', 'junctions'), scr,
+                                                           tag=jtag, title=f'{os.path.basename(cdir)} stage {n}')
+                for l in jlines:
+                    print(l)
+                print('BMK junction sheet:', jsheet)
+                return 0 if jok else 1
+        ap.error('no stage GLB to probe')
     if N < 1:
         ap.error('--stage N (1-4), --blueprint or --compare')
     args = ['--out', cdir, '--scratch', scr, '--stage', str(N), '--round', str(a.round)]
@@ -725,6 +766,32 @@ def main():
         grc, tail = glbcheck(glb, os.path.join(sdir, 'glbcheck.txt'))
         print(f'BMK glbcheck rc={grc}: ' + ' | '.join(tail))
         ok &= grc == 0
+
+    if a.junctions and glb and os.path.exists(glb):
+        import junction_gate
+        jtag = f's{N}_r{a.round:02d}'
+        jok, jlines, jrep, jsheet = junction_gate.gate(glb, os.path.join(sdir, 'junctions'), scr, tag=jtag,
+                                                      title=f'{os.path.basename(cdir)} stage {N} round {a.round}')
+        for l in jlines:
+            print(l)
+        if jsheet:
+            os.makedirs(os.path.join(cdir, 'rounds'), exist_ok=True)
+            shutil.copy(jsheet, os.path.join(cdir, 'rounds', f'{jtag}_junctions.jpg'))
+            print('BMK junction sheet:', os.path.relpath(os.path.join(cdir, 'rounds', f'{jtag}_junctions.jpg'), ROOT))
+        ok &= jok
+
+    if a.details and glb and os.path.exists(glb):
+        import detail_gate
+        dtag = f's{N}_r{a.round:02d}'
+        dok, dlines, _, dsheet = detail_gate.gate(glb, os.path.join(sdir, 'details'), scr, tag=dtag, prog=prog,
+                                                  title=f'{os.path.basename(cdir)} stage {N} round {a.round}')
+        for l in dlines:
+            print(l)
+        if dsheet:
+            os.makedirs(os.path.join(cdir, 'rounds'), exist_ok=True)
+            shutil.copy(dsheet, os.path.join(cdir, 'rounds', f'{dtag}_details.jpg'))
+            print('BMK detail sheet:', os.path.relpath(os.path.join(cdir, 'rounds', f'{dtag}_details.jpg'), ROOT))
+        ok &= dok
 
     # the round sheet
     t = f's{N}'

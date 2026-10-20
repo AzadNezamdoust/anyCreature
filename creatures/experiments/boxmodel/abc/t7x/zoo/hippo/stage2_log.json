@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face on the skull top",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

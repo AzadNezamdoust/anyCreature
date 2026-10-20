@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the upper-side head face between H2 and H3",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "lip and belly line: a longitudinal loop through the lower-flank faces, nose to tail tip",
+   "new_verts": 93,
+   "extra_base_edges": []
+  }
+ ]
+}

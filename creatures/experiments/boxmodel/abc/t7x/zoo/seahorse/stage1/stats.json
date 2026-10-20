@@ -1,0 +1,26 @@
+{
+ "report": {
+  "verts": 2006,
+  "faces": 1992,
+  "tris": 4008,
+  "quads": 1988,
+  "ngons": 4,
+  "components": 1,
+  "nonmanifold_edges": 0,
+  "self_intersections": 0,
+  "intersections_at": [],
+  "bbox": [
+   [
+    -0.0836,
+    -0.142,
+    -0.0016
+   ],
+   [
+    0.0836,
+    0.1409,
+    0.503
+   ]
+  ]
+ },
+ "lock": true
+}

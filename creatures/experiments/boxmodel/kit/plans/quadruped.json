@@ -1,0 +1,570 @@
+{
+ "plan": "quadruped",
+ "note": "workflow v4 body-plan preset. One spine loft tail tip -> nose; fore/hind limbs grown from flank sockets, ears from a skull socket; the creature fills the numbers from its sheet. Sockets name a span (the section the span starts at), the first ring quad j0 and the face count n (n=2 on 6-vertex profiles = 6-sided limbs, n=3 on 8-vertex = 8-sided). Bones and clips are wolf_t7's (t7r), the default for any quadruped; joint names refer to the creature's J.",
+ "ftest_body": "quadruped",
+ "tri_budget": 8000,
+ "sockets": {
+  "fore": {
+   "span": "C0",
+   "j0": 2,
+   "n": 2,
+   "corner": 0.55
+  },
+  "hind": {
+   "span": "R1",
+   "j0": 2,
+   "n": 2,
+   "corner": 0.55
+  },
+  "ear": {
+   "span": "N0",
+   "j0": 1,
+   "n": 1,
+   "corner": 1.0
+  }
+ },
+ "limb_order": [
+  "fore",
+  "hind",
+  "ear"
+ ],
+ "regions": [
+  "fur",
+  "saddle",
+  "cream",
+  "tan",
+  "tip",
+  "nose",
+  "amber"
+ ],
+ "proportion_plan": {
+  "spine": [
+   "hips",
+   "spine",
+   "chest",
+   "neck",
+   "head",
+   "nose"
+  ],
+  "limbs": {
+   "fore": [
+    "shoulder",
+    "elbow",
+    "wrist",
+    "fpaw"
+   ],
+   "hind": [
+    "hipL",
+    "knee",
+    "hock",
+    "hpaw"
+   ]
+  },
+  "neck": "neck",
+  "head": "head",
+  "snout": "nose"
+ },
+ "bones": [
+  [
+   "hips",
+   "hips",
+   "spine",
+   null
+  ],
+  [
+   "spine",
+   "spine",
+   "chest",
+   "hips",
+   true
+  ],
+  [
+   "chest",
+   "chest",
+   "neck",
+   "spine",
+   true
+  ],
+  [
+   "neck",
+   "neck",
+   "head",
+   "chest",
+   true
+  ],
+  [
+   "head",
+   "head",
+   "nose",
+   "neck",
+   true
+  ],
+  [
+   "ear.L",
+   "ear",
+   "eartip",
+   "head"
+  ],
+  [
+   "tail0",
+   "tail0",
+   "tail1",
+   "hips"
+  ],
+  [
+   "tail1",
+   "tail1",
+   "tail2",
+   "tail0",
+   true
+  ],
+  [
+   "tail2",
+   "tail2",
+   "tail3",
+   "tail1",
+   true
+  ],
+  [
+   "upperarm.L",
+   "shoulder",
+   "elbow",
+   "chest"
+  ],
+  [
+   "forearm.L",
+   "elbow",
+   "wrist",
+   "upperarm.L",
+   true
+  ],
+  [
+   "paw.L",
+   "wrist",
+   "ftoe",
+   "forearm.L",
+   true
+  ],
+  [
+   "thigh.L",
+   "hipL",
+   "knee",
+   "hips"
+  ],
+  [
+   "shin.L",
+   "knee",
+   "hock",
+   "thigh.L",
+   true
+  ],
+  [
+   "foot.L",
+   "hock",
+   "hpaw",
+   "shin.L",
+   true
+  ],
+  [
+   "toe.L",
+   "hpaw",
+   "htoe",
+   "foot.L",
+   true
+  ]
+ ],
+ "loops": [
+  {
+   "limb": "fore",
+   "between": [
+    0,
+    1
+   ],
+   "reason": "elbow: a second ring between elbow and forearm so the elbow bends, not kinks"
+  },
+  {
+   "limb": "hind",
+   "between": [
+    0,
+    1
+   ],
+   "reason": "stifle: a second ring between stifle and gaskin for the hind-leg bend"
+  },
+  {
+   "spine": [
+    "N0",
+    "H0"
+   ],
+   "reason": "neck: a ring between N0 and the skull so the head-down lunge bends the neck in two places"
+  }
+ ],
+ "clips": {
+  "idle": {
+   "rot": {
+    "1": {},
+    "12": {
+     "chest": [
+      1.5,
+      0,
+      0
+     ],
+     "neck": [
+      -1.5,
+      0,
+      0
+     ],
+     "tail1": [
+      0,
+      0,
+      4
+     ]
+    },
+    "20": {
+     "ear.L": [
+      0,
+      0,
+      -14
+     ]
+    },
+    "24": {
+     "tail1": [
+      0,
+      0,
+      0
+     ]
+    },
+    "27": {},
+    "36": {
+     "chest": [
+      1.5,
+      0,
+      0
+     ],
+     "neck": [
+      -1.5,
+      0,
+      0
+     ],
+     "tail1": [
+      0,
+      0,
+      -4
+     ]
+    },
+    "48": {}
+   }
+  },
+  "move": {
+   "rot": {
+    "1": {
+     "upperarm.L": [
+      18,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      -18,
+      0,
+      0
+     ],
+     "thigh.L": [
+      -18,
+      0,
+      0
+     ],
+     "thigh.R": [
+      18,
+      0,
+      0
+     ],
+     "tail1": [
+      0,
+      0,
+      5
+     ]
+    },
+    "7": {
+     "forearm.R": [
+      -35,
+      0,
+      0
+     ],
+     "paw.R": [
+      -30,
+      0,
+      0
+     ],
+     "shin.L": [
+      -20,
+      0,
+      0
+     ],
+     "foot.L": [
+      25,
+      0,
+      0
+     ],
+     "neck": [
+      2,
+      0,
+      0
+     ]
+    },
+    "13": {
+     "upperarm.L": [
+      -18,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      18,
+      0,
+      0
+     ],
+     "thigh.L": [
+      18,
+      0,
+      0
+     ],
+     "thigh.R": [
+      -18,
+      0,
+      0
+     ],
+     "tail1": [
+      0,
+      0,
+      -5
+     ]
+    },
+    "19": {
+     "forearm.L": [
+      -35,
+      0,
+      0
+     ],
+     "paw.L": [
+      -30,
+      0,
+      0
+     ],
+     "shin.R": [
+      -20,
+      0,
+      0
+     ],
+     "foot.R": [
+      25,
+      0,
+      0
+     ],
+     "neck": [
+      2,
+      0,
+      0
+     ]
+    },
+    "25": {
+     "upperarm.L": [
+      18,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      -18,
+      0,
+      0
+     ],
+     "thigh.L": [
+      -18,
+      0,
+      0
+     ],
+     "thigh.R": [
+      18,
+      0,
+      0
+     ],
+     "tail1": [
+      0,
+      0,
+      5
+     ]
+    }
+   }
+  },
+  "attack": {
+   "rot": {
+    "1": {},
+    "8": {
+     "neck": [
+      -10,
+      0,
+      0
+     ],
+     "chest": [
+      4,
+      0,
+      0
+     ],
+     "head": [
+      -4,
+      0,
+      0
+     ],
+     "tail0": [
+      8,
+      0,
+      0
+     ]
+    },
+    "16": {
+     "neck": [
+      20,
+      0,
+      0
+     ],
+     "chest": [
+      -11,
+      0,
+      0
+     ],
+     "head": [
+      8,
+      0,
+      0
+     ],
+     "upperarm.L": [
+      14,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      14,
+      0,
+      0
+     ],
+     "ear.L": [
+      -12,
+      0,
+      0
+     ]
+    },
+    "20": {
+     "neck": [
+      17,
+      0,
+      0
+     ],
+     "chest": [
+      -11,
+      0,
+      0
+     ],
+     "head": [
+      20,
+      0,
+      0
+     ],
+     "upperarm.L": [
+      14,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      14,
+      0,
+      0
+     ],
+     "ear.L": [
+      -12,
+      0,
+      0
+     ]
+    },
+    "24": {
+     "neck": [
+      18,
+      0,
+      0
+     ],
+     "chest": [
+      -5,
+      0,
+      0
+     ],
+     "head": [
+      6,
+      0,
+      0
+     ],
+     "upperarm.L": [
+      8,
+      0,
+      0
+     ],
+     "upperarm.R": [
+      8,
+      0,
+      0
+     ]
+    },
+    "32": {}
+   },
+   "loc": {
+    "1": {
+     "hips": [
+      0,
+      0,
+      0
+     ]
+    },
+    "8": {
+     "hips": [
+      0,
+      -0.03,
+      0
+     ]
+    },
+    "16": {
+     "hips": [
+      0,
+      0.06,
+      0
+     ]
+    },
+    "20": {
+     "hips": [
+      0,
+      0.06,
+      0
+     ]
+    },
+    "24": {
+     "hips": [
+      0,
+      0.03,
+      0
+     ]
+    },
+    "32": {
+     "hips": [
+      0,
+      0,
+      0
+     ]
+    }
+   }
+  }
+ },
+ "trot_flex": {
+  "fore": {
+   "forearm": -35,
+   "paw": -30
+  },
+  "hind": {
+   "shin": -20,
+   "foot": 25
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "3d4593a85727a5ac346c043c6c5f387772f2870a421dbc8d473763aea1a89764",
+  "collapsed_edge_hash": "3d4593a85727a5ac346c043c6c5f387772f2870a421dbc8d473763aea1a89764",
+  "logged_ops": 6,
+  "logged_new_verts": 64,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "beak",
+  "brown",
+  "cream",
+  "dark",
+  "tan"
+ ],
+ "colour_count": 6,
+ "tris": 1822,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_beak": 14,
+  "piece_wing": 136,
+  "piece_toes": 160,
+  "piece_talons": 48
+ }
+}

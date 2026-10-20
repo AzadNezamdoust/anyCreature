@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "peduncle: the caudal stroke bends here",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "mid body: the second bend of the swim wave",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "gill region: the head yaw bends behind the head",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "pectoral root: a ring between the root and mid sections so the fin flaps",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "811bab8ca67a1bae9f4310893729e8db95a32b015f219c3f66d3f710ba0f751a",
+  "collapsed_edge_hash": "811bab8ca67a1bae9f4310893729e8db95a32b015f219c3f66d3f710ba0f751a",
+  "logged_ops": 3,
+  "logged_new_verts": 28,
+  "errors": []
+ },
+ "colours": [
+  "belly",
+  "eye",
+  "leather",
+  "nail",
+  "nose",
+  "pupil",
+  "rope",
+  "skin"
+ ],
+ "colour_count": 8,
+ "tris": 3652,
+ "attach": [
+  {
+   "kind": "piece_attach",
+   "piece": "hand_L",
+   "cage_ring": 10,
+   "part_ring": 10,
+   "new_faces": 13,
+   "reason": "parts-library 4-finger hand on the wrist ring"
+  },
+  {
+   "kind": "piece_attach",
+   "piece": "hand_R",
+   "cage_ring": 10,
+   "part_ring": 10,
+   "new_faces": 13,
+   "reason": "parts-library 4-finger hand on the wrist ring"
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_hand_L": 196,
+  "piece_hand_R": 196,
+  "piece_toes_L": 100,
+  "piece_toes_R": 100,
+  "piece_belt": 288,
+  "piece_flap_front": 176,
+  "piece_flap_back": 176
+ }
+}

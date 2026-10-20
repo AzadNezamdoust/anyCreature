@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "flipper shoulder loop: the flipper swings at the shoulder",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "flipper wrist loop: the flipper bends at wing1",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "ankle loop: the foot bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "neck loop: the head turn and the throat curve",
+   "new_verts": 17,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "eye socket: a ring in the eye face behind the beak root, its floor pushed in",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

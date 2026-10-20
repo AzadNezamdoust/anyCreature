@@ -1,0 +1,29 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "b0057f1bf4567783ce117517d9d221278c2d72b7a99be3e9aad1b2793d05fc60",
+  "collapsed_edge_hash": "b0057f1bf4567783ce117517d9d221278c2d72b7a99be3e9aad1b2793d05fc60",
+  "logged_ops": 4,
+  "logged_new_verts": 47,
+  "errors": []
+ },
+ "colours": [
+  "brass",
+  "cream",
+  "dark",
+  "eye",
+  "leather",
+  "pupil",
+  "skin"
+ ],
+ "colour_count": 7,
+ "tris": 3836,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_belt": 256,
+  "piece_buckle": 12,
+  "piece__rest_hand": 80,
+  "piece__rest_foot": 60
+ }
+}

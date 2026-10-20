@@ -1,0 +1,186 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow ring: the bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "stifle ring: the bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck-skull ring: the head turn",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "stripe loop A in T3b-T4: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "stripe loop B in T3b-T4: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "stripe loop A in T2b-T3: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "stripe loop B in T2b-T3: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "stripe loop A in T1-T2: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "stripe loop B in T1-T2: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "stripe loop A in R0-R0b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "stripe loop B in R0-R0b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "loop",
+   "reason": "stripe loop A in R2-R2b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "loop",
+   "reason": "stripe loop B in R2-R2b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 14,
+   "kind": "loop",
+   "reason": "stripe loop A in W0b-M0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 15,
+   "kind": "loop",
+   "reason": "stripe loop B in W0b-M0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 16,
+   "kind": "loop",
+   "reason": "stripe loop A in M0b-C0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 17,
+   "kind": "loop",
+   "reason": "stripe loop B in M0b-C0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 18,
+   "kind": "loop",
+   "reason": "stripe loop A in C1-C1b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 19,
+   "kind": "loop",
+   "reason": "stripe loop B in C1-C1b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 20,
+   "kind": "loop",
+   "reason": "stripe loop A in R0b-R1: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 21,
+   "kind": "loop",
+   "reason": "stripe loop B in R0b-R1: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 22,
+   "kind": "loop",
+   "reason": "stripe loop A in R2b-W0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 23,
+   "kind": "loop",
+   "reason": "stripe loop B in R2b-W0: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 24,
+   "kind": "loop",
+   "reason": "stripe loop A in W0-W0b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 25,
+   "kind": "loop",
+   "reason": "stripe loop B in W0-W0b: colour border",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 26,
+   "kind": "inset",
+   "reason": "eye socket (pass 3: the upper face of the split stop face)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

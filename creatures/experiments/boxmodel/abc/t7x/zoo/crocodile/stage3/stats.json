@@ -1,0 +1,28 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "827ff1557f3bfee8b10a866107501f6e0e7206985e0a88be8594848f4a73c703",
+  "collapsed_edge_hash": "827ff1557f3bfee8b10a866107501f6e0e7206985e0a88be8594848f4a73c703",
+  "logged_ops": 5,
+  "logged_new_verts": 46,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "claw",
+  "cream",
+  "olive",
+  "pupil",
+  "scute",
+  "tooth"
+ ],
+ "colour_count": 7,
+ "tris": 3548,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_scutes": 576,
+  "piece_teeth": 40,
+  "piece_claws": 320
+ }
+}

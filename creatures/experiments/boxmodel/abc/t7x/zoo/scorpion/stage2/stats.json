@@ -1,0 +1,45 @@
+{
+ "report": {
+  "verts": 2182,
+  "faces": 2168,
+  "tris": 4360,
+  "quads": 2164,
+  "ngons": 4,
+  "components": 1,
+  "nonmanifold_edges": 0,
+  "self_intersections": 0,
+  "intersections_at": [],
+  "bbox": [
+   [
+    -0.2946,
+    -0.4269,
+    0.0036
+   ],
+   [
+    0.2946,
+    0.4385,
+    0.5081
+   ]
+  ]
+ },
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "e816f5d821fd0b0d5a2c923d9bb942b711ade00136563db0f65e1e158ea1c1eb",
+  "collapsed_edge_hash": "e816f5d821fd0b0d5a2c923d9bb942b711ade00136563db0f65e1e158ea1c1eb",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "iou_vs_stage1": {
+  "az000": 0.99,
+  "az045": 0.979,
+  "az090": 0.953,
+  "az135": 0.951,
+  "az180": 0.963,
+  "az225": 0.951,
+  "az270": 0.953,
+  "az315": 0.979,
+  "top": 0.926,
+  "bottom": 0.909
+ }
+}

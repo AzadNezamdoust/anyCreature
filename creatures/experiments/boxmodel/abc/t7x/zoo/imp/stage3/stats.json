@@ -1,0 +1,51 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "e4d2e62d202caf28b46d8201147c5a500d7c73c070542ae4c9fe9f9981f0425b",
+  "collapsed_edge_hash": "e4d2e62d202caf28b46d8201147c5a500d7c73c070542ae4c9fe9f9981f0425b",
+  "logged_ops": 3,
+  "logged_new_verts": 32,
+  "errors": []
+ },
+ "colours": [
+  "belly",
+  "eye",
+  "horn",
+  "nose",
+  "pupil",
+  "skin",
+  "wing"
+ ],
+ "colour_count": 7,
+ "tris": 3644,
+ "attach": [
+  {
+   "kind": "piece_attach",
+   "piece": "hand_L",
+   "cage_ring": 12,
+   "part_ring": 8,
+   "new_faces": 13,
+   "reason": "parts-library 3-finger clawed hand on the wrist ring"
+  },
+  {
+   "kind": "piece_attach",
+   "piece": "hand_R",
+   "cage_ring": 12,
+   "part_ring": 8,
+   "new_faces": 13,
+   "reason": "parts-library 3-finger clawed hand on the wrist ring"
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_nose": 32,
+  "piece_horn_L": 58,
+  "piece_horn_R": 58,
+  "piece_hand_L": 204,
+  "piece_hand_R": 204,
+  "piece_claws_L": 60,
+  "piece_claws_R": 60,
+  "piece_wing_L": 192,
+  "piece_wing_R": 192
+ }
+}

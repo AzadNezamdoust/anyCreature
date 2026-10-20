@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "tail joint: a ring in the peduncle span, where the caudal swings",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "body flex: a ring in the free span behind the pectoral girdle",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "gill line: a ring where the operculum ends, the head joint",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the upper-side head face between H1 and H2",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

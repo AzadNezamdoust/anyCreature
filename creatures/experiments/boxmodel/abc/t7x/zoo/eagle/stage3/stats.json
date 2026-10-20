@@ -1,0 +1,30 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "6847c24f37fd9da1d76c6a5fd018e92ef658dee9c127a90308813d61730ce422",
+  "collapsed_edge_hash": "6847c24f37fd9da1d76c6a5fd018e92ef658dee9c127a90308813d61730ce422",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "body",
+  "cov",
+  "eye",
+  "flight",
+  "gold",
+  "horn",
+  "yellow"
+ ],
+ "colour_count": 7,
+ "tris": 4596,
+ "attach": [],
+ "borders": null,
+ "pieces": {
+  "piece_eye": 80,
+  "piece_primaries": 336,
+  "piece_tailfeathers": 168,
+  "piece_footL": 148,
+  "piece_footR": 148
+ }
+}

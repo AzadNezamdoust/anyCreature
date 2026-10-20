@@ -1,0 +1,28 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "0741eff919ca9e2f8ff7eba46cae823b5a68d43eb047de40cf4668c3f949f1e3",
+  "collapsed_edge_hash": "0741eff919ca9e2f8ff7eba46cae823b5a68d43eb047de40cf4668c3f949f1e3",
+  "logged_ops": 9,
+  "logged_new_verts": 123,
+  "errors": []
+ },
+ "colours": [
+  "beak",
+  "black",
+  "iris",
+  "leg",
+  "pupil",
+  "sheen",
+  "talon"
+ ],
+ "colour_count": 7,
+ "tris": 3056,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_wing": 388,
+  "piece_feathers": 144,
+  "piece_toes": 272
+ }
+}

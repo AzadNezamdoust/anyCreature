@@ -1,0 +1,26 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "57438054a7feadacf8489d073b1a61b4a7496a01a0a654bb3cd61aeb46577861",
+  "collapsed_edge_hash": "57438054a7feadacf8489d073b1a61b4a7496a01a0a654bb3cd61aeb46577861",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "dark",
+  "eye",
+  "horn",
+  "leg",
+  "skin"
+ ],
+ "colour_count": 5,
+ "tris": 3164,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_horn_front": 58,
+  "piece_horn_back": 46,
+  "piece_nails": 384
+ }
+}

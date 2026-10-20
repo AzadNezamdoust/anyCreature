@@ -1,0 +1,320 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\gorilla\\stage4\\gorilla.glb",
+ "tag": "s4_r02",
+ "ok": false,
+ "size_m": 1.683,
+ "limits": {
+  "REGION_K": 2.0,
+  "EXPOSED": 2,
+  "WELD": 1e-05,
+  "KNIFE_DEG": 90.0,
+  "KNIFE_LEN_K": 1.0,
+  "STRIP_W": 0.4,
+  "STRIP_ASPECT": 3.0,
+  "STRIP_CREASE_DEG": 30.0,
+  "STRIP_LEN_K": 1.0,
+  "SLIT_K": 0.1,
+  "SLIT_PCT": 1.5,
+  "GAP_K": 1.0,
+  "PINCH_RAD": 2.2,
+  "CLIP_PCT": 1.0,
+  "EYE_VIS": {
+   "front": 0.15,
+   "threeq": 0.35,
+   "side": 0.4
+  },
+  "EYE_SIZE": [
+   0.06,
+   0.24
+  ],
+  "EYE_ROUND": 0.7,
+  "SEAT_LIFT": 0.004,
+  "SEAT_FAR": 0.05,
+  "SEAT_PCT": 10.0,
+  "MEMBRANE_ABS": 0.006,
+  "MEMBRANE_REL": 0.004
+ },
+ "body": {
+  "open_edges": 0,
+  "nonmanifold_edges": 0
+ },
+ "junctions": [
+  {
+   "name": "upperarm.L",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 178.3,
+   "root": [
+    0.36,
+    -0.36,
+    1.0
+   ],
+   "region_tris": 170,
+   "open_edges": 0,
+   "max_concave_deg": 112.3,
+   "hidden_max_concave_deg": 112.3,
+   "knife_edges": 2,
+   "knife_len_r": 1.39,
+   "strip_max_len_r": 0.88,
+   "strip_min_width_mm": 20.9,
+   "strip_count": 0,
+   "median_face_mm": 79.8,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "gaps": [],
+   "clip_pct": 0.0,
+   "clip_at": null,
+   "clip_with": [],
+   "root_clip_pct": 0.0,
+   "fail": [
+    "knife folds 2 (1.39 r, max 112.3 deg)"
+   ],
+   "ok": false
+  },
+  {
+   "name": "upperarm.R",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 178.3,
+   "root": [
+    -0.36,
+    -0.36,
+    1.0
+   ],
+   "region_tris": 170,
+   "open_edges": 0,
+   "max_concave_deg": 112.3,
+   "hidden_max_concave_deg": 112.3,
+   "knife_edges": 2,
+   "knife_len_r": 1.39,
+   "strip_max_len_r": 0.88,
+   "strip_min_width_mm": 20.9,
+   "strip_count": 0,
+   "median_face_mm": 79.8,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "gaps": [],
+   "clip_pct": 12.88,
+   "clip_at": "attack@8",
+   "clip_with": [
+    "thigh.R"
+   ],
+   "root_clip_pct": 11.65,
+   "fail": [
+    "knife folds 2 (1.39 r, max 112.3 deg)",
+    "posed clip 12.88% with thigh.R at attack@8"
+   ],
+   "ok": false
+  },
+  {
+   "name": "thigh.L",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 231.0,
+   "root": [
+    0.24,
+    0.5,
+    0.62
+   ],
+   "region_tris": 202,
+   "open_edges": 0,
+   "max_concave_deg": 98.4,
+   "hidden_max_concave_deg": 98.4,
+   "knife_edges": 3,
+   "knife_len_r": 1.45,
+   "strip_max_len_r": 0.94,
+   "strip_min_width_mm": 22.8,
+   "strip_count": 0,
+   "median_face_mm": 86.5,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "gaps": [],
+   "clip_pct": 0.0,
+   "clip_at": null,
+   "clip_with": [],
+   "root_clip_pct": 0.0,
+   "fail": [
+    "knife folds 3 (1.45 r, max 98.4 deg)"
+   ],
+   "ok": false
+  },
+  {
+   "name": "thigh.R",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 231.0,
+   "root": [
+    -0.24,
+    0.5,
+    0.62
+   ],
+   "region_tris": 202,
+   "open_edges": 0,
+   "max_concave_deg": 98.4,
+   "hidden_max_concave_deg": 98.4,
+   "knife_edges": 3,
+   "knife_len_r": 1.45,
+   "strip_max_len_r": 0.94,
+   "strip_min_width_mm": 22.8,
+   "strip_count": 0,
+   "median_face_mm": 86.5,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "gaps": [],
+   "clip_pct": 10.33,
+   "clip_at": "attack@8",
+   "clip_with": [
+    "upperarm.R"
+   ],
+   "root_clip_pct": 0.0,
+   "fail": [
+    "knife folds 3 (1.45 r, max 98.4 deg)",
+    "posed clip 10.33% with upperarm.R at attack@8"
+   ],
+   "ok": false
+  }
+ ],
+ "eyes": [
+  {
+   "side": "L",
+   "centre": [
+    0.096,
+    -0.757,
+    1.199
+   ],
+   "diam_mm": 33.9,
+   "round": 1.0,
+   "diam_head": 0.053,
+   "embed_mm": 7.2,
+   "proud_mm": 13.7,
+   "visible": {
+    "front": 0.82,
+    "threeq": 0.83,
+    "side": 0.03
+   },
+   "unoccluded": {
+    "front": 1.0,
+    "threeq": 1.0,
+    "side": 0.07
+   },
+   "fail": [
+    "side view 0.03 < 0.4",
+    "size 0.053 of head length (allowed 0.06-0.24)"
+   ],
+   "ok": false
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.096,
+    -0.757,
+    1.199
+   ],
+   "diam_mm": 34.0,
+   "round": 1.0,
+   "diam_head": 0.054,
+   "embed_mm": 7.2,
+   "proud_mm": 13.7,
+   "visible": {
+    "front": 0.82,
+    "threeq": 0.83,
+    "side": 0.03
+   },
+   "unoccluded": {
+    "front": 1.0,
+    "threeq": 1.0,
+    "side": 0.07
+   },
+   "fail": [
+    "side view 0.03 < 0.4",
+    "size 0.054 of head length (allowed 0.06-0.24)"
+   ],
+   "ok": false
+  }
+ ],
+ "membranes": [
+  {
+   "target": "piece_ear_L",
+   "p10_mm": 3.3,
+   "p50_mm": 10.9,
+   "floor_mm": 6.7,
+   "thin_area_pct": 46.7,
+   "open_edges": 0,
+   "fail": [
+    "p10 thickness 3.3 mm < 6.7 mm"
+   ],
+   "ok": false
+  },
+  {
+   "target": "piece_ear_R",
+   "p10_mm": 3.3,
+   "p50_mm": 10.9,
+   "floor_mm": 6.7,
+   "thin_area_pct": 46.7,
+   "open_edges": 0,
+   "fail": [
+    "p10 thickness 3.3 mm < 6.7 mm"
+   ],
+   "ok": false
+  }
+ ],
+ "seats": [],
+ "crops": [
+  "s4_r02_j0_A_beauty.png",
+  "s4_r02_j0_B_beauty.png",
+  "s4_r02_j0_C_beauty.png",
+  "s4_r02_j1_A_beauty.png",
+  "s4_r02_j1_B_beauty.png",
+  "s4_r02_j1_C_beauty.png",
+  "s4_r02_j2_A_beauty.png",
+  "s4_r02_j2_B_beauty.png",
+  "s4_r02_j2_C_beauty.png",
+  "s4_r02_j3_A_beauty.png",
+  "s4_r02_j3_B_beauty.png",
+  "s4_r02_j3_C_beauty.png",
+  "s4_r02_eyeL_front_beauty.png",
+  "s4_r02_eyeL_threeq_beauty.png",
+  "s4_r02_eyeL_side_beauty.png",
+  "s4_r02_eyeR_front_beauty.png",
+  "s4_r02_eyeR_threeq_beauty.png",
+  "s4_r02_eyeR_side_beauty.png",
+  "s4_r02_j0_A_flags.png",
+  "s4_r02_j0_B_flags.png",
+  "s4_r02_j0_C_flags.png",
+  "s4_r02_j1_A_flags.png",
+  "s4_r02_j1_B_flags.png",
+  "s4_r02_j1_C_flags.png",
+  "s4_r02_j2_A_flags.png",
+  "s4_r02_j2_B_flags.png",
+  "s4_r02_j2_C_flags.png",
+  "s4_r02_j3_A_flags.png",
+  "s4_r02_j3_B_flags.png",
+  "s4_r02_j3_C_flags.png"
+ ],
+ "views": {
+  "j0": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j1": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j2": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j3": [
+   "A",
+   "B",
+   "C"
+  ]
+ }
+}

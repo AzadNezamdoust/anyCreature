@@ -59,6 +59,36 @@ COLOURS = dict(
     tooth='#f3eddb', gum='#a24c4c', nose='#5a484a', nostril='#0d0909',
     fur='#b58f66', fur_tip='#efe4c8', fur_under='#8a6846')
 
+# =============================================================================
+# STYLE: 'classic' (the original proportions; every existing caller) or 'game' (owner 2026-10-21:
+# the creatures are for games, details must read at game camera distance: fatter, shorter digits,
+# fewer of them where the count is a default (3-4 fat toes beat 5 sticks), thicker claws, horns and
+# tusks). New builds call parts.set_style('game') once, or pass style='game' per part. The numbers
+# are checked by kit/detail_gate.py (thickness >= 1.2% H, x2 on tier-1 small creatures; digit
+# length / thickness <= 4.5 (tier 1) or 6).
+# =============================================================================
+STYLE = 'classic'
+GAME = dict(
+    toe_h=1.24,        # toe / finger height (thickness), x classic
+    toe_w=1.08,        # toe width, x classic (the toe row overlaps a little more)
+    toe_len=0.85,      # toe / finger length, x classic: shorter and fatter
+    claw_w=1.40,       # claw / talon / nail cross-section, x classic
+    claw_h=1.25,
+    claw_len=0.82,     # claw length, x classic: a blunt hook, not a needle
+    horn_r=1.30,       # horn / tusk / antler base radius, x classic
+)
+
+
+def set_style(style):
+    """'classic' or 'game': the default for every part built after the call."""
+    global STYLE
+    assert style in ('classic', 'game'), style
+    STYLE = style
+
+
+def _game(style=None):
+    return (style or STYLE) == 'game'
+
 
 # =============================================================================
 # the builder: indexed points and slotted faces, compiled to one object
@@ -398,7 +428,7 @@ def eye_set(center, radius, forward=(0, -1, 0), up=(0, 0, 1), side=1, expression
 # FEET: paws, the biped foot, the hoof, the bird foot
 # =============================================================================
 def _foot(B, W, H, heel, reach, root, toe_w, toe_len, Lt, toe_h, arc, slant, splay, instep, toe_segs,
-          pads, claws, claw_len, claw_curve, open_root, lift=0.18):
+          pads, claws, claw_len, claw_curve, open_root, lift=0.18, claw_k=(1.0, 1.0)):
     """Root ring at the origin (the ankle / wrist, z = 0); the ground is z = -H.
     One shell: palm from the root ring to the knuckle line, each toe extruded from its own quad."""
     n = len(toe_w)
@@ -443,7 +473,7 @@ def _foot(B, W, H, heel, reach, root, toe_w, toe_len, Lt, toe_h, arc, slant, spl
             cl = claw_len * Lt * (0.8 + 0.2 * toe_len[i] / Lmax)
             root_pt = p2 + Vector((0, 0, 0.16 * tip_h)) - d * (0.05 * L)
             claw_tips.append(_claw(B, root_pt, _rot(d, d.cross(Vector((0, 0, -1))), -12), (0, 0, -1), cl,
-                                   0.46 * w, 0.74 * tip_h, curve=claw_curve))
+                                   0.46 * w * claw_k[0], 0.74 * tip_h * claw_k[1], curve=claw_curve))
     pts = dict(root=(0, 0, 0), ground=(0, reach * 0.4, -H), toe_tips=tips)
     if claw_tips:
         pts['claw_tips'] = claw_tips
@@ -459,7 +489,7 @@ def _bean(i, w, h):
 
 def paw_canine(origin, width=0.08, forward=(0, -1, 0), up=(0, 0, 1), side=1, height=None, toes=4, toe_segs=2,
                claws=True, claw_len=0.70, pads=True, splay=14.0, root=None, open_root=False,
-               name='paw', mats=None, colours=None):
+               name='paw', mats=None, colours=None, style=None):
     """Dog / wolf / fox / cat paw, on its toes: a narrow wrist that flares into a soft compact
     mound, four rounded toe beans on an arc in front of it (the middle pair ahead), a short blunt
     claw out of the top of each bean, a palm pad and toe pads underneath.
@@ -502,6 +532,10 @@ def paw_canine(origin, width=0.08, forward=(0, -1, 0), up=(0, 0, 1), side=1, hei
     else:
         B.cap(R3, 'skin')
     tw, th, Lt = 1.06 * W / n, 0.38 * W, 0.34 * W
+    ck = (1.0, 1.0)
+    if _game(style):                         # game: fatter, shorter beans and thicker blunt claws
+        tw, th, Lt = tw * GAME['toe_w'], th * GAME['toe_h'], Lt * GAME['toe_len']
+        ck, claw_len = (GAME['claw_w'], GAME['claw_h']), claw_len * GAME['claw_len']
     tips, ctips = [], []
     for i in range(n):
         q = (i + 0.5) / n * 2 - 1
@@ -523,7 +557,7 @@ def paw_canine(origin, width=0.08, forward=(0, -1, 0), up=(0, 0, 1), side=1, hei
         if claws:
             cr = c1.lerp(tip, 0.50) + Vector((0, 0, 0.10 * th))
             ctips.append(_claw(B, cr, _rot(d, d.cross(Vector((0, 0, -1))), -4), (0, 0, -1),
-                               claw_len * Lt * (0.8 + 0.2 * prof[i]), 0.34 * tw, 0.36 * th, curve=40.0))
+                               claw_len * Lt * (0.8 + 0.2 * prof[i]), 0.34 * tw * ck[0], 0.36 * th * ck[1], curve=40.0))
     pts = dict(root=(0, 0, 0), ground=(0, 0.2 * W, -H), toe_tips=tips)
     if ctips:
         pts['claw_tips'] = ctips
@@ -532,9 +566,9 @@ def paw_canine(origin, width=0.08, forward=(0, -1, 0), up=(0, 0, 1), side=1, hei
     return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
 
 
-def paw_bear(origin, width=0.13, forward=(0, -1, 0), up=(0, 0, 1), side=1, height=None, toes=5, toe_segs=2,
+def paw_bear(origin, width=0.13, forward=(0, -1, 0), up=(0, 0, 1), side=1, height=None, toes=None, toe_segs=2,
              claws=True, claw_len=0.85, pads=True, splay=20.0, root=None, open_root=False,
-             name='paw', mats=None, colours=None):
+             name='paw', mats=None, colours=None, style=None):
     """Bear paw, flat on the ground: a broad long sole with a heel, five short blunt toes in a shallow
     arc and long graded hooks (the middle claw longest). Also a badger, a big cat's forepaw
     (claw_len 0.5), a troll's foot.
@@ -545,17 +579,21 @@ def paw_bear(origin, width=0.13, forward=(0, -1, 0), up=(0, 0, 1), side=1, heigh
     Triangles: 198 (5 toes, arched, claws); 148 without claws; 108 with toe_segs=1 and no claws."""
     W = float(width)
     H = height or 0.55 * W
+    g = _game(style)
+    toes = toes or (4 if g else 5)           # game: four fat toes by default
     prof = {5: (0.80, 0.94, 1.0, 0.94, 0.80), 4: (0.85, 1.0, 1.0, 0.85)}.get(toes, (1.0,) * toes)
+    G = GAME if g else dict(toe_h=1.0, toe_len=1.0, claw_w=1.0, claw_h=1.0, claw_len=1.0)
     B = _B()
     pts = _foot(B, W, H, heel=0.62 * W, reach=0.56 * W, root=root or (0.66 * W, 0.66 * W), toe_w=(1.0,) * toes,
-                toe_len=prof, Lt=0.36 * W, toe_h=0.34 * W, arc=0.13 * W, slant=0.0, splay=splay, instep=0.42,
-                toe_segs=toe_segs, pads=pads, claws=claws, claw_len=claw_len, claw_curve=62.0, open_root=open_root)
+                toe_len=prof, Lt=0.36 * W * G['toe_len'], toe_h=0.34 * W * min(G['toe_h'], 1.12), arc=0.13 * W, slant=0.0,
+                splay=splay, instep=0.42, toe_segs=toe_segs, pads=pads, claws=claws, claw_len=claw_len * G['claw_len'],
+                claw_curve=62.0, open_root=open_root, claw_k=(G['claw_w'], G['claw_h']))
     return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
 
 
 def foot_biped(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, height=None, length=None, toes=3,
                toe_segs=1, claws=False, claw_len=0.5, pads=False, root=None, open_root=False,
-               name='foot', mats=None, colours=None):
+               name='foot', mats=None, colours=None, style=None):
     """Biped foot: heel behind the ankle, a rising instep, the ball, and a toe block stepped down
     from the instep. toes=3 cuts the block into a big toe (inner side, local +x) and two more;
     toes=1 keeps one block (a shoe or a mitten foot).
@@ -572,10 +610,12 @@ def foot_biped(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, hei
                 4: ((0.2, 0.22, 0.24, 0.34), (0.66, 0.78, 0.9, 1.0))}.get(toes, ((1.0,) * toes, (1.0,) * toes))
     Lt, heel = 0.20 * Lf, 0.26 * Lf
     reach = Lf - heel - Lt
+    G = GAME if _game(style) else dict(toe_h=1.0, claw_w=1.0, claw_h=1.0, claw_len=1.0)
     B = _B()
     pts = _foot(B, W, H, heel=heel, reach=reach, root=root or (0.60 * W, 0.72 * W), toe_w=tw, toe_len=prof, Lt=Lt,
-                toe_h=0.36 * W, arc=0.02 * W, slant=0.07 * W, splay=6.0, instep=0.34, toe_segs=toe_segs, pads=pads,
-                claws=claws, claw_len=claw_len, claw_curve=45.0, open_root=open_root, lift=0.10)
+                toe_h=0.36 * W * G['toe_h'], arc=0.02 * W, slant=0.07 * W, splay=6.0, instep=0.34, toe_segs=toe_segs,
+                pads=pads, claws=claws, claw_len=claw_len * G['claw_len'], claw_curve=45.0, open_root=open_root, lift=0.10,
+                claw_k=(G['claw_w'], G['claw_h']))
     return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
 
 
@@ -640,7 +680,7 @@ def hoof_cloven(origin, radius=0.028, forward=(0, -1, 0), up=(0, 0, 1), side=1, 
 
 def bird_foot(origin, toe_length=0.07, forward=(0, -1, 0), up=(0, 0, 1), side=1, height=None, radius=None,
               spread=34.0, hallux=0.6, talons=True, talon_len=0.42, toe_sides=4, name='birdfoot',
-              mats=None, colours=None):
+              mats=None, colours=None, style=None):
     """Bird foot: a scaled shank widening into the foot knuckle, three forward toes (the middle one
     longest) and one back toe, each arched with a hooked talon. Raptor: talon_len 0.6, spread 40.
     Songbird / raven: defaults. Chicken or wading bird: talon_len 0.25, hallux 0.35.
@@ -655,6 +695,10 @@ def bird_foot(origin, toe_length=0.07, forward=(0, -1, 0), up=(0, 0, 1), side=1,
     H = height or 0.9 * Lt
     r = radius or 0.13 * Lt
     tw, th = 0.26 * Lt, 0.20 * Lt
+    ck = (1.0, 1.0)
+    if _game(style):                         # game: toes a third thicker, short blunt talons
+        r, tw, th = r * 1.2, tw * 1.3, th * 1.35
+        ck, talon_len = (GAME['claw_w'], GAME['claw_h']), talon_len * GAME['claw_len']
     B = _B()
     hub = Vector((0, 0, -H + 0.62 * th))
     _sweep(B, [(0, 0, 0), (0, 0.02 * Lt, -0.62 * H), hub + Vector((0, 0, 0.25 * th)), (0, 0, -H + 0.05 * th)],
@@ -672,18 +716,137 @@ def bird_foot(origin, toe_length=0.07, forward=(0, -1, 0), up=(0, 0, 1), side=1,
         tips.append(p2)
         if talons:
             ctips.append(_claw(B, p2 + Vector((0, 0, 0.06 * th)), _rot(d, d.cross(Vector((0, 0, -1))), -18), (0, 0, -1),
-                               talon_len * Lt * (0.8 + 0.2 * f), 0.36 * tw, 0.62 * th, curve=70.0))
+                               talon_len * Lt * (0.8 + 0.2 * f), 0.36 * tw * ck[0], 0.62 * th * ck[1], curve=70.0))
     pts = dict(root=(0, 0, 0), ground=(0, 0, -H), toe_tips=tips)
     if ctips:
         pts['claw_tips'] = ctips
     return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
 
 
+def _digit_tube(B, start, c0, d, L, w, h, b0, stations, tip_from, slot='skin', tip_slot='tip'):
+    """A flat-soled box digit on the ground plane (z = b0 underneath): from c0 along d (horizontal),
+    stations (t, width k, height k); start = an existing 4-index quad [-s bottom, +s bottom, +s top,
+    -s top] or None (then the digit is its own closed tube). Returns the tip point."""
+    d = Vector((d[0], d[1], 0.0)).normalized()
+    s = Vector((d.y, -d.x, 0.0))
+    c0 = Vector((c0[0], c0[1], 0.0))
+    prev = list(start) if start is not None else None
+    for t, kw, kh in stations:
+        c = c0 + d * (L * t)
+        hw, top = w * kw / 2, b0 + h * kh
+        ring = B.ring([c - s * hw + Vector((0, 0, b0)), c + s * hw + Vector((0, 0, b0)),
+                       c + s * hw + Vector((0, 0, top)), c - s * hw + Vector((0, 0, top))])
+        if prev is None:
+            B.cap(list(reversed(ring)), slot)
+        else:
+            B.bridge(prev, ring, tip_slot if t >= tip_from else slot)
+        prev = ring
+    B.cap(prev, tip_slot)
+    return c0 + d * L + Vector((0, 0, b0 + 0.5 * h))
+
+
+def foot_webbed(origin, length=0.11, width=0.04, forward=(0, -1, 0), up=(0, 0, 1), side=1, heel_h=0.03, heel_w=None,
+                web=None, toes=None, toe_len=None, toe_h=None, splay=None, knobs=True, rows=6, lift=None,
+                name='foot', mats=None, colours=None, style=None):
+    """Webbed foot lying flat on the ground (frog, toad, newt, duck, platypus): a shank that rises from
+    the ground to `heel_h` at the heel (bury the heel in the leg), a sole that widens to the ball, a
+    fan-shaped web plate, and FAT toes from the web's front edge, each ending in a round knob.
+    Chunky-first (owner 2026-10-21): style 'game' (or parts.set_style('game')) gives four toes
+    0.30 width thick; 'classic' five toes 0.20 width thick.
+
+    origin   the heel ON THE GROUND (local z 0 = the ground); forward = heel to toes; up = the foot's top
+    length   heel to ball; width = across the ball; heel_h / heel_w = the shank at the heel
+    web      the fan plate's length (default 0.8 width game, 0.5 classic); it is thinner than the toes
+    toes     4 (game) / 5 (classic); toe_len one length per toe (default: middle toes longest, about
+             0.85 width game, 1.6 classic); toe_h toe thickness; splay = degrees between neighbouring toes
+    knobs    a round pad at each toe tip (frog / gecko); False: a blunt end
+    One closed shell. Slots: skin, tip (the toe knobs). Attach: root, ground, toe_tips.
+    Triangles: 2 (n+1) x 2 x (rows + 3) + n x 34 (4 toes, 6 rows: 316)."""
+    g = _game(style)
+    n = int(toes or (4 if g else 5))
+    W = float(width)
+    th = toe_h or (0.30 if g else 0.20) * W
+    b0 = lift if lift is not None else 0.04 * th
+    web = web if web is not None else (0.8 if g else 0.5) * W
+    step = splay if splay is not None else (16.0 if g else 14.0)
+    if toe_len is None:
+        prof = {3: (0.85, 1.0, 0.85), 4: (0.80, 1.0, 0.98, 0.82), 5: (0.70, 0.88, 1.0, 0.86, 0.68)}.get(n, (1.0,) * n)
+        toe_len = [(0.85 if g else 1.6) * W * q for q in prof]
+    hw0 = (heel_w or 0.45 * W) / 2
+    lerp = lambda a, b, t: a + (b - a) * t
+    B = _B()
+    rings = []
+    for k in range(rows + 1):                         # the shank and sole: heel -> ball
+        t = k / rows
+        y = t * length
+        hw = lerp(hw0, W / 2, t ** 0.7)
+        h = lerp(heel_h, b0 + 1.05 * th, t ** 1.3)
+        tk = lerp(0.55, 0.85, t)
+        xs = [-hw + 2 * hw * i / n for i in range(n + 1)]
+        ring, tp, bt = _rows(B, [(x * tk, y, h) for x in xs], [(x, y, b0) for x in xs])
+        rings.append((B, ring, tp, bt, xs))
+    ball = [Vector((x, length, 0.0)) for x in rings[-1][4]]
+    dirs = [Vector((math.sin(math.radians(step * (c - n / 2))), math.cos(math.radians(step * (c - n / 2))), 0.0))
+            for c in range(n + 1)]
+    web_h = b0 + (0.62 if g else 0.50) * th
+    for j in range(1, 4):                             # the web fan: the column lines splay along the toe directions
+        f = j / 3
+        P = [ball[c] + dirs[c] * (web * f) for c in range(n + 1)]
+        cen = sum(P, Vector()) / len(P)
+        h = lerp(b0 + 1.05 * th, web_h, f ** 0.8)
+        tk = lerp(0.85, 0.92, f)
+        top = [(cen + (p - cen) * tk) + Vector((0, 0, h)) for p in P]
+        bot = [p + Vector((0, 0, b0)) for p in P]
+        ring, tp, bt = _rows(B, top, bot)
+        rings.append((B, ring, tp, bt, [p.x for p in P]))
+    for (_, a, _, _, _), (_, b, _, _, _) in zip(rings, rings[1:]):
+        B.bridge(a, b, 'skin')
+    r0 = rings[0][1]                                  # the heel cap: a fan from its centre (rows are collinear)
+    B.fan(list(reversed(r0)), B.v(B.centre(r0)), 'skin')
+    _, _, tp, bt, _ = rings[-1]
+    stations = ((0.40, 1.0, 1.0), (0.78, 0.94, 0.92), (0.90, 1.22, 1.12), (1.0, 0.72, 0.74)) if knobs else \
+        ((0.45, 1.0, 1.0), (0.85, 0.92, 0.90), (1.0, 0.80, 0.78))
+    tips = []
+    for i in range(n):
+        q = [bt[i], bt[i + 1], tp[i + 1], tp[i]]
+        c0 = (B.P[bt[i]] + B.P[bt[i + 1]]) / 2
+        a = math.radians(step * (i + 0.5 - n / 2))
+        w = (B.P[bt[i + 1]] - B.P[bt[i]]).length * (0.96 if g else 0.80)
+        tips.append(_digit_tube(B, q, c0, (math.sin(a), math.cos(a)), toe_len[i], w, th, b0, stations, 0.78))
+    pts = dict(root=(0, 0, heel_h / 2), ground=(0, length, 0), toe_tips=tips)
+    return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
+
+
+def digits_splayed(center, lengths=(0.026, 0.032, 0.031, 0.025), width=0.012, height=0.010, spread=96.0, r0=0.014,
+                   forward=(0, -1, 0), up=(0, 0, 1), side=1, knobs=True, lift=0.002, name='digits', mats=None,
+                   colours=None, style=None):
+    """Fat splayed fingers or toes lying on the ground round a palm (frog / toad / gecko hand, a newt
+    foot): one flat-soled box digit per length, fanned over `spread` degrees about `forward`, from r0
+    out of the palm centre, each its own closed shell ending in a round knob (knobs=False: blunt).
+    Chunky-first (owner 2026-10-21): pick width / height >= 2.4% of the creature's height on a small
+    creature and length <= 4.5 x height (kit/detail_gate.py). style is accepted for API symmetry.
+
+    center   the palm centre ON THE GROUND (local z 0); lengths = one per digit (count = len)
+    width / height  the digit's section at its root; lift = the sole's height off the ground
+    Slots: skin, tip (knobs). Attach: root, finger_tips. Triangles: 34 per digit."""
+    n = len(lengths)
+    B = _B()
+    stations = ((0.0, 1.0, 1.0), (0.55, 0.97, 0.95), (0.80, 0.92, 0.90), (0.91, 1.24, 1.12), (1.0, 0.76, 0.74)) \
+        if knobs else ((0.0, 1.0, 1.0), (0.60, 0.95, 0.92), (1.0, 0.82, 0.80))
+    tips = []
+    for i, L in enumerate(lengths):
+        a = math.radians(spread * ((i / (n - 1) if n > 1 else 0.5) - 0.5))
+        d = (math.sin(a), math.cos(a))
+        c0 = (d[0] * r0, d[1] * r0)
+        tips.append(_digit_tube(B, None, c0, d, L, width, height, lift, stations, 0.80))
+    return _finish(B, name, _frame(center, forward, up), side, mats, colours, dict(root=(0, 0, 0), finger_tips=tips))
+
+
 # =============================================================================
 # HANDS
 # =============================================================================
 def _hand(B, W, T, palm, finger_w, finger_len, Lf, curl, spread, thumb, thumb_len, thumb_curl, wrist, knuckle,
-          claw_len, open_root):
+          claw_len, open_root, claw_k=(1.0, 1.0)):
     """Wrist ring at the origin; +y to the fingertips, +z the back of the hand, the thumb on +x.
     One shell: palm, each finger extruded from its own knuckle quad, the thumb from the palm's side quad."""
     n = len(finger_w)
@@ -726,7 +889,7 @@ def _hand(B, W, T, palm, finger_w, finger_len, Lf, curl, spread, thumb, thumb_le
         if claw_len > 0:
             dd = dirv(th2)
             ctips.append(_claw(B, p2 - dd * (0.04 * L), dd, dirv(th2 + 90), claw_len * L,
-                               0.42 * w, 0.40 * h0, curve=35.0))
+                               0.42 * w * claw_k[0], 0.40 * h0 * claw_k[1], curve=35.0))
     pts = dict(root=(0, 0, 0), palm=(0, 0.55 * palm, -T / 2), finger_tips=tips, grip=(0, 0.75 * palm, -T))
     if thumb == 'wrap':
         # a fist: the thumb is its own closed shell, rooted in the heel of the palm, running up the
@@ -753,8 +916,8 @@ def _hand(B, W, T, palm, finger_w, finger_len, Lf, curl, spread, thumb, thumb_le
                (0, 0, 1), 'skin', start=[t1[n], t0[n], b0[n], b1[n]])
         pts['thumb_tip'] = p3
         if claw_len > 0:
-            ctips.append(_claw(B, p3 - d2 * (0.04 * thumb_len), d2, (0, 0, -1), claw_len * thumb_len, 0.40 * tw,
-                               0.40 * tt, curve=35.0))
+            ctips.append(_claw(B, p3 - d2 * (0.04 * thumb_len), d2, (0, 0, -1), claw_len * thumb_len,
+                               0.40 * tw * claw_k[0], 0.40 * tt * claw_k[1], curve=35.0))
     if ctips:
         pts['claw_tips'] = ctips
     if open_root:
@@ -763,8 +926,8 @@ def _hand(B, W, T, palm, finger_w, finger_len, Lf, curl, spread, thumb, thumb_le
 
 
 def hand_three_finger(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, fingers=3, curl=0.12,
-                      spread=13.0, finger_len=1.0, thumb=True, thumb_curl=0.0, knuckle=0.10, claw_len=0.0,
-                      wrist=None, open_root=False, name='hand', mats=None, colours=None):
+                      spread=13.0, finger_len=None, thumb=True, thumb_curl=0.0, knuckle=0.10, claw_len=0.0,
+                      wrist=None, open_root=False, name='hand', mats=None, colours=None, style=None):
     """Stylised hand: a palm, a stepped knuckle row, three thick two-joint fingers and an opposed thumb.
 
     origin     the wrist end of the forearm; forward = wrist to fingertips; up = the back of the hand
@@ -777,16 +940,20 @@ def hand_three_finger(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side
     Slots: skin, claw. Attach: root, palm, grip, finger_tips, thumb_tip, claw_tips, root_ring (open_root).
     Triangles: 140 (3 fingers and thumb); 176 (4 fingers); 180 (3 fingers, claws)."""
     W = float(width)
-    T = 0.34 * W
+    g = _game(style)
+    T = 0.34 * W * (GAME['toe_h'] if g else 1.0)             # game: a thicker palm = thicker fingers
+    finger_len = finger_len or (GAME['toe_len'] if g else 1.0)
     prof = {3: (0.88, 1.0, 0.93), 4: (0.78, 0.94, 1.0, 0.92), 2: (0.95, 1.0)}.get(fingers, (1.0,) * fingers)
     B = _B()
     pts = _hand(B, W, T, 0.85 * W, (1.0,) * fingers, prof, finger_len * W, curl, spread, thumb, 0.62 * W, thumb_curl,
-                wrist or (0.62 * W, 0.90 * T), knuckle * T, claw_len, open_root)
+                wrist or (0.62 * W, 0.90 * T), knuckle * T, claw_len * (GAME['claw_len'] if g else 1.0), open_root,
+                claw_k=(GAME['claw_w'], GAME['claw_h']) if g else (1.0, 1.0))
     return _finish(B, name, _frame(origin, forward, up), side, mats, colours, pts)
 
 
 def hand_mitten(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, curl=0.15, finger_len=0.85,
-                thumb_curl=0.0, knuckle=0.10, wrist=None, open_root=False, name='hand', mats=None, colours=None):
+                thumb_curl=0.0, knuckle=0.10, wrist=None, open_root=False, name='hand', mats=None, colours=None,
+                style=None):
     """Mitten hand for a toon character: a soft palm with bevelled sides, one broad finger slab
     that bends at two joints and narrows in three steps to a rounded tip, and a thick separate
     thumb standing off the palm at an angle (the notch between thumb and slab is what reads as a hand).
@@ -797,7 +964,7 @@ def hand_mitten(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, cu
     Slots: skin. Attach: root, palm, grip, finger_tips, thumb_tip, root_ring (open_root; 6 points).
     Triangles: 96."""
     W = float(width)
-    T = 0.36 * W
+    T = 0.36 * W * (GAME['toe_h'] if _game(style) else 1.0)
     palm, Lf = 0.85 * W, finger_len * W
     ww, wt = wrist or (0.62 * W, 0.90 * T)
     c = min(max(curl, 0.0), 0.8)
@@ -832,7 +999,7 @@ def hand_mitten(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, cu
 
 
 def fist(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, fingers=3, knuckle=0.22, wrist=None,
-         open_root=False, name='fist', mats=None, colours=None):
+         open_root=False, name='fist', mats=None, colours=None, style=None):
     """A closed fist: the hand curled shut. The knuckle row stands above the back of the hand (the
     knuckle step), the fingers fold down the front and back underneath, and the thumb runs up the
     index side and wraps ACROSS the front of the index and middle fingers, pressed into them.
@@ -842,7 +1009,7 @@ def fist(origin, width=0.09, forward=(0, -1, 0), up=(0, 0, 1), side=1, fingers=3
     Slots: skin. Attach: root, palm, grip, finger_tips, thumb_tip, root_ring (open_root).
     Triangles: 144 (3 fingers), 180 (4)."""
     W = float(width)
-    T = 0.40 * W
+    T = 0.40 * W * (1.15 if _game(style) else 1.0)
     prof = {3: (0.94, 1.0, 0.96), 4: (0.9, 0.98, 1.0, 0.95)}.get(fingers, (1.0,) * fingers)
     B = _B()
     pts = _hand(B, W, T, 0.82 * W, (1.0,) * fingers, prof, 1.0 * W, 1.0, 0.0, 'wrap', 0.62 * W, 1.0,
@@ -910,7 +1077,7 @@ def _arc_points(L, segs, curve, spiral, bury):
 
 
 def horn(base, length=0.12, radius=None, forward=(0, 0, 1), up=(0, 1, 0), side=1, curve=70.0, spiral=0.0, segs=4,
-         sides=5, ridges=False, taper=1.0, tip_from=0.6, name='horn', mats=None, colours=None):
+         sides=5, ridges=False, taper=1.0, tip_from=0.6, name='horn', mats=None, colours=None, style=None):
     """A tapered horn swept along an arc.
 
     base     where the horn leaves the skull (the root is buried 0.15 length below it)
@@ -923,7 +1090,7 @@ def horn(base, length=0.12, radius=None, forward=(0, 0, 1), up=(0, 1, 0), side=1
     Slots: horn, horn_tip. Attach: base, tip.
     Triangles: 48 (5 sides, 4 segs); 78 with ridges; 22 as a 4-sided 2-segment spike."""
     L = float(length)
-    r0 = radius or 0.16 * L
+    r0 = radius or 0.16 * L * (GAME['horn_r'] if _game(style) else 1.0)
     pts, dirs = _arc_points(L, segs, curve, spiral, 0.15)
     rad = lambda t: r0 * max(max(1 - t, 0.0) ** (1.0 / taper), 0.24)
     P, S, tt = [pts[0], pts[1]], [(2 * r0, 2 * r0), (2 * r0, 2 * r0)], [0.0, 0.0]
@@ -940,13 +1107,13 @@ def horn(base, length=0.12, radius=None, forward=(0, 0, 1), up=(0, 1, 0), side=1
 
 
 def tusk(base, length=0.07, radius=None, forward=(0, -1, 0), up=(0, 0, 1), side=1, curve=60.0, segs=3, sides=4,
-         name='tusk', mats=None, colours=None):
+         name='tusk', mats=None, colours=None, style=None):
     """A short thick tusk or fang: a horn with a blunt taper and a square section, bending toward `up`.
     Boar: forward = out and forward from the lip, up = (0, 0, 1). Sabre fang: forward down, curve 25.
 
     radius default 0.15 length. Slots: tooth. Attach: base, tip. Triangles: 15."""
     L = float(length)
-    r0 = radius or 0.15 * L
+    r0 = radius or 0.15 * L * (GAME['horn_r'] if _game(style) else 1.0)
     pts, _ = _arc_points(L, segs, curve, 0.0, 0.2)
     S = [(2 * r0, 2 * r0)] * 2 + [(2 * r0 * (1 - j / segs) ** 0.55,) * 2 for j in range(1, segs)] + [(0, 0)]
     B = _B()
@@ -963,7 +1130,7 @@ ANTLER_TINES = dict(          # (position along the beam 0..1, length / beam len
 
 def antler_beam(base, length=0.22, radius=None, forward=(0, 0.45, 1), up=(0, -1, 0.3), side=1, curve=62.0,
                 spiral=14.0, tines='stag', fan=12.0, tine_sides=3, tine_segs=2, segs=5, name='antler',
-                mats=None, colours=None):
+                mats=None, colours=None, style=None):
     """One antler: a main beam that sweeps back, curves up-forward (most of the bend low down, the
     top nearly straight) and thins to under half its base, with tines on its front side. Each tine
     leaves the beam through a flared root, heads forward and then turns up along the beam; the
@@ -979,7 +1146,7 @@ def antler_beam(base, length=0.22, radius=None, forward=(0, 0.45, 1), up=(0, -1,
     Slots: antler, horn_tip (the outer part of every tine). Attach: base, tip, tine_tips.
     Triangles: 110 (stag, 4 tines); 78 (young); 126 (elk). Lite: tine_segs=1 gives 86 / 66 / 96."""
     L = float(length)
-    r0 = radius or 0.085 * L
+    r0 = radius or 0.085 * L * (GAME['horn_r'] if _game(style) else 1.0)
     spec = ANTLER_TINES[tines] if isinstance(tines, str) else list(tines)
     bend = lambda u_: u_ ** 0.62                     # most of the curve in the lower beam
     pts, dirs = [Vector((0, -0.12 * L, 0)), Vector((0, 0, 0))], []
@@ -1321,6 +1488,8 @@ PARTS = dict(
     foot_biped=(68, 'width, height, length, toes, toe_segs, claws, pads, root, open_root'),
     hoof_cloven=(68, 'radius, height, width, length, cleft, dewclaws, open_root'),
     bird_foot=(148, 'toe_length, height, radius, spread, hallux, talons, talon_len, toe_sides'),
+    foot_webbed=(316, 'length, width, heel_h, heel_w, web, toes, toe_len, toe_h, splay, knobs, rows, lift'),
+    digits_splayed=(136, 'lengths, width, height, spread, r0, knobs, lift'),
     hand_three_finger=(140, 'width, fingers, curl, spread, finger_len, thumb, thumb_curl, knuckle, claw_len, wrist, open_root'),
     hand_mitten=(96, 'width, curl, finger_len, thumb_curl, knuckle, wrist, open_root'),
     fist=(144, 'width, fingers, knuckle, wrist, open_root'),

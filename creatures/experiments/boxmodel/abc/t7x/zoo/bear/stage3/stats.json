@@ -1,0 +1,26 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "fe20f810fe4168416a1f605a2ce8febed045efaa1dc96e3e1563259846509d02",
+  "collapsed_edge_hash": "fe20f810fe4168416a1f605a2ce8febed045efaa1dc96e3e1563259846509d02",
+  "logged_ops": 9,
+  "logged_new_verts": 92,
+  "errors": []
+ },
+ "colours": [
+  "claw",
+  "dark",
+  "fur",
+  "iris",
+  "muzzle",
+  "nose"
+ ],
+ "colour_count": 6,
+ "tris": 2528,
+ "attach": [],
+ "pieces": {
+  "piece_eye": 48,
+  "piece_claws": 320,
+  "piece_fur": 120
+ }
+}

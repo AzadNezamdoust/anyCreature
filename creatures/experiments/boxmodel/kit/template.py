@@ -31,6 +31,25 @@ FIT (fit_template). Ring stations from carve.part_rings; ring vertices on the co
 stays off axis); socket loops between their border on the trunk and the limb's first free ring, on the guide;
 eye and ear loops pinned to META['landmarks']; hinge rings converge on the flexion side; then the named offsets
 (clamped) and a light relax-and-project of the vertices no section placed. No generic shrink-wrap.
+
+KNOBS (what a sweep varies; the program's module-level COUNTS and OFFSETS dict literals, sensible ranges):
+  COUNTS  trunk_mid 1-3 (rows between the haunch and scapula blocks)   neck 0-4   head 4-5 (4 is a real floor: the ear
+          block sits on rings n-3..n-2 and the eye block on n-2..n-1, the occiput ring n-4 behind them)   muzzle 1-3
+          tail 1-6 (1 = a stub; 3 = a paddle of big planes; 5-6 = a round brush)   ear 2-3
+          fore / hind: hinge (3, 2|3) (3 converging rings at the elbow / knee, 2-3 at the wrist / hock), mass 0-1 per
+          bone, cap 0-2 (rings between the socket loop and the first hinge: the scapula / thigh mass)
+  OFFSETS plane breaks, x the local width, clamped to +-OFFSET_CLAMP: withers, scapula, scapula_edge, haunch,
+          haunch_edge, belly_tuck 0-0.08; ruff, ruff_side, cheek 0-0.1; brow, jaw 0-0.06
+          form knobs (FORM below; not clamped):
+          tail_flat   None | 0.3-1.0  the tail's thickness x the guide's (None: the guide's round section as it is)
+          tail_width  0.8-1.6   the tail's height (side view) x the guide's
+          tail_side   0.2-0.6   the side line's height x the half height: low = one big flat side plane per half
+          tail_root   0-1       how much of the paddle shape the socket loop on the rump takes
+          leg_column  0-1       lower-leg rings blend to one straight column (0: the guide's own swell at the elbow)
+          leg_taper   -0.2-0.4  the column's taper, top over bottom (+ = thicker at the elbow)
+          flank_fill  0-1       the waist and the flank line between the legs pushed out to the limb roots' width
+          rump_width  0-0.9     the haunch block's rear row stays where the trunk is at least this x its hip width
+          head_relax  0-1       the head and muzzle rings between the landmark loops relax toward a clean box
 """
 import hashlib, json, math, os
 
@@ -46,6 +65,8 @@ COUNTS = dict(quadruped=dict(
     hind=dict(hinge=(3, 3), mass=(1, 1, 1)),     # before it: mass rings (the last bone's is the cannon); + paw and sole rings
 ))
 OFFSET_CLAMP = 0.25          # a named offset is at most this x the local width
+FORM = dict(tail_flat=None, tail_width=1.0, tail_side=0.35, tail_root=0.4, leg_column=0.0, leg_taper=0.0,
+            flank_fill=0.0, rump_width=0.0, head_relax=0.0)       # form knobs read from OFFSETS (see KNOBS above)
 
 
 # ---------------------------------------------------------------- connectivity (no Blender needed)
@@ -312,6 +333,7 @@ def quadruped_spec(tm, k, **over):
              socket=(0.4, 0.75), hinge_ratio=0.55, paw=0.62, eye=0.13, tail_border=(0.4, 0.75), ear=dict(a=0.16, b=0.07, f=None, s=None), offsets={})
     for k_ in ('pad', 'span', 'top', 'root', 'block'):
         S[k_].update(over.get(k_, {}))
+    FM = dict(FORM, **{k_: v for k_, v in (over.get('offsets') or {}).items() if k_ in FORM})
     dn = (Vector(J[plan['head']]) - Vector(J[plan['neck']])).normalized()
     Ln = math.degrees(math.atan2(dn.z, -dn.y))                           # the neck's rise: its rings lean back by this
     rows = [None] * R
@@ -334,6 +356,14 @@ def quadruped_spec(tm, k, **over):
     for name, mid in (('hind', tm.rows['hip']), ('fore', tm.rows['shoulder'])):       # a leaning row crosses the root joint's height at its y
         for i in (mid - 1, mid, mid + 1):
             rows[i] -= (J[plan['limbs'][name][0]][2] - T['torso'].at_y(rows[i])['centre'].z) * math.tan(math.radians(lean[i]))
+    if FM['rump_width'] > 0:                                             # the haunch's rear row stays on the full trunk, not its end cap
+        tt = T['torso']
+        y_hip, w_hip = J[plan['limbs']['hind'][0]][1], T['torso'].at_y(J[plan['limbs']['hind'][0]][1])['width']
+        ok = [float(y) for y, w in zip(tt.c[:, 1], tt.w) if w >= FM['rump_width'] * w_hip and (y - y_hip) * (rows[1] - y_hip) >= 0]
+        if ok:
+            lim_ = max(ok, key=lambda y: abs(y - y_hip))
+            if abs(rows[1] - y_hip) > abs(lim_ - y_hip):
+                rows[1] = lim_
     a, b = tm.rows['hip'] + 1, sh - 1
     for i in range(a + 1, b):
         rows[i] = rows[a] + (rows[b] - rows[a]) * (i - a) / (b - a)
@@ -384,6 +414,9 @@ def quadruped_spec(tm, k, **over):
         if q == n - 1:
             f[1], f[5] = 0.15, 0.85
         f[1] = min(f[1], 0.16)
+        if FM['head_relax'] > 0 and 0 < q < n - 1:                      # the inner rings' lines straighten toward the stop ring's
+            base = [0.0, 0.15, 0.30, 0.5, 0.69, 0.85, 1.0]
+            f = [a_ + FM['head_relax'] * (b_ - a_) if j_ not in (2, 3) else a_ for j_, (a_, b_) in enumerate(zip(f, base))]
         f[2] = min(max(f[2], f[1] + 0.09), 0.42)
         f[3] = min(max(f[3], f[2] + 0.1), 0.6)
         f[4] = max(f[4], f[3] + 0.1)
@@ -403,6 +436,8 @@ def quadruped_spec(tm, k, **over):
             S[k_].update(v)
         else:
             S[k_] = v
+    S['form'] = FM
+    S['offsets'] = {k_: v for k_, v in (S.get('offsets') or {}).items() if k_ not in FORM}
     return S
 
 
@@ -416,6 +451,7 @@ def fit_template(tm, k, guide, spec=None):
     from carve import section_corners, _tree, _super_r
     assert tm.kind == 'quadruped'
     S = spec or quadruped_spec(tm, k)
+    FM = S.get('form') or dict(FORM)
     import bmkit as B
     (J, plan), gp = B.cage_plan(k.meta), k.guide_parts
     lm = k.meta.get('landmarks') or {}
@@ -565,6 +601,21 @@ def fit_template(tm, k, guide, spec=None):
         tls = smooth_leans([(tl, t) for t in S['tail']])
         tls[0] *= 0.75
         tube('tail', tl, S['tail'], lambda q: tm.rings[('tail', q)], 3, tls, lim=(0.6, 1.4))
+        if FM['tail_flat'] is not None:                                  # a paddle: thin across, tall in the side view, one big
+            for q in range(C['tail'] + 1):                               # flat side plane between the top and bottom seam lines
+                ids = tm.rings[('tail', q)]
+                top, s1, s2, bot = (P[i] for i in ids)
+                c_ = (top + bot) / 2
+                up = top - bot
+                up.x = 0.0
+                Ht = 0.5 * up.length
+                up = up.normalized() if Ht > 1e-6 else Vector((0, 0, 1))
+                Wx = max(s1.x, s2.x)
+                bl = FM['tail_root'] if q == 0 else 1.0
+                tgt = [c_ + up * Ht * FM['tail_width'], c_ + up * Ht * FM['tail_width'] * FM['tail_side'] + X * Wx * FM['tail_flat'],
+                       c_ - up * Ht * FM['tail_width'] * FM['tail_side'] + X * Wx * FM['tail_flat'], c_ - up * Ht * FM['tail_width']]
+                for i, p_ in zip(ids, tgt):
+                    P[i] = P[i].lerp(p_, bl)
     else:                                                                # MVP-STUB: no tail in J: a short stub off the rump
         raise ValueError('the quadruped template needs a tail chain in J (tail0, tail1)')
     # the rump: row 0 and the tail's border are straight blends from the haunch's rear row to the tail's socket loop (two
@@ -711,6 +762,27 @@ def fit_template(tm, k, guide, spec=None):
                     P[i] += tau * (shr * (P[i] - st['centre']).dot(w) / rw)
             lastc = st['centre']
             frames[ri + 1] = (st['centre'], tau, w)
+        if FM['leg_column'] > 0:                                         # the lower leg: one straight column, not the guide's swell
+            col = sorted(frames)
+            ext = {}
+            for r in col:
+                cc, tau, w = frames[r]
+                u = (X - tau * X.dot(tau)).normalized()
+                du = [(P[i] - cc).dot(u) for i in tm.rings[(name, r)]]
+                dw = [(P[i] - cc).dot(w) for i in tm.rings[(name, r)]]
+                ext[r] = (u, (max(du) + min(du)) / 2, (max(du) - min(du)) / 2, (max(dw) + min(dw)) / 2, (max(dw) - min(dw)) / 2)
+            mu = sum(e[2] for e in ext.values()) / len(ext)
+            mw = sum(e[4] for e in ext.values()) / len(ext)
+            for q, r in enumerate(col):
+                cc, tau, w = frames[r]
+                u, cu, eu, cw, ew = ext[r]
+                tp = 1.0 + FM['leg_taper'] * (0.5 - q / max(1, len(col) - 1))
+                su = (eu + FM['leg_column'] * (mu * tp - eu)) / max(1e-6, eu)
+                sw = (ew + FM['leg_column'] * (mw * tp - ew)) / max(1e-6, ew)
+                o = cc + u * cu + w * cw
+                for i in tm.rings[(name, r)]:
+                    d_ = P[i] - o
+                    P[i] = o + u * (d_.dot(u) * su) + w * (d_.dot(w) * sw) + tau * d_.dot(tau)
         for h in tm.hinges.values():                                     # the hinge fan, measured as the gate measures it, set to the ratio
             if h['limb'] != name:
                 continue
@@ -731,7 +803,8 @@ def fit_template(tm, k, guide, spec=None):
         free = tm.rings[(name, first_free + 1)]
         n_between = first_free + 1                                       # socket loop + the 'cap' rings before the first free ring
         for k_ in (3, 4, 5):                                             # under the body the first free ring stays below the border
-            P[free[k_]].z = min(P[free[k_]].z, P[bd[k_]].z - 0.02)
+            P[free[k_]].z = min(P[free[k_]].z, P[bd[k_]].z - 0.02)       # and outward of it
+            P[free[k_]].x = max(P[free[k_]].x, P[bd[k_]].x + 0.01 * (n_between + 1))
         lastj = len(hinge_n) - 1                                         # below the last joint a ring never dips under the next one
         q0 = next(ri for ri, x in enumerate(roles) if isinstance(x, tuple) and x[1] == lastj)
         for q in range(len(roles) - 1, q0, -1):
@@ -750,12 +823,22 @@ def fit_template(tm, k, guide, spec=None):
                 m_ = P[bd[k_]].lerp(P[free[k_]], f)
                 if k_ in (3, 4, 5):
                     P[i] = near(m_, 0.015)
+                    P[i].x = max(P[i].x, P[bd[k_]].x + 0.01 * (q + 1))   # never inward of the belly line it hangs off
                     continue
                 ax = a0 + (a1 - a0) * min(1.0, max(0.0, (m_ - a0).dot(a1 - a0) / (a1 - a0).length_squared))
                 d_ = m_ - ax
                 hit = tree.ray_cast(ax, d_.normalized()) if d_.length > 1e-6 else (None,)
                 P[i] = hit[0].copy() if hit[0] is not None and 0.7 * d_.length <= hit[3] <= 1.8 * d_.length else near(m_, 0.06)
             tm.pinned.update(tm.rings[(name, q)])
+    if FM['flank_fill'] > 0:                                             # the flank between the legs: one big plane out to the limb roots
+        rx = lambda n_: max(P[i].x for q in range(3) for i in tm.rings[(n_, q)])
+        tgt = FM['flank_fill'] * min(rx('fore'), rx('hind'))
+        for i in range(hip, sh + 1):                                    # (the rump's and the chest's end rows keep their taper)
+            for j, wt in ((2, 0.5), (3, 1.0), (4, 1.0), (5, 1.0), (6, 0.9)):
+                if (j >= 4 and (hip - 1 <= i <= hip + 1 or sh - 1 <= i <= sh + 1)) or (j == 2 and i in (hip, sh)):
+                    continue                                             # the block borders stay where the sockets put them
+                v_ = N('trunk', i, j)
+                P[v_].x = max(P[v_].x, wt * tgt)
     # ---- the eye loop and the ear, pinned to the landmarks
     hw = TT['head'].at(0.0)['width']
 
@@ -926,6 +1009,11 @@ def fit_template(tm, k, guide, spec=None):
         c_['ids'] = [i for i in c_['ids'] if owner.get(i) == key and i not in tm.pinned]
         c_['names'] = [tm.names[i] for i in c_['ids']]
     if os.environ.get('BMK_TMPL_DBG'):
+        for key in sorted(tm.rings, key=str):
+            if key[0] in ('trunk', 'fore', 'hind', 'tail', 'head', 'neck'):
+                ps = [P[i] for i in tm.rings[key]]
+                B.say('DBG ring', key, 'y %.3f..%.3f x<=%.3f z %.3f..%.3f' % (min(p.y for p in ps), max(p.y for p in ps), max(p.x for p in ps),
+                                                                           min(p.z for p in ps), max(p.z for p in ps)))
         ed = sorted({(round((P[a] - P[b]).length, 4), str(tm.names[a]), str(tm.names[b])) for f in tm.F for a, b in zip(f, f[1:] + f[:1])})
         for e in ed[:14]:
             B.say('DBG short edge', e)

@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow ring: the elbow bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "wrist ring: the wrist bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "knee ring: the knee bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "ankle ring: the ankle bend",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "waist ring: the spine bend",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "neck ring: the head nod",
+   "new_verts": 10,
+   "extra_base_edges": []
+  }
+ ]
+}

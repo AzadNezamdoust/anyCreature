@@ -1119,6 +1119,129 @@ def _fill_unweighted(ob, rig):
     return fixed
 
 
+def skin_parts(body, rig, labels=None, band_rings=2):
+    """Part-owned weights (opt-in alternative to skin; research/partllm_*.md): every vertex weight 1.0 to the
+    bone that owns its faces (partseg.part_labels), except inside a seam band of `band_rings` vertex rings
+    round each label border, where only the two owning bones blend, by geodesic distance across the seam
+    (smoothstep: 0.5 / 0.5 on the border, the owner alone just outside the band). At most 2 influences per
+    vertex, normalised, mirror-exact (-X vertices copy their +X twin with L / R swapped). Returns the labels."""
+    import heapq
+    import partseg
+    from mathutils.kdtree import KDTree
+    apply_mirror(body)
+    if labels is None:
+        labels = partseg.part_labels(body, rig, band_rings=band_rings)
+    names, lab = labels['names'], labels['label']
+    me = body.data
+    assert len(lab) == len(me.polygons), 'labels were made on another mesh'
+    nv = len(me.vertices)
+    co = [body.matrix_world @ v.co for v in me.vertices]
+    area = {}                                   # vertex -> {label: incident face area}
+    for p in me.polygons:
+        for v in p.vertices:
+            d = area.setdefault(v, {})
+            d[lab[p.index]] = d.get(lab[p.index], 0.0) + p.area
+    nb = [[] for _ in range(nv)]
+    for e in me.edges:
+        a, b = e.vertices
+        L = (co[a] - co[b]).length
+        nb[a].append((b, L)); nb[b].append((a, L))
+    own = {v: max(d, key=d.get) for v, d in area.items()}
+    border = {v for v, d in area.items() if len(d) > 1}
+    # vertex rings round the borders: 0 = border, 1..band_rings = band, band_rings + 1 = the first ring outside
+    ring = {v: 0 for v in border}
+    front = set(border)
+    for r in range(1, band_rings + 2):
+        nxt = {u for v in front for u, _ in nb[v] if u not in ring}
+        for u in nxt:
+            ring[u] = r
+        front = nxt
+    band = {v for v, r in ring.items() if r <= band_rings}
+
+    def dijkstra(src, through):
+        dist = {v: 0.0 for v in src}
+        orig = {v: v for v in src}
+        h = [(0.0, v) for v in src]
+        heapq.heapify(h)
+        while h:
+            d, v = heapq.heappop(h)
+            if d > dist[v] or (v not in src and v not in through):
+                continue
+            for u, L in nb[v]:
+                if u in band and d + L < dist.get(u, 1e18):
+                    dist[u] = d + L; orig[u] = orig[v]
+                    heapq.heappush(h, (d + L, u))
+        return dist, orig
+
+    db, ob_ = dijkstra(border, band)
+    # the blend runs `band_rings` typical edge lengths each side of the seam
+    width = band_rings * float(np.median([L for v in band for _, L in nb[v]] or [0.03]))
+
+    def top2(d):
+        return sorted(d, key=lambda k_: -d[k_])[:2]
+
+    W = {}
+    for v in range(nv):
+        if v not in area:
+            continue
+        if v not in band:
+            W[v] = {own[v]: 1.0}
+            continue
+        if v in border:
+            a, b = top2(area[v])
+            W[v] = {a: 0.5, b: 0.5}
+            continue
+        L0 = own[v]
+        src = ob_.get(v)
+        part = [l for l in top2(area[src]) if l != L0] if src is not None and L0 in area[src] else []
+        if not part or v not in db:
+            W[v] = {L0: 1.0}
+            continue
+        u = 0.5 * max(0.0, 1.0 - db[v] / width)   # 0.5 on the border .. 0 at `width` from it
+        s = u * u * (3 - 2 * u)
+        W[v] = {L0: 1.0 - s, part[0]: s}
+    # mirror-exact: -X vertices copy their +X twin (L / R swapped); seam vertices average with their swap
+    kd = KDTree(nv)
+    for i, c in enumerate(co):
+        kd.insert(c, i)
+    kd.balance()
+    idx = {n: i for i, n in enumerate(names)}
+    swap = lambda w: {idx.get(partseg.mirror_name(names[l]), l): x for l, x in w.items()}
+    for v in range(nv):
+        if v not in W:
+            continue
+        c = co[v]
+        if abs(c.x) < SEAM:
+            s_ = swap(W[v])
+            W[v] = {l: 0.5 * (W[v].get(l, 0.0) + s_.get(l, 0.0)) for l in set(W[v]) | set(s_)}
+        elif c.x < 0:
+            _, j, d = kd.find((-c.x, c.y, c.z))
+            if d < 1e-4 and j in W:
+                W[v] = swap(W[j])
+    body.vertex_groups.clear()
+    for m in [m for m in body.modifiers if m.type == 'ARMATURE']:
+        body.modifiers.remove(m)
+    segs = _bone_segments(rig)
+    for n in segs:
+        body.vertex_groups.new(name=n)
+    maxinf = 0
+    for v, w in W.items():
+        tot = sum(w.values())
+        w = {l: x / tot for l, x in w.items() if x / tot > 1e-4}
+        maxinf = max(maxinf, len(w))
+        for l, x in w.items():
+            body.vertex_groups[names[l]].add([v], x, 'REPLACE')
+    mw = body.matrix_world.copy()
+    body.parent = rig
+    body.matrix_world = mw
+    am = body.modifiers.new('armature', 'ARMATURE')
+    am.object = rig
+    fixed = _fill_unweighted(body, rig)
+    labels['stats'].update(band_verts=len(band), band_width=round(width, 4), max_influences=maxinf, unweighted_fixed=fixed)
+    print('PARTSEG skin', dict(band_verts=len(band), width=round(width, 4), border_verts=len(border), max_influences=maxinf, fixed=fixed))
+    return labels
+
+
 def bind(piece, rig, bone=None, body=None):
     """A stage-3 piece follows the skeleton: rigidly to one bone, or with the
     weights of the nearest body surface (fur ruffs, crests) when body is given."""
@@ -1537,7 +1660,10 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     for p in pieces:
         if not p.name.startswith('piece_'):
             p.name = 'piece_' + p.name
-    ok &= _gate('s3 base mesh untouched by stage 3', geometry_hash(body) == g0)
+    g3, sb = geometry_hash(body), body.get('bmk_borders')      # kit/smooth_borders.py: the one sanctioned S3 base edit
+    sb_ok = sb is not None and list(sb)[0] == g0 and list(sb)[1] == g3
+    ok &= _gate('s3 base mesh untouched by stage 3' + (' (except the logged smooth_borders pass)' if sb_ok else ''),
+                g3 == g0 or sb_ok)
     la3 = assert_lock(body, lock, k.log)
     ok &= _gate('s3 lock assertion', la3['verdict'] == 'PASS', '; '.join(la3['errors'][:3]))
     mats = {m.name for o in [body] + pieces for m in o.data.materials if m}
@@ -1552,7 +1678,7 @@ def run(meta, stage1, stage2=None, stage3=None, stage4=None):
     t_lo, t_hi = meta.get('total_tris', (500, 3000))
     ok &= _gate('s3 total triangles in budget', t_lo <= tris <= t_hi, f'{tris} (budget {t_lo}-{t_hi})')
     _dump(k.path('stage3', 'stats.json'), dict(lock_assert=la3, colours=sorted(mats), colour_count=len(cols), tris=tris,
-                                               attach=k.log.attach,
+                                               attach=k.log.attach, borders=k.meta.get('_borders'),
                                                pieces={p.name: report(p, False)['tris'] for p in pieces}))
     _dump(k.path('lock_assert.json'), dict(stage=3, **la3))
     if N == 3:

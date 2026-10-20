@@ -1,0 +1,13 @@
+{
+ "leg_L_vs_R": 0.2162,
+ "arm_L_vs_body": 0.0619,
+ "arm_R_vs_body": 0.0619,
+ "counts": {
+  "legL": 1120,
+  "legR": 1120,
+  "armL": 685,
+  "armR": 685,
+  "torso": 1700
+ },
+ "verdict": "PASS"
+}

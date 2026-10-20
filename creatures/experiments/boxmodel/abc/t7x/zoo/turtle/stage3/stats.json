@@ -1,0 +1,29 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "8ff62df31f00992d6c7b183e07765e238522ee31721665b1ab8cfb7995e7dab2",
+  "collapsed_edge_hash": "8ff62df31f00992d6c7b183e07765e238522ee31721665b1ab8cfb7995e7dab2",
+  "logged_ops": 1,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "dark",
+  "eye",
+  "groove",
+  "plastron",
+  "pupil",
+  "scute",
+  "skin"
+ ],
+ "colour_count": 7,
+ "tris": 3656,
+ "attach": [],
+ "borders": null,
+ "pieces": {
+  "piece_shell": 648,
+  "piece_eye": 64,
+  "piece_tail": 78,
+  "piece_nails": 576
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "source": "golem_sheet.png",
+ "layout": "2x2",
+ "views": [
+  "side",
+  "front",
+  "rear",
+  "top"
+ ],
+ "sheet_size": [
+  1536,
+  1536
+ ],
+ "background_rgb": [
+  254.0,
+  254.0,
+  254.0
+ ],
+ "thresh": 40.0,
+ "height_m": 2.0,
+ "length_arg": null,
+ "metres_per_pixel": {
+  "side": 0.004202,
+  "front": 0.004202,
+  "rear": 0.004202,
+  "top": 0.004202
+ },
+ "figure_px_w_h": {
+  "side": [
+   249,
+   476
+  ],
+  "front": [
+   556,
+   469
+  ],
+  "rear": [
+   546,
+   454
+  ],
+  "top": [
+   275,
+   561
+  ]
+ },
+ "cells_rows_cols": {
+  "side": [
+   13,
+   506,
+   291,
+   557
+  ],
+  "front": [
+   13,
+   506,
+   796,
+   1369
+  ],
+  "rear": [
+   771,
+   1371,
+   146,
+   709
+  ],
+  "top": [
+   771,
+   1371,
+   915,
+   1207
+  ]
+ },
+ "traced": {
+  "side_points": 58,
+  "front_points": 24,
+  "top_points": 30,
+  "length_m": 1.046,
+  "width_m": 2.328,
+  "head_end_z": 1.324
+ },
+ "crops": {
+  "side": {
+   "box_rows_cols": [
+    21,
+    497,
+    299,
+    548
+   ],
+   "crop_origin": [
+    156,
+    -8
+   ],
+   "crop_size": 535
+  },
+  "front": {
+   "box_rows_cols": [
+    27,
+    496,
+    804,
+    1360
+   ],
+   "crop_origin": [
+    770,
+    -50
+   ],
+   "crop_size": 624
+  },
+  "rear": {
+   "box_rows_cols": [
+    779,
+    1233,
+    154,
+    700
+   ],
+   "crop_origin": [
+    120,
+    700
+   ],
+   "crop_size": 613
+  },
+  "top": {
+   "box_rows_cols": [
+    801,
+    1362,
+    923,
+    1198
+   ],
+   "crop_origin": [
+    746,
+    766
+   ],
+   "crop_size": 630,
+   "rotated": "CW 90 (head up, left flank on the image left, as the kit top view)"
+  }
+ },
+ "warnings": [
+  "top-view length 1.16 m vs side length 1.05 m (1.10 x)"
+ ]
+}

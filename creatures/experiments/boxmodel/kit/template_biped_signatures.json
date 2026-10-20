@@ -1,0 +1,139 @@
+{
+ "biped:{\"arm\": {\"cap\": 1, \"finger\": 1, \"finger_rings\": 2, \"fingers\": 2, \"hinge\": [3, 2], \"mass\": [1, 1], \"palm\": 2, \"thumb\": 2}, \"ear\": 6, \"head\": 10, \"leg\": {\"arch\": 1, \"cap\": 1, \"hinge\": [3, 2], \"mass\": [1, 1]}, \"neck\": 2, \"nose\": 3, \"trunk_mid\": 4}": {
+  "conn": "7209c886454d27d4",
+  "faces": 509,
+  "hash": "1d829548721de080",
+  "kind": "biped",
+  "loops": {
+   "arm.border": 8,
+   "arm.socket": 8,
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "finger0.border": 6,
+   "finger0.socket": 6,
+   "finger1.border": 6,
+   "finger1.socket": 6,
+   "leg.border": 8,
+   "leg.socket": 8,
+   "mouth": 5,
+   "mouth.border": 5,
+   "neck.border": 5,
+   "neck.head": 5,
+   "neck.socket": 5,
+   "nose.border": 5,
+   "nose.socket": 5,
+   "thumb.border": 4,
+   "thumb.socket": 4
+  },
+  "rings": 69,
+  "seam": 56,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 18,
+   "limb": 8,
+   "mouth": 8,
+   "neck": 8,
+   "nose": 8,
+   "thumb": 4,
+   "torso": 16
+  },
+  "valence": {
+   "3": 32,
+   "4": 480,
+   "5": 24,
+   "6": 2
+  },
+  "verts": 538
+ },
+ "biped:{\"arm\": {\"cap\": 1, \"finger\": 1, \"hinge\": [3, 2], \"mass\": [1, 1], \"palm\": 2, \"thumb\": 2}, \"ear\": 6, \"head\": 10, \"leg\": {\"arch\": 1, \"cap\": 1, \"hinge\": [3, 2], \"mass\": [1, 1]}, \"neck\": 2, \"nose\": 3, \"trunk_mid\": 4}": {
+  "conn": "8bdd240104f1b1d2",
+  "faces": 473,
+  "hash": "f57e7c49829538f6",
+  "kind": "biped",
+  "loops": {
+   "arm.border": 8,
+   "arm.socket": 8,
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "leg.border": 8,
+   "leg.socket": 8,
+   "mouth": 5,
+   "mouth.border": 5,
+   "neck.border": 5,
+   "neck.head": 5,
+   "neck.socket": 5,
+   "nose.border": 5,
+   "nose.socket": 5,
+   "thumb.border": 4,
+   "thumb.socket": 4
+  },
+  "rings": 63,
+  "seam": 56,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 18,
+   "limb": 8,
+   "mouth": 8,
+   "neck": 8,
+   "nose": 8,
+   "thumb": 4,
+   "torso": 16
+  },
+  "valence": {
+   "3": 28,
+   "4": 450,
+   "5": 24
+  },
+  "verts": 502
+ },
+ "biped:{\"arm\": {\"cap\": 1, \"finger\": 1, \"hinge\": [3, 2], \"mass\": [1, 1], \"palm\": 2, \"thumb\": 2}, \"ear\": 6, \"head\": 9, \"leg\": {\"arch\": 1, \"cap\": 1, \"hinge\": [3, 2], \"mass\": [1, 1]}, \"neck\": 2, \"nose\": 3, \"trunk_mid\": 4}": {
+  "conn": "42a9b9aab77d2ece",
+  "faces": 464,
+  "hash": "8c5244b1d951d09d",
+  "kind": "biped",
+  "loops": {
+   "arm.border": 8,
+   "arm.socket": 8,
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "leg.border": 8,
+   "leg.socket": 8,
+   "mouth": 5,
+   "mouth.border": 5,
+   "neck.border": 5,
+   "neck.head": 5,
+   "neck.socket": 5,
+   "nose.border": 5,
+   "nose.socket": 5,
+   "thumb.border": 4,
+   "thumb.socket": 4
+  },
+  "rings": 62,
+  "seam": 54,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 18,
+   "limb": 8,
+   "mouth": 8,
+   "neck": 8,
+   "nose": 8,
+   "thumb": 4,
+   "torso": 16
+  },
+  "valence": {
+   "3": 28,
+   "4": 440,
+   "5": 24
+  },
+  "verts": 492
+ }
+}
