@@ -1,4 +1,4 @@
-"""run_inbox.py - reference images -> finished creature asset, by calling the existing stage scripts.
+﻿"""run_inbox.py - reference images -> finished creature asset, by calling the existing stage scripts.
 
   python run_inbox.py <animal> [--seeds 0,1] [--lowvram]            # generate + clean + render candidates
   python run_inbox.py <animal> --pick <candidate>                   # + texture, QuadriFlow, rig, assets
@@ -11,7 +11,7 @@ See INBOX.md.
 import argparse, json, os, re, shutil, subprocess, sys, time
 
 G = 'E:/gen3d'
-LAB = 'E:/Github/anyCreature/harness/lab'
+LAB = 'E:/Github/anyCreature/creatures/harness/lab'
 VENV = f'{G}/venv/Scripts/python.exe'        # torch cu128, hunyuan, pymeshlab, trimesh, scipy
 VENV_LP = f'{G}/venv_lp/Scripts/python.exe'  # pyquadriflow
 SYS_PY = sys.executable                      # system python: render.py / wire.py (numpy+PIL)
@@ -19,6 +19,7 @@ NODE = 'node'
 CUDA13_DLL = f'{G}/cuda134/nvidia/cu13/bin/x86_64'   # paint21.py also add_dll_directory()s this
 RIG_EXIT_SKIP = 3                            # rig_robust.py: body plan is not a 2x2 quadruped stance -> documented skip
 VIEWS = ['hero', 'side', 'front', 'back']
+PAINT_LADDER = [(6, 512), (4, 512), (4, 384)]   # --lowvram paint fallbacks (views, view res), tried in order on OOM
 LV = f'{G}/lowvram/tests'                    # measured 8 GB stage code (paint.py, rigrun.py); shape/mv chain is inlined below
 
 # prepended to every GPU stage script: optional VRAM cap (VRAM_CAP env, GiB) + PEAK line at exit (parsed from the log)
@@ -27,14 +28,31 @@ import torch as _t
 _CAP = float(_o.environ.get('VRAM_CAP', '0') or 0); _T0 = _tm.time()
 if _CAP > 0 and _t.cuda.is_available():
     _t.cuda.set_per_process_memory_fraction(min(1.0, _CAP / (_t.cuda.get_device_properties(0).total_memory / 2**30)))
+# Turing (sm_75, RTX 2070M): no bf16, no flash SDPA. TURING=1 forces this on a newer card (emulation); auto if cc < 8.0.
+# Inference weights are already fp16 in every stage (shape/2mv/paint/T2I); this removes flash + cuDNN SDPA kernels
+# (SDPA falls back to mem-efficient, else math) and reports bf16 unsupported so nothing silently picks it.
+if _t.cuda.is_available() and (_o.environ.get('TURING') == '1' or _t.cuda.get_device_capability(0) < (8, 0)):
+    _t.backends.cuda.enable_flash_sdp(False); _t.backends.cuda.enable_cudnn_sdp(False)
+    _t.backends.cuda.enable_mem_efficient_sdp(True); _t.backends.cuda.enable_math_sdp(True)
+    _t.cuda.is_bf16_supported = lambda *a, **k: False
+    print('TURING mode: flash/cudnn SDPA off, bf16 reported unsupported (weights fp16)', flush=True)
+def _rss():   # peak host working set of this process (GiB)
+    try:
+        import psutil; m = psutil.Process().memory_info(); return getattr(m, 'peak_wset', m.rss) / 2**30
+    except Exception: return -1.0
 def _peak(tag='exit'):
     if _t.cuda.is_available():
-        print(f'PEAK {tag} cap={_CAP} alloc {_t.cuda.max_memory_allocated()/2**30:.2f} GiB reserved {_t.cuda.max_memory_reserved()/2**30:.2f} GiB t {_tm.time()-_T0:.0f}s', flush=True)
+        print(f'PEAK {tag} cap={_CAP} alloc {_t.cuda.max_memory_allocated()/2**30:.2f} GiB reserved {_t.cuda.max_memory_reserved()/2**30:.2f} GiB rss_peak {_rss():.2f} GiB t {_tm.time()-_T0:.0f}s', flush=True)
 _ae.register(_peak, 'exit')
 """
 
 # low-VRAM shape: load on CPU, accelerate cpu_offload_with_hook chain conditioner -> DiT -> VAE (bit-identical mesh, 6.45 GiB peak)
-OFFLOAD_CHAIN = """{v} = {ctor}
+OFFLOAD_CHAIN = """_tl = torch.load   # low host RAM: mmap ckpt + build modules directly in fp16 (no fp32 copy); see RTX2070M.md
+torch.load = lambda *a, **k: _tl(*a, **{{**k, "mmap": True}})
+torch.set_default_dtype(torch.float16)
+{v} = {ctor}
+torch.set_default_dtype(torch.float32); torch.load = _tl
+import gc; gc.collect()
 from accelerate import cpu_offload_with_hook as _cow
 _h = None
 for _n in ('conditioner', 'model', 'vae'):
@@ -63,6 +81,7 @@ class Ctx:
         if env: e.update(env)
         if cpu and s.a.lowvram: e['CUDA_VISIBLE_DEVICES'] = ''      # mask/clean/quadriflow/rig are CPU-only in lowvram mode
         if s.a.vram_cap: e['VRAM_CAP'] = str(s.a.vram_cap)
+        if s.a.turing: e['TURING'] = '1'
         if s.a.lowvram or s.a.vram_cap: e['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
         t = time.time(); print(f'[{ts()}] {name}: {" ".join(os.path.basename(str(c)) if i == 0 else str(c) for i, c in enumerate(cmd))[:200]}', flush=True)
         with open(f'{s.logs}/{name}.log', 'w', encoding='utf-8') as lf:
@@ -201,10 +220,18 @@ def stage_finish(c, pick):
     # texture: Hunyuan Paint 2.1 + RealESRGAN (paint13.py), hero as reference
     td = f'{W}/tex'; shutil.rmtree(f'{td}/{c.an}', ignore_errors=True)
     hero = f'{W}/ref_rgba.png'
-    if c.a.lowvram:   # lowvram/tests/paint.py: 6 views, UNet/VAE on GPU only during diffusion, DINOv2/CLIP staged, FF chunking, VAE tiling, ESRGAN tile 256
-        c.templated('paint13', f'{LV}/paint.py',
-                    [("sys.path.insert(0, 'E:/gen3d/lowvram'); import cap", 'import sys'), ("cap.peak('paint')", "_peak('paint')")],
-                    VENV, [hi, hero, f'{td}/{c.an}', 'v=6', 'off=1', 'tile=256', 'vt=1', 'dil=0', 'ds=1'], gpu=True, check=False)
+    if c.a.lowvram:   # lowvram/tests/paint.py: UNet/VAE on GPU only during diffusion, DINOv2/CLIP staged, FF chunking, VAE tiling, ESRGAN tile 256
+        # OOM ladder (8 GB laptop driving a display): 6 views@512 -> 4 views@512 -> 4 views@384; first that fits wins
+        for nv, res in PAINT_LADDER:
+            shutil.rmtree(f'{td}/{c.an}', ignore_errors=True)
+            c.templated('paint13', f'{LV}/paint.py',
+                        [("sys.path.insert(0, 'E:/gen3d/lowvram'); import cap", 'import sys'), ("cap.peak('paint')", "_peak('paint')")],
+                        VENV, [hi, hero, f'{td}/{c.an}', f'v={nv}', f'r={res}', 'off=1', 'tile=256', 'vt=1', 'dil=0', 'ds=1'], gpu=True, check=False)
+            log = open(f'{c.logs}/paint13.log', encoding='utf-8', errors='replace').read()
+            c.timings['paint_cfg'] = f'v={nv} r={res}'; json.dump(c.timings, open(c.tfile, 'w'), indent=1)
+            if 'out of memory' not in log.lower() and 'OutOfMemoryError' not in log: break
+            shutil.copy(f'{c.logs}/paint13.log', f'{c.logs}/paint13_oom_v{nv}_r{res}.log')
+            print(f'[{ts()}]   paint OOM at v={nv} r={res} -> next fallback', flush=True)
     else:
         c.templated('paint13', f'{G}/tex13/paint13.py',
                     [("rf'E:\\gen3d\\r9pick\\{a}.obj'", "os.environ['PAINT_MESH']"),
@@ -261,7 +288,7 @@ def batch(a):
             if ln: jobs.append((ln[0], ['--pick', ln[1]]))
     else:
         jobs = [(d, []) for d in sorted(os.listdir(f'{G}/inbox')) if os.path.isfile(f'{G}/inbox/{d}/hero.png')]
-    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else [])
+    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) + (['--turing'] if a.turing else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else [])
     res = {}
     for an, extra in jobs:
         print(f'\n[{ts()}] ===== {an} {" ".join(extra)}', flush=True); t = time.time()
@@ -284,6 +311,8 @@ def main():
     ap.add_argument('--pick', help='candidate name from candidates.json: texture + lowpoly + rig + assets')
     ap.add_argument('--force', action='store_true', help='regenerate even if outputs exist')
     ap.add_argument('--no-rig', action='store_true')
+    ap.add_argument('--turing', action='store_true', help='force RTX 20xx (sm_75) mode on a newer card: flash/cuDNN SDPA off, '
+                    'bf16 off (auto-on when the GPU compute capability < 8.0)')
     a = ap.parse_args()
     if a.all or a.pick_file: return batch(a)
     if not a.animal: ap.error('animal required (or --all / --pick-file)')
