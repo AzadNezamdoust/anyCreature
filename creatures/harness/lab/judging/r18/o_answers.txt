@@ -1,0 +1,12 @@
+704: eagle | 6 | top view shows lumpy feather-clump blobs; tail/wing feathers fused into flat slabs
+432: horse | 5 | mane/tail are layered shingle slabs with ragged frayed edges; noisy lumpy lower legs
+517: wolf/fox | 5 | blotchy noise on neck ruff and back; front legs look like stiff tubes with banding seams
+628: eagle | 6 | same as 704, slightly crisper feather edges but wing/tail still fused slabs, lumpy top
+933: horse | 5 | slab mane/tail plus small dark pinhole speckle artifacts on body
+844: wolf/fox | 5 | noisy pitted surface on back/haunch; collar-like ridge crease around neck
+639: eagle | 6 | stylized clay-like feathers, dark smear patches on wing tips; back view chest flat/smeared
+682: horse | 5 | painted-on rib stripes and dark smudge blobs on flank/shoulder; face blaze inconsistent between views
+602: wolf | 4 | coloring inconsistent across views (white face side vs orange mask), muddy smear on flank, cartoonish
+618: eagle | 6 | pale smeared wing patches and bleached spots inconsistent between views
+805: horse | 4 | dark blotchy smudges on shoulder/flank plus rib stripes; muddy dark front view
+231: wolf | 5 | white shoulder band and orange mask placement inconsistent; flat smeared leg coloring

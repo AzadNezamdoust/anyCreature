@@ -293,3 +293,18 @@ PartCrafter wolf = one body part + junk, horse partial (tail fused); P3-SAM
 too few parts (wolf 2, horse 4). Fused toes not fixed. OmniPart skipped
 (nvdiffrast, Linux-only wheels). Not adopted; rigging keeps the geometric
 skeleton fit.
+
+## Round 18 — Hunyuan3D-2.1 settings + texture seam sweep (wolf, horse, eagle; 2070M mode, cap 7.0)
+
+Blind Opus: shape base 5.33 vs best (100 steps + decimate-last) 5.33; texture
+base 5.0 vs best (seam blend + dilate) 5.0. No measurable gain. cfg 7.5 worse,
+octree 1024 noisier + 5x time + OOM in cleanup, ESRGAN off softer. Current
+defaults stay; new options kept as default-off flags. Paint is not deterministic
+run-to-run, so small texture deltas are noise.
+
+## Round 19 — normal-map bake high -> QuadriFlow LODs (wolf)
+
+Cycles selected-to-active tangent normal + albedo bake, 2-3 s/map; Marigold
+normals LCM v0.1 (Apache) detail overlay, 3.8 GiB. Baked normal clearly adds
+fur clumps / ear and jaw creases on 1.5k-15k face LODs; Marigold detail subtle.
+Flag --bake-normals (default off; recommended on). Sheets: pipeline/bake/.
