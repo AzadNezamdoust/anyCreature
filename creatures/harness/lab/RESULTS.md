@@ -283,3 +283,13 @@ into the colour map, which breaks in-engine lighting. Hunyuan Paint stays defaul
 MV-Adapter is the commercial-safe fallback and needs a delighting pass. Defects shared by both: baked shading/specular, flat
 cartoon kangaroo. Seq-inpaint views drift (one side bleached white). Albedo
 only (fixed metallic/roughness). Scripts + report: texc/.
+
+## Part-aware generation test (wolf, horse, eagle, crocodile, kangaroo)
+
+PartCrafter (MIT, fits 7 GiB cap at 5.3-6.1 GiB, 2.5-4.5 min) and P3-SAM
+segmentation of Hunyuan meshes (Tencent + CC-BY-NC sonata weights, not
+commercial; 3.5 GiB at 30k points). Neither gives clean per-limb parts:
+PartCrafter wolf = one body part + junk, horse partial (tail fused); P3-SAM
+too few parts (wolf 2, horse 4). Fused toes not fixed. OmniPart skipped
+(nvdiffrast, Linux-only wheels). Not adopted; rigging keeps the geometric
+skeleton fit.
