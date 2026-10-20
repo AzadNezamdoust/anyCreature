@@ -61,15 +61,93 @@ for _n in ('conditioner', 'model', 'vae'):
 """
 
 
+# --octree > 512: VanillaVolumeDecoder keeps all query points (res^3 x 3) + logits on the GPU (6.4 GiB at 1024 -> OOM under cap).
+# Streamed variant: query points built per chunk from flat indices, logits moved to host per chunk. Same math.
+STREAM_DECODER = """import numpy as _np
+from hy3dshape.models.autoencoders import volume_decoders as _vd
+@torch.no_grad()
+def _stream(self, latents, geo_decoder, bounds=1.01, num_chunks=10000, octree_resolution=None, enable_pbar=True, **kw):
+    if isinstance(bounds, float): bounds = [-bounds] * 3 + [bounds] * 3
+    n = octree_resolution + 1; lo = torch.tensor(bounds[:3], dtype=torch.float32, device=latents.device)
+    st = (torch.tensor(bounds[3:], dtype=torch.float32, device=latents.device) - lo) / octree_resolution
+    out = torch.empty(n ** 3, dtype=torch.float16)
+    for s in range(0, n ** 3, num_chunks):
+        i = torch.arange(s, min(s + num_chunks, n ** 3), device=latents.device)
+        q = (torch.stack([i // (n * n), (i // n) % n, i % n], -1).float() * st + lo).to(latents.dtype)
+        out[s:s + len(i)] = geo_decoder(queries=q[None].expand(latents.shape[0], -1, -1), latents=latents)[0, :, 0].half().cpu()
+    print('stream-decoded', n, 'cube', flush=True)
+    return out.view(1, n, n, n).float()
+_vd.VanillaVolumeDecoder.__call__ = _stream
+"""
+
+# r18 paint hooks, injected into lowvram/tests/paint.py before bake (env-driven, both off by default)
+PAINT_HOOKS = """if os.environ.get('NO_SR') == '1':   # --no-esrgan: RealESRGAN x4 slot off (views baked at diffusion res)
+    pipe.models['super_model'] = lambda im: im; print('RealESRGAN off', flush=True)
+_TR = float(os.environ.get('TRUST_INPAINT', '0') or 0)
+if _TR > 0:   # --tex-trust-inpaint T: texels whose summed view trust (w*cos^4) < T are re-filled by Paint's own uv_inpaint
+    _rd = pipe.render
+    def _fbt(textures, cos_maps, _rd=_rd):
+        tm = torch.zeros(_rd.texture_size + (textures[0].shape[-1],)).to(_rd.device); tr = torch.zeros(_rd.texture_size + (1,)).to(_rd.device)
+        for tx, cm in zip(textures, cos_maps):
+            if ((cm > 0) * (tr > 0)).sum() / (cm > 0).sum() > 0.99: continue
+            tm += tx * cm; tr += cm
+        keep = tr > _TR; print('trust-inpaint: covered', float((tr > 1e-8).float().mean()), 'kept', float(keep.float().mean()), flush=True)
+        return tm / torch.clamp(tr, min=1e-8), keep
+    _rd.fast_bake_texture = _fbt
+"""
+
+
+def seam_blend(d):
+    """--tex-seam: cross-chart seam blending + UV dilation on <d>/textured*.jpg, then rebuild textured.glb + preview.
+    Every UV seam vertex (same 3D position, several UV copies) gets the mean colour of its copies; the correction
+    (mean - own) is barycentric-interpolated over its incident triangles (fades to 0 one ring away). Then gutters dilate."""
+    import runpy, numpy as np, torch, trimesh, cv2
+    from PIL import Image, ImageDraw
+    os.add_dll_directory(CUDA13_DLL); import custom_rasterizer as cr
+    m = trimesh.load(f'{d}/textured.obj', process=False, force='mesh')
+    uv = np.asarray(m.visual.uv, np.float64); F = np.asarray(m.faces); V = np.asarray(m.vertices)
+    key = np.unique(np.round(V / (np.ptp(V, 0).max() * 1e-6)).astype(np.int64), axis=0, return_inverse=True)[1].ravel()
+    cnt = np.bincount(key); seam = cnt[key] > 1
+    print('seam verts', int(seam.sum()), 'of', len(V), flush=True)
+    cen = uv[F].mean(1)
+    def blend(path):
+        im = np.asarray(Image.open(path).convert('RGB'), np.float32); H, W = im.shape[:2]
+        # per-vertex colour, sampled 15% toward each incident face centroid (avoid gutter texels), averaged
+        acc = np.zeros((len(V), 3)); n = np.zeros(len(V))
+        for k in range(3):
+            p = uv[F[:, k]] * 0.85 + cen * 0.15
+            px = np.clip((p[:, 0] * (W - 1)).astype(int), 0, W - 1); py = np.clip(((1 - p[:, 1]) * (H - 1)).astype(int), 0, H - 1)
+            np.add.at(acc, F[:, k], im[py, px]); np.add.at(n, F[:, k], 1)
+        col = acc / np.maximum(n, 1)[:, None]
+        g = np.zeros((cnt.size, 3)); np.add.at(g, key, col); g /= cnt[:, None]
+        delta = np.where(seam[:, None], g[key] - col, 0).astype(np.float32)
+        dev = 'cuda'
+        clip = torch.tensor(np.c_[uv * 2 - 1, np.full(len(uv), .5), np.ones(len(uv))], dtype=torch.float32, device=dev)
+        ft = torch.tensor(F, dtype=torch.int32, device=dev)
+        fi, bary = cr.rasterize(clip[None], ft, (H, W))
+        mk = fi > 0; tri = ft[(fi[mk] - 1).long()].long(); b = bary[mk]
+        t = (torch.tensor(uv, dtype=torch.float32, device=dev)[tri] * b[..., None]).sum(1)
+        dl = (torch.tensor(delta, device=dev)[tri] * b[..., None]).sum(1)
+        px = (t[:, 0] * (W - 1)).round().clamp(0, W - 1).long(); py = ((1 - t[:, 1]) * (H - 1)).round().clamp(0, H - 1).long()
+        out = torch.tensor(im, device=dev); out[py, px] += dl
+        Image.fromarray(out.clamp(0, 255).byte().cpu().numpy()).save(path, quality=95)
+        print('blended', os.path.basename(path), 'mean |delta|', float(np.abs(delta[seam]).mean()), flush=True)
+    for fn in ('textured.jpg', 'textured_metallic.jpg', 'textured_roughness.jpg'): blend(f'{d}/{fn}')
+    p13 = open(f'{G}/tex13/paint13.py').read(); s = p13.index('def dilate'); e = p13.index('for job in jobs')
+    gg = dict(os=os, np=np, Image=Image, ImageDraw=ImageDraw, cv2=cv2, trimesh=trimesh); exec(p13[s:e], gg)
+    gg['dilate'](d, int(os.environ.get('SEAM_PX', '24')))
+    sys.argv = ['g', d]; runpy.run_path(f'{G}/glb_preview21.py', run_name='__main__')
+
+
 def ts(): return time.strftime('%H:%M:%S')
 
 
 class Ctx:
     def __init__(s, a):
         s.a = a; s.an = a.animal
-        s.inbox = f'{G}/inbox/{s.an}'; s.work = f'{s.inbox}/work'
+        s.inbox = f'{a.inbox_root or G + "/inbox"}/{s.an}'; s.work = f'{s.inbox}/work'
         s.stage = f'{s.work}/_stage'; s.logs = f'{s.work}/logs'
-        s.out = f'{G}/assets/{s.an}'
+        s.out = f'{a.assets_root or G + "/assets"}/{s.an}'
         for d in (s.work, s.stage, s.logs, f'{s.work}/cand', f'{s.work}/sheets'): os.makedirs(d, exist_ok=True)
         s.tfile = f'{s.work}/timings.json'
         s.timings = json.load(open(s.tfile)) if os.path.exists(s.tfile) else {}
@@ -109,13 +187,13 @@ class Ctx:
 
 
 # ---------------------------------------------------------------- masking (runs in venv via --_mask)
-def mask_views(an):
+def mask_views(an, inbox=None):
     sys.path.insert(0, G)
     import numpy as np
     from PIL import Image
     from scipy import ndimage
     from mask8 import remove_bg8
-    inbox = f'{G}/inbox/{an}'; work = f'{inbox}/work'
+    inbox = inbox or f'{G}/inbox/{an}'; work = f'{inbox}/work'
     def lcc(r):
         a = np.array(r); lab, n = ndimage.label(a[..., 3] > 128)
         if n > 1:
@@ -146,13 +224,17 @@ def stage_generate(c):
     a = c.a; W = c.work
     seeds = [int(x) for x in a.seeds.split(',')]
     have_mv = os.path.exists(f'{c.inbox}/side.png')
-    c.run('mask', [VENV, os.path.abspath(__file__), '--_mask', c.an], cpu=True)
+    c.run('mask', [VENV, os.path.abspath(__file__), '--_mask', c.an, c.inbox], cpu=True)
     if a.lowvram: print('--lowvram: shape = accelerate offload chain (conditioner->DiT->VAE); CPU-only mask/clean/quadriflow/rig')
     cands = []
     seed_t = ', '.join(map(str, seeds))
     # Hunyuan3D-2.1, single image (hero)
     if not all(os.path.exists(f'{W}/raw21_s{s}.obj') for s in seeds) or a.force:
         subs = [('seeds = [0, 1]', f'seeds = [{seed_t}]'), ('r8/{an}', W)]
+        if a.steps or a.guidance or a.octree or a.chunks:   # r18 shape knobs (default off = gen21.py values: 50 steps, cfg 5.0, octree 380, chunks 8000)
+            kw = f'num_inference_steps={a.steps or 50}, octree_resolution={a.octree or 380}, guidance_scale={a.guidance or 5.0}, num_chunks={a.chunks or 8000}'
+            subs.append(('num_inference_steps=50, octree_resolution=380', kw))
+            if (a.octree or 380) > 512: subs.append(('for an in ans:', STREAM_DECODER + 'for an in ans:'))
         if a.lowvram:
             old = 'shp = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1")\n'
             subs.append((old, OFFLOAD_CHAIN.format(v='shp', ctor='Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1", device="cpu")')))
@@ -183,7 +265,7 @@ def stage_generate(c):
         k['clean'] = f'{W}/cand/{k["name"]}.obj'; k['sheet'] = f'{W}/sheets/{k["name"]}.png'
         if not os.path.exists(k['raw']): k['error'] = 'raw missing'; continue
         if not os.path.exists(k['clean']) or a.force:
-            c.run(f'clean8_{k["name"]}', [VENV, f'{G}/clean8.py', k['raw'], k['clean']], cpu=True)
+            c.run(f'clean8_{k["name"]}', [VENV, f'{G}/clean8.py', k['raw'], k['clean']] + (['--declast'] if a.decimate_last else []), cpu=True)
         c.run(f'render_{k["name"]}', [SYS_PY, f'{LAB}/render.py', k['clean'], k['sheet']], cwd=LAB)
     # keep earlier candidates (other seeds/variants) whose clean mesh still exists, so a `--all --seeds 0` run
     # does not drop e.g. h21_s1 that a picks.txt still refers to
@@ -225,8 +307,10 @@ def stage_finish(c, pick):
         for nv, res in PAINT_LADDER:
             shutil.rmtree(f'{td}/{c.an}', ignore_errors=True)
             c.templated('paint13', f'{LV}/paint.py',
-                        [("sys.path.insert(0, 'E:/gen3d/lowvram'); import cap", 'import sys'), ("cap.peak('paint')", "_peak('paint')")],
-                        VENV, [hi, hero, f'{td}/{c.an}', f'v={nv}', f'r={res}', 'off=1', 'tile=256', 'vt=1', 'dil=0', 'ds=1'], gpu=True, check=False)
+                        [("sys.path.insert(0, 'E:/gen3d/lowvram'); import cap", 'import sys'), ("cap.peak('paint')", "_peak('paint')"),
+                         ("sm = type(pipe.render).save_mesh", PAINT_HOOKS + "sm = type(pipe.render).save_mesh")],
+                        VENV, [hi, hero, f'{td}/{c.an}', f'v={nv}', f'r={res}', 'off=1', 'tile=256', 'vt=1', 'dil=0', 'ds=1'], gpu=True, check=False,
+                        env=dict(NO_SR='1' if c.a.no_esrgan else '0', TRUST_INPAINT=str(c.a.tex_trust_inpaint)))
             log = open(f'{c.logs}/paint13.log', encoding='utf-8', errors='replace').read()
             c.timings['paint_cfg'] = f'v={nv} r={res}'; json.dump(c.timings, open(c.tfile, 'w'), indent=1)
             if 'out of memory' not in log.lower() and 'OutOfMemoryError' not in log: break
@@ -238,9 +322,18 @@ def stage_finish(c, pick):
                      ('import importlib, utils.image_super_utils as isu',
                       "ORIG[jobs[0].split(':')[0]] = os.environ['PAINT_REF']\nimport importlib, utils.image_super_utils as isu")],
                     VENV, [td, f'{c.an}:ref=orig'], env=dict(PAINT_MESH=hi, PAINT_REF=hero), gpu=True, check=False)
+    if c.a.tex_seam and os.path.exists(f'{td}/{c.an}/textured.obj'):   # cross-chart seam blend + 24 px UV dilation, rebuild glb/preview
+        c.run('seam', [VENV, os.path.abspath(__file__), '--_seam', f'{td}/{c.an}'], env=dict(SEAM_PX=str(c.a.tex_seam)))
     tg = f'{td}/{c.an}/textured.glb'
     if os.path.exists(tg): shutil.copy(tg, f'{O}/textured.glb')
     else: print('WARNING: texture stage produced no textured.glb (see logs/paint13.log)')
+    if c.a.texture_only:
+        prev = f'{td}/{c.an}/preview.png'
+        if os.path.exists(prev): shutil.copy(prev, f'{O}/textured_preview.png')
+        for f in ('textured.obj', 'textured.mtl', 'textured.jpg', 'textured_metallic.jpg', 'textured_roughness.jpg'):
+            if os.path.exists(f'{td}/{c.an}/{f}'): shutil.copy(f'{td}/{c.an}/{f}', f'{O}/{f}')
+        json.dump(dict(animal=c.an, chosen=pick, timings=c.timings), open(f'{O}/manifest.json', 'w'), indent=1)
+        print(f'[{ts()}] --texture-only: done {c.an} -> {O}'); return
     # low-poly: QuadriFlow 1500 & 5000
     lpin = f'{W}/lp_in/inbox_{c.an}'; os.makedirs(lpin, exist_ok=True); shutil.copy(hi, f'{lpin}/final.obj')
     c.run('quadriflow', [VENV_LP, f'{G}/lowpoly/run_classic.py', 'quadriflow', '--in-root', f'{W}/lp_in', '--out-root', f'{W}/lp',
@@ -251,6 +344,12 @@ def stage_finish(c, pick):
         else: print(f'WARNING: missing lp_{b}')
     if os.path.exists(f'{O}/lp_5000.obj'):
         c.run('wire', [SYS_PY, f'{LAB}/wire.py', f'{O}/lp_5000.obj', f'{O}/wire.png'], cwd=LAB)
+    # --bake-normals (default off): Blender Cycles hi->LOD tangent normal + albedo bake on fresh UVs, plus Marigold-LCM
+    # (Apache-2.0) image-derived fine normal detail; lit comparison sheets. -> {O}/baked/lod<N>/{lod.obj,albedo.png,n_tan*.png}
+    if c.a.bake_normals and os.path.exists(f'{td}/{c.an}/textured.obj'):
+        lods = [f'{O}/lp_{b}.obj:{1024 if b < 3000 else 2048}' for b in (1500, 5000) if os.path.exists(f'{O}/lp_{b}.obj')]
+        c.run('bake_normals', [VENV, f'{G}/bake/bake_lods.py', f'{td}/{c.an}/textured.obj', f'{O}/baked', *lods,
+                               '--detail', '--vram-cap', str(c.a.vram_cap or 7.0)], check=False)
     # rig: rig_robust.py = rig.py (untouched) + leak-proof voxel fill + foot-contact leg detection + body-plan gate
     rigged = False
     for f in ('rigged.glb', 'rig_skip.json'):
@@ -301,7 +400,8 @@ def batch(a):
 
 
 def main():
-    if len(sys.argv) > 2 and sys.argv[1] == '--_mask': return mask_views(sys.argv[2])
+    if len(sys.argv) > 2 and sys.argv[1] == '--_mask': return mask_views(*sys.argv[2:4])
+    if len(sys.argv) > 2 and sys.argv[1] == '--_seam': return seam_blend(sys.argv[2])
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('animal', nargs='?'); ap.add_argument('--seeds', default='0,1')
     ap.add_argument('--all', action='store_true', help='phase 1 for every inbox/<animal>/ with a hero.png')
@@ -311,8 +411,21 @@ def main():
     ap.add_argument('--pick', help='candidate name from candidates.json: texture + lowpoly + rig + assets')
     ap.add_argument('--force', action='store_true', help='regenerate even if outputs exist')
     ap.add_argument('--no-rig', action='store_true')
+    ap.add_argument('--bake-normals', action='store_true', help='phase 2: bake hi->LOD normal+albedo maps (Blender) + Marigold detail normals, comparison sheets')
     ap.add_argument('--turing', action='store_true', help='force RTX 20xx (sm_75) mode on a newer card: flash/cuDNN SDPA off, '
                     'bf16 off (auto-on when the GPU compute capability < 8.0)')
+    # r18 upgrade knobs (all default off = previous behaviour)
+    ap.add_argument('--steps', type=int, default=0, help='shape: num_inference_steps (default 50)')
+    ap.add_argument('--guidance', type=float, default=0, help='shape: guidance_scale (default 5.0)')
+    ap.add_argument('--octree', type=int, default=0, help='shape: octree_resolution (default 380)')
+    ap.add_argument('--chunks', type=int, default=0, help='shape: VAE decode num_chunks (default 8000; lower = less VRAM)')
+    ap.add_argument('--decimate-last', action='store_true', help='clean8: decimate after smoothing/fill instead of mid-cleanup')
+    ap.add_argument('--tex-seam', type=int, default=0, help='paint: cross-chart seam blend + N px UV dilation (24 typical)')
+    ap.add_argument('--tex-trust-inpaint', type=float, default=0, help='paint: re-inpaint texels with view trust < T via Paint uv_inpaint (e.g. 0.003)')
+    ap.add_argument('--no-esrgan', action='store_true', help='paint: RealESRGAN slot off')
+    ap.add_argument('--texture-only', action='store_true', help='phase 2: stop after texture (no QuadriFlow/rig/validate)')
+    ap.add_argument('--inbox-root', help='inbox root dir (default E:/gen3d/inbox)')
+    ap.add_argument('--assets-root', help='assets root dir (default E:/gen3d/assets)')
     a = ap.parse_args()
     if a.all or a.pick_file: return batch(a)
     if not a.animal: ap.error('animal required (or --all / --pick-file)')
