@@ -1,0 +1,9 @@
+{
+ "stage": 4,
+ "verdict": "PASS",
+ "lock_edge_hash": "e5a087abb81741d2229da45a094b671dbbb8fc71274c8355b9bb31cb959cd7c9",
+ "collapsed_edge_hash": "e5a087abb81741d2229da45a094b671dbbb8fc71274c8355b9bb31cb959cd7c9",
+ "logged_ops": 1,
+ "logged_new_verts": 7,
+ "errors": []
+}

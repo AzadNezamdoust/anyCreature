@@ -1,0 +1,74 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: a second loop at the elbow bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee (carpus): loop above the knee",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "knee (carpus): loop below the knee",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "fetlock: loop above the fetlock",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "stifle: loop below the stifle",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "hock: loop above the hock",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "hock: loop below the hock",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "fetlock: loop above the fetlock",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "throatlatch: a loop between poll and neck for the head nod",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "neck base: a loop where the neck meets the withers",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

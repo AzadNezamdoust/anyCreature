@@ -1,0 +1,53 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "fore leg: a loop under the knee for the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "fore leg: mid-femur loop (keeps the quads near square)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "mid leg: a loop under the knee for the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "mid leg: mid-femur loop (keeps the quads near square)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "hind leg: a loop under the knee for the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "hind leg: mid-femur loop (keeps the quads near square)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "elytra: the shell rim loop between pronotum and wing cases",
+   "new_verts": 17,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,101 @@
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 604 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — fore leg: a loop under the knee for the bend
+BMK topo #2 loop: +6 verts — fore leg: mid-femur loop (keeps the quads near square)
+BMK topo #3 loop: +6 verts — mid leg: a loop under the knee for the bend
+BMK topo #4 loop: +6 verts — mid leg: mid-femur loop (keeps the quads near square)
+BMK topo #5 loop: +6 verts — hind leg: a loop under the knee for the bend
+BMK topo #6 loop: +6 verts — hind leg: mid-femur loop (keeps the quads near square)
+BMK topo #7 loop: +17 verts — elytra: the shell rim loop between pronotum and wing cases
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 1.0
+BMK PASS s2 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s2 qa: no floating piece — 0 shells
+BMK PASS s2 qa: no z-fighting — 0 faces
+BMK PASS s2 qa: sliver triangles <= 2.0% — 2 (0.2%)
+BMK s2 qa: turned 76 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 2, "tris": 812, "min_iou": 1.0}
+BMK OK in 5.1s
+BMK sheet: experiments\boxmodel\r20\crystal_beetle\rounds\s2_r01.jpg
+BMK round OK
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 604 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — fore leg: a loop under the knee for the bend
+BMK topo #2 loop: +6 verts — fore leg: mid-femur loop (keeps the quads near square)
+BMK topo #3 loop: +6 verts — mid leg: a loop under the knee for the bend
+BMK topo #4 loop: +6 verts — mid leg: mid-femur loop (keeps the quads near square)
+BMK topo #5 loop: +6 verts — hind leg: a loop under the knee for the bend
+BMK topo #6 loop: +6 verts — hind leg: mid-femur loop (keeps the quads near square)
+BMK topo #7 loop: +17 verts — elytra: the shell rim loop between pronotum and wing cases
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 1.0
+BMK PASS s3 base mesh untouched by stage 3
+BMK PASS s3 lock assertion
+BMK PASS s3 4-8 region colours — 8: ['bone', 'crystal', 'crystal_lt', 'dark', 'eye', 'leg', 'shell', 'under']
+BMK PASS s3 total triangles in budget — 1190 (budget 900-2200)
+BMK PASS s3 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 16/16 pieces closed, 0 inside-out
+BMK PASS s3 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s3 qa: no floating piece — 0 shells
+BMK PASS s3 qa: no z-fighting — 0 faces
+BMK PASS s3 qa: sliver triangles <= 2.0% — 2 (0.2%)
+BMK s3 qa: turned 84 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 3, "tris": 1190, "colours": 8}
+BMK OK in 8.2s
+BMK sheet: experiments\boxmodel\r20\crystal_beetle\rounds\s3_r01.jpg
+BMK round OK
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 604 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — fore leg: a loop under the knee for the bend
+BMK topo #2 loop: +6 verts — fore leg: mid-femur loop (keeps the quads near square)
+BMK topo #3 loop: +6 verts — mid leg: a loop under the knee for the bend
+BMK topo #4 loop: +6 verts — mid leg: mid-femur loop (keeps the quads near square)
+BMK topo #5 loop: +6 verts — hind leg: a loop under the knee for the bend
+BMK topo #6 loop: +6 verts — hind leg: mid-femur loop (keeps the quads near square)
+BMK topo #7 loop: +17 verts — elytra: the shell rim loop between pronotum and wing cases
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 1.0
+BMK PASS s3 base mesh untouched by stage 3
+BMK PASS s3 lock assertion
+BMK PASS s3 4-8 region colours — 8: ['bone', 'crystal', 'crystal_lt', 'dark', 'eye', 'leg', 'shell', 'under']
+BMK PASS s3 total triangles in budget — 1190 (budget 900-2200)
+BMK PASS s3 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 16/16 pieces closed, 0 inside-out
+BMK PASS s4 clips idle / move / attack — have ['attack', 'idle', 'move']
+BMK PASS s4 every vertex weighted — 0 unweighted
+BMK PASS s4 final lock assertion
+BMK PASS s4 final census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 16/16 pieces closed, 0 inside-out
+BMK PASS s4 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s4 qa: no floating piece — 0 shells
+BMK PASS s4 qa: no z-fighting — 0 faces
+BMK PASS s4 qa: sliver triangles <= 2.0% — 2 (0.2%)
+BMK PASS s4 qa: posed fold-overs/collapses <= 0.5% of triangles and <= 0.5% of surface area — 0 (0.00% of tris, 0.00% of area)
+BMK PASS s4 qa: no piece comes off the body in a pose (drift) — 0 shells — bind them with body= weights (or the bone under them)
+BMK WARN s4 qa: 30 triangles (0.70% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek
+BMK s4 qa: turned 160 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 4, "glb": "E:\\Github\\anyCreature\\creatures\\experiments\\boxmodel\\r20\\crystal_beetle\\stage4\\crystal_beetle.glb"}
+BMK OK in 26.4s
+BMK orbit (harness/outline.py) rc=0:   advise  az000: head_merged � only 14% of the head's outline clears the body (head 20.3% of the view) � it does not read as its own mass |   advise  az180: head_hidden � the head owns 0.0% of the view � from here the creature has no head
+BMK glbcheck rc=0: OK - well-formed GLB, 2 chunks, 0 image(s), anims: attack/idle/move
+BMK sheet: experiments\boxmodel\r20\crystal_beetle\rounds\s4_r04.jpg
+BMK round OK
+BMK review packet: experiments\boxmodel\r20\crystal_beetle\review

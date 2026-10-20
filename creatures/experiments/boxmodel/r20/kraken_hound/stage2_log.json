@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: a loop above the elbow bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "wrist loop",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "stifle: a loop below the knee",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "hock loop",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "neck: a third loop for the head-down bend",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

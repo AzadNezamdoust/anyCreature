@@ -1,0 +1,130 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "pincer arm: elbow loop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "pincer arm: wrist loop before the palm swells",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "leg 0: knee loop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "leg 1: knee loop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "leg 2: knee loop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "leg 3: knee loop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "leg 0: ankle loop above the pointed foot",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "leg 1: ankle loop above the pointed foot",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "leg 2: ankle loop above the pointed foot",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "leg 3: ankle loop above the pointed foot",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "tail joint 7: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "loop",
+   "reason": "tail joint 8: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "loop",
+   "reason": "tail joint 9: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 14,
+   "kind": "loop",
+   "reason": "tail joint 10: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 15,
+   "kind": "loop",
+   "reason": "tail joint 11: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 16,
+   "kind": "loop",
+   "reason": "tail joint 12: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 17,
+   "kind": "loop",
+   "reason": "tail joint 13: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 18,
+   "kind": "loop",
+   "reason": "tail joint 14: a loop between segments for the curl / strike",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

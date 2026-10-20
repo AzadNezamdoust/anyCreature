@@ -1,0 +1,60 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "partial_loop",
+   "reason": "mouth line along the snout side, ends on the cheek behind the jaw hinge",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "elbow: a second loop at the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "forearm: loop between elbow and wrist",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "knee: a second loop at the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "shin: loop between knee and ankle",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "neck: a loop behind the jaw hinge for the head lift",
+   "new_verts": 3,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "tail root: a loop for the sweep",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "mid tail: a loop for the sweep",
+   "new_verts": 5,
+   "extra_base_edges": []
+  }
+ ]
+}

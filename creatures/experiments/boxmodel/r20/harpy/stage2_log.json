@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "elbow: a loop past the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "knee: a loop below the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "ankle: a loop below the bird joint",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

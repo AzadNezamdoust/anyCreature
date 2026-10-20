@@ -1,0 +1,102 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "arm 0: loop 0 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "arm 0: loop 1 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "arm 0: loop 2 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "arm 1: loop 0 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "arm 1: loop 1 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "arm 1: loop 2 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "arm 2: loop 0 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "arm 2: loop 1 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "arm 2: loop 2 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "arm 3: loop 0 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "arm 3: loop 1 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "loop",
+   "reason": "arm 3: loop 2 for the curl",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "loop",
+   "reason": "head / mantle junction: the mantle sways on it",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 14,
+   "kind": "loop",
+   "reason": "mantle: mid loop for the breathing swell",
+   "new_verts": 7,
+   "extra_base_edges": []
+  }
+ ]
+}

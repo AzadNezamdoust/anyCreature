@@ -1,0 +1,88 @@
+BMK review packet: experiments\boxmodel\r20\cyclops\review
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 516 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — elbow: a second loop above the bend
+BMK topo #2 loop: +6 verts — knee: a loop above the bend
+BMK topo #3 loop: +6 verts — knee: a loop below the bend
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 0.997
+BMK PASS s2 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s2 qa: no floating piece — 0 shells
+BMK PASS s2 qa: no z-fighting — 0 faces
+BMK PASS s2 qa: sliver triangles <= 2.0% — 0 (0.0%)
+BMK s2 qa: turned 48 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 2, "tris": 588, "min_iou": 0.997}
+BMK OK in 7.3s
+BMK sheet: experiments\boxmodel\r20\cyclops\rounds\s2_r01.jpg
+BMK round OK
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 516 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — elbow: a second loop above the bend
+BMK topo #2 loop: +6 verts — knee: a loop above the bend
+BMK topo #3 loop: +6 verts — knee: a loop below the bend
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 0.997
+BMK PASS s3 base mesh untouched by stage 3
+BMK PASS s3 lock assertion
+BMK PASS s3 4-8 region colours — 8: ['cloth', 'dark', 'eye', 'horn', 'iris', 'pupil', 'skin', 'wood']
+BMK PASS s3 total triangles in budget — 918 (budget 900-2200)
+BMK PASS s3 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 10/10 pieces closed, 0 inside-out
+BMK PASS s3 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s3 qa: no floating piece — 0 shells
+BMK PASS s3 qa: no z-fighting — 0 faces
+BMK PASS s3 qa: sliver triangles <= 2.0% — 0 (0.0%)
+BMK s3 qa: turned 61 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 3, "tris": 918, "colours": 8}
+BMK OK in 9.9s
+BMK sheet: experiments\boxmodel\r20\cyclops\rounds\s3_r01.jpg
+BMK round OK
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 516 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +6 verts — elbow: a second loop above the bend
+BMK topo #2 loop: +6 verts — knee: a loop above the bend
+BMK topo #3 loop: +6 verts — knee: a loop below the bend
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 0.997
+BMK PASS s3 base mesh untouched by stage 3
+BMK PASS s3 lock assertion
+BMK PASS s3 4-8 region colours — 8: ['cloth', 'dark', 'eye', 'horn', 'iris', 'pupil', 'skin', 'wood']
+BMK PASS s3 total triangles in budget — 918 (budget 900-2200)
+BMK PASS s3 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 10/10 pieces closed, 0 inside-out
+BMK PASS s4 clips idle / move / attack — have ['attack', 'idle', 'move']
+BMK PASS s4 every vertex weighted — 0 unweighted
+BMK PASS s4 final lock assertion
+BMK PASS s4 final census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 10/10 pieces closed, 0 inside-out
+BMK PASS s4 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s4 qa: no floating piece — 0 shells
+BMK PASS s4 qa: no z-fighting — 0 faces
+BMK PASS s4 qa: sliver triangles <= 2.0% — 0 (0.0%)
+BMK PASS s4 qa: posed fold-overs/collapses <= 0.5% of triangles and <= 0.5% of surface area — 2 (0.22% of tris, 0.47% of area)
+BMK PASS s4 qa: no piece comes off the body in a pose (drift) — 0 shells — bind them with body= weights (or the bone under them)
+BMK WARN s4 qa: 50 triangles (3.78% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek
+BMK s4 qa: turned 109 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 4, "glb": "E:\\Github\\anyCreature\\creatures\\experiments\\boxmodel\\r20\\cyclops\\stage4\\cyclops.glb"}
+BMK OK in 64.4s
+BMK glbcheck rc=0: OK - well-formed GLB, 2 chunks, 0 image(s), anims: attack/idle/move
+BMK sheet: experiments\boxmodel\r20\cyclops\rounds\s4_r04.jpg
+BMK round OK

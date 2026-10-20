@@ -1,0 +1,49 @@
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 620 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +39 verts — mouth: a loop through the jaw so the mouth line has an edge
+BMK topo #2 loop: +39 verts — neck: an extra loop at the tightest bend (rear-up)
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 0.993
+BMK PASS s2 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s2 qa: no floating piece — 0 shells
+BMK PASS s2 qa: no z-fighting — 0 faces
+BMK PASS s2 qa: sliver triangles <= 2.0% — 6 (0.6%)
+BMK s2 qa: turned 43 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 2, "tris": 932, "min_iou": 0.993}
+BMK OK in 9.5s
+BMK sheet: experiments\boxmodel\r20\wyrm\rounds\s2_r01.jpg
+BMK round OK
+BMK PASS s1 one connected shell — 1 components
+BMK PASS s1 closed (no open or non-manifold edges) — 0 edges
+BMK PASS s1 no self-intersection — 0 face pairs
+BMK PASS s1 triangles in budget — 620 (budget 400-1500)
+BMK PASS s1 mirrored
+BMK PASS s1 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s1 matches stage1_lock.json (stage 1 is frozen)
+BMK topo #1 loop: +39 verts — mouth: a loop through the jaw so the mouth line has an edge
+BMK topo #2 loop: +39 verts — neck: an extra loop at the tightest bend (rear-up)
+BMK PASS s2 base connectivity = lock + logged loops
+BMK PASS s2 one closed shell, no self-intersection — 1 comp, 0 open edges, 0 hits
+BMK PASS s2 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 1/1 pieces closed, 0 inside-out
+BMK PASS s2 silhouette IoU vs stage 1 > 0.9 per view — min 0.993
+BMK PASS s3 base mesh untouched by stage 3
+BMK PASS s3 lock assertion
+BMK PASS s3 4-8 region colours — 7: ['belly', 'dark', 'eye', 'fin', 'horn', 'mouth', 'scale']
+BMK PASS s3 total triangles in budget — 1308 (budget 900-2200)
+BMK PASS s3 census: no flipped normals / loose verts / zero-area faces / inside-out closed pieces — flipped 0 edges, loose 0 verts, zero-area 0 faces, 17/17 pieces closed, 0 inside-out
+BMK PASS s3 qa: no piece passes through a surface twice (hit) — 0 shells
+BMK PASS s3 qa: no floating piece — 0 shells
+BMK PASS s3 qa: no z-fighting — 0 faces
+BMK PASS s3 qa: sliver triangles <= 2.0% — 6 (0.5%)
+BMK s3 qa: turned 59 edges so folds follow the form (0 pinched folds could not be turned)
+BMK SUMMARY {"ok": true, "stage": 3, "tris": 1308, "colours": 7}
+BMK OK in 14.2s
+BMK sheet: experiments\boxmodel\r20\wyrm\rounds\s3_r01.jpg
+BMK round OK

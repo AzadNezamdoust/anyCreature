@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "mouth: a loop through the jaw so the mouth line has an edge",
+   "new_verts": 39,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "neck: an extra loop at the tightest bend (rear-up)",
+   "new_verts": 39,
+   "extra_base_edges": []
+  }
+ ]
+}
