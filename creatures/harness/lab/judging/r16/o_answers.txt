@@ -1,0 +1,20 @@
+278: kangaroo | 6 | blobby oversized hip/thigh mass, soft undefined hands and feet
+349: elephant | 3 | torn shredded feet/ears with floating sheet fragments and stray spike geometry
+373: horse | 4 | shredded open-sheet tail and torn feet/hooves, seam crack at neck
+421: frog | 3 | torn open-shell webbed feet, holes and ragged sheet fragments under body
+500: crocodile | 1 | body is a shattered shell of open patches/holes, mangled limbs and tail
+510: giraffe | 6 | noisy ossicones/ear fins, slightly lumpy tail tuft
+557: giraffe | 7 | flattened jagged tail tuft, minor surface noise
+561: frog | 6 | flat single-sided paper-thin toe plates fused with ground plane
+585: shark | 7 | pectoral fins fused to body as flat slabs, minor gill noise
+628: kangaroo | 4 | tail is flat open sheet with ragged edge; torn feet, asymmetric ears
+685: wolf | 3 | shredded fur sheets and cracks across body, torn paws
+749: crocodile | 7 | rubbery soft forms, legs read as stubby pads; tail curl odd
+752: eagle | 3 | feather layers are torn floating sheets with ragged holes, broken talons
+792: elephant | 7 | slight belly skin-fold mush, soft undefined toenails
+821: tortoise | 3 | shell and limbs shredded with cracks/open sheets, ragged claws
+822: wolf | 6 | lumpy noisy fur surface, mushy face and paw definition
+878: tortoise | 5 | thin ragged sheet artifacts under feet, lumpy rubbery legs
+881: horse | 6 | tail is stacked jagged plate layers with cracks, minor neck seam
+885: shark | 4 | tail fin duplicated/broken into perpendicular plates, extra fins
+959: eagle | 7 | feathers are soft blobby plates with layered overlap seams

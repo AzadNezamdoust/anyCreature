@@ -1,0 +1,20 @@
+278: kangaroo | 6 | hind feet and tail-base are mushy, under-defined blobs; feet silhouette fused in top view
+349: elephant | 4 | feet are ragged torn/open shards with floating slivers; tusk and ear edges shredded
+373: horse | 5 | tail is a stack of flat intersecting shards with jagged open edges, not a solid volume
+421: frog | 3 | toes are thin broken slivers with holes; front feet open hollow geometry; belly intersects legs
+500: crocodile | 2 | body is a broken hollow shell with internal shards visible; limbs and spines fragmented
+510: giraffe | 6 | neck-mane ridge is a thin detached fin; ossicones split; hooves are flat detached discs
+557: giraffe | 7 | hooves are separate floating discs; tail tip torn; horns lumpy
+561: frog | 6 | front feet are flattened sheets with intersecting toe blobs; floor of feet non-manifold slivers
+585: shark | 7 | tail fin lobes too thin and bent at wrong angle; gill-slit creases are pinched geometry
+628: kangaroo | 6 | tail is a flattened plank with open torn end; feet overlapping pancakes
+685: wolf | 5 | tail and ruff are stacked flat fur shards with jagged open edges; paws fragmented
+749: crocodile | 7 | feet fused into blob paws; scute spines low-res lumps; tail curl pinched
+752: eagle | 4 | feathers are intersecting flat open planes; talons/feet broken shards with gaps
+792: elephant | 7 | ear hangs as a thin sheet with open edge; foot pads are flat split discs
+821: turtle | 4 | shell plates are cracked open shards with visible gaps; legs lumpy with slivers
+822: wolf | 7 | head/snout too soft and bulbous; ear tips thin; paws fused low-detail stubs
+878: turtle | 7 | foot soles flat sheared with edge slivers; neck-shell seam pinched
+881: horse | 7 | tail is stacked flat shards with jagged open edges; mane crease is a hard seam
+885: shark | 5 | tail fin lobes fold at odd angles and pierce; pectoral fin intersects body; gill creases pinched
+959: eagle | 7 | top view shows stacked overlapping feather plates with gaps; tail feather tips thin open edges

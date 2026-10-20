@@ -255,3 +255,16 @@ Multi-view unposed images -> 3D (TRELLIS.2 + VGGT based). Blocked: needs gated
 DINOv3 (same as TRELLIS.2). Weights CC BY-NC 4.0 (non-commercial). Pipeline has
 low_vram mode (per-stage GPU loading), 8 GB fit untested. Details:
 harness/lab/UniForge3D_TEST.md.
+
+## Round 16 — TRELLIS.2 via trellis.cpp v0.8.1 (community GGUF, res 512) vs Hunyuan3D-2.1, untextured shape
+
+| | recognised O / F | quality O / F |
+|---|---|---|
+| **Hunyuan3D-2.1** (r9 picks) | 10 / 10 | **6.4 / 6.8** |
+| TRELLIS.2 (trellis.cpp) | 10 / 10 | 3.4 / 4.4 |
+
+Hunyuan wins clearly. TRELLIS.2 thin parts (tails, feathers, toes, shell plates,
+fur) come out as open jagged sheets; crocodile 1-2/10. Wins on cost: peak VRAM
+~3.5 GB CUDA / ~2.9 GB Vulkan (fits 8 GB without offload), ~12 s GPU, texture
+bake without nvdiffrast (MIT + DINOv3 terms). 1024 cascade untested (weights
+download stalled). Scripts: trellis_cpp/.
