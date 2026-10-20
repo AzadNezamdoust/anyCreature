@@ -1,0 +1,50 @@
+{
+ "704": {
+  "method": "base",
+  "animal": "eagle"
+ },
+ "432": {
+  "method": "base",
+  "animal": "horse"
+ },
+ "517": {
+  "method": "base",
+  "animal": "wolf"
+ },
+ "628": {
+  "method": "best",
+  "animal": "eagle"
+ },
+ "933": {
+  "method": "best",
+  "animal": "horse"
+ },
+ "844": {
+  "method": "best",
+  "animal": "wolf"
+ },
+ "639": {
+  "method": "tbase",
+  "animal": "eagle"
+ },
+ "682": {
+  "method": "tbase",
+  "animal": "horse"
+ },
+ "602": {
+  "method": "tbase",
+  "animal": "wolf"
+ },
+ "618": {
+  "method": "tbest",
+  "animal": "eagle"
+ },
+ "805": {
+  "method": "tbest",
+  "animal": "horse"
+ },
+ "231": {
+  "method": "tbest",
+  "animal": "wolf"
+ }
+}
