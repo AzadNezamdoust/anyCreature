@@ -1,0 +1,18 @@
+{
+  "theta_deg": 43.75,
+  "phi_deg": 66.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_rail_rifle.png",
+  "sha256": "6fd25bbdd07bb6889aaa6a13da131c74599b13186122983d024ed94087aac9f9",
+  "solved": "2026-10-10T22:31:08.198Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.748,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.537
+  }
+}

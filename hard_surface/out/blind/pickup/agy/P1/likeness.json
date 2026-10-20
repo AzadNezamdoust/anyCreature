@@ -1,0 +1,805 @@
+{
+  "advisories": [],
+  "rows": [
+    {
+      "v": "LK_VALUE",
+      "part": "body_side/palette",
+      "verdict": "PASS",
+      "measured": "1.014x (#8cbadc vs #8ab8d9)",
+      "limit": "0.9-1.05",
+      "hint": "the capture must show the palette hex on the populated face",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "body_front/body_side",
+      "verdict": "PASS",
+      "measured": "0.986x",
+      "limit": "0.95-1.05 (target 1 +-0.05, measured at runtime)",
+      "hint": "the return must read exactly as much darker than the front as the target's does",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "body_side",
+      "verdict": "PASS",
+      "measured": "1.01x (#8cbadc vs #8ab8d9)",
+      "limit": "0.85-1.15",
+      "hint": "zone body_side renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "body_side",
+      "verdict": "PASS",
+      "measured": "0 deg (#8cbadc vs #8ab8d9)",
+      "limit": "<= 12 deg",
+      "hint": "zone body_side renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "body_front",
+      "verdict": "PASS",
+      "measured": "1.00x (#8ab8d9 vs #8ab8d9)",
+      "limit": "0.85-1.15",
+      "hint": "zone body_front renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "body_front",
+      "verdict": "PASS",
+      "measured": "0 deg (#8ab8d9 vs #8ab8d9)",
+      "limit": "<= 12 deg",
+      "hint": "zone body_front renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "bed_inside",
+      "verdict": "PASS",
+      "measured": "1.00x (#6e96b2 vs #6e96b2)",
+      "limit": "0.85-1.15",
+      "hint": "zone bed_inside renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "bed_inside",
+      "verdict": "PASS",
+      "measured": "0 deg (#6e96b2 vs #6e96b2)",
+      "limit": "<= 12 deg",
+      "hint": "zone bed_inside renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "glass",
+      "verdict": "PASS",
+      "measured": "1.01x (#b9cae3 vs #b7c7e0)",
+      "limit": "0.85-1.15",
+      "hint": "zone glass renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "glass",
+      "verdict": "PASS",
+      "measured": "1 deg (#b9cae3 vs #b7c7e0)",
+      "limit": "<= 12 deg",
+      "hint": "zone glass renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "mirror",
+      "verdict": "PASS",
+      "measured": "1.01x (#bddff3 vs #bbdcf0)",
+      "limit": "0.85-1.15",
+      "hint": "zone mirror renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "mirror",
+      "verdict": "PASS",
+      "measured": "0 deg (#bddff3 vs #bbdcf0)",
+      "limit": "<= 12 deg",
+      "hint": "zone mirror renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "tyre",
+      "verdict": "PASS",
+      "measured": "1.00x (#5c5e5b vs #5c5e5b)",
+      "limit": "0.85-1.15",
+      "hint": "zone tyre renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "tyre",
+      "verdict": "PASS",
+      "measured": "0 deg (#5c5e5b vs #5c5e5b)",
+      "limit": "<= 12 deg",
+      "hint": "zone tyre renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "tread",
+      "verdict": "PASS",
+      "measured": "1.02x (#40403e vs #3f3f3d)",
+      "limit": "0.85-1.15",
+      "hint": "zone tread renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "tread",
+      "verdict": "PASS",
+      "measured": "0 deg (#40403e vs #3f3f3d)",
+      "limit": "<= 12 deg",
+      "hint": "zone tread renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "hub",
+      "verdict": "PASS",
+      "measured": "1.00x (#b5babe vs #b5babe)",
+      "limit": "0.85-1.15",
+      "hint": "zone hub renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "hub",
+      "verdict": "PASS",
+      "measured": "0 deg (#b5babe vs #b5babe)",
+      "limit": "<= 12 deg",
+      "hint": "zone hub renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "bumper",
+      "verdict": "PASS",
+      "measured": "1.01x (#bdc1c7 vs #bbbec4)",
+      "limit": "0.85-1.15",
+      "hint": "zone bumper renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "bumper",
+      "verdict": "PASS",
+      "measured": "4 deg (#bdc1c7 vs #bbbec4)",
+      "limit": "<= 12 deg",
+      "hint": "zone bumper renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "headlight",
+      "verdict": "FAIL",
+      "measured": "0.54x (#828282 vs #f2eba9)",
+      "limit": "0.85-1.15",
+      "hint": "zone headlight renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "headlight",
+      "verdict": "FAIL",
+      "measured": "54 deg (#828282 vs #f2eba9)",
+      "limit": "<= 12 deg",
+      "hint": "zone headlight renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VALUE",
+      "part": "grille",
+      "verdict": "PASS",
+      "measured": "1.01x (#668599 vs #658397)",
+      "limit": "0.85-1.15",
+      "hint": "zone grille renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "grille",
+      "verdict": "PASS",
+      "measured": "1 deg (#668599 vs #658397)",
+      "limit": "<= 12 deg",
+      "hint": "zone grille renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "body",
+      "verdict": "PASS",
+      "measured": "60.3% vs 65.8% (0.92x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family body covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "glass",
+      "verdict": "PASS",
+      "measured": "11.3% vs 11.6% (0.98x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family glass covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "dark",
+      "verdict": "PASS",
+      "measured": "21.4% vs 17.0% (1.26x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family dark covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "light",
+      "verdict": "PASS",
+      "measured": "7.0% vs 5.7% (1.23x)",
+      "limit": "within +-30% of the target share",
+      "hint": "family light covers the wrong share of the FRONT FACE",
+      "blocking": true
+    },
+    {
+      "v": "LK_AREA",
+      "part": "lamp",
+      "verdict": "UNVERIFIED",
+      "measured": "0.0% vs 0.0% — target share under 0.2 % of the front plane",
+      "limit": "within +-30%",
+      "hint": "family lamp is not measurable in the target's front quad",
+      "blocking": true
+    },
+    {
+      "v": "LK_OVERLAP",
+      "part": "window",
+      "verdict": "PASS",
+      "measured": "0 iron px inside 2 window rect(s)",
+      "limit": "0 px",
+      "hint": "ironwork must not cross a window opening on screen (target keeps them apart)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "wheel",
+      "verdict": "FAIL",
+      "measured": "2 of 3 instance(s) >= 50 px (11178 px total)",
+      "limit": "3 instance(s), each >= 50 px",
+      "hint": "1 wheel assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "bumper",
+      "verdict": "PASS",
+      "measured": "2 of 2 instance(s) >= 50 px (9329 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "0 bumper assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "headlight",
+      "verdict": "PASS",
+      "measured": "2 of 2 instance(s) >= 50 px (1862 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "0 headlight assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "mirror",
+      "verdict": "PASS",
+      "measured": "2 of 2 instance(s) >= 50 px (3086 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "0 mirror assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "window",
+      "verdict": "PASS",
+      "measured": "2 of 2 instance(s) >= 50 px (24256 px total)",
+      "limit": "2 instance(s), each >= 50 px",
+      "hint": "0 window assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    }
+  ],
+  "unverified": [
+    {
+      "v": "LK_AREA",
+      "part": "lamp",
+      "verdict": "UNVERIFIED",
+      "measured": "0.0% vs 0.0% — target share under 0.2 % of the front plane",
+      "limit": "within +-30%",
+      "hint": "family lamp is not measurable in the target's front quad",
+      "blocking": true
+    }
+  ],
+  "pass": false,
+  "violations": [
+    {
+      "v": "LK_VALUE",
+      "part": "headlight",
+      "measured": "0.54x (#828282 vs #f2eba9)",
+      "limit": "0.85-1.15",
+      "hint": "zone headlight renders at the wrong value",
+      "blocking": true
+    },
+    {
+      "v": "LK_HUE",
+      "part": "headlight",
+      "measured": "54 deg (#828282 vs #f2eba9)",
+      "limit": "<= 12 deg",
+      "hint": "zone headlight renders at the wrong hue",
+      "blocking": true
+    },
+    {
+      "v": "LK_VISIBLE",
+      "part": "wheel",
+      "measured": "2 of 3 instance(s) >= 50 px (11178 px total)",
+      "limit": "3 instance(s), each >= 50 px",
+      "hint": "1 wheel assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob)",
+      "blocking": true
+    }
+  ],
+  "zones": {
+    "body_side": {
+      "role": "cab",
+      "targetHex": "#8ab8d9",
+      "renderHex": "#8cbadc",
+      "targetV": 0.851,
+      "renderV": 0.863,
+      "valueRatio": 1.014,
+      "hueDelta": 0.4,
+      "targetAreaShare": 0.545,
+      "renderAreaShare": 0.2336,
+      "maskPx": 51379,
+      "rectPx": 1500,
+      "sharesRoleWith": []
+    },
+    "body_front": {
+      "role": "hood",
+      "targetHex": "#8ab8d9",
+      "renderHex": "#8ab8d9",
+      "targetV": 0.851,
+      "renderV": 0.851,
+      "valueRatio": 1,
+      "hueDelta": 0,
+      "targetAreaShare": 0,
+      "renderAreaShare": 0.2371,
+      "maskPx": 52131,
+      "rectPx": 400,
+      "sharesRoleWith": []
+    },
+    "bed_inside": {
+      "role": "bed",
+      "targetHex": "#6e96b2",
+      "renderHex": "#6e96b2",
+      "targetV": 0.698,
+      "renderV": 0.698,
+      "valueRatio": 1,
+      "hueDelta": 0,
+      "targetAreaShare": 0.1061,
+      "renderAreaShare": 0.0403,
+      "maskPx": 8867,
+      "rectPx": 520,
+      "sharesRoleWith": []
+    },
+    "glass": {
+      "role": "window",
+      "targetHex": "#b7c7e0",
+      "renderHex": "#b9cae3",
+      "targetV": 0.878,
+      "renderV": 0.89,
+      "valueRatio": 1.013,
+      "hueDelta": 0.9,
+      "targetAreaShare": 0.1231,
+      "renderAreaShare": 0.1103,
+      "maskPx": 24256,
+      "rectPx": 3600,
+      "sharesRoleWith": []
+    },
+    "mirror": {
+      "role": "mirror",
+      "targetHex": "#bbdcf0",
+      "renderHex": "#bddff3",
+      "targetV": 0.941,
+      "renderV": 0.953,
+      "valueRatio": 1.013,
+      "hueDelta": 0.4,
+      "targetAreaShare": 0.0154,
+      "renderAreaShare": 0.014,
+      "maskPx": 3086,
+      "rectPx": 840,
+      "sharesRoleWith": []
+    },
+    "tyre": {
+      "role": "wheel",
+      "targetHex": "#5c5e5b",
+      "renderHex": "#5c5e5b",
+      "targetV": 0.369,
+      "renderV": 0.369,
+      "valueRatio": 1,
+      "hueDelta": 0,
+      "targetAreaShare": 0.0687,
+      "renderAreaShare": 0.0508,
+      "maskPx": 11178,
+      "rectPx": 60,
+      "sharesRoleWith": []
+    },
+    "tread": {
+      "role": "tyre",
+      "targetHex": "#3f3f3d",
+      "renderHex": "#40403e",
+      "targetV": 0.247,
+      "renderV": 0.251,
+      "valueRatio": 1.016,
+      "hueDelta": 0,
+      "targetAreaShare": 0.032,
+      "renderAreaShare": 0.0197,
+      "maskPx": 4324,
+      "rectPx": 60,
+      "sharesRoleWith": []
+    },
+    "hub": {
+      "role": "hub",
+      "targetHex": "#b5babe",
+      "renderHex": "#b5babe",
+      "targetV": 0.745,
+      "renderV": 0.745,
+      "valueRatio": 1,
+      "hueDelta": 0,
+      "targetAreaShare": 0.0246,
+      "renderAreaShare": 0.0361,
+      "maskPx": 7931,
+      "rectPx": 72,
+      "sharesRoleWith": []
+    },
+    "bumper": {
+      "role": "bumper",
+      "targetHex": "#bbbec4",
+      "renderHex": "#bdc1c7",
+      "targetV": 0.769,
+      "renderV": 0.78,
+      "valueRatio": 1.015,
+      "hueDelta": 4,
+      "targetAreaShare": 0.0564,
+      "renderAreaShare": 0.0424,
+      "maskPx": 9329,
+      "rectPx": 100,
+      "sharesRoleWith": []
+    },
+    "headlight": {
+      "role": "headlight",
+      "targetHex": "#f2eba9",
+      "renderHex": "#828282",
+      "targetV": 0.949,
+      "renderV": 0.51,
+      "valueRatio": 0.537,
+      "hueDelta": 54.2,
+      "targetAreaShare": 0.0077,
+      "renderAreaShare": 0.0085,
+      "maskPx": 1862,
+      "rectPx": 452,
+      "sharesRoleWith": []
+    },
+    "grille": {
+      "role": "grille",
+      "targetHex": "#658397",
+      "renderHex": "#668599",
+      "targetV": 0.592,
+      "renderV": 0.6,
+      "valueRatio": 1.013,
+      "hueDelta": 0.5,
+      "targetAreaShare": 0.0209,
+      "renderAreaShare": 0.0168,
+      "maskPx": 3702,
+      "rectPx": 120,
+      "sharesRoleWith": []
+    }
+  },
+  "faces": {
+    "frontHex": "#8cbadc",
+    "sideHex": "#8ab8d9",
+    "frontVsPalette": 1.014,
+    "targetSideOverFront": 1,
+    "sideOverFrontBand": [
+      0.95,
+      1.05
+    ],
+    "sideOverFront": 0.986
+  },
+  "areas": {
+    "targetByRole": {
+      "cab": 179052,
+      "hood": 0,
+      "bed": 34844,
+      "window": 40439,
+      "mirror": 5070,
+      "wheel": 22582,
+      "tyre": 10510,
+      "hub": 8097,
+      "bumper": 18527,
+      "headlight": 2537,
+      "grille": 6865
+    },
+    "targetRoleTotal": 328523,
+    "renderByRole": {
+      "chassis": 11984,
+      "cab": 51379,
+      "hood": 52131,
+      "bed": 8867,
+      "bed_wall": 18050,
+      "tailgate": 11831,
+      "wheel": 11178,
+      "tyre": 4324,
+      "hub": 7931,
+      "bumper": 9329,
+      "headlight": 1862,
+      "grille": 3702,
+      "window": 24256,
+      "mirror": 3086
+    },
+    "renderTotal": 219910
+  },
+  "areaFamilies": {
+    "target": {
+      "counts": {
+        "body": 126465,
+        "glass": 22232,
+        "dark": 32669,
+        "light": 10906,
+        "lamp": 0
+      },
+      "share": {
+        "body": 0.6577400765582092,
+        "glass": 0.11562786053091453,
+        "dark": 0.1699103353582425,
+        "light": 0.05672172755263377,
+        "lamp": 0
+      },
+      "total": 192272,
+      "quad": [
+        [
+          339.6,
+          479.9
+        ],
+        [
+          952.7,
+          177.5
+        ],
+        [
+          952.7,
+          591.8
+        ],
+        [
+          339.6,
+          894.2
+        ]
+      ],
+      "inside": 253963,
+      "classified": 192272,
+      "provenance": "subjects/pickup/layout.measured.json (measured face quad)",
+      "measuredQuad": true
+    },
+    "render": {
+      "counts": {
+        "body": 78757,
+        "glass": 14765,
+        "dark": 27896,
+        "light": 9127,
+        "lamp": 0
+      },
+      "share": {
+        "body": 0.6032938833352484,
+        "glass": 0.11310276149986595,
+        "dark": 0.21368876632578804,
+        "light": 0.06991458883909762,
+        "lamp": 0
+      },
+      "total": 130545,
+      "quad": [
+        [
+          307.1,
+          454.84
+        ],
+        [
+          795.45,
+          213.94
+        ],
+        [
+          795.45,
+          543.75
+        ],
+        [
+          307.1,
+          784.65
+        ]
+      ],
+      "inside": 160951,
+      "classified": 130545,
+      "provenance": "capture manifest frontQuad",
+      "measuredQuad": true
+    },
+    "rows": {
+      "body": {
+        "tShare": 0.6577,
+        "rShare": 0.6033,
+        "ratio": 0.917,
+        "verdict": "PASS"
+      },
+      "glass": {
+        "tShare": 0.1156,
+        "rShare": 0.1131,
+        "ratio": 0.978,
+        "verdict": "PASS"
+      },
+      "dark": {
+        "tShare": 0.1699,
+        "rShare": 0.2137,
+        "ratio": 1.258,
+        "verdict": "PASS"
+      },
+      "light": {
+        "tShare": 0.0567,
+        "rShare": 0.0699,
+        "ratio": 1.233,
+        "verdict": "PASS"
+      },
+      "lamp": {
+        "tShare": 0,
+        "rShare": 0,
+        "ratio": null,
+        "verdict": "UNVERIFIED"
+      }
+    }
+  },
+  "quads": {
+    "target": {
+      "px": [
+        [
+          339.6,
+          479.9
+        ],
+        [
+          952.7,
+          177.5
+        ],
+        [
+          952.7,
+          591.8
+        ],
+        [
+          339.6,
+          894.2
+        ]
+      ],
+      "measured": true,
+      "provenance": "subjects/pickup/layout.measured.json (measured face quad)"
+    },
+    "render": {
+      "axis": "+x",
+      "px": [
+        [
+          307.1,
+          454.84
+        ],
+        [
+          795.45,
+          213.94
+        ],
+        [
+          795.45,
+          543.75
+        ],
+        [
+          307.1,
+          784.65
+        ]
+      ],
+      "world": [
+        [
+          0.989,
+          2.621,
+          2.4
+        ],
+        [
+          0.989,
+          2.621,
+          -2.4
+        ],
+        [
+          0.989,
+          0,
+          -2.4
+        ],
+        [
+          0.989,
+          0,
+          2.4
+        ]
+      ],
+      "bbox": {
+        "x0": 307.1,
+        "y0": 213.94,
+        "x1": 795.45,
+        "y1": 784.65
+      },
+      "source": "16 massing part(s)"
+    }
+  },
+  "windows": 2,
+  "overlapPx": 0,
+  "visible": {
+    "wheel": {
+      "px": 11178,
+      "instances": 2,
+      "expected": 3,
+      "componentPx": [
+        5584,
+        5582
+      ]
+    },
+    "bumper": {
+      "px": 9329,
+      "instances": 2,
+      "expected": 2,
+      "componentPx": [
+        7984,
+        1337
+      ]
+    },
+    "headlight": {
+      "px": 1862,
+      "instances": 2,
+      "expected": 2,
+      "componentPx": [
+        931,
+        931
+      ]
+    },
+    "mirror": {
+      "px": 3086,
+      "instances": 2,
+      "expected": 2,
+      "componentPx": [
+        1559,
+        1527
+      ]
+    },
+    "window": {
+      "px": 24256,
+      "instances": 2,
+      "expected": 2,
+      "componentPx": [
+        17661,
+        6595
+      ]
+    }
+  },
+  "text": "FAIL: 3 likeness row(s) [LK_VALUE, LK_HUE, LK_VISIBLE].\n- LK_VALUE headlight: zone headlight renders at the wrong value (measured 0.54x (#828282 vs #f2eba9), limit 0.85-1.15)\n- LK_HUE headlight: zone headlight renders at the wrong hue (measured 54 deg (#828282 vs #f2eba9), limit <= 12 deg)\n- LK_VISIBLE wheel: 1 wheel assembly/assemblies the census counts cannot be seen at the solved camera (hidden behind another part, or merged into one blob) (measured 2 of 3 instance(s) >= 50 px (11178 px total), limit 3 instance(s), each >= 50 px)\n- UNVERIFIED LK_AREA lamp: 0.0% vs 0.0% — target share under 0.2 % of the front plane",
+  "pass_label": "P1",
+  "inputs": {
+    "target": "refs/pickup_truck.png",
+    "still": "out/pickup/P1/attempt-2/target.png",
+    "idpass": "out/pickup/P1/attempt-2/idpass.png",
+    "regions": "subjects/pickup/regions.json",
+    "census": "subjects/pickup/census.json",
+    "measuredLayout": "subjects/pickup/layout.measured.json",
+    "targetQuad": "subjects/pickup/layout.measured.json (measured face quad)",
+    "renderQuad": "capture manifest frontQuad"
+  }
+}

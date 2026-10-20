@@ -1,0 +1,262 @@
+{
+  "subject": "school_bus",
+  "module": "out/v6/bus-start.mjs",
+  "out": "out/v6/B.mjs",
+  "views": {
+    "concept": 2,
+    "side": 1,
+    "front": 1,
+    "rear": 1,
+    "top": 1
+  },
+  "size": 256,
+  "stages": [
+    {
+      "stage": "body",
+      "knobs": [
+        "L",
+        "W",
+        "H",
+        "capDrop",
+        "capRun",
+        "chamfer",
+        "sillY",
+        "wheelR",
+        "axleF",
+        "axleR",
+        "roofR",
+        "capR",
+        "bumperFTop",
+        "bumperFH",
+        "bumperRTop",
+        "bumperRH",
+        "frameScale",
+        "frameX",
+        "frameY"
+      ],
+      "evals": 320,
+      "accepted": 125,
+      "start": {
+        "score": 0.7277,
+        "views": {
+          "side": {
+            "iou": 0.5682,
+            "zone": 0.0703,
+            "fam": {
+              "black": 0.0824,
+              "glass": 0.1286,
+              "red": 0
+            }
+          },
+          "front": {
+            "iou": 0.6122,
+            "zone": 0.1179,
+            "fam": {
+              "black": 0.1247,
+              "glass": 0.2291,
+              "red": 0
+            }
+          },
+          "rear": {
+            "iou": 0.5975,
+            "zone": 0.1475,
+            "fam": {
+              "black": 0.3246,
+              "glass": 0.1178,
+              "red": 0
+            }
+          },
+          "top": {
+            "iou": 0.708,
+            "zone": 0.0003,
+            "fam": {
+              "black": 0.001,
+              "glass": 0,
+              "red": 0
+            }
+          },
+          "concept": {
+            "iou": 0.9401
+          }
+        }
+      },
+      "end": {
+        "score": 0.9564,
+        "views": {
+          "side": {
+            "iou": 0.9631,
+            "zone": 0.7795,
+            "fam": {
+              "black": 0.7011,
+              "glass": 0.9098,
+              "red": 0.7277
+            }
+          },
+          "front": {
+            "iou": 0.9611,
+            "zone": 0.7408,
+            "fam": {
+              "black": 0.5956,
+              "glass": 0.96,
+              "red": 0.6667
+            }
+          },
+          "rear": {
+            "iou": 0.9246,
+            "zone": 0.7402,
+            "fam": {
+              "black": 0.7296,
+              "glass": 0.9524,
+              "red": 0.5385
+            }
+          },
+          "top": {
+            "iou": 0.9675,
+            "zone": 0.6,
+            "fam": {
+              "black": 0.5499,
+              "glass": 1,
+              "red": 0.25
+            }
+          },
+          "concept": {
+            "iou": 0.961
+          }
+        }
+      }
+    },
+    {
+      "stage": "feature",
+      "knobs": [
+        "wsY0",
+        "wsY1",
+        "bandY0",
+        "bandY1",
+        "paneY0",
+        "paneY1",
+        "paneFront",
+        "panePitch"
+      ],
+      "evals": 83,
+      "accepted": 9,
+      "start": {
+        "score": 1.4331,
+        "views": {
+          "side": {
+            "iou": 0.9631,
+            "zone": 0.7795,
+            "fam": {
+              "black": 0.7011,
+              "glass": 0.9098,
+              "red": 0.7277
+            }
+          },
+          "front": {
+            "iou": 0.9611,
+            "zone": 0.7408,
+            "fam": {
+              "black": 0.5956,
+              "glass": 0.96,
+              "red": 0.6667
+            }
+          },
+          "rear": {
+            "iou": 0.9246,
+            "zone": 0.7402,
+            "fam": {
+              "black": 0.7296,
+              "glass": 0.9524,
+              "red": 0.5385
+            }
+          },
+          "top": {
+            "iou": 0.9675,
+            "zone": 0.6,
+            "fam": {
+              "black": 0.5499,
+              "glass": 1,
+              "red": 0.25
+            }
+          },
+          "concept": {
+            "iou": 0.961
+          }
+        }
+      },
+      "end": {
+        "score": 1.4479,
+        "views": {
+          "side": {
+            "iou": 0.9631,
+            "zone": 0.8416,
+            "fam": {
+              "black": 0.769,
+              "glass": 0.9753,
+              "red": 0.7804
+            }
+          },
+          "front": {
+            "iou": 0.9614,
+            "zone": 0.7655,
+            "fam": {
+              "black": 0.6201,
+              "glass": 1,
+              "red": 0.6765
+            }
+          },
+          "rear": {
+            "iou": 0.9249,
+            "zone": 0.7414,
+            "fam": {
+              "black": 0.7296,
+              "glass": 0.9524,
+              "red": 0.5423
+            }
+          },
+          "top": {
+            "iou": 0.9675,
+            "zone": 0.6,
+            "fam": {
+              "black": 0.5499,
+              "glass": 1,
+              "red": 0.25
+            }
+          },
+          "concept": {
+            "iou": 0.961
+          }
+        }
+      }
+    }
+  ],
+  "knobs": {
+    "L": 6.2633,
+    "W": 2.4408,
+    "H": 2.7848,
+    "capDrop": 0.1146,
+    "capRun": 0.1071,
+    "chamfer": 0.1395,
+    "sillY": 0.3528,
+    "wheelR": 0.5293,
+    "axleF": 1.0227,
+    "axleR": 1.3562,
+    "roofR": 0.1575,
+    "capR": 0.34,
+    "bumperFTop": 0.5079,
+    "bumperFH": 0.2436,
+    "bumperRTop": 0.7203,
+    "bumperRH": 0.3791,
+    "frameScale": 0.801,
+    "frameX": -28.35,
+    "frameY": 25.35,
+    "wsY0": 0.5321,
+    "wsY1": 0.7995,
+    "bandY0": 0.5473,
+    "bandY1": 0.871,
+    "paneY0": 0.586,
+    "paneY1": 0.833,
+    "paneFront": 0.1141,
+    "panePitch": 0.1223
+  },
+  "ms": 237578
+}

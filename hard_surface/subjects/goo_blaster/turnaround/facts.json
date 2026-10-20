@@ -1,0 +1,36 @@
+{
+  "subject": "goo_blaster",
+  "noun": "toy goo gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/goo_blaster.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/goo_blaster.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours)",
+  "description": "A fictional cartoon science-fiction toy goo-squirter gadget, a chunky toy-like game prop (not a real object, no working parts). A short wide off-white body shaped like a rounded bean lying on its side. At the front a very wide short mid grey round tube with a thick rolled bright green rim round its open end and a dark centre. Standing upright on top of the body, in a mid grey collar, a tall clear glass jar filled flat bright slime green, with a flat mid grey ribbed screw lid. Two riveted mid grey bands wrap the body, one in front of the jar and one behind it, each with a row of round rivets. Under the front of the body a round flat mid grey pump knob on a short horizontal grey rod pointing forward. Behind it, under the rear half of the body, a chunky dark purple handle raked backward, with a bright yellow curved finger lever inside a rounded mid grey loop in front of the handle. At the rear the body ends in a round off-white stepped cap with a mid grey ring and a bright yellow round button in its centre. A bright yellow crank handle is on the right flank of the body.",
+  "proportions": "About 0.48 m long, 0.18 m wide and 0.38 m tall. (length : width : height = 2.67 : 1 : 2.11)",
+  "sides": "the bright yellow crank handle is on the right flank only; the left flank has none; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 1.26 times as long as it is tall",
+    "front": "in this view its width is 0.47 of its height",
+    "rear": "in this view its width is 0.47 of its height",
+    "top": "in this view it is 2.67 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the wide grey tube exactly horizontal with its green rim at the left end of the image, the off-white bean body in the middle with the two riveted grey bands, the tall green jar with its grey lid standing on top between the bands, the stepped rear cap with the yellow button at the right end of the image; the grey pump knob on its rod sits low under the front of the body, pointing left; the dark purple handle hangs below the rear half, raked toward the right, with the yellow finger lever and grey loop in front of it.",
+    "front": "Seen from the front end: the thick green rim as a full ring in the middle with the dark round opening inside it, the round off-white body outline with a grey band just around it, the green jar with its grey lid standing above on the centre line, the round grey pump knob as a disc below the ring on the centre line, the grey loop and dark purple handle hanging below on the centre line.",
+    "rear": "Seen from the rear end: the round off-white rear cap with the grey ring and the yellow button in its centre, the round body outline with a grey band around it, the green jar with its grey lid standing above on the centre line, the dark purple handle hanging below on the centre line and hiding the finger lever.",
+    "top": "Seen from above: the green rim and grey tube at the left end, the off-white body with the two grey bands across it, the round grey jar lid as a big circle on the centre line between the bands, the stepped rear cap and yellow button at the right end; the handle and the pump knob are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the bright yellow crank handle",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.48,
+    "W": 0.18,
+    "H": 0.38,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

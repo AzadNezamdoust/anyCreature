@@ -1,0 +1,59 @@
+{
+  "id": "main_battle_tank",
+  "class": "vehicle",
+  "title": "RTS-style main battle tank (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/main_battle_tank.v2.png",
+    "camera": "subjects/main_battle_tank/camera.json",
+    "layoutMeasured": "subjects/main_battle_tank/layout.measured.json"
+  },
+  "outDir": "out/main_battle_tank",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 14,
+        "axles": 7,
+        "diameters": "equal",
+        "running": "tracks"
+      },
+      "evidence": "concept refs/main_battle_tank.v2.png + side turnaround: a tracked tank, seven equal road wheels per side (14 on 7 stations) under full-length segmented tracks, no side skirt"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "turret",
+          "gun",
+          "mantlet",
+          "cupola",
+          "hatch",
+          "machine_gun",
+          "smoke_launcher",
+          "sprocket",
+          "idler",
+          "return_roller",
+          "track_guard",
+          "engine_grille",
+          "tow_hook"
+        ]
+      },
+      "evidence": "the concept draws a turret with a mantlet and main gun, a round commander's cupola + pintle machine gun (roof right half), a loader's hatch, four-tube smoke launchers per turret corner, sprocket (rear), idler (front), three return rollers, track guard shelves, two engine-deck grille boxes, tow hooks (refs/main_battle_tank.v2.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "metal",
+          "track"
+        ]
+      },
+      "evidence": "the concept paints the gun barrel, mantlet, MG, smoke launchers, tow hooks, headlight guards (metal) and the tracks, road wheels, rollers, sprocket, idler (track) one dark gunmetal grey (views.json families.metal #444446 / #32332f), the hull olive (body)"
+    }
+  }
+}

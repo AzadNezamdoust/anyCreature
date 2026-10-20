@@ -1,0 +1,188 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&subject=pickup&seed=1&size=900&module=out%2Fref%2Fwork%2Fpickup.mjs&view=target&idpass=1",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-25T22:40:51.422Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 3844,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 2.66976,
+      "h": 2.52121,
+      "d": 5.06,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          315.69,
+          460.9
+        ],
+        [
+          795.22,
+          224.35
+        ],
+        [
+          795.22,
+          535.89
+        ],
+        [
+          315.69,
+          772.44
+        ]
+      ],
+      "world": [
+        [
+          1.019,
+          2.521,
+          2.4
+        ],
+        [
+          1.019,
+          2.521,
+          -2.4
+        ],
+        [
+          1.019,
+          0,
+          -2.4
+        ],
+        [
+          1.019,
+          0,
+          2.4
+        ]
+      ],
+      "bbox": {
+        "x0": 315.69,
+        "y0": 224.35,
+        "x1": 795.22,
+        "y1": 772.44
+      },
+      "source": "26 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          110.77,
+          361.15
+        ],
+        [
+          315.69,
+          460.9
+        ],
+        [
+          315.69,
+          772.44
+        ],
+        [
+          110.77,
+          672.69
+        ]
+      ],
+      "world": [
+        [
+          -1.019,
+          2.521,
+          2.4
+        ],
+        [
+          1.019,
+          2.521,
+          2.4
+        ],
+        [
+          1.019,
+          0,
+          2.4
+        ],
+        [
+          -1.019,
+          0,
+          2.4
+        ]
+      ],
+      "bbox": {
+        "x0": 110.77,
+        "y0": 361.15,
+        "x1": 315.69,
+        "y1": 772.44
+      },
+      "source": "26 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -1.019,
+        0,
+        -2.4
+      ],
+      "max": [
+        1.019,
+        2.521,
+        2.4
+      ]
+    },
+    "subject": "pickup",
+    "view": "target",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:a299569c",
+    "dslVersion": "pg/1",
+    "validatorPass": true,
+    "frontRotationDeg": 0,
+    "lit": false,
+    "idpass": true,
+    "idColours": {
+      "chassis": "#ff0000",
+      "body": "#00ff00",
+      "cab": "#0000ff",
+      "hood": "#ffff00",
+      "bed": "#ff00ff",
+      "bed_wall": "#00ffff",
+      "tailgate": "#ff8000",
+      "wheel": "#8000ff",
+      "tyre": "#00ff80",
+      "hub": "#ff0080",
+      "axle": "#80ff00",
+      "bumper": "#0080ff",
+      "headlight": "#804000",
+      "grille": "#408000",
+      "window": "#004080",
+      "mirror": "#800040",
+      "prop": "#c0c0c0"
+    },
+    "palette": {
+      "body": "#8ab8d9",
+      "bed": "#6d96b2",
+      "glass": "#b7c7e0",
+      "mirror": "#bbdcf0",
+      "tyre": "#5c5e5b",
+      "hub": "#b5babe",
+      "bumper": "#bcbfc5",
+      "lamp": "#f2eba9",
+      "grille": "#668296",
+      "tread": "#3f3f3d"
+    },
+    "violationCount": 0,
+    "violations": "PASS: V0-V7 + V10 clean.",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "ortho:theta29.342:phi44.8092"
+  },
+  "bytes": 18337
+}

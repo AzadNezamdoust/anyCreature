@@ -1,0 +1,1 @@
+# v7 CRITIC — moved (WF v8, 2026-09-27): the role text is `D:\Git\checkout\.claude\agents\gold-critic-fable.md` / `gold-critic-opus.md` (pinned seats, blind, in parallel, launched only with a `node scripts/v7/gold.mjs brief --role critic --seat fable|opus` brief; output per scripts/v7/critique.schema.json).

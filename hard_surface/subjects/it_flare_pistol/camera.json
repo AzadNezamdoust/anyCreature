@@ -1,0 +1,18 @@
+{
+  "theta_deg": 16.5,
+  "phi_deg": 70.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_flare_pistol.png",
+  "sha256": "e0bca2ebae03d812cfb9da82b804745e387c68a4e6fa8b81a52f82369a5a3ccc",
+  "solved": "2026-10-11T10:04:57.357Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.85,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.521
+  }
+}

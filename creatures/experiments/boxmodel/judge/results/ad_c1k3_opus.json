@@ -1,0 +1,58 @@
+{
+ "bear": {
+  "X": {"score": 6, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090/back34: hind legs are one brown slab with no dark lower-leg band and no hock, so the rear reads as a block next to the dark front legs",
+    "1_beauty az000 + 2_closeups head: pale muzzle spills up the whole face to the brow in a long wedge; reference has a short pale muzzle block with brown forehead, so the face reads more dog than bear",
+    "1_beauty az090: hump is weak and back is near-level; reference has the shoulder hump clearly highest with head carried lower"],
+   "strengths": ["Heavy, thick-legged mass and plantigrade paws with dark claw rows read as a bear at a glance (1_beauty hero)", "Round ears and small dark eyes sit well; front view proportions close to reference"]},
+  "Y": {"score": 5, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090/back34: legs are long and thin with flat plate feet, the bear stands tall and spidery instead of heavy; reference legs are thick columns",
+    "2_closeups hind limb: hind paw is a flat wedge with claws as a tiny comb on the edge; claws barely read and toes are absent",
+    "1_beauty hero/az000: dark hood shading and boxy pale muzzle make a blocky, hippo-like face; ears small knobs"],
+   "strengths": ["Shoulder hump is the highest point and the back slopes down to the rump as the reference does (1_beauty az090)", "Black nose pad and pale muzzle block read clearly from the front"]},
+  "better": "X", "why": "X has the heavy thick-legged bear mass and readable paws; Y's long thin legs and plate feet lose the weight that defines a bear."},
+ "giant": {
+  "X": {"score": 6, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090/back34: legs are hidden and fused into the torso mass, from the side the giant has no readable thighs or feet, unlike the reference's short thick legs and big flat feet",
+    "2_closeups hind limb: foot is a flat dark slab with block toes sticking out like a shelf; reads as a placeholder",
+    "1_beauty az090: loincloth flap at the back hangs as a thin plate standing off the body"],
+   "strengths": ["Face is the strongest part: heavy brow, deep-set amber eyes, nose and cream tusks from the lower jaw read at thumbnail (1_beauty az000, 2_closeups head)", "Moss mantle draped over the shoulder hump with bedded stones matches the reference's identity cue"]},
+  "Y": {"score": 4, "verdict": "FIX",
+   "top_issues": [
+    "2_closeups head + 1_beauty az000: amber eyes are yellow wedge chips stuck on the outside of the brow, and the mouth is a dark gaping triangular pit; the face reads broken, not menacing",
+    "1_beauty az000: chest ends in a flat horizontal shelf over the belly, a machine-like box step with no pot belly",
+    "1_beauty hero/back34: moss is a few flat green leaf plates rather than a draped mantle; reads as stickers"],
+   "strengths": ["Long arms to the knees with separate fingers and nails match the silhouette cue (1_beauty az000)", "Big dark feet with stone toenails are visible and read as flat feet"]},
+  "better": "X", "why": "X's face and moss mantle sell a mountain troll; Y's glued-on eye chips and pit mouth break the face, the owner's first look."},
+ "goblin": {
+  "X": {"score": 4, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty hero/back34 + 4_posed: head is a box helmet with the face hanging under a visor, cranium and face read as two parts; no domed head",
+    "2_closeups fangs: nose is a long thin blade drooping past the chin and the fangs are separate needles stuck in the lip; face is uncanny, not a grin",
+    "1_beauty az000: torso is a narrow wedge with a glossy light-green chest panel, no pot belly; ears are flat thin plates"],
+   "strengths": ["Long thin arms and crouched skinny legs match the reference's limb proportion (1_beauty az090)", "Belt with chunky buckle and tattered loincloth read clearly"]},
+  "Y": {"score": 6, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090: near ear points up and back like a horn instead of horizontal; reference ears are long and level",
+    "1_beauty az000/hero: body and legs are chunky and short, losing the thin-limbed crouched look; arms read thick",
+    "1_beauty back34/az090: loincloth back flap bulges out as a big pouch off the rump"],
+   "strengths": ["Big domed head with hooked nose, heavy brow, yellow eyes and a wide fanged grin reads as goblin and has appeal (1_beauty az000, 2_closeups fangs)", "Light belly panel and three-toed clawed feet match the brief"]},
+  "better": "Y", "why": "Y has a coherent domed head and a readable grinning goblin face; X's visor head and drooping blade nose fail the face."},
+ "wolf": {
+  "X": {"score": 6, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az090/hero: neck ruff is a few scattered thin shards on the shoulder; reference ruff is a full thick mane framing the face",
+    "1_beauty az090: torso is a straight box with no chest depth or tuck-up; legs are constant-section tubes",
+    "4_posed attack_f016: head folds into the neck in the lunge, ears and ruff collapse into the face"],
+   "strengths": ["Clean wolf silhouette: wedge head, tall ears, long legs, low brush tail with dark tip (1_beauty az090)", "Palette and saddle/bib/tan-leg placement follow the reference"]},
+  "Y": {"score": 4, "verdict": "FIX",
+   "top_issues": [
+    "1_beauty az000 + 2_closeups ruff: ruff and chest are a pile of paper-thin triangular cards sticking out at all angles; front view is a white wall of shards",
+    "1_beauty az090/back34: tail is a huge drooping slab reaching the ground, and legs are short thick posts; wolf reads squat",
+    "2_closeups hind limb: shard cards on the thigh and tail stand off the surface as floating planes"],
+   "strengths": ["Ruff mass at least frames the head as the reference does (1_beauty hero)", "Dark saddle and cream belly stripe placement read well from the side"]},
+  "better": "X", "why": "X keeps the clean long-legged wolf silhouette; Y's ruff of loose shard cards and slab tail look broken up close."}
+}

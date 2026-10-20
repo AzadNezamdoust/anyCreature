@@ -1,0 +1,92 @@
+{
+  "bear": {
+    "X": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090: colour is muddy and desaturated grey-brown, fur and dark legs sit too close in value, nothing of the concept's warm brown; facets barely read",
+        "2_closeups front limb + claws: chest/armpit is a pile of pinched creased folds and slivers, legs are short lumpy stumps with no wrist or paw design, claws are tiny needles (scan-like, not a designed cage)",
+        "1_beauty az000: head peaks into a pointed triangular skull with small ears pushed to the sides, eyes are black beads stuck on the muzzle edge; face lacks brow and the broad dished read of the concept"
+      ],
+      "strengths": [
+        "1_beauty az090: heavy body with the shoulder hump as highest point and low-carried head, good bear mass",
+        "4_posed attack_f010/f020: open-jaw lunge reads, body holds volume"
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090 + 4_posed all frames: a faceted lump sits between cheek and shoulder under the ear, reads as a growth, not anatomy; breaks the head-neck silhouette",
+        "2_closeups front/hind limb wire: lower legs are stacks of uniform horizontal ring bands with a hard straight colour border and a stepped cuff above the paw (machine tell)",
+        "1_beauty az090: head is small and cub-like against the body and the hump is shallower than the concept; reads young bear rather than heavy grizzly"
+      ],
+      "strengths": [
+        "1_beauty hero: clean large planes, warm brown/dark leg/cream muzzle palette close to concept, facets read",
+        "2_closeups front limb: designed plantigrade paws with separate toes and bold dark claws; brow-and-amber eye gives expression"
+      ]
+    },
+    "better": "Y",
+    "why": "Y has designed planes, concept-true colour and real paws and face; X has good mass but is muddy, creased and scan-like in close-up."
+  },
+  "goblin": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000: ears are extremely long thin needle cones, nearly head-width each, no broad leaf shape or cupped inner ear as in concept; they read as spikes",
+        "1_beauty az000/az090: limbs are thick and stubby with mitten-like blocky hands and short legs, not the thin wiry arms-to-knees limbs of the concept; stance is upright, barely crouched",
+        "2_closeups belt: loincloth is a comb of identical parallel slats, buckle is a flat pale square frame floating proud of the belt; eye is a hexagon in a heavy black frame"
+      ],
+      "strengths": [
+        "1_beauty hero: reads goblin at a glance, big domed head, heavy brow, hooked nose, fanged dark mouth, pot belly over belt",
+        "4_posed attack_f017: clear claw swipe, clean deformation at shoulder and elbow"
+      ]
+    },
+    "Y": {
+      "score": 4,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090: face has no brow at all, flat yellow almond eyes pasted on a smooth dome, nose is a flat duck-bill wedge not a hooked nose; reads lizard/bird, the head top is cut flat (2_closeups head wire shows a ring cap)",
+        "2_closeups hind limb + 1_beauty az090: legs are thin bent shards with pinched twisted facets and flat flipper feet, a green lump hangs below the loincloth between the legs; lower body is unreadable",
+        "1_beauty az090/back34: belt floats off the back as a separate strap with a visible gap, and oversized white claws on hands and feet are out of scale and off palette"
+      ],
+      "strengths": [
+        "1_beauty az000: thin arms reaching the knees with separated clawed fingers, closer to concept limb proportion",
+        "1_beauty az000: wide toothy grin and broader ear cones read from the front"
+      ]
+    },
+    "better": "X",
+    "why": "X has a constructed goblin face and solid clean forms; Y's browless beak face, broken legs and floating belt fail in close-up."
+  },
+  "wolf": {
+    "X": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head + ruff, 1_beauty hero: ruff is a scatter of identical triangular spikes glued onto neck, cheeks and nape, intersecting each other and the ears; reads as confetti, not clumps",
+        "1_beauty hero/az090: values are washed out, grey/cream/saddle nearly merge and the body surface is a noisy mesh of small irregular triangles; no clear primary planes",
+        "2_closeups hind limb + 1_beauty az090: tail is a ragged mass of spike shards fused to the hindquarter with no dark tip block, hind legs are thin straight sticks with tiny paws and no hock"
+      ],
+      "strengths": [
+        "1_beauty az090: true wolf proportions, long legs, level head, deep chest with tuck-up, long wedge muzzle",
+        "2_closeups head: long muzzle with mouth line and nose pad reads canine"
+      ]
+    },
+    "Y": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090: proportions are toy-like, oversized head and huge ears on short thick legs; reads fox or corgi pup, not the long-legged wolf of the concept",
+        "2_closeups front limb/toes: legs are blocky columns with a stepped ankle cuff and oversized splayed toe blocks with large black claws; no taper, no oval paw",
+        "1_beauty az090/back34: ruff at the nape is a couple of rounded blobs behind the ears rather than a thick clumped mane, and the flank colour blocks cut as hard rectangles (cream patch on the thigh)"
+      ],
+      "strengths": [
+        "1_beauty hero: clean bold planes and strong value structure, dark saddle, cream bib, tan legs, dark tail tip all read at thumbnail size",
+        "2_closeups head: designed wedge head with brow over amber eye, dark-backed ears with tan inner; 4_posed attack_f017 is a readable lunge"
+      ]
+    },
+    "better": "Y",
+    "why": "Y looks like a designed low-poly asset with clear planes and colour blocking despite toy proportions; X has the right wolf build but is buried in spike noise and washed-out values."
+  }
+}

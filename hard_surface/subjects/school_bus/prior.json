@@ -1,0 +1,29 @@
+{
+  "_comment": "WF-V6 V6-1 item 2 — PRIOR CARD for the school bus: real-world dimensions (soft plausibility only; the turnaround wins) + the STYLISATION ratio measured off subjects/school_bus/turnaround (scripts/v6/bus-experiment.mjs re-measures it and reports it). Anchor: the body width W is the one real dimension kept (it fixes the metric scale of the orthos); every other body dimension comes from the turnaround.",
+  "class": "vehicle",
+  "real": {
+    "source": "North American school bus Type C / Type D (Blue Bird Vision / All American published specs, rounded)",
+    "W": 2.44,
+    "H": [3.1, 3.3],
+    "L": [7.8, 12.7],
+    "wheelD": [0.98, 1.06],
+    "wheelbaseOverL": [0.47, 0.6],
+    "LoverW": [3.2, 5.2],
+    "HoverW": [1.27, 1.35]
+  },
+  "anchor": { "dim": "W", "m": 2.44, "why": "road-legal width: the one proportion a stylised bus keeps; fixes px/m of the turnaround" },
+  "stylisation": {
+    "_comment": "measured on the turnaround (body paint spans; H = overall incl. wheels): the concept is a deliberately CHIBI bus",
+    "LoverW": 2.56,
+    "HoverW": 1.14,
+    "wheelDoverH": 0.35,
+    "wheelbaseOverL": 0.63
+  },
+  "softRanges": {
+    "_comment": "FIT knob ranges (m) = the stylised card widened to the real card: a soft plausibility box, never a target",
+    "L": [5.0, 12.7],
+    "W": [2.0, 2.8],
+    "H": [2.0, 3.3],
+    "wheelR": [0.3, 0.55]
+  }
+}

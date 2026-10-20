@@ -1,0 +1,15 @@
+{
+  "_comment": "a frozen keyTable (merge.mjs) of a fixture module: value, comment, axis per key",
+  "knob:signT": { "kind": "knob", "name": "signT", "value": 0.385, "comment": "roof-sign half-width at the top", "axis": "x" },
+  "knob:mh": { "kind": "knob", "name": "mh", "value": 0.39, "comment": "mirror head height (bottom kept)", "axis": "y" },
+  "knob:paneZ": { "kind": "knob", "name": "paneZ", "value": 0, "comment": "side glass along z", "axis": "z" },
+  "knob:frameScale": { "kind": "knob", "name": "frameScale", "value": 1, "comment": "concept-view similarity", "axis": null, "group": "frame" },
+  "def:br.bot": { "kind": "def", "name": "br.bot", "value": 0.38, "comment": "rear bumper", "axis": "y" },
+  "def:hubR": { "kind": "def", "name": "hubR", "value": 0.23, "comment": "", "axis": null },
+  "def:R": { "kind": "def", "name": "R", "value": 0.46, "comment": "tyre radius", "axis": null },
+  "def:cap.drop": { "kind": "def", "name": "cap.drop", "value": 0.25, "comment": "front / rear caps", "axis": "y" },
+  "def:zR": { "kind": "def", "name": "zR", "value": -1.8, "comment": "rear hub z", "axis": "z" },
+  "def:roofR": { "kind": "def", "name": "roofR", "value": 0.24, "comment": "long roof edges", "axis": null },
+  "def:mD": { "kind": "def", "name": "mD", "value": 0.16, "comment": "mirror head depth", "axis": "z" },
+  "def:planR": { "kind": "def", "name": "planR", "value": 0.12, "comment": "plan corners", "axis": null }
+}

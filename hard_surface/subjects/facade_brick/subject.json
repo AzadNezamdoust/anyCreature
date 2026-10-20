@@ -1,0 +1,40 @@
+{
+  "id": "facade_brick",
+  "class": "building",
+  "title": "Brick middle building of the tenement block",
+  "paths": {
+    "target": "refs/tenement-iso.png",
+    "camera": "subjects/facade_brick/camera.json",
+    "module": "subjects/facade_brick/facade.mjs",
+    "passes": "subjects/facade_brick/passes.json",
+    "census": "subjects/facade_brick/census.json",
+    "layout": "subjects/facade_brick/layout.json",
+    "layoutMeasured": "subjects/facade_brick/layout.measured.json",
+    "regions": "subjects/facade_brick/regions.json",
+    "missingKeys": "subjects/facade_brick/missing-keys.json"
+  },
+  "outDir": "out/facade",
+  "missingKeyPolicy": "report",
+  "deferredByRuling": [
+    "ink outlines",
+    "brick-accent decals",
+    "glass reflection strokes",
+    "bench prop",
+    "roof fixture shapes"
+  ],
+  "ruleOverrides": {
+    "_comment": "V5-8 R2 (owner 2026-09-26: TARGET WINS over real-world rules). Measured on refs/tenement-iso.png; src/validate/kernel-chain.mjs applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "step_rise_max": {
+      "value": 0.3,
+      "evidence": "tread ink along the flight stringer midline (640,610)->(712,462): tread pitch 15.6 px along the line (14.0 px vertical); stringer vertical = deck spacing 148.5 px (decks 0.453 / 0.723 H, landing.rowY) / (1 - 0.483 x 0.486) = 193.5 px -> 13.8 ~ 14 risers of 3.79 m / 14 = 0.271 m (> limits 0.2); max 0.3 = 0.271 + ~10 % for the fitted deck spacing"
+    },
+    "stairRails": {
+      "value": false,
+      "evidence": "the target flight between the decks draws two stringers and treads only: no sloped handrail, no posts (crop x 560..750, y 380..660)"
+    },
+    "flightTreads": {
+      "value": 13,
+      "evidence": "14 risers (step_rise_max evidence) = 13 treads; accuracy.mjs thin profile on the target flight ROI independently counts 13 treads, pitch 13 px (out/v58/loop-a/start/accuracy.json fe_flight0_step)"
+    }
+  }
+}

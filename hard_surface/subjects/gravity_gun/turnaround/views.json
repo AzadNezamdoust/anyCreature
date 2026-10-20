@@ -1,0 +1,81 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new --class weapon 2026-10-04 (WF v10, pipeline direct). Author frame: muzzle +z, the weapon's left flank +x, y up, y = 0 at its lowest point, x and z centred (classes/weapon.md). Views: side = the left flank with the muzzle to the image left, front = muzzle on, rear = butt on, top = plan with the muzzle to the image left.",
+  "_note": "2026-10-04: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 0.62
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off: a trigger-guard opening / skeleton stock is background",
+    "table": {
+      "body": [
+        "#8e8f8e",
+        "#e9e6d9",
+        "#fd7002",
+        "#ccc9ba",
+        "#737473",
+        "#264e55",
+        "#1e3e44",
+        "#f5d90a"
+      ]
+    },
+    "_table": "ONE family (classes/weapon.json _anchor_comment): body = every foreground colour cluster >= 2 % of the concept (share % {\"body\":27.03,\"f2\":16.85,\"f3\":14.95,\"f4\":12.63,\"f5\":12.37,\"f6\":6.65,\"dark\":2.18}); the registration's spans are then the whole foreground. Add a colour here when a view's part classifies as \"other\" (> 120 RGB from every listed colour). 2026-10-04: + accent colours under 2 % of the foreground measured on refs/gravity_gun.png (measure.mjs sample): #f5d90a."
+  }
+}

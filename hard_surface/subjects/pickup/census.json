@@ -1,0 +1,16 @@
+{
+  "_comment": "FROZEN contents count of the pickup in refs/pickup_truck.png. Counted off the target with the structural inventory refs/pickup_truck.README.md: two wheels and one far-front tyre sliver are visible, the fourth is occluded, and a truck on two axles has 4 wheels (the far-side wheel geometry is UNVERIFIED in layout.json, the COUNT is not). windows = windshield + one side window per door; V12 compares for equality, so a rear cab window would be a census change, not an author choice. Counting rules live in classes/vehicle.json censusRules (taken off ROLES). STAGED: _pass[key] = first pass that must satisfy the key.",
+  "_source": "refs/pickup_truck.png",
+  "wheels": 4,
+  "bumpers": 2,
+  "headlights": 2,
+  "mirrors": 2,
+  "windows": 3,
+  "_pass": {
+    "wheels": 0,
+    "bumpers": 0,
+    "headlights": 1,
+    "mirrors": 1,
+    "windows": 1
+  }
+}

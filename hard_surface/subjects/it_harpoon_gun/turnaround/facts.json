@@ -1,0 +1,47 @@
+{
+  "subject": "it_harpoon_gun",
+  "noun": "chunky harpoon launcher game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_harpoon_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_harpoon_gun.png = out/concept-items30/09_harpoon_gun/v4b_hero_2.png; FPS refs/it_harpoon_gun.fps.png = v4b_fps.png). Facts from the NEW hero (counts as drawn: 1 octagonal barrel tube, 1 muzzle rim + 2 charcoal bands, 1 harpoon bolt with 1 point + 2 barbs, 1 spool drum (axis left-right) on 1 bracket with 2 rims, 1 crank (hub, arm, knob) on the spool's LEFT face, 1 trigger guard + trigger, 1 ribbed grip, 1 raised lamp plate with 1 teal lamp on the left flank, 1 stock frame with a dark triangular panel + butt pad). FRAME (classes/weapon.md): front +z = the harpoon point, left flank +x = the flank the hero shows. Hidden right flank: plain sand tube and stock, plain spool face (no crank), no lamp. Dims estimated on the hero: L 0.95 (harpoon point to butt pad), W 0.14 (spool + crank knob), H 0.30.",
+  "description": "A fictional harpoon launcher game prop for a cave hunter, chunky low-poly, held level with the harpoon point forward. One long octagonal sand-grey painted barrel tube with wide chamfers, a thick dark steel muzzle rim at its front end and two wide charcoal bands around it, one behind the muzzle rim and one in the middle. Under the front of the tube, hung on a short sand-grey bracket, one wide line spool drum about 0.12 m across whose axis runs left to right: two thick octagonal dark steel side rims around a solid fat charcoal winding; on its left face one fat charcoal crank: a round hub, a short thick arm and a fat round knob pointing forward. Behind the spool under the tube one squared charcoal trigger guard with a thick trigger and one chunky charcoal pistol grip raked back with big diagonal ribs; above the grip on the left flank one raised sand-grey plate carrying one small rectangular teal lamp window in a thick raised charcoal bezel. At the rear one sand-grey stock frame of two thick bars around a recessed dark charcoal triangular panel, ending in a fat tall charcoal butt pad.",
+  "proportions": "Out of the muzzle sticks one thick dark steel harpoon bolt about 0.18 m long with an arrow point and exactly two fat swept-back barbs. About 0.95 m long, 0.14 m wide and 0.30 m tall. (length : width : height = 1.29 : 1 : 2.14)",
+  "sides": "on the LEFT flank only: the crank on the spool's left face (hub, arm, knob, sticking out past the spool) and the raised lamp plate with the teal lamp window above the grip. The right flank is plain: smooth sand tube and stock, a plain spool rim face. The tube, the harpoon bolt and its two barbs, the spool drum, the bracket, the trigger guard, the grip, the stock and the butt pad are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky harpoon launcher game prop is 0.60 times as long as it is tall",
+    "front": "in this view its width is 0.47 of its height",
+    "rear": "in this view its width is 0.47 of its height",
+    "top": "in this view it is 1.29 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the harpoon point to the LEFT of the image: the arrow point with its two swept-back barbs at the left end, the bolt shaft running into the dark steel muzzle rim, the long octagonal sand tube with its two charcoal bands, the round spool drum hanging under the front of the tube on its bracket, seen face on as a circle with the crank hub, arm and knob on it, the trigger guard with the trigger and the raked ribbed grip behind it, the lamp plate with the teal window above the grip, and the sand stock frame with its dark triangular panel ending in the tall charcoal butt pad at the right.",
+    "front": "Seen from the harpoon end: the arrow point and barbs in the middle in front of the round muzzle rim, the tube behind it, the spool below seen edge on as a wide band with the crank sticking out on the left-flank side (image RIGHT), the butt pad edges behind.",
+    "rear": "Seen from the back end: the tall charcoal butt pad in the middle with the stock behind it, the tube outline above, the grip below on the centre line, the spool edge lower down with the crank sticking out on the left-flank side (image LEFT). No lamp visible.",
+    "top": "Seen from above, the harpoon point to the LEFT: the bolt and its point, the muzzle rim, the long tube with its two bands, the stock widening to the butt pad at the right; the spool showing a little past the tube on both sides near the front and the crank knob sticking out at the bottom edge (left flank)."
+  },
+  "asymmetric": [
+    {
+      "part": "the fat charcoal crank (round hub, short arm, round knob) on the spool's left face",
+      "plural": false,
+      "flank": "left",
+      "along": "front",
+      "protrudes": true
+    },
+    {
+      "part": "the raised sand-grey plate with the small teal lamp window",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.18,
+    "W": 0.14,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the stock triangle is a recessed dark charcoal panel, not an opening",
+    "the crank is on the spool's left face only"
+  ]
+}

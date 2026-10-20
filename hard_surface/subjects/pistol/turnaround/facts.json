@@ -1,0 +1,36 @@
+{
+  "subject": "pistol",
+  "noun": "game pistol prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/pistol.png (orange button + two levers on the visible left flank; right flank hidden); noun / description / sides / faces worded as a fictional low-poly video-game prop described by its shapes and colours only (same parts, same colours; mechanism names dropped) — the assault_rifle sheet with the concept paragraph verbatim was rejected by the GPT image safety system",
+  "description": "A fictional stylised low-poly video-game prop in the shape of a pistol, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A long slab-sided dark grey top block with a flat top, six slanted grooves on its side at the rear end, a blocky notched block standing on top at the rear end and a small orange blade standing on top at the front end. In the front face of the top block a round dark grey tube end with a dark centre hole, and below it a round dark grey plug. Under the top block a matte black lower body with a short ridged strip under its front end, a squared black loop with a small curved dark grey lever inside it, and a thick matte black handle raked backward with a flat textured panel on its side and a flared base. A bright orange plate closes the bottom of the handle. Bright orange accents: the bottom plate of the handle, the small blade on top at the front end, and a round button on the left flank behind the squared loop. Two small dark grey levers on the left flank of the lower body, just under the top block. The right flank is plain.",
+  "proportions": "About 0.21 m long, 0.035 m wide and 0.15 m tall. (length : width : height = 6.00 : 1 : 4.29)",
+  "sides": "the round orange button and the two small dark grey levers are on the left flank; the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 1.40 times as long as it is tall",
+    "front": "in this view its width is 0.23 of its height",
+    "rear": "in this view its width is 0.23 of its height",
+    "top": "in this view it is 6.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the top block exactly horizontal along the top with its front end at the left end of the image, the six slanted grooves near its right end, the squared loop below its middle, the handle hanging down at the right end raked backward to the right, the orange plate at the very bottom.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the squarish front face of the top block with the round tube end and its dark centre hole, the round plug below it, the small orange blade standing on top, the ridged strip under it, then the squared loop and the handle with its orange bottom plate hanging below.",
+    "rear": "Seen from the rear end: the squarish rear face of the top block at the top with the notched block standing on it, the plain rounded back of the matte black handle below it on the centre line, the orange plate at the very bottom. No tube end and no hole in this view.",
+    "top": "Seen from above the prop is a plain long narrow rectangle: the flat top of the top block, the small orange blade at the left end, the notched block at the right end; the handle and the squared loop are hidden under it."
+  },
+  "asymmetric": [
+    {
+      "part": "the round orange button and the two small dark grey levers",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.21,
+    "W": 0.035,
+    "H": 0.15,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

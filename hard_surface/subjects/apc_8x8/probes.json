@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 603, "from": 80, "to": 950, "what": "hub row: four tyre / hub / tyre patterns, axle spacing 1.151 m (hub centres px 290, 460, 628, 796)" },
+  { "id": "P2", "view": "side", "axis": "row", "index": 680, "from": 80, "to": 950, "what": "tyre bottoms row (tyre band 0.007..1.181 m): four tread runs, nothing else" },
+  { "id": "P3", "view": "side", "axis": "row", "index": 415, "from": 80, "to": 950, "what": "roof fittings row (up 1.87 m): driver's hatch 265-300, turret base 440-590, rear hatch hinge ~830" },
+  { "id": "P4", "view": "side", "axis": "col", "index": 290, "from": 300, "to": 720, "what": "front wheel column: roof edge ~426, arch top ~510, tyre top 522, hub, tyre bottom 688" },
+  { "id": "P5", "view": "side", "axis": "col", "index": 796, "from": 300, "to": 720, "what": "rear wheel column: roof ~426, arch, tyre 522-688" },
+  { "id": "P6", "view": "side", "axis": "row", "index": 390, "from": 250, "to": 650, "what": "gun barrel row (up 2.05 m): muzzle collar 305, barrel to the mantlet 432, turret box to 590" },
+  { "id": "P7", "view": "front", "axis": "row", "index": 600, "from": 250, "to": 800, "what": "tow-hook / hull-bottom row: tyre 309-377, hull 380-660 with the two hooks ~420 and ~605, tyre 655-725" },
+  { "id": "P8", "view": "front", "axis": "row", "index": 490, "from": 250, "to": 800, "what": "headlight row: hull 320-720 with the two caged lenses at 350-395 and 640-690" },
+  { "id": "P9", "view": "front", "axis": "col", "index": 512, "from": 300, "to": 720, "what": "centre column: cupola top ~345, turret, vision blocks 440, glacis, hull bottom ~630" },
+  { "id": "P10", "view": "rear", "axis": "row", "index": 600, "from": 250, "to": 800, "what": "hull-bottom row: tyre 317-387, hull 342-672 (narrow: scale 1.091 proposed), tyre 630-700" },
+  { "id": "P11", "view": "rear", "axis": "row", "index": 385, "from": 300, "to": 750, "what": "launcher row: -x cluster 435-475, turret 480-610, +x cluster 615-650" },
+  { "id": "P12", "view": "top", "axis": "col", "index": 300, "from": 250, "to": 780, "what": "driver's hatch column: -x tyre ~290, hull 299-698, hatch 395-470 (x -0.55 m), +x tyre 715-737" },
+  { "id": "P13", "view": "top", "axis": "col", "index": 525, "from": 250, "to": 780, "what": "turret + grille column: -x tyre, turret octagon 380-560, grille 570-665 (+x side), +x tyre" },
+  { "id": "P14", "view": "top", "axis": "row", "index": 512, "from": 80, "to": 950, "what": "centreline nose to tail: nose 124, turret 405-600 with the barrel to 305, hull to 909" },
+  { "id": "P15", "view": "concept", "axis": "col", "index": 470, "from": 250, "to": 830, "what": "front wheel column: roof/turret top ~276, glacis, arch, front tyre bottom 811" }
+]

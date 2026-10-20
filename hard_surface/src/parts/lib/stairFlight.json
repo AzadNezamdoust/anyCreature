@@ -1,0 +1,17 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "stairFlight",
+  "note": "One straight flight. dims are DERIVED from the params, not from the composite's own [w,h,d]: height = steps * rise, depth = steps * run, width = width. Treads ascend toward +Z. The flight is a single manifold `stepStack` prim (see prims.js: geom.js stepStack merges N shells and V1 rejects it), so this composite has one sub-part; the stringers the reference drawing shows are deferred.",
+  "params": { "steps": 6, "rise": 0.18, "run": 0.26, "width": 0.9 },
+  "dims": ["$width", "$steps * $rise", "$steps * $run"],
+  "parts": [
+    {
+      "id": "flight",
+      "prim": "stepStack",
+      "dims": ["$width", "$steps * $rise", "$steps * $run"],
+      "steps": "$steps",
+      "role": "stair"
+    }
+  ]
+}

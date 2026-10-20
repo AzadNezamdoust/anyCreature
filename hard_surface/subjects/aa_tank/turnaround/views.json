@@ -1,0 +1,99 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 3.4
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#606164", "#535456", "#414244"],
+      "metal": ["#313133"],
+      "dark": ["#1c1d1d"],
+      "radar": ["#808080"]
+    },
+    "_table": "2026-09-29 (v2 concept refs/aa_tank.v2.png): named from the concept's foreground colour clusters >= 2 % (newsubject.mjs proposeFamilies on the v2 image) + measure.mjs sample of each part: hull, turret, hatch, track guards, grille boxes and radar post dark grey (lit / mid / shade); metal = barrels, cradles, smoke launchers, tow hooks, headlight guards, tracks, road wheels, rollers, sprocket, idler gunmetal; dark = track gaps and outlines; radar = the lighter mid-grey radar slab, tracking box and hub caps",
+    "viewTable": {
+      "side": { "body": ["#67676b", "#5a5a5d", "#48484b", "#646566"], "metal": ["#38373a", "#363737"], "dark": ["#232324"], "radar": ["#878687", "#828282"] },
+      "front": { "body": ["#606064", "#535356", "#414144", "#444446"], "metal": ["#313033", "#2c2c2d"], "dark": ["#1c1c1d", "#1a1a1a"], "radar": ["#807f80", "#7c7c7c", "#8e8e8e"] },
+      "rear": { "body": ["#595a5c", "#4c4d4e", "#3a3b3c", "#5c5d60"], "metal": ["#2a2a2b"], "dark": ["#151615", "#1a1a1a"], "radar": ["#797978", "#7c7c7c"] },
+      "top": { "body": ["#646468", "#57575a", "#454548", "#48494b"], "metal": ["#353437"], "dark": ["#202021", "#1a1a1b"], "radar": ["#848384"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/aa_tank/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +7.2 +6.4 +6.5 · front +0.4 -0.6 -0.2 · rear -7 -7.3 -7.6 · top +4.2 +3.4 +4.1); ambiguous: side #3f3f41 1.4 % metal (vs body); rear #68686b 2.9 % body (vs radar); top #2c2c2d 12.4 % metal (vs dark); top #3b3c3c 5.0 % metal (vs body). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor, owner-approved 2026-10-02",
+    "side": [
+      { "id": "D1", "rect": [225, 190, 500, 415], "decides": "concept", "why": "barrels: concept-only muzzle blobs px 196-396,234-371 + 381-455,240-301 (2.3 % of the concept) beyond the registered hull; side draws 2.25 m at 37 deg from the cradle (px 490,400 -> 235,210), prompt 30 deg - the concept's longer, flatter barrel wins" }
+    ],
+    "front": [],
+    "rear": [
+      { "id": "D5", "rect": [420, 252, 606, 270], "decides": "front", "why": "radar slab top: up 3.46..4.02 m here (px 418-606,254-333) vs front 3.30..3.90 and side 3.30..3.86 m (rear-only blob 418-606,254-333, 1.5 %)" },
+      { "id": "D6", "rect": [424, 404, 466, 474], "decides": "front", "why": "post base box left lobe: the box is 0.58 x 0.52 m here (body comp px 471-553,403-477) vs the front's 0.19 m post with a small base (px 495-522,354-395); rear-only blob 425-500,364-411" },
+      { "id": "D7", "rect": [558, 404, 600, 474], "decides": "front", "why": "post base box right lobe: same box (px 471-553,403-477) vs the front's 0.19 m post; rear-only blob 575-624,382-412" }
+    ],
+    "top": [],
+    "concept": [
+      { "id": "D8", "rect": [100, 580, 210, 700], "decides": "side", "why": "nose running gear: the concept's z-lines fan (track bottom slope 0.36-0.39 = camera mZ, hub row 0.27, guard edge 0.10); concept-only blob 103-310,498-697 (3.3 %) is that inconsistency, the side's sprocket (right -2.3 m, up 0.55-0.83) decides" },
+      { "id": "D9", "rect": [905, 655, 955, 735], "decides": "side", "why": "rear track / idler: the same fanning; concept-only blob 776-951,567-747 (1.2 %), the side's idler hub at right 2.26-2.40 m up 0.69-0.86 decides" }
+    ]
+  }
+}

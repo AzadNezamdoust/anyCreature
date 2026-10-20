@@ -1,0 +1,6 @@
+{
+  "theta_deg": 30,
+  "phi_deg": 45,
+  "provisional": true,
+  "note": "UNMEASURED. Assumed 2:1-iso values, flagged provisional per 08:E8 — Tapped Out's own angle is unverified (04:122). Measure from refs/tenement-iso.png with scripts/solve-camera.mjs (two ground-edge slopes) before M4, and re-freeze."
+}

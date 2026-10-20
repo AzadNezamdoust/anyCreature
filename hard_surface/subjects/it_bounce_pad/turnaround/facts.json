@@ -1,0 +1,32 @@
+{
+  "subject": "it_bounce_pad",
+  "noun": "chunky placeable spring bounce pad (game prop)",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_bounce_pad.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_bounce_pad.png = out/concept-items30/27_bounce_pad/v4b_hero_1.png; FPS refs/it_bounce_pad.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: thin sand-grey plate with exactly 9 square recesses in a 3x3 grid and a raised chevron pointing to the front edge, exactly 4 coil springs with 4 coils each, exactly 4 cone feet, 1 lamp on the front edge, no base frame; the v3 honeycomb, bolt sockets and hex feet are NOT drawn and dropped). FRAME as the v3 subject: standard weapon frame, no turn (front-left isometric): +z = the front edge carrying the lamp (image lower-left edge), +x = the left flank edge, y up, y = 0 at the spike tips. Four-fold plan symmetry except the chevron / lamp (front). Dims = the old stated size, re-measured after install.",
+  "description": "A fictional placeable spring bounce pad game prop, chunky low-poly, standing on the ground alone. A thin plate floating on four tall exposed coil springs, open air under it on every side. One square flat sand-grey painted top plate with wide chamfered edges and chamfered corners, about 0.05 m thick, with exactly nine big shallow square recesses with solid dark floors in a three by three grid on its top face and one fat raised chevron pointing to the front. Exactly four fat dark steel coil springs, one under each corner, about 0.20 m tall with exactly four thick coils each, each wound around a thick dark steel guide post. Exactly four fat dark steel cone feet, a thick octagonal collar with a short cone spike under it, one under each spring. One small teal lamp window in a thick charcoal bezel on the front edge of the top plate, in the middle. There is no base frame under the plate.",
+  "proportions": "About 0.9 m long, 0.9 m wide and 0.3 m tall. (length : width : height = 1.00 : 1 : 0.33)",
+  "sides": "the bounce pad is a square plate on four springs: four-fold symmetric apart from the raised chevron on the top face (pointing to the FRONT) and the small teal lamp window on the FRONT edge of the plate. Frame words: the FRONT is the edge with the lamp window; the REAR the opposite edge; the LEFT flank the edge seen on the image right of the concept.",
+  "shape": {
+    "side": "in this view the chunky placeable spring bounce pad (game prop) is 3.00 times as long as it is tall",
+    "front": "in this view its width is 3.00 of its height",
+    "rear": "in this view its width is 3.00 of its height",
+    "top": "in this view it is 1.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Seen from the left flank: the thin sand-grey plate edge with its chamfers high above, four tall coil springs seen as two overlapping pairs (near and far), each with four thick coils on a guide post, and the cone feet with their octagonal collars at the bottom; open air between the plate and the ground.",
+    "front": "Seen from the front edge: the plate's front edge with the teal lamp window in its bezel in the middle, two springs (near pair) with their cone feet, the far pair mostly hidden behind them, open air under the plate.",
+    "rear": "Seen from the rear edge: the plain rear plate edge, the near pair of springs with their cone feet, the far pair hidden behind; no lamp.",
+    "top": "Seen from above (front to the LEFT, left flank at the BOTTOM): the square plate with chamfered corners, the three by three grid of nine square recesses and the raised chevron pointing to the LEFT (front) in the front-middle, the springs hidden under the plate (feet may peek out at the corners)."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 0.9,
+    "W": 0.9,
+    "H": 0.3,
+    "_": "ESTIMATE on the hero (perspective); after turnaround.mjs install re-measure with hull.mjs"
+  },
+  "decided": [
+    "exactly four springs with four coils each, exactly four cone feet, exactly nine recesses in a 3x3 grid, one chevron pointing to the front, one lamp on the front edge",
+    "the plate floats on the springs: no base frame, no honeycomb, no bolt sockets"
+  ]
+}

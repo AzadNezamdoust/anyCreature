@@ -1,0 +1,165 @@
+{
+  "subject": "school_bus",
+  "at": "2026-09-27T12:24:51.199Z",
+  "module": "out/ref/gold/school_bus/start.mjs",
+  "verdict": "BLOCK",
+  "blocks": 1,
+  "warns": 3,
+  "rows": [
+    {
+      "level": "PASS",
+      "id": "files",
+      "text": "subject.json, camera, concept, views.json + 4 views, out/ref/gold/school_bus/start.mjs"
+    },
+    {
+      "level": "BLOCK",
+      "id": "check-module",
+      "text": "FAIL out/ref/gold/school_bus/start.mjs import \"../../../../scripts/v6/rules.mjs\": only src/kernel/index.mjs is allowed"
+    },
+    {
+      "level": "PASS",
+      "id": "residuals",
+      "text": "registration W / L / H within +-3 % (largest W rear +0.5 %)"
+    },
+    {
+      "level": "PASS",
+      "id": "white",
+      "data": [
+        {
+          "image": "side",
+          "fg": 264882,
+          "total": 0.0013024667587831563,
+          "comps": [
+            {
+              "n": 345,
+              "share": 0.0013024667587831563,
+              "bbox": [
+                176,
+                491,
+                244,
+                560
+              ]
+            }
+          ]
+        },
+        {
+          "image": "front",
+          "fg": 113081,
+          "total": 0.013043747402304542,
+          "comps": [
+            {
+              "n": 751,
+              "share": 0.006641257151953025,
+              "bbox": [
+                333,
+                407,
+                352,
+                488
+              ]
+            },
+            {
+              "n": 724,
+              "share": 0.0064024902503515176,
+              "bbox": [
+                672,
+                406,
+                691,
+                485
+              ]
+            }
+          ]
+        },
+        {
+          "image": "rear",
+          "fg": 112363,
+          "total": 0.010394880877157071,
+          "comps": [
+            {
+              "n": 620,
+              "share": 0.0055178306026005,
+              "bbox": [
+                673,
+                399,
+                692,
+                476
+              ]
+            },
+            {
+              "n": 548,
+              "share": 0.004877050274556571,
+              "bbox": [
+                332,
+                399,
+                351,
+                476
+              ]
+            }
+          ]
+        },
+        {
+          "image": "concept",
+          "fg": 470416,
+          "total": 0.001271215264786912,
+          "comps": [
+            {
+              "n": 598,
+              "share": 0.001271215264786912,
+              "bbox": [
+                64,
+                491,
+                81,
+                579
+              ]
+            }
+          ]
+        }
+      ],
+      "text": "enclosed near-white decided (enclosedFg false: background): side 0.13 % [176,491,244,560 0.13 %] · front 1.30 % [333,407,352,488 0.66 %; 672,406,691,485 0.64 %] · rear 1.04 % [673,399,692,476 0.55 %; 332,399,351,476 0.49 %] · concept 0.13 % [64,491,81,579 0.13 %]"
+    },
+    {
+      "level": "PASS",
+      "id": "body-colour",
+      "text": "body colours #f3b619, #f4b719, #fcc423 clear of fgMax 235 by > 8"
+    },
+    {
+      "level": "PASS",
+      "id": "centring-front",
+      "text": "front right: fg bbox centre +0.000 m, mass +0.006 m from the body span centre"
+    },
+    {
+      "level": "PASS",
+      "id": "centring-rear",
+      "text": "rear right: fg bbox centre +0.000 m, mass -0.007 m from the body span centre"
+    },
+    {
+      "level": "PASS",
+      "id": "centring-top",
+      "text": "top up: fg bbox centre -0.039 m, mass -0.005 m from the body span centre"
+    },
+    {
+      "level": "WARN",
+      "id": "audit",
+      "text": "no audit: views.json has no `drift` with `audited` (research/v7/AUDITOR.md; empty rect lists are fine)"
+    },
+    {
+      "level": "WARN",
+      "id": "probes",
+      "text": "no subjects/school_bus/probes.json (6-15 scan lines through landmarks; research/v7/AUDITOR.md)"
+    },
+    {
+      "level": "PASS",
+      "id": "views",
+      "text": "views side, front, rear, top"
+    },
+    {
+      "level": "WARN",
+      "id": "camera",
+      "text": "camera world-up 0.7989 deg off vertical (> 0.5)"
+    },
+    {
+      "level": "PASS",
+      "id": "tools",
+      "text": "17 tool runs ok (slowest 5.2 s)"
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+ "bear": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.978,
+   "rear": 1.048,
+   "top": [
+    1.017,
+    1.111
+   ],
+   "length": 1.064,
+   "largest": 0.111
+  },
+  "accept": true,
+  "why": null
+ },
+ "boar": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.972,
+   "rear": 1.018,
+   "top": [
+    1.085,
+    1.112
+   ],
+   "length": 1.001,
+   "largest": 0.112
+  },
+  "accept": true,
+  "why": null
+ },
+ "character": {
+  "sheet": "fittedv2_2.png",
+  "source": "sheetv2_2.png",
+  "concept": "concepts/character_owner_v2.png",
+  "fit": {
+   "front": 0.998,
+   "rear": 1.011,
+   "top": [
+    1.007,
+    1.108
+   ],
+   "largest": 0.108
+  },
+  "accept": true,
+  "why": null
+ },
+ "crab": {
+  "sheet": "fittedv2_2.png",
+  "source": "sheetv2_2.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 1.0,
+   "rear": 1.04,
+   "top": [
+    0.858,
+    1.716
+   ],
+   "largest": 0.716
+  },
+  "accept": true,
+  "why": null,
+  "note": "least bad of 2: the plan view splays the legs wider than the front view; the builder carves carapace and claws only and extrudes the legs, as the c1 crab did",
+  "over_limit": true
+ },
+ "frog": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.984,
+   "rear": 1.053,
+   "top": [
+    0.965,
+    1.304
+   ],
+   "largest": 0.304
+  },
+  "accept": true,
+  "why": null,
+  "note": "no brief-length stretch: it needed more than 35%; the concept sets the proportions"
+ },
+ "giant": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.995,
+   "rear": 1.057,
+   "top": [
+    0.981,
+    1.265
+   ],
+   "length": 1.012,
+   "largest": 0.265
+  },
+  "accept": true,
+  "why": null
+ },
+ "goblin": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.985,
+   "rear": 1.063,
+   "top": [
+    0.932,
+    1.122
+   ],
+   "length": 0.75,
+   "largest": 0.25
+  },
+  "accept": true,
+  "why": null
+ },
+ "owl": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.992,
+   "rear": 1.062,
+   "top": [
+    0.783,
+    1.119
+   ],
+   "length": 0.928,
+   "largest": 0.217
+  },
+  "accept": true,
+  "why": null
+ },
+ "raven_wyvern": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.982,
+   "rear": 1.012,
+   "top": [
+    0.993,
+    1.081
+   ],
+   "length": 0.998,
+   "largest": 0.081
+  },
+  "accept": true,
+  "why": null
+ },
+ "stag": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 1.002,
+   "rear": 1.019,
+   "top": [
+    0.757,
+    0.821
+   ],
+   "largest": 0.243
+  },
+  "accept": true,
+  "why": null,
+  "note": "no brief-length stretch: it needed more than 35%; the concept sets the proportions"
+ },
+ "wolf": {
+  "sheet": "fittedv2_1.png",
+  "source": "sheetv2_1.png",
+  "concept": "concept_2.png",
+  "fit": {
+   "front": 0.993,
+   "rear": 1.052,
+   "top": [
+    0.974,
+    0.985
+   ],
+   "length": 1.192,
+   "largest": 0.192
+  },
+  "accept": true,
+  "why": null
+ }
+}

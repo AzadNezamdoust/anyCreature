@@ -1,0 +1,244 @@
+{
+  "bear": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty az000: the eyes are barely visible, so the face reads as a blank brown block with a pale muzzle; brief calls for small dark eyes that read at thumbnail.",
+        "2_closeups front limb colour/wire: claws are a comb of five identical thin needle spikes glued to the paw edge, not blunt digits.",
+        "reference sheet az180 / 1_beauty back34: the rump has a radial fan of triangles converging on the tail stub (machine tell) instead of planes following the hip."
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups front limb colour/wire: claws are still a comb of identical needle spikes on the paw edge.",
+        "1_beauty back34: radial fan around the tail stub on the rump; the tail itself is a small disc, not a stub.",
+        "2_closeups head colour: the muzzle is a flat pale wedge with the nose pad sitting on the flat front plane, no dished brow-to-muzzle step."
+      ]
+    },
+    "better": "Y",
+    "why": "Same body; Y adds readable dark eyes and a lighter chest plane so the face and the brief's colour cues actually read (1_beauty az000 and hero)."
+  },
+  "boar": {
+    "X": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups crest colour: the crest is a row of near-identical blunt clumps of equal height and spacing; vary height and pitch so it reads as bristle, not a comb.",
+        "1_beauty hero/az000: tusks are short and tucked against the snout with weak contrast; they should curve up and out of the lower jaw more.",
+        "2_closeups front limb wire: the foreleg pinches to a waist at the wrist then flares into the hoof block, an hourglass tube rather than a knee and pastern."
+      ]
+    },
+    "Y": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090 and 4_posed all frames: the crest is a row of paper-thin identical triangular fins that read as shards edge-on (blocker per contract: thin plates, identical repeated spikes).",
+        "1_beauty az090: the dark shoulder saddle is a hard rectangular patch whose colour border cuts across faces instead of following loops.",
+        "2_closeups tusk colour: nostrils are two tall rectangular slots on the snout disc, reading as vents, not nostrils."
+      ]
+    },
+    "better": "X",
+    "why": "X's crest has volume and its saddle follows the hump; Y's crest fins and rectangular saddle are the two loudest machine tells in the batch."
+  },
+  "character": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head wire / front limb wire: brows and mouth line are separate bars floating a visible gap off the skull; they need to sit on the surface.",
+        "2_closeups front limb colour: hands are flat paddle mitts with no thumb; brief asks for thumb plus a curled mitten of fingers.",
+        "2_closeups outline.L colour: the eye outline ring is thick and heavy compared with the brief's thin black outline, and the sclera is a faceted 12-gon that shows corners at close range."
+      ]
+    },
+    "Y": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head wire / front limb wire: brows and mouth line float off the skull as separate bars with a gap.",
+        "2_closeups front limb colour: hands are flat paddle mitts with no thumb.",
+        "4_posed move_f009: the far leg folds sharply at the knee with a candy-wrapper crease on the shin; feet are flat slabs with no toe blocks in any view."
+      ]
+    },
+    "better": "Y",
+    "why": "Near-identical builds; Y's thinner eye outline matches the brief and the reference, X's ring is heavier than the design target."
+  },
+  "crab": {
+    "X": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups front limb colour/wire: the carapace teeth beside the claw joint are thin needle slivers rather than a toothed edge cut into the rim.",
+        "2_closeups hind limb wire: walking legs are constant-section tubes with two bends; no thickening at the knee or taper toward the tip.",
+        "2_closeups barnacles: the cluster is three small hex prisms of the same size sitting on the rim, reads as glued-on, not bedded in."
+      ]
+    },
+    "Y": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty az000 and hero: a large cream oval panel on the front rim between the eye stalks reads as a blank face or mouth plate; the brief's cream is belly only.",
+        "1_beauty az000 and 2_closeups front limb: eye bulbs are pointed cones/diamonds rather than round bulb eyes, and the rim teeth are needle slivers.",
+        "2_closeups hind limb colour: a row of thin spikes along the carapace side edge reads as splinters edge-on."
+      ]
+    },
+    "better": "X",
+    "why": "Same shell and legs; Y adds an off-brief cream front panel and pointed eyes that hurt the read, X's rounded eyes and clean rim are closer to the reference."
+  },
+  "frog": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head wire: the black mouth line is a separate raised ribbon running around the jaw with a visible gap in wire, floating rather than a colour border on the loop.",
+        "1_beauty az000 and 2_closeups head colour: two large black slanted triangular shards on the snout as nostrils; they read as cracks in the head.",
+        "2_closeups hind limb colour / toes: hind-foot toes are thin needle sticks with tiny pads; front toes are stubby cylinders; both read procedural at close range."
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups hind limb colour / toes: hind-foot toes are thin needle sticks that read as slivers edge-on.",
+        "1_beauty back34: back spots are small flat dark polygons pasted on the surface, identical in size and shape.",
+        "1_beauty az000: the cream belly border on the throat is a hard straight line across faces rather than following an edge loop."
+      ]
+    },
+    "better": "Y",
+    "why": "Y's mouth is a proper edge-loop colour line and its nostrils are small dots; X's floating mouth ribbon and black nostril shards are technical blockers on the face."
+  },
+  "giant": {
+    "X": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000 and 2_closeups head colour: tusks are two long thin needle spikes rising past the eyes, reading as splinters, not cream tusks from the lower jaw.",
+        "2_closeups head colour: the face is one dark muddy block; brow, cheek and jaw planes do not separate and the amber eyes are tiny chips buried in shadow.",
+        "1_beauty az090: the loincloth is a paper-thin tan strip edge-on behind the leg, no thickness."
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head colour: face is still a dark block with little plane separation; eyes are small chips deep in shadow.",
+        "1_beauty az090: loincloth back flap is a paper-thin strip with no thickness.",
+        "1_beauty az000: fists show a knuckle row of identical flat stone blocks; no separate fingers as the brief asks."
+      ]
+    },
+    "better": "Y",
+    "why": "Y's tusks are short, thick and seated in a mouth box; X's needle tusks are the single loudest defect on the hero shot."
+  },
+  "goblin": {
+    "X": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000: the open mouth is a large flat black cavity with fangs sitting on its rim; it needs a lip edge or teeth seated in the jaw.",
+        "2_closeups front limb colour / fingers: hands are pointed mitts with three tiny claw cones; no separate fingers.",
+        "1_beauty az090: loincloth is a thin flat plate hanging in front of the belt with no thickness."
+      ]
+    },
+    "Y": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000: the mouth is a thin dark line with four tiny fangs and the eyes are small yellow dots, so the brief's wide fanged grin and heavy brow do not read; the face looks like a lizard snout.",
+        "2_closeups front limb colour: hands are pointed mitts with three tiny claw cones; no separate fingers.",
+        "1_beauty az090: loincloth is a thin flat plate with no thickness."
+      ]
+    },
+    "better": "X",
+    "why": "X's face reads as a grinning goblin at thumbnail; Y closes the mouth and shrinks the eyes and loses the identity cue."
+  },
+  "owl": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head wire: the brow bars are separate thick boxes floating above the face plane with a visible gap; they should sit on the head surface.",
+        "1_beauty az000: the facial disc is a flat vertical panel with a hard straight dark band under the eyes; no dark rim shaping the disc.",
+        "2_closeups hind limb colour and front limb wire: talons are thin black slivers on a flat foot plate, and the folded wing tip is a paper-thin plate edge-on."
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head wire: brow bars still sit slightly off the head as separate pieces.",
+        "2_closeups hind limb colour: talons are thin black spikes on a flat cream foot plate; the wing tip is a paper-thin plate edge-on.",
+        "1_beauty hero: the face is a flat panel; the beak is a small wedge that barely projects from the disc."
+      ]
+    },
+    "better": "Y",
+    "why": "Y's dark V rim under the eyes and eyelids give the facial disc a real shape and the brows sit closer to the head; X's brows float and its disc is a flat band."
+  },
+  "raven_wyvern": {
+    "X": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head colour / hackles: throat hackles and neck feathers are a scatter of thin dark needle slivers rather than shaggy clumps.",
+        "1_beauty az090: dorsal spines along the back and tail are identical repeated cones at even spacing, not graded.",
+        "2_closeups hind limb wire: the folded wing membrane is a single flat plate with spar ridges drawn on; the thumb claw is a small hook floating at the shoulder."
+      ]
+    },
+    "Y": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az090 and 4_posed attack_f020: the folded wing is a plain flat purple slab with no finger spars or thumb claw, and it does not mantle in the attack frames; the brief's wing-as-forelimb cue is lost.",
+        "1_beauty az090: the tail fin is a flat purple fan plate with no spars; reads as a paddle.",
+        "2_closeups head colour / hackles: hackles are thin needle slivers; dorsal spines are identical repeated cones."
+      ]
+    },
+    "better": "X",
+    "why": "X has spars, a thumb claw and wings that spread in the attack; Y's wings are flat slabs that stay folded, which fails the defining wyvern cue."
+  },
+  "stag": {
+    "X": {
+      "score": 6,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000 and 2_closeups mane: the neck mane is a comb of dozens of identical thin needle spikes covering the neck and chest, the classic procedural tell; brief asks for a mane with a V bib.",
+        "2_closeups head colour: ears are flat pale paddles with no thickness or cup.",
+        "2_closeups head wire: antler tines end in thin slivers and the brow tines are small pins; tines should grow out of the beam with a base."
+      ]
+    },
+    "Y": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups mane colour: mane clumps are blunt but randomly placed and sized; they read as lumps stuck on rather than a hanging mane with a V bib.",
+        "2_closeups head colour: ears are flat pale paddles with no thickness.",
+        "2_closeups head wire: antler tines end in thin slivers; brow tines are small pins."
+      ]
+    },
+    "better": "Y",
+    "why": "Y replaces X's spike-comb mane with blunt clumps, which removes the loudest machine tell on the hero shot."
+  },
+  "wolf": {
+    "X": {
+      "score": 7,
+      "verdict": "FIX",
+      "top_issues": [
+        "2_closeups head colour: the eye is a tiny amber triangle chip with no brow; it does not read at thumbnail in 1_beauty az000.",
+        "2_closeups front limb colour: toe claws are thin black needle slivers on a plain block paw; no middle toes leading.",
+        "2_closeups ruff colour: the ruff clumps are a few flat slabs stacked on the neck, they sit on the surface rather than in it."
+      ]
+    },
+    "Y": {
+      "score": 5,
+      "verdict": "FIX",
+      "top_issues": [
+        "1_beauty hero/az000/az090 and 2_closeups ruff: the ruff, chest bib and back saddle are covered in scattered thin triangular shards that read as spikes and splinters edge-on (paper-thin plates, identical repeated spikes).",
+        "1_beauty back34: a row of shard fins runs along the spine and onto the tail; the wolf reads as spiky, not furry.",
+        "2_closeups front limb colour: toe claws are thin black needle slivers on a block paw."
+      ]
+    },
+    "better": "X",
+    "why": "X's blunt ruff clumps keep the wolf furry; Y's scattered thin shards turn it into a spiked creature and fail the close-ups."
+  }
+}

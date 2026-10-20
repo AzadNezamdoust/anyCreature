@@ -1,0 +1,107 @@
+{
+  "_comment": "FROZEN. WF-LOOP-R2 A3. Target pixel rects for the BRICK (middle) building in refs/tenement-iso.png only — the green and tan neighbours are never sampled. Each zone's rects are sampling patches on flat interior colour, not the zone's full extent: the median RGB inside them IS the target's colour for that zone, and `median` below is the frozen record of what was measured when the file was written (scripts/likeness.mjs recomputes it from the image, so the pixels stay the authority). Placed by sliding a window over the image and keeping the most uniform placement whose median matched the zone (see `purity` = share of pixels within 10/255 of the median). Nobody re-places these by eye again: a likeness row cites the rect. Rects are [x, y, w, h], origin top-left, in the 1024x1024 target.",
+  "_source": "refs/tenement-iso.png",
+  "_frozen": "2026-09-13",
+  "image": { "w": 1024, "h": 1024 },
+
+  "_building_comment": "Union of rects that contains the brick building and nothing else, used ONLY for the area-share row: pixels inside it are classified to the nearest zone median within `areaTolerance` (RGB Chebyshev-free Euclidean) and everything further away is unclassified. Two boxes because the roof deck reaches left past the wall line, above the green neighbour's roof, while the wall box stops short of the tan neighbour on the right and of the bench on the pavement.",
+  "building": [
+    [520, 140, 250, 200],
+    [503, 232, 262, 618]
+  ],
+  "areaTolerance": 32,
+
+  "_zones_comment": "`role` is the closed-table role (src/validate/kernel-chain.mjs ROLES) whose id-pass mask this zone is compared against. NOTE: `glass` and `frame` both live in role `window` (the kernel's role table makes frame AND glass a window), so they are measured against the same render mask; likeness.mjs says so in its output rather than pretending they are separate.",
+  "zones": {
+    "brick_front": {
+      "role": "massing",
+      "face": "front",
+      "median": "#a85643",
+      "rects": [[618, 322, 30, 22], [736, 730, 24, 20]],
+      "note": "populated face, clear of the brick accent decals; V .66"
+    },
+    "brick_side_strip": {
+      "role": "massing",
+      "face": "side",
+      "median": "#843b2e",
+      "rects": [[535, 520, 12, 80], [540, 480, 10, 60]],
+      "note": "left return, between the roof ladder and the corner; V .52 = 0.79 of the front"
+    },
+    "roof": {
+      "role": "roof",
+      "median": "#918680",
+      "rects": [[590, 245, 60, 40]],
+      "note": "roof deck, clear of the vent box and the two pipes"
+    },
+    "coping": {
+      "role": "parapet",
+      "median": "#a77b6f",
+      "rects": [[665, 280, 14, 6], [657, 284, 14, 6]],
+      "note": "the pink crown band along the roof edge"
+    },
+    "glass": {
+      "role": "window",
+      "median": "#80a9ac",
+      "rects": [[586, 368, 20, 28], [706, 330, 16, 30], [590, 520, 16, 30], [708, 512, 14, 18]],
+      "note": "one rect per window pane row: row1 bay1, row1 bay2, row2 bay1, row2 bay2"
+    },
+    "frame": {
+      "role": "window",
+      "median": "#8b7e73",
+      "rects": [[606, 398, 5, 7]],
+      "note": "the target's frames are ~5 px wide (audit L6), so this is the one placement that clears the outline on both sides; 35 px"
+    },
+    "sill": {
+      "role": "sill",
+      "median": "#be9589",
+      "rects": [[604, 437, 12, 5], [720, 384, 12, 5]],
+      "note": "the lit top of the stone stool under each upper window"
+    },
+    "iron_landing_upper": {
+      "role": "landing",
+      "face": "front",
+      "_ruling": "WF-BLIND-R2 C6, by measurement (2026-09-14): this patch lies on the deck beam's FRONT face. Renders paint that face at the palette tone and the bar sides at sideTint: run 4 P2, both landings, #8f7d6e front 1.05x and #67594e side 0.76x (the most frequent tone). The upper and lower patches are one colour (#887768 vs #887568), so the old k-means colour split handed the lit cluster to the upper zone and the side tone to the lower one in every run (lower 0.72-0.77x regardless of author). likeness.mjs now splits same-colour zones of one role by screen position (top band = the zone whose rect is higher) and reads each band's FRONT tone.",
+      "median": "#887768",
+      "rects": [[615, 472, 8, 6]],
+      "note": "solid deck beam of the upper fire-escape landing (the deck itself is mostly daylight)"
+    },
+    "iron_landing_lower": {
+      "role": "landing",
+      "face": "front",
+      "_ruling": "WF-BLIND-R2 C6 — see iron_landing_upper: same patch placement on the lower deck beam's front face; rect unchanged.",
+      "median": "#887568",
+      "rects": [[615, 618, 8, 6]],
+      "note": "solid deck beam of the lower fire-escape landing"
+    },
+    "awning": {
+      "role": "awning",
+      "median": "#538c54",
+      "rects": [[660, 690, 40, 20]],
+      "note": "lit top surface of the shop canopy"
+    },
+    "signbox": {
+      "role": "signbox",
+      "median": "#668865",
+      "rects": [[736, 612, 12, 8]],
+      "note": "the darker green band above the awning"
+    },
+    "ac": {
+      "role": "ac",
+      "median": "#c0c0bf",
+      "rects": [[590, 683, 10, 8]],
+      "note": "the wall-hung unit left of the sign box"
+    },
+    "door": {
+      "role": "door",
+      "median": "#81acaf",
+      "rects": [[694, 751, 14, 14]],
+      "note": "the glazed shop door, right of the storefront pane"
+    },
+    "storefront": {
+      "role": "storefront",
+      "median": "#85adb2",
+      "rects": [[630, 776, 30, 24]],
+      "note": "the big shop window, clear of the white highlight streaks"
+    }
+  }
+}

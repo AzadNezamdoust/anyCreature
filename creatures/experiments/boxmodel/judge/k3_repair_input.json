@@ -1,0 +1,331 @@
+{
+ "bear": {
+  "reviews": {
+   "fable": {
+    "score": 5,
+    "verdict": "FIX",
+    "top_issues": [
+     "Pale muzzle spreads up over the whole front of the face to the brow, so the head reads as a koala/sloth-bear mask instead of a pale muzzle block",
+     "Ears are pointed wolf-style blades, and the eyes are so small they vanish at thumbnail: the face has no read",
+     "Dark triangular creases and slivers in the armpit/chest under the front legs (front-limb close-up, 2 slivers flagged); front legs are tube sections with a kink"
+    ],
+    "brief_fit": "Body mass and hump are the strongest of the three, but round ears, small readable eyes and a muzzle block are all missed."
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "pale muzzle colour floods the whole front of the face up past the eyes, and a stray pale stripe runs along the jaw and neck in side view (1_beauty az000/az090)",
+     "ears are pointed cat ears, not round; the eyes are tiny slits almost lost in the facets (2_closeups head)",
+     "the hump is weak: the back is one long arch with the highest point mid-back; legs are thick box tubes with a hard dark band"
+    ],
+    "brief_fit": "Heavy, organic bear mass with good paws and claws and clean deformation, but the ears, the muzzle and the hump deviate from the brief."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [],
+  "clip_triangles": 0,
+  "clip_area_pct": 0.0
+ },
+ "boar": {
+  "reviews": {
+   "fable": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Crest is a sawtooth of identical sharp triangles, stegosaurus-like, where the brief asks for blunt bristle clumps",
+     "Tail is a paper-thin plate seen edge-on in back34, and a dense dark triangle fan sits at the rump/tail root (hind-limb wire); 2 flipped faces on the body",
+     "Ears are slabs set far apart on top of the head; eyes are flat diamonds with no brow, so the face is only the snout"
+    ],
+    "brief_fit": "Strongest hump and front-heavy mass, good snout disc with nostrils and chunky tusks; crest and tail miss the brief."
+   },
+   "opus": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "the crest is a row of identical sharp spikes in a regular comb, not blunt clumps (1_beauty az090)",
+     "the dark saddle is a hard rectangular block on the flank, with its border cutting across faces rather than following a loop (1_beauty az090/back34)",
+     "nostrils are tiny rectangular boxes on the disc; 2 flipped faces on the body are under the limit but should be checked"
+    ],
+    "brief_fit": "Best match to the brief: low wedge head, a flat snout disc with nostrils, cream tusks curving up from the lower jaw, a front-heavy hump, hock angles and a tufted tail."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [],
+  "clip_triangles": 0,
+  "clip_area_pct": 0.0
+ },
+ "character": {
+  "reviews": {
+   "fable": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Hands are paper-thin paddles with a notch for a thumb; the far hand in hero and back34 is a flat blade edge-on",
+     "Brow and mouth pieces float off the skull as dark bars (head close-up, left brow and mouth); the far eye is seen as a dark rim disc stuck on the sphere",
+     "Feet are flat flipper slabs with a step, no toe block; head is a uniform ring-band sphere"
+    ],
+    "brief_fit": "Big round head, thin neck, slim torso, big rimmed eyes, brows, nose and mouth are all present; hands and feet miss the brief."
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "the thumb is a thin detached hook and the hand reads as a claw rather than a curled mitten (2_closeups front limb)",
+     "the head is a plain UV sphere with uniform ring bands, a machine tell; the feet are long flat flippers",
+     "the hard hip seam band reads as a briefs line despite 'no clothing detail'; torso and limbs are constant-section tubes"
+    ],
+    "brief_fit": "Clean tech and the best eyes (round sclera, black pupil, thin outline flush on the sphere), with a correct big-head, thin-neck silhouette. The hands and feet are weak."
+   }
+  },
+  "kit_gate_fails": [
+   "FAIL s4 qa: posed fold-overs/collapses <= 0.5% of triangles and <= 0.5% of surface area \u2014 95 (8.02% of tris, 1.75% of area)",
+   "FAIL s4 qa: no piece comes off the body in a pose (drift) \u2014 2 shells \u2014 bind them with body= weights (or the bone under them)"
+  ],
+  "kit_warnings": [],
+  "clip_triangles": 0,
+  "clip_area_pct": 0.0
+ },
+ "crab": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "Rim teeth are sparse needle spikes on the carapace front edge, read as slivers at close range (2_closeups front limb)",
+     "Walking legs are constant-section tubes between the two bends; no taper or knee swell",
+     "Barnacles are plain extruded prisms glued on the rear rim rather than bedded in"
+    ],
+    "brief_fit": "Hits nearly every line: low wide carapace, two chunky gapped claws with teeth, eight legs with two bends and dark tips, eye stalks, barnacle cluster, palette exact"
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Radial fan of needle spikes on the rear-left carapace rim (hind-limb close-up, back34), a machine tell that reads as splinters",
+     "Cream belly shows as a flat shield on the front face between the eye stalks (az000), so the front rim loses its red toothed edge",
+     "Walking legs are constant-section tubes with a weak second bend; barnacles are plain stubby cylinders"
+    ],
+    "brief_fit": "Strong: wide low carapace, chunky claws with teeth and a gap, eight splayed legs with dark tips, stalk eyes on the rim, barnacles on the rear rim."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 2 triangles (0.04% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 2,
+  "clip_area_pct": 0.04
+ },
+ "frog": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "Black arrow-shaped nostril marks on the snout read as stray decals at thumbnail size (2_closeups head)",
+     "Mouth line is a thin ribbon plate that stands proud of the jaw in wire (2_closeups head wire)",
+     "Posed fold-over patch at the hip in the hero heatmap; body reads as a box from the front (az000)"
+    ],
+    "brief_fit": "Closest to brief: big gold eyes with horizontal pupil band, wide mouth line, cream jaw and belly, straight front legs with pad toes, folded Z hind legs with long webbed feet, spots"
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Stands too tall on long straight front legs, so it reads alert-upright rather than squat, and the hind legs leave a big gap under the body (az090)",
+     "The pupil is a black band wrapped right round each eye (goggle stripe), and a green lid bump sits behind each eye as a second dome; the mouth-line bar pokes past the head at the corners (az000)",
+     "Hind feet have separate thin toes with no webbing; posed fold-over at the thigh-body junction (tech hero purple, move_f012)"
+    ],
+    "brief_fit": "Good: big gold bulging eyes on top of a wide head, cream jaw, black mouth line, dark back spots, folded Z hind legs; webbing is missing."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 80 triangles (4.32% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 80,
+  "clip_area_pct": 4.32
+ },
+ "giant": {
+  "reviews": {
+   "fable": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Fists are dark mitts with five parallel nail slabs in a row (1_beauty az000), no knuckle row or separate fingers",
+     "Face is a small inset with two cube eyes and no brow or mouth plane (2_closeups head)",
+     "Moss and rocks are glued on the hump top as flat chips"
+    ],
+    "brief_fit": "Cleanest tech and a strong hunched profile, but the sunken head has no face and the fists are mitts"
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Fingers and toes are rows of identical rectangular stone blocks like piano keys (az000), and the dark mitt fists have no knuckle row",
+     "Tusks are overlong and run up past the eyes; the eyes are tiny amber chips under the brow",
+     "Pot belly is flat-fronted and the legs are constant-section; the tech sheet is clean, which my eye confirms"
+    ],
+    "brief_fit": "Best: a hunched mountain troll with a small head sunk low under massive shoulders, brow, jaw tusks, arms to the knees, irregular moss pads and bedded rocks, belt and loincloth."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 38 triangles (2.46% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 38,
+  "clip_area_pct": 2.46
+ },
+ "goblin": {
+  "reviews": {
+   "fable": {
+    "score": 5.5,
+    "verdict": "FIX",
+    "top_issues": [
+     "head is a long dog/lizard muzzle with lateral eyes and no dome or heavy brow; the hooked nose is absent so it reads kobold, not goblin",
+     "ears are oversized swept-back blades out of scale with the head, and a sliver seam runs along the jaw/neck (yellow in hero and az000 heatmap)",
+     "mouth is a thin line with fangs poking from an underbite; the face has no expression at thumbnail size"
+    ],
+    "brief_fit": "Body, belt with gold buckle, three-fingered hands and three-toed feet are right; the head misses the brief (no dome, no hooked nose, no wide grin)."
+   },
+   "opus": {
+    "score": 5,
+    "verdict": "FIX",
+    "top_issues": [
+     "The head is a boxy dog-like muzzle, not a hooked nose, and the back of the skull (back34) has a recessed vertical groove that reads as a modelling error",
+     "The mouth seam is a dark crease wrapping the jaw, with a sliver line flagged at the jaw hinge; the far ear is extremely long and blade-thin in hero and az090",
+     "The side loincloth panels are thin plates (slivers in az090 and back34); the belly is a shaded chest panel with no pot over the belt"
+    ],
+    "brief_fit": "Has the right parts (arms to the knees, chunky gold buckle, long ears, fangs), but the head reads as a snouted dog-goblin and the face lacks a heavy brow."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 4 triangles (0.66% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 4,
+  "clip_area_pct": 0.66
+ },
+ "owl": {
+  "reviews": {
+   "fable": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "brow slabs float above the head surface with a visible gap (head wire, top-left)",
+     "black talon pieces poke through the top of the foot as dark slits (hind-limb close-up), reading as holes",
+     "tail underside has a sliver seam (yellow, az090) and the eyes sit slightly unequal in the hero view"
+    ],
+    "brief_fit": "All cues present: egg body, solid cone tufts, folded wings, fan tail, feathered legs with dark talons, cream disc and belly, orange eyes."
+   },
+   "opus": {
+    "score": 7,
+    "verdict": "FIX",
+    "top_issues": [
+     "The brows are rectangular sticks that jut past the head silhouette in hero and the head close-up, reading as glued-on planks",
+     "The facial disc is a square mask with no dark rim; the tan chest band adds an off-palette colour",
+     "The eye rings are flat octagons with a visible stepped inset in the wire, and the tail fan is a thin plate (sliver on the tail underside in az090)"
+    ],
+    "brief_fit": "Good match: egg body, folded wings with a fan tail, big orange eyes, tufts, feathered brown thighs and dark talons."
+   }
+  },
+  "kit_gate_fails": [
+   "FAIL s4 qa: no piece comes off the body in a pose (drift) \u2014 1 shells \u2014 bind them with body= weights (or the bone under them)"
+  ],
+  "kit_warnings": [
+   "WARN s4 qa: 13 triangles (1.00% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 13,
+  "clip_area_pct": 1.0
+ },
+ "raven_wyvern": {
+  "reviews": {
+   "fable": {
+    "score": 6.5,
+    "verdict": "FIX",
+    "top_issues": [
+     "folded wing is a single flat purple plate with no thickness, reads as a shard edge-on (hind-limb close-up, sliver edges in az000)",
+     "tail is a constant-section tube ending in a fan; feet are flat wedges with serrated flat toes and tiny claws",
+     "eye is a small diamond and the body squats low with short hidden legs, reading as a hunched vulture"
+    ],
+    "brief_fit": "Best silhouette match: tail longer than the body, graded dorsal spines, shaggy hackles, swept horns, raven bill; the wings and feet are the weak pieces."
+   },
+   "opus": {
+    "score": 4,
+    "verdict": "REBUILD",
+    "top_issues": [
+     "The wings are a single purple cape plate hung on each flank, with no wing arm, spars or thumb claw, so the wyvern identity fails",
+     "The chest and neck are covered in dozens of needle-thin hackle shards that splinter at close range",
+     "The body is an upright raven with no neck S-curve and no wing mantle in the attack"
+    ],
+    "brief_fit": "Reads as a horned raven with a dragon tail; the brief's first requirement (a wyvern whose wings are the forelimbs) is not met."
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 8 triangles (3.56% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 8,
+  "clip_area_pct": 3.56
+ },
+ "stag": {
+  "reviews": {
+   "fable": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "Tech heatmap flags posed fold-over (purple) at the mane/neck junction in hero and az000; the mane is a dense pile of overlapping thin shards that gets messy at close range (mane close-up, attack_f016)",
+     "Antler tine tips are identical needle spikes (piece_tines) and 2 flipped body faces are logged near the shoulder; a dark inset facet at the armpit in the front-limb close-up",
+     "Eye is a tiny dot on a long head, so the face has little appeal at thumbnail size"
+    ],
+    "brief_fit": "Closest to the brief: tall crowned antlers with forward brow tines, leaf ears, dark mane over a cream V bib, cream belly and rump, hocks and small black hooves all read."
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "The mane and bib are built from many thin shard plates, not a few bold clumps, so they read spiky and procedural in the close-ups",
+     "The ear is a thin flat cream plate that sits in front of the antler base and eye (head close-up). Two flipped faces at the throat fold when posed (purple in tech az000)",
+     "The tines have separate darker cone caps that read as glued-on pencil tips. The lower legs add an off-palette dark stocking colour"
+    ],
+    "brief_fit": "Best fit: tall, properly branching antlers with forward brow tines and crowned tips, a dark mane with a cream V bib, rump patch and short tail"
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 16 triangles (1.17% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 16,
+  "clip_area_pct": 1.17
+ },
+ "wolf": {
+  "reviews": {
+   "fable": {
+    "score": 6.5,
+    "verdict": "FIX",
+    "top_issues": [
+     "Tech heatmap flags a posed fold-over (purple) on the chest under the ruff, seen in the idle first frame as a dark collapsed facet between the front legs in az000 and hero",
+     "Hackles along the spine are a row of identical repeated spikes (az090, back34), and some ruff triangles float off the shoulder as detached shards (hero, front-limb close-up)",
+     "2 flipped body faces and 2 slivers logged; paws are blocky with claws stuck on rather than oval toe-led paws"
+    ],
+    "brief_fit": "Strongest identity: long wedge muzzle, tall ears, amber eyes under a brow, clumped ruff over a cream bib, dark saddle, tuck-up and a low bushy dark-tipped tail all read at a glance."
+   },
+   "opus": {
+    "score": 6,
+    "verdict": "FIX",
+    "top_issues": [
+     "The ruff is built from many thin triangle plates, and the hackles are a row of identical spikes along the spine (machine tell, paper-thin edge-on)",
+     "Two flipped faces fold over at the throat when posed (purple in tech hero/az000). A dark spike pendant hangs under the chest between the forelegs (az000)",
+     "The tail is dark along its whole underside rather than a dark tip. Some ruff plates cross the shoulder and forelimb line"
+    ],
+    "brief_fit": "Closest overall: wedge head, tall pointed ears, strong amber eyes, dark saddle, deep chest with tuck-up, long legs, low bushy tail"
+   }
+  },
+  "kit_gate_fails": [],
+  "kit_warnings": [
+   "WARN s4 qa: 14 triangles (0.79% of surface) clip through the body in a pose that did not at rest (pink): a limb through a flap, a paw through the cheek"
+  ],
+  "clip_triangles": 14,
+  "clip_area_pct": 0.79
+ }
+}

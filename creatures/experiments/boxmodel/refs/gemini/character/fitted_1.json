@@ -1,0 +1,18 @@
+{
+ "source": "sheet_1.png",
+ "ops": {
+  "side": "flip",
+  "front": "none",
+  "rear": "none",
+  "top": "rot90cw"
+ },
+ "fit": {
+  "front": 0.998,
+  "rear": 1.024,
+  "top": [
+   0.977,
+   0.998
+  ],
+  "largest": 0.024
+ }
+}

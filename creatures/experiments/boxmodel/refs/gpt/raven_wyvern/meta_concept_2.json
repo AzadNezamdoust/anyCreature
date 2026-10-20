@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 71.0,
+ "exit": 0,
+ "prompt": "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole creature in frame on a plain pure white background. The creature: a raven-headed wyvern: a wyvern first: two legs, the wings ARE the forelimbs folded at rest, a long reptile tail longer than the body with a fin tip; raven traits second; raven skull with a heavy black bill and a pale tip, amber eye, swept-back horns, shaggy throat hackles; S-curved neck, deep keeled chest, forward-pitched crouch, bird legs with a reversed hock and talons, long tapering tail; folded membrane wings with tapered finger spars and a thumb claw, graded dorsal spines, tail fin, horns, hackles. Size: height 1.4 m, length 2.3 m bill to tail tip, width 0.7 m with the wings folded. Pose: standing on two legs, body pitched forward, wings folded. Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; no thin spikes, no loose shards, no tiny noisy details. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (blue-black plumage, purple membrane, black bill, pale bill tip, amber eye, grey-brown shank, horn), soft even light, no cast shadows, no text, no labels.",
+ "reference": null,
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:32:51"
+}

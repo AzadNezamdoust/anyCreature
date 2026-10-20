@@ -1,0 +1,34 @@
+{
+  "id": "pickup",
+  "class": "vehicle",
+  "title": "Cartoon pickup truck (WORKFLOW-V3 §5 second class)",
+  "paths": {
+    "target": "refs/pickup_truck.png",
+    "camera": "refs/pickup_truck.camera.json",
+    "module": "subjects/pickup/module.mjs",
+    "passes": "subjects/pickup/passes.json",
+    "census": "subjects/pickup/census.json",
+    "layout": "subjects/pickup/layout.json",
+    "layoutMeasured": "subjects/pickup/layout.measured.json",
+    "regions": "subjects/pickup/regions.json",
+    "missingKeys": "subjects/pickup/missing-keys.json"
+  },
+  "outDir": "out/pickup",
+  "missingKeyPolicy": "report",
+  "deferredByRuling": [
+    "ink outlines",
+    "hood crease panel",
+    "wheel-arch flares"
+  ],
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/pickup/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "tail"
+        ]
+      },
+      "evidence": "tail = the tail-lamp lenses rearLamp_l/_r on the rear face (0 px in the registered concept render): rear turnaround 361,535,7,7 #e13738 (model #e13638)"
+    }
+  }
+}

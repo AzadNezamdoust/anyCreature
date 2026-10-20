@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face (H4-H5, brow edge to cheek)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "nostril: a loop inside the flat disc (half cap = one nostril per side)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "partial_loop",
+   "reason": "mouth line: from the disc rim back to under the eye, fan-terminated in the disc-rim quad and in the cheek quad (skull, nothing bends there)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "ear cup: a loop inside the front face of the ear",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "partial_loop",
+   "reason": "saddle border: a diagonal line across the upper flank from the chest front (low) to behind the hump (high), fan-terminated in the nape quad and the barrel quad (mid-back, nothing bends there)",
+   "new_verts": 2,
+   "extra_base_edges": []
+  }
+ ]
+}

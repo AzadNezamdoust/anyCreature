@@ -1,0 +1,88 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "leg 0: loop on the thigh side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "leg 0: loop on the shin side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "leg 1: loop on the thigh side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "leg 1: loop on the shin side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "leg 2: loop on the thigh side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "leg 2: loop on the shin side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "leg 3: loop on the thigh side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "leg 3: loop on the shin side of the knee (the bend)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "claw: elbow loop (the arm raise bends here)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "claw: mid-palm loop (swell the palm)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "inset",
+   "reason": "eye orbit: the stalk sits in a socket on the front plate",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "inset",
+   "reason": "mouth plate: a recessed frame under the front rim",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

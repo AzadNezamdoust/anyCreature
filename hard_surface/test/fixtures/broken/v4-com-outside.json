@@ -1,0 +1,66 @@
+{
+  "schema": "pg/1",
+  "subject": "v4_com_outside",
+  "seed": 1,
+  "class": "prop",
+  "note": "V4: a 3 m boom cantilevered off the crate puts the centre of mass outside the ground footprint.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood"
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": [
+        0.64,
+        0.05,
+        0.64
+      ],
+      "role": "lid",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "boom",
+      "prim": "box",
+      "dims": [
+        3,
+        0.4,
+        0.4
+      ],
+      "role": "boom",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+X",
+        "uv": [
+          0.5,
+          1
+        ],
+        "contact": "flush",
+        "align": "top"
+      }
+    }
+  ]
+}

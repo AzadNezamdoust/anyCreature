@@ -1,0 +1,23 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 1.85 },
+  "families": {
+    "body": "body",
+    "enclosedFg": true,
+    "_enclosedFg": "2026-09-27 (research/v7/EYES-EXPERIMENT.md B): background = the near-white region connected to the border; the enclosed roof sign and headlight lenses are foreground",
+    "table": {
+      "body": ["#fecb17", "#f0c00c"],
+      "glass": "#84c4fb",
+      "dark": ["#2f2f2f", "#424141"],
+      "bumper": "#757474",
+      "hub": "#a9a9a9",
+      "sign": "#f0f0f0"
+    }
+  }
+}

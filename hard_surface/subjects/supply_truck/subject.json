@@ -1,0 +1,49 @@
+{
+  "id": "supply_truck",
+  "class": "vehicle",
+  "title": "RTS-style supply truck (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/supply_truck.v2.png",
+    "camera": "subjects/supply_truck/camera.json",
+    "layoutMeasured": "subjects/supply_truck/layout.measured.json"
+  },
+  "outDir": "out/supply_truck",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 6,
+        "axles": 3,
+        "diameters": "equal"
+      },
+      "evidence": "concept refs/supply_truck.v2.png + side turnaround: six wheels of one size, one axle under the cab and two close-set rear axles"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "canvas",
+          "hoop",
+          "spare_wheel",
+          "fuel_tank"
+        ]
+      },
+      "evidence": "the concept draws a canvas tilt over hoops on the cargo bed, a spare wheel upright behind the cab and a fuel tank under the cab door (refs/supply_truck.README.md)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "canvas",
+          "gunmetal"
+        ]
+      },
+      "evidence": "the concept paints the canvas tilt a darker sand khaki than the tan cab, and the fuel tank / chassis dark gunmetal"
+    },
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# TARGET provenance — revolver
+
+- date: 2026-10-04
+- generator: GPT image generation through scripts/v7/imagegen.mjs --gen gpt (text to image, no reference; agent gpt-6-astra); GPT / Gemini are used only to generate the image
+- raw output: 1536 x 1024 px, 1206813 bytes, sha256 05cb26b0dc0eed5cf954702d60823b6b02106d8656a0a3b7e53e80a42831c25b (out/concept/revolver/raw.png)
+- image: refs/revolver.png = the raw output padded with white to a square (centred) and resized to 1024 x 1024 (lanczos3); nothing else changed
+- bytes: 498878
+- sha256: 277a35e45ab5c41a6af21cb08dfe9b107f6c3a1054c0f9ee4f4b147a3a6c96d5
+- style: fps (scripts/v7/styles.json styles.fps.text), after the description and the hidden-face rule (RUNBOOK 2026-09-27; gold.mjs new --style fps)
+
+## Full prompt (image prompt, verbatim)
+
+```
+A stylised heavy double-action revolver, one game weapon model. A thick dark gunmetal frame with a flat top strap. A long heavy gunmetal barrel, slab-sided with a round bore, a full-length underlug beneath it and a ventilated rib with three slots along its top, a ramped blade front sight at the muzzle end and a boxy rear sight notch at the back of the top strap. In the middle of the frame a fat round gunmetal cylinder with six chambers and six rounded flutes on its outside, its axis parallel to the barrel. Behind the cylinder a spurred gunmetal hammer standing up at the rear of the frame. Under the frame a rounded trigger guard with a curved gunmetal trigger inside it. A matte black polymer grip raked backward with a finger-grooved front edge, a stippled side panel and a rounded base. Safety-orange accents: the front sight blade, the cylinder release latch on the left flank behind the cylinder, and a round medallion disc on the grip's side panel. The ejector rod tip shows under the barrel in front of the cylinder. The right flank has a plain side plate with one screw, hidden in this view. About 0.30 m long, 0.045 m wide and 0.16 m tall. Anything on a face this view cannot show (the rear face, the far flank, the underside) faces away and is not visible in this view: never move it onto a visible face; the visible faces are drawn exactly as described. Orthographic isometric view, 30 degree elevation, 45 degree azimuth from front-left, no perspective, vertical edges perfectly vertical. Stylised first-person-shooter weapon model: one single handheld weapon held level in the air, its barrel horizontal, the muzzle end being its front. Chunky, readable low-poly forms with slightly exaggerated proportions, crisp facets and chamfers, flat cel shading, one solid flat colour per surface, thin dark outlines. Dark gunmetal for the metal parts, matte black polymer for the furniture, and the one accent colour described. No textures, no gradients, no wear, no scratches, no decals, no text, no numbers, no logos or markings. Lenses are a single flat colour with no reflections, streaks, highlights or glass shine. No hands, no people, no animals, no stand, no table, no other weapons, no props beyond those described, no ground shadow. Solid white background, whole object in frame with margin, centred.
+```

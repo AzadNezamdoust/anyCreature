@@ -1,0 +1,406 @@
+{
+  "module": "out/ref/gold/school_bus/model.mjs",
+  "sigma": 1.0027,
+  "views": {
+    "side": {
+      "iou": 0.9643,
+      "zone": 0.3258,
+      "fam": {
+        "glass": 0.8119,
+        "tyre+black": 0.5688,
+        "hub": 0.563,
+        "headlight": 0,
+        "amber": 0,
+        "signal": 0.1787,
+        "orange": 0.1578
+      }
+    },
+    "front": {
+      "iou": 0.9687,
+      "zone": 0.3749,
+      "fam": {
+        "glass": 0.7666,
+        "tyre+black": 0.6132,
+        "hub": 0,
+        "headlight": 0.6839,
+        "amber": 0.4953,
+        "signal": 0.0549,
+        "orange": 0.0106
+      }
+    },
+    "rear": {
+      "iou": 0.9411,
+      "zone": 0.4756,
+      "fam": {
+        "glass": 0.9913,
+        "tyre+black": 0.7871,
+        "hub": 0,
+        "headlight": 0,
+        "amber": 0.7094,
+        "signal": 0.8413,
+        "orange": 0
+      }
+    },
+    "top": {
+      "iou": 0.9709,
+      "zone": 0.1786,
+      "fam": {
+        "glass": 1,
+        "tyre+black": 0.2505,
+        "hub": 0,
+        "headlight": 0,
+        "amber": 0,
+        "signal": 0,
+        "orange": 0
+      }
+    },
+    "concept": {
+      "iou": 0.9638
+    }
+  },
+  "viewRows": [
+    {
+      "view": "side",
+      "part": "row_band_l",
+      "score": 3593.9517725029395,
+      "text": "SIDE: part \"row_band_l\" (tyre+black) 0.06 m too far low, 0.31 m too far rearward, 0.11 m too narrow along z, 0.35 m too short along y"
+    },
+    {
+      "view": "top",
+      "part": "bumper_front",
+      "score": 573.2770649325287,
+      "text": "TOP: part \"bumper_front\" (tyre+black) 0.55 m too tall along x"
+    },
+    {
+      "view": "front",
+      "part": "windshield_r",
+      "score": 318.8680359836776,
+      "text": "FRONT: part \"windshield_r\" (glass) 0.1 m too far high, 0.06 m too tall along y"
+    },
+    {
+      "view": "front",
+      "part": "windshield_l",
+      "score": 310.3984340559132,
+      "text": "FRONT: part \"windshield_l\" (glass) 0.09 m too far high, 0.06 m too tall along y"
+    },
+    {
+      "view": "top",
+      "part": "marker_housing_l",
+      "score": 266.302450855162,
+      "text": "TOP: part \"marker_housing_l\" (tyre+black) 0.48 m too far inboard, 0.36 m too far rearward, 0.31 m too narrow along z, 0.06 m too tall along x"
+    },
+    {
+      "view": "side",
+      "part": "stopArm_sign",
+      "score": 235.9668612284374,
+      "text": "SIDE: part \"stopArm_sign\" (signal) 0.28 m too far rearward"
+    },
+    {
+      "view": "rear",
+      "part": "bumper_rear",
+      "score": 224.09502014874613,
+      "text": "REAR: part \"bumper_rear\" (tyre+black) 0.05 m too narrow along x"
+    },
+    {
+      "view": "top",
+      "part": "marker_housing_r",
+      "score": 222.02961635048032,
+      "text": "TOP: part \"marker_housing_r\" (tyre+black) 0.42 m too far inboard, 0.38 m too far rearward, 0.17 m too narrow along z, 0.09 m too tall along x"
+    },
+    {
+      "view": "front",
+      "part": "windshield_frame",
+      "score": 191.47700142472678,
+      "text": "FRONT: part \"windshield_frame\" (tyre+black) 0.06 m too far high, 0.05 m too wide along x, 0.08 m too tall along y"
+    },
+    {
+      "view": "side",
+      "part": "wheel_rl",
+      "score": 141.05754512349498,
+      "text": "SIDE: part \"wheel_rl\" (tyre+black) 0.06 m too narrow along z, 0.05 m too short along y"
+    },
+    {
+      "view": "top",
+      "part": "-",
+      "score": 118.60000000000001,
+      "text": "TOP: MISSING tyre+black 0.12 x 2.29 m at (x -0.01, y 0, z -3.16) m"
+    },
+    {
+      "view": "side",
+      "part": "door_pane",
+      "score": 106.5162941633896,
+      "text": "SIDE: part \"door_pane\" (glass) 0.08 m too far low, 0.05 m too far rearward, 0.09 m too narrow along z, 0.11 m too tall along y"
+    },
+    {
+      "view": "side",
+      "part": "wheel_fl",
+      "score": 105.28542553229452,
+      "text": "SIDE: part \"wheel_fl\" (tyre+black) 0.05 m too narrow along z, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l0",
+      "score": 98.2413833606007,
+      "text": "SIDE: part \"row_l0\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l1",
+      "score": 98.2413833606007,
+      "text": "SIDE: part \"row_l1\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l4",
+      "score": 98.2413833606007,
+      "text": "SIDE: part \"row_l4\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l6",
+      "score": 95.95670002663324,
+      "text": "SIDE: part \"row_l6\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l2",
+      "score": 94.992286604762,
+      "text": "SIDE: part \"row_l2\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l3",
+      "score": 94.992286604762,
+      "text": "SIDE: part \"row_l3\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "row_l5",
+      "score": 94.992286604762,
+      "text": "SIDE: part \"row_l5\" (glass) 0.05 m too far low, 0.05 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "bumper_rear",
+      "score": 66.46690607913376,
+      "text": "SIDE: part \"bumper_rear\" (tyre+black) 0.06 m too far forward, 0.09 m too wide along z"
+    },
+    {
+      "view": "side",
+      "part": "hub_rl",
+      "score": 59.927916476441204,
+      "text": "SIDE: part \"hub_rl\" (hub) 0.08 m too narrow along z, 0.08 m too short along y"
+    },
+    {
+      "view": "side",
+      "part": "hub_fl",
+      "score": 59.312482160893666,
+      "text": "SIDE: part \"hub_fl\" (hub) 0.08 m too narrow along z, 0.08 m too short along y"
+    },
+    {
+      "view": "top",
+      "part": "mirror_head_r",
+      "score": 57.74312465624745,
+      "text": "TOP: silhouette -x edge 0.14 m past the reference (part \"mirror_head_r\" at that edge)"
+    },
+    {
+      "view": "side",
+      "part": "-",
+      "score": 49.400000000000006,
+      "text": "SIDE: MISSING tyre+black 0.22 x 0.55 m at (x 0, y 1.87, z 3.21) m"
+    },
+    {
+      "view": "top",
+      "part": "bumper_front",
+      "score": 46.15757366606511,
+      "text": "TOP: silhouette forward edge 0.23 m short of the reference (part \"bumper_front\" at that edge)"
+    },
+    {
+      "view": "rear",
+      "part": "mirror_head_l",
+      "score": 30.797566448789702,
+      "text": "REAR: part \"mirror_head_l\" (tyre+black) 0.06 m too far low, 0.05 m too tall along y"
+    },
+    {
+      "view": "rear",
+      "part": "mirror_head_r",
+      "score": 28.78060693225873,
+      "text": "REAR: part \"mirror_head_r\" (tyre+black) 0.06 m too far low, 0.05 m too tall along y"
+    },
+    {
+      "view": "top",
+      "part": "mirror_head_l",
+      "score": 25.663610958332203,
+      "text": "TOP: silhouette +x edge 0.06 m past the reference (part \"mirror_head_l\" at that edge)"
+    },
+    {
+      "view": "front",
+      "part": "marker_housing_r",
+      "score": 17.71304321199736,
+      "text": "FRONT: part \"marker_housing_r\" (tyre+black) 0.11 m too far high, 0.05 m too short along y"
+    },
+    {
+      "view": "front",
+      "part": "marker_housing_l",
+      "score": 16.505990099109837,
+      "text": "FRONT: part \"marker_housing_l\" (tyre+black) 0.11 m too far high, 0.05 m too short along y"
+    },
+    {
+      "view": "front",
+      "part": "marker_r0",
+      "score": 11.406401400653156,
+      "text": "FRONT: part \"marker_r0\" (signal) 0.12 m too far high"
+    },
+    {
+      "view": "front",
+      "part": "marker_l0",
+      "score": 11.21531734220663,
+      "text": "FRONT: part \"marker_l0\" (signal) 0.12 m too far high"
+    },
+    {
+      "view": "side",
+      "part": "bumper_front",
+      "score": 11.077817679855627,
+      "text": "SIDE: silhouette forward edge 0.06 m short of the reference (part \"bumper_front\" at that edge)"
+    },
+    {
+      "view": "top",
+      "part": "bumper_rear",
+      "score": 9.231514733213023,
+      "text": "TOP: silhouette rearward edge 0.05 m short of the reference (part \"bumper_rear\" at that edge)"
+    },
+    {
+      "view": "front",
+      "part": "turn_r",
+      "score": 2.769454419963907,
+      "text": "FRONT: part \"turn_r\" (amber) 0.05 m too wide along x"
+    },
+    {
+      "view": "rear",
+      "part": "rearMarker_r1",
+      "score": 2.400193830635386,
+      "text": "REAR: part \"rearMarker_r1\" (amber) 0.05 m too tall along y"
+    }
+  ],
+  "symmetry": 1,
+  "checks": {
+    "groups": [
+      {
+        "name": "bumper_front",
+        "parts": [
+          "bumper_front"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.9)"
+      },
+      {
+        "name": "bumper_rear",
+        "parts": [
+          "bumper_rear"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.9)"
+      },
+      {
+        "name": "mirror_l",
+        "parts": [
+          "mirror_head_l",
+          "mirror_arm_l0",
+          "mirror_arm_l1",
+          "mirror_arm_l2",
+          "mirror_arm_l3"
+        ],
+        "float": false,
+        "why": "chain ok"
+      },
+      {
+        "name": "mirror_r",
+        "parts": [
+          "mirror_head_r",
+          "mirror_arm_r0",
+          "mirror_arm_r1",
+          "mirror_arm_r2",
+          "mirror_arm_r3"
+        ],
+        "float": false,
+        "why": "chain ok"
+      },
+      {
+        "name": "stopArm",
+        "parts": [
+          "stopArm_rim",
+          "stopArm_border",
+          "stopArm_sign",
+          "stopArm_post",
+          "stopArm_hinge"
+        ],
+        "backed": 0.843,
+        "float": false,
+        "why": "min backed fraction 0.843 (rule >= 0.5)"
+      },
+      {
+        "name": "headlights",
+        "parts": [
+          "lamp_l",
+          "lamp_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "turn",
+        "parts": [
+          "turn_l",
+          "turn_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "markers",
+        "parts": [
+          "marker_housing_l",
+          "marker_l0",
+          "marker_l1",
+          "marker_housing_r",
+          "marker_r0",
+          "marker_r1"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      },
+      {
+        "name": "rearLamps",
+        "parts": [
+          "rearLamp_l",
+          "rearLamp_r"
+        ],
+        "backed": 1,
+        "float": false,
+        "why": "min backed fraction 1 (rule >= 0.5)"
+      }
+    ],
+    "clips": [],
+    "mirror": {
+      "armLength": 0.256,
+      "reach": 0.509,
+      "swept": {
+        "gap": 0.023,
+        "yOverlap": false,
+        "clip": false
+      },
+      "armOk": true
+    },
+    "pass": true
+  },
+  "placementRows": [],
+  "minOrtho": 0.9411,
+  "minView": 0.9411,
+  "score": 0.9621,
+  "tris": 3742
+}

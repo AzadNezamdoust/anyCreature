@@ -1,0 +1,19 @@
+node_modules/
+dist/
+out/
+cache/
+
+# WF v8 WP5 (research/v7/UNTRACK-2026-09-27.md): out/ stays ignored as a whole; `scripts/v7/gold.mjs commit` force-adds the
+# round's files by explicit path (never a directory). These are never tracked under out/ref/gold/<s>/ — per-step
+# snapshots and renders, critic crops, scratch dirs, subject-local tools, briefs (one model-rN.mjs per round is):
+out/ref/gold/*/model-v*.mjs
+out/ref/gold/*/steps/
+out/ref/gold/*/brief/
+out/ref/gold/*/critique/r*-*/
+out/ref/gold/*/view/model-v*
+out/ref/gold/*/view/v*-view.*
+out/ref/gold/*/tools/
+out/ref/gold/*/view0/
+out/ref/gold/*/snap/
+out/ref/gold/*/k1/
+out/ref/gold/*/audit/view/

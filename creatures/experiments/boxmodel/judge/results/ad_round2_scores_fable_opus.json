@@ -1,0 +1,41 @@
+{
+ "scores_fable_opus": {
+  "wolf": [
+   7,
+   6
+  ],
+  "giant": [
+   6,
+   5
+  ],
+  "boar": [
+   7,
+   7
+  ],
+  "goblin": [
+   7,
+   6
+  ],
+  "bear": [
+   7,
+   7
+  ],
+  "stag": [
+   7,
+   7
+  ],
+  "frog": [
+   7,
+   6
+  ],
+  "owl": [
+   7,
+   7
+  ],
+  "crab": [
+   7,
+   5
+  ]
+ },
+ "verdicts_note": "all FIX except boar (Fable SHIP)"
+}

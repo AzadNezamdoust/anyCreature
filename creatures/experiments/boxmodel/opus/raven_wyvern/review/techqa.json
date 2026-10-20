@@ -1,0 +1,115 @@
+{
+ "limits": {
+  "sliver_pct": 2.0,
+  "hit": 0,
+  "float": 0,
+  "zfight": 2,
+  "flip_pct": 0.5
+ },
+ "totals": {
+  "valley": 0,
+  "fold": 0,
+  "sliver": 56,
+  "hit": 2,
+  "open": 0,
+  "float": 0,
+  "zfight": 5,
+  "flip": 27
+ },
+ "triangles": 1528,
+ "turned": 88,
+ "stuck": 0,
+ "per_object": {
+  "body": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 24,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_eye": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_brow": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 2,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_horns": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_hackles": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 2,
+   "flip": 0
+  },
+  "piece_spines": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_wingbones": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 32,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 3,
+   "flip": 27
+  },
+  "piece_claws": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  },
+  "piece_tailfan": {
+   "valley": 0,
+   "fold": 0,
+   "sliver": 0,
+   "hit": 0,
+   "open": 0,
+   "float": 0,
+   "zfight": 0,
+   "flip": 0
+  }
+ },
+ "ok": false
+}

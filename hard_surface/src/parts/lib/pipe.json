@@ -1,0 +1,23 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "pipe",
+  "note": "Roof pipe / chimney stack: a round shaft with a cap plate. dims = [diameter, height, diameter]. `ring` (the hollow variant) is available for a flue that must read as open at the top; the cap plate here closes it, so the solid `tube` is the cheaper choice at 8 000 tris.",
+  "params": { "capThickness": 0.08, "capOverhang": 0.06, "sides": 8 },
+  "parts": [
+    {
+      "id": "shaft",
+      "prim": "tube",
+      "dims": ["$w", "$h - $capThickness", "$d"],
+      "sides": "$sides",
+      "role": "pipe"
+    },
+    {
+      "id": "cap",
+      "prim": "plate",
+      "dims": ["$w + 2 * $capOverhang", "$capThickness", "$d + 2 * $capOverhang"],
+      "role": "pipe_cap",
+      "attach": { "to": "shaft", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" }
+    }
+  ]
+}

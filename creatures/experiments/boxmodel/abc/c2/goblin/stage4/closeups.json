@@ -1,0 +1,22 @@
+[
+ {
+  "name": "head",
+  "colour": "close_0_colour.png",
+  "wire": "close_0_wire.png"
+ },
+ {
+  "name": "front limb",
+  "colour": "close_1_colour.png",
+  "wire": "close_1_wire.png"
+ },
+ {
+  "name": "hind limb",
+  "colour": "close_2_colour.png",
+  "wire": "close_2_wire.png"
+ },
+ {
+  "name": "belt (largest piece)",
+  "colour": "close_3_colour.png",
+  "wire": "close_3_wire.png"
+ }
+]

@@ -1,0 +1,18 @@
+{
+  "theta_deg": 22.25,
+  "phi_deg": 68.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/freeze_ray.png",
+  "sha256": "7094704203aa127f5c702a13efedc1620bb9b85a8543fb35f6e5d715461d8d43",
+  "solved": "2026-10-04T21:11:43.230Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.771,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.544
+  }
+}

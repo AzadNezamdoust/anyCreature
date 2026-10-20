@@ -1,0 +1,18 @@
+{
+  "theta_deg": 54.75,
+  "phi_deg": 73.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_harpoon_gun.png",
+  "sha256": "068e33a52781e3f250763b4f360c3fc60c85e3719b2320e2350234fb34dfec86",
+  "solved": "2026-10-11T09:49:42.848Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.769,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.578
+  }
+}

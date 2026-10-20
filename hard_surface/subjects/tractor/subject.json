@@ -1,0 +1,45 @@
+{
+  "id": "tractor",
+  "class": "vehicle",
+  "title": "Cartoon farm tractor (WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered body box to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/tractor.png",
+    "camera": "subjects/tractor/camera.json",
+    "module": "subjects/tractor/module.mjs",
+    "layoutMeasured": "subjects/tractor/layout.measured.json"
+  },
+  "outDir": "out/tractor",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/tractor/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 4,
+        "axles": 2,
+        "diameters": "per-axle",
+        "diameterFrac": [
+          0.25,
+          0.47
+        ]
+      },
+      "evidence": "the target draws small front and big rear wheels: side turnaround tyre runs 184 px = 0.81 m (front, row 703) and 313 px = 1.37 m (rear, row 644) at 228.18 px/m; the concept's tyres R .46 / .76 (LEDGER r4 K1, followed by the model). Gold model: wheel groups 0.911 m (front axle z 1.300) and 1.505 m (rear axle z -0.890) over the 3.398 m length = 0.268 / 0.443; diameterFrac 0.25..0.47 = those two +-5 % rounded out (the class 0.1..0.2 band is a road-vehicle band)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "engine",
+          "dark",
+          "rim",
+          "hole",
+          "seat",
+          "recess",
+          "slat",
+          "pod",
+          "cap"
+        ]
+      },
+      "evidence": "concept samples: engine = engine side panels + footwell 459,609,7,7 #2a2a2a (model #393939); dark = engine heads / blocks, grille slats, canopy posts, exhaust, front axle 279,773,7,7 #424242 (model #444444); rim = headlamp bezels + steering wheel / column 512,361,7,7 #303131 (model #262626); hole = exhaust mouth + drawbar eye 274,252,7,7 #202020 (model #1b1b1b); seat = seat cushion + back 650,359,7,7 #363635 (model side #353535); r5 zones, concept samples: recess = the engine side recesses 467,580,7,7 #292929 (model #262626); slat = the grille slats 160,644,7,7 #343434 (model #333333); pod = headlamp pods + brackets 282,672,7,7 #3b3b3a (model side #3c3c3c); cap = hub caps 858,635,7,7 #7b7a79 (model side #626161)"
+    }
+  }
+}

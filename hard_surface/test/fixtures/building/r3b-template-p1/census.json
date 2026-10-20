@@ -1,0 +1,30 @@
+{
+  "_comment": "FROZEN contents count of the brick (middle) building in refs/tenement-iso.png, counted once by two seats at 2x zoom (out/wf-loop/r1/target-brick-zoom.png, WF-LOOP-R1 row 4). Nobody counts the target by vision again: pass items cite these numbers and V12_CENSUS measures them off part ROLES. Counting rules live in CENSUS_RULES in src/validate/kernel-chain.mjs. 'vent' and 'pipes' share role roof_fixture, so V12 checks their SUM (3). r2 row B3: the run is now THREE passes (P0 massing, P1 openings + trims, P2 ironwork) and the palette is a script, so the sign box and the AC moved from P3 to P1 and the ironwork keys from P3 to P2. STAGED: _pass[key] = first pass that must satisfy the key (pass.mjs filters; app.js applies the full census, so the capture manifest's validatorPass is only meaningful at the last pass).",
+  "_source": "refs/tenement-iso.png",
+  "bays": 2,
+  "windowRows": 2,
+  "windows": 4,
+  "storefront": 1,
+  "doors": 1,
+  "landings": 2,
+  "flights": 1,
+  "ladders": 2,
+  "signbox": 1,
+  "ac": 1,
+  "vent": 1,
+  "pipes": 2,
+  "_pass": {
+    "bays": 1,
+    "windowRows": 1,
+    "windows": 1,
+    "storefront": 1,
+    "doors": 1,
+    "landings": 2,
+    "flights": 2,
+    "ladders": 2,
+    "signbox": 1,
+    "ac": 1,
+    "vent": 0,
+    "pipes": 0
+  }
+}

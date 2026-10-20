@@ -1,0 +1,513 @@
+{
+  "registration": {
+    "pxPerM": 129.643,
+    "dims": {
+      "L": 6.244,
+      "W": 2.44,
+      "H": 2.777
+    },
+    "residuals": {
+      "L": {
+        "side": 0.0031,
+        "top": -0.0031,
+        "meanPx": 809.5,
+        "maxAbs": 0.0030883261272390827
+      },
+      "H": {
+        "side": 0,
+        "front": 0,
+        "rear": 0,
+        "meanPx": 360,
+        "maxAbs": 0
+      },
+      "W": {
+        "front": -0.0011,
+        "rear": 0.0053,
+        "top": -0.0042,
+        "meanPx": 316.33,
+        "maxAbs": 0.005268703898841043
+      },
+      "Lbbox": {
+        "side": -0.014,
+        "top": 0.014,
+        "meanPx": 860,
+        "maxAbs": 0.013953488372093092
+      },
+      "Wbbox": {
+        "front": 0.0194,
+        "rear": 0.0245,
+        "top": -0.044,
+        "meanPx": 394.33,
+        "maxAbs": 0.04395604395604391
+      }
+    },
+    "stylisation": {
+      "LoverW": 2.559,
+      "HoverW": 1.138,
+      "realLoverW": [
+        3.2,
+        5.2
+      ],
+      "realHoverW": [
+        1.27,
+        1.35
+      ]
+    }
+  },
+  "arms": {
+    "A": {
+      "module": "out/v6/A.mjs",
+      "sigma": 1.276,
+      "views": {
+        "side": {
+          "iou": 0.9449,
+          "zone": 0.4265,
+          "fam": {
+            "black": 0.4472,
+            "glass": 0.6585,
+            "red": 0.1738
+          }
+        },
+        "front": {
+          "iou": 0.8332,
+          "zone": 0.3894,
+          "fam": {
+            "black": 0.3226,
+            "glass": 0.6674,
+            "red": 0.1784
+          }
+        },
+        "rear": {
+          "iou": 0.8235,
+          "zone": 0.1169,
+          "fam": {
+            "black": 0.3507,
+            "glass": 0,
+            "red": 0
+          }
+        },
+        "top": {
+          "iou": 0.8595,
+          "zone": 0.0269,
+          "fam": {
+            "black": 0.0807,
+            "glass": 0,
+            "red": 0
+          }
+        },
+        "concept": {
+          "iou": 0.97
+        }
+      },
+      "symmetry": 1,
+      "checks": {
+        "groups": [
+          {
+            "name": "bumper_front",
+            "parts": [
+              "bumper_front"
+            ],
+            "backed": 0,
+            "float": true,
+            "why": "min backed fraction 0 (rule >= 0.9)"
+          },
+          {
+            "name": "bumper_rear",
+            "parts": [
+              "bumper_rear"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.9)"
+          },
+          {
+            "name": "mirror_l",
+            "parts": [
+              "mirror_head_l",
+              "mirror_arm_l0",
+              "mirror_arm_l1"
+            ],
+            "float": false,
+            "why": "chain ok"
+          },
+          {
+            "name": "mirror_r",
+            "parts": [
+              "mirror_head_r",
+              "mirror_arm_r0",
+              "mirror_arm_r1"
+            ],
+            "float": false,
+            "why": "chain ok"
+          },
+          {
+            "name": "stopArm",
+            "parts": [
+              "stopArm_sign",
+              "stopArm_border",
+              "stopArm_post"
+            ],
+            "backed": 0.269,
+            "float": true,
+            "why": "min backed fraction 0.269 (rule >= 0.5)"
+          },
+          {
+            "name": "headlights",
+            "parts": [
+              "lamp_l",
+              "lamp_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "turn",
+            "parts": [
+              "turn_l",
+              "turn_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "markers",
+            "parts": [
+              "marker_housing_l",
+              "marker_l0",
+              "marker_l1",
+              "marker_housing_r",
+              "marker_r0",
+              "marker_r1"
+            ],
+            "backed": 0.977,
+            "float": false,
+            "why": "min backed fraction 0.977 (rule >= 0.5)"
+          }
+        ],
+        "clips": [],
+        "mirror": {
+          "armLength": 0.045,
+          "reach": 0.269,
+          "swept": {
+            "gap": 0.085,
+            "yOverlap": true,
+            "clip": true
+          },
+          "armOk": false
+        },
+        "pass": false
+      },
+      "tris": 2128
+    },
+    "B": {
+      "module": "out/v6/B.mjs",
+      "sigma": 0.9953,
+      "views": {
+        "side": {
+          "iou": 0.9557,
+          "zone": 0.771,
+          "fam": {
+            "black": 0.6545,
+            "glass": 0.9099,
+            "red": 0.7486
+          }
+        },
+        "front": {
+          "iou": 0.9467,
+          "zone": 0.7373,
+          "fam": {
+            "black": 0.627,
+            "glass": 0.9458,
+            "red": 0.6389
+          }
+        },
+        "rear": {
+          "iou": 0.9198,
+          "zone": 0.7288,
+          "fam": {
+            "black": 0.6904,
+            "glass": 0.9678,
+            "red": 0.5281
+          }
+        },
+        "top": {
+          "iou": 0.9678,
+          "zone": 0.5348,
+          "fam": {
+            "black": 0.3906,
+            "glass": 1,
+            "red": 0.2139
+          }
+        },
+        "concept": {
+          "iou": 0.9609
+        }
+      },
+      "symmetry": 1,
+      "checks": {
+        "groups": [
+          {
+            "name": "bumper_front",
+            "parts": [
+              "bumper_front"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.9)"
+          },
+          {
+            "name": "bumper_rear",
+            "parts": [
+              "bumper_rear"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.9)"
+          },
+          {
+            "name": "mirror_l",
+            "parts": [
+              "mirror_head_l",
+              "mirror_arm_l"
+            ],
+            "float": false,
+            "why": "chain ok"
+          },
+          {
+            "name": "mirror_r",
+            "parts": [
+              "mirror_head_r",
+              "mirror_arm_r"
+            ],
+            "float": false,
+            "why": "chain ok"
+          },
+          {
+            "name": "stopArm",
+            "parts": [
+              "stopArm_sign",
+              "stopArm_border",
+              "stopArm_post"
+            ],
+            "backed": 0.866,
+            "float": false,
+            "why": "min backed fraction 0.866 (rule >= 0.5)"
+          },
+          {
+            "name": "headlights",
+            "parts": [
+              "lamp_l",
+              "lamp_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "turn",
+            "parts": [
+              "turn_l",
+              "turn_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "markers",
+            "parts": [
+              "marker_housing_l",
+              "marker_l0",
+              "marker_l1",
+              "marker_housing_r",
+              "marker_r0",
+              "marker_r1"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "rearLamps",
+            "parts": [
+              "rearLamp_l",
+              "rearLamp_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          }
+        ],
+        "clips": [],
+        "mirror": {
+          "armLength": 0.329,
+          "reach": 0.478,
+          "swept": {
+            "gap": -0.155,
+            "yOverlap": false,
+            "clip": false
+          },
+          "armOk": true
+        },
+        "pass": true
+      },
+      "tris": 2228
+    },
+    "CONTROL": {
+      "module": "out/v6/CONTROL.mjs",
+      "sigma": 1.2344,
+      "views": {
+        "side": {
+          "iou": 0.9407,
+          "zone": 0.7096,
+          "fam": {
+            "black": 0.6768,
+            "glass": 0.9395,
+            "red": 0.5124
+          }
+        },
+        "front": {
+          "iou": 0.8803,
+          "zone": 0.489,
+          "fam": {
+            "black": 0.4588,
+            "glass": 0.6514,
+            "red": 0.3568
+          }
+        },
+        "rear": {
+          "iou": 0.8666,
+          "zone": 0.601,
+          "fam": {
+            "black": 0.5188,
+            "glass": 0.932,
+            "red": 0.3521
+          }
+        },
+        "top": {
+          "iou": 0.9241,
+          "zone": 0.0737,
+          "fam": {
+            "black": 0.2212,
+            "glass": 0,
+            "red": 0
+          }
+        },
+        "concept": {
+          "iou": 0.9667
+        }
+      },
+      "symmetry": 1,
+      "checks": {
+        "groups": [
+          {
+            "name": "bumper_front",
+            "parts": [
+              "bumper_front"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.9)"
+          },
+          {
+            "name": "bumper_rear",
+            "parts": [
+              "bumper_rear"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.9)"
+          },
+          {
+            "name": "mirror_l",
+            "parts": [
+              "mirror_head_l",
+              "mirror_arm_l"
+            ],
+            "float": false,
+            "why": "chain ok"
+          },
+          {
+            "name": "mirror_r",
+            "parts": [
+              "mirror_head_r",
+              "mirror_arm_r"
+            ],
+            "float": true,
+            "why": "not reached: mirror_head_r, mirror_arm_r"
+          },
+          {
+            "name": "stopArm",
+            "parts": [
+              "stopArm_sign",
+              "stopArm_border",
+              "stopArm_post"
+            ],
+            "backed": 0.737,
+            "float": false,
+            "why": "min backed fraction 0.737 (rule >= 0.5)"
+          },
+          {
+            "name": "headlights",
+            "parts": [
+              "lamp_l",
+              "lamp_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "turn",
+            "parts": [
+              "turn_l",
+              "turn_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          },
+          {
+            "name": "markers",
+            "parts": [
+              "marker_housing_l",
+              "marker_l0",
+              "marker_l1",
+              "marker_housing_r",
+              "marker_r0",
+              "marker_r1"
+            ],
+            "backed": 0.885,
+            "float": false,
+            "why": "min backed fraction 0.885 (rule >= 0.5)"
+          },
+          {
+            "name": "rearLamps",
+            "parts": [
+              "rearLamp_l",
+              "rearLamp_r"
+            ],
+            "backed": 1,
+            "float": false,
+            "why": "min backed fraction 1 (rule >= 0.5)"
+          }
+        ],
+        "clips": [],
+        "mirror": {
+          "armLength": 0.329,
+          "reach": 0.476,
+          "swept": {
+            "gap": -0.306,
+            "yOverlap": false,
+            "clip": false
+          },
+          "armOk": true
+        },
+        "pass": false
+      },
+      "tris": 2448
+    }
+  }
+}

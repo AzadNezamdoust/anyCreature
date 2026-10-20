@@ -1,0 +1,9 @@
+{
+  "_comment": "FROZEN contents count of the school bus in refs/school_bus.png, counted off the measured layout (subjects/school_bus/layout.json). wheels: 2 near wheels visible, a bus on two axles has 4 (the far pair is hidden: wheel.farSide UNVERIFIED; the COUNT is not). bumpers: front + rear black blocks. headlights: the round pair (the amber turn lenses and the roof markers are role prop, not counted). mirrors: the black pair on arms. windows = window.front.panes 2 (split windshield) + window.row.count 7 on the near flank + 7 mirrored on the far flank (VEH_MIRROR); the entrance-door pane behind the near mirror head is NOT counted (window.door UNVERIFIED: occluded, not measured). Counting rules live in classes/vehicle.json censusRules.",
+  "_source": "refs/school_bus.png",
+  "wheels": 4,
+  "bumpers": 2,
+  "headlights": 2,
+  "mirrors": 2,
+  "windows": 16
+}

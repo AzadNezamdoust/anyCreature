@@ -1,0 +1,1 @@
+OK - well-formed GLB, 2 chunks, 0 image(s), anims: attack/idle/move

@@ -1,0 +1,56 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "landing",
+  "note": "Fire-escape / stoop landing: a deck plate with railings on three sides (-X, +X, +Z). The wall side is -Z, which is the face the composite's own attach normally sits on. The side rails are inset by one rail thickness so their ends only touch the front rail instead of interpenetrating it (V6 would otherwise call two 0.06 m posts a duplicate).",
+  "params": { "deckThickness": 0.12, "railHeight": 0.95, "railThickness": 0.06, "postCount": 4 },
+  "parts": [
+    {
+      "id": "deck",
+      "prim": "plate",
+      "dims": ["$w", "$deckThickness", "$d"],
+      "role": "landing"
+    },
+    {
+      "id": "rail_front",
+      "prim": "railing",
+      "dims": ["$w", "$railHeight", "$railThickness"],
+      "role": "railing",
+      "params": { "postCount": "$postCount" },
+      "attach": {
+        "to": "deck",
+        "face": "+Y",
+        "uv": [0.5, "1 - $railThickness / (2 * $d)"],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "rail_left",
+      "prim": "railing",
+      "dims": ["$d - 2 * $railThickness", "$railHeight", "$railThickness"],
+      "role": "railing",
+      "params": { "postCount": "$postCount" },
+      "attach": {
+        "to": "deck",
+        "face": "+Y",
+        "uv": ["$railThickness / (2 * $w)", 0.5],
+        "contact": "rests-on-top",
+        "rot": 90
+      }
+    },
+    {
+      "id": "rail_right",
+      "prim": "railing",
+      "dims": ["$d - 2 * $railThickness", "$railHeight", "$railThickness"],
+      "role": "railing",
+      "params": { "postCount": "$postCount" },
+      "attach": {
+        "to": "deck",
+        "face": "+Y",
+        "uv": ["1 - $railThickness / (2 * $w)", 0.5],
+        "contact": "rests-on-top",
+        "rot": 90
+      }
+    }
+  ]
+}

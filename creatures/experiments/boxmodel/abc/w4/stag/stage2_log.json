@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the cheek face under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "nose pad: a loop inside the nose cap for the black nose block",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "mid-neck loop: the neck bends for grazing and the charge",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "second hock loop: the hind leg bends at the hock",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

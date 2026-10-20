@@ -1,0 +1,257 @@
+{
+  "massing.wallThickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.812Z"
+  },
+  "roof.thickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.812Z"
+  },
+  "crown.thickness": {
+    "count": 2,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.812Z"
+  },
+  "roof_fixture.size": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.812Z"
+  },
+  "roof_fixture.position": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.812Z"
+  },
+  "storefront.w": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json storefront.w — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "storefront.centreX": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json storefront.centreX — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "storefront.bottom": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z"
+  },
+  "door.w": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json door.w — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "door.centreX": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json door.centreX — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "awning.centreX": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z"
+  },
+  "awning.depth": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z"
+  },
+  "signbox.w": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json signbox.w — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "signbox.centreX": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json signbox.centreX — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "signbox.depth": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z"
+  },
+  "ac.size": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json ac.w, ac.h, ac.depth — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "ac.position": {
+    "count": 1,
+    "passes": [
+      "P1"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.872Z",
+    "resolvedBy": "subjects/facade_brick/layout.json ac.centreX, ac.top — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "landing.span": {
+    "count": 2,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z",
+    "resolvedBy": "subjects/facade_brick/layout.json landing.span — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "landing.centreX": {
+    "count": 2,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z",
+    "resolvedBy": "subjects/facade_brick/layout.json landing.centreX — measured by scripts/measure-target.mjs (v3-backlog, 2026-09-13)"
+  },
+  "stair.run": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z"
+  },
+  "stair.width": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z"
+  },
+  "ladder.roof.bottom": {
+    "count": 2,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z"
+  },
+  "ladder.drop.position": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z"
+  },
+  "ladder.drop.length": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T00:41:09.905Z"
+  },
+  "massing.depthOverW": {
+    "count": 2,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:20:43.158Z"
+  },
+  "crown.height": {
+    "count": 2,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:20:43.158Z"
+  },
+  "roof.slabThickness": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:26:14.702Z"
+  },
+  "roofFixtures.vent.size": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:26:14.702Z"
+  },
+  "roofFixtures.vent.position": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:26:14.702Z"
+  },
+  "roofFixtures.pipes.size": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:26:14.702Z"
+  },
+  "roofFixtures.pipes.positions": {
+    "count": 1,
+    "passes": [
+      "P0"
+    ],
+    "firstSeen": "2026-09-13T18:26:14.702Z"
+  },
+  "flight.width": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T19:12:31.589Z"
+  },
+  "ladder.width": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T19:12:31.589Z"
+  },
+  "ladder.drop.bottom": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T19:12:31.589Z"
+  },
+  "ladder.drop.centreX": {
+    "count": 1,
+    "passes": [
+      "P2"
+    ],
+    "firstSeen": "2026-09-13T19:12:31.589Z"
+  }
+}

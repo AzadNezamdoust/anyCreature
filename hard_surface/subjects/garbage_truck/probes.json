@@ -1,0 +1,137 @@
+[
+  {
+    "id": "P1",
+    "view": "side",
+    "axis": "row",
+    "index": 629,
+    "from": 80,
+    "to": 960,
+    "what": "hub row: front hub x 235-297, rear hub 602-664, skirt 343-564, step 782-873"
+  },
+  {
+    "id": "P2",
+    "view": "side",
+    "axis": "row",
+    "index": 430,
+    "from": 80,
+    "to": 960,
+    "what": "belt / window row: cab 130-341 (mirror 161-172, glass 175-277), body 343-703, hopper 706-807"
+  },
+  {
+    "id": "P3",
+    "view": "side",
+    "axis": "row",
+    "index": 345,
+    "from": 80,
+    "to": 960,
+    "what": "roof row: the body's rounded-top strip y 336-352 (x 345-695); cab top is y 370, hopper top y 373"
+  },
+  {
+    "id": "P4",
+    "view": "side",
+    "axis": "col",
+    "index": 266,
+    "from": 300,
+    "to": 720,
+    "what": "front wheel column: cab bottom y 640, hub 598-660, tyre bottom 688"
+  },
+  {
+    "id": "P5",
+    "view": "side",
+    "axis": "col",
+    "index": 633,
+    "from": 300,
+    "to": 720,
+    "what": "rear wheel column: body bottom / skirt y 619-640, hub 598-660, tyre bottom 688"
+  },
+  {
+    "id": "P6",
+    "view": "side",
+    "axis": "col",
+    "index": 800,
+    "from": 300,
+    "to": 700,
+    "what": "hopper mid column: hopper top y 373 .. bottom 652 (step 634-649)"
+  },
+  {
+    "id": "P7",
+    "view": "front",
+    "axis": "row",
+    "index": 580,
+    "from": 300,
+    "to": 720,
+    "what": "headlight / grille row: lamps x 391-431 and 592-631, grille 453-569, cab edges 379 / 644, body edges 368 / 657"
+  },
+  {
+    "id": "P8",
+    "view": "front",
+    "axis": "row",
+    "index": 460,
+    "from": 300,
+    "to": 720,
+    "what": "windshield / mirror row: mirror heads x 328-361 and 663-695, glass 393-630"
+  },
+  {
+    "id": "P9",
+    "view": "front",
+    "axis": "col",
+    "index": 512,
+    "from": 300,
+    "to": 720,
+    "what": "centre column: body top y 339, cab top 370, glass 392-497, grille 551-599, bumper 613-648, ground 688"
+  },
+  {
+    "id": "P10",
+    "view": "rear",
+    "axis": "row",
+    "index": 520,
+    "from": 300,
+    "to": 720,
+    "what": "mouth row: outer edges x 365 / 659, grab bars 385-390 / 633-638, mouth 400-623, mirror glass 334-356 / 668-690 lie at y 434-484"
+  },
+  {
+    "id": "P11",
+    "view": "rear",
+    "axis": "col",
+    "index": 512,
+    "from": 300,
+    "to": 720,
+    "what": "centre column: top y 339, mouth 435-580, step 612-634, bumper bar 636-648"
+  },
+  {
+    "id": "P12",
+    "view": "rear",
+    "axis": "row",
+    "index": 670,
+    "from": 300,
+    "to": 720,
+    "what": "tyre row: one tyre per side x 370-408 and 615-653 (S1 fixed 2026-09-28: the inner duals were erased; the model builds singles 0.4 m wide at r +-0.75..1.18)"
+  },
+  {
+    "id": "P13",
+    "view": "top",
+    "axis": "col",
+    "index": 520,
+    "from": 300,
+    "to": 720,
+    "what": "body width column: rounded-edge bands y 365-389 and 642-667, flat top 392-639"
+  },
+  {
+    "id": "P14",
+    "view": "top",
+    "axis": "row",
+    "index": 515,
+    "from": 90,
+    "to": 950,
+    "what": "length row: bumper x 116-127, windshield band 136-145, cab roof 153-335, body 349-703, hopper 707-893 (front strip 707-767), step 896-908"
+  },
+  {
+    "id": "P15",
+    "view": "concept",
+    "axis": "col",
+    "index": 395,
+    "from": 600,
+    "to": 860,
+    "what": "front wheel column: body/skirt to y 663, tyre top 664, hub 706-776, tyre bottom 806"
+  }
+]

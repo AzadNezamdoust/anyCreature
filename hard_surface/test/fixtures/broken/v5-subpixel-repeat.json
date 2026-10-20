@@ -1,0 +1,70 @@
+{
+  "schema": "pg/1",
+  "subject": "v5_subpixel_repeat",
+  "seed": 1,
+  "class": "prop",
+  "note": "V5: five slats 0.5 mm apart — sub-pixel at the frozen 900 px capture. Repairable: collapse to one striped block.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood"
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": [
+        0.64,
+        0.05,
+        0.64
+      ],
+      "role": "lid",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "slats",
+      "prim": "box",
+      "dims": [
+        0.05,
+        0.06,
+        0.05
+      ],
+      "role": "slat",
+      "zone": "band",
+      "attach": {
+        "to": "lid",
+        "face": "+Y",
+        "uv": [
+          0.3,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      },
+      "repeat": {
+        "axis": "+X",
+        "count": 5,
+        "pitch": 0.0505
+      }
+    }
+  ]
+}

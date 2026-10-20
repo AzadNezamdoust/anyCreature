@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: the gold eye piece sits in it, proud of the rim",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "second elbow loop on the front leg: the bend of the straight arm",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "extra knee loop on the hind leg: the thigh-shin fold",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "goblin": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Pot belly is missing: the light-green belly is a flat bib slab on the chest, and the belt sits under it instead of the belly hanging over it",
+    "The arms stop at mid-thigh, not the knees, and the hands are mitts with claw spikes rather than three fingers; the nose is a straight wedge beak, not a hooked nose",
+    "The buckle is a flat cream square, off-palette and not chunky; seen from the side (az090) the back loincloth is thin strap slivers (4 slivers on loin_back)"
+   ],
+   "brief_fit": "Reads as a goblin (domed head, horizontal ears, yellow eyes, fanged grin), but pot belly, knee-length arms and hooked nose are weak or missing."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "The head is a boxy dog-like muzzle, not a hooked nose, and the back of the skull (back34) has a recessed vertical groove that reads as a modelling error",
+    "The mouth seam is a dark crease wrapping the jaw, with a sliver line flagged at the jaw hinge; the far ear is extremely long and blade-thin in hero and az090",
+    "The side loincloth panels are thin plates (slivers in az090 and back34); the belly is a shaded chest panel with no pot over the belt"
+   ],
+   "brief_fit": "Has the right parts (arms to the knees, chunky gold buckle, long ears, fangs), but the head reads as a snouted dog-goblin and the face lacks a heavy brow."
+  },
+  "C": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "The eyes are flat hexagon decals on the cheek plane, with no brow ridge overhanging them, so the face reads a little blank",
+    "The buckle is a pale grey block, off-palette; the side loincloth strips are paper-thin sticks in az090 (sliver flags)",
+    "There is a posed fold-over at the right shoulder/neck junction (purple on the az000 heatmap), and the ear tips are needle-thin slivers"
+   ],
+   "brief_fit": "Closest to the brief: big domed head, hooked nose, wide fanged grin, long horizontal ears, pot belly over the belt, arms to the knees, and clear three-fingered hands and three-toed feet."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "C is the only one with the hooked nose, the pot belly over the belt and knee-length arms all in the base silhouette; A is clean but generic, and B's snouted head and grooved skull break its identity."
+ },
+ "owl": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "The body is a straight cylinder with uniform horizontal ring bands, not an egg; the head is a hard-cornered box",
+    "The legs are bare cream stilts with no feathering, and the wings are flat dark slabs stuck to the sides",
+    "The facial disc has no dark rim and the cream belly is washed out; the attack frame's feet splay into broken shards"
+   ],
+   "brief_fit": "Reads as a horned owl from the front with the best eyes, but the egg body, feathered legs and disc rim are missing."
+  },
+  "B": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "The brows are rectangular sticks that jut past the head silhouette in hero and the head close-up, reading as glued-on planks",
+    "The facial disc is a square mask with no dark rim; the tan chest band adds an off-palette colour",
+    "The eye rings are flat octagons with a visible stepped inset in the wire, and the tail fan is a thin plate (sliver on the tail underside in az090)"
+   ],
+   "brief_fit": "Good match: egg body, folded wings with a fan tail, big orange eyes, tufts, feathered brown thighs and dark talons."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "The near brow is a spike that projects off the face like a third horn (hero, head close-up)",
+    "The eyes are small for 'big round eyes', and the talons are pale beak-colour spiky toe fans that read as splinters, not dark talons",
+    "The wing seam shows a hard stepped edge along the flank (az090), and the disc is rectangular"
+   ],
+   "brief_fit": "Good anatomy with a dark disc rim and V brows, but the eyes are undersized and the feet and talons miss the brief."
+  },
+  "rank": [
+   "B",
+   "C",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "B has the big eyes, egg body, feathered legs and dark talons together; C loses on small eyes and splinter feet, and A on its ring-banded cylinder body and stilt legs."
+ },
+ "raven_wyvern": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "The folded wings are boxy slabs on the back and read as shoulder pads from the front (az000); the finger spars barely show",
+    "Values are near-uniform blue-black, so the planes go muddy; the thighs are blocky boxes",
+    "There is almost no S-curve in the neck, the dorsal spines are tiny, and the attack pose does not mantle the wings"
+   ],
+   "brief_fit": "Reads as a compact bird-dragon/griffin with a good raven head and amber eye, but the wings-as-forelimbs wyvern cue is weak."
+  },
+  "B": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "The head is a blocky helmet with a tiny hexagon eye; the hackles are thin black splinter shards",
+    "The wings are rigid straight sticks with triangular membrane plates and no tapered finger spars; slivers are flagged along the wing leading edges",
+    "Very dark values flatten the body, and the attack lunges only the head, with no wing mantle"
+   ],
+   "brief_fit": "The strongest wyvern read: wing-forelimbs with thumb claws planted, S-neck, graded spines, a long tail with a fin, and swept horns."
+  },
+  "C": {
+   "score": 4,
+   "verdict": "REBUILD",
+   "top_issues": [
+    "The wings are a single purple cape plate hung on each flank, with no wing arm, spars or thumb claw, so the wyvern identity fails",
+    "The chest and neck are covered in dozens of needle-thin hackle shards that splinter at close range",
+    "The body is an upright raven with no neck S-curve and no wing mantle in the attack"
+   ],
+   "brief_fit": "Reads as a horned raven with a dragon tail; the brief's first requirement (a wyvern whose wings are the forelimbs) is not met."
+  },
+  "rank": [
+   "B",
+   "A",
+   "C"
+  ],
+  "margin": "clear",
+  "why": "B is the only one whose base silhouette reads wyvern-first (wing-forelimbs, S-neck, long finned tail); A reads as a griffin and C as a caped raven."
+ }
+}

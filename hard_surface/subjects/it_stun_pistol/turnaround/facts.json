@@ -1,0 +1,47 @@
+{
+  "subject": "it_stun_pistol",
+  "noun": "chunky prong stun pistol game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_stun_pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_stun_pistol.png = out/concept-items30/08_stun_pistol/v4b_hero_1.png; FPS refs/it_stun_pistol.fps.png = v4b_fps.png). Facts from the NEW hero (counts as drawn: 1 body + charcoal rear cap, 2 octagonal prongs one above the other with 2 root collars, 1 emitter disc between them, 1 capacitor cylinder with 2 clamp bands, 1 two-part slider block on the LEFT flank, 1 teal lamp on the left flank, 1 trigger guard + trigger, 1 grip with 4 ribs). FRAME (classes/weapon.md): front +z = the prong tips, left flank +x = the flank the hero shows. Hidden right flank: plain slate body, no slider, no lamp. Dims estimated on the hero: L 0.36 (prong tips to rear cap), W 0.09, H 0.25.",
+  "description": "A fictional stun pistol game prop for a cave warden, chunky low-poly, one hand, held level with the prongs forward. One smooth slate blue-grey painted body block with wide chamfers and a rounded charcoal rear end cap. From its front two thick octagonal dark steel contact prongs reach straight forward, one above the other with a clear gap between them, each rooted in one fat charcoal collar block on the body front; between the prong roots one dished round dark steel emitter disc in a thick rim recessed in the front face. Lying lengthwise on top of the body one fat octagonal slate blue-grey capacitor cylinder with chamfered ends, held by exactly two wide charcoal clamp bands that stand on the body top. On the left flank one fat two-part charcoal slider block toward the rear and one small rectangular teal lamp window in a thick raised charcoal bezel ahead of it. Under the rear of the body one squared charcoal trigger guard with a thick charcoal trigger and one chunky charcoal pistol grip raked back with four big diagonal ribs.",
+  "proportions": "About 0.36 m long, 0.09 m wide and 0.25 m tall. (length : width : height = 4.00 : 1 : 2.78)",
+  "sides": "on the LEFT flank only: the teal lamp window and the fat two-part charcoal slider block (standing proud of the body). The right flank is plain slate. The two prongs (one above the other on the centre line), the emitter disc, the capacitor and its bands, the rear cap, the trigger guard and the grip are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky prong stun pistol game prop is 1.44 times as long as it is tall",
+    "front": "in this view its width is 0.36 of its height",
+    "rear": "in this view its width is 0.36 of its height",
+    "top": "in this view it is 4.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the prongs to the LEFT of the image: the two long octagonal dark steel prongs one above the other with a clear gap reaching left from their two charcoal root collars, the emitter disc rim between the roots, the slate body with the teal lamp window and the two-part slider block behind it on the flank, the charcoal rear cap at the right end, the long octagonal capacitor lying on top with its two clamp bands, and under the rear the squared trigger guard with the trigger and the raked ribbed grip.",
+    "front": "Seen from the prong end: the two square prong ends one above the other on the centre line with the round dished emitter disc between them, the collar blocks around their roots, the slate body face behind, the round capacitor end on top, the slider block sticking out a little on the left-flank side (image RIGHT), the grip below.",
+    "rear": "Seen from the back end: the rounded charcoal rear cap of the body, the round capacitor end on top with its bands, the grip below on the centre line, the slider block sticking out a little on the left-flank side (image LEFT). No lamp visible.",
+    "top": "Seen from above, the prongs to the LEFT: the upper prong reaching left from its collar, the slate body with the capacitor lying along its middle and its two bands across, the rear cap at the right end, the slider block sticking out at the bottom edge (left flank) toward the rear."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    },
+    {
+      "part": "the fat two-part charcoal slider block",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.36,
+    "W": 0.09,
+    "H": 0.25,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the two prongs are separate bars with a clear gap between them (background shows through the gap in the side view)",
+    "the slider block is on the left flank only"
+  ]
+}

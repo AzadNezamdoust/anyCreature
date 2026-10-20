@@ -1,0 +1,166 @@
+{
+  "settings": {
+    "url": "http://127.0.0.1:4210/?capture=1&subject=facade_brick&seed=1&view=target&size=900",
+    "viewport": {
+      "width": 900,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "readyFlag": "__CAPTURE_READY__",
+    "manifestFlag": "__CAPTURE_MANIFEST__",
+    "capturedAt": "2026-09-13T00:11:14.333Z"
+  },
+  "observed": {
+    "innerWidth": 900,
+    "innerHeight": 900,
+    "devicePixelRatio": 1
+  },
+  "manifest": {
+    "triangles": 244,
+    "materials": 1,
+    "drawCalls": 1,
+    "boundsM": {
+      "w": 6.555,
+      "h": 17.5065,
+      "d": 7.5,
+      "minY": 0
+    },
+    "frontQuad": {
+      "axis": "+x",
+      "px": [
+        [
+          443.52,
+          283.42
+        ],
+        [
+          640.45,
+          180.73
+        ],
+        [
+          640.45,
+          734.31
+        ],
+        [
+          443.52,
+          837
+        ]
+      ],
+      "world": [
+        [
+          0,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          16.5,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          -3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 443.52,
+        "y0": 180.73,
+        "x1": 640.45,
+        "y1": 837
+      },
+      "source": "5 massing part(s)"
+    },
+    "sideQuad": {
+      "axis": "+z",
+      "px": [
+        [
+          259.55,
+          199.46
+        ],
+        [
+          443.52,
+          283.42
+        ],
+        [
+          443.52,
+          837
+        ],
+        [
+          259.55,
+          753.04
+        ]
+      ],
+      "world": [
+        [
+          -6.555,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          16.5,
+          3.75
+        ],
+        [
+          0,
+          0,
+          3.75
+        ],
+        [
+          -6.555,
+          0,
+          3.75
+        ]
+      ],
+      "bbox": {
+        "x0": 259.55,
+        "y0": 199.46,
+        "x1": 443.52,
+        "y1": 837
+      },
+      "source": "5 massing part(s)"
+    },
+    "massingBoxM": {
+      "min": [
+        -6.555,
+        0,
+        -3.75
+      ],
+      "max": [
+        0,
+        16.5,
+        3.75
+      ]
+    },
+    "subject": "facade_brick",
+    "view": "target",
+    "seed": 1,
+    "size": 900,
+    "specHash": "h32:9a02bdd0",
+    "dslVersion": "pg/1",
+    "validatorPass": false,
+    "frontRotationDeg": -90,
+    "lit": false,
+    "idpass": false,
+    "idColours": null,
+    "palette": {
+      "brick": "#b5412f",
+      "trim": "#5a2a22",
+      "glass": "#8fc1d6",
+      "iron": "#2b2e33",
+      "roof": "#88817c",
+      "fixture": "#999f9d"
+    },
+    "violationCount": 10,
+    "violations": "FAIL: 10 violation(s) [V12_CENSUS].\n- V12_CENSUS: the target has 4 window assemblies and the model has 0 — add 4 (role \"window\"; the count is taken off the role, not the part name) (measured 0 window assemblies, limit 4)\n- V12_CENSUS: the target has 2 window rows and the model has 0 — add 2 (role \"window\"; the count is taken off the role, not the part name) (measured 0 window rows, limit 2)\n- V12_CENSUS: the target has 2 window bays and the model has 0 — add 2 (role \"window\"; the count is taken off the role, not the part name) (measured 0 window bays, limit 2)\n- V12_CENSUS: the target has 1 storefronts and the model has 0 — add 1 (role \"storefront\"; the count is taken off the role, not the part name) (measured 0 storefronts, limit 1)\n- V12_CENSUS: the target has 1 doors and the model has 0 — add 1 (role \"door\"; the count is taken off the role, not the part name) (measured 0 doors, limit 1)\n- V12_CENSUS: the target has 2 landing levels and the model has 0 — add 2 (role \"landing\"; the count is taken off the role, not the part name) (measured 0 landing levels, limit 2)\n- … and 4 more of the same class.",
+    "repairCount": 0,
+    "v8Dropped": 0,
+    "cameraId": "ortho:theta29.1981:phi43.0925"
+  },
+  "bytes": 9773
+}

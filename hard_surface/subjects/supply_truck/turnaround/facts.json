@@ -1,0 +1,25 @@
+{
+  "subject": "supply_truck",
+  "noun": "supply truck",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28: description + proportions = the concept prompt's paragraph (refs/supply_truck.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly six-wheeled military cargo truck parked on the ground, seen from the front-left. A boxy flat-fronted cab at the front with a flat slatted grille, two square flat headlights, a flat two-pane windscreen and a flat roof; behind the cab a long flat cargo bed with low flat side boards, covered by a tall canvas tilt: a boxy cover with a gently rounded top and flat sides stretched over hoops, the hoops showing as slight vertical ridges along the side. Six large chunky wheels of the same size: one axle under the cab and two close-set axles under the rear of the cargo bed. Cab and cargo bed side boards painted one desert tan; canvas cover a slightly darker sand khaki; bumper, grille slats and fuel tank under the cab door dark gunmetal grey; windscreen and cab side windows a single flat dark blue-grey; tyres dark charcoal, hubs dark tan; headlights pale grey. The open rear end of the canvas cover and the tailgate on the rear face face away and are hidden; the right-hand wheels are hidden behind the truck.",
+  "proportions": "About 8.0 m long, 2.5 m wide and 3.3 m tall; the six wheels clearly visible. (length : width : height = 3.20 : 1 : 1.32)",
+  "sides": "the supply truck is symmetric left to right: the spare wheel stands upright on the centre line behind the cab, a mirror on each cab corner, a fuel tank under each cab door.",
+  "shape": {
+    "side": "in this view the supply truck is 2.42 times as long as it is tall",
+    "front": "in this view its width is 0.76 of its height",
+    "rear": "in this view its width is 0.76 of its height",
+    "top": "in this view it is 3.20 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the open rear end of the canvas cover (dark interior) above the flat tan tailgate, the tailgate between the two rear wheels."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 6.177,
+    "W": 2.5,
+    "H": 2.859,
+    "_": "2026-09-29: the registered dims of the installed turnaround (hull.mjs --subject supply_truck --aniso; W = the anchor); the concept prompt stated 8 x 2.5 x 3.3 m"
+  }
+}

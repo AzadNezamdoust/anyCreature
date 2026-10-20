@@ -1,0 +1,16 @@
+{
+  "theta_deg": 25.0818,
+  "phi_deg": 44.8899,
+  "slopes": {
+    "mX": 0.422287,
+    "mZ": 0.425544
+  },
+  "residual_px": 0.4614,
+  "vertical_tilt_deg": 0.0142,
+  "source": "refs/forklift.png",
+  "sha256": "bff3af5559a3922a59ab9c25c494af424918b838c942b94174c689d34334cacc",
+  "solved": "2026-09-27T08:59:02.638Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left"
+}

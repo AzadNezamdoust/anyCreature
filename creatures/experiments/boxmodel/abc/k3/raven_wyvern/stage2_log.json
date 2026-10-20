@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "drumstick loop: the thigh bends where the leg leaves the body",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "second hock loop, above the reversed ankle: the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "third hock loop, below the reversed ankle: the bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "wing membrane: cross loop at the rear spar bay, so the trailing edge can scallop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "wing membrane: cross loop at the front spar bay, so the trailing edge can scallop",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

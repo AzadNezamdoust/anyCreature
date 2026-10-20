@@ -1,0 +1,134 @@
+{
+  "bear": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090 + back34: hind leg is one undivided brown slab from rump to ground, no thigh/hock break and no dark sock on the outer face (reference has dark lower legs all round)",
+      "2_closeups hind limb: long fan triangles on the thigh column read as a tube, paw has no claws visible",
+      "4_posed attack_f010/f020: attack barely differs from idle, no readable lunge or swipe"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090: back is a flat slanted plank from shoulder to rump, hump reads weaker than the reference dome",
+      "1_beauty az000: hump comes to a sharp point above the head instead of a rounded mass",
+      "4_posed attack_f020: lowered forelimb collapses into the chest, shoulder volume lost"]},
+    "better": "Y",
+    "why": "Y has shaped hind legs with consistent dark socks and a readable rearing attack; X keeps the better hump but its hind leg slab is the more visible flaw."
+  },
+  "boar": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az000: ears are needle-thin dark spikes, read as horns/shards rather than the broad cupped ears of the reference",
+      "1_beauty az090: dark ear overlaps the dark saddle so the head/neck break is lost in side view",
+      "2_closeups hind limb: tail is a flat paddle stuck on the rump"]},
+    "Y": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: dark X/diamond patch across the forehead cuts across faces and reads as a painted mask",
+      "1_beauty az090: tail tuft hangs as a long flat blade past the hock",
+      "2_closeups head: eye is a thin dark sliver, hard to read at thumbnail size"]},
+    "better": "Y",
+    "why": "Y has broad body-coloured ears that match the reference and fix the spike-ear silhouette of X; the forehead mask is a repaint."
+  },
+  "character": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az090: eyes are thick discs standing proud of the head like goggles",
+      "1_beauty az000 + 2_closeups front limb: hands are curled hooks, not the open hand with thumb and finger mitten of the reference",
+      "1_beauty az090: nose is nearly absent in profile, reference has a clear pointed nose"]},
+    "Y": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: hands are closed box fists, reference shows relaxed open fingers",
+      "2_closeups toes: toe blocks are oversized cubes stepping out of the foot",
+      "1_beauty az000: shoulders slope into the arms with no clavicle break, torso reads as a tube"]},
+    "better": "Y",
+    "why": "Y has flatter eyes and a pointed nose that give the reference face in profile; the goggle eyes and hook hands of X are more off-model."
+  },
+  "crab": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty az000 + az090: eyes sit directly on the shell with almost no stalk, reference has clear stalks",
+      "1_beauty hero + 2_closeups front limb: claw fingers have no dark tips and the gap is a thin slit, claw reads as one lump",
+      "1_beauty all views: shell colour is dull brick, cream belly barely visible, low contrast against the reference"]},
+    "Y": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: dark claw tips are large flat rectangles facing the camera, read as patches not pincers",
+      "2_closeups front limb: claw gap still narrow, lower finger is a thin sliver",
+      "1_beauty az090: walking legs are straight planks with one bend, reference has two rounded segments"]},
+    "better": "Y",
+    "why": "Y has real eye stalks, dark claw tips, a brighter shell and a visible cream belly, all of which the reference calls for and X lacks."
+  },
+  "frog": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az000: eyes are giant balls roughly a third of the head width perched on top, far larger than the reference and with no lid/socket",
+      "1_beauty az090 + back34: spots are identical floating hexagon decals, machine tell",
+      "1_beauty az000: head is narrow between the eyes, the wide flat reference head is lost"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty back34 + az090: dark markings are big jagged triangle patches across the back instead of round spots",
+      "1_beauty hero + 2_closeups hind limb: sliver spikes stick out along the thigh/rear edge",
+      "1_beauty az090: hind thigh is a boxy block, the folded Z leg does not read"]},
+    "better": "Y",
+    "why": "Y has a head and socketed eyes that match the reference proportions; the oversized ball eyes and hex decals of X read as procedural."
+  },
+  "giant": {
+    "X": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az000: moss is saturated lime, reference moss is a muted olive",
+      "1_beauty az090: belt is a wide flat band and the loincloth is a thin plate edge-on",
+      "1_beauty az090: torso side is a flat wall, shoulder/arm/ribcage do not separate"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + back34: rocks are tiny pebbles lost in the moss, reference has big bedded slabs",
+      "1_beauty az000: feet have no stone-coloured toenails, toes read as dark blocks",
+      "1_beauty az090: belt is a thin wire with loincloth strips hanging off as paper-thin slats"]},
+    "better": "X",
+    "why": "X carries the bold shoulder rocks and stone toenails of the reference; Y has the closer moss colour but its details are too small to read."
+  },
+  "goblin": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az000: eyes are large flat yellow diamonds on the surface with no brow over them, expression is blank not menacing",
+      "1_beauty az090: head is an upright egg with the nose a straight cone, the hooked nose and forward crouch of the reference are weak",
+      "1_beauty back34: rear loincloth is a small thin flap"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az000 + 2_closeups fangs: eyes are small hexagonal nuts with a hex pupil, read as bolts",
+      "1_beauty az090 + back34: rear loincloth is a bulging bag that sticks out like a backpack",
+      "1_beauty az000: hands are small mitts with tiny claws, reference has long clawed fingers"]},
+    "better": "tie",
+    "why": "Y gains the heavy brow but loses on bolt eyes, the rear bag and weak hands; X has better hands and claws but a blank face."
+  },
+  "owl": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + az090: beak is a huge black wedge, far larger than the small hooked beak of the reference",
+      "1_beauty az000: facial disc is one pale mask with small eyes, the two dark-rimmed discs of the reference are missing",
+      "1_beauty hero + 2_closeups hind limb: feet are long thin sticks with flat toes, not feathered owl feet"]},
+    "Y": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty hero + 2_closeups hind limb: feet are blocky mittens with tiny claws, no separate toes",
+      "1_beauty az090 + back34: tail is a short stub, the reference fan tail is missing",
+      "1_beauty hero: eye discs stand proud of the head like goggles"]},
+    "better": "Y",
+    "why": "Y has big dark-rimmed eye discs and a small beak that give the reference owl face and far more appeal; the oversized beak of X dominates the head."
+  },
+  "raven_wyvern": {
+    "X": {"score": 4, "verdict": "REBUILD", "top_issues": [
+      "1_beauty az090 + hero: body is a fat pigeon ball on short legs, the lean S-neck and forward-pitched wyvern stance of the reference are gone",
+      "1_beauty hero + 2_closeups head: eyes are orange hex bolts sitting on top of the skull",
+      "1_beauty az090 + back34: wing is one flat purple slab with a stray spar stub, no finger spars or membrane panels"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090: neck is short and straight, no S-curve or shaggy hackles in silhouette",
+      "1_beauty az090 + back34: tail fin is a plain purple trapezoid, reference has a ribbed fin",
+      "1_beauty az000: wings hang as thin vertical planks beside the body"]},
+    "better": "Y",
+    "why": "Y is leaner with longer legs, a side-set eye and dark wings with purple panels between spars; X reads as a plump bird with a purple board."
+  },
+  "stag": {
+    "X": {"score": 7, "verdict": "FIX", "top_issues": [
+      "2_closeups head + 1_beauty hero: antler tines are needle-thin spikes glued onto the beam",
+      "1_beauty az000 + hero: mane has boxy flaps sticking out at the shoulders",
+      "1_beauty az000: ears are large pale paddles held horizontal, brighter than the reference"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: antlers rise as two near-parallel vertical posts, the wide spread of the reference is lost from the front",
+      "1_beauty az000: cream diamond on the chest reads as a stuck-on patch",
+      "1_beauty hero: tines cluster at the base and overlap the ears"]},
+    "better": "X",
+    "why": "X keeps the wide antler spread that defines the stag from the front and 3/4; Y has a tidier mane but its antlers read as narrow posts."
+  },
+  "wolf": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty az000 + 2_closeups head: ruff is a mass of loose triangle shards covering the cheeks and chest",
+      "1_beauty hero + az090: front legs are thick tan columns, body is stocky against the lean reference",
+      "2_closeups head: no mouth line and a tiny eye, the face is blank"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090 + 2_closeups head: neck ruff still reads as separate triangle shards behind the ear",
+      "1_beauty az090: tan leg colour starts in a hard horizontal line at the elbow",
+      "1_beauty az000: face is pale and washed out, the dark mask and ear backs of the reference are missing"]},
+    "better": "Y",
+    "why": "Y is leaner with a mouth line, larger eyes and a calmer ruff, closer to the reference wolf; X is stocky with a shard-covered blank face."
+  }
+}

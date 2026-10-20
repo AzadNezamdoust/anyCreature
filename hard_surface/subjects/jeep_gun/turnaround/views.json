@@ -1,0 +1,103 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.2
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#9a8764", "#c8b189", "#b9a37d", "#a8946f"],
+      "glass": "#4b5258",
+      "gunmetal": ["#3d3d3c", "#42474d"],
+      "dark": "#262625"
+    },
+    "_table": "2026-09-29 (setup, from the concept's family masks: each proposed cluster tinted on the concept): body = the desert-tan body, bonnet, doors, roof and flared arches (proposal body #9a8764 flanks + f3 #c8b189 lit bonnet / roof + f6 #b9a37d front faces + f7 #a8946f edges); glass = the dark blue-grey windows (f4); gunmetal = tyres, bumper, gun, ring mount, gun shield, mirrors (f2 #3d3d3c + f5 #42474d); dark = grille slats and tyre shade (#262625).",
+    "viewTable": {
+      "side": { "body": ["#9a8460", "#c8ae85", "#b9a079", "#a8916b", "#b99f73", "#ccb285", "#97825e"], "glass": ["#4b4f54"], "gunmetal": ["#3d3a38", "#424449", "#3d3c3c"], "dark": ["#262321", "#262524"] },
+      "front": { "body": ["#9a8663", "#c8b088", "#b9a27c", "#a8936e", "#d0b68a", "#c2a87c", "#b1986f", "#a18a64", "#907c59"], "glass": ["#4b5157", "#5d5d5d"], "gunmetal": ["#3d3c3b", "#42464c", "#373736", "#41403e"], "dark": ["#262524"] },
+      "rear": { "body": ["#99855c", "#c7af81", "#b8a175", "#a79267", "#cdb387", "#aa926a", "#99835f"], "glass": ["#4a5050"], "gunmetal": ["#3c3b34", "#414545", "#3b3b3a"], "dark": ["#25241d", "#292929", "#1a1a19"] },
+      "top": { "body": ["#a08960", "#ceb385", "#bfa579", "#ae966b", "#ac936a", "#97825d"], "glass": ["#515454", "#5c5c5c"], "gunmetal": ["#433f38", "#484949", "#383939"], "dark": ["#2c2821", "#2b2b29", "#1c1b18"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/jeep_gun/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -0.1 -3.2 -3.8 · front +0.1 -1.1 -1 · rear -1 -2.3 -8 · top +6 +1.5 -4.4); ambiguous: front #4b4d50 28.2 % glass (vs gunmetal); front #62543d 1.3 % glass (vs gunmetal); rear #4a4c4f 17.4 % glass (vs gunmetal); top #695b42 1.2 % glass (vs gunmetal). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-29 gold-auditor, owner-approved 2026-09-29",
+    "side": [],
+    "front": [
+      { "id": "D1", "rect": [312, 535, 345, 608], "decides": "concept", "why": "-x headlight cage 0.26 m wide, centre x -0.745 (dark comp 328-382 x 541-603); the concept's cages are 65 px = 0.35 m wide with centres +-0.78 (u 95-205 / 355-420, delta-u 260 px = 1.55 m at s 224): the outboard strip x -0.96..-0.80 is where the concept's bigger cage reaches" },
+      { "id": "D2", "rect": [679, 535, 712, 608], "decides": "concept", "why": "+x headlight cage outboard strip x +0.80..+0.96, same as D1 (front cage 638-703 x 540-604 = 0.31 m at x +0.77; concept 0.35 m at +0.78)" },
+      { "id": "D3", "rect": [684, 382, 726, 424], "decides": "concept", "why": "jerry-can top drawn at 1.845 m = 0.14 m under the roof (body comp 687-724 x 386-419; roof 1.989); side 1.69 m = 0.265 under its roof 1.955; concept can top v 355 vs the roof's rear-near corner v 300 = 0.26 m (0.954 x s 224)" }
+    ],
+    "rear": [
+      { "id": "D4", "rect": [298, 393, 344, 422], "decides": "concept", "why": "jerry-can top drawn at 1.78 m = 0.21 m under the roof 1.993 (body comp 300-340 x 399-498); side 0.265 m under, concept 0.26 m under (D3)" },
+      { "id": "D5", "rect": [543, 258, 590, 328], "decides": "concept", "why": "gun shield plate drawn to -x: rear glass comp 548-581 x 267-320 = right +0.14..+0.32 = x -0.14..-0.32; concept: the plate sits ahead of the receiver toward +x with the barrel at its -x edge (u 440-540, receiver 540-600, barrel leaves at u 440-460); front view plate 483-545 centred on the muzzle 515" }
+    ],
+    "top": [
+      { "id": "D6", "rect": [110, 280, 205, 345], "decides": "concept", "why": "front bumper drawn 1.7 m wide (dark comp 114-267 x 346-698 = x +-0.85) against the front view's -1.09..+1.09 (2.18 m) and the concept's full-width bumper (u 68-430 = 362 px = 2.07 x its grille 175 px; front view 2.14 x): the -x end is missing here" },
+      { "id": "D7", "rect": [110, 655, 205, 750], "decides": "concept", "why": "front bumper +x end missing, same as D6" }
+    ],
+    "concept": [
+      { "id": "D8", "rect": [730, 275, 900, 328], "decides": "side", "why": "the roof's near edge rises 40 px over 295 px of u (slope 0.135) where the solved camera gives 0.37 for a z-edge (step plate 0.32, hub line 0.315): the rear roof corner is drawn ~0.3 m low (perspective); the side view's flat roof 1.955 m (body comp top 363 px) settles it" },
+      { "id": "D9", "rect": [820, 665, 940, 740], "decides": "side", "why": "rear rim ellipse 65 x 104 px vs the front rim 75 x 115 (0.88 x) and its hub 19 px lower than a consistent projection of the front hub (delta-u 349, delta-v -110, expected -129): wheels of one size per the prompt; side D 0.936 / 0.941 m, hubs at 669 px both" }
+    ]
+  }
+}

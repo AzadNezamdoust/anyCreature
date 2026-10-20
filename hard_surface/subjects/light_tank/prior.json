@@ -1,0 +1,35 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json), gold.mjs new 2026-09-28: real = the concept prompt's stated size (soft plausibility only; the turnaround wins); stylisation to re-measure on the installed turnaround at the W anchor (scripts/v6/README.md 'bus card'; wheelDoverH is what scaffold.mjs reads).",
+  "class": "vehicle",
+  "real": {
+    "source": "the concept prompt's stated size (gold.mjs new)",
+    "L": 6.5,
+    "W": 2.9,
+    "H": 2.3
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.9,
+    "why": "the stated width; fixes px/m of the turnaround"
+  },
+  "stylisation": {
+    "_comment": "2026-09-29: re-measured on the installed turnaround at the W anchor (hull.mjs --aniso registered dims L 4.906 W 2.9 H 2.869 m); wheelDoverH = the side view road-wheel diameter over the foreground height (~0.63 m / 2.869 m, pixel estimate)",
+    "LoverW": 1.69,
+    "HoverW": 0.99,
+    "wheelDoverH": 0.22
+  },
+  "softRanges": {
+    "L": [
+      5.2,
+      8.13
+    ],
+    "W": [
+      2.32,
+      3.63
+    ],
+    "H": [
+      1.84,
+      2.88
+    ]
+  }
+}

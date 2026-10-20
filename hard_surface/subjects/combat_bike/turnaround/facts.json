@@ -1,0 +1,41 @@
+{
+  "subject": "combat_bike",
+  "noun": "combat bike",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28: description + proportions = the concept prompt's paragraph (refs/combat_bike.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly military off-road motorbike parked upright on the ground on its two wheels, no rider, seen from the front-left. A slim boxy fuel tank and flat seat on a sturdy tubular frame, a small blocky engine block low in the middle, a tall front fork with wide flat handlebars and a small square headlight on the front of the fork, a short flat front mudguard over the front wheel and a flat rear mudguard, a boxy saddlebag hanging from the left side of the rear seat and an exhaust pipe running along the left side under the seat. Two large chunky knobbly wheels of the same size, front and rear. Fuel tank, mudguards and saddlebag painted one desert tan; frame, fork, handlebars, engine block and exhaust dark gunmetal grey; seat black; tyres dark charcoal, hubs dark grey; headlight lens pale grey. The tail light on the rear face faces away and is hidden; the right-hand side of the bike faces away and is hidden.",
+  "proportions": "About 2.2 m long, 0.9 m wide and 1.2 m tall; both wheels clearly visible. (length : width : height = 2.44 : 1 : 1.33)",
+  "sides": "the combat bike is symmetric left to right except the boxy tan saddlebag, which hangs from the LEFT side of the rear seat only, and the exhaust pipe, which runs along the LEFT side under the seat only; nothing hangs on the right side of the rear seat.",
+  "shape": {
+    "side": "in this view the combat bike is 1.83 times as long as it is tall",
+    "front": "in this view its width is 0.75 of its height",
+    "rear": "in this view its width is 0.75 of its height",
+    "top": "in this view it is 2.44 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows a small tail light on the back of the rear mudguard; the rear wheel hides most of the front wheel.",
+    "front": "The front face shows the small square headlight on the fork, the wide flat handlebars and the front wheel hiding most of the rear wheel."
+  },
+  "asymmetric": [
+    {
+      "part": "the tan saddlebag",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": true
+    },
+    {
+      "part": "the exhaust pipe",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 2.668,
+    "W": 0.9,
+    "H": 1.737,
+    "_": "2026-09-29: the registered dims of the installed turnaround (hull.mjs --subject combat_bike --aniso; W = the anchor); the concept prompt stated 2.2 x 0.9 x 1.2 m"
+  }
+}

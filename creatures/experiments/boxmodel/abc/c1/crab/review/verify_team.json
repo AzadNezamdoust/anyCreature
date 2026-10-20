@@ -1,0 +1,7 @@
+{"items":[
+{"title":"1. Front wall fan of vertical stripes","verdict":"DONE","evidence":"1_beauty az000: cream face is a clean flat bowl with 3-4 facets, no needle fan; 3_tech az000 wall grey, no yellow."},
+{"title":"2. Belly bowl twice reference height","verdict":"DONE","evidence":"1_beauty az090/back34: cream is a thin strip under the rim (~15-20% of body height), matches 5_reference side split."},
+{"title":"3. Eye stalks are lollipops","verdict":"DONE","evidence":"1_beauty az000/hero and 2_closeups eyes: balls sit on the rim on a short socket stalk, no tall thin stick; wire shows buried root."},
+{"title":"4. Claw tips dark blocks / near claw lump","verdict":"PARTLY","evidence":"1_beauty hero: dark zone is now a tip cap and fingers read separately; but az000 still shows large black wedges on the inner side of each claw, and 5_reference front pair shows tips much smaller."},
+{"title":"5. Legs too short and flat","verdict":"PARTLY","evidence":"5_reference top: reach is close to sheet; but 1_beauty az000/back34 legs still slope straight from hip as constant boxes, no arched knees near rim height."}
+],"regressions":["3_tech/techqa clip count is 4 (eyes 2, rim teeth 2); eye clip tris are new but tiny (0.0004 area), gates ok"],"all_done":false}

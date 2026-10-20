@@ -1,0 +1,74 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "nose block: a loop just behind the nose pad so the pad reads as its own block",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "partial_loop",
+   "reason": "mouth line along the muzzle side, fan terminators at the nose and on the cheek",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck base: loop between the neck and the withers for the head-down bend",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "mid neck: loop between the throat rings so the neck arcs instead of kinking",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "shoulder: loop round the foreleg root above the elbow",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "elbow: loop below the elbow for the bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "stifle: loop in the thigh above the stifle",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "stifle: loop below the stifle",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye plane under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "chamfer",
+   "reason": "rump: a crease hugging the top-back corner so the rump rounds off instead of a slab",
+   "new_verts": 10,
+   "extra_base_edges": []
+  }
+ ]
+}

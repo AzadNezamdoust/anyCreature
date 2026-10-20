@@ -1,0 +1,39 @@
+{
+  "subject": "it_smg",
+  "noun": "chunky compact carbine game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_smg.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_smg.png = out/concept-items30/06_smg/v4b_hero_1.png; FPS refs/it_smg.fps.png = v4b_fps.png). Facts from the NEW hero (counts as drawn: 1 receiver with 1 raised band, 1 barrel collar + 1 muzzle tube, 1 top bar with 2 sight blocks, 1 magazine with 4 ribs, 1 olive trigger guard + charcoal trigger, 1 grip with ribs and an olive base cap, 1 two-strut stock + butt pad, 1 teal lamp on the left flank of the band). FRAME (classes/weapon.md): front +z = the muzzle, left flank +x = the flank the hero shows. Hidden right flank: plain olive receiver, no lamp. Dims estimated on the hero: L 0.62, W 0.09 (receiver; butt pad about as wide), H 0.34 (sight block top to magazine bottom).",
+  "description": "A fictional compact rapid-fire carbine game prop for a cave scout, chunky low-poly, held level with the muzzle forward. One short boxy muted olive painted receiver with wide chamfers and one raised olive band around its middle. At the front one short thick dark steel barrel collar and one fat round dark steel muzzle tube with a thick rim and a dark round opening. Along the receiver top one plain thick charcoal top bar with two big blocky charcoal sight blocks, one at each end. Under the receiver one long straight charcoal magazine with four wide horizontal ribs hanging straight down just ahead of the trigger guard; one squared olive trigger guard with a thick charcoal trigger; one chunky charcoal pistol grip raked back with big diagonal ribs and a fat olive base cap. At the rear one open stock of two thick dark steel struts, a straight top strut and a diagonal lower strut, meeting a fat tall charcoal butt pad. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank of the receiver band above the magazine.",
+  "proportions": "About 0.62 m long, 0.09 m wide and 0.34 m tall. (length : width : height = 6.89 : 1 : 3.78)",
+  "sides": "only the teal lamp window is on one flank: on the LEFT flank of the receiver's raised band above the magazine; the right flank is plain olive. The barrel, the muzzle, the top bar and its two sight blocks, the magazine, the trigger guard, the grip, the two stock struts and the butt pad are on the centre line (symmetric left to right).",
+  "shape": {
+    "side": "in this view the chunky compact carbine game prop is 1.82 times as long as it is tall",
+    "front": "in this view its width is 0.26 of its height",
+    "rear": "in this view its width is 0.26 of its height",
+    "top": "in this view it is 6.89 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the muzzle to the LEFT of the image: the fat round muzzle tube and its barrel collar at the left end, the short boxy olive receiver with its raised band and the teal lamp window on the band, the charcoal top bar along the top with one blocky sight block at each end, the long ribbed magazine hanging straight down under the receiver middle, the squared olive trigger guard with the trigger behind it, the raked ribbed grip with its olive base cap, and at the right the open stock: a straight top strut and a diagonal lower strut meeting the tall charcoal butt pad, the background showing through the triangle between them.",
+    "front": "Seen from the muzzle end: the round muzzle tube with its dark opening in the middle, the barrel collar ring around it, the olive receiver face behind, the two sight blocks one behind the other on top on the centre line, the magazine below on the centre line, the butt pad edges showing behind. Narrow and tall.",
+    "rear": "Seen from the back end: the tall charcoal butt pad in the middle, the rear sight block above the receiver behind it, the receiver edges, the grip and the magazine below on the centre line. No lamp visible.",
+    "top": "Seen from above, the muzzle to the LEFT: the muzzle tube and collar, the olive receiver with the top bar along its middle and the two sight blocks, the top strut of the stock and the butt pad at the right end, a little wider than the strut. The lamp is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.62,
+    "W": 0.09,
+    "H": 0.34,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the stock is open: the white background shows between the two struts and inside the trigger guard only"
+  ]
+}

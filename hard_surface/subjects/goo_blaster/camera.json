@@ -1,0 +1,18 @@
+{
+  "theta_deg": 4.25,
+  "phi_deg": 84.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/goo_blaster.png",
+  "sha256": "a7759c0c9e7ed96b38058ee6bbf0fa44b7166f4d21465debe9e93fc6a52deb11",
+  "solved": "2026-10-04T21:17:24.906Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.857,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.635
+  }
+}

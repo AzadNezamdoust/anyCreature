@@ -1,0 +1,119 @@
+{
+ "crab": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Radial fan of needle spikes on the rear-left carapace rim (hind-limb close-up, back34), a machine tell that reads as splinters",
+    "Cream belly shows as a flat shield on the front face between the eye stalks (az000), so the front rim loses its red toothed edge",
+    "Walking legs are constant-section tubes with a weak second bend; barnacles are plain stubby cylinders"
+   ],
+   "brief_fit": "Strong: wide low carapace, chunky claws with teeth and a gap, eight splayed legs with dark tips, stalk eyes on the rim, barnacles on the rear rim."
+  },
+  "B": {
+   "score": 4,
+   "verdict": "REBUILD",
+   "top_issues": [
+    "Legs are near-vertical square-section stilts that lift the body high; in side view (az090) it reads as a table, not a low crab",
+    "Paper-thin sawtooth fringe along the carapace sides (az000, back34) reads as shards edge-on",
+    "Barnacles are scattered pill cylinders mid-back, not a rear-rim cluster; the claw dactyl is a small glued-on block"
+   ],
+   "brief_fit": "Poor on the key cue: the carapace, face and claws are in place, but the body stands tall on stilts, so it misses both 'body close to the ground' and the splayed legs with two bends."
+  },
+  "C": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Legs are thin, arched and spidery, and the front pairs arch above the carapace (hero, back34), so it reads as part spider",
+    "Cream is painted across the claw sides and the inner leg faces in large patches (az090, back34); the colour borders fight the forms",
+    "Carapace is a thin flat wedge in side view with no readable toothed front rim; the needle-thin legs are flagged as slivers"
+   ],
+   "brief_fit": "Mixed: the best claws of the three (open gap with teeth, eyes on stalks), but the leg shape and the colour layout drift from the low, chunky, red-shelled crab in the brief."
+  },
+  "rank": [
+   "A",
+   "C",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "A alone keeps a low, wide, splayed crab silhouette with chunky legs; C's spidery arched legs and cream patches, and B's vertical stilt legs, break the identity cue."
+ },
+ "frog": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Stands too tall on long straight front legs, so it reads alert-upright rather than squat, and the hind legs leave a big gap under the body (az090)",
+    "The pupil is a black band wrapped right round each eye (goggle stripe), and a green lid bump sits behind each eye as a second dome; the mouth-line bar pokes past the head at the corners (az000)",
+    "Hind feet have separate thin toes with no webbing; posed fold-over at the thigh-body junction (tech hero purple, move_f012)"
+   ],
+   "brief_fit": "Good: big gold bulging eyes on top of a wide head, cream jaw, black mouth line, dark back spots, folded Z hind legs; webbing is missing."
+  },
+  "B": {
+   "score": 4,
+   "verdict": "REBUILD",
+   "top_issues": [
+    "Sprawled flat on its belly with front and hind legs splayed sideways like a lizard (az000); no upward tilt at the front, so the sitting-frog cue fails",
+    "Eyes are small yellow caps on pointed green cone turrets, and the pupil is a tiny dash; eyes don't bulge and don't read at thumbnail size",
+    "No webbing; the mouth line is barely visible and the cream jaw is almost hidden"
+   ],
+   "brief_fit": "Weak: green, spotted and frog-coloured, but the pose and the eyes miss the brief's 'squat sitting frog tilted up at the front' and 'big bulging eyes'."
+  },
+  "C": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Gold eyes are small discs stuck on the outer sides of the green lid bumps, so from the front (az000) the eyes nearly vanish",
+    "Hind leg is a box thigh block over a thin vertical shin post and a flat plank foot (hero); it reads as a stool leg, not a folded Z",
+    "Mouth-line bar wraps around the head as a separate ring; no webbing; spots z-fight flagged once"
+   ],
+   "brief_fit": "Fair: squat sitting body, cream jaw, mouth line and spots are right, but the eyes and hind legs, the two defining cues, are weak."
+  },
+  "rank": [
+   "A",
+   "C",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "A's big top-mounted gold eyes and cleaner folded hind legs carry the frog read; C hides the eyes on the sides and has stool-leg hind limbs, and B sprawls like a lizard."
+ },
+ "giant": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "No separate head: the face is a flat panel on the front of the hump, and the tusks sit above the mouth line rising from the snout, not from the lower jaw (az000)",
+    "Moss is repeated flat hexagonal coins stacked over the hump (back34), a machine tell; the dark hide splits the torso vertically in half on a hard border",
+    "Fists are a box with four identical slab fingers; posed fold-over at both armpits (tech az000 purple)"
+   ],
+   "brief_fit": "Partial: the hunched mass, long arms, belt, loincloth and moss/rocks are all present, but the small sunken head with heavy brow and jaw tusks is missing."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Shoulders form a flat square yoke with a hard-edged dark-hide polygon painted over the back (back34), so the hump reads as a box lid, not a mass",
+    "Fists are dark cube mitts with tiny fingers; the eye is a hexagonal nut-like ring; posed fold-over at the armpits, and z-fight on finger0",
+    "Loincloth is a thin plank hanging off the belt (az090); the legs are stacked uniform ring bands"
+   ],
+   "brief_fit": "Fair: a distinct small head with heavy brow and jaw tusks, a pot belly, moss and rocks as proper clumps, but a boxy T-shaped upper body instead of a hunched hump."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Fingers and toes are rows of identical rectangular stone blocks like piano keys (az000), and the dark mitt fists have no knuckle row",
+    "Tusks are overlong and run up past the eyes; the eyes are tiny amber chips under the brow",
+    "Pot belly is flat-fronted and the legs are constant-section; the tech sheet is clean, which my eye confirms"
+   ],
+   "brief_fit": "Best: a hunched mountain troll with a small head sunk low under massive shoulders, brow, jaw tusks, arms to the knees, irregular moss pads and bedded rocks, belt and loincloth."
+  },
+  "rank": [
+   "C",
+   "B",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "C is the only one that combines the massive hump with a distinct sunken head and clean deformation; B and A each lose one of those two cues (B the hump, A the head)."
+ }
+}

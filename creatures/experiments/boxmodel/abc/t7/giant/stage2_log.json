@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "face loop round the head just behind the face: cheek plane and eye depth",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "socket",
+   "reason": "eye socket under the brow (inset, pushed in)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

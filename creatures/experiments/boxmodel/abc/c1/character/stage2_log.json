@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "knee loop: the hinge of the leg bend (z 0.35)",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "elbow loop: the hinge of the arm bend (x 0.35)",
+   "new_verts": 0,
+   "extra_base_edges": []
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "apc_8x8",
+  "class": "vehicle",
+  "title": "RTS-style apc 8x8 (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/apc_8x8.v2.png",
+    "camera": "subjects/apc_8x8/camera.json",
+    "layoutMeasured": "subjects/apc_8x8/layout.measured.json"
+  },
+  "outDir": "out/apc_8x8",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 8,
+        "axles": 4,
+        "diameters": "equal"
+      },
+      "evidence": "concept refs/apc_8x8.v2.png + side turnaround: eight equal treaded wheels on four evenly spaced axles"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "turret",
+          "gun",
+          "hatch",
+          "vision_block",
+          "smoke_launcher",
+          "engine_grille",
+          "wheel_arch",
+          "tow_hook"
+        ]
+      },
+      "evidence": "the concept draws a small one-man turret (traversed ~30 deg toward the right flank) with an autocannon, a round driver's hatch + three vision blocks, two troop hatches, smoke launchers, a roof engine grille, flared wheel arches, tow hooks (refs/apc_8x8.v2.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "metal",
+          "dark"
+        ]
+      },
+      "evidence": "the concept paints the autocannon, smoke launchers, tow hooks, headlight guards and grille slats dark gunmetal grey (metal), the tyres charcoal (tyre), the hull + hubs olive (body; views.json families); parts the target draws in their own flat colours that the vehicle class list lacks (gold.mjs override --palette-auto on out/ref/gold/apc_8x8/model.mjs): dark = 24 part(s), e.g. liner_l"
+    }
+  }
+}

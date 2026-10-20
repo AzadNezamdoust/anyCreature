@@ -1,0 +1,38 @@
+{
+  "id": "school_bus",
+  "class": "vehicle",
+  "variant": "bus",
+  "title": "Cartoon school bus (WF-V4 V4-7 unseen-subject generality test)",
+  "_variant_comment": "variant = the class body variant the measure / profile / template scripts build (classes/vehicle.json variants.bus): a flat-nosed box body with no hood and no bed; the whole body is role cab. A STRUCTURAL choice read off the target, never a number.",
+  "paths": {
+    "target": "refs/school_bus.png",
+    "camera": "refs/school_bus.camera.json",
+    "module": "subjects/school_bus/module.mjs",
+    "census": "subjects/school_bus/census.json",
+    "layout": "subjects/school_bus/layout.json",
+    "layoutMeasured": "subjects/school_bus/layout.measured.json",
+    "regions": "subjects/school_bus/regions.json",
+    "regionSeeds": "subjects/school_bus/regions.seeds.json"
+  },
+  "outDir": "out/school_bus",
+  "missingKeyPolicy": "report",
+  "deferredByRuling": [
+    "ink outlines",
+    "marker-lamp pods (black housings)",
+    "rounded roof and front-cap edges (built as chamfers)",
+    "entrance door leaf / folding-door seams"
+  ],
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/school_bus/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "well",
+          "mirror",
+          "white"
+        ]
+      },
+      "evidence": "concept samples: well = the arch-well faces above the tyres (arch_*) 866,542,3,3 #8d660e and 878,560,3,3 #886311 (model #8f6912); mirror = the two mirror heads 48,515,5,5 and 368,655,3,3 both #333435 (model #333435; the class black reads #272829); white = the stop-sign rim inside the octagon outline (stopArm_border) 420,690,1,30 #ffffff (model #fbfbfb)"
+    }
+  }
+}

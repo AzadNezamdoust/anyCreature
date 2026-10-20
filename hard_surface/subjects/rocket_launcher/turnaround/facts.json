@@ -1,0 +1,28 @@
+{
+  "subject": "rocket_launcher",
+  "noun": "game launcher tube prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/rocket_launcher.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / faces written from the concept refs/rocket_launcher.png (the concept draws the viewer box's blue window on its FRONT face, not the rear as the description asked — the facts follow the concept; nothing on the visible left flank; the right flank's swivels / cover are hidden and left out); noun / description / faces worded as a fictional low-poly video-game prop described by its shapes and colours only (same parts, same colours; mechanism names dropped) — the assault_rifle sheet with the concept paragraph verbatim was rejected by the GPT image safety system",
+  "description": "A fictional stylised low-poly video-game prop: a long shoulder tube with a big cone-shaped nose piece, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A long thick dark grey tube, round in section, with a raised dark grey ring round its front end and a wide flared cone-shaped funnel at its rear end, the funnel much wider than the tube. Out of the front of the tube sticks a fat matte black double-cone nose piece, wider than the tube, ending in a short pointed tip. Under the middle of the tube a matte black handle raked backward with a small curved dark grey lever inside a rounded dark grey loop, and in front of it a second matte black straight vertical handle with ribbed grooves. On top of the tube above the handles a boxy matte black viewer box on a short bracket, with a flat dark blue square window in its front face and a short round stub at its back. A small thin upright black post with a forked top on top of the tube just behind the front ring. A matte black wedge-shaped rest pad on the underside of the tube behind the handles. Bright orange accents: a band round the nose piece at its widest point, the pointed tip of the nose piece, and a band round the rim of the rear funnel. The right flank is plain.",
+  "proportions": "About 1.30 m long, 0.16 m wide and 0.32 m tall. (length : width : height = 8.13 : 1 : 2.00)",
+  "sides": "the prop is symmetric left to right; both flanks of the tube are plain.",
+  "shape": {
+    "side": "in this view the prop is 4.06 times as long as it is tall",
+    "front": "in this view its width is 0.50 of its height",
+    "rear": "in this view its width is 0.50 of its height",
+    "top": "in this view it is 8.13 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the tube exactly horizontal, the pointed orange tip at the left end of the image, the wide funnel with its orange rim at the right end; the viewer box and the small upright post on top, the two handles and the rest pad hanging below.",
+    "front": "Seen from the front end everything is concentric circles on one centre line: the small orange tip in the centre, the round matte black nose piece with its orange band as a ring round it, and the bigger round outline of the rear funnel behind it; the viewer box with its dark blue square window stands above the circles and the small upright post in front of it; the two handles hang below on the centre line, one behind the other.",
+    "rear": "Seen from the rear end: the big round open funnel with its orange rim ring in front of everything, a dark round hole in its centre; the top of the viewer box with its short round stub shows above the funnel; the lower ends of the handles show below it on the centre line. No blue window in this view.",
+    "top": "Seen from above the prop is a long strip: the pointed tip and the double-cone nose piece with its orange band at the left end, the ring, the long tube, the viewer box as a small rectangle on the centre line, and the funnel widening to its orange rim at the right end; the handles and the rest pad are hidden under the tube."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 1.3,
+    "W": 0.16,
+    "H": 0.32,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "id": "aa_tank",
+  "class": "vehicle",
+  "title": "RTS-style aa tank (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/aa_tank.v2.png",
+    "camera": "subjects/aa_tank/camera.json",
+    "layoutMeasured": "subjects/aa_tank/layout.measured.json"
+  },
+  "outDir": "out/aa_tank",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 12,
+        "axles": 6,
+        "diameters": "equal",
+        "running": "tracks"
+      },
+      "evidence": "concept refs/aa_tank.v2.png: a tracked anti-aircraft tank, six equal road wheels per side (12 on 6 stations), no side skirt (the side turnaround draws five: the concept + prompt decide six)"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "turret",
+          "gun",
+          "gun_cradle",
+          "radar",
+          "radar_post",
+          "tracking_radar",
+          "hatch",
+          "smoke_launcher",
+          "sprocket",
+          "idler",
+          "return_roller",
+          "track_guard",
+          "engine_grille",
+          "tow_hook"
+        ]
+      },
+      "evidence": "the concept draws a tall turret with two raised autocannons in boxy cradles, a flat radar slab on a post at the roof rear, a tracking radar box on the turret front, a hatch, smoke launchers, sprocket (front), idler (rear), three return rollers, track guards, two grille boxes, tow hooks (refs/aa_tank.v2.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "metal",
+          "track",
+          "radar"
+        ]
+      },
+      "evidence": "the concept paints the barrels, cradles, smoke launchers, tow hooks, headlight guards (metal) and the tracks, road wheels, rollers, sprocket, idler (track) dark gunmetal (views.json families.metal #313133), the radar slab + tracking box a lighter mid grey (families.radar #808080), the hull dark grey (body)"
+    }
+  }
+}

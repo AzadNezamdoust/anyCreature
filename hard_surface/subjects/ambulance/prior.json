@@ -1,0 +1,8 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only (the turnaround wins); stylisation measured on subjects/ambulance/turnaround at the W anchor after the 2026-09-27 setup audit (160.3 px/m; L = cab nose .. patient-box rear, the span rule's 5.355 includes the bumper outlines; H = overall incl. wheels and the box roof lamps).",
+  "class": "vehicle",
+  "real": { "source": "Type III box ambulance (van cutaway cab + modular patient box)", "W": 2.3, "H": [2.7, 3.0], "L": [6.5, 7.2], "wheelD": [0.72, 0.8], "wheelbaseOverL": [0.5, 0.6], "LoverW": [2.8, 3.1], "HoverW": [1.15, 1.3] },
+  "anchor": { "dim": "W", "m": 2.2, "why": "road width of the patient box; fixes px/m of the turnaround (the three W spans include mirror / bumper outline columns: box silhouette +-1.055 front, +-1.10 rear, +-1.03 top)" },
+  "stylisation": { "_comment": "CHIBI: short and chunky (the concept at the re-solved camera: hull stretch fit kW 1.03, kL 1.00; concept bbox fit sx/sy 1.030)", "LoverW": 2.33, "HoverW": 1.13, "wheelDoverH": 0.32, "wheelbaseOverL": 0.53 },
+  "softRanges": { "L": [4.6, 6.4], "W": [2.0, 2.5], "H": [2.2, 2.9], "wheelR": [0.34, 0.48] }
+}

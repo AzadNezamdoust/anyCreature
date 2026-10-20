@@ -1,0 +1,103 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "scale": { "right": 0.9 }
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2.9
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#6f724f", "#5a5d3f", "#484b31"],
+      "tyre": ["#333330", "#22221e"],
+      "dark": ["#151512"]
+    },
+    "_table": "2026-09-29 (v2 concept refs/apc_8x8.v2.png): named from the concept's foreground colour clusters >= 2 % (newsubject.mjs proposeFamilies on the v2 image) + measure.mjs sample of each part: hull, wheel arches, hatches, turret and the dark-olive hubs olive drab (lit / shade); tyre = the eight treaded tyres (charcoal) with the gunmetal autocannon, smoke launchers, tow hooks, headlight guards and grille slats of the same tone; dark = outlines and tread gaps",
+    "viewTable": {
+      "side": { "body": ["#666a4b", "#51553b", "#3f432d", "#3c3c3a"], "tyre": ["#2a2b2c", "#191a1a", "#22221d", "#2e2f28"], "dark": ["#0c0d0e"] },
+      "front": { "body": ["#676b4a", "#52563a", "#40442c", "#3b3c2d", "#454642", "#555650"], "tyre": ["#2b2c2b", "#1a1b19", "#292a26", "#1d1e17"], "dark": ["#0d0e0d"] },
+      "rear": { "body": ["#686c4a", "#53573a", "#41452c", "#434340"], "tyre": ["#2c2d2b", "#1b1c19", "#282926"], "dark": ["#0e0f0d"] },
+      "top": { "body": ["#666b49", "#515639", "#3f442b", "#585c3e", "#3c3e2c", "#4a4d37"], "tyre": ["#2a2c2a", "#191b18", "#26271f"], "dark": ["#0c0e0c"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/apc_8x8/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -9.3 -8 -4.5 · front -8.3 -7.2 -5.5 · rear -7 -6.3 -4.5 · top -8.6 -7.3 -6); ambiguous: side #14140f 1.5 % dark (vs tyre); rear #393b2d 18.5 % body (vs tyre); top #191b0f 1.5 % tyre (vs dark). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-10-02 gold-auditor re-audit, owner-approved 2026-10-02",
+    "side": [
+      { "id": "D1", "rect": [302, 372, 432, 416], "decides": "concept", "why": "gun 0.87 m from the mantlet face here (px 305-432, up 1.93-2.18); concept 0.65-0.75 m (barrel (-70,+34) px at s 171 = 0.65 m along +z), top view 0.69 m (px 305-405)" }
+    ],
+    "front": [
+      { "id": "D2", "rect": [505, 368, 612, 408], "decides": "concept", "why": "barrel yawed ~33 deg toward +x (near flank) here (muzzle at px 600, mantlet 540: 0.41 m lateral of a 0.72 m gun); concept yaw 0 (+-5) deg: barrel parallel to +z (-70,34 px vs +z (-117,49) px/m), turret front facet parallel to the nose plate; the +x smoke cluster hidden behind this barrel reappears" }
+    ],
+    "rear": [],
+    "top": [
+      { "id": "D3", "rect": [462, 360, 515, 397], "decides": "concept", "why": "a second smoke-launcher cluster on the -x (image-up) side of the turret here (px 470-510 x 365-390, beside the one at 405-450 x 395-420); concept draws ONE cluster per turret side" },
+      { "id": "D4", "rect": [225, 710, 375, 740], "decides": "front", "why": "+x tyre 1 proud 0.15-0.27 m of the arch band here (tyre px y 712-737 + shadow 675-717 vs hull 698); front view tyre outer face 0.10 m proud (-1.435 vs hull -1.36 at up 1.0 m); -x side of this view 0.08 m" },
+      { "id": "D5", "rect": [388, 710, 540, 740], "decides": "front", "why": "+x tyre 2 proud 0.15-0.27 m here (px y 715-737); front view 0.10 m; -x side of this view 0.08 m" },
+      { "id": "D6", "rect": [550, 710, 710, 740], "decides": "front", "why": "+x tyre 3 proud 0.15-0.27 m here (px y 712-736); front view 0.10 m; -x side of this view 0.08 m" },
+      { "id": "D7", "rect": [720, 710, 882, 740], "decides": "front", "why": "+x tyre 4 proud 0.15-0.27 m here (px y 716-737); front view 0.10 m; -x side of this view 0.08 m" }
+    ],
+    "concept": [
+      { "id": "D8", "rect": [840, 560, 1000, 680], "decides": "side", "why": "near-flank ground line fans: tyre-bottom line slope 0.37 (bottoms at (470,811) (610,758) (760,706) (900,652)) vs the solved camera mZ 0.415 (camera residual 1.23 px) - the rear tyres sit ~0.2 m high here; side view: all four tyre bottoms on y = 0 (band 0.007..1.181)" },
+      { "id": "D9", "rect": [295, 285, 350, 355], "decides": "rear", "why": "-x smoke cluster overlaps the turret: 2 tube ends visible (px (190,190),(175,250) in the x3 crop); the +x cluster shows 4 (2x2); rear view draws both clusters clear of the turret (px 435-475 and 615-650 x 365-405)" }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "subject": "revolver",
+  "noun": "game revolver prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/revolver.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/revolver.png (orange latch knob behind the cylinder + the orange grip medallion on the visible left flank; right flank hidden; the concept draws the three chamber mouths that the frame window leaves visible); noun / description / sides / faces worded as a fictional low-poly video-game prop described by its shapes and colours only (same parts, same colours; mechanism names dropped) — the assault_rifle sheet with the concept paragraph verbatim was rejected by the GPT image safety system",
+  "description": "A fictional stylised low-poly video-game prop in the shape of an old-west style revolver, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A thick dark grey main body with a flat top bar. A long heavy dark grey front bar, slab-sided with chamfered edges, with a round dark hole in its front face, a full-length heavy lower lobe beneath it, and a raised strip along its top with three oblong slots through its side; a small ramped orange blade stands on top at the front end and a small boxy notched block stands on the back end of the top bar. In the middle of the main body, inside a rectangular window, a fat round dark grey drum lying on its side, its axis parallel to the front bar, with rounded grooves along its outside and round holes in its front face. A short pale grey pin shows under the front bar just in front of the drum. Behind the drum a dark grey spur with a ribbed top standing up at the rear of the main body. Under the main body a rounded dark grey loop with a curved dark grey lever inside it. At the rear a matte black handle raked backward and curving down, with a wavy grooved front edge, a flat textured side panel and a rounded base. Bright orange accents: the small blade on top at the front end, a small ribbed knob on the left flank just behind the drum, and a round disc on the side panel of the handle. The right flank is plain.",
+  "proportions": "About 0.30 m long, 0.045 m wide and 0.16 m tall. (length : width : height = 6.67 : 1 : 3.56)",
+  "sides": "the small orange ribbed knob behind the drum is on the left flank only; the round orange disc is drawn on the left side panel of the handle (flat, it does not stick out); the right flank is plain; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 1.88 times as long as it is tall",
+    "front": "in this view its width is 0.28 of its height",
+    "rear": "in this view its width is 0.28 of its height",
+    "top": "in this view it is 6.67 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the front bar exactly horizontal with its front end at the left end of the image, the three oblong slots in the strip along its top, the drum in the middle, the spur standing up behind it, the rounded loop below the main body, the handle curving down at the right end of the image with the orange disc on its side panel.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the chamfered front face of the front bar with a round dark centre hole and the lower lobe under it, the small orange blade standing on top; behind it the round outline of the fat drum, wider than the bar on both sides; the rounded loop and the matte black handle hanging below on the centre line.",
+    "rear": "Seen from the rear end: the spur and the notched block at the top on the centre line, the round outline of the drum showing a little on both sides of the main body, the rounded back of the matte black handle below on the centre line. No hole in this view.",
+    "top": "Seen from above the prop is a long narrow strip: the flat strip of the front bar with the small orange blade at the left end, the drum as a wider rounded bulge on both sides in the middle, the notched block and the spur behind it, the top of the handle at the right end; the loop is hidden under the main body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small orange ribbed knob",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.3,
+    "W": 0.045,
+    "H": 0.16,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

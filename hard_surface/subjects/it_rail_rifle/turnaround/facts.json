@@ -1,0 +1,40 @@
+{
+  "subject": "it_rail_rifle",
+  "noun": "chunky twin-rail long rifle game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_rail_rifle.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_rail_rifle.png = out/concept-items30/02_rail_rifle/v4b_hero_2.png; FPS refs/it_rail_rifle.fps.png = v4b_fps.png). Facts written from the NEW hero (chunky v4 design; counts as drawn: 2 rails with a recessed web, 1 muzzle block with 1 bore, 3 coil rings, 1 scope with 2 end caps + 1 top knob on 2 mounts, 1 cell pack, 1 ribbed grip + trigger guard, 1 teal lamp on the left flank, 1 stock + butt pad). FRAME (classes/weapon.md): front +z = the muzzle block, left flank +x = the flank the hero shows. Hidden right flank: plain olive housing and stock panels, no lamp. Dims estimated on the hero (perspective): L 1.15, W 0.09 (housing; the coil rings and scope caps a little wider), H 0.30 (scope knob top to grip bottom).",
+  "description": "A fictional long twin-rail game rifle prop for a mining scout, chunky low-poly, held level with the square muzzle block forward. The front half is two long thick flat dark steel rails, one stacked above the other, with a wide dark gap between them as tall as one rail, in which a recessed dark charcoal web plate runs set back in the middle, so the gap reads as a deep dark slot; at the tip both rails end in one thick square dark steel muzzle block with wide chamfers and one round dark bore opening in its front face. The rear half is a long slim muted olive painted housing block with wide chamfers; around its front end exactly three fat raised dark steel coil rings. On top of the housing one thick charcoal scope tube with a big square front end cap holding a teal-black lens and a big rear end cap, one fat round charcoal knob on top of the tube, standing on two fat blocky charcoal mounts. Under the housing one fat boxy charcoal cell pack ahead of a chunky charcoal pistol grip with a few big diagonal ribs and a squared charcoal trigger guard. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank of the housing above the cell pack. Behind the housing a flat-sided olive shoulder stock rising to a tall rear end with a thick charcoal butt pad.",
+  "proportions": "About 1.15 m long, 0.09 m wide and 0.30 m tall. (length : width : height = 12.78 : 1 : 3.33)",
+  "sides": "only the teal lamp window is on one flank: it sits on the LEFT flank of the housing above the cell pack; the right flank is plain olive housing and stock panels with no lamp. The rails, the muzzle block with its bore, the three coil rings, the scope with its knob and mounts, the cell pack, the grip, the trigger guard, the stock and the butt pad are all on the centre line (symmetric left to right).",
+  "shape": {
+    "side": "in this view the chunky twin-rail long rifle game prop is 3.83 times as long as it is tall",
+    "front": "in this view its width is 0.30 of its height",
+    "rear": "in this view its width is 0.30 of its height",
+    "top": "in this view it is 12.78 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The rifle is level, pointing to the LEFT of the image: the thick square dark steel muzzle block at the left end, the two long thick flat dark steel rails stacked one above the other running right from it with the deep dark recessed slot between them, the olive housing with its three fat dark steel coil rings at its front end, the thick charcoal scope tube on top on two blocky mounts with its big front and rear end caps and the round knob on top, the boxy charcoal cell pack under the housing, the chunky ribbed charcoal pistol grip raked back behind it with its squared trigger guard, the teal lamp window in its bezel on the housing flank above the cell pack, and the flat olive stock rising to the tall charcoal butt pad at the right end.",
+    "front": "Seen from the muzzle end: the square dark steel muzzle block in the middle with its one round dark bore opening, hiding the rails behind it; the three coil rings around the housing a little wider than the block; the scope's square front end cap with its dark lens on top on the centre line, the round knob above it; the cell pack and the grip below on the centre line; the tall stock and butt pad edges behind. Narrow and tall.",
+    "rear": "Seen from the butt end: the tall flat charcoal butt pad in the middle, the olive stock edges beside it, the scope's square rear end cap on top on the centre line with the knob above it, the housing and coil ring edges, the cell pack and the grip below on the centre line. Narrow and tall, no lamp visible.",
+    "top": "Seen from above: a very long narrow shape with the muzzle at the left end: the square muzzle block, the upper rail, the housing with the three coil rings slightly wider than it, the scope tube along the centre line with its two end caps and the round knob, the stock widening a little toward the butt pad at the right end. The lamp window is flush on the flank and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 1.15,
+    "W": 0.09,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the rail gap is a deep dark slot with a recessed charcoal web plate set back in the middle of the rail width: no see-through between the rails",
+    "the right (hidden) flank is plain olive panels: no lamp, no lever, no loop"
+  ]
+}

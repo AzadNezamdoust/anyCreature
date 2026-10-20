@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "forehead / cheekbone ring between the eye line and the skull: the brow-to-forehead plane break",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "neck ruff ring behind the skull: third neck loop, the ruff step",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "fore sock border: a ring on the forearm between the elbow and wrist loops",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "hind sock border: a ring on the shank between the stifle and hock loops",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

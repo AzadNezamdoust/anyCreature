@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "nose block: a loop round the muzzle behind the nose pad (black nose border)",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "eye socket in the side-of-face plane under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

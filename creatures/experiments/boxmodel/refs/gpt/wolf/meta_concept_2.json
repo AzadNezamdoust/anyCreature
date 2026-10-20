@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 88.5,
+ "exit": 0,
+ "prompt": "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole creature in frame on a plain pure white background. The creature: a wolf: wedge head with tall pointed ears, thick neck ruff, deep chest with a clear tuck-up, long legs, bushy brush tail with a dark tip carried low; long wedge muzzle, black nose pad over a cream lip, amber eyes under a slight brow, tall pointed ears; deep chest, narrow waist, long tapering legs, oval paws with the middle toes leading; neck ruff in clumps, dark back saddle, cream bib, tail brush with a dark tip, toe claws. Size: height 1.1 m to the ear tips, length 1.7 m nose to tail tip, width 0.5 m. Pose: standing on all four legs, head level. Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; no thin spikes, no loose shards, no tiny noisy details. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (grey fur, dark saddle, tan legs, cream bib, amber eye, black nose), soft even light, no cast shadows, no text, no labels.",
+ "reference": null,
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:35:34"
+}

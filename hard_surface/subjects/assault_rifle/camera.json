@@ -1,0 +1,18 @@
+{
+  "theta_deg": 27,
+  "phi_deg": 60.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/assault_rifle.png",
+  "sha256": "d533674e1ce962054ac6a499c3ce15a45204f28cb0ccd2faf04707f89a8f98bd",
+  "solved": "2026-10-04T19:17:40.275Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.743,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.426
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "fire_truck",
+  "class": "vehicle",
+  "title": "Cartoon fire engine with roof ladder (WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered visual hull to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/fire_truck.png",
+    "camera": "subjects/fire_truck/camera.json",
+    "module": "subjects/fire_truck/module.mjs",
+    "layoutMeasured": "subjects/fire_truck/layout.measured.json"
+  },
+  "outDir": "out/fire_truck",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Added 2026-09-28 at the r1 boundary (orchestrator, owner 'go marathon'); printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 6,
+        "axles": 3,
+        "diameters": "equal"
+      },
+      "evidence": "the target draws a front axle and a rear tandem (concept + side turnaround: 3 wheels per flank, equal tyres); setup audit decided axles z +2.38 / -1.28 / -2.36, wheelR 0.51 (out/ref/gold/fire_truck/audit/audit.json)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "bar",
+          "handle",
+          "ladder",
+          "locker",
+          "slat",
+          "stripe",
+          "well"
+        ]
+      },
+      "evidence": "parts the target draws in their own flat colours that the vehicle class list lacks (setup audit gate-class WARN; model-r1): locker = 7 part(s), e.g. locker_la; stripe = 7 part(s), e.g. stripe_body_l; handle = 6 part(s), e.g. handle_la; bar = 8 part(s), e.g. rearLamp_l; ladder = 20 part(s), e.g. ladder_rail_l; slat = 4 part(s), e.g. grille_slat_0; well = the dark-red recessed wheel wells around the front tyre and the rear tandem (r1 opus critique item 5, r2 X1)"
+    }
+  }
+}

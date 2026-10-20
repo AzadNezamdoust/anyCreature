@@ -1,0 +1,40 @@
+{
+  "subject": "it_grenade_launcher",
+  "noun": "chunky revolving drum launcher game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_grenade_launcher.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_grenade_launcher.png = out/concept-items30/03_grenade_launcher/v4b_hero_2.png; FPS refs/it_grenade_launcher.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 launch tube + muzzle rim, 1 sight bar, 1 octagonal drum with 4 chambers (2 x 2) and 2 charcoal bands, 1 frame block, 1 front handle with 4 ribbed segments, 1 pistol grip + trigger guard, 1 triangle strut stock + butt pad, 1 teal lamp on the left flank of the frame). FRAME (classes/weapon.md): front +z = the launch-tube muzzle, left flank +x = the flank the hero shows. Hidden right flank: plain ochre frame, no lamp. Dims estimated on the hero: L 0.78, W 0.17 (the drum), H 0.32 (sight bar top to the front handle bottom).",
+  "description": "A fictional short heavy revolving launcher game prop for an engineer, chunky low-poly, held level with the launch tube muzzle forward. On top at the front one single wide dark steel launch tube with a thick chamfered steel muzzle rim around its round dark opening, one long thick flat charcoal sight bar lying along the top of the tube and the frame. Under the rear of the tube one big fat ochre painted revolving drum, a chamfered octagonal cylinder along the tube axis, with exactly four big round dark chambers open on its front face in a two by two cluster and two wide charcoal bands around it. Behind the drum one boxy ochre painted frame block with wide chamfers, one small rectangular teal lamp window in a thick raised charcoal bezel on its left flank. Under the tube ahead of the drum one fat charcoal vertical front handle with four thick ribbed segments. Behind the drum under the frame one chunky charcoal pistol grip with a few big diagonal ribs and a squared charcoal trigger guard. Behind the frame one charcoal shoulder stock: two thick flat struts forming an open triangle ending in a fat tall charcoal butt pad.",
+  "proportions": "About 0.78 m long, 0.17 m wide and 0.32 m tall. (length : width : height = 4.59 : 1 : 1.88)",
+  "sides": "only the teal lamp window is on one flank: on the LEFT flank of the ochre frame block; the right flank of the frame is plain ochre. The launch tube, the sight bar, the drum with its four chambers, the front handle, the pistol grip, the trigger guard and the strut stock are on the centre line (symmetric left to right). The drum hangs under the tube, its axis parallel to the tube.",
+  "shape": {
+    "side": "in this view the chunky revolving drum launcher game prop is 2.44 times as long as it is tall",
+    "front": "in this view its width is 0.53 of its height",
+    "rear": "in this view its width is 0.53 of its height",
+    "top": "in this view it is 4.59 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The launcher is level, pointing to the LEFT of the image: the wide dark steel launch tube on top at the left with its thick muzzle rim at the left end and the long flat charcoal sight bar along its top; under the rear half of the tube the big fat ochre drum (a long chamfered block in profile) with its two wide charcoal bands; the fat ribbed charcoal front handle hanging straight down under the tube ahead of the drum; behind the drum the boxy ochre frame block with the teal lamp window on its flank; under the frame the ribbed charcoal pistol grip raked back with its squared trigger guard; at the right end the open triangle of two flat charcoal struts ending in the tall fat butt pad.",
+    "front": "Seen from the muzzle end: on top the round launch tube opening with its thick round steel rim, the flat sight bar edge above it; below and slightly overlapping it the big octagonal ochre drum face with exactly four big round dark chambers in a two by two cluster and the charcoal bands around its rim; the front handle hanging below on the centre line; the frame, grip and butt pad hidden behind. About as wide as the drum.",
+    "rear": "Seen from the butt end: the tall fat charcoal butt pad in the middle with the triangle struts behind it; behind them the ochre frame block, the drum's octagonal outline around it with its charcoal bands, the launch tube on top with the sight bar, the front handle and the pistol grip below on the centre line. No lamp visible.",
+    "top": "Seen from above: muzzle to the LEFT: the round launch tube with its muzzle rim at the left end and the flat sight bar along the middle; the drum wider than the tube showing on both sides around the middle; the ochre frame block behind it; the narrow strut stock and the butt pad at the right end. The lamp window is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.78,
+    "W": 0.17,
+    "H": 0.32,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the four chambers are open round holes in the drum's front face, dark inside (closed bottoms), never see-through",
+    "the stock struts form an open triangle: the white background shows through the triangle opening and inside the trigger guard only"
+  ]
+}

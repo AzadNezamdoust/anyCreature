@@ -1,0 +1,191 @@
+{
+ "per_creature": {
+  "bear": {
+   "pre": [
+    6,
+    6
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 0.0,
+   "clip_post": 0.0
+  },
+  "boar": {
+   "pre": [
+    5,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 0.0,
+   "clip_post": 0.0
+  },
+  "character": {
+   "pre": [
+    6,
+    6
+   ],
+   "post": [
+    6,
+    5
+   ],
+   "better": [
+    "pre",
+    "pre"
+   ],
+   "clip_pre": 0.0,
+   "clip_post": 0.0
+  },
+  "crab": {
+   "pre": [
+    6,
+    4
+   ],
+   "post": [
+    7,
+    5
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 0.04,
+   "clip_post": 0.03
+  },
+  "frog": {
+   "pre": [
+    6,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 4.32,
+   "clip_post": 0.91
+  },
+  "giant": {
+   "pre": [
+    5,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 2.46,
+   "clip_post": 0.29
+  },
+  "goblin": {
+   "pre": [
+    6,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 0.66,
+   "clip_post": 0.0
+  },
+  "owl": {
+   "pre": [
+    6,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 1.0,
+   "clip_post": 0.0
+  },
+  "raven_wyvern": {
+   "pre": [
+    5,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 3.56,
+   "clip_post": 0.08
+  },
+  "stag": {
+   "pre": [
+    6,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 1.17,
+   "clip_post": 0.1
+  },
+  "wolf": {
+   "pre": [
+    5,
+    5
+   ],
+   "post": [
+    7,
+    6
+   ],
+   "better": [
+    "post",
+    "post"
+   ],
+   "clip_pre": 0.79,
+   "clip_post": 0.0
+  }
+ },
+ "mean_pre": 5.363636363636363,
+ "mean_post": 6.363636363636363,
+ "wins": {
+  "pre": 2,
+  "post": 20,
+  "tie": 0
+ },
+ "ship": {
+  "pre": 0,
+  "post": 0
+ }
+}

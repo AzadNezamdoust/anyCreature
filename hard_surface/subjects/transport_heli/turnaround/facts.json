@@ -1,0 +1,26 @@
+{
+  "subject": "transport_heli",
+  "noun": "transport heli",
+  "style": "generals",
+  "sources": "gold.mjs new 2026-09-28: description + proportions = the concept prompt's paragraph (refs/transport_heli.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank)",
+  "description": "A chunky low-poly twin-rotor heavy transport helicopter parked on the ground on its wheels, rotors stopped, seen from the front-left. A long boxy fuselage with flat sides and a flat roof, a rounded blunt cockpit nose with a row of flat-panelled cockpit windows at the front, a small square cabin window row along the side; a tall rotor pylon at the front on top of the nose and a taller rotor pylon at the rear end, each carrying a three-blade rotor with long thin flat blades, the two rotors overlapping in the middle. A long fairing along each lower flank; four short landing gear legs, two at the front and two at the rear, each with one small wheel resting on the ground. Fuselage, pylons and fairings painted one olive drab green; cockpit and cabin windows a single flat dark blue-grey; rotor blades and rotor hubs dark gunmetal grey; tyres dark charcoal. The rear loading ramp on the rear face faces away and is hidden; the right-hand landing gear is hidden behind the fuselage.",
+  "proportions": "About 30 m long from the front rotor tip to the rear rotor tip, 18.3 m wide across the rotor blades and 5.7 m tall; the four wheels and both rotors clearly visible. (length : width : height = 1.64 : 1 : 0.31)",
+  "sides": "the transport helicopter is symmetric left to right: the fairings run along BOTH lower flanks, landing gear legs on both sides, both rotors on the centre line, an engine pod on each side of the rear pylon.",
+  "shape": {
+    "side": "in this view the transport heli is 5.26 times as long as it is tall",
+    "front": "in this view its width is 3.21 of its height",
+    "rear": "in this view its width is 3.21 of its height",
+    "top": "in this view it is 1.64 times as long as it is wide"
+  },
+  "faces": {
+    "rear": "The rear face shows the closed rear loading ramp at the bottom of the fuselage tail, the rear pylon above it with an engine pod on each side, and the rear rotor blades.",
+    "top": "Seen from above the two three-blade rotors overlap in the middle of the fuselage; each rotor is three long thin flat dark grey blades from its hub, stopped at the angles the reference image shows; the fuselage, the flank fairings and the engine pods show between the blades."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 12.887,
+    "W": 3.8,
+    "H": 5.783,
+    "_": "2026-09-29: the registered dims of the installed turnaround (hull.mjs --aniso; W = the fuselage anchor, L = the fuselage body span, H = ground to the rotor hub tops); the concept prompt stated 30 x 18.3 x 5.7 m tip-to-tip / across the rotor blades"
+  }
+}

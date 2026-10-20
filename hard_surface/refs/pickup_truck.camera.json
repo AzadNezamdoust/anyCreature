@@ -1,0 +1,15 @@
+{
+  "theta_deg": 29.342,
+  "phi_deg": 44.8092,
+  "slopes": {
+    "mX": 0.486769,
+    "mZ": 0.493298
+  },
+  "residual_px": 0.5286,
+  "vertical_tilt_deg": null,
+  "source": "refs/pickup_truck.png",
+  "sha256": "a7c5465e3360f70454182cd437c2593f97d2aaf746a609412bfd7adbbf636dd3",
+  "solved": "2026-09-13T18:34:04.402Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

@@ -1,0 +1,11 @@
+{
+  "subject": "school_bus",
+  "round": 3,
+  "seat": "fable",
+  "done": true,
+  "items": [
+    { "sev": "MAJOR", "key": "part:arch.colour", "now": "#8f6912", "want": "#2a2a20", "unit": "hex", "views": ["side", "concept"], "basis": "side",
+      "at": { "image": "side", "rect": [239, 561, 250, 572], "claim": "colour" }, "evidence": ["measure.mjs sample side"], "reopens": null,
+      "note": "school_bus r3 Fable item 1: wheel-arch liners khaki -> near-black; the orchestrator's check found the side sample at (244, 566) is the tyre" }
+  ]
+}

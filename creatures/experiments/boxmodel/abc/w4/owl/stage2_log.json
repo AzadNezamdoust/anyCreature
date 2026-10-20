@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop in the disc quad between the theta-12/38 columns and the cheek/brow rings",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

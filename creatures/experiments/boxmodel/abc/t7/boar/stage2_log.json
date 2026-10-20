@@ -1,0 +1,53 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck loop between skull and nape: the neck bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "mouth-corner ring between muzzle and stop: tusk root, jaw plane",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "mid-spine loop behind the ribs: the back bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "foreleg loop below the elbow: the elbow bend",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "hind-leg loop between stifle and hock: the gaskin",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "inset",
+   "reason": "nostril in the snout disc",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "inset",
+   "reason": "eye socket under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

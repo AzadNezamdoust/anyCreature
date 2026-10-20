@@ -1,0 +1,18 @@
+{
+  "theta_deg": 19.25,
+  "phi_deg": 48.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_mason_gun.png",
+  "sha256": "7ce98b310b23be61c29ef02327490b0594070ab718e380cbce10bf5fc5bb5ea5",
+  "solved": "2026-10-11T08:36:37.140Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.82,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.739
+  }
+}

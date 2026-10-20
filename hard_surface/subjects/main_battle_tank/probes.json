@@ -1,0 +1,17 @@
+[
+  {"id": "P1", "view": "side", "axis": "row", "index": 624, "from": 250, "to": 950, "what": "hub row: idler, 7 road wheels, sprocket (up 0.485 m)"},
+  {"id": "P2", "view": "side", "axis": "col", "index": 533, "from": 380, "to": 700, "what": "column through road wheel 3: guard, wheel top/bottom, track bottom"},
+  {"id": "P3", "view": "side", "axis": "row", "index": 460, "from": 80, "to": 800, "what": "gun axis (up 2.37 m): muzzle collar, fume extractor, mantlet, turret"},
+  {"id": "P4", "view": "side", "axis": "row", "index": 545, "from": 250, "to": 950, "what": "hull upper band under the guard: nose to tail"},
+  {"id": "P5", "view": "side", "axis": "col", "index": 660, "from": 330, "to": 700, "what": "column through cupola + MG: MG top, cupola, turret roof, hull, track"},
+  {"id": "P6", "view": "front", "axis": "row", "index": 640, "from": 330, "to": 700, "what": "track bottoms: two track runs, belly gap"},
+  {"id": "P7", "view": "front", "axis": "row", "index": 540, "from": 330, "to": 700, "what": "hull width at the headlights"},
+  {"id": "P8", "view": "front", "axis": "row", "index": 440, "from": 330, "to": 700, "what": "turret width at the mantlet + smoke launchers"},
+  {"id": "P9", "view": "front", "axis": "col", "index": 565, "from": 340, "to": 700, "what": "column through the cupola (+0.6 m): cupola top, roof, hull, track"},
+  {"id": "P10", "view": "rear", "axis": "row", "index": 540, "from": 320, "to": 710, "what": "hull width at the exhaust grille (rear drawn 3.72 m: D1/D2)"},
+  {"id": "P11", "view": "rear", "axis": "row", "index": 440, "from": 320, "to": 710, "what": "turret width at the stowage basket"},
+  {"id": "P12", "view": "top", "axis": "col", "index": 655, "from": 320, "to": 700, "what": "column through the cupola: hull width, cupola ring, near track strip (D3)"},
+  {"id": "P13", "view": "top", "axis": "row", "index": 508, "from": 80, "to": 950, "what": "centre row: muzzle, barrel, mantlet, turret, deck, tail"},
+  {"id": "P14", "view": "concept", "axis": "col", "index": 650, "from": 380, "to": 760, "what": "column through the turret and road wheel 4: roof, hull, wheel, track bottom"},
+  {"id": "P15", "view": "concept", "axis": "row", "index": 520, "from": 20, "to": 1010, "what": "row through the muzzle and the sprocket: gun, hull, sprocket"}
+]

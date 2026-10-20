@@ -1,0 +1,63 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only (the turnaround wins); stylisation measured on subjects/icecream_van/turnaround at the W anchor (body paint span; H = overall incl. the roof cone sign, roof 2.95). Setup audit 2026-09-27: the first turnaround drew the van 15-24 % too long / wide against the concept (per-view aspects); side / front / rear regenerated, remaining drift in out/ref/gold/icecream_van/LEDGER.md.",
+  "class": "vehicle",
+  "real": {
+    "source": "ice-cream van (Ford Transit / Mercedes Sprinter conversion, rounded)",
+    "W": 2,
+    "H": [
+      2.6,
+      3
+    ],
+    "L": [
+      5,
+      6
+    ],
+    "wheelD": [
+      0.68,
+      0.74
+    ],
+    "wheelbaseOverL": [
+      0.55,
+      0.62
+    ],
+    "LoverW": [
+      2.5,
+      3
+    ],
+    "HoverW": [
+      1.3,
+      1.5
+    ]
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 2,
+    "why": "body width of a van; fixes px/m of the turnaround"
+  },
+  "stylisation": {
+    "_comment": "CHIBI: short and tall, big cone sign (1.5 m above the roof)",
+    "LoverW": 2.33,
+    "HoverW": 2.22,
+    "roofOverW": 1.48,
+    "wheelDoverH": 0.2,
+    "wheelbaseOverL": 0.66
+  },
+  "softRanges": {
+    "L": [
+      3.4,
+      5.6
+    ],
+    "W": [
+      1.8,
+      2.2
+    ],
+    "H": [
+      3.4,
+      5
+    ],
+    "wheelR": [
+      0.3,
+      0.55
+    ]
+  }
+}

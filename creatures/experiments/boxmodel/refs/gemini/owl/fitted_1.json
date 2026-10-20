@@ -1,0 +1,19 @@
+{
+ "source": "sheet_1.png",
+ "ops": {
+  "side": "flip",
+  "front": "none",
+  "rear": "none",
+  "top": "none"
+ },
+ "fit": {
+  "front": 1.0,
+  "rear": 0.99,
+  "top": [
+   0.876,
+   1.0
+  ],
+  "length": 0.955,
+  "largest": 0.124
+ }
+}

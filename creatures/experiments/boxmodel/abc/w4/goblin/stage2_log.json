@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "brow loop above R10: the heavy brow ridge gets its own row to overhang the eyes",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "mouth loop between chin R7 and R8: the grin line and the lip plane",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "second elbow loop: the arm bends at A3",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "second knee loop: the crouched knee bends at L2",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye quad under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

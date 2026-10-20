@@ -1,0 +1,28 @@
+{
+  "subject": "fixture",
+  "round": 2,
+  "seat": "opus",
+  "done": true,
+  "items": [
+    { "sev": "MINOR", "key": "knob:signT", "now": 0.385, "want": 0.36, "unit": "m", "views": ["front"], "basis": "front",
+      "at": null, "evidence": [], "reopens": null, "note": "sign top a little narrower" },
+    { "sev": "MINOR", "key": "def:br.bot", "now": 0.38, "want": 0.45, "unit": "m", "views": ["rear"], "basis": "rear",
+      "at": null, "evidence": [], "reopens": null, "note": "rear bumper higher" },
+    { "sev": "MINOR", "key": "def:hubR", "now": 0.23, "want": 0.1, "unit": "m", "views": ["side"], "basis": "side",
+      "at": null, "evidence": [], "reopens": null, "note": "hub much smaller" },
+    { "sev": "MAJOR", "key": "def:R", "now": 0.46, "want": 0.5, "unit": "m", "views": ["side"], "basis": "side",
+      "at": { "image": "side", "rect": [5, 5, 15, 15], "claim": "model-only" }, "evidence": ["measure.mjs profile side"], "reopens": null, "note": "tyres bigger" },
+    { "sev": "MINOR", "key": "def:cap.drop", "now": 0.25, "want": 0.15, "unit": "m", "views": ["front"], "basis": "front",
+      "at": null, "evidence": [], "reopens": null, "note": "roof edge tighter" },
+    { "sev": "MINOR", "key": "knob:mh", "now": 0.39, "want": 0.35, "unit": "m", "views": ["concept"], "basis": "concept",
+      "at": null, "evidence": [], "reopens": null, "note": "mirror head shorter" },
+    { "sev": "MINOR", "key": "part:tail.shape", "now": "square", "want": "round", "unit": "text", "views": ["rear"], "basis": "rear",
+      "at": null, "evidence": [], "reopens": null, "note": "tail lamp shape" },
+    { "sev": "MINOR", "key": "def:roofR", "now": 0.24, "want": 0.3, "unit": "m", "views": ["front"], "basis": "front",
+      "at": null, "evidence": [], "reopens": null, "note": "rounder roof edge (third time)" },
+    { "sev": "MINOR", "key": "def:zR", "now": -1.8, "want": -1.75, "unit": "m", "views": ["side"], "basis": "side",
+      "at": { "image": "side", "rect": [0, 0, 4, 4], "claim": "edge" }, "evidence": ["measure.mjs profile side"], "reopens": "def:zR", "note": "rear axle, measured again on the side view" },
+    { "sev": "MINOR", "key": "def:planR", "now": 0.12, "want": 0.06, "unit": "m", "views": ["concept"], "basis": "concept",
+      "at": null, "evidence": [], "reopens": null, "note": "plan corners tighter" }
+  ]
+}

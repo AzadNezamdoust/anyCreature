@@ -1,0 +1,54 @@
+{
+  "subject": "it_line_gun",
+  "noun": "chunky piton line launcher game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_line_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_line_gun.png = out/concept-items30/17_line_gun/v4b_hero_2.png; FPS refs/it_line_gun.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: muzzle block with a closed square bore, nothing protruding; ONE cassette on top with exactly three piton heads in a window on its left face; ONE spool with hub cap on the left flank; one olive lever block on the left flank ahead of the spool; one charcoal rear end block; one ribbed grip + trigger guard; one teal lamp on the left flank). The v3 spike / ring eye / loose cord / spare-spike box / belt clip / top slots are NOT drawn and are dropped. FRAME (classes/weapon.md): front +z = the muzzle block, left flank +x = the flank the hero shows, y up with y = 0 at the grip bottom. Dims = the old stated size, re-measured after install.",
+  "description": "A fictional piton line launcher game prop for a mining scout, chunky low-poly, held level in one hand with the flat muzzle block forward. One compact muted olive painted body with wide chamfers. At the front one short thick square dark steel muzzle block with a flat face and one square dark bore opening that closes a short way in; nothing sticks out of it. On top of the body one chunky charcoal piton cassette, a flat box lying lengthwise, with a wide window on its left face showing exactly three big dark steel piton heads side by side pointing forward, each a fat square spike with a round ring eye at its back. On the left side of the body one wide flat round line spool drum about 0.11 m across, its winding one solid fat charcoal fill with a thick charcoal rim and one big dark steel octagonal hub cap, sitting flush against the body. One fat blocky olive lever block on the left flank just in front of and below the spool. One thick charcoal end block at the rear of the body. One diagonal-ribbed charcoal pistol grip raked backward with a squared charcoal trigger guard under the rear of the body. One small rectangular teal lamp window in a thick raised charcoal bezel on the left flank above the grip. The hidden right flank is plain olive shell with the right face of the cassette plain charcoal.",
+  "proportions": "About 0.42 m long, 0.12 m wide and 0.2 m tall. (length : width : height = 3.50 : 1 : 1.67)",
+  "sides": "everything listed as on the left flank is on the left only: the wide round line spool with its hub cap (sticks out of the flank), the olive lever block in front of it (sticks out), the small teal lamp window (flush) above the grip, and the three piton heads' window on the cassette's left face. The right flank is plain: smooth olive body, no spool, no lamp, no lever; the cassette's right face is plain charcoal. The muzzle block, the cassette, the rear end block, the grip and the trigger guard are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky piton line launcher game prop is 2.10 times as long as it is tall",
+    "front": "in this view its width is 0.60 of its height",
+    "rear": "in this view its width is 0.60 of its height",
+    "top": "in this view it is 3.50 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level, pointing to the LEFT of the image: the short thick square dark steel muzzle block at the left end (flat face, nothing sticking out), the compact olive body with wide chamfers, the flat charcoal cassette lying along the top with its window showing three big dark steel piton heads side by side pointing left, the big round line spool on the visible flank in the middle of the body (thick charcoal rim, solid charcoal winding, big dark steel octagonal hub cap), the fat olive lever block in front of and below the spool, the teal lamp window in its bezel near the rear above the grip, the thick charcoal end block at the right end, the diagonal-ribbed charcoal grip raked back below the rear with its squared trigger guard.",
+    "front": "Seen from the muzzle end (the weapon's left flank on the image RIGHT): the square dark steel muzzle block in the middle with its one square dark bore opening in a flat face; the flat charcoal cassette on top on the centre line, its three piton heads not visible; the wide round spool disc sticking out at the image RIGHT (left flank) as a thick slab with the lever block beside it; the grip hidden behind the body, only its lower end showing below.",
+    "rear": "Seen from the butt end (the left flank on the image LEFT): the thick charcoal end block in the middle, the olive body edges, the flat cassette on top on the centre line, the ribbed grip back strap below on the centre line, the wide round spool disc sticking out at the image LEFT as a thick slab with the lever block beside it.",
+    "top": "Seen from above (muzzle to the LEFT, left flank at the BOTTOM): a short compact shape: the square muzzle block at the left end, the olive body, the long flat charcoal cassette box along the centre line, the rear end block at the right end, and the wide round spool disc and the olive lever block sticking out of the left-flank (bottom) edge; the lamp window is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the wide flat round line spool drum with its hub cap",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    },
+    {
+      "part": "the fat olive lever block",
+      "plural": false,
+      "flank": "left",
+      "along": "front",
+      "protrudes": true
+    },
+    {
+      "part": "the small teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.42,
+    "W": 0.12,
+    "H": 0.2,
+    "_": "ESTIMATE on the hero (perspective); after turnaround.mjs install re-measure with hull.mjs"
+  },
+  "decided": [
+    "the muzzle block is the frontmost part; its square bore closes a short way in; no spike, ring eye, line or cord anywhere",
+    "exactly one cassette with exactly three piton heads, one spool, one lever block, one lamp"
+  ]
+}

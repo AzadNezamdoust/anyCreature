@@ -1,0 +1,58 @@
+{
+  "pass": "P2",
+  "dry": false,
+  "item": "Add the fire escape, OPEN, so daylight passes through it. The frozen count in subjects/facade_brick/census.json is 2 landings, 1 flight of stairs, and 2 ladder assemblies - the roof-access ladder and the drop ladder under the lower landing. Every bar, baluster, tread, stringer, stile and rung is its own part and no two of them are booleaned together. Roles: landing for deck members, support for brackets, stringer for the stair strings, step for the treads, railing for handrails, baluster for the uprights, ladder for the stiles, rung for the rungs. The roof ladder stands on the street-left SIDE wall, 0.18 W behind the front plane, never in front of the face. Bars are 0.04 m; a deck is an open grate - the wall must show through it. The rest of the rules the ironwork has to satisfy: the flight rises INSIDE the landing's x-range, not hung off the outside of the decks; the deck tops sit BELOW the window sills by layout landing.rowY, which is negative - the target's landings do not hang off the sill line; the roof ladder's top stops layout ladder.topBelowCoping under the coping and nothing of it stands above the coping, so no handholds over the roof edge; the back of every landing sits within 0.15 m of the brick; a deck leaves no clear slot wider than 0.20 m between adjacent members; the flight rises 0.14-0.20 m per tread, all risers within 0.01 m of each other, and it carries at least one railing 0.9-1.1 m above the tread line; and the head of a ladder that reaches a landing has a gate-width gap in the railing over it (nothing in the railing family within 0.3 m either side of the ladder, from the deck up to 1.1 m). layout is UNVERIFIED - the scan could not resolve a deck's depth off the still, so nothing gates it; build a deck you could stand on and do not read a number into the silence. Use K.repeat for the balusters, the treads and the rungs, not hand-placed copies, and keep the total under the triangle budget. Where a bar is genuinely seated into a landing, declare embed: true on it and name what it touches; a part that penetrates anything it has NOT named in touches fails the gate. Layout keys this pass must satisfy: landing.rowY, ladder.topBelowCoping, ladder.roof.face, ladder.roof.backFromCorner. Done looks like: the ironwork in image 1 - you can see the wall through the railings, the landings stand under the window sills, the roof ladder climbs the side wall well behind the corner, and you could climb it. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+  "gatePass": true,
+  "likenessPass": false,
+  "likenessMs": 1848,
+  "likenessCodes": [
+    "LK_VALUE",
+    "LK_HUE",
+    "LK_AREA"
+  ],
+  "codexSeconds": 0,
+  "tokens": 0,
+  "repairs": 0,
+  "kernelBuildMs": 150,
+  "booleans": 3,
+  "toThreeMs": 66,
+  "validatorMs": 924,
+  "validatorTimings": {
+    "merge": 66,
+    "V1": 9,
+    "V5": 2,
+    "V2": 430,
+    "V3": 344,
+    "V6": 4,
+    "V4": 2,
+    "V7": 2,
+    "V11_BEARING": 25,
+    "V11_LANDING_GAP": 1,
+    "V11_LADDER_ACCESS": 7,
+    "V11_DECK_GAP": 1,
+    "V12": 3,
+    "V12_LAYOUT": 6,
+    "V10": 6,
+    "total": 924
+  },
+  "captureMs": 4033,
+  "captures": {
+    "target": {
+      "ok": true,
+      "ms": 1574,
+      "out": "out/facade/P2/target.png"
+    },
+    "threeQuarter": {
+      "ok": true,
+      "ms": 971,
+      "out": "out/facade/P2/threeQuarter.png"
+    },
+    "idpass": {
+      "ok": true,
+      "ms": 925,
+      "out": "out/facade/P2/idpass.png"
+    }
+  },
+  "moduleChanged": true,
+  "answer": "CHANGE: none (gate-only re-run)"
+}

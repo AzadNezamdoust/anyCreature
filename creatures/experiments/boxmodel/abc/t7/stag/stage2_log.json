@@ -1,0 +1,39 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "foreleg wrist (knee): a loop above and below it so it bends",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "hind hock: a loop above and below it so it bends",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "elbow: a loop above it, the upper arm leaves the chest",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "neck: two loops between the base, mid and top rings so the neck bends without collapsing",
+   "new_verts": 12,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "inset",
+   "reason": "eye socket in the brow->stop upper-side face, under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

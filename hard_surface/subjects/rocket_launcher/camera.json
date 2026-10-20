@@ -1,0 +1,18 @@
+{
+  "theta_deg": 29.25,
+  "phi_deg": 67.5,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/rocket_launcher.png",
+  "sha256": "ad1293b59f3d196bf06905a186dffcc4f8113545d00c2870f7c49510cb4240f7",
+  "solved": "2026-10-04T19:57:33.200Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.682,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.399
+  }
+}

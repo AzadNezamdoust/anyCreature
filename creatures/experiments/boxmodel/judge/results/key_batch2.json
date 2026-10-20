@@ -1,0 +1,15 @@
+{
+ "pairs": {},
+ "identity": {
+  "shape1.jpg": "frog",
+  "look1.jpg": "frog",
+  "shape2.jpg": "bear",
+  "look2.jpg": "bear",
+  "shape3.jpg": "crab",
+  "look3.jpg": "crab",
+  "shape4.jpg": "owl",
+  "look4.jpg": "owl",
+  "shape5.jpg": "stag",
+  "look5.jpg": "stag"
+ }
+}

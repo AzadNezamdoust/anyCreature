@@ -1,0 +1,66 @@
+{
+  "schema": "pg/1",
+  "subject": "v2_gap_large",
+  "seed": 1,
+  "class": "prop",
+  "note": "V2: socket 0.30 m into a 0.05 m lid — 0.25 m gap, past the repair ceiling, must re-prompt.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood"
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": [
+        0.64,
+        0.05,
+        0.64
+      ],
+      "role": "lid",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "handle",
+      "prim": "box",
+      "dims": [
+        0.1,
+        0.12,
+        0.1
+      ],
+      "role": "handle",
+      "zone": "band",
+      "attach": {
+        "to": "lid",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.3
+      }
+    }
+  ]
+}

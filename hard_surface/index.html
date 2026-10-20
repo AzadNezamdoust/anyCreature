@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LLM Modeling — spec studio</title>
+    <style>
+      :root { color-scheme: dark; --bg: #14161a; --panel: #1c1f25; --ink: #e6e8ec; --dim: #8c93a0; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; }
+      body { background: var(--bg); color: var(--ink); font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      #app { display: grid; grid-template-columns: 1fr 320px; height: 100%; }
+      #viewport { position: relative; min-width: 0; overflow: hidden; }
+      #scene { display: block; width: 100%; height: 100%; }
+      /* M1-FIX, studio only: with the canvas in flow, its width/height
+         ATTRIBUTES are its intrinsic size, so resizeToViewport() grew the grid
+         row, which grew clientHeight, which grew the canvas — the viewport ran
+         away to 38 000 px tall and the perspective camera rendered a 1:40 sliver
+         of solid brick. Taking it out of flow breaks the loop. Scoped to studio
+         so the capture path (which sets an explicit 900x900 style) is untouched
+         and the frozen capture hash cannot move. */
+      body[data-mode="studio"] #scene { position: absolute; inset: 0; }
+      #panel { background: var(--panel); border-left: 1px solid #2b303a; overflow-y: auto; padding: 16px; }
+      h1 { font-size: 15px; margin: 0 0 2px; }
+      h2 { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--dim); margin: 18px 0 6px; }
+      .sub, .note { color: var(--dim); margin: 0; }
+      .row { display: flex; justify-content: space-between; gap: 8px; padding: 2px 0; }
+      .row strong { font-weight: 600; }
+      .btns { display: flex; flex-wrap: wrap; gap: 6px; }
+      button { background: #262b33; color: var(--ink); border: 1px solid #39404c; border-radius: 4px; padding: 5px 9px; font: inherit; cursor: pointer; }
+      button:hover { background: #303743; }
+      button[aria-pressed="true"] { background: #3a4a63; border-color: #55708f; }
+      pre { background: #12141a; border: 1px solid #2b303a; border-radius: 4px; padding: 8px; margin: 0; max-height: 260px; overflow: auto; white-space: pre-wrap; }
+      .bad { color: #ff9b8a; }
+      .good { color: #8fdca4; }
+
+      /* Capture mode: the panel is not hidden, it is never built (08:G8). The
+         page background is a fixed constant so a transparent clear colour
+         composites to the same pixels on every machine. */
+      body[data-mode="capture"] { background: #ffffff; }
+      body[data-mode="capture"] #app { grid-template-columns: 1fr; }
+      body[data-mode="capture"] #panel { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <main id="viewport"><canvas id="scene"></canvas></main>
+      <aside id="panel">
+        <h1>LLM Modeling</h1>
+        <p class="sub">spec.json in, one merged mesh out.</p>
+
+        <h2>Subject</h2>
+        <div id="subjects" class="btns"></div>
+
+        <h2>View</h2>
+        <div id="views" class="btns"></div>
+
+        <h2>Measured</h2>
+        <div id="stats"></div>
+
+        <h2>Validators</h2>
+        <pre id="report">—</pre>
+
+        <h2>Export</h2>
+        <div class="btns"><button type="button" id="export-glb">Export GLB</button></div>
+        <p id="status" class="note" role="status"></p>
+      </aside>
+    </div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

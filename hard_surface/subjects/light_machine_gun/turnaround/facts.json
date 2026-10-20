@@ -1,0 +1,36 @@
+{
+  "subject": "light_machine_gun",
+  "noun": "game heavy rifle prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/light_machine_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/light_machine_gun.png (orange knob + the brass belt on the visible left flank above the box; right flank hidden; the bipod splays symmetrically); noun / description / sides / faces worded as a fictional low-poly video-game prop described by its shapes and colours only (same parts, same colours; mechanism names dropped) — the assault_rifle sheet with the concept paragraph verbatim was rejected by the GPT image safety system",
+  "description": "A fictional stylised low-poly video-game prop in the shape of a big long rifle on two thin legs, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A long boxy dark grey main body block with a flat lid on top carrying a short ridged strip and a small boxy block with a round hoop at its back end. A long heavy round dark grey tube sticking out of the front, with a matte black ribbed carry bar on two small brackets above it near the main body, a triangular frame standing on it near the front end, and a chunky slotted cylinder at the very front end. Under the rear half of the tube a matte black front cover with four oblong slots along its side. Under the main body a matte black handle raked backward with a small curved dark grey lever inside a rounded loop. Hanging under the main body in front of the handle a big squarish matte black box with a chamfered bottom and a bright orange band round its top edge. At the rear a solid matte black shoulder piece with a hooked lower edge and a flat end plate. Under the tube in front of the cover two thin dark grey legs angled down and slightly forward, splayed left and right like an upside-down V, each ending in a small flat orange foot. Bright orange accents: the band round the top edge of the box, a small knob on the left flank of the main body, and the two feet. On the left flank of the main body, above the box, a short vertical row of five small brass-yellow pegs with dark pointed tips. The right flank is plain.",
+  "proportions": "About 1.10 m long, 0.12 m wide and 0.30 m tall. (length : width : height = 9.17 : 1 : 2.50)",
+  "sides": "the small orange knob and the short row of brass-yellow pegs are on the left flank of the main body, above the box; the right flank is plain; everything else (the two legs, the box, the carry bar) is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 3.67 times as long as it is tall",
+    "front": "in this view its width is 0.40 of its height",
+    "rear": "in this view its width is 0.40 of its height",
+    "top": "in this view it is 9.17 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the tube and the lid exactly horizontal, the slotted cylinder at the left end of the image, the shoulder piece and its end plate at the right end; the carry bar and the triangular frame above the tube, the box and the handle hanging below the main body, the two legs seen as one thin leg hanging down and slightly forward under the tube with an orange foot at the bottom, reaching lower than the box.",
+    "front": "Seen from the front end the prop is a narrow tall stack on one centre line: the round end of the slotted cylinder with a dark centre hole, the triangular frame above it, the carry bar and the small boxy block behind it higher up, the wide squarish box with its orange band behind and below; the two thin legs spread out and down to the left and to the right like an upside-down V, wider than everything else, each with a flat orange foot.",
+    "rear": "Seen from the rear end: the tall flat end plate of the shoulder piece in front of everything on the centre line, the small boxy block with its hoop above it, the handle and the wider squarish box with its orange band below and behind it, and the two thin legs spreading out and down to the left and right beyond it, each with a flat orange foot.",
+    "top": "Seen from above the prop is a long thin strip: the slotted cylinder at the left end, the tube with the carry bar along it, the lid with its ridged strip, the shoulder piece and end plate at the right end; the box is a little wider than the main body on both sides; the two legs splay out to the top and to the bottom of the image near the left end, each ending in an orange foot; the handle is hidden under the main body."
+  },
+  "asymmetric": [
+    {
+      "part": "the small orange knob and the short row of brass-yellow pegs",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 1.1,
+    "W": 0.12,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

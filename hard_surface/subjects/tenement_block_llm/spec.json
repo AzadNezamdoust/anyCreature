@@ -1,0 +1,1783 @@
+{
+  "schema": "pg/1",
+  "subject": "tenement_block",
+  "seed": 1,
+  "parts": [
+    {
+      "id": "plinth_left",
+      "prim": "bevelBox",
+      "dims": [
+        9,
+        0.9,
+        8.3
+      ],
+      "bevel": 0.06,
+      "ground": true,
+      "role": "plinth",
+      "zone": "foundation"
+    },
+    {
+      "id": "mass_left",
+      "prim": "box",
+      "dims": [
+        9,
+        10.8,
+        8
+      ],
+      "role": "massing",
+      "zone": "mint",
+      "attach": {
+        "to": "plinth_left",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "plinth_middle",
+      "prim": "bevelBox",
+      "dims": [
+        7.6,
+        0.9,
+        8.3
+      ],
+      "bevel": 0.06,
+      "role": "plinth",
+      "zone": "stone",
+      "attach": {
+        "to": "plinth_left",
+        "face": "+X",
+        "uv": [
+          0.5,
+          0
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "mass_middle",
+      "prim": "box",
+      "dims": [
+        7.6,
+        12,
+        8
+      ],
+      "role": "massing",
+      "zone": "brick",
+      "attach": {
+        "to": "plinth_middle",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "plinth_right",
+      "prim": "bevelBox",
+      "dims": [
+        8.4,
+        0.9,
+        8.3
+      ],
+      "bevel": 0.06,
+      "role": "plinth",
+      "zone": "stone",
+      "attach": {
+        "to": "plinth_middle",
+        "face": "+X",
+        "uv": [
+          0.5,
+          0
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "mass_right",
+      "prim": "box",
+      "dims": [
+        8.4,
+        10.2,
+        8
+      ],
+      "role": "massing",
+      "zone": "render",
+      "attach": {
+        "to": "plinth_right",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "parapet_left",
+      "prim": "bevelBox",
+      "dims": [
+        9,
+        0.95,
+        8.24
+      ],
+      "bevel": 0.05,
+      "role": "parapet",
+      "zone": "stone",
+      "attach": {
+        "to": "mass_left",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "parapet_middle",
+      "prim": "bevelBox",
+      "dims": [
+        7.6,
+        1.15,
+        8.24
+      ],
+      "bevel": 0.05,
+      "role": "parapet",
+      "zone": "trim",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "parapet_right",
+      "prim": "bevelBox",
+      "dims": [
+        8.4,
+        0.85,
+        8.24
+      ],
+      "bevel": 0.05,
+      "role": "parapet",
+      "zone": "stone",
+      "attach": {
+        "to": "mass_right",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "bulkhead_left",
+      "prim": "bevelBox",
+      "dims": [
+        3.2,
+        2.4,
+        2.8
+      ],
+      "bevel": 0.05,
+      "role": "bulkhead",
+      "zone": "mint",
+      "attach": {
+        "to": "parapet_left",
+        "face": "+Y",
+        "uv": [
+          0.3,
+          0.45
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "basement_window_left",
+      "prim": "box",
+      "dims": [
+        0.9,
+        0.5,
+        0.12
+      ],
+      "role": "window",
+      "zone": "glass",
+      "mirror": true,
+      "attach": {
+        "to": "plinth_left",
+        "face": "+Z",
+        "uv": [
+          0.25,
+          0.45
+        ],
+        "contact": "socket",
+        "embed": 0.06
+      }
+    },
+    {
+      "id": "balcony_r2",
+      "prim": "bevelBox",
+      "dims": [
+        2.6,
+        0.18,
+        1.2
+      ],
+      "bevel": 0.04,
+      "role": "balcony",
+      "zone": "stone",
+      "attach": {
+        "to": "mass_right",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.313725
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "balcony_r3",
+      "prim": "bevelBox",
+      "dims": [
+        2.6,
+        0.18,
+        1.2
+      ],
+      "bevel": 0.04,
+      "role": "balcony",
+      "zone": "stone",
+      "attach": {
+        "to": "mass_right",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.627451
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "stoop_left",
+      "prim": "stepStack",
+      "dims": [
+        1.6,
+        0.78,
+        1.2
+      ],
+      "steps": 4,
+      "role": "stoop",
+      "zone": "stone",
+      "attach": {
+        "to": "plinth_left",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.9939759036144579
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.8,
+        "align": "bottom",
+        "rot": 180
+      }
+    },
+    {
+      "id": "stoop_left_rail",
+      "prim": "railing",
+      "dims": [
+        1.2,
+        0.95,
+        0.06
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 2
+      },
+      "mirror": true,
+      "attach": {
+        "to": "stoop_left",
+        "face": "+Y",
+        "uv": [
+          0.04,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "rot": 90
+      }
+    },
+    {
+      "id": "stoop_right",
+      "prim": "stepStack",
+      "dims": [
+        1.6,
+        0.78,
+        1.2
+      ],
+      "steps": 4,
+      "role": "stoop",
+      "zone": "stone",
+      "attach": {
+        "to": "plinth_right",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.9939759036144579
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.8,
+        "align": "bottom",
+        "rot": 180
+      }
+    },
+    {
+      "id": "stoop_right_rail",
+      "prim": "railing",
+      "dims": [
+        1.2,
+        0.95,
+        0.06
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 2
+      },
+      "mirror": true,
+      "attach": {
+        "to": "stoop_right",
+        "face": "+Y",
+        "uv": [
+          0.04,
+          0.5
+        ],
+        "contact": "rests-on-top",
+        "rot": 90
+      }
+    },
+    {
+      "id": "fe_deck_2",
+      "prim": "box",
+      "dims": [
+        2.6,
+        0.12,
+        1.4
+      ],
+      "role": "landing",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.184211,
+          0.333333
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "fe_rail_2",
+      "prim": "railing_open",
+      "dims": [
+        2.6,
+        0.95,
+        0.12
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 4,
+        "railThickness": 0.12,
+        "postThickness": 0.12
+      },
+      "attach": {
+        "to": "fe_deck_2",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.96
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "fe_stair_tread_1",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.057895,
+          0.354722
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_2",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.073684,
+          0.371111
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_3",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.089474,
+          0.3875
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_4",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.105263,
+          0.403889
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_5",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.121053,
+          0.420277
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_6",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.136842,
+          0.436666
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_7",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.152632,
+          0.453055
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_8",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.168421,
+          0.469444
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.184211,
+          0.485833
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_10",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.200000,
+          0.502222
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_11",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.215789,
+          0.518611
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_12",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.231579,
+          0.535
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_13",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.247368,
+          0.551389
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_14",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.263158,
+          0.567777
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_15",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.278947,
+          0.584166
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_16",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.294737,
+          0.600555
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_tread_17",
+      "prim": "box",
+      "dims": [
+        0.29,
+        0.12,
+        1.2
+      ],
+      "role": "stair_tread",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.310526,
+          0.616944
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "fe_stair_stringer_back",
+      "prim": "box",
+      "dims": [
+        4.146944,
+        0.12,
+        0.12
+      ],
+      "role": "stair_stringer",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.184211,
+          0.485833
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "rot": 121.391
+      }
+    },
+    {
+      "id": "fe_stair_stringer_front",
+      "prim": "box",
+      "dims": [
+        4.146944,
+        0.12,
+        0.12
+      ],
+      "role": "stair_stringer",
+      "zone": "iron",
+      "attach": {
+        "to": "fe_stair",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "flush",
+        "embed": 0.1,
+        "rot": 121.391
+      }
+    },
+    {
+      "id": "fe_deck_3",
+      "prim": "box",
+      "dims": [
+        2.6,
+        0.12,
+        1.4
+      ],
+      "role": "landing",
+      "zone": "iron",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.184211,
+          0.628333
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "fe_rail_3",
+      "prim": "railing_open",
+      "dims": [
+        2.6,
+        0.95,
+        0.12
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 4,
+        "railThickness": 0.12,
+        "postThickness": 0.12
+      },
+      "attach": {
+        "to": "fe_deck_3",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.96
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "shop_awning",
+      "prim": "plate",
+      "dims": [
+        6,
+        0.08,
+        0.08
+      ],
+      "role": "awning",
+      "zone": "awning",
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.316667
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "top"
+      }
+    },
+    {
+      "id": "shop_awning_canopy",
+      "prim": "plate",
+      "dims": [
+        6,
+        0.06,
+        1.5
+      ],
+      "role": "awning",
+      "zone": "awning",
+      "attach": {
+        "to": "shop_awning",
+        "face": "+X",
+        "uv": [
+          0.5,
+          1
+        ],
+        "contact": "flush",
+        "embed": 6,
+        "align": "top",
+        "alignU": "start",
+        "rot": 12
+      }
+    },
+    {
+      "id": "shop_awning_valance",
+      "prim": "plate",
+      "dims": [
+        6,
+        0.2,
+        0.06
+      ],
+      "role": "awning_valance",
+      "zone": "awning",
+      "attach": {
+        "to": "shop_awning_canopy",
+        "face": "+X",
+        "uv": [
+          1,
+          0.5
+        ],
+        "contact": "flush",
+        "embed": 6,
+        "align": "top",
+        "rot": -12
+      }
+    },
+    {
+      "id": "ac_unit_middle",
+      "prim": "acUnit",
+      "dims": [
+        0.9,
+        0.6,
+        0.5
+      ],
+      "role": "ac_unit",
+      "zone": "metal",
+      "zones": {
+        "grille": "trim"
+      },
+      "attach": {
+        "to": "mass_middle",
+        "face": "+Z",
+        "uv": [
+          0.85,
+          0.4
+        ],
+        "contact": "flush",
+        "embed": 0.05,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "balcony_r2_rail",
+      "prim": "railing",
+      "dims": [
+        2.6,
+        0.95,
+        0.06
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 4
+      },
+      "attach": {
+        "to": "balcony_r2",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.95
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "balcony_r3_rail",
+      "prim": "railing",
+      "dims": [
+        2.6,
+        0.95,
+        0.06
+      ],
+      "role": "railing",
+      "zone": "iron",
+      "params": {
+        "postCount": 4
+      },
+      "attach": {
+        "to": "balcony_r3",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.95
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "chimney_left",
+      "prim": "pipe",
+      "dims": [
+        0.7,
+        2.2,
+        0.7
+      ],
+      "role": "chimney",
+      "zone": "brick_dark",
+      "params": {
+        "capThickness": 0.1,
+        "capOverhang": 0.08,
+        "sides": 6
+      },
+      "attach": {
+        "to": "parapet_left",
+        "face": "+Y",
+        "uv": [
+          0.72,
+          0.35
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "bulkhead_louvre",
+      "prim": "vent",
+      "dims": [
+        1.4,
+        0.9,
+        0.25
+      ],
+      "role": "vent",
+      "zone": "metal",
+      "zones": {
+        "louvre": "metal"
+      },
+      "params": {
+        "louvreThickness": 0.06,
+        "louvreInsetU": 0.16,
+        "louvreInsetV": 0.16
+      },
+      "attach": {
+        "to": "bulkhead_left",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0.62
+        ],
+        "contact": "flush",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "roof_vent_middle",
+      "prim": "vent",
+      "dims": [
+        1.2,
+        0.8,
+        0.7
+      ],
+      "role": "vent",
+      "zone": "metal",
+      "zones": {
+        "louvre": "trim"
+      },
+      "attach": {
+        "to": "parapet_middle",
+        "face": "+Y",
+        "uv": [
+          0.35,
+          0.62
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "roof_pipe_middle",
+      "prim": "pipe",
+      "dims": [
+        0.35,
+        1.4,
+        0.35
+      ],
+      "role": "pipe",
+      "zone": "metal",
+      "params": {
+        "capThickness": 0.08,
+        "capOverhang": 0.06,
+        "sides": 6
+      },
+      "attach": {
+        "to": "parapet_middle",
+        "face": "+Y",
+        "uv": [
+          0.66,
+          0.42
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "clothes_line",
+      "prim": "box",
+      "dims": [
+        3.4,
+        0.08,
+        0.08
+      ],
+      "role": "clothesline",
+      "zone": "metal",
+      "attach": {
+        "to": "bulkhead_left",
+        "face": "+X",
+        "uv": [
+          0.5,
+          0.6
+        ],
+        "contact": "flush",
+        "embed": 0.04
+      }
+    },
+    {
+      "id": "clothes_post",
+      "prim": "box",
+      "dims": [
+        0.12,
+        2,
+        0.12
+      ],
+      "role": "post",
+      "zone": "metal",
+      "attach": {
+        "to": "parapet_left",
+        "face": "+Y",
+        "uv": [
+          0.85,
+          0.45
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.05
+      }
+    },
+    {
+      "id": "shirt_1",
+      "prim": "box",
+      "dims": [
+        0.5,
+        0.65,
+        0.06
+      ],
+      "role": "cloth",
+      "zone": "cloth_red",
+      "attach": {
+        "to": "clothes_line",
+        "face": "-Y",
+        "uv": [
+          0.2,
+          0.5
+        ],
+        "contact": "hangs-below",
+        "embed": 0.02
+      }
+    },
+    {
+      "id": "shirt_2",
+      "prim": "box",
+      "dims": [
+        0.5,
+        0.65,
+        0.06
+      ],
+      "role": "cloth",
+      "zone": "cloth_yellow",
+      "attach": {
+        "to": "clothes_line",
+        "face": "-Y",
+        "uv": [
+          0.4,
+          0.5
+        ],
+        "contact": "hangs-below",
+        "embed": 0.02
+      }
+    },
+    {
+      "id": "shirt_3",
+      "prim": "box",
+      "dims": [
+        0.5,
+        0.65,
+        0.06
+      ],
+      "role": "cloth",
+      "zone": "cloth_blue",
+      "attach": {
+        "to": "clothes_line",
+        "face": "-Y",
+        "uv": [
+          0.6,
+          0.5
+        ],
+        "contact": "hangs-below",
+        "embed": 0.02
+      }
+    },
+    {
+      "id": "shirt_4",
+      "prim": "box",
+      "dims": [
+        0.5,
+        0.65,
+        0.06
+      ],
+      "role": "cloth",
+      "zone": "cloth_green",
+      "attach": {
+        "to": "clothes_line",
+        "face": "-Y",
+        "uv": [
+          0.8,
+          0.5
+        ],
+        "contact": "hangs-below",
+        "embed": 0.02
+      }
+    },
+    {
+      "id": "trash_can",
+      "prim": "trashcan",
+      "dims": [
+        0.62,
+        1,
+        0.62
+      ],
+      "role": "bin",
+      "zone": "metal",
+      "zones": {
+        "lid": "plastic"
+      },
+      "params": {
+        "wall": 0.06,
+        "lidThickness": 0.08,
+        "lidOverhang": 0.04,
+        "sides": 6
+      },
+      "attach": {
+        "to": "plinth_right",
+        "face": "+Z",
+        "uv": [
+          0.7,
+          0
+        ],
+        "contact": "flush",
+        "embed": 0.03,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "crate_1",
+      "prim": "box",
+      "dims": [
+        0.7,
+        0.5,
+        0.6
+      ],
+      "role": "crate",
+      "zone": "wood",
+      "attach": {
+        "to": "plinth_right",
+        "face": "+Z",
+        "uv": [
+          0.3,
+          0
+        ],
+        "contact": "flush",
+        "embed": 0.03,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "crate_2",
+      "prim": "crate",
+      "dims": [
+        0.6,
+        0.45,
+        0.52
+      ],
+      "role": "crate",
+      "zone": "wood",
+      "zones": {
+        "band": "trim"
+      },
+      "attach": {
+        "to": "crate_1",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.55
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.02
+      }
+    },
+    {
+      "id": "bench_seat",
+      "prim": "box",
+      "dims": [
+        1.9,
+        0.45,
+        0.55
+      ],
+      "role": "bench",
+      "zone": "wood",
+      "attach": {
+        "to": "plinth_middle",
+        "face": "+Z",
+        "uv": [
+          0.5,
+          0
+        ],
+        "contact": "flush",
+        "embed": 0.03,
+        "align": "bottom"
+      }
+    },
+    {
+      "id": "bench_back",
+      "prim": "box",
+      "dims": [
+        1.9,
+        0.5,
+        0.1
+      ],
+      "role": "bench_back",
+      "zone": "wood",
+      "attach": {
+        "to": "bench_seat",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.1
+        ],
+        "contact": "rests-on-top",
+        "embed": 0.02
+      }
+    }
+  ],
+  "class": "building",
+  "unit": {
+    "part": "mass_left",
+    "m": 10.8
+  },
+  "palette": {
+    "mint": "#9ec4a6",
+    "brick": "#a04b39",
+    "brick_dark": "#7d382b",
+    "render": "#c9a980",
+    "foundation": "#907589",
+    "stone": "#9a958c",
+    "trim": "#e3dccf",
+    "glass": "#3a4750",
+    "wood": "#6b4a30",
+    "iron": "#3a3e46",
+    "metal": "#8a8d92",
+    "awning": "#4e8f5f",
+    "cloth_red": "#d6402f",
+    "cloth_yellow": "#e8b02a",
+    "cloth_blue": "#2f6fbf",
+    "cloth_green": "#4aa356",
+    "roof": "#4a4642",
+    "plastic": "#46604f"
+  },
+  "facades": [
+    {
+      "id": "fac_left_front",
+      "on": "mass_left",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "ground",
+            3.4
+          ],
+          [
+            "floor",
+            3.4,
+            "*2"
+          ],
+          [
+            "cornice",
+            0.6
+          ]
+        ]
+      },
+      "tile": {
+        "ground": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              1.2
+            ],
+            [
+              "gwin",
+              2.3
+            ],
+            [
+              "entry",
+              2
+            ],
+            [
+              "gwin",
+              2.3
+            ],
+            [
+              "pier",
+              1.2
+            ]
+          ]
+        },
+        "floor": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              0.75
+            ],
+            [
+              "bay",
+              2.5,
+              "*3"
+            ],
+            [
+              "pier",
+              0.75
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "entry": {
+          "door": {
+            "dims": [
+              1.25,
+              2.35
+            ],
+            "inset": 0.12,
+            "zone": "wood",
+            "lintel": "flat"
+          }
+        },
+        "gwin": {
+          "window": {
+            "dims": [
+              1.4,
+              1.7
+            ],
+            "inset": 0.1,
+            "zone": "glass",
+            "sill": 0.09,
+            "lintel": "flat"
+          }
+        },
+        "bay": {
+          "window": {
+            "dims": [
+              1.35,
+              1.85
+            ],
+            "inset": 0.12,
+            "zone": "glass",
+            "sill": 0.08,
+            "lintel": "flat"
+          }
+        },
+        "cornice": {
+          "band": {
+            "h": 0.5,
+            "depth": 0.18,
+            "zone": "trim",
+            "role": "cornice"
+          }
+        }
+      }
+    },
+    {
+      "id": "fac_left_side",
+      "on": "mass_left",
+      "face": "-X",
+      "occlude": true,
+      "trimZone": "trim",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "floor",
+            3.4,
+            "*3"
+          ],
+          [
+            "cornice",
+            0.6
+          ]
+        ]
+      },
+      "tile": {
+        "floor": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              1.8
+            ],
+            [
+              "bay",
+              2.2,
+              "*2"
+            ],
+            [
+              "pier",
+              1.8
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "bay": {
+          "window": {
+            "dims": [
+              1.1,
+              1.6
+            ],
+            "inset": 0.1,
+            "zone": "glass",
+            "sill": 0.08,
+            "lintel": "flat"
+          }
+        },
+        "cornice": {
+          "band": {
+            "h": 0.5,
+            "depth": 0.18,
+            "zone": "trim",
+            "role": "cornice"
+          }
+        }
+      }
+    },
+    {
+      "id": "fac_middle_front",
+      "on": "mass_middle",
+      "face": "+Z",
+      "occlude": true,
+      "trimZone": "trim",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "shop",
+            4
+          ],
+          [
+            "floor",
+            3.5,
+            "*2"
+          ],
+          [
+            "cornice",
+            1
+          ]
+        ]
+      },
+      "tile": {
+        "shop": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              0.6
+            ],
+            [
+              "front",
+              6.4
+            ],
+            [
+              "pier",
+              0.6
+            ]
+          ]
+        },
+        "floor": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              0.5
+            ],
+            [
+              "bay",
+              2.2,
+              "*3"
+            ],
+            [
+              "pier",
+              0.5
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "front": {
+          "storefront": {
+            "dims": [
+              5.6,
+              2.8
+            ],
+            "inset": 0.14,
+            "zone": "glass"
+          }
+        },
+        "bay": {
+          "window": {
+            "dims": [
+              1.4,
+              1.9
+            ],
+            "inset": 0.12,
+            "zone": "glass",
+            "sill": 0.08,
+            "lintel": "flat"
+          }
+        },
+        "cornice": {
+          "band": {
+            "h": 0.8,
+            "depth": 0.22,
+            "zone": "trim",
+            "role": "cornice"
+          }
+        }
+      }
+    },
+    {
+      "id": "fac_right_front",
+      "on": "mass_right",
+      "face": "+Z",
+      "occlude": false,
+      "trimZone": "trim",
+      "split": {
+        "axis": "Y",
+        "rule": [
+          [
+            "ground",
+            3.2
+          ],
+          [
+            "floor",
+            3.2,
+            "*2"
+          ],
+          [
+            "cornice",
+            0.6
+          ]
+        ]
+      },
+      "tile": {
+        "ground": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              0.6
+            ],
+            [
+              "gwin",
+              2.4
+            ],
+            [
+              "entry",
+              2.4
+            ],
+            [
+              "gwin",
+              2.4
+            ],
+            [
+              "pier",
+              0.6
+            ]
+          ]
+        },
+        "floor": {
+          "axis": "X",
+          "rule": [
+            [
+              "pier",
+              0.6
+            ],
+            [
+              "bay",
+              2.4,
+              "*3"
+            ],
+            [
+              "pier",
+              0.6
+            ]
+          ]
+        }
+      },
+      "elements": {
+        "entry": {
+          "door": {
+            "dims": [
+              1.2,
+              2.2
+            ],
+            "inset": 0.12,
+            "zone": "wood",
+            "lintel": "arch"
+          }
+        },
+        "gwin": {
+          "window": {
+            "dims": [
+              1.4,
+              1.7
+            ],
+            "inset": 0.1,
+            "zone": "glass",
+            "sill": 0.09,
+            "lintel": "flat"
+          }
+        },
+        "bay": {
+          "window": {
+            "dims": [
+              1.3,
+              1.8
+            ],
+            "inset": 0.12,
+            "zone": "glass",
+            "sill": 0.08,
+            "lintel": "flat"
+          }
+        },
+        "cornice": {
+          "band": {
+            "h": 0.5,
+            "depth": 0.18,
+            "zone": "trim",
+            "role": "cornice"
+          }
+        }
+      }
+    }
+  ]
+}

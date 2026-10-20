@@ -1,0 +1,378 @@
+{
+ "gemini": {
+  "wolf": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": false,
+    "note": "6 figures: top-right holds two identical straight-on front views; bottom-left holds a front view (left) plus the rear view (right); thin divider lines"
+   },
+   "sheet_2.png": {
+    "side_head": "right",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "side view faces RIGHT; thin divider lines, no labels"
+   },
+   "sheet_3.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   }
+  },
+  "giant": {
+   "sheet_1.png": {
+    "side_head": "right",
+    "top_head": "down",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "side view faces RIGHT; top view is an above-front perspective render with the face/tusks at the bottom edge, not a flat plan; divider lines"
+   }
+  },
+  "boar": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "text labels SIDE/FRONT/REAR/TOP drawn under each view; divider lines"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "text labels SIDE/FRONT/REAR/TOP drawn above each view; no dividers"
+   }
+  },
+  "goblin": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view is a distorted head-down plan (ears sweep back-right, belt patch at right, hands at left); divider lines"
+   }
+  },
+  "raven_wyvern": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   }
+  },
+  "bear": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "text labels SIDE/FRONT/REAR/TOP drawn (TOP sits above its view); divider lines"
+   }
+  },
+  "stag": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "frog": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view is a slightly tilted above-3/4 perspective render, eyes at left; no dividers, no labels"
+   }
+  },
+  "owl": {
+   "sheet_1.png": {
+    "side_head": "right",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "side view faces RIGHT; labels SIDE VIEW/FRONT VIEW/REAR VIEW/TOP VIEW drawn; divider lines; top view shows the face with both eyes (slightly angled)"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "down",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view has the face at the BOTTOM edge (tail at top), above-front perspective render; divider lines, no labels"
+   },
+   "sheet_3.png": {
+    "side_head": "right",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "side view faces RIGHT; stray labels drawn (LEFT, SIDE, RIGHT, FRONT, REAR, LEFT, TOP, BOTTOM); divider lines"
+   }
+  },
+  "crab": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "labels SIDE/FRONT/REAR/TOP drawn (TOP to the right of the figure); divider lines; claws+eyes at left in side and top"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "labels SIDE/FRONT/REAR/TOP drawn; divider lines; claws+eyes at left in side and top"
+   },
+   "sheet_3.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "labels SIDE/FRONT/REAR/TOP drawn (TOP to the right of the figure); divider lines; claws+eyes at left in side and top"
+   }
+  },
+  "character": {
+   "sheet_1.png": {
+    "side_head": "right",
+    "top_head": "down",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check: side faces right, plan face at bottom"
+   }
+  }
+ },
+ "gpt": {
+  "wolf": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "wide 3:2 canvas, no dividers, no labels; all views correct"
+   }
+  },
+  "giant": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view is a slightly perspective above render (fists and tusks at left, belt at right) but orientation is correct; no dividers, no labels"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "boar": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   }
+  },
+  "goblin": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view is a head-down plan with ears vertical and belt at right, orientation correct; no dividers, no labels"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "raven_wyvern": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "wide 3:2 canvas, no dividers, no labels; all views correct"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   },
+   "sheet_3.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "wide 3:2 canvas, no dividers, no labels; all views correct"
+   },
+   "sheet_4.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "bear": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "wide 3:2 canvas, no dividers, no labels; all views correct"
+   }
+  },
+  "stag": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "no dividers, no labels; all views correct"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "frog": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view slightly tilted perspective render, eyes at left; wide 3:2 canvas, no dividers, no labels"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "owl": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "top view slightly angled from above, beak at left; no dividers, no labels"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "crab": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "claws+eyes at left in side and top; wide 3:2 canvas, no dividers, no labels"
+   },
+   "sheet_2.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   },
+   "sheet_3.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check 2026-09-28: directions correct"
+   }
+  },
+  "character": {
+   "sheet_1.png": {
+    "side_head": "left",
+    "top_head": "left",
+    "front_ok": true,
+    "rear_ok": true,
+    "layout_ok": true,
+    "note": "orchestrator check: directions correct"
+   }
+  }
+ }
+}

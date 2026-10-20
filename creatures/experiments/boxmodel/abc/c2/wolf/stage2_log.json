@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "mane ridge between the jaw tier and the mane edge: breaks the barrel, carries the bib border",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "cheek ruff ring behind the skull: the step from the head into the mane",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "inner ear: a loop inside the front face of the ear, sunk (the cup)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

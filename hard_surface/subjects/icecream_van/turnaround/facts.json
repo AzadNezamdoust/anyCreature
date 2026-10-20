@@ -1,0 +1,32 @@
+{
+  "subject": "icecream_van",
+  "noun": "ice-cream van",
+  "sources": "description: refs/icecream_van.README.md Full prompt (parts / colours; its size sentence dropped) + refs/icecream_van.png (striped awning, counter brackets, grey sign base), as in the image-generator A/B (research/v7/IMAGEGEN-AB.md); proportions: subjects/icecream_van/turnaround/README.md concept measurement (body 4.73 x 2.0 m, roof 3.0 m, cone sign +1.7 m) + prior.json stylisation (wheelDoverH 0.2 of 4.44 m, wheelbaseOverL 0.66) at the W anchor 2.0 m, awning / shelf ~0.4-0.5 m proud (out/ref/gold/icecream_van/LEDGER.md drift); sides / faces: the concept prompt (serving window on the left flank), the A/B blind semantic check (its Gemini rear drew the awning / shelf on both flanks) and the setup semantic audit I1-I3 (cone disc from above, awning / shelf profiles in the front / rear views); dims: the same concept measurement",
+  "description": "A chunky cartoon ice-cream van. A short rounded bonnet at the front with two round pale yellow headlights and a simple dark grille, a cab with a large windshield, one side window per door and a light grey side mirror on each door at window height; behind the cab a tall boxy van body with rounded top edges; on the left flank a large rectangular serving window with a small sloped awning above it (diagonal pink and cream stripes) and a narrow light grey counter shelf on small brackets below it; on the roof a big ice-cream cone sign (a tan waffle cone with a pink scoop on top) standing upright on a small light grey base. Full-width light grey front and rear bumpers and four wheels with dark tyres and light grey hubs. Lower body pastel pink, upper body and roof cream, windows pale blue-grey, bumpers and hubs light grey, tyres dark charcoal.",
+  "proportions": "at a width of 2.0 m, the body is 4.73 m long and 3.0 m tall from the ground to the roof (length : width : height = 2.37 : 1 : 1.5); the cone sign rises 1.7 m above the roof, so the overall height is 4.7 m (2.35 times the width); the awning and the counter shelf stick out about 0.4 m from the left flank; the wheels are 0.89 m in diameter, the wheelbase 3.1 m (0.66 of the length).",
+  "sides": "the serving window, the striped awning above it and the counter shelf below it are on the LEFT flank only; the right flank is a plain two-tone wall with no window, no awning and no shelf. Everything else (the mirrors, the wheels, the cone sign on the roof centre line) is symmetric.",
+  "shape": {
+    "side": "in this view the body is 1.58 times as long as it is tall to the roof; with the cone sign the overall height about equals the length",
+    "front": "in this view the body width is 0.67 of the roof height (0.43 of the overall height with the cone sign)",
+    "rear": "in this view the body width is 0.67 of the roof height (0.43 of the overall height with the cone sign)",
+    "top": "in this view it is 2.37 times as long as it is wide"
+  },
+  "faces": {
+    "top": "The upright cone sign seen from above is a round pink disc (the scoop) on its small grey square base, centred on the roof's centre line."
+  },
+  "asymmetric": [
+    {
+      "part": "the striped awning and the counter shelf",
+      "plural": true,
+      "flank": "left",
+      "along": null,
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 4.7,
+    "W": 2.5,
+    "H": 4.7,
+    "_": "registration measures: L = the pink / cream body span; W = the pink / cream span ACROSS the van, which counts the body-colour awning on the left flank: 2.0 m body + ~0.5 m awning (out/ref/gold/icecream_van/LEDGER.md: awning out to x +1.51); H = the foreground bbox height, ground .. scoop top"
+  }
+}

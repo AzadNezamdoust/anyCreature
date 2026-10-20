@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "grin: a loop in the chin band H2-H3 (lower lip edge), its front pushed in as the mouth slot",
+   "new_verts": 8,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "inset",
+   "reason": "eye socket under the brow (H7-H8, P2-P3)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

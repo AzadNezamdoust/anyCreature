@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1. Hands: mitten with knuckle row and forward thumb","verdict":"PARTLY","evidence":"2_closeups front limb: hand is wider than the wrist and denser in wire, but the thumb is still a small hook pointing down/back, not a forward lump; 1_beauty az000 hands still read as thin bent flippers; 4_posed attack_f007 fist reads as a mitten."},
+{"title":"2. Eye pieces sunk, thin outline, no black crescent from behind","verdict":"PARTLY","evidence":"1_beauty az090: outline is now a thin line but the eye disc still stands about 1/3 of its diameter proud; back34 still shows a thin black sliver outside the head silhouette at upper left."},
+{"title":"3. Nose","verdict":"DONE","evidence":"1_beauty az090 clear cone protrudes; az000 and hero show a nose point between the eyes; 5_reference model top shows a point at the front of the head."},
+{"title":"4. Shoulder wedge and sternum crease","verdict":"PARTLY","evidence":"1_beauty hero: deltoid is rounder and the knife ridge is softer, but az000 still shows a faint vertical sternum crease and 2_closeups front limb colour still shows faceted wedge planes at the arm root; 3_tech shows a purple fold-over patch at the shoulder."},
+{"title":"5. Idle arm double kink","verdict":"DONE","evidence":"1_beauty hero and az090: arms hang by the thighs with one gentle bend each and the hand follows the forearm; 4_posed idle_f012/idle_f024 match."}
+],
+"regressions":["techqa totals: flips 6 (about 0.27%, limit 0.5%), up from the 3 in the AD notes; clip count 26 on the eye and pupil pieces (not a limit item).","3_tech shows purple posed fold-over patches at the shoulders, upper arm and shin."],
+"all_done":false}

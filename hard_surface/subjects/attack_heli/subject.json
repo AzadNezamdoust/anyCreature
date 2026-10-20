@@ -1,0 +1,63 @@
+{
+  "id": "attack_heli",
+  "class": "vehicle",
+  "title": "RTS-style attack heli (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/attack_heli.v2.png",
+    "camera": "subjects/attack_heli/camera.json",
+    "layoutMeasured": "subjects/attack_heli/layout.measured.json"
+  },
+  "outDir": "out/attack_heli",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 0,
+        "axles": 0,
+        "diameters": "equal",
+        "running": "skids"
+      },
+      "evidence": "concept refs/attack_heli.v2.png + side turnaround: the helicopter stands on two tubular landing skids (runner on two struts each), no wheels"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "fuselage",
+          "canopy",
+          "canopy_frame",
+          "tail_boom",
+          "fin",
+          "stabiliser",
+          "stub_wing",
+          "rocket_pod",
+          "engine_pod",
+          "intake",
+          "rotor",
+          "rotor_hub",
+          "rotor_mast",
+          "tail_rotor",
+          "chin_turret",
+          "gun",
+          "antenna"
+        ]
+      },
+      "evidence": "the concept draws a slim fuselage, a tandem stepped canopy with frame bars, a tail boom, fin + small stabiliser, two stub wings each with a rocket pod, two engine pods with intake grilles, a four-blade '+' main rotor on a hub + mast, a two-blade tail rotor, a chin turret with a gun, two whip antennas (refs/attack_heli.v2.README.md Full prompt)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "metal",
+          "rotor"
+        ]
+      },
+      "evidence": "the concept paints the rotor blades, hub, mast and tail rotor (rotor) and the chin gun, rocket pods, intake grilles, antennas and skids (metal) dark gunmetal grey (views.json families.metal #505050 / #353535), the canopy panels dark blue-grey (glass), the airframe dark olive (body)"
+    }
+  }
+}

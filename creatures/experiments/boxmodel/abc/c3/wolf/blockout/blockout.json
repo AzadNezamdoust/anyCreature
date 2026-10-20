@@ -1,0 +1,384 @@
+{
+ "creature": "wolf",
+ "gates_ok": true,
+ "tris": 864,
+ "verts": 434,
+ "joints": {
+  "elbowL": [
+   0.106,
+   -0.285,
+   0.345
+  ],
+  "wristL": [
+   0.112,
+   -0.31,
+   0.135
+  ],
+  "kneeL": [
+   0.105,
+   0.285,
+   0.345
+  ],
+  "hockL": [
+   0.105,
+   0.415,
+   0.235
+  ],
+  "neck": [
+   0.0,
+   -0.41,
+   0.73
+  ]
+ },
+ "poses": {
+  "fold": {
+   "elbow.L": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -80.0,
+    0,
+    0
+   ],
+   "hock.L": [
+    80.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    80.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -80.0,
+    0,
+    0
+   ],
+   "hock.R": [
+    80.0,
+    0,
+    0
+   ]
+  },
+  "swing": {
+   "shoulder.L": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    60.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    60.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    -60.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    60.0,
+    0,
+    0
+   ]
+  },
+  "crouch": {
+   "elbow.L": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.L": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.L": [
+    -90.0,
+    0,
+    0
+   ],
+   "hock.L": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.L": [
+    30.0,
+    0,
+    0
+   ],
+   "neck": [
+    -35.0,
+    0,
+    0
+   ],
+   "head": [
+    -25.0,
+    0,
+    0
+   ],
+   "elbow.R": [
+    90.0,
+    0,
+    0
+   ],
+   "wrist.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "shoulder.R": [
+    -30.0,
+    0,
+    0
+   ],
+   "knee.R": [
+    -90.0,
+    0,
+    0
+   ],
+   "hock.R": [
+    90.0,
+    0,
+    0
+   ],
+   "hip.R": [
+    30.0,
+    0,
+    0
+   ]
+  }
+ },
+ "rom": {
+  "flip_tris": 34,
+  "triangles": 864,
+  "flip_area_pct": 2.26,
+  "stretch_tris": 0
+ },
+ "loops": {
+  "elbowL": 4,
+  "wristL": 2,
+  "kneeL": 4,
+  "hockL": 3,
+  "neck": 2
+ },
+ "quad_share": 1.0,
+ "topology_checks": [
+  {
+   "kind": "gate",
+   "name": "even face size: edge length p90/p10 <= 4 in every region",
+   "ok": true,
+   "detail": "torso 1.99, head 3.35, fore 2.89, hind 3.05, tail 3.1"
+  },
+  {
+   "kind": "gate",
+   "name": "long faces: at most 5% of faces over 5:1",
+   "ok": true,
+   "detail": "3.2% (worst 18.3:1)"
+  },
+  {
+   "kind": "gate",
+   "name": "no pole (valence 3 or 5+) inside a joint band",
+   "ok": true,
+   "detail": "0 of 72 poles"
+  },
+  {
+   "kind": "gate",
+   "name": "a closed loop round every limb root, over its joint (shoulder / hip loop)",
+   "ok": true,
+   "detail": "fore: over the joint, hind: over the joint"
+  },
+  {
+   "kind": "gate",
+   "name": "limbs join the torso by edge flow: no fan (valence >= 6) and no non-quad face at the junction",
+   "ok": true,
+   "detail": "fore 0 fans 0 non-quads, hind 0 fans 0 non-quads"
+  },
+  {
+   "kind": "gate",
+   "name": "no ring-band stack (3+ parallel rings closer than 0.5 x the limb width outside a joint band)",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "kind": "warn",
+   "name": "faces over 3:1 at most 20%",
+   "ok": true,
+   "detail": "13.9%"
+  },
+  {
+   "kind": "warn",
+   "name": "density per region within 0.5-2 x the body average (triangle share / area share)",
+   "ok": true,
+   "detail": "torso 0.73, head 1.02, fore 1.19, hind 1.26, tail 0.73"
+  },
+  {
+   "kind": "warn",
+   "name": "edge length p90/p10 over the whole body <= 6",
+   "ok": true,
+   "detail": "2.96"
+  },
+  {
+   "kind": "warn",
+   "name": "limb edges run on into the torso (flow >= 0.3)",
+   "ok": true,
+   "detail": "fore 0.33, hind 0.33"
+  },
+  {
+   "kind": "warn",
+   "name": "face loops round the eye and the mouth (META['landmarks'])",
+   "ok": false,
+   "detail": "eye absent, mouth present"
+  }
+ ],
+ "iou": {
+  "side": 0.933,
+  "front": 0.838,
+  "top": 0.904
+ },
+ "iou_floor": {
+  "side": 0.9,
+  "front": 0.83,
+  "top": 0.8
+ },
+ "proportions": {
+  "body length / height": {
+   "model": 1.554,
+   "sheet": 1.549,
+   "diff_pct": 0.3
+  },
+  "head height / body height": {
+   "model": 0.471,
+   "sheet": 0.516,
+   "diff_pct": -8.8
+  },
+  "leg length / body height": {
+   "model": 0.402,
+   "sheet": 0.415,
+   "diff_pct": -3.0
+  },
+  "neck width / head width": {
+   "model": 1.467,
+   "sheet": 1.368,
+   "diff_pct": 7.2
+  },
+  "fore limb thickness / length": {
+   "model": 0.238,
+   "sheet": 0.238,
+   "diff_pct": 0.0
+  },
+  "hind limb thickness / length": {
+   "model": 0.21,
+   "sheet": 0.207,
+   "diff_pct": 1.6
+  }
+ },
+ "intended": {},
+ "frame": {
+  "centre": [
+   0.0,
+   0.0,
+   0.551
+  ],
+  "size": [
+   0.41,
+   1.702,
+   1.098
+  ],
+  "ortho": 2.0423999999999998
+ },
+ "later": [],
+ "profile_checks": [
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "depth model 3.89 reference 4.23 (-8%), tube score 0.58 vs 0.57; width model 3.55 reference 3.33 (+6.5%), tube score 0.57 vs 0.58"
+  },
+  {
+   "kind": "gate",
+   "part": "head",
+   "name": "head: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.35%, max 4.32% (depth 6 stations: 6 sheet 0 guide, width 5 stations: 5 sheet 0 guide); width hidden at 1"
+  },
+  {
+   "kind": "gate",
+   "part": "fore",
+   "name": "fore: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "depth model 1.65 reference 1.48 (+11.2%), tube score 0.83 vs 0.84; width model 1.44 reference 1.65 (-12.5%), tube score 0.84 vs 0.81"
+  },
+  {
+   "kind": "gate",
+   "part": "fore",
+   "name": "fore: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 1.29%, max 1.8% (depth 6 stations: 6 sheet 0 guide, width 4 stations: 4 sheet 0 guide); depth hidden at 1, width hidden at 3"
+  },
+  {
+   "kind": "gate",
+   "part": "hind",
+   "name": "hind: taper ratio within 20% of the reference's",
+   "ok": true,
+   "detail": "depth model 2.39 reference 2.65 (-9.7%), tube score 0.67 vs 0.63"
+  },
+  {
+   "kind": "gate",
+   "part": "hind",
+   "name": "hind: profile RMS <= 3% of the part's length",
+   "ok": true,
+   "detail": "RMS 2.79%, max 3.85% (depth 7 stations: 7 sheet 0 guide); depth hidden at 1, width hidden at 6"
+  }
+ ],
+ "limits": {
+  "joint_loops": 2,
+  "quad_share": 0.85,
+  "iou": {
+   "side": 0.9,
+   "front": 0.85,
+   "top": 0.8
+  },
+  "proportion_pct": 10.0
+ }
+}

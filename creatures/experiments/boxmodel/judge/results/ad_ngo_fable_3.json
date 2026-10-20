@@ -1,0 +1,119 @@
+{
+ "goblin": {
+  "A": {
+   "score": 6.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "hands are two-claw mitts, not three clawed fingers; the fingers are not modelled (front-limb close-up)",
+    "buckle is a flat grey tag on the belt, not a chunky buckle; loincloth is a zero-thickness plate that reads as a shard from az090",
+    "mouth is a dark band with fangs, no grin shape, and the eyes are small; hip fold-over flagged (purple) in the back34 heatmap"
+   ],
+   "brief_fit": "Silhouette cues all present (big head, horizontal ears, hooked nose, arms to knees, pot belly); misses the three-fingered hands and the chunky buckle."
+  },
+  "B": {
+   "score": 5.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "head is a long dog/lizard muzzle with lateral eyes and no dome or heavy brow; the hooked nose is absent so it reads kobold, not goblin",
+    "ears are oversized swept-back blades out of scale with the head, and a sliver seam runs along the jaw/neck (yellow in hero and az000 heatmap)",
+    "mouth is a thin line with fangs poking from an underbite; the face has no expression at thumbnail size"
+   ],
+   "brief_fit": "Body, belt with gold buckle, three-fingered hands and three-toed feet are right; the head misses the brief (no dome, no hooked nose, no wide grin)."
+  },
+  "C": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "ears are paper-thin blades (sliver edges flagged along both ear tips in every heatmap view) and read as shards edge-on",
+    "front loincloth is a comb of thin ribbed strips (slivers flagged), and the chest has a posed fold-over (purple, az000)",
+    "hind-limb close-up: knee is pinched to a sharp crease and the heel ends in a point; buckle is a flat grey tag"
+   ],
+   "brief_fit": "Closest to the brief: domed head, heavy brow, hooked nose, wide fanged grin, slit yellow eyes, long ears, three-fingered clawed hands, pot belly over the belt."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "C is the only one whose face carries the brief (dome, hooked nose, grin, slit eyes) with real three-fingered hands; A is cleaner but blander, B's muzzle head fails the goblin read."
+ },
+ "owl": {
+  "A": {
+   "score": 6.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "ear tufts are two thin dark splinters like antennae, invisible as tufts at thumbnail; the brow slabs hover off the face with a visible gap (head wire)",
+    "body is a flat-fronted vertical can, not an egg; the wings are flat side plates and the back is boxy",
+    "feet are flat yellow plates with needle claws poking out as thin spikes (hind-limb close-up)"
+   ],
+   "brief_fit": "Face is the best of the three (big orange eyes, disc with dark rim, V brows) but the egg body and tufts, the silhouette cues, are weak."
+  },
+  "B": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "brow slabs float above the head surface with a visible gap (head wire, top-left)",
+    "black talon pieces poke through the top of the foot as dark slits (hind-limb close-up), reading as holes",
+    "tail underside has a sliver seam (yellow, az090) and the eyes sit slightly unequal in the hero view"
+   ],
+   "brief_fit": "All cues present: egg body, solid cone tufts, folded wings, fan tail, feathered legs with dark talons, cream disc and belly, orange eyes."
+  },
+  "C": {
+   "score": 6.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "toes are radial flat spikes splayed like a starfish (hind-limb close-up), a machine tell and paper-thin",
+    "eyes are small for the head and the brow slabs float off the face; two flipped faces flagged on the body",
+    "head and chest merge with no neck step, and the wing is a flat darker patch with little relief"
+   ],
+   "brief_fit": "Egg body, big horn tufts and angry brows read well; the eyes are undersized and the feet are wrong."
+  },
+  "rank": [
+   "B",
+   "C",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "B is the only one with every silhouette cue (egg, tufts, folded wings, fan tail) and clean feet; A has the best face but a can body and twig tufts."
+ },
+ "raven_wyvern": {
+  "A": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "tail is shorter than the body and ends in a purple paddle block; the brief asks for a long tapering tail with a fin",
+    "folded wing forearm is a boxy bar with long dark sliver creases across the membrane (front-limb close-up, yellow in back34)",
+    "neck is short and straight, no S-curve; the front view shows the wing wrists as square blocks"
+   ],
+   "brief_fit": "Reads as a compact bird-dragon: raven head with pale bill tip, amber eye, hackles, spines, hock legs with talons; the tail length and S-neck miss."
+  },
+  "B": {
+   "score": 5.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "wing spars are long straight rods jutting up and back above the body at 45 deg, out of scale, and the thumb claws plant on the ground like crutches; a flipped face on spar3",
+    "eye is a tiny orange hexagon on a boxy wedge head, so the face reads flat; hackles are thin black splinters",
+    "membrane is a flat purple triangle with sliver edges along the spar (yellow in hero, az090, az000)"
+   ],
+   "brief_fit": "Has the S-neck, long horns, long finned tail and four-toed hock legs, but the wings are not folded at rest and the raven head is lost."
+  },
+  "C": {
+   "score": 6.5,
+   "verdict": "FIX",
+   "top_issues": [
+    "folded wing is a single flat purple plate with no thickness, reads as a shard edge-on (hind-limb close-up, sliver edges in az000)",
+    "tail is a constant-section tube ending in a fan; feet are flat wedges with serrated flat toes and tiny claws",
+    "eye is a small diamond and the body squats low with short hidden legs, reading as a hunched vulture"
+   ],
+   "brief_fit": "Best silhouette match: tail longer than the body, graded dorsal spines, shaggy hackles, swept horns, raven bill; the wings and feet are the weak pieces."
+  },
+  "rank": [
+   "A",
+   "C",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "A is the most cohesive and technically clean close-up; C matches the brief's tail and hackles better but its wing is a paper-thin plate, and B's rod-like spars break the folded-wing silhouette."
+ }
+}

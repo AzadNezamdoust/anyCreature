@@ -1,0 +1,15 @@
+{
+  "schema": "pg/1",
+  "subject": "bench",
+  "seed": 1,
+  "class": "prop",
+  "note": "Worked example 2: a side attach and a top attach in one program. M0 has no hangs-below, so the legs are the rooted parts and the seat rests on one of them; the second leg is flush against the first leg's +X face.",
+  "palette": { "slat": "#c9a36a", "leg": "#5b5750" },
+  "parts": [
+    { "id": "leg_1", "prim": "box", "dims": [0.08, 0.42, 0.36], "ground": true, "role": "leg", "zone": "leg" },
+    { "id": "leg_2", "prim": "box", "dims": [0.08, 0.42, 0.36], "role": "leg", "zone": "leg",
+      "attach": { "to": "leg_1", "face": "+X", "uv": [0.5, 0.0], "contact": "flush", "align": "bottom" } },
+    { "id": "seat", "prim": "plate", "dims": [1.2, 0.06, 0.38], "role": "seat", "zone": "slat",
+      "attach": { "to": "leg_1", "face": "+Y", "uv": [0.5, 0.5], "contact": "rests-on-top" } }
+  ]
+}

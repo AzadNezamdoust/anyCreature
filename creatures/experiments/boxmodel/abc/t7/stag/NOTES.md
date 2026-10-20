@@ -1,0 +1,34 @@
+# stag (t7) build notes
+
+No reference/: stage 0 blueprint drawn from the brief (1.7 m to antler tips, 1.8 m long incl. tail piece, 0.6 m antler span).
+
+## Stage 1
+- r1: Critique: reads as a deer already (loft torso->neck->head, 4-sided legs, leaf ears, branching beam), but gate FAIL: 5 self-intersecting face pairs. Diagnosis: unknown from the sheet; added a STAG_DBG face-pair dump. Tris 592. IoU side/front/top 0.861/0.838/0.919.
+- r2 (debug run, same geometry): all hits are the trez tine root at (0.19,-0.70,1.60): its first ring (h 0.015) sits inside beam segment 2's front face, so its side faces fold through the beam. Fix: root ring at the face centre, sized to the face (0.18,-0.72,1.585, h 0.019).
+- r3: Result: 5 -> 2 pairs, tris 592. Remaining hit is the trez tine's second segment.
+- r4 (debug dump): the tine extrude classified the beam-side face corners by world X, but along a leaning beam X also separates the lower and upper ring, so two corners landed on one target (twisted tine). Fix: classify and place tine rings in the beam's own frame (along-beam axis, and its cross with Y).
+- r5: Result: gates PASS, 592 tris, IoU 0.862/0.839/0.916. Critique (az090): torso is a straight tube, top and belly lines parallel, rear a vertical blunt disc; a deer has a deep chest, a belly tucked toward the flank and a rump sloping down-forward from the tail. Diagnosis: SECS rump..shldr bottoms all at z 0.58-0.52 and rump ring vertical. Fix: chest deepest at ribs (0.50), belly tucked to 0.63 at the flank, rump ring slanted (bottom 0.09 forward), haunch widened.
+- r6: Result: better: chest now deepest, belly tucks, rump slopes; 592 tris; IoU 0.854/0.847/0.915. Critique (az000/az180): antlers read as two straight parallel spikes (gazelle), not a stag's spreading lyre. Diagnosis: BEAM x runs 0.095->0.25 almost linearly. Fix: beams flare out to x 0.26 by mid-height then rise (b2 x .17, b3 x .26, tip x .29), tines re-seated on the moved beam faces.
+- r7: Result: better: antlers now a spreading lyre from the front; 592 tris; IoU 0.854/0.845/0.918. Critique (az000, hero): the head is a tapered octagonal cylinder ending in a round nose disc, no planes; a stylised deer head is a wedge with a flat forehead/nasal plane, flat cheeks and a square nose block. Diagnosis: head SECS put p1/p4 at ~60% of p2's width, so each section is a round octagon. Fix: head sections boxed (top and bottom corners near full width), brow wider than the cheek (overhang), muzzle squared.
+- r8: Result: better: head now a wedge with a flat forehead and square nose; 592 tris; IoU 0.855/0.846/0.919. Critique (az000, az045): the neck is thinner than the head from the front, reads as a stalk; STYLE wants a thick neck (mane goes on it later). Diagnosis: neck0/neck1 half widths 0.15/0.125, corners at ~55%. Fix: neck0 0.17 and neck1 0.135 half width, corners fuller (a trapezoid, not an octagon).
+- r9: Result: better: neck now as wide as the head, a trapezoid; 592 tris; IoU 0.855/0.841/0.914. Critique (top, az180): body is a uniform sausage from above and the rear is one big flat octagon disc; a deer has a wide ribcage, a narrower waist, a wide haunch and a small rump plane. Diagnosis: rump ring 0.125 half width (as wide as the waist) and waist = ribs width. Fix: rump ring down to 0.10, haunch (hip ring) out to 0.205, waist in to 0.185.
+- r10: Result: better: ribcage/waist/haunch rhythm from above, rear disc smaller; 592 tris; IoU 0.855/0.841/0.899. Reads as a stag from every view (lyre antlers with brow and trez tines, upright thick neck, deep chest, slender jointed legs). Remaining stage-1 weakness: legs are plain 4-sided planks (stage 2 moves). Fix: none, lock.
+- r11 (lock, orbit): LOCKED 592 tris, edge sha256 939b87ca9fce1363; orbit holds, no azimuth collapses. Min stage-1 blueprint IoU 0.841 (front).
+
+## Stage 2
+- r1 plan: Critique: joints have one ring each (wrist, hock, elbow) and the neck has 3 widely spaced rings, so they will crease/collapse when posed. Fix: joint loops (above/below wrist and hock, above elbow) and two neck loops.
+- r1: Result: PASS, joints/neck have 2-3 loops, 712 tris, IoU vs s1 min 1.0. Critique (hero/az000): the face is blank: no eye socket and the forehead runs straight into the nose with no stop. Diagnosis: head has no loop at the eye; the stop ring top sits on the forehead line. Fix: inset eye socket (depth -0.012, kept as a valley) in the brow->stop upper-side face, stop-ring top dropped 0.014.
+- r2: Result: PASS, 728 tris, IoU vs s1 min 0.998; socket reads as a shadow under the brow, stop is a small step. Critique (az090 legs): hooves are straight posts the width of the fetlock; they should read as small wedge blocks. Diagnosis: sole ring same size as the hoof top. Fix: sole verts scaled 1.2/1.25 and the toe led forward 0.012.
+- r3 (final, orbit): Result: PASS, 728 tris, IoU vs s1 min 0.991; orbit holds. Hooves read as small wedges.
+
+## Stage 3
+- r1 plan: paint 6 colours (coat, mane, cream rump/jaw/belly, antler, black hoof+nose, eye); pieces: mane sleeve with V bib, hex eye lens, antler crown prongs, hanging tail.
+- r1: Result: FAIL hit=1 (piece_mane), 1080 tris, 6 colours. Diagnosis: the mane's inner surface sat 0.004 off the neck, so the triangulated neck ridges touched it in several separate patches (more than one contact cluster). Fix: inner surface 0.015 clear of the neck everywhere except the rear ring, which is sunk 0.012 into the withers: one seated rim.
+- r2: Result: FAIL hit=1, slivers 22 (2.0%). Tech view: magenta at the withers rim (expected seat) AND under the jaw: the mane's front ring sat at the occ ring, where the head widens forward through its end cap (a second contact); its end cap was ~0.005 wide (outer 0.01-0.02 vs inner 0.015) = needle triangles. Fix: mane ends at 35% neck1->occ, clear of the jaw, with a 0.035-0.045 thick front edge.
+- r3: Result: PASS: hit 0, float 0, z-fight 0, slivers 2 (body), 1080 tris total (body 728), 6 colours. Reads as a red deer stag in colour: dark mane with V bib, cream rump and belly, pale antlers, black hooves and nose. (No separate stage-3 orbit round: turn budget.)
+
+## Stage 4
+- r1 plan: 22-bone rig on J (roll auto), skin, all pieces bound with body weights (drift), idle graze+ear flick 48f, move walk 33f, attack rear+ram 33f.
+- r1: Result: all gates PASS. Posed wire: neck bends in graze and ram without collapse (2-3 loops per neck segment hold), knees/hocks fold cleanly in the walk, attack drops the antlers forward below the withers. Fix: none needed; final round with orbit + glbcheck.
+- r2 (final, orbit+glbcheck): all gates PASS; review close-ups show cream paint on the hind hock/gaskin undersides. Diagnosis: belly rule (n.z < -0.6, -0.2 < y < 0.45) had no height limit, so down-facing leg faces went cream. Fix: belly rule limited to z > 0.5.
+- r3 (final, orbit+glbcheck): all gates PASS; hind legs now coat-coloured. Triangles: s1 592, s2 728, s3/s4 1080 total. Review packet built.

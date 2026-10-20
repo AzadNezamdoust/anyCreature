@@ -1,0 +1,8 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only; stylisation measured on subjects/tractor/turnaround at the W anchor (red paint spans; H = overall to the canopy). NOTE the turnaround front / rear views are mirrored vs the concept (ladder / exhaust sides swapped).",
+  "class": "vehicle",
+  "real": { "source": "2WD utility tractor with ROPS canopy (MF 375 / Deere 5E class, rounded)", "W": 2.2, "H": [2.5, 2.8], "L": [3.6, 4.2], "wheelD": [1.35, 1.6], "frontWheelD": [0.75, 0.95], "wheelbaseOverL": [0.55, 0.62], "LoverW": [1.7, 2.1], "HoverW": [1.15, 1.35] },
+  "anchor": { "dim": "W", "m": 2.2, "why": "overall width over the rear wheels / fenders; fixes px/m of the turnaround" },
+  "stylisation": { "_comment": "short body", "LoverW": 1.48, "HoverW": 1.15, "wheelDoverH": 0.58, "frontOverRearWheelD": 0.56, "wheelbaseOverL": 0.73 },
+  "softRanges": { "L": [3.0, 4.2], "W": [1.9, 2.4], "H": [2.3, 2.9], "wheelR": [0.6, 0.8], "frontWheelR": [0.35, 0.48] }
+}

@@ -1,0 +1,62 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept (+ the turnaround's body whites); families.body names the body family.",
+  "_note": "2026-09-27: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.2 },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "_spanOpen": "2026-09-28 (scripts/v6/README.md 'Span opening'): the x / z body spans are counted on the body mask opened with a 2 x 2 square, so the 1-px anti-alias halo columns / rows of dark outlines (mirror heads, lamps: greys classified as body) no longer widen W / L; setup auditors 2026-09-28",
+    "fgMax": 252,
+    "enclosedFg": true,
+    "_enclosedFg": "white body, no see-through openings (research/v7/EYES-EXPERIMENT.md B): background = the near-white region connected to the image border; enclosed near-white (highlights inside the white body) is foreground",
+    "_fgMax": "the body is near-white (concept 236-241 darkest channel, turnaround 237-246): the default bg cut (235) would erase it; 252 keeps it solid (bg is 253-255 in the concept and every view)",
+    "table": {
+      "body": ["#e8e8e8", "#f2f2f2"],
+      "stripe": "#d3241d",
+      "glass": "#8ca8bb",
+      "dark": ["#35373a", "#1a1b1b"],
+      "bumper": ["#a5a7a9", "#b5b6b8"],
+      "lamp": "#fdf9d2",
+      "fringe": "#fbfbfb"
+    },
+    "_fringe": "fringe = the 247-252 anti-alias band along outlines (mirror edges); without it those px join the body family and widen its W span in front / rear (same fix as delivery_truck). 2026-09-27 setup audit: #f9f9f9 -> #fbfbfb because the regenerated top view's roof is 245-246 (it split between body and fringe); with it the side and top L spans both end on the bumper outlines (side / top origins 512.0 / 512.5 px, no shift needed; every view's centring offset <= 0.022 m)",
+    "viewTable": {
+      "side": { "body": ["#e5e5e3", "#efefed"], "stripe": ["#d02118", "#d12720"], "glass": ["#89a5b6", "#90aab9"], "dark": ["#323435", "#171816", "#3d3f43", "#2d2e31"], "bumper": ["#a2a4a4", "#b2b3b3", "#a1a5a8"], "lamp": ["#faf6cd"], "fringe": ["#f8f8f6", "#fcfcfc"] },
+      "front": { "body": ["#e5e5e6", "#efeff0"], "stripe": ["#d0211b", "#d32720", "#ba231d"], "glass": ["#89a5b9", "#90aaba"], "dark": ["#323438", "#171819", "#34373a", "#141618"], "bumper": ["#a2a4a7", "#b2b3b6", "#9fa2a7", "#bcbfc1"], "lamp": ["#faf6d0", "#fdfad2"], "fringe": ["#f8f8f9", "#fcfcfb"] },
+      "rear": { "body": ["#e5e5e4", "#efefee"], "stripe": ["#d02119", "#d12820", "#b9261f"], "glass": ["#89a5b7", "#90aaba"], "dark": ["#323436", "#171817", "#34373b", "#121416", "#25282a"], "bumper": ["#a2a4a5", "#b2b3b4", "#9fa3a6", "#b8babc"], "lamp": ["#faf6ce"], "fringe": ["#f8f8f7", "#fdfdfc"] },
+      "top": { "body": ["#e5e5e4", "#efefee"], "stripe": ["#d02119", "#df2c21", "#bc251d"], "glass": ["#89a5b7", "#8fa9ba"], "dark": ["#323436", "#171817", "#212325"], "bumper": ["#a2a4a5", "#b2b3b4"], "lamp": ["#faf6ce"], "fringe": ["#f8f8f7", "#fcfcfc"] }
+    },
+    "_viewTable": "2026-09-27: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/ambulance/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -2.9 -3.3 -4.9 · front -2.7 -3.3 -2.5 · rear -2.7 -3 -3.7 · top -3.1 -3.1 -4.3); ambiguous: none. Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-28 gold-auditor, owner-approved 2026-09-28",
+    "side": [],
+    "front": [],
+    "rear": [
+      { "id": "D1", "rect": [290, 458, 316, 526], "decides": "front", "why": "mirror head outer edge x 294 = -1.21 m here; front view head edge x 315 = -1.107 m (0.175 m beyond the box flank; concept mirror span 1.127 x box W): 0.10 m too wide" },
+      { "id": "D2", "rect": [708, 458, 734, 526], "decides": "front", "why": "mirror head outer edge x 730 = +1.23 m here; front +1.107 m: 0.12 m too wide (hull viewOnly blobs 1441 + 1292 px)" },
+      { "id": "D3", "rect": [348, 680, 372, 724], "decides": "front", "why": "rear tyre outer edge x 352 = -0.886 m here; front tyre outer edge x 361 = -0.849 m: 0.04 m further out (hull viewOnly 867 px)" },
+      { "id": "D4", "rect": [650, 680, 676, 724], "decides": "front", "why": "rear tyre outer edge x 671 = +0.903 m here; front x 663 = +0.844 m: 0.06 m further out (hull viewOnly 1077 px)" }
+    ],
+    "top": [
+      { "id": "D5", "rect": [258, 284, 296, 352], "decides": "side", "why": "mirror stick x 262..291 = z 1.40..1.24 m; side view mirror x 215..234 = z 1.71..1.60 m at the windshield base (the concept's near head sits at the windshield's bottom-near corner): 0.3 m too far back, tip y 288 = 1.26 m out vs front head 1.107 m" },
+      { "id": "D6", "rect": [258, 673, 296, 741], "decides": "side", "why": "near-flank mirror stick, same 0.3 m z error as D5; tip y 737 = -1.26 m vs front -1.107 m" },
+      { "id": "D7", "rect": [376, 398, 404, 626], "decides": "concept", "why": "light bar x 341..398 = 41..98 px ahead of this view's box front (441); side view bar 309..348 = 73..112 px ahead of its box front (421.5) and the concept draws the bar at the roof's front edge: the bar's rear 25-30 px strip should be roof white" },
+      { "id": "D13", "rect": [886, 300, 940, 342], "decides": "rear", "why": "rear step far corner: step outer edge y 308 = x -1.294 m here (comp 885..935 x 308..717, 2.59 m across); rear view bumper 325..699 = +-1.18 m (2.37 m): 0.11 m too wide (hull viewOnly blob 797 px)" },
+      { "id": "D14", "rect": [826, 686, 940, 722], "decides": "rear", "why": "rear step near corner: outer edge y 717 = x +1.294 m vs the rear view +-1.18 m; the near-edge lamp 829..880 x 709..718 sits 0.31 m ahead of the side view lamp (848..893 = 2.03..2.31 m behind the box front vs 2.03..2.35 here): hull viewOnly blob 1424 px" }
+    ],
+    "concept": [
+      { "id": "D8", "rect": [150, 488, 200, 550], "decides": "front", "why": "far mirror head px 158..191: outer edges of the two heads 2.38 start-m apart = 1.127 x box W (2.111), but the near head (D9) is drawn flush on the door: the concept is asymmetric; the front view's heads at +-1.107 m (1.19 x box W) settle it (hull conceptOnly blob 1351 px)" },
+      { "id": "D9", "rect": [404, 585, 446, 645], "decides": "front", "why": "near mirror head px 412..440 drawn on the door face (unproject y 1.38: x 0.878..1.003 vs the cab flank ~1.0): no overhang, while the far head overhangs 0.27 start-m; front view: 0.175 m beyond the box flank both sides" },
+      { "id": "D10", "rect": [505, 395, 548, 455], "decides": "front", "why": "the box front face shows one marker lamp (far corner, px 332..365 x 350..383) and none at the near corner; front view: two (x 363..407 and 618..662, y 314..343), rear view two, symmetric" },
+      { "id": "D11", "rect": [705, 650, 762, 718], "decides": "side", "why": "rear tyre bottom y 711 sits 17 px below the ground line through the front tyre bottom (820 - 0.3847 x 328 = 694; camera.json: the tyre-bottom line disagrees with every straight z-edge); hub z -0.939 start-m = 1.60 behind the box front vs side 1.32 m x 1.132 = 1.50: 0.09 m too far back (hull conceptOnly blob 497 px)" },
+      { "id": "D12", "rect": [893, 548, 925, 606], "decides": "side", "why": "rear step end px 899..921 beyond the box rear edge (hull conceptOnly blob 779 px); side view step 724..936 = 0.14 m proud of the box rear (911), top 0.17 m" }
+    ]
+  }
+}

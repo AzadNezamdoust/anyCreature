@@ -1,0 +1,32 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "33feea8b4ad01a1680b6b5c934d6b5822b4203e61bab037180749b3fd0c072fc",
+  "collapsed_edge_hash": "33feea8b4ad01a1680b6b5c934d6b5822b4203e61bab037180749b3fd0c072fc",
+  "logged_ops": 3,
+  "logged_new_verts": 14,
+  "errors": []
+ },
+ "colours": [
+  "black",
+  "cream",
+  "fur",
+  "iris",
+  "light",
+  "saddle",
+  "sock"
+ ],
+ "colour_count": 7,
+ "tris": 1708,
+ "attach": [],
+ "pieces": {
+  "piece_toes_fore": 176,
+  "piece_toes_hind": 176,
+  "piece_eye_L": 80,
+  "piece_eye_R": 80,
+  "piece_nose": 48,
+  "piece_bib": 48,
+  "piece_nape": 48,
+  "piece_withers": 48
+ }
+}

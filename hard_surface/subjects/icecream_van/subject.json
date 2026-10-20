@@ -1,0 +1,26 @@
+{
+  "id": "icecream_van",
+  "class": "vehicle",
+  "title": "Cartoon ice-cream van (serving window, roof cone sign; WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered visual hull's bbox to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/icecream_van.png",
+    "camera": "subjects/icecream_van/camera.json",
+    "module": "subjects/icecream_van/module.mjs",
+    "layoutMeasured": "subjects/icecream_van/layout.measured.json"
+  },
+  "outDir": "out/icecream_van",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Added 2026-09-28 at the r1/r2 boundary (orchestrator, owner 'go marathon'); printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "cone",
+          "tail"
+        ]
+      },
+      "evidence": "the target draws a tan waffle cone (sign) and red tail lamps (rear / side views #c65854 / #c75855, r1 critiques item 3 / 4) — colours the vehicle class list lacks, so r1 had to zone them tread / lamp (pale yellow)"
+    }
+  }
+}

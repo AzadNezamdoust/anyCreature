@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face, pushed in for the eye piece",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "neck loop: S->N1 band gets a middle ring so the neck bends in 3 loops",
+   "new_verts": 7,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "inner ear: a loop inside the two front faces of the middle ear segment, pushed back as the cup",
+   "new_verts": 8,
+   "extra_base_edges": []
+  }
+ ]
+}

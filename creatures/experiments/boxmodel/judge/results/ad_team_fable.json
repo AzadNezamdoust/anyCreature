@@ -1,0 +1,134 @@
+{
+  "bear": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090: back is a flat slab, no shoulder hump as the highest point; reference has a clear hump over the forelegs",
+      "1_beauty az000: body reads narrow and the head small against the reference front view; ears are tiny nubs",
+      "4_posed attack_f010/f020: the attack barely moves the head or a paw, no readable lunge or swipe"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090: same flat slab back, hump missing as the silhouette cue",
+      "2_closeups front limb colour: a dark pinched crease cuts across the chest/elbow between the forelegs",
+      "1_beauty az000: narrow body and small head against the reference front view"]},
+    "better": "Y",
+    "why": "Same base, but Y's darker warmer brown is closer to the reference and its attack frames show a real head-forward lunge; X's attack is static."
+  },
+  "boar": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "2_closeups front/hind limb: legs are thin constant-section tubes with no hock angle",
+      "4_posed attack_f016: head and neck flatten into a wedge, the snout disc collapses",
+      "1_beauty hero: crest spikes are identical repeated triangles, not blunt clumps"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "2_closeups front/hind limb: thin tube legs, no hock",
+      "4_posed attack_f016: neck/head candy-wrapper flattening",
+      "1_beauty hero: identical repeated crest spikes"]},
+    "better": "tie",
+    "why": "Geometry and pieces are the same; only a slight tint difference, not enough to separate them."
+  },
+  "character": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: hands are flat paddles with no thumb or curled mitt; read as spatulas",
+      "2_closeups head colour: no nose at all, face is eyes, brows and mouth only",
+      "1_beauty hero: arms hang as thin uniform tubes, the elbow reads as a kink"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: hands are blunt cube fists, no thumb or finger split",
+      "1_beauty hero: uniform tube arms and legs with a kinked elbow",
+      "2_closeups toes: toe blocks are a comb of identical cubes"]},
+    "better": "Y",
+    "why": "Y has the tiny pointed nose the brief and reference call for and its fists read as hands; X's paddle hands and missing nose fail the face."
+  },
+  "crab": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero: claws are lumpy red mitts with almost no gap between the fingers; the pincer does not read",
+      "1_beauty hero/az000: eyes are black bulbs buried on the rim with no visible stalk",
+      "2_closeups hind limb: walking legs are straight tubes with a single bend, no knee"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: eye stalks are tall thin pins, taller than the reference's short stubs",
+      "2_closeups hind limb: walking legs are stiff straight tubes, one bend only",
+      "1_beauty hero: carapace is one smooth dome, the toothed front edge barely reads"]},
+    "better": "Y",
+    "why": "Y's dark-tipped pincers with a real gap, visible eye stalks and brighter red-orange match the reference; X's claws are mitts."
+  },
+  "frog": {
+    "X": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: eye domes are huge spheres perched on top, far larger than the reference and floating off the head",
+      "2_closeups hind limb colour/wire: back spots are separate flat hexagon stickers lying on the skin, not painted faces",
+      "2_closeups front limb: forelegs are thick straight blocks, toes a comb of cubes"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: a pink slit shows inside the black mouth line at centre",
+      "1_beauty hero: eyes are small and sunk into the brow, less bulge than the reference",
+      "2_closeups front limb: forelegs are straight blocks, toes a comb of cubes"]},
+    "better": "Y",
+    "why": "Y's proportions and painted spots read like the reference; X's oversized floating eyes and sticker spots look procedural."
+  },
+  "giant": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/back34: moss and rocks are bright separate clumps glued on top of the shoulders, not bedded in",
+      "2_closeups hind limb: the gap between the legs shows dark pinched planes and the foot is a flat slab",
+      "1_beauty az000: head is a small block with the brow/eyes barely reading at thumbnail"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero: fewer rocks, the moss cap reads as a flat painted region with little form",
+      "2_closeups hind limb: dark pinched planes between the legs, slab foot",
+      "1_beauty az000: small block head, brow and eyes weak at thumbnail"]},
+    "better": "Y",
+    "why": "Y's olive moss sits in the shoulder mass like the reference; X's bright clumps and rocks read as glued-on props."
+  },
+  "goblin": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty back34/az090: loincloth back panel is a flat plate standing off the rump with a visible gap",
+      "1_beauty az000: hooked nose does not read from the front, head is a smooth dome",
+      "2_closeups hind limb: feet are flat wedges with claws, no toe split"]},
+    "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: eyes are small hexagon rings, the goblin reads squinting and loses the yellow-eye cue",
+      "1_beauty back34: loincloth back panel floats off the rump with a gap",
+      "2_closeups fangs colour: brow crease over the eye cuts a dark line across the forehead"]},
+    "better": "X",
+    "why": "X's larger yellow eyes give the face the cartoon menace of the reference; Y's ring eyes kill the expression."
+  },
+  "owl": {
+    "X": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az090: wings are flat slabs standing off the body with a visible edge, not folded into the flank",
+      "2_closeups hind limb: feet are a flat platform with claws, no toes",
+      "1_beauty az000: facial disc edge is a hard mask line, no dark rim"]},
+    "Y": {"score": 5, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: eyes are giant cream goggle rings with no facial disc; looks like spectacles, not an owl face",
+      "1_beauty hero/az090: wings are flat slabs standing off the body",
+      "2_closeups hind limb: platform feet with no toes"]},
+    "better": "X",
+    "why": "X's pale facial disc with rimmed orange eyes matches the reference; Y's goggle eyes are off-model."
+  },
+  "raven_wyvern": {
+    "X": {"score": 4, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az000: wings are big flat purple sheets glued to the flanks, standing proud with floating black spar strips",
+      "1_beauty hero / 2_closeups head: eyes are orange hexes stuck on the top edge of the skull, not on the side",
+      "1_beauty az090: tail fin is a flat triangle plate, paper thin edge-on"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az090: tail fin is a flat triangle plate",
+      "2_closeups front limb: wing spars are black stripes painted on the membrane, little relief",
+      "1_beauty az000: body is a narrow box, keeled chest and shaggy hackles do not read"]},
+    "better": "Y",
+    "why": "Y's wings fold onto the body with spars and the eye sits on the side of the bill; X's wings and eyes are glued-on slabs."
+  },
+  "stag": {
+    "X": {"score": 7, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: mane bib ends in a sharp cream diamond patch on the chest, border crosses faces",
+      "2_closeups hind limb: legs are constant-section tubes, hock angle weak",
+      "1_beauty hero: mane edge is a saw of shard triangles over the shoulder"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty hero/az090: antlers are thin straight spikes, brow tines and crowned tips barely branch",
+      "1_beauty az000: cream diamond chest patch, same as X",
+      "2_closeups hind limb: tube legs, weak hock"]},
+    "better": "X",
+    "why": "X's antlers branch and spread like the reference crown; Y's are flat spikes. Bodies are otherwise identical."
+  },
+  "wolf": {
+    "X": {"score": 4, "verdict": "FIX", "top_issues": [
+      "1_beauty az000/hero: neck ruff is an explosion of overlapping cream shards that hides the chest and jaw",
+      "2_closeups head colour: muzzle is short and blunt, eye half-buried under ruff plates; wedge head lost",
+      "2_closeups hind limb: dark shard tufts protrude from the thigh and tail like splinters"]},
+    "Y": {"score": 6, "verdict": "FIX", "top_issues": [
+      "1_beauty az000: ruff still shows a few shard-edged plates on the cheeks",
+      "2_closeups hind limb: tail brush is a stack of thin plates, splinter edges",
+      "1_beauty hero: ears are thin flat triangles, no inner ear"]},
+    "better": "Y",
+    "why": "Y keeps a long wedge muzzle, visible amber eyes and a controlled ruff; X's ruff is shard noise that wrecks the head."
+  }
+}

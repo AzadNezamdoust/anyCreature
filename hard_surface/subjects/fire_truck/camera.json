@@ -1,0 +1,18 @@
+{
+  "theta_deg": 20.8801,
+  "phi_deg": 49.1308,
+  "slopes": {
+    "mX": 0.411902,
+    "mZ": 0.308399
+  },
+  "residual_px": 0.7119,
+  "vertical_tilt_deg": 0.5104,
+  "source": "refs/fire_truck.png",
+  "sha256": "a74d05c050907a3c98406b5137ada71df41a8e5b2eed768baae0dbabab5e8834",
+  "solved": "2026-09-27T08:59:06.475Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left",
+  "threshold": 2,
+  "_threshold": "node scripts/solve-camera.mjs fire_truck --image refs/fire_truck.png --x-edge left (default RANSAC band 2 px; 2026-09-27 setup audit re-ran it: identical). The right family is the tyre-bottom line (mZ 0.3084); the body sill is steeper (0.360, the fit at --threshold 1: theta 22.67 / phi 46.93), but that camera scores worse on the concept: visual hull -> concept IoU 0.940 -> 0.930, blockout start 0.935 -> 0.919. Kept."
+}

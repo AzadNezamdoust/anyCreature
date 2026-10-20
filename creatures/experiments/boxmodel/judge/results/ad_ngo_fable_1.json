@@ -1,0 +1,119 @@
+{
+ "bear": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Nose pad is a black box glued on the muzzle tip and pokes out sideways in az090 and the front view; it does not sit in the muzzle",
+    "Square block ears and flat octagon eye discs sitting proud of the skull read as machine-placed parts; no brow or dish to the face",
+    "No lighter chest plane from the brief; front view (az000) is a flat brown wall from muzzle to feet"
+   ],
+   "brief_fit": "Hump, low head, thick legs, dark lower legs and claws are there; face and chest plane miss the brief."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Pale muzzle spreads up over the whole front of the face to the brow, so the head reads as a koala/sloth-bear mask instead of a pale muzzle block",
+    "Ears are pointed wolf-style blades, and the eyes are so small they vanish at thumbnail: the face has no read",
+    "Dark triangular creases and slivers in the armpit/chest under the front legs (front-limb close-up, 2 slivers flagged); front legs are tube sections with a kink"
+   ],
+   "brief_fit": "Body mass and hump are the strongest of the three, but round ears, small readable eyes and a muzzle block are all missed."
+  },
+  "C": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Hindquarters are a tall box: rump nearly as high as the hump in az090 and back34, hind legs stubby, hind feet flat slabs with claws half-buried (hind-limb close-up)",
+    "Dense dark triangle fan behind the hind leg at the hip/belly junction (hind-limb wire) reads as a crease from below",
+    "Body is compact and short for the 1.7 m brief; the chest-plane border cuts diagonally across the chest like a bib in az000"
+   ],
+   "brief_fit": "Closest match: broad dished face with brow, pale muzzle block, round ears, lighter chest plane, dark lower legs, claws front and hind."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "C is the only one whose face reads as a bear at thumbnail (dished brow, muzzle block, round ears) and that has the chest plane; A has the better body length but a box nose and block ears, and B loses the face entirely under the pale mask."
+ },
+ "boar": {
+  "A": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Tusks are needle slivers (8 slivers flagged, yellow on the heatmap); at close range they read as splinters, not curved tusks",
+    "Ears are oversized tall blades, donkey-scale next to the head in the front view",
+    "Crest is a stepped row of near-identical blocks along the spine; the dark saddle border runs across faces on the shoulder"
+   ],
+   "brief_fit": "Best overall match: wedge head, snout disc with nostrils, up-curving tusks, blunt crest clumps, dark saddle, hock angles, tail tuft."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Body is not front-heavy: hump barely above the back line, so the side view reads as a generic pig/deer rather than a boar",
+    "Crest is a row of identical spaced triangular spikes (machine tell) with a dark saddle whose borders cut across faces",
+    "Snout disc has no nostrils, eyes are near-invisible, tail is a bare stub with no tuft; legs are constant-section tubes with soft hocks"
+   ],
+   "brief_fit": "Tusks and ears are right, but the silhouette cue (high shoulder hump, front-heavy) and several brief details are missing."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Crest is a sawtooth of identical sharp triangles, stegosaurus-like, where the brief asks for blunt bristle clumps",
+    "Tail is a paper-thin plate seen edge-on in back34, and a dense dark triangle fan sits at the rump/tail root (hind-limb wire); 2 flipped faces on the body",
+    "Ears are slabs set far apart on top of the head; eyes are flat diamonds with no brow, so the face is only the snout"
+   ],
+   "brief_fit": "Strongest hump and front-heavy mass, good snout disc with nostrils and chunky tusks; crest and tail miss the brief."
+  },
+  "rank": [
+   "A",
+   "C",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "A and C both read as boar, but A's crest is clumped and its head details complete while C's sawtooth crest and plate tail are visible machine tells; B fails the front-heavy silhouette cue."
+ },
+ "character": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "Hands are paper-thin paddles with a notch for a thumb; the far hand in hero and back34 is a flat blade edge-on",
+    "Brow and mouth pieces float off the skull as dark bars (head close-up, left brow and mouth); the far eye is seen as a dark rim disc stuck on the sphere",
+    "Feet are flat flipper slabs with a step, no toe block; head is a uniform ring-band sphere"
+   ],
+   "brief_fit": "Big round head, thin neck, slim torso, big rimmed eyes, brows, nose and mouth are all present; hands and feet miss the brief."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "Head is lumpy with a peaked top and back (az090, hero), not a clean faceted sphere",
+    "No nose at all; dark inset notch behind the shoulder in az090 where the arm meets the torso; 1 flipped face",
+    "Hands are flat paddles and feet are flat slabs, same as A; hip/crotch crease reads dark in back34"
+   ],
+   "brief_fit": "Eyes, brows and a smiling mouth read well, but the head shape and the missing nose break the brief; hands and feet are placeholders."
+  },
+  "C": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "Posed fold-over flagged at the left armpit (purple on hero, az090 and az000 of the tech sheet); shoulder yoke collapses when the arm drops or punches",
+    "2 flipped faces on the body; the chest yoke/belly seam shows as a dark crease under the arm in az000",
+    "Feet are still flat wedges rather than a foot with a toe block; the neck is a thin peg"
+   ],
+   "brief_fit": "Closest: real mitten hands with a thumb, a shoulder line, faceted sphere head with brows, rimmed eyes, tiny nose and mouth."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "clear",
+  "why": "C is the only candidate with hands and shoulders that make it read as a character instead of a stick figure, and its one defect (armpit fold-over) is a stage-4 weight fix; A and B share paddle hands and slab feet, with B also losing the head shape and nose."
+ }
+}

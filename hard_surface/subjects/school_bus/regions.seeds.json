@@ -1,0 +1,162 @@
+{
+  "_comment": "SEEDS for regions.json (scripts/measure-vehicle.mjs --place-regions). A seed is a STRUCTURAL identification — 'this pixel lies inside that material's area' — never a measurement: the placer grows the seed's same-colour component and keeps the largest square window inside it that is uniform (every px within `uniform` of the seed colour), nearest the seed; the zone median is recomputed from the pixels every run. role = the vehicle-class role whose id-pass mask the zone is compared against; face marks the two flat body tones (front = the +X flank, side = the +Z nose). Every flat colour of the target gets one zone; materials that share a colour share a zone (the bus's black: bumpers, window band, pillars, mirrors, stop-arm post, marker pods are one paint, the tyres a second black).",
+  "_source": "refs/school_bus.png",
+  "zones": {
+    "body_side": {
+      "role": "cab",
+      "face": "front",
+      "seeds": [
+        [
+          600,
+          650
+        ],
+        [
+          880,
+          500
+        ]
+      ],
+      "note": "the +X flank below the window band"
+    },
+    "body_front": {
+      "role": "cab",
+      "face": "side",
+      "seeds": [
+        [
+          200,
+          700
+        ],
+        [
+          160,
+          760
+        ]
+      ],
+      "note": "the +Z nose face between the headlights"
+    },
+    "roof": {
+      "role": "cab",
+      "seeds": [
+        [
+          600,
+          250
+        ],
+        [
+          220,
+          480
+        ]
+      ],
+      "note": "the roof and the front cap above the windshield (lit, paler than the flank)"
+    },
+    "glass": {
+      "role": "window",
+      "seeds": [
+        [
+          150,
+          560
+        ],
+        [
+          690,
+          480
+        ]
+      ],
+      "note": "windshield pane and a side pane"
+    },
+    "tyre": {
+      "role": "wheel",
+      "seeds": [
+        [
+          790,
+          620
+        ],
+        [
+          835,
+          665
+        ]
+      ],
+      "note": "the rear tyre's face ahead of and below its hub"
+    },
+    "black": {
+      "role": "bumper",
+      "seeds": [
+        [
+          200,
+          815
+        ],
+        [
+          960,
+          540
+        ]
+      ],
+      "note": "the black paint: front and rear bumpers (also the band, pillars, mirrors, stop-arm post, pods)"
+    },
+    "hub": {
+      "role": "hub",
+      "seeds": [
+        [
+          835,
+          615
+        ],
+        [
+          445,
+          812
+        ]
+      ],
+      "note": "the two near hub discs"
+    },
+    "headlight": {
+      "role": "headlight",
+      "seeds": [
+        [
+          100,
+          690
+        ],
+        [
+          285,
+          775
+        ]
+      ],
+      "note": "the two round headlight lenses"
+    },
+    "amber": {
+      "role": "prop",
+      "seeds": [
+        [
+          100,
+          730
+        ],
+        [
+          285,
+          815
+        ]
+      ],
+      "note": "the amber turn lamps under the headlights (the amber marker lenses read the same)"
+    },
+    "signal": {
+      "role": "prop",
+      "seeds": [
+        [
+          450,
+          700
+        ],
+        [
+          110,
+          460
+        ]
+      ],
+      "note": "the stop-sign face and the red marker lenses"
+    },
+    "orange": {
+      "role": "prop",
+      "seeds": [
+        [
+          145,
+          475
+        ],
+        [
+          290,
+          540
+        ]
+      ],
+      "note": "the amber (orange) roof-marker lenses inboard of the red ones"
+    }
+  }
+}

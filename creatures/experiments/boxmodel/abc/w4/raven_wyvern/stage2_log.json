@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck: a second loop between N1 and N2 so the S-bend has three rings to deform",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "chest base of the neck: a loop between B3 and N1 so the neck root bends without collapsing",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "wing finger: a knuckle loop halfway along the long spar (its quads were needles)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "wing finger tip: a loop halfway to the tip (needle quads, and the tip flexes)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "tail tip: a loop halfway along the last tail segment (needle quads; the tip flicks)",
+   "new_verts": 5,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "inset",
+   "reason": "eye socket on the skull side under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

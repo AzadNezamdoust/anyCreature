@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "violations": [],
+  "advisories": [
+    {
+      "v": "V3",
+      "part": null,
+      "measured": "not run",
+      "limit": "manifold-3d union split() == 1",
+      "hint": "cross-check against a real boolean union is deferred; V3 is box-contact only",
+      "blocking": false
+    }
+  ],
+  "context": {
+    "EPS": 0.1568767748903578,
+    "PX": 0.01976744186046512,
+    "MIN_FEAT": 0.06,
+    "cls": "building",
+    "diagonal": 31.375354978071563
+  },
+  "text": "PASS: V0-V7 + V10 clean."
+}

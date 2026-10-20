@@ -1,0 +1,18 @@
+{
+  "theta_deg": 23.75,
+  "phi_deg": 68.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/revolver.png",
+  "sha256": "277a35e45ab5c41a6af21cb08dfe9b107f6c3a1054c0f9ee4f4b147a3a6c96d5",
+  "solved": "2026-10-04T20:35:09.704Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.836,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.51
+  }
+}

@@ -1,0 +1,26 @@
+{
+ "provider": "gpt",
+ "model": "gpt-6-astra",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 74.3,
+ "exit": 0,
+ "prompt": "One image: concept art of ONE stylised low-poly 3D game creature, a single three-quarter front view, the whole creature in frame on a plain pure white background. The creature: a stag: tall branching antlers, upright neck with a dark mane, deep chest, slender legs; long tapered head, black nose, pale jaw line, dark eyes, leaf-shaped ears, antlers with brow tines pointing forward and crowned tips; deep chest, slender legs with knees and hocks, small black hooves, cream rump patch, short hanging tail; antlers, neck mane with a V bib, tail. Size: height 1.7 m to the antler tips, length 1.8 m, width 0.6 m. Pose: standing on all four legs, head up. Push the SHAPE DESIGN: a bold, instantly readable silhouette; a few big simple masses with clear contrast between big, medium and small shapes; exaggerated, appealing proportions (a strong head, chunky hands, feet or paws, a characterful face); every limb, ear, horn and tail clearly separated from the body with open space around it; no thin spikes, no loose shards, no tiny noisy details. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (red-brown body, dark mane, pale cream, antler, black hoof, eye), soft even light, no cast shadows, no text, no labels.",
+ "reference": null,
+ "command": [
+  "codex.exe",
+  "exec",
+  "--skip-git-repo-check",
+  "-s",
+  "workspace-write",
+  "-m",
+  "gpt-6-astra",
+  "-c",
+  "model_reasoning_effort=\"low\"",
+  "-o",
+  "<prompt>"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-10-03 20:34:06"
+}

@@ -1,0 +1,402 @@
+{
+ "gemini": {
+  "bear": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.922,
+    "rear": 0.897,
+    "top": [
+     0.994,
+     0.898
+    ],
+    "length": 1.198,
+    "largest": 0.198
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.028
+  },
+  "boar": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.936,
+    "rear": 0.908,
+    "top": [
+     1.0,
+     0.975
+    ],
+    "length": 1.079,
+    "largest": 0.092
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.036
+  },
+  "character": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "flip",
+    "top": "rot90cw"
+   },
+   "fit": {
+    "front": 0.998,
+    "rear": 1.024,
+    "top": [
+     0.977,
+     0.998
+    ],
+    "largest": 0.024
+   },
+   "attempts": 1,
+   "raw_pass": false,
+   "raw_proportion_off": 2.76
+  },
+  "giant": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "flip",
+    "top": "rot90cw"
+   },
+   "fit": {
+    "front": 0.998,
+    "rear": 0.98,
+    "top": [
+     1.088,
+     0.97
+    ],
+    "length": 0.939,
+    "largest": 0.088
+   },
+   "attempts": 1,
+   "raw_pass": false,
+   "raw_proportion_off": 0.467
+  },
+  "goblin": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.0,
+    "rear": 1.0,
+    "top": [
+     1.039,
+     1.045
+    ],
+    "length": 0.886,
+    "largest": 0.114
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.043
+  },
+  "owl": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "flip",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.0,
+    "rear": 0.99,
+    "top": [
+     0.876,
+     1.0
+    ],
+    "length": 0.955,
+    "largest": 0.124
+   },
+   "attempts": 3,
+   "raw_pass": true,
+   "raw_proportion_off": 0.142
+  },
+  "raven_wyvern": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.005,
+    "rear": 0.937,
+    "top": [
+     1.159,
+     0.996
+    ],
+    "length": 1.125,
+    "largest": 0.159
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.137
+  },
+  "wolf": {
+   "sheet": "fitted_2.png",
+   "source": "sheet_2.png",
+   "ops": {
+    "side": "flip",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.98,
+    "rear": 0.944,
+    "top": [
+     0.998,
+     1.046
+    ],
+    "length": 1.249,
+    "largest": 0.249
+   },
+   "attempts": 3,
+   "raw_pass": true,
+   "raw_proportion_off": 0.065
+  }
+ },
+ "gpt": {
+  "bear": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.988,
+    "rear": 0.998,
+    "top": [
+     1.041,
+     0.979
+    ],
+    "length": 1.053,
+    "largest": 0.053
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.039
+  },
+  "boar": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.995,
+    "rear": 1.022,
+    "top": [
+     1.0,
+     1.009
+    ],
+    "length": 1.053,
+    "largest": 0.053
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.009
+  },
+  "character": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.0,
+    "rear": 0.991,
+    "top": [
+     0.93,
+     0.935
+    ],
+    "largest": 0.07
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.076
+  },
+  "frog": {
+   "sheet": "fitted_2.png",
+   "source": "sheet_2.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.031,
+    "rear": 1.115,
+    "top": [
+     1.084,
+     1.213
+    ],
+    "length": 1.292,
+    "largest": 0.292
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.153
+  },
+  "giant": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.993,
+    "rear": 1.005,
+    "top": [
+     0.835,
+     1.135
+    ],
+    "length": 1.121,
+    "largest": 0.165
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.198
+  },
+  "goblin": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.989,
+    "rear": 1.024,
+    "top": [
+     0.949,
+     0.857
+    ],
+    "length": 0.735,
+    "largest": 0.265
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.155
+  },
+  "owl": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.996,
+    "rear": 1.002,
+    "top": [
+     0.952,
+     1.339
+    ],
+    "length": 0.94,
+    "largest": 0.339
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.254
+  },
+  "raven_wyvern": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.971,
+    "rear": 0.856,
+    "top": [
+     1.174,
+     0.995
+    ],
+    "length": 0.836,
+    "largest": 0.174
+   },
+   "attempts": 4,
+   "raw_pass": false,
+   "raw_proportion_off": 0.148
+  },
+  "stag": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 0.991,
+    "rear": 0.99,
+    "top": [
+     0.9,
+     0.723
+    ],
+    "length": 1.263,
+    "largest": 0.277
+   },
+   "attempts": 2,
+   "raw_pass": false,
+   "raw_proportion_off": 0.373
+  },
+  "wolf": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.004,
+    "rear": 0.991,
+    "top": [
+     0.956,
+     0.94
+    ],
+    "length": 1.04,
+    "largest": 0.06
+   },
+   "attempts": 1,
+   "raw_pass": true,
+   "raw_proportion_off": 0.064
+  },
+  "crab": {
+   "sheet": "fitted_1.png",
+   "source": "sheet_1.png",
+   "ops": {
+    "side": "none",
+    "top": "none"
+   },
+   "fit": {
+    "front": 1.029,
+    "rear": 0.995,
+    "top": [
+     1.101,
+     1.351
+    ],
+    "largest": 0.351
+   },
+   "attempts": 3,
+   "over_limit": true,
+   "note": "least-bad of 3: every attempt needed a correction above the 35% limit"
+  }
+ }
+}

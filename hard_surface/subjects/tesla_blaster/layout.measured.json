@@ -1,0 +1,51 @@
+{
+  "_comment": "MEASURED (hull.mjs --write-frame --from hull, 2026-10-04): the VISUAL HULL of the registered turnaround (subjects/tesla_blaster/turnaround: side / front / rear / top foregrounds, 0.00188 m voxels refined x4, 1758113 surface / shell points) projected through subjects/tesla_blaster/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 22.5 deg, phi 73.5 deg",
+    "conceptBboxPx": [
+      31,
+      188,
+      953,
+      819
+    ],
+    "sPxPerM": {
+      "x": 1879.742,
+      "y": 1854.63,
+      "used": 1785.687,
+      "xOverY": 1.0135
+    },
+    "quadPx": [
+      [
+        124.9,
+        439.3
+      ],
+      [
+        981,
+        342.3
+      ],
+      [
+        981,
+        837.2
+      ],
+      [
+        124.9,
+        934.3
+      ]
+    ],
+    "fit": {
+      "s": 1785.6867408322335,
+      "ox": 512.3857373041001,
+      "oy": 833.3333142665156,
+      "refined": {
+        "frame": {
+          "scale": 0.9563517207607183,
+          "tx": 12.00513322807955,
+          "ty": -2.9855519816412652
+        },
+        "iou": 0.8067,
+        "bboxIou": 0.7884
+      }
+    },
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

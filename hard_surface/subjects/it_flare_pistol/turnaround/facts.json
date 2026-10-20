@@ -1,0 +1,39 @@
+{
+  "subject": "it_flare_pistol",
+  "noun": "chunky signal flare pistol game prop",
+  "style": "chunky_weapon",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_flare_pistol.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 lane 1 of the owner-picked v4 hero (refs/it_flare_pistol.png = out/concept-items30/10_flare_pistol/v4b_hero_2.png; FPS refs/it_flare_pistol.fps.png = v4b_fps_R2.png). Facts from the NEW hero (counts as drawn: 1 octagonal barrel + 1 muzzle rim, 1 top sight ridge, 1 frame rail with 1 hinge block at its front, 1 rear frame block, 1 hammer spur, 1 trigger guard + trigger, 1 ribbed grip, 1 lanyard ring, 1 teal lamp on the left flank of the frame rail). FRAME (classes/weapon.md): front +z = the muzzle, left flank +x = the flank the hero shows. Hidden right flank: plain charcoal frame rail, no lamp. Dims estimated on the hero: L 0.30, W 0.10 (the barrel), H 0.26 (hammer spur top to lanyard ring bottom).",
+  "description": "A fictional signal flare pistol game prop for a cave scout, chunky low-poly, one hand, held level with the wide barrel forward. One short very wide octagonal sand-grey painted barrel with a thick chamfered sand-grey muzzle rim around a big round dark bore about 40 mm across, shown closed. Along the top of the barrel one thick flat charcoal sight ridge. Under the barrel one thick charcoal frame rail running from a fat octagonal dark steel hinge block under the barrel front back to a tall blocky charcoal rear frame block behind the barrel; one small square teal lamp window in a thick raised charcoal bezel on the left flank of the frame rail. On top of the rear frame block one big dark steel hammer spur block raked back. Under the frame one large rounded-square charcoal trigger guard sized for gloves with a thick charcoal trigger, and one chunky charcoal pistol grip raked back with big diagonal ribs, one fat charcoal lanyard ring hanging from the grip base.",
+  "proportions": "About 0.30 m long, 0.10 m wide and 0.26 m tall. (length : width : height = 3.00 : 1 : 2.60)",
+  "sides": "only the teal lamp window is on one flank: on the LEFT flank of the charcoal frame rail under the barrel; the right flank is plain. The barrel, the sight ridge, the hinge block, the frame, the hammer spur, the trigger guard, the grip and the lanyard ring are on the centre line (symmetric left to right).",
+  "shape": {
+    "side": "in this view the chunky signal flare pistol game prop is 1.15 times as long as it is tall",
+    "front": "in this view its width is 0.38 of its height",
+    "rear": "in this view its width is 0.38 of its height",
+    "top": "in this view it is 3.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Level, the muzzle to the LEFT of the image: the wide octagonal sand barrel with its thick muzzle rim at the left end and the flat charcoal sight ridge along its top; under it the charcoal frame rail with the octagonal hinge block at its front end and the teal lamp window on its flank; behind the barrel the tall blocky charcoal rear frame block with the hammer spur raked back on top; below, the large rounded-square trigger guard with the trigger and the raked ribbed grip with the lanyard ring hanging from its base.",
+    "front": "Seen from the muzzle end: the big round dark bore inside the thick octagonal sand muzzle rim filling the upper middle, the sight ridge on top, the hinge block under it, the hammer spur peeking above behind, the grip and lanyard ring below on the centre line.",
+    "rear": "Seen from the back end: the charcoal rear frame block with the hammer spur on top, the barrel's octagonal outline around it, the grip below on the centre line with the lanyard ring at its base. No lamp visible.",
+    "top": "Seen from above, the muzzle to the LEFT: the wide barrel with its rim at the left end and the sight ridge along its middle, the rear frame block and the hammer spur at the right; the frame rail hidden under the barrel. The lamp is flush and does not stick out."
+  },
+  "asymmetric": [
+    {
+      "part": "the small square teal lamp window in its thick charcoal bezel",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 0.3,
+    "W": 0.1,
+    "H": 0.26,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  },
+  "decided": [
+    "the barrel is shown closed (hinge block under the front); the bore is dark inside and closes a short way in"
+  ]
+}

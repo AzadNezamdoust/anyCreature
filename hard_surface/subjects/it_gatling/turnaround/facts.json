@@ -1,0 +1,50 @@
+{
+  "subject": "it_gatling",
+  "noun": "rotary-barrel game prop",
+  "style": "grounded",
+  "sources": "gold.mjs new --dry --concept 2026-10-10 (WF v10 S1 items-30; concept out/concept-items30 v1.png = refs/it_gatling.png); brief subjects/_items30; facts written 2026-10-10 from the brief AND the concept image (decided: front = the ring of six barrels (muzzle end); left flank = the flank the concept shows. DECISION vs the brief: the brief puts the sling loop and the round motor cover on the hidden right flank; the concept (chosen) draws both on the visible left flank, so facts follow the concept (left flank: lamp, vent slots, feed chute, motor cover, sling loop); the right flank is plain smooth panels.)",
+  "description": "A fictional heavy rotary-barrel game prop for a mining crew, held level at the hip with the barrel cluster pointing forward. A boxy brick-red painted shell receiver with large chamfers. At its front a ring of six dark steel round barrels (a cluster about half the total length) held by two round dark steel clamp plates, one at the muzzle end and one in the middle of the cluster. On top of the receiver a charcoal arched carry handle running front to back. Under the front of the receiver a charcoal vertical handle with three ribs. At the rear a diagonal-ribbed charcoal pistol grip raked backward and a short thick charcoal padded brace tube ending in a flat charcoal shoulder pad. A square brick-red ammunition box hangs under the receiver behind the front handle, with a short curved charcoal feed chute running from its top up into the receiver's left side. Two short slotted vents and one tiny teal lamp window on the left flank of the receiver; behind them a round raised brick-red motor cover and a charcoal sling loop on the left flank near the rear.",
+  "proportions": "About 1.10 m long (front to back), 0.22 m wide and 0.36 m tall. (length : width : height = 5.00 : 1 : 1.64)",
+  "sides": "everything listed as on the left flank is on the left only: the two slotted vents, the tiny teal lamp window, the curved feed chute, the round motor cover and the sling loop. The right flank is plain: smooth brick-red panels with no lamp, no cover and no loop. The carry handle, the front handle, the ammunition box, the pistol grip and the barrel ring are on the centre line.",
+  "shape": {
+    "side": "in this view the prop is 3.06 times as long as it is tall",
+    "front": "in this view its width is 0.61 of its height",
+    "rear": "in this view its width is 0.61 of its height",
+    "top": "in this view it is 5.00 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the barrel cluster exactly horizontal and pointing to the LEFT of the image, the muzzle clamp plate at the left end, the receiver in the middle with the arched carry handle on top, the vertical front handle under the front of the receiver, the square ammunition box hanging under the middle, the pistol grip raked backward behind the box, and the short brace tube with its flat shoulder pad at the right end.",
+    "front": "Seen from the muzzle end: the round clamp plate with the ring of six round barrel openings is in the middle, the boxy receiver outline behind it, the arched carry handle on top on the centre line, and the vertical front handle and the ammunition box below on the centre line (the box partly behind the handle).",
+    "rear": "Seen from the rear end: the flat shoulder pad is in front on the centre line, the boxy receiver outline behind and around it, the arched carry handle on top, the pistol grip and the ammunition box below on the centre line; the barrels are hidden behind the receiver.",
+    "top": "Seen from above: the long barrel cluster with its two clamp plates at the left end, the receiver with the arched handle's top bar running along the centre line, the brace tube and shoulder pad at the right end; the ammunition box, the pistol grip and the front handle are hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the tiny teal lamp window and the two slotted vents",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    },
+    {
+      "part": "the round motor cover and the charcoal sling loop",
+      "plural": true,
+      "flank": "left",
+      "along": "rear",
+      "protrudes": false
+    },
+    {
+      "part": "the short curved charcoal feed chute",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    }
+  ],
+  "dims": {
+    "L": 1.1,
+    "W": 0.22,
+    "H": 0.36,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

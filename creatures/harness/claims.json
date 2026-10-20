@@ -1,0 +1,101 @@
+{
+  "name": "<creature name>",
+  "_role": "The one claims sheet. Every creature is judged at boss standard: viewed close up, exaggerated, signature thresholds high. Role tiers (minion/NPC/boss) were removed — a cheaper creature is not a different ruler, it is the same ruler with a smaller triangle budget, so adjust tri_budget here if you need one.",
+  "claims": [
+    {
+      "type": "part_exists",
+      "part": "<signature part>",
+      "stage": "MID",
+      "label": "signature part must exist",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "part_signature",
+      "part": "<signature part>",
+      "view": "side",
+      "min_share": 0.16,
+      "or_min_span": 0.12,
+      "stage": "MID",
+      "label": "signature presence",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "focal_contrast",
+      "a": "<primary focal>",
+      "b": "<secondary focal>",
+      "min_ratio": 2,
+      "stage": "MID",
+      "label": "focal points must not be equal weight",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "share_hierarchy",
+      "primary": [
+        "<primary mass…>"
+      ],
+      "secondary": [
+        "<secondary mass…>"
+      ],
+      "tertiary": [
+        "<detail part…>"
+      ],
+      "stage": "MID",
+      "label": "631 hierarchy",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "orbit_consistent",
+      "stage": "LOW",
+      "label": "the 8+2 orbit: no flank (both obliques of one side) closes into a lump its neighbours are not (outline.py blob flags: convexity deficiency <=0.68x the smaller neighbour at 96 and 48 px; see orbit_sheet.png)",
+      "enforce": "advise",
+      "when": "verify"
+    },
+    {
+      "type": "head_reads",
+      "stage": "LOW",
+      "label": "the head is visible from every azimuth, reads as its own mass from the front half, and is not small from everywhere (outline.py head_hidden / head_merged / head_small)",
+      "enforce": "advise",
+      "when": "verify"
+    },
+    {
+      "type": "rig_skinned",
+      "stage": "HIGH",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "anim_named",
+      "names": [
+        "idle",
+        "move",
+        "attack"
+      ],
+      "stage": "HIGH",
+      "enforce": "block",
+      "when": "verify"
+    },
+    {
+      "type": "saturation_area",
+      "view": "tq",
+      "min": 0.1,
+      "max": 0.5,
+      "stage": "HIGH",
+      "label": "read on the PALETTE (albedo before lighting), so the shading stack cannot move it: at least 10% of the view carries a nameable colour (HSV S ≥ 0.30) or the creature reads as a grey mass; at most 50% is LOUD (S ≥ 0.50) or saturation is the base colour, not a spotlight.",
+      "enforce": "advise",
+      "when": "allocate"
+    },
+    {
+      "type": "tri_budget",
+      "min": 4000,
+      "max": 9000,
+      "stage": "LOW",
+      "label": "triangle budget band",
+      "enforce": "advise",
+      "when": "allocate"
+    }
+  ]
+}

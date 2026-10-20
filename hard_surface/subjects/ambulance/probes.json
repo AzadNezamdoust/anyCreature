@@ -1,0 +1,17 @@
+[
+  { "id": "P1", "view": "side", "axis": "row", "index": 661, "from": 60, "to": 960, "what": "hub row: front bumper, front tyre/hub (150..282, hub 184..244), rear tyre/hub (590..720, hub 627..687), rear step" },
+  { "id": "P2", "view": "side", "axis": "row", "index": 718, "from": 60, "to": 960, "what": "tyre bottoms (ground 727): front tyre 150..282, rear tyre 590..720" },
+  { "id": "P3", "view": "side", "axis": "row", "index": 330, "from": 60, "to": 960, "what": "box roof lamp row: light bar 309..348, flank lamps 443..489 / 727..772 / 848..893, rear-edge lamp 914..920" },
+  { "id": "P4", "view": "side", "axis": "row", "index": 540, "from": 60, "to": 960, "what": "stripe row: nose 105 .. box rear 911 (cab stripe 105..410, box stripe 421..911)" },
+  { "id": "P5", "view": "side", "axis": "col", "index": 214, "from": 260, "to": 760, "what": "front wheel column: cab roof/hood 367, stripe 526..570, tyre 583..722" },
+  { "id": "P6", "view": "side", "axis": "col", "index": 657, "from": 260, "to": 760, "what": "rear wheel column: box roof 299, stripe 513..569, tyre 592..722" },
+  { "id": "P7", "view": "front", "axis": "row", "index": 497, "from": 280, "to": 740, "what": "mirror head row: heads 315..354 / 670..709, windshield 382..643" },
+  { "id": "P8", "view": "front", "axis": "col", "index": 512, "from": 260, "to": 760, "what": "centre column: box top 299, light bar 364..391, windshield 412..513, stripe 526..580, grille 577..626, bumper 633..679" },
+  { "id": "P9", "view": "front", "axis": "row", "index": 705, "from": 280, "to": 740, "what": "tyre row: tyres 361..410 / 614..663" },
+  { "id": "P10", "view": "rear", "axis": "row", "index": 490, "from": 260, "to": 760, "what": "mirror row: heads 294..335 / 690..730, box 342..681, door seams 402..404 / 510..513 / 619..621" },
+  { "id": "P11", "view": "rear", "axis": "col", "index": 460, "from": 260, "to": 760, "what": "left door column: box top 299, door window 396..461, stripe 519..569, door bottom 609, riser 612..651, bumper 654..680" },
+  { "id": "P12", "view": "rear", "axis": "row", "index": 667, "from": 260, "to": 760, "what": "bumper row: rear bumper 325..699 (full width beyond the box 346..677)" },
+  { "id": "P13", "view": "top", "axis": "row", "index": 512, "from": 60, "to": 960, "what": "centreline: front bumper 86..99, front stripe band 103..112, hood 115..214, windshield 216..302, roof, light bar 341..397, box 441..903, rear step 905..939" },
+  { "id": "P14", "view": "top", "axis": "col", "index": 600, "from": 260, "to": 760, "what": "box across: box 322..703 (381 px, +15 % over the front/rear 332 px), flank lamps 307..316 / 709..718" },
+  { "id": "P15", "view": "concept", "axis": "col", "index": 392, "from": 280, "to": 860, "what": "front wheel column: box roof edge, light bar, windshield, stripe, tyre 700..820 (hub 738..796)" }
+]

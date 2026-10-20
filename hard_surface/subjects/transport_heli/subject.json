@@ -1,0 +1,59 @@
+{
+  "id": "transport_heli",
+  "class": "vehicle",
+  "title": "RTS-style transport heli (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/transport_heli.v2.png",
+    "camera": "subjects/transport_heli/camera.json",
+    "layoutMeasured": "subjects/transport_heli/layout.measured.json"
+  },
+  "outDir": "out/transport_heli",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    },
+    "wheels": {
+      "value": {
+        "count": 4,
+        "axles": 2,
+        "diameters": "equal",
+        "diameterFrac": [
+          0.03,
+          0.06
+        ]
+      },
+      "evidence": "tandem-rotor heli on 4 small wheels: D 0.66 m over L 15.5 m = 0.043 (side view / audit fact:wheel-layout); band 0.03..0.06"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "rotor",
+          "rotor_blade",
+          "rotor_hub",
+          "pylon",
+          "fairing",
+          "gear_leg",
+          "engine_pod",
+          "ramp",
+          "antenna"
+        ]
+      },
+      "evidence": "the concept draws two three-blade rotors on hubs atop a front and a taller rear pylon, long flank fairings, four gear legs, two engine pods on the rear pylon, a rear loading ramp (hidden face) and two roof antennas (refs/transport_heli.README.md)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "rotor",
+          "dark",
+          "ramp"
+        ]
+      },
+      "evidence": "the concept paints the rotor blades and hubs dark gunmetal grey (family rotor), a zone a road vehicle does not have; parts the target draws in their own flat colours that the vehicle class list lacks (gold.mjs override --palette-auto on out/ref/gold/transport_heli/model.mjs): dark = 15 part(s), e.g. glass_bars; ramp = 1 part(s), e.g. ramp"
+    }
+  }
+}

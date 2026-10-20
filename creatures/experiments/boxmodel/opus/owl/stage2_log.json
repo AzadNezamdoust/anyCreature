@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "partial_loop",
+   "reason": "facial-disc rim: a loop inside the rim, terminators in the cheek (k0-k1) and brow (k2-k3)",
+   "new_verts": 2,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "neck loop between n0 and k0: the swivel ring and the ruff under the disc",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "wing-root loop: the shoulder bend, blended body/wing weights",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "partial_loop",
+   "reason": "tuft notch: a loop down the blade splits the tip in two; terminators in the flat of the blade (section 0.22-0.62), nothing bends there",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

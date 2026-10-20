@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1 Wing slab","verdict":"PARTLY","evidence":"1_beauty az090 and 2_closeups front limb: blade tapered to a diagonal, dark top band, purple bays below, three spars radiating from the wrist; but az000 and 5_reference model az000 still show the two blades standing off the flank with daylight between wing and body, and the tip does not reach the tail base."},
+{"title":"2 Legs too short (Stage 1)","verdict":"PARTLY","evidence":"1_beauty az090/hero: belly raised clear of the feet and a visible hock bend, but belly sits at about 28-30% of height vs the reference ~35%; still a lowish stance in 5_reference side pair. 4_posed move_f009/f017 feet plant, no knee pop."},
+{"title":"3 Eyes on top of skull","verdict":"DONE","evidence":"2_closeups head colour: amber eye on the side of the head at the bill top line under a brow ledge; 1_beauty hero and az090 show it from the side/3-4 front, not from the top."},
+{"title":"4 Hackles bag of rocks","verdict":"DONE","evidence":"2_closeups head colour: a few lighter ruff wedges under the jaw, nape clear, neck visible; techqa hackles clip 2 tris (<10), flip 0; 3_tech no pink/purple on the throat beyond small marks."},
+{"title":"5 Bill short fat wedge","verdict":"DONE","evidence":"2_closeups head colour/wire and 1_beauty az090: long bill with downturned tip and a small pale tip covering only the front ~30%."}
+],
+"regressions":[],
+"all_done":false}

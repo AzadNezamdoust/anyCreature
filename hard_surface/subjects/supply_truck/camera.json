@@ -1,0 +1,15 @@
+{
+  "theta_deg": 19.971,
+  "phi_deg": 41.4152,
+  "slopes": {
+    "mX": 0.301273,
+    "mZ": 0.387199
+  },
+  "residual_px": 0.824,
+  "vertical_tilt_deg": null,
+  "source": "refs/supply_truck.v2.png",
+  "sha256": "c8918fd9b3fd8d699fc432f8ec4c039e39669564ced4546ec5c27012eb1aa9a0",
+  "solved": "2026-09-29T17:55:35.765Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

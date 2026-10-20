@@ -1,0 +1,28 @@
+{
+  "subject": "gatling_gun",
+  "noun": "game rotary prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/gatling_gun.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04: shape lines corrected after the sheet (a setup helper had garbled one word in them and left the subject name in shape.side; the generated sheet prompt carried that typo — see out/turnaround/gatling_gun/attempt-0/prompt.txt)",
+  "description": "A fictional stylised low-poly video-game prop, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). At the front a cluster of six long round dark grey tubes arranged in a circle around one axis, held together by two flat round discs: an orange disc at the front end, with the six open tube ends and a small orange centre cap showing in its face, and a dark grey disc halfway along. Behind the tubes a fat dark grey cylindrical main housing with stepped collars at its front and a flat rear cap. On top of the housing a matte black carrying handle shaped like a long flat arch running front to back. At the rear a matte black vertical D-shaped handle with a small orange paddle inside its opening. Under the housing a big round matte black drum, about as wide as the housing, its flat round faces facing the front and the rear, with two orange bands round it, one near each flat face; it hangs from the housing by a short dark grey bracket on its top. Bright orange accents: the front disc and centre cap, the two bands round the drum, and the paddle. The prop is the same on both flanks.",
+  "proportions": "About 1.05 m long, 0.24 m wide and 0.42 m tall. (length : width : height = 4.38 : 1 : 1.75)",
+  "sides": "the prop is symmetric left to right; both flanks are the same.",
+  "shape": {
+    "side": "in this view the prop is 2.50 times as long as it is tall",
+    "front": "in this view its width is 0.57 of its height",
+    "rear": "in this view its width is 0.57 of its height",
+    "top": "in this view it is 4.38 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the tubes and the housing exactly horizontal on one axis, the orange front disc at the left end of the image, the arch handle on top of the housing, the D-shaped handle at the right end of the image with the orange paddle inside its opening, the drum hanging below the housing as a rectangle with two vertical orange bands.",
+    "front": "Seen from the front end: the round orange front disc with six dark open tube ends in a circle and the small orange centre cap, the larger round outline of the housing behind it, the arch handle as a narrow upright block on top on the centre line, the drum below as a full black circle with a thin orange rim.",
+    "rear": "Seen from the rear end: the D-shaped handle as a narrow upright bar on the centre line in front of the round flat rear cap of the housing, the arch handle as a narrow block on top, the drum below as a full black circle with a thin orange rim.",
+    "top": "Seen from above: the arch handle is a long thin bar along the centre line over the housing, the six tubes run to the left end with the two discs as thin cross bars, the D-shaped handle is a thin bar at the right end; the drum under the housing shows only where it is wider than the housing, as an edge on both sides."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 1.05,
+    "W": 0.24,
+    "H": 0.42,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

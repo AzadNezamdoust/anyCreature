@@ -1,0 +1,43 @@
+{
+  "subject": "shrink_ray",
+  "noun": "toy shrink gadget prop",
+  "style": "scifi_toon",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/shrink_ray.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04 (WF v10 setup): sides / asymmetric / faces written from the concept refs/shrink_ray.png; noun / description / faces worded as a fictional cartoon toy-like game prop described by shapes and colours (same parts, same colours); the concept draws the two teal dials in a row along the top (the description says side by side): facts follow the concept",
+  "description": "A fictional cartoon science-fiction toy shrink-ray gadget, a chunky toy-like game prop (not a real object, no working parts). A boxy off-white body with heavily rounded corners, longer than it is tall. At the front, on a short mid grey neck, a wide shallow round mid grey dish facing forward, much wider than the body, with a thin mid grey rod in its centre pointing forward and ending in a bright yellow ball. On top of the body two bright teal round ribbed dial knobs in a row one behind the other, and behind them one short mid grey toggle stick on a round grey base, leaning backward. On the left flank of the body a row of three small round lights: bright red, bright yellow, bright green, front to rear. Underneath at the rear a dark navy handle raked backward, with a bright red curved finger lever inside a rounded mid grey loop in front of the handle. At the rear a short ribbed mid grey cylinder sticking out backward on the axis, with a bright yellow end cap. A bright teal round knob is on the right flank of the body.",
+  "proportions": "About 0.42 m long, 0.20 m wide and 0.26 m tall. (length : width : height = 2.10 : 1 : 1.30)",
+  "sides": "the three small round lights (red, yellow, green) are on the left flank only; the bright teal round knob is on the right flank only; everything else is symmetric left to right.",
+  "shape": {
+    "side": "in this view the prop is 1.62 times as long as it is tall",
+    "front": "in this view its width is 0.77 of its height",
+    "rear": "in this view its width is 0.77 of its height",
+    "top": "in this view it is 2.10 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the rod exactly horizontal, the yellow ball at the left end of the image, the dish seen edge-on as a tall thin curved grey shape near the left end, the grey neck, the off-white rounded box body in the middle with the two teal dials and the grey toggle stick standing on top and the red, yellow and green lights in a row on its flank, the ribbed grey cylinder with its yellow end cap at the right end of the image; the dark navy handle hangs below the rear half of the body, raked toward the right, with the red finger lever and grey loop in front of it.",
+    "front": "Seen from the front end: the big round grey dish fills the middle as a full circle whose diameter equals the dish height in the side view, with the yellow ball in its centre; the dish hides the body; the top of a teal dial and the toggle stick show just above the dish on the centre line, and the grey loop and the dark navy handle hang below the dish on the centre line.",
+    "rear": "Seen from the rear end: the round yellow end cap in the centre with the grey ribbed cylinder around it, the rounded off-white box outline of the body around that, the wide round rim of the grey dish showing behind the body all round, the toggle stick and a teal dial standing on top on the centre line, the dark navy handle hanging below on the centre line and hiding the finger lever.",
+    "top": "Seen from above: the yellow ball and rod at the left end, the dish seen edge-on as a thin curved grey shape much wider than the body: the dish is a circle, so its span across this view is the same as its height in the side view and the same as its diameter in the front view, the grey neck, the off-white rounded body with the two teal dials as circles in a row on the centre line and the round base of the toggle stick behind them, the ribbed grey cylinder and yellow end cap at the right end; the handle is hidden under the body."
+  },
+  "asymmetric": [
+    {
+      "part": "the row of three small round lights (red, yellow, green)",
+      "plural": true,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": false
+    },
+    {
+      "part": "the bright teal round knob",
+      "plural": false,
+      "flank": "right",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 0.42,
+    "W": 0.2,
+    "H": 0.26,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

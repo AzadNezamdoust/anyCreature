@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "hip loop round the thigh root: the hop swings the thigh here",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "chest loop behind the jaw hinge (its ring runs on down the front of the upper arm): the head nods here",
+   "new_verts": 13,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "eye socket in the top of each eye bulge: the gold eye sits in it",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

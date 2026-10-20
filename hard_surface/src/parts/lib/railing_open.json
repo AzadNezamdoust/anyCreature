@@ -1,0 +1,47 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "railing_open",
+  "note": "Open-bar balcony / landing / stoop railing: bottom rail plate + N posts + top rail plate, and NO infill web. dims = [length, height, depth]. This is the railing the M2 brief's inventory actually asked for; it only became authorable in M6, when `alignU` gave a child a way to butt its edge to a point on the face's u axis. The top rail is a child of the FIRST post (a 0.06 m parent), and `alignU: \"start\"` is what lets a 2.4 m plate hang off it and still span the declared box exactly. `instance: 0` keeps it on post 0 — per-instance children are the default, and without it the top rail would be repeated once per post. The posts run edge to edge for the same reason. `railing` (the web version) is kept unchanged beside it: it is what the frozen M2 baseline references, and a web still reads better than bars at a distance where the gaps go sub-pixel (V5 will say so).",
+  "params": {
+    "railThickness": 0.06,
+    "postThickness": 0.06,
+    "postCount": 6
+  },
+  "parts": [
+    {
+      "id": "bot",
+      "prim": "plate",
+      "dims": ["$w", "$railThickness", "$d"],
+      "role": "railing_rail"
+    },
+    {
+      "id": "post",
+      "prim": "box",
+      "dims": ["$postThickness", "$h - 2 * $railThickness", "$postThickness"],
+      "role": "railing_post",
+      "attach": {
+        "to": "bot",
+        "face": "+Y",
+        "uv": [0, 0.5],
+        "contact": "rests-on-top",
+        "alignU": "start"
+      },
+      "repeat": { "axis": "+X", "count": "$postCount", "pitch": "($w - $postThickness) / ($postCount - 1)" }
+    },
+    {
+      "id": "top",
+      "prim": "plate",
+      "dims": ["$w", "$railThickness", "$d"],
+      "role": "railing_rail",
+      "attach": {
+        "to": "post",
+        "face": "+Y",
+        "uv": [0, 0.5],
+        "contact": "rests-on-top",
+        "alignU": "start",
+        "instance": 0
+      }
+    }
+  ]
+}

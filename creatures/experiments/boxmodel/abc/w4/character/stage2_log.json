@@ -1,0 +1,18 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the eye face, pushed in",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "toe crease: the ball of the foot / toe block",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

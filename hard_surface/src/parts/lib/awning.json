@@ -1,0 +1,30 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "awning",
+  "note": "Shop awning: a tapered canopy with a valance hanging off its front lip. dims = [width, height, projection]. The canopy is a `wedge`, which narrows to 25 % at the top, so it reads as a sloped canopy from the judged iso angle without a second prim. The valance is placed half-overlapping the canopy's front face rather than butted under it: the attach algebra anchors a child's CENTRE along u and its named extreme along v, so a valance anchored exactly at the bottom edge would share zero contact area and V2 would reject the contact it declares.",
+  "params": { "valanceDrop": 0.24, "valanceThickness": 0.06 },
+  "parts": [
+    {
+      "id": "canopy",
+      "prim": "wedge",
+      "dims": ["$w", "$h", "$d"],
+      "role": "awning"
+    },
+    {
+      "id": "valance",
+      "prim": "plate",
+      "dims": ["$w", "$valanceDrop", "$valanceThickness"],
+      "role": "awning_valance",
+      "zoneKey": "valance",
+      "attach": {
+        "to": "canopy",
+        "face": "+Z",
+        "uv": [0.5, "$valanceDrop / (2 * $h)"],
+        "contact": "flush",
+        "embed": "$valanceThickness / 2",
+        "align": "top"
+      }
+    }
+  ]
+}

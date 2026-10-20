@@ -1,0 +1,69 @@
+{
+  "_comment": "WF v8 WP2 (research/v7/WF-V8-PLAN.md 'Gate', WF-REVIEW-opus.md C10) — the ruleOverrides the orchestrator adds to subjects/<s>/subject.json at a round boundary; WP2 edits no subject. Per subject, `ruleOverrides` is the exact JSON to add (merge its keys into an existing ruleOverrides). The names `wheels` and `paletteZones` extend the owner's 2026-09-26 TARGET WINS ruling: owner ratification pending. Measured on the committed gold models (HEAD 78d8269; `_gold` = git blob of out/ref/gold/<s>/model.mjs), re-checked on the round-5 commits (see _verify). Colours: node scripts/v7/measure.mjs sample --subject <s> --view concept|rear x,y,w,h, each rect inside the zone's visible pixels of the registered model render and checked on a measure.mjs grid crop; the rear turnaround view where the concept does not show the part. Wheel numbers: the chain's own wheel groups (kernel-chain chainContext + rules/vehicle.mjs wheelGroups) and measure.mjs runs on the side turnaround.",
+  "_verify": "2026-09-27, scratch copies of the five subjects (subject.json + these ruleOverrides, the WP2 kernel-chain / rules/vehicle.mjs): node scripts/v7/inspect.mjs chain --module out/ref/gold/<s>/model.mjs --subject <s> prints pass true on all five r4 golds (78d8269 blobs below) with RULE_OVERRIDE advisories only, and node scripts/check-module.mjs <m> --subject <s> PASS. Without them (the committed subject.json) all five print pass false: school_bus 3, pickup 1, taxi 10 PALETTE_ZONE; delivery_truck VEH_WHEELS (6 wheel assemblies), then 8 PALETTE_ZONE; tractor 2 VEH_WHEELS (diameters 0.911..1.505 m, diameter/length 0.355), then 5 PALETTE_ZONE. Round 5 (HEAD b3a62cd: school_bus cf538571, pickup 5ad5926a, taxi 51a4fd4c, delivery_truck ca273f28) keeps the same zones, palette colours and truck wheels: pass true with, pass false without. The tractor's round 5 was still uncommitted: see tractor._r5_working_copy.",
+  "school_bus": {
+    "_gold": "8f661f92 (bus variant: its closed palette is body, glass, black, tyre, hub, lamp, signal, amber, orange)",
+    "ruleOverrides": {
+      "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/school_bus/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+      "paletteZones": {
+        "value": { "extra": ["well", "mirror", "white"] },
+        "evidence": "concept samples: well = the arch-well faces above the tyres (arch_*) 866,542,3,3 #8d660e and 878,560,3,3 #886311 (model #8f6912); mirror = the two mirror heads 48,515,5,5 and 368,655,3,3 both #333435 (model #333435; the class black reads #272829); white = the stop-sign rim inside the octagon outline (stopArm_border) 420,690,1,30 #ffffff (model #fbfbfb)"
+      }
+    }
+  },
+  "pickup": {
+    "_gold": "410eb2bf",
+    "ruleOverrides": {
+      "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/pickup/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+      "paletteZones": {
+        "value": { "extra": ["tail"] },
+        "evidence": "tail = the tail-lamp lenses rearLamp_l/_r on the rear face (0 px in the registered concept render): rear turnaround 361,535,7,7 #e13738 (model #e13638)"
+      }
+    }
+  },
+  "taxi": {
+    "_gold": "b152ab6a",
+    "ruleOverrides": {
+      "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/taxi/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+      "paletteZones": {
+        "value": { "extra": ["well", "sign", "trim", "handle", "panel", "grilleLine", "turn", "tail", "mirrorGlass", "hubcap"] },
+        "evidence": "concept samples: well = wheel wells, underbody, axles 459,671,7,7 #2b2b2b (model #2a2a29); sign = the roof sign 486,252,7,7 #efefef side, 530,250,5,5 #f2f1f2 top (model side #efefef, top #fbfbfb); trim = belt stripe + door seams 506,602,7,7 #30302f (model #2f2f2f); handle = door handles 767,467,7,7 #87888a (model side #9a9a9a); panel = the nose panel round lamps and grille 240,640,3,3 #454545 (model #454545); grilleLine = the grille slat lines 120,596,1,2 #20201f on the #3b3b3b grille field (model #222222); turn = front corner turn lamps 300,700,5,5 #fb8a19 (model side #fb8a19); tail = tail lamps 967,394,7,7 #d3481e (model side #e0441c); hubcap = hub caps 432,755,7,7 #747473 (model #757574); mirrorGlass = the rear-facing mirror glass (53 px in the concept): rear turnaround 324,474,7,7 #8c8b8b (model #9e9e9e)"
+      }
+    }
+  },
+  "delivery_truck": {
+    "_gold": "e42b9285",
+    "ruleOverrides": {
+      "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/delivery_truck/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+      "wheels": {
+        "value": { "count": 6, "axles": 3, "diameters": "equal" },
+        "evidence": "the concept and the side turnaround draw a front axle and a rear tandem: side view row 690 (hub height, 164.17 px/m) tyre runs px 203-331, 600-730, 734-865 = 0.79-0.81 m each, the rear two 0.82 m apart; gold model: 6 wheel groups of 0.780 m at z 1.520 / -1.050 / -1.840 (3 axle clusters), diameter/length 0.157 inside the class band 0.1..0.2 (no diameterFrac)"
+      },
+      "paletteZones": {
+        "value": { "extra": ["stripe", "slat", "red", "amber", "dark", "bar", "cab", "seam"] },
+        "evidence": "concept samples: stripe = the green side stripe (+ rear door stripe / posts) 944,387,7,7 #378a47 (model #388b48); amber = turn lamps 314,805,7,7 #ea831f (model #f0901e); dark = rails, crossmember, underride, side boxes, mirror heads 634,729,7,7 #393c3d (model #3b3f40); cab = the cab shell 273,432,7,7 #f0efeb (model top #f0efeb); seam = cab rear corner seams 494,519,3,3 #bbbab9 (model #c4c4c2). Rear face, not in the concept, rear turnaround: slat = door frame + slat lines 450,379,20,2 #b5b5b5 (model #b4b4b4); red = tail lamps 362,594,7,7 #bd1213 (model #c8161e); bar = the underride plate 337,651,7,7 #767577 (model #818181)"
+      }
+    }
+  },
+  "tractor": {
+    "_gold": "8760ccad",
+    "_r5_working_copy": {
+      "blob": "f275d656 (uncommitted round 5, 2026-09-27; re-list at the round boundary: the chain names every zone it rejects)",
+      "wheels": "unchanged override: groups 0.923 m (front, z 1.300) / 1.520 m (rear, z -0.890) over 3.411 m = 0.270 / 0.446, inside 0.25..0.47 (VEH_WHEELS passes)",
+      "paletteZones_extra_add": ["recess", "slat", "pod", "cap"],
+      "evidence_add": "; r5 zones, concept samples: recess = the engine side recesses 467,580,7,7 #292929 (model #262626); slat = the grille slats 160,644,7,7 #343434 (model #333333); pod = headlamp pods + brackets 282,672,7,7 #3b3b3a (model side #3c3c3c); cap = hub caps 858,635,7,7 #7b7a79 (model side #626161)",
+      "_check": "with extra = the nine zones (engine, dark, rim, hole, seat + these four) the working copy passes the chain; with the five it fails PALETTE_ZONE on recess, slat, pod, cap"
+    },
+    "ruleOverrides": {
+      "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/tractor/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+      "wheels": {
+        "value": { "count": 4, "axles": 2, "diameters": "per-axle", "diameterFrac": [0.25, 0.47] },
+        "evidence": "the target draws small front and big rear wheels: side turnaround tyre runs 184 px = 0.81 m (front, row 703) and 313 px = 1.37 m (rear, row 644) at 228.18 px/m; the concept's tyres R .46 / .76 (LEDGER r4 K1, followed by the model). Gold model: wheel groups 0.911 m (front axle z 1.300) and 1.505 m (rear axle z -0.890) over the 3.398 m length = 0.268 / 0.443; diameterFrac 0.25..0.47 = those two +-5 % rounded out (the class 0.1..0.2 band is a road-vehicle band)"
+      },
+      "paletteZones": {
+        "value": { "extra": ["engine", "dark", "rim", "hole", "seat"] },
+        "evidence": "concept samples: engine = engine side panels + footwell 459,609,7,7 #2a2a2a (model #393939); dark = engine heads / blocks, grille slats, canopy posts, exhaust, front axle 279,773,7,7 #424242 (model #444444); rim = headlamp bezels + steering wheel / column 512,361,7,7 #303131 (model #262626); hole = exhaust mouth + drawbar eye 274,252,7,7 #202020 (model #1b1b1b); seat = seat cushion + back 650,359,7,7 #363635 (model side #353535)"
+      }
+    }
+  }
+}

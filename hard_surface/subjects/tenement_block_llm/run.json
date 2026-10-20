@@ -1,0 +1,107 @@
+{
+  "subject": "tenement_block",
+  "runner": "file",
+  "startedAt": "2026-09-11T20:42:50.271Z",
+  "dslVersion": "100665aa4dc0",
+  "seats": {
+    "lister": "claude-fable-5-1",
+    "builder-a": "claude-opus-5",
+    "builder-b": "claude-opus-5",
+    "builder-c": "claude-opus-5",
+    "repair": "claude-opus-5"
+  },
+  "deviations": [
+    "refs/tenement_block.png absent — the LISTER was fed refs/README.md's structural inventory text instead of the image (04:T6 assumes a VLM reading a picture). Re-run the lister when the PNG lands; its cache key changes with the prompt inputs, so nothing stale survives.",
+    "MEASURE (Grounded SAM / operator-clicked boxes, PLAN 3) is NOT implemented in M3. Every rel_size the LISTER returns stays a hypothesis; only V0-V7 + V10 constrain the metres."
+  ],
+  "calls": [
+    {
+      "seat": "lister",
+      "model": "claude-fable-5-1",
+      "tier": "-",
+      "attempt": 0,
+      "hash": "469342b21df839bbd116f68fade055ae0336be68d432ad106cd61dc33ca84cd4",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": null,
+      "violations": []
+    },
+    {
+      "seat": "builder-a",
+      "model": "claude-opus-5",
+      "tier": "A",
+      "attempt": 0,
+      "hash": "0b31a0e53ec59827393f549075e5f40b6b26cdc0c849ae74fc05b5a98cb22b70",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "seat": "builder-b",
+      "model": "claude-opus-5",
+      "tier": "B",
+      "attempt": 0,
+      "hash": "531a2cfa8541454b36e8b8a1af15163ef794c12e7c02b6b47b24bef13b313b2e",
+      "cached": true,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    },
+    {
+      "seat": "builder-c",
+      "model": "claude-opus-5",
+      "tier": "C",
+      "attempt": 0,
+      "hash": "b90d43ab383ec1bb9b6fe97ca27aba46eaf71f1141fcd591b01950b4fc7cce2f",
+      "cached": false,
+      "tokensIn": 0,
+      "tokensOut": 0,
+      "ms": 0,
+      "pass": true,
+      "violations": []
+    }
+  ],
+  "tiers": [
+    {
+      "tier": "A",
+      "seat": "builder-a",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V3 clean (tier gate)."
+    },
+    {
+      "tier": "B",
+      "seat": "builder-b",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V3 clean (tier gate)."
+    },
+    {
+      "tier": "C",
+      "seat": "builder-c",
+      "autoRepairs": [],
+      "reprompts": 0,
+      "pass": true,
+      "text": "PASS: V0-V7 + V10 clean."
+    }
+  ],
+  "pass": true,
+  "violations": [],
+  "totals": {
+    "calls": 4,
+    "cached": 3,
+    "tokensIn": 0,
+    "tokensOut": 0,
+    "ms": 0
+  },
+  "summary": "4 call(s) (3 cached), 0/0 tokens in/out, 0 repair prompt(s), FINAL PASS (0 violation(s))"
+}

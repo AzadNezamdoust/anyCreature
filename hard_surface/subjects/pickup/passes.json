@@ -1,0 +1,177 @@
+[
+  {
+    "id": "P0",
+    "title": "body: chassis, hood, cab, bed with walls and tailgate, bumpers, four wheels",
+    "requiredLayoutKeys": [
+      "wheel.diameterOverL",
+      "wheel.centreFromFront",
+      "wheelbase.overL",
+      "height.overL",
+      "width.overL",
+      "cab.start",
+      "cab.end",
+      "bed.start",
+      "bed.end",
+      "hood.top",
+      "cab.roof",
+      "bedWall.top",
+      "bumper.front.top",
+      "bumper.front.h",
+      "bumper.rear.h"
+    ],
+    "item": "Build the truck's body only, in the vehicle frame of the class rules: length along Z with the nose at +Z, width along X centred on x = 0, and meta.front \"+X\" so the flank with the near wheels faces the camera. Parts and roles: a chassis between the wheels (role chassis) that the wheels meet with their inner faces and every body part rests on, its underside {GROUND_CLEARANCE} m above the ground; a hood box ahead of the cab (role hood); the cab (role cab); an OPEN bed behind it - a floor (role bed), two side walls and a front bulkhead (role bed_wall) and a tailgate at the back (role tailgate); a front and a rear bumper across the full width at the nose and the tail (role bumper); and four wheels on two axles (role wheel, one disc per wheel with its axis along X, revolved and turned with .rotZ(90)), a mirror pair across x = 0, all the same diameter, and they are the ONLY parts that touch the ground. The census for this pass is 4 wheels and 2 bumpers. Dimensions from subjects/pickup/layout.json, as fractions of the body length L, width W and height H you fix here: the proportions are height.overL and width.overL; along the length, measured from the nose, the hood runs to cab.start, the cab from cab.start to cab.end, the bed from bed.start to bed.end, and the axles sit at wheel.centreFromFront (so wheelbase.overL between them) with wheel.diameterOverL; heights are hood.top, cab.roof (the cab is the tallest part), bedWall.top, bumper.front.top with bumper.front.h, and bumper.rear.h. Read each number and multiply - do not invent a metre. Every section is at least {MIN_FEAT} m. No windows, lamps, grille or mirrors yet. Layout keys this pass must satisfy: wheel.diameterOverL, wheel.centreFromFront, wheelbase.overL, height.overL, width.overL, cab.start, cab.end, bed.start, bed.end, hood.top, cab.roof, bedWall.top, bumper.front.top, bumper.front.h, bumper.rear.h. Done looks like: the silhouette of the truck in image 1 at the right proportions - a short hood, a tall cab, an open bed you can see into, round wheels under the body standing on the ground. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+    "instructionRows": [
+      {
+        "match": "Build the truck's body only, in the vehicle frame",
+        "rows": [
+          "LOOK:orientation",
+          "VEH_MIRROR",
+          "V12_LAYOUT:width.overL"
+        ]
+      },
+      {
+        "match": "Parts and roles",
+        "rows": [
+          "V7_ROLE",
+          "VEH_GROUND",
+          "VEH_WHEELS",
+          "V3_UNSUPPORTED",
+          "V12_CENSUS:wheels",
+          "V12_CENSUS:bumpers",
+          "V12_LAYOUT:bed.start"
+        ]
+      },
+      {
+        "match": "The census for this pass is 4 wheels and 2 bumpers",
+        "rows": [
+          "V12_CENSUS:wheels",
+          "V12_CENSUS:bumpers"
+        ]
+      },
+      {
+        "match": "Dimensions from subjects/pickup/layout.json",
+        "rows": [
+          "V12_LAYOUT:height.overL",
+          "V12_LAYOUT:cab.start",
+          "V12_LAYOUT:wheel.centreFromFront",
+          "V12_LAYOUT:hood.top"
+        ]
+      },
+      {
+        "match": "Read each number and multiply",
+        "exempt": "method: how to read the measured numbers; the numbers themselves are the V12_LAYOUT rows"
+      },
+      {
+        "match": "Every section is at least",
+        "rows": [
+          "V5"
+        ]
+      },
+      {
+        "match": "No windows, lamps, grille or mirrors yet",
+        "exempt": "scope: what this pass builds or leaves out, not an appearance demand"
+      },
+      {
+        "match": "Layout keys this pass must satisfy",
+        "rows": [
+          "V12_LAYOUT:wheel.diameterOverL",
+          "V12_LAYOUT:bumper.rear.h"
+        ]
+      },
+      {
+        "match": "Done looks like",
+        "rows": [
+          "V12_LAYOUT:cab.roof",
+          "LK_VALUE:bed_inside",
+          "LK_VISIBLE:wheel",
+          "VEH_GROUND",
+          "LOOK:reads as the target"
+        ]
+      },
+      {
+        "match": "You may reopen any earlier part",
+        "exempt": "process: the previous review's failed rows come back as the review's own rows"
+      }
+    ]
+  },
+  {
+    "id": "P1",
+    "title": "details: windows, grille with its slots, headlights, mirrors",
+    "requiredLayoutKeys": [
+      "headlight.centreY",
+      "headlight.offsetX",
+      "headlight.diameter",
+      "grille.w",
+      "grille.h",
+      "mirror.centreY",
+      "mirror.offsetX",
+      "mirror.head.w",
+      "mirror.head.h",
+      "mirror.arm.length",
+      "window.front.w",
+      "window.front.bottom",
+      "window.front.top",
+      "window.front.topAt",
+      "window.side.start",
+      "window.side.end",
+      "window.side.bottom",
+      "window.side.top",
+      "grille.slots"
+    ],
+    "item": "Add the details on the P0 body with ONE K.assemble call each, pasted from READY CALLS in MEASURED NUMBERS before `return parts;`: the windshield and one side window per door on the cab (K.assemble.pane), the headlight pair (K.assemble.lamp), the grille with its slots between them (K.assemble.grille), the mirror pair at the A-pillars (K.assemble.mirror), and on each door its seam and handle (K.assemble.seam, K.assemble.handle). The census is 3 windows, 2 headlights and 2 mirrors. Do not hand-place a detail part and do not move the P0 body. Done looks like: from the solved camera the windshield and the near side window read as pale glass in the cab, two round yellow lamps flank a dark grille on the nose at screen-left, and a mirror stands out from each A-pillar. You may reopen any earlier part if the LOOK checklist for it failed; the previous review lists the failed rows.",
+    "instructionRows": [
+      {
+        "match": "Add the details on the P0 body with ONE K.assemble call each",
+        "rows": [
+          "V12_LAYOUT:window.front.w",
+          "V12_LAYOUT:window.front.top",
+          "V12_LAYOUT:window.side.start",
+          "V12_LAYOUT:headlight.centreY",
+          "V12_LAYOUT:headlight.diameter",
+          "V12_LAYOUT:grille.w",
+          "V12_LAYOUT:grille.slots",
+          "V12_LAYOUT:mirror.offsetX",
+          "V12_LAYOUT:mirror.head.h",
+          "V12_LAYOUT:mirror.arm.length",
+          "V3_FLOAT",
+          "V5_THIN",
+          "VEH_HANDBUILT"
+        ]
+      },
+      {
+        "match": "The census is 3 windows, 2 headlights and 2 mirrors",
+        "rows": [
+          "V12_CENSUS:windows",
+          "V12_CENSUS:headlights",
+          "V12_CENSUS:mirrors",
+          "VEH_MIRROR"
+        ]
+      },
+      {
+        "match": "Do not hand-place a detail part and do not move the P0 body",
+        "rows": [
+          "VEH_HANDBUILT",
+          "V12_LAYOUT:cab.start",
+          "LK_SILHOUETTE:cab",
+          "LK_VISIBLE:wheel"
+        ]
+      },
+      {
+        "match": "Done looks like",
+        "rows": [
+          "LK_VALUE:glass",
+          "LK_HUE:headlight",
+          "LK_VALUE:grille",
+          "LK_VISIBLE:window",
+          "LK_VISIBLE:headlight",
+          "LK_VISIBLE:mirror",
+          "LOOK:reads as the target"
+        ]
+      },
+      {
+        "match": "You may reopen any earlier part",
+        "exempt": "process: the previous review's failed rows come back as the review's own rows"
+      }
+    ]
+  }
+]

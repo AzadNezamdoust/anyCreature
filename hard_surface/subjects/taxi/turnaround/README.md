@@ -1,0 +1,1 @@
+Orthographic turnaround of refs/taxi.png, generated 2026-09-26 with GPT image generation (Codex CLI, concept as input image). Views: side (the concept-visible flank, front -> left), front, rear, top (front -> left). Requested at one common scale with the concept proportions kept. Frozen.

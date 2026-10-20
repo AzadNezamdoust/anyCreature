@@ -1,0 +1,26 @@
+{
+ "clips": {
+  "attack": [
+   1.0,
+   33.0
+  ],
+  "idle": [
+   1.0,
+   49.0
+  ],
+  "move": [
+   1.0,
+   25.0
+  ]
+ },
+ "bones": 18,
+ "unweighted": 0,
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "c8772dee01d0ddf8dd6945860d9ad8408e7f546f34a49c3081d0c0a8e8ae5d85",
+  "collapsed_edge_hash": "c8772dee01d0ddf8dd6945860d9ad8408e7f546f34a49c3081d0c0a8e8ae5d85",
+  "logged_ops": 3,
+  "logged_new_verts": 29,
+  "errors": []
+ }
+}

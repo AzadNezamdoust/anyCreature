@@ -1,0 +1,1619 @@
+{
+ "sheet_17.jpg": {
+  "creature": "wolf",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "wolf",
+    "dog",
+    "coyote",
+    "fox",
+    "husky"
+   ],
+   "az045": [
+    "wolf",
+    "coyote",
+    "fox",
+    "dog",
+    "jackal"
+   ],
+   "az090": [
+    "wolf",
+    "fox",
+    "coyote",
+    "dog",
+    "jackal"
+   ],
+   "az135": [
+    "wolf",
+    "coyote",
+    "dog",
+    "fox",
+    "hyena"
+   ],
+   "az180": [
+    "wolf",
+    "dog",
+    "cat",
+    "fox",
+    "coyote"
+   ],
+   "top": [
+    "wolf",
+    "dog",
+    "fox",
+    "beetle",
+    "fish"
+   ]
+  }
+ },
+ "sheet_10.jpg": {
+  "creature": "owl",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "owl",
+    "horned owl",
+    "eagle owl",
+    "cat",
+    "bear cub"
+   ],
+   "az045": [
+    "owl",
+    "horned owl",
+    "eagle owl",
+    "hawk",
+    "cat"
+   ],
+   "az090": [
+    "owl",
+    "hawk",
+    "parrot",
+    "eagle",
+    "penguin"
+   ],
+   "az135": [
+    "owl",
+    "horned owl",
+    "hawk",
+    "eagle",
+    "bat"
+   ],
+   "az180": [
+    "owl",
+    "horned owl",
+    "cat",
+    "bear cub",
+    "bat"
+   ],
+   "top": [
+    "owl",
+    "bird",
+    "beetle",
+    "turtle",
+    "hedgehog"
+   ]
+  }
+ },
+ "sheet_15.jpg": {
+  "creature": "boar",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "boar",
+    "warthog",
+    "rhino",
+    "bull",
+    "pig"
+   ],
+   "az045": [
+    "warthog",
+    "boar",
+    "rhino",
+    "triceratops",
+    "pig"
+   ],
+   "az090": [
+    "warthog",
+    "boar",
+    "rhino",
+    "pig",
+    "tapir"
+   ],
+   "az135": [
+    "warthog",
+    "boar",
+    "rhino",
+    "triceratops",
+    "pig"
+   ],
+   "az180": [
+    "pig",
+    "boar",
+    "rhino",
+    "hippo",
+    "bear"
+   ],
+   "top": [
+    "boar",
+    "warthog",
+    "pig",
+    "beetle",
+    "fish"
+   ]
+  }
+ },
+ "sheet_19.jpg": {
+  "creature": "frog",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "salamander"
+   ],
+   "az045": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "lizard"
+   ],
+   "az090": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "newt"
+   ],
+   "az135": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "lizard"
+   ],
+   "az180": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "turtle"
+   ],
+   "top": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "turtle",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_30.jpg": {
+  "creature": "boar",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "boar",
+    "pig",
+    "warthog",
+    "rhino",
+    "donkey"
+   ],
+   "az045": [
+    "boar",
+    "warthog",
+    "pig",
+    "rhino",
+    "wild hog"
+   ],
+   "az090": [
+    "boar",
+    "warthog",
+    "wild hog",
+    "pig",
+    "rhino"
+   ],
+   "az135": [
+    "boar",
+    "warthog",
+    "wild hog",
+    "pig",
+    "rhino"
+   ],
+   "az180": [
+    "pig",
+    "boar",
+    "donkey",
+    "goat",
+    "cow"
+   ],
+   "top": [
+    "boar",
+    "pig",
+    "warthog",
+    "rhino",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_06.jpg": {
+  "creature": "bear",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "bear",
+    "gorilla",
+    "grizzly bear",
+    "ape",
+    "bigfoot"
+   ],
+   "az045": [
+    "bear",
+    "grizzly bear",
+    "brown bear",
+    "wolverine",
+    "badger"
+   ],
+   "az090": [
+    "bear",
+    "grizzly bear",
+    "brown bear",
+    "wolverine",
+    "badger"
+   ],
+   "az135": [
+    "bear",
+    "grizzly bear",
+    "brown bear",
+    "badger",
+    "wombat"
+   ],
+   "az180": [
+    "bear",
+    "gorilla",
+    "ape",
+    "bigfoot",
+    "grizzly bear"
+   ],
+   "top": [
+    "bear",
+    "seal",
+    "walrus",
+    "manatee",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_16.jpg": {
+  "creature": "crab",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "crab",
+    "spider",
+    "beetle",
+    "scorpion",
+    "lobster"
+   ],
+   "az045": [
+    "crab",
+    "spider",
+    "beetle",
+    "scorpion",
+    "tick"
+   ],
+   "az090": [
+    "crab",
+    "spider",
+    "beetle",
+    "scorpion",
+    "insect"
+   ],
+   "az135": [
+    "crab",
+    "spider",
+    "beetle",
+    "scorpion",
+    "tick"
+   ],
+   "az180": [
+    "crab",
+    "spider",
+    "beetle",
+    "tick",
+    "turtle"
+   ],
+   "top": [
+    "crab",
+    "spider",
+    "beetle",
+    "scorpion",
+    "lobster"
+   ]
+  }
+ },
+ "sheet_12.jpg": {
+  "creature": "goblin",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "kobold",
+    "gnome"
+   ],
+   "az045": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "kobold",
+    "gnoll"
+   ],
+   "az090": [
+    "goblin",
+    "gremlin",
+    "kobold",
+    "imp",
+    "gnome"
+   ],
+   "az135": [
+    "goblin",
+    "gremlin",
+    "kobold",
+    "imp",
+    "troll"
+   ],
+   "az180": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "kobold",
+    "elf"
+   ],
+   "top": [
+    "goblin",
+    "imp",
+    "gremlin",
+    "bat",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_14.jpg": {
+  "creature": "character",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "human",
+    "child",
+    "mannequin",
+    "doll",
+    "alien"
+   ],
+   "az045": [
+    "human",
+    "child",
+    "mannequin",
+    "doll",
+    "alien"
+   ],
+   "az090": [
+    "human",
+    "child",
+    "mannequin",
+    "doll",
+    "robot"
+   ],
+   "az135": [
+    "human",
+    "child",
+    "mannequin",
+    "doll",
+    "alien"
+   ],
+   "az180": [
+    "human",
+    "child",
+    "mannequin",
+    "doll",
+    "alien"
+   ],
+   "top": [
+    "human",
+    "mannequin",
+    "airplane",
+    "doll",
+    "scarecrow"
+   ]
+  }
+ },
+ "sheet_01.jpg": {
+  "creature": "frog",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "salamander"
+   ],
+   "az045": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "lizard"
+   ],
+   "az090": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "crouching lizard",
+    "salamander"
+   ],
+   "az135": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "lizard",
+    "salamander"
+   ],
+   "az180": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "tree frog",
+    "salamander"
+   ],
+   "top": [
+    "frog",
+    "toad",
+    "bullfrog",
+    "beetle",
+    "turtle"
+   ]
+  }
+ },
+ "sheet_27.jpg": {
+  "creature": "goblin",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "Yoda-like alien",
+    "gnome"
+   ],
+   "az045": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "elf creature",
+    "gnome"
+   ],
+   "az090": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "hunched troll",
+    "kobold"
+   ],
+   "az135": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "hunched troll",
+    "kobold"
+   ],
+   "az180": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "gnome",
+    "kobold"
+   ],
+   "top": [
+    "goblin",
+    "bat",
+    "gremlin",
+    "manta ray",
+    "fish"
+   ]
+  }
+ },
+ "sheet_11.jpg": {
+  "creature": "raven_wyvern",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "dragon",
+    "wyvern",
+    "winged lizard",
+    "gargoyle",
+    "demon"
+   ],
+   "az045": [
+    "dragon",
+    "wyvern",
+    "dinosaur",
+    "winged lizard",
+    "gargoyle"
+   ],
+   "az090": [
+    "dragon",
+    "wyvern",
+    "theropod dinosaur",
+    "winged lizard",
+    "raptor"
+   ],
+   "az135": [
+    "dragon",
+    "wyvern",
+    "dinosaur",
+    "winged lizard",
+    "gargoyle"
+   ],
+   "az180": [
+    "dragon",
+    "wyvern",
+    "gargoyle",
+    "winged lizard",
+    "demon"
+   ],
+   "top": [
+    "dragon",
+    "wyvern",
+    "fighter jet",
+    "bird",
+    "bat"
+   ]
+  }
+ },
+ "sheet_08.jpg": {
+  "creature": "raven_wyvern",
+  "setting": "N",
+  "verdict": "FAIL \u2014 none of the accepted words reached a rank in enough views.",
+  "guesses": {
+   "az000": [
+    "raptor dinosaur",
+    "theropod",
+    "velociraptor",
+    "bipedal lizard",
+    "kobold"
+   ],
+   "az045": [
+    "raptor dinosaur",
+    "velociraptor",
+    "theropod",
+    "dromaeosaur",
+    "small dragon"
+   ],
+   "az090": [
+    "raptor dinosaur",
+    "velociraptor",
+    "theropod",
+    "dromaeosaur",
+    "compsognathus"
+   ],
+   "az135": [
+    "raptor dinosaur",
+    "velociraptor",
+    "theropod",
+    "dromaeosaur",
+    "small dragon"
+   ],
+   "az180": [
+    "bipedal dinosaur",
+    "raptor dinosaur",
+    "theropod",
+    "kobold",
+    "robot mech"
+   ],
+   "top": [
+    "dinosaur",
+    "lizard",
+    "raptor dinosaur",
+    "crocodile",
+    "fish"
+   ]
+  }
+ },
+ "sheet_26.jpg": {
+  "creature": "crab",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "crab",
+    "fiddler crab",
+    "spider crab",
+    "giant crab",
+    "scorpion"
+   ],
+   "az045": [
+    "crab",
+    "fiddler crab",
+    "spider crab",
+    "giant crab",
+    "beetle"
+   ],
+   "az090": [
+    "crab",
+    "spider",
+    "beetle",
+    "giant crab",
+    "tick"
+   ],
+   "az135": [
+    "crab",
+    "fiddler crab",
+    "spider crab",
+    "beetle",
+    "spider"
+   ],
+   "az180": [
+    "crab",
+    "beetle",
+    "spider",
+    "turtle",
+    "giant crab"
+   ],
+   "top": [
+    "crab",
+    "fiddler crab",
+    "giant crab",
+    "spider crab",
+    "scorpion"
+   ]
+  }
+ },
+ "sheet_18.jpg": {
+  "creature": "goblin",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "goblin",
+    "gremlin",
+    "yoda",
+    "imp",
+    "house elf"
+   ],
+   "az045": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "gnome",
+    "yoda"
+   ],
+   "az090": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "yoda",
+    "gnome"
+   ],
+   "az135": [
+    "goblin",
+    "gremlin",
+    "imp",
+    "yoda",
+    "house elf"
+   ],
+   "az180": [
+    "goblin",
+    "gremlin",
+    "yoda",
+    "imp",
+    "house elf"
+   ],
+   "top": [
+    "goblin",
+    "airplane",
+    "bat",
+    "gremlin",
+    "flying creature"
+   ]
+  }
+ },
+ "sheet_28.jpg": {
+  "creature": "character",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "human",
+    "cartoon boy",
+    "child character",
+    "mannequin",
+    "humanoid"
+   ],
+   "az045": [
+    "human",
+    "cartoon boy",
+    "child character",
+    "mannequin",
+    "humanoid"
+   ],
+   "az090": [
+    "human",
+    "child character",
+    "mannequin",
+    "cartoon boy",
+    "humanoid"
+   ],
+   "az135": [
+    "human",
+    "cartoon boy",
+    "child character",
+    "mannequin",
+    "humanoid"
+   ],
+   "az180": [
+    "human",
+    "cartoon boy",
+    "child character",
+    "mannequin",
+    "humanoid"
+   ],
+   "top": [
+    "human t-pose",
+    "humanoid",
+    "mannequin",
+    "scarecrow",
+    "airplane"
+   ]
+  }
+ },
+ "sheet_31.jpg": {
+  "creature": "frog",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "frog",
+    "toad",
+    "lizard",
+    "salamander",
+    "crab"
+   ],
+   "az045": [
+    "frog",
+    "toad",
+    "salamander",
+    "lizard",
+    "turtle"
+   ],
+   "az090": [
+    "frog",
+    "toad",
+    "salamander",
+    "lizard",
+    "turtle"
+   ],
+   "az135": [
+    "frog",
+    "toad",
+    "salamander",
+    "lizard",
+    "turtle"
+   ],
+   "az180": [
+    "frog",
+    "toad",
+    "lizard",
+    "salamander",
+    "crab"
+   ],
+   "top": [
+    "frog",
+    "toad",
+    "salamander",
+    "lizard",
+    "gecko"
+   ]
+  }
+ },
+ "sheet_03.jpg": {
+  "creature": "wolf",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "wolf",
+    "dog",
+    "german shepherd",
+    "fox",
+    "coyote"
+   ],
+   "az045": [
+    "wolf",
+    "german shepherd",
+    "dog",
+    "coyote",
+    "fox"
+   ],
+   "az090": [
+    "wolf",
+    "german shepherd",
+    "coyote",
+    "dog",
+    "fox"
+   ],
+   "az135": [
+    "wolf",
+    "german shepherd",
+    "dog",
+    "coyote",
+    "fox"
+   ],
+   "az180": [
+    "wolf",
+    "dog",
+    "german shepherd",
+    "coyote",
+    "fox"
+   ],
+   "top": [
+    "wolf",
+    "dog",
+    "fox",
+    "coyote",
+    "lizard"
+   ]
+  }
+ },
+ "sheet_25.jpg": {
+  "creature": "giant",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc brute",
+    "golem"
+   ],
+   "az045": [
+    "ogre",
+    "gorilla",
+    "troll",
+    "orc",
+    "cave giant"
+   ],
+   "az090": [
+    "gorilla",
+    "troll",
+    "ogre",
+    "ape",
+    "hunched giant"
+   ],
+   "az135": [
+    "gorilla",
+    "ogre",
+    "troll",
+    "ape",
+    "orc"
+   ],
+   "az180": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc",
+    "golem"
+   ],
+   "top": [
+    "ogre",
+    "gorilla",
+    "troll",
+    "golem",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_32.jpg": {
+  "creature": "wolf",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "wolf",
+    "dog",
+    "fox",
+    "coyote",
+    "jackal"
+   ],
+   "az045": [
+    "wolf",
+    "fox",
+    "coyote",
+    "dog",
+    "jackal"
+   ],
+   "az090": [
+    "wolf",
+    "fox",
+    "coyote",
+    "dog",
+    "jackal"
+   ],
+   "az135": [
+    "wolf",
+    "fox",
+    "coyote",
+    "husky",
+    "jackal"
+   ],
+   "az180": [
+    "wolf",
+    "dog",
+    "fox",
+    "coyote",
+    "cat"
+   ],
+   "top": [
+    "wolf",
+    "fox",
+    "dog",
+    "lizard",
+    "rat"
+   ]
+  }
+ },
+ "sheet_29.jpg": {
+  "creature": "boar",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "boar",
+    "rhino",
+    "bull",
+    "warthog",
+    "triceratops"
+   ],
+   "az045": [
+    "boar",
+    "warthog",
+    "rhino",
+    "stegosaurus",
+    "bull"
+   ],
+   "az090": [
+    "boar",
+    "warthog",
+    "rhino",
+    "stegosaurus",
+    "hippo"
+   ],
+   "az135": [
+    "boar",
+    "warthog",
+    "rhino",
+    "stegosaurus",
+    "bull"
+   ],
+   "az180": [
+    "boar",
+    "rhino",
+    "bull",
+    "warthog",
+    "pig"
+   ],
+   "top": [
+    "boar",
+    "rhino",
+    "beetle",
+    "bull",
+    "pig"
+   ]
+  }
+ },
+ "sheet_04.jpg": {
+  "creature": "bear",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "bear",
+    "gorilla",
+    "boar",
+    "bison",
+    "wombat"
+   ],
+   "az045": [
+    "bear",
+    "polar bear",
+    "wombat",
+    "boar",
+    "hyena"
+   ],
+   "az090": [
+    "bear",
+    "polar bear",
+    "grizzly",
+    "boar",
+    "hyena"
+   ],
+   "az135": [
+    "bear",
+    "polar bear",
+    "rhino",
+    "boar",
+    "hippo"
+   ],
+   "az180": [
+    "bear",
+    "gorilla",
+    "boar",
+    "bison",
+    "wombat"
+   ],
+   "top": [
+    "bear",
+    "seal",
+    "fish",
+    "beetle",
+    "capybara"
+   ]
+  }
+ },
+ "sheet_13.jpg": {
+  "creature": "character",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "human",
+    "child",
+    "stick figure",
+    "mannequin",
+    "elf"
+   ],
+   "az045": [
+    "human",
+    "child",
+    "mannequin",
+    "stick figure",
+    "elf"
+   ],
+   "az090": [
+    "human",
+    "child",
+    "mannequin",
+    "goblin",
+    "doll"
+   ],
+   "az135": [
+    "human",
+    "child",
+    "mannequin",
+    "stick figure",
+    "elf"
+   ],
+   "az180": [
+    "human",
+    "child",
+    "mannequin",
+    "stick figure",
+    "elf"
+   ],
+   "top": [
+    "human",
+    "airplane",
+    "cross",
+    "scarecrow",
+    "mannequin"
+   ]
+  }
+ },
+ "sheet_21.jpg": {
+  "creature": "giant",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "ogre",
+    "troll",
+    "golem",
+    "orc brute",
+    "gorilla"
+   ],
+   "az045": [
+    "ogre",
+    "troll",
+    "golem",
+    "orc brute",
+    "gorilla"
+   ],
+   "az090": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "golem",
+    "hunchback"
+   ],
+   "az135": [
+    "ogre",
+    "troll",
+    "golem",
+    "gorilla",
+    "orc brute"
+   ],
+   "az180": [
+    "ogre",
+    "golem",
+    "troll",
+    "gorilla",
+    "orc brute"
+   ],
+   "top": [
+    "ogre",
+    "gorilla",
+    "troll",
+    "crab",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_07.jpg": {
+  "creature": "raven_wyvern",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "owl",
+    "penguin",
+    "eagle",
+    "griffin",
+    "horned owl"
+   ],
+   "az045": [
+    "raven",
+    "dragon",
+    "wyvern",
+    "vulture",
+    "cockatrice"
+   ],
+   "az090": [
+    "dragon",
+    "wyvern",
+    "cockatrice",
+    "griffin",
+    "basilisk"
+   ],
+   "az135": [
+    "wyvern",
+    "dragon",
+    "cockatrice",
+    "raven",
+    "griffin"
+   ],
+   "az180": [
+    "owl",
+    "penguin",
+    "eagle",
+    "bird",
+    "bat"
+   ],
+   "top": [
+    "lizard",
+    "dragon",
+    "stingray",
+    "salamander",
+    "crocodile"
+   ]
+  }
+ },
+ "sheet_09.jpg": {
+  "creature": "stag",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az045": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "caribou"
+   ],
+   "az090": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "caribou"
+   ],
+   "az135": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "caribou"
+   ],
+   "az180": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "antelope"
+   ],
+   "top": [
+    "deer",
+    "stag",
+    "moose",
+    "elk",
+    "reindeer"
+   ]
+  }
+ },
+ "sheet_20.jpg": {
+  "creature": "giant",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc",
+    "golem"
+   ],
+   "az045": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc",
+    "golem"
+   ],
+   "az090": [
+    "gorilla",
+    "ogre",
+    "troll",
+    "bear",
+    "orc"
+   ],
+   "az135": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc",
+    "golem"
+   ],
+   "az180": [
+    "ogre",
+    "troll",
+    "gorilla",
+    "orc",
+    "golem"
+   ],
+   "top": [
+    "ogre",
+    "gorilla",
+    "troll",
+    "golem",
+    "orc"
+   ]
+  }
+ },
+ "sheet_22.jpg": {
+  "creature": "owl",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "owl",
+    "horned owl",
+    "eagle owl",
+    "griffin",
+    "penguin"
+   ],
+   "az045": [
+    "owl",
+    "great horned owl",
+    "eagle owl",
+    "hawk",
+    "griffin"
+   ],
+   "az090": [
+    "owl",
+    "penguin",
+    "hawk",
+    "falcon",
+    "eagle"
+   ],
+   "az135": [
+    "owl",
+    "horned owl",
+    "hawk",
+    "eagle",
+    "penguin"
+   ],
+   "az180": [
+    "owl",
+    "horned owl",
+    "eagle owl",
+    "hawk",
+    "griffin"
+   ],
+   "top": [
+    "owl",
+    "bird",
+    "beetle",
+    "hedgehog",
+    "turtle"
+   ]
+  }
+ },
+ "sheet_33.jpg": {
+  "creature": "crab",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "crab",
+    "spider",
+    "scorpion",
+    "lobster",
+    "beetle"
+   ],
+   "az045": [
+    "crab",
+    "spider",
+    "scorpion",
+    "lobster",
+    "beetle"
+   ],
+   "az090": [
+    "crab",
+    "lobster",
+    "scorpion",
+    "spider",
+    "shrimp"
+   ],
+   "az135": [
+    "crab",
+    "spider",
+    "scorpion",
+    "lobster",
+    "beetle"
+   ],
+   "az180": [
+    "crab",
+    "spider",
+    "scorpion",
+    "beetle",
+    "tick"
+   ],
+   "top": [
+    "crab",
+    "fiddler crab",
+    "spider",
+    "scorpion",
+    "beetle"
+   ]
+  }
+ },
+ "sheet_02.jpg": {
+  "creature": "stag",
+  "setting": "G",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "antelope"
+   ],
+   "az045": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az090": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az135": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az180": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "antelope"
+   ],
+   "top": [
+    "deer",
+    "stag",
+    "elk",
+    "reindeer",
+    "moose"
+   ]
+  }
+ },
+ "sheet_23.jpg": {
+  "creature": "bear",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "bear",
+    "gorilla",
+    "bulldog",
+    "boar",
+    "rhinoceros"
+   ],
+   "az045": [
+    "bear",
+    "grizzly bear",
+    "polar bear",
+    "wolverine",
+    "boar"
+   ],
+   "az090": [
+    "bear",
+    "grizzly bear",
+    "polar bear",
+    "badger",
+    "hyena"
+   ],
+   "az135": [
+    "bear",
+    "grizzly bear",
+    "gorilla",
+    "boar",
+    "wolverine"
+   ],
+   "az180": [
+    "bear",
+    "gorilla",
+    "boar",
+    "bulldog",
+    "cow"
+   ],
+   "top": [
+    "bear",
+    "seal",
+    "beetle",
+    "walrus",
+    "manatee"
+   ]
+  }
+ },
+ "sheet_05.jpg": {
+  "creature": "owl",
+  "setting": "N",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "owl",
+    "horned owl",
+    "penguin",
+    "bat",
+    "goblin"
+   ],
+   "az045": [
+    "owl",
+    "horned owl",
+    "penguin",
+    "caped goblin",
+    "gargoyle"
+   ],
+   "az090": [
+    "owl",
+    "horned owl",
+    "parrot",
+    "penguin",
+    "vulture"
+   ],
+   "az135": [
+    "owl",
+    "horned owl",
+    "penguin",
+    "vulture",
+    "caped figure"
+   ],
+   "az180": [
+    "owl",
+    "horned owl",
+    "cat",
+    "penguin",
+    "rabbit"
+   ],
+   "top": [
+    "owl",
+    "beetle",
+    "turtle",
+    "crab",
+    "seed pod"
+   ]
+  }
+ },
+ "sheet_24.jpg": {
+  "creature": "stag",
+  "setting": "O",
+  "verdict": "PASS \u2014 carried at rank 1.",
+  "guesses": {
+   "az000": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "antelope"
+   ],
+   "az045": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az090": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "caribou"
+   ],
+   "az135": [
+    "stag",
+    "deer",
+    "elk",
+    "reindeer",
+    "moose"
+   ],
+   "az180": [
+    "stag",
+    "deer",
+    "elk",
+    "antelope",
+    "goat"
+   ],
+   "top": [
+    "stag",
+    "deer",
+    "elk",
+    "moose",
+    "reindeer"
+   ]
+  }
+ }
+}

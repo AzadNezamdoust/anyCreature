@@ -1,0 +1,64 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+
+  "_note": "2026-09-27: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 1.2 },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "_spanOpen": "2026-09-28 (scripts/v6/README.md 'Span opening'): the x / z body spans are counted on the body mask opened with a 2 x 2 square, so the 1-px anti-alias halo columns / rows of dark outlines (mirror heads, lamps: greys classified as body) no longer widen W / L; setup auditors 2026-09-28",
+    "enclosedFg": false,
+    "_enclosedFg": "off: the overhead guard (open posts + slatted roof), the mast rails and the steering wheel are see-through",
+    "table": {
+      "body": ["#fbcb15", "#e4b20c"],
+      "mast": ["#444649", "#333436", "#515356"],
+      "black": ["#1c1c1c", "#0b0b0b"],
+      "hub": "#b2b2b4",
+      "beacon": "#f67006"
+    },
+    "_body": "body = the yellow family (body, counterweight, overhead guard): its span sets W / L and the x / z origin; the mast, carriage and forks (dark) lie ahead of it",
+    "viewTable": {
+      "side": { "body": ["#f4c517", "#ddac0e", "#cb9e11", "#eec62f"], "mast": ["#3d404b", "#2c2e38", "#4a4d58", "#47484c", "#39393b", "#2b2b2a"], "black": ["#15161e", "#04050d", "#141415"], "hub": ["#abacb6", "#acacad"], "beacon": ["#ef6a08"] },
+      "front": { "body": ["#fdcc16", "#e6b30d", "#face1a"], "mast": ["#46474a", "#353537", "#535457", "#373739"], "black": ["#1e1d1d", "#0d0c0c", "#242526", "#121213"], "hub": ["#b4b3b5"], "beacon": ["#f87107"] },
+      "rear": { "body": ["#f6c611", "#dfad08", "#f4c011", "#fad714"], "mast": ["#3f4145", "#2e2f32", "#4c4e52", "#343536"], "black": ["#171718", "#060607", "#14120f"], "hub": ["#adadb0"], "beacon": ["#f16b02"] },
+      "top": { "body": ["#f9cd14", "#e2b40b", "#f5ce2b"], "mast": ["#424848", "#313635", "#4f5555", "#46474b", "#353636"], "black": ["#1a1e1b", "#090d0a"], "hub": ["#b0b4b3"], "beacon": ["#f47205"] }
+    },
+    "_viewTable": "2026-09-27: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/forklift/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -6.8 -5.5 +2.3 · front +1.9 +0.5 +1.2 · rear -4.5 -5.2 -4.5 · top -1.7 +2.2 -0.7); ambiguous: rear #232424 5.7 % black (vs mast). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-09-28 gold-auditor (proposal; re-audit after a4d8279, rects unchanged), owner-approved 2026-09-27",
+    "side": [
+      { "id": "D1", "rect": [360, 148, 420, 236], "decides": "concept", "why": "mast rail top 2.59 m here (px y 233), concept 2.80-2.93 m (unproject 345,152,x,-0.5 / 470,205,x,0.5; start.mjs frame): the view draws the mast 0.28 m short" },
+      { "id": "D2", "rect": [40, 740, 122, 772], "decides": "concept", "why": "fork tips z 2.57 here (px x 114), concept z 2.88-2.96 (unproject 205,848,x,0.35 / 100,790,x,-0.35; the model's tip at 0.33,0.17,2.85 projects to 117,796 = the drawn tip): the forks 0.3 m short" }
+    ],
+    "front": [
+      { "id": "D3", "rect": [426, 148, 600, 232], "decides": "concept", "why": "mast rail tops 2.59 m here (px y 233), concept 2.80-2.93 m (D1): 0.28 m short" },
+      { "id": "D4", "rect": [590, 290, 618, 324], "decides": "top", "why": "beacon at x +0.38..0.46 here (px 595-613), top view +0.20..0.30 (px y 558-580) and concept +0.24 (unproject 720,200,y,2.25)" }
+    ],
+    "rear": [
+      { "id": "D5", "rect": [426, 148, 600, 232], "decides": "concept", "why": "mast rail tops 2.59 m here (px y 233), concept 2.80-2.93 m (D1): 0.28 m short" },
+      { "id": "D6", "rect": [408, 290, 438, 324], "decides": "top", "why": "beacon at x +0.36..0.45 here (px 413-433), top view +0.20..0.30 and concept +0.24 (D4)" },
+      { "id": "D7", "rect": [468, 440, 554, 472], "decides": "side", "why": "seat back + steering wheel top 1.61 m here (px y 445), side 1.50 (px 470), front 1.51 (px 468)" },
+      { "id": "D8", "rect": [346, 606, 382, 634], "decides": "front", "why": "the front tyres seen behind the rear ones top out at 0.83 m here (px y 615), front view 0.75 (px 632)" },
+      { "id": "D9", "rect": [641, 606, 680, 634], "decides": "front", "why": "as D8, right side" },
+      { "id": "D10", "rect": [344, 768, 384, 800], "decides": "front", "why": "below px 770 only the rear tyres x 0.43-0.63 (px 375-419) are drawn; the front view's tyres reach the ground at x 0.45-0.72 (px 357-414) and the top view puts the rear tyres' outer face at 0.71 (px y 358)" },
+      { "id": "D11", "rect": [641, 768, 681, 800], "decides": "front", "why": "as D10, right side (px 603-647 vs the front's 614-664)" }
+    ],
+    "top": [
+      { "id": "D12", "rect": [40, 416, 120, 462], "decides": "concept", "why": "fork tips z 2.57 here (px x 115), concept z 2.88-2.96 (D2): 0.3 m short" },
+      { "id": "D13", "rect": [40, 567, 120, 614], "decides": "concept", "why": "as D12, near-flank fork" }
+    ],
+    "concept": [
+      { "id": "D14", "rect": [432, 200, 500, 246], "decides": "top", "why": "roof far edge L(490,230)-T(613,163) is 123 px long, the near edge B(605,313)-R(770,230) 165 px (an ortho draws them equal); the views' roof (z +0.63..-0.34, x +-0.6, side + top) projects its far-front corner to (435,229): the drawn corner sits 55 px = 0.35 m behind it (fanned far edge) - the corner wedge" },
+      { "id": "D15", "rect": [496, 170, 590, 226], "decides": "top", "why": "the same far edge, middle: the views' edge runs (435,229)-(585,165), the drawn one (490,230)-(613,163): a 15-25 px band between them" },
+      { "id": "D16", "rect": [586, 150, 622, 178], "decides": "top", "why": "the same far edge at the far-rear corner: views (585,165) vs drawn T(613,163): 28 px" },
+      { "id": "D17", "rect": [476, 226, 512, 446], "decides": "side", "why": "the far-front guard post hangs from that fanned corner, 0.35 m behind the side view's front post (z 0.55-0.64, px x 530-550, vertical at rows 350 and 600)" }
+    ]
+  }
+}

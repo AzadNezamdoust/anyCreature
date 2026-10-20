@@ -1,0 +1,35 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "wheel",
+  "note": "Cartoon road wheel: a ring tyre with its bore along X (a side-mounted wheel rolls about X, so the vehicle's length runs along Z and its left/right axis is X — the axis V9 mirrors about) plus a box hub filling that bore. dims = [width, diameter, diameter]. DEVIATION (M5): the brief writes dims as [diameter, width, diameter] and the tyre as a child of the hub. Both are inverted here, for one reason each. (1) dims: with the bore along X the wheel occupies `width` in x and `diameter` in y and z; [diameter, width, diameter] would be a wheel lying flat, whose axle points up. (2) root: the attach solver places the ROOT sub-part on the parent point, so the root's box must BE the composite's declared box — a hub-rooted wheel would hang its tyre half a hub above wherever it was attached. The hub is still what the wheel attaches 'through': it sits dead centre, `embedded` in the tyre, and hubFrac is set so its corners bite into the bore wall rather than floating inside it. M6: per-instance children are the default, so a mirrored or repeated wheel now gets a hub on every tyre instead of only the anchor — that is what closed the cart.json MVP-STUB, and it needed no edit here.",
+  "params": {
+    "hubFrac": 0.7,
+    "wallFrac": 0.18
+  },
+  "parts": [
+    {
+      "id": "tyre",
+      "prim": "ring",
+      "axis": "x",
+      "sides": 12,
+      "wall": "$h * $wallFrac",
+      "dims": ["$w", "$h", "$d"],
+      "role": "wheel"
+    },
+    {
+      "id": "hub",
+      "prim": "box",
+      "dims": ["$w", "$h * $hubFrac", "$d * $hubFrac"],
+      "role": "wheel_hub",
+      "zoneKey": "hub",
+      "attach": {
+        "to": "tyre",
+        "face": "+X",
+        "uv": [0.5, 0.5],
+        "contact": "embedded",
+        "embed": "$w / 2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "theta_deg": 23.6662,
+  "phi_deg": 46.2149,
+  "slopes": {
+    "mX": 0.418803,
+    "mZ": 0.384735
+  },
+  "residual_px": 0.3324,
+  "vertical_tilt_deg": 0.0099,
+  "source": "refs/ambulance.png",
+  "sha256": "ccdf1d63ff9959e5ac258ddcc38b69b78b4ea2508c12f368109b0627e6ff73d7",
+  "solved": "2026-09-27T10:19:11.911Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left",
+  "threshold": 1,
+  "_threshold": "node scripts/solve-camera.mjs ambulance --image refs/ambulance.png --x-edge left --threshold 1 (2026-09-27 setup audit). The default RANSAC band (2 px) fitted the right family to the line through the two tyre-bottom arcs (mZ 0.3086, rms 1.11 px, theta 21.06 / phi 49.35), which disagrees with every straight z-edge of the body (box sill 0.386, rear step bottom 0.386, box roof far edge 0.412); at 1 px the fit takes the straight rear-step / sill edge (rms 0.33 px). Visual hull of the registered turnaround -> concept IoU (similarity fit): 0.926 at the old camera, 0.945 at this one."
+}

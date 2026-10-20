@@ -1,0 +1,15 @@
+{
+  "theta_deg": 17.1119,
+  "phi_deg": 34.9122,
+  "slopes": {
+    "mX": 0.205357,
+    "mZ": 0.421589
+  },
+  "residual_px": 0.7874,
+  "vertical_tilt_deg": null,
+  "source": "refs/attack_heli.v2.png",
+  "sha256": "146cedf40819aa10fd5b94cf31d9e9fb8a9c4b522876a549f6bcf517bbb7f5d2",
+  "solved": "2026-09-29T18:00:14.809Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

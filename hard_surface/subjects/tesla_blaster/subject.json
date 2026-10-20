@@ -1,0 +1,21 @@
+{
+  "id": "tesla_blaster",
+  "class": "weapon",
+  "title": "Sci-fi cartoon toy lightning gadget prop (WF v10 direct subject; gold.mjs new --style scifi_toon)",
+  "style": "scifi_toon",
+  "pipeline": "direct",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-10-04): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/tesla_blaster.png",
+    "camera": "subjects/tesla_blaster/camera.json",
+    "layoutMeasured": "subjects/tesla_blaster/layout.measured.json"
+  },
+  "outDir": "out/tesla_blaster",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "tris": {
+      "value": 8000,
+      "evidence": "WF v10 weapon class budget (owner 2026-10-04: tri budget 8000 each)"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "_comment": "MEASURED (no regions.json / census / layout for this subject): the VISUAL HULL of the registered turnaround (side / front / rear / top foregrounds, 0.03 m voxels, 756073 kept) projected through subjects/ambulance/camera.json; its bbox fitted to the concept foreground bbox (s = mean of the x / y px-per-m, centres matched). Only _frame is read (scripts/registered.mjs registration).",
+  "_frame": {
+    "camera": "theta 23.6662 deg, phi 46.2149 deg",
+    "conceptBboxPx": [
+      98,
+      188,
+      923,
+      825
+    ],
+    "sPxPerM": {
+      "x": 160.437,
+      "y": 155.708,
+      "used": 158.073,
+      "xOverY": 1.03
+    },
+    "quadPx": [
+      [
+        341.6,
+        500.4
+      ],
+      [
+        889.3,
+        289.7
+      ],
+      [
+        889.3,
+        637.1
+      ],
+      [
+        341.6,
+        847.9
+      ]
+    ],
+    "note": "quadPx = the registered.mjs anchorFace corners (+X flank of the class default body) placed with the fitted s / ox / oy, so registration() recovers them exactly (rms 0); sPxPerM.xOverY != 1 = the concept's aspect differs from the turnaround's (drift); the module's frameScale / frameX / frameY knobs refine the fit"
+  }
+}

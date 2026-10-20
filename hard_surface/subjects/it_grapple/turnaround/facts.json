@@ -1,0 +1,32 @@
+{
+  "subject": "it_grapple",
+  "noun": "chunky wrist grappling hook launcher (game prop)",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_grapple.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_grapple.png = out/concept-items30/24_grapple/v4b_hero_1.png; FPS refs/it_grapple.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: olive half-tube bracer with a top ridge, exactly 2 straps each with a rectangular buckle, a short launch tube with a small centre spike, exactly 3 grapnel arms 120 degrees apart with hooked tips, 1 flat round reel with hub cap in the top, 1 lamp on the left flank; the v3 thin rail, reel brake lever are NOT drawn and dropped). FRAME as the v3 subject: front +z = the grapnel end, rear = the open elbow end of the bracer, left flank +x = the flank shown (lamp), y up; the three arms 120 degrees apart: one points to the weapon's RIGHT (-x), the other two up / down toward the LEFT flank. Dims = the old stated size; re-measured after install. | 2026-10-11 after attempt-0 (front viewOnly 21 %, the sheet drew the side view with arms up / middle / down but the front with up / down-left / down-right): ARM LAYOUT FIXED: seen from the hook end the three arms are 120 degrees apart: ONE straight UP and TWO angled DOWN-left and DOWN-right (a Y shape); from the side the upper arm shows above the tube and the two lower arms overlap as ONE lower arm.",
+  "description": "A fictional wrist grappling hook launcher game prop for a mining scout, chunky low-poly, shown alone with no person, level with the hook forward. One olive painted shell bracer, a thick curved half-tube with wide chamfers, open at its rear end and underneath, with one thick plain olive top ridge along it. Exactly two wide charcoal straps with two big rectangular dark steel-framed buckles hang below the bracer. At the front of the bracer one short fat dark steel launch tube, ending in a small pointed centre spike. From the tube's front one dark steel grapnel stands open: exactly three thick curved arms, at least 20 mm thick, about 0.16 m tip to tip, spaced 120 degrees round the tube axis (one straight up, two angled down to the left and right), splayed forward and outward with their tips bent back. One fat flat round dark steel line reel sits flush in the bracer's top with one big dark steel hub cap. One small teal lamp window in a thick charcoal bezel on the left flank of the bracer. The hidden right flank is plain olive shell. Worn on the left forearm.",
+  "proportions": "About 0.45 m long, 0.16 m wide and 0.2 m tall. (length : width : height = 2.81 : 1 : 1.25)",
+  "sides": "the grapple is symmetric about its centre plane (x = 0) except the three-armed grapnel (one arm straight up, two down-left and down-right: symmetric about x = 0) and the lamp: the small teal lamp window is on the LEFT flank (flush). The right flank is plain olive shell. The bracer, top ridge, reel, straps, launch tube and spike are on the centre line.",
+  "shape": {
+    "side": "in this view the chunky wrist grappling hook launcher (game prop) is 2.25 times as long as it is tall",
+    "front": "in this view its width is 0.80 of its height",
+    "rear": "in this view its width is 0.80 of its height",
+    "top": "in this view it is 2.81 times as long as it is wide"
+  },
+  "faces": {
+    "side": "Seen from the left flank, the hook to the image LEFT: the grapnel at the left end with the UPPER arm curving up and back as a hook and the two LOWER arms (down-left and down-right, overlapping) as ONE hook curving down and back, the short dark steel launch tube with its centre spike, the olive half-tube bracer with its top ridge and the round reel with its hub cap flush in the top, the teal lamp window on the flank, two charcoal straps with rectangular buckles hanging below, the open half-tube end at the right.",
+    "front": "Seen from the hook end: the three hooked arms in a Y shape around the centre spike and hub: one straight UP, two angled DOWN to the image left and right (120 degrees apart), the olive bracer behind them wider than the tube, the two straps hanging below it.",
+    "rear": "Seen from the elbow end: the open half-tube of the bracer (a curved opening, open underneath), the top ridge above, the two straps hanging below it, the tube and the grapnel arms behind it peeking out; the reel hub cap on top.",
+    "top": "Seen from above (hook to the LEFT, left flank at the BOTTOM): the upper arm seen end-on above the tube (hidden by the hub), the two lower arms splayed to the top and bottom edges at the left end as two hooks, the launch tube, the long olive bracer with its top ridge and the round reel with its hub cap, the strap ends just outside the bracer edges; the lamp is flush."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 0.45,
+    "W": 0.16,
+    "H": 0.2,
+    "_": "ESTIMATE on the hero (perspective); after turnaround.mjs install re-measure with hull.mjs"
+  },
+  "decided": [
+    "exactly three grapnel arms in a Y (one up, two down-left / down-right), two straps with one buckle each, one reel, one lamp",
+    "right flank plain; no rail, no brake lever"
+  ]
+}

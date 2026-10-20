@@ -1,0 +1,18 @@
+{
+  "theta_deg": 15.5,
+  "phi_deg": 5.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_float_bladder.png",
+  "sha256": "8ecbc1096a65aa99f2757045d4b67781bb96a3533d210520724f16143655b34f",
+  "solved": "2026-10-11T09:19:30.877Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.67,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.595
+  }
+}

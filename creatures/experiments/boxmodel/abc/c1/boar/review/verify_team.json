@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1 Ears read as thin dark horns","verdict":"PARTLY","evidence":"1_beauty az000: ears are broad brown leaves with dark cup, matching 5_reference front; but hero, az090 and 2_closeups head wire still show a thin spike-like ear, tip not clearly ahead of base."},
+{"title":"2 Crest is identical sawteeth","verdict":"DONE","evidence":"1_beauty az090 and back34: crest dense, clumps vary in height and width, tallest at the withers, tapering toward the rump, no bare nape; 3_tech float 0, hit 0."},
+{"title":"3 Face has no eye or brow","verdict":"DONE","evidence":"1_beauty az000: both dark almond eyes under a dark brow V are readable at thumbnail size; hero and az090 show the eye lens in shadow."},
+{"title":"4 Hind legs straight columns","verdict":"DONE","evidence":"1_beauty az090: hind leg shows a hock bulge set back with the cannon angled forward to a planted hoof; 3_tech hind leg clean, hit 0, IoU .967; cannon-front flatten not done, minor."},
+{"title":"5 Mantle border one straight diagonal; brown too orange","verdict":"PARTLY","evidence":"Body brown now darker, closer to the reference (1_beauty az090); but the mantle lower edge in az090 and hero still reads as a near-straight diagonal, with only a faint shoulder dip compared to the saddle in 5_reference side."}
+],
+"regressions":["3_tech/techqa: clip 2 (0.01%, crest under the ear in the toss) is a new warning, baseline 0; other keep items (mass, snout and tusks, 0 hit/float/drift/flips) held"],
+"all_done":false}

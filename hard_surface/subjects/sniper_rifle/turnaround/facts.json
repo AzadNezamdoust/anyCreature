@@ -1,0 +1,36 @@
+{
+  "subject": "sniper_rifle",
+  "noun": "game long prop",
+  "style": "fps",
+  "sources": "gold.mjs new 2026-10-04: description + proportions = the concept prompt's paragraph (refs/sniper_rifle.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank); 2026-10-04: sheet attempt-0 was rejected by the GPT image tool (the shape.side line still carried the subject name and the noun said rifle) — one rewording: noun / shape.side / description first sentence without those words (same parts, same colours)",
+  "description": "A fictional stylised low-poly video-game prop with a telescope on top, a chunky toy-like cartoon 3D game asset (not a real object, no working parts). A very long round dark grey tube with shallow grooves along it, ending at the front in a large dark grey box with two square side openings and an orange band behind the box. A slim round dark grey main body behind the tube. On top of the main body a long matte black telescope held by two dark grey ring clamps: a wide cone-shaped front end with a flat dark blue glass, a narrow middle tube carrying two small round orange knobs (one on top, one on the left flank), and a narrower rear end. Under the tube and main body a matte black lower frame: a straight front part with two small slots under the rear third of the tube, a short straight matte black box hanging below, a small curved lever inside a squared loop, a vertical matte black handle, and at the rear an open frame shoulder piece with a raised padded block on top and a flat end plate. At the front of the lower frame two thin dark grey legs hang down and slightly forward, splayed left and right, each ending in a small flat round orange foot. Bright orange accents: the two small knobs on the telescope, the band behind the front box, and the two feet. The right flank is plain.",
+  "proportions": "About 1.20 m long, 0.09 m wide and 0.30 m tall. (length : width : height = 13.33 : 1 : 3.33)",
+  "sides": "one small round orange knob sticks out of the telescope's middle on the left flank; the right flank is plain; everything else is symmetric left to right (one thin leg on each side).",
+  "shape": {
+    "side": "in this view the prop is 4.00 times as long as it is tall",
+    "front": "in this view its width is 0.30 of its height",
+    "rear": "in this view its width is 0.30 of its height",
+    "top": "in this view it is 13.33 times as long as it is wide"
+  },
+  "faces": {
+    "side": "The prop is level: the long tube exactly horizontal with the front box at the left end of the image, the telescope above the main body with its wide end toward the left and its orange knobs in the middle, the two thin legs hanging down from the front of the lower frame (one in front of the other), the short box, the loop and the vertical handle below the main body, the open frame shoulder piece with the raised block and the end plate at the right end of the image.",
+    "front": "Seen from the front end: the square front face of the front box with a small dark centre hole is in the middle, above it the big round dark blue glass of the telescope's wide end with the orange top knob showing over it, the two thin legs splay down and out to the left and right like an upside-down V with a small orange foot at each lower end, the handle hangs on the centre line between them.",
+    "rear": "Seen from the rear end: the tall flat end plate is in front on the centre line with the raised block above it, above that the small round rear end of the telescope with the orange top knob over it, the two thin legs splay down and out to the left and right behind, each with a small orange foot, the handle on the centre line.",
+    "top": "Seen from above the prop is a very long thin strip: the long tube with the front box at the left end, the telescope lying along the centre line over the main body with its wide end toward the left and the round orange top knob in its middle, the two legs and their orange feet spread out to both sides near the middle of the length, the shoulder piece and end plate at the right end."
+  },
+  "asymmetric": [
+    {
+      "part": "one small round orange knob on the telescope's middle",
+      "plural": false,
+      "flank": "left",
+      "along": "middle",
+      "protrudes": true
+    }
+  ],
+  "dims": {
+    "L": 1.2,
+    "W": 0.09,
+    "H": 0.3,
+    "_": "ESTIMATE from the concept prompt's stated size (gold.mjs new); after turnaround.mjs install re-measure: L / W = the body-family span (views.json families.body), H = the foreground bbox height (hull.mjs prints the registered dims)"
+  }
+}

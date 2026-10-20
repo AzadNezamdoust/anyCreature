@@ -1,0 +1,40 @@
+{
+  "id": "delivery_truck",
+  "class": "vehicle",
+  "title": "Cartoon box delivery truck (WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered body box to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/delivery_truck.png",
+    "camera": "subjects/delivery_truck/camera.json",
+    "module": "subjects/delivery_truck/module.mjs",
+    "layoutMeasured": "subjects/delivery_truck/layout.measured.json"
+  },
+  "outDir": "out/delivery_truck",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Measured on out/ref/gold/delivery_truck/model.mjs; kernel-chain applyRuleOverrides prints each as a RULE_OVERRIDE advisory. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 6,
+        "axles": 3,
+        "diameters": "equal"
+      },
+      "evidence": "the concept and the side turnaround draw a front axle and a rear tandem: side view row 690 (hub height, 164.17 px/m) tyre runs px 203-331, 600-730, 734-865 = 0.79-0.81 m each, the rear two 0.82 m apart; gold model: 6 wheel groups of 0.780 m at z 1.520 / -1.050 / -1.840 (3 axle clusters), diameter/length 0.157 inside the class band 0.1..0.2 (no diameterFrac)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "stripe",
+          "slat",
+          "red",
+          "amber",
+          "dark",
+          "bar",
+          "cab",
+          "seam"
+        ]
+      },
+      "evidence": "concept samples: stripe = the green side stripe (+ rear door stripe / posts) 944,387,7,7 #378a47 (model #388b48); amber = turn lamps 314,805,7,7 #ea831f (model #f0901e); dark = rails, crossmember, underride, side boxes, mirror heads 634,729,7,7 #393c3d (model #3b3f40); cab = the cab shell 273,432,7,7 #f0efeb (model top #f0efeb); seam = cab rear corner seams 494,519,3,3 #bbbab9 (model #c4c4c2). Rear face, not in the concept, rear turnaround: slat = door frame + slat lines 450,379,20,2 #b5b5b5 (model #b4b4b4); red = tail lamps 362,594,7,7 #bd1213 (model #c8161e); bar = the underride plate 337,651,7,7 #767577 (model #818181)"
+    }
+  }
+}

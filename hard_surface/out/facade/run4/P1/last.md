@@ -1,0 +1,1 @@
+CHANGE: Added four framed windows, sills, glazed shopfront and door, stepped coping, awning, sign, and AC; MISSING KEY storefront.w, storefront.centreX, storefront.bottom, door.w, door.centreX, awning.centreX, awning.depth, signbox.w, signbox.centreX, signbox.depth, ac.size, ac.position.

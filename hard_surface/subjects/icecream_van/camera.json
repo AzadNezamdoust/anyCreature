@@ -1,0 +1,16 @@
+{
+  "theta_deg": 29.6895,
+  "phi_deg": 46.1722,
+  "slopes": {
+    "mX": 0.515991,
+    "mZ": 0.475437
+  },
+  "residual_px": 0.349,
+  "vertical_tilt_deg": 0.3418,
+  "source": "refs/icecream_van.png",
+  "sha256": "6bf95c5eee9f2872db803028cf98467404002a486c239aeee003bca2f9029d99",
+  "solved": "2026-09-27T08:59:03.526Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left"
+}

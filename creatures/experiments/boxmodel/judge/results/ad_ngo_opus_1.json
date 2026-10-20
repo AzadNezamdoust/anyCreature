@@ -1,0 +1,119 @@
+{
+ "bear": {
+  "A": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "ears are tall rectangular posts rather than round ears, and the stacked flat muzzle box plus nose block read as a crate on the face (1_beauty hero, 2_closeups head)",
+    "legs are constant-section box tubes with a hard dark-sock band, and the side view shows a thin doubled slab behind each leg pair (1_beauty az090)",
+    "no lighter chest plane; attack_f010 crumples the head and muzzle into a folded wedge (4_posed)"
+   ],
+   "brief_fit": "Reads as a bear with a clear shoulder hump and a low head, but the round ears, the chest plane and the plane design are missing; the form is the most boxy and procedural of the three."
+  },
+  "B": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "pale muzzle colour floods the whole front of the face up past the eyes, and a stray pale stripe runs along the jaw and neck in side view (1_beauty az000/az090)",
+    "ears are pointed cat ears, not round; the eyes are tiny slits almost lost in the facets (2_closeups head)",
+    "the hump is weak: the back is one long arch with the highest point mid-back; legs are thick box tubes with a hard dark band"
+   ],
+   "brief_fit": "Heavy, organic bear mass with good paws and claws and clean deformation, but the ears, the muzzle and the hump deviate from the brief."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "body is a deep rounded barrel on short legs, so it reads cub-like and the head is carried level, not low; the hump barely beats the rump (1_beauty az090)",
+    "attack_f010 swings the forearm out as a flattened slab (4_posed), and the flanks are long vertical triangle strips that read as panels",
+    "the black nose pad is an oversized block capping the whole muzzle tip (2_closeups head)"
+   ],
+   "brief_fit": "Closest to the brief: round ears, a pale muzzle block with a black nose, a lighter chest plane, good claws and dark lower legs; the proportions are chunky and the head should be lower."
+  },
+  "rank": [
+   "C",
+   "B",
+   "A"
+  ],
+  "margin": "slight",
+  "why": "C is the only one with the brief's round ears, lighter chest plane and a contained muzzle block. B has the nicer mass but floods the face with the pale colour, and A's boxy ears, muzzle and tube legs read as procedural."
+ },
+ "boar": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "tusks are thin slivers laid flat on the cheek, far behind the snout, not growing up from the lower jaw (2_closeups head; techqa flags 8 tusk slivers)",
+    "the crest is a row of near-identical sawtooth fins in a straight comb rather than blunt clumps (2_closeups crest)",
+    "ears are very tall and upright, not tilted forward, and the dark shoulder saddle is a hard-edged panel"
+   ],
+   "brief_fit": "Strong boar read: long wedge head, a snout disc with nostrils, a front-heavy hump, hocks and a tufted tail. Only the tusks and the crest fall short."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "the snout disc has no nostrils; it is a flat pink cap (1_beauty az000, 2_closeups head)",
+    "the crest is a row of identical sharp dinosaur spikes, a machine tell and the opposite of blunt clumps; the saddle is a rectangular dark decal",
+    "head carried high with a weak hump; the legs are straight thin tubes with no hock angle, so it reads as a generic pig or warthog rather than a front-heavy boar"
+   ],
+   "brief_fit": "Identifiable as a hog with good jaw-rooted tusks, but it misses nostrils, the low head, the hump and the hocks."
+  },
+  "C": {
+   "score": 7,
+   "verdict": "FIX",
+   "top_issues": [
+    "the crest is a row of identical sharp spikes in a regular comb, not blunt clumps (1_beauty az090)",
+    "the dark saddle is a hard rectangular block on the flank, with its border cutting across faces rather than following a loop (1_beauty az090/back34)",
+    "nostrils are tiny rectangular boxes on the disc; 2 flipped faces on the body are under the limit but should be checked"
+   ],
+   "brief_fit": "Best match to the brief: low wedge head, a flat snout disc with nostrils, cream tusks curving up from the lower jaw, a front-heavy hump, hock angles and a tufted tail."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "C's tusks grow from the lower jaw and it has a proper nostrilled snout disc and a low front-heavy stance. A's cheek-glued sliver tusks and B's missing nostrils and tube legs rank below it."
+ },
+ "character": {
+  "A": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "the thumb is a thin detached hook and the hand reads as a claw rather than a curled mitten (2_closeups front limb)",
+    "the head is a plain UV sphere with uniform ring bands, a machine tell; the feet are long flat flippers",
+    "the hard hip seam band reads as a briefs line despite 'no clothing detail'; torso and limbs are constant-section tubes"
+   ],
+   "brief_fit": "Clean tech and the best eyes (round sclera, black pupil, thin outline flush on the sphere), with a correct big-head, thin-neck silhouette. The hands and feet are weak."
+  },
+  "B": {
+   "score": 5,
+   "verdict": "FIX",
+   "top_issues": [
+    "the face is a flattened shield plane with a central wedge ridge standing in for the tiny pointed nose, and the eyes are crowded low and close together (2_closeups head)",
+    "the eyes sit on thick protruding rim discs that stand proud of the face and read glued on (2_closeups eye_rim)",
+    "the hands are flat hooked blades with no mitten volume, and the fingers flare at the tips in the front view (1_beauty az000)"
+   ],
+   "brief_fit": "Correct toon silhouette and palette, but the face construction and the hands depart from the brief and look the most procedural."
+  },
+  "C": {
+   "score": 6,
+   "verdict": "FIX",
+   "top_issues": [
+    "posed fold-over at the left armpit and shoulder (3_tech hero/az000, purple; 2 flips): fix the shoulder weights",
+    "the eyes sit in a boxed, recessed face plate that cuts a hard horizontal plane across the face (2_closeups eye_L wire)",
+    "the head is coarser and boxier than a faceted sphere; the crotch is a flat triangle wedge"
+   ],
+   "brief_fit": "Best hands (a curled mitten with a thumb), best torso planes and appealing idle proportions with a readable face. The armpit deformation and the eye socket plate need a fix."
+  },
+  "rank": [
+   "C",
+   "A",
+   "B"
+  ],
+  "margin": "slight",
+  "why": "C's curled mitten hands and planed torso read as a designed toon figure where A's claw-hook hands and ring-banded sphere do not. C's armpit fold-over is small and fixable, and B's shield face disqualifies it."
+ }
+}

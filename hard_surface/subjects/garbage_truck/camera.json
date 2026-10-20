@@ -1,0 +1,16 @@
+{
+  "theta_deg": 25.0208,
+  "phi_deg": 47.4509,
+  "slopes": {
+    "mX": 0.460772,
+    "mZ": 0.388227
+  },
+  "residual_px": 0.3941,
+  "vertical_tilt_deg": null,
+  "source": "refs/garbage_truck.png",
+  "sha256": "3065d921e3cdca8c99c4cc8f08fde11d0c9b4caa4a16f16bffb0a9ae49d7ed72",
+  "solved": "2026-09-27T08:59:01.721Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit",
+  "xEdge": "left"
+}

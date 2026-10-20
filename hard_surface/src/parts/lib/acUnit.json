@@ -1,0 +1,30 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "acUnit",
+  "note": "Wall-mounted air-conditioning box: a chamfered body with a grille plate on its front. Same zone-only treatment as `vent`: the grille is one plate in its own zone, never per-louvre geometry.",
+  "params": { "grilleInsetU": 0.1, "grilleInsetV": 0.1, "grilleThickness": 0.06, "bevel": 0.03 },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": ["$w", "$h", "$d"],
+      "bevel": "$bevel",
+      "role": "hvac"
+    },
+    {
+      "id": "grille",
+      "prim": "plate",
+      "dims": ["$w - 2 * $grilleInsetU", "$h - 2 * $grilleInsetV", "$grilleThickness"],
+      "role": "hvac_grille",
+      "zoneKey": "grille",
+      "attach": {
+        "to": "body",
+        "face": "+Z",
+        "uv": [0.5, 0.5],
+        "contact": "flush",
+        "embed": "$grilleThickness / 2"
+      }
+    }
+  ]
+}

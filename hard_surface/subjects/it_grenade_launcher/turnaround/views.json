@@ -1,0 +1,83 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new --class weapon 2026-10-10 (WF v10, pipeline direct). Author frame: muzzle +z, the weapon's left flank +x, y up, y = 0 at its lowest point, x and z centred (classes/weapon.md). Views: side = the left flank with the muzzle to the image left, front = muzzle on, rear = butt on, top = plan with the muzzle to the image left.",
+  "_note": "2026-10-11: turnaround regenerated (image-generated sheet + repairs, scripts/v7/turnaround.mjs; generator recorded per attempt in out/turnaround/<s>/state.json; any previous set is kept beside it); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 0.78
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off: a trigger-guard opening / skeleton stock is background",
+    "table": {
+      "body": [
+        "#2d2c2a",
+        "#4c4b49",
+        "#3f3d3b",
+        "#ad8531",
+        "#656464",
+        "#1a1a18",
+        "#eec463",
+        "#838180",
+        "#44d9d9"
+      ]
+    },
+    "_table": "ONE family (classes/weapon.json _anchor_comment): body = every foreground colour cluster >= 2 % of the concept (share % {\"f2\":18.17,\"body\":18.08,\"f3\":10.38,\"f4\":8.93,\"f5\":6.98,\"dark\":6.52,\"f6\":4.22,\"f7\":3.78}); the registration's spans are then the whole foreground. Add a colour here when a view's part classifies as \"other\" (> 120 RGB from every listed colour).",
+    "_note_accent": "2026-10-11: #44d9d9 = the teal lamp window (< 2 %, measure.mjs sample refs/it_grenade_launcher.png 655,355,40,12)."
+  }
+}

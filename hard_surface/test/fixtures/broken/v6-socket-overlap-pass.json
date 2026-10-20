@@ -1,0 +1,46 @@
+{
+  "schema": "pg/1",
+  "subject": "v6_socket_overlap_pass",
+  "seed": 1,
+  "class": "prop",
+  "note": "PASS fixture: a peg socketed 0.1 m into the body overlaps 40 % of its own volume — declared, so allowed.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood"
+    },
+    {
+      "id": "peg",
+      "prim": "box",
+      "dims": [
+        0.1,
+        0.25,
+        0.1
+      ],
+      "role": "peg",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "socket",
+        "embed": 0.1
+      }
+    }
+  ]
+}

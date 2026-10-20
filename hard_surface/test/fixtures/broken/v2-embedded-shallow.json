@@ -1,0 +1,13 @@
+{
+  "schema": "pg/1",
+  "subject": "v2_embedded_shallow",
+  "seed": 1,
+  "class": "prop",
+  "note": "V2: a plug declared embedded in the body but placed at the very edge of its top face with embed 0 — only a quarter of it is inside the parent, under the 50 % rule.",
+  "palette": { "wood": "#b98a4e", "band": "#6d5030" },
+  "parts": [
+    { "id": "body", "prim": "box", "dims": [0.6, 0.45, 0.6], "ground": true, "role": "crate", "zone": "wood" },
+    { "id": "plug", "prim": "box", "dims": [0.2, 0.2, 0.2], "role": "plug", "zone": "band",
+      "attach": { "to": "body", "face": "+Y", "uv": [1.0, 0.5], "contact": "embedded", "embed": 0 } }
+  ]
+}

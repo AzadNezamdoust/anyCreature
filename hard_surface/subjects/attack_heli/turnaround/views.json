@@ -1,0 +1,110 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new 2026-09-28. Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. No regions.json: families.table = flat colours of the concept; families.body names the body family.",
+  "_note": "2026-09-29: turnaround regenerated (Gemini sheet + repairs, scripts/v7/turnaround.mjs; the previous GPT set is ../turnaround-1-gpt); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ]
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 15,
+    "why": "2026-09-29: the stated 14.6 m width is the main-rotor span (gunmetal, not the body family), so W cannot anchor; L = the olive body family nose-to-fin span, the stated 15.5 m nose-to-tail-rotor less the tail rotor / chin gun (~0.5 m)"
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off until the setup audit decides (see-through parts stay background)",
+    "table": {
+      "body": ["#3e472e", "#566241"],
+      "metal": ["#505050", "#353535"],
+      "glass": ["#414648", "#5d6d77"],
+      "dark": ["#22241f", "#131511"]
+    },
+    "_table": "2026-09-29 (v2 concept refs/attack_heli.v2.png): named from the concept's foreground colour clusters >= 2 % (newsubject.mjs proposeFamilies on the v2 image) + measure.mjs sample of each part: fuselage, tail boom, fin, stub wings and engine pods dark olive (shade / lit); metal = rotor blades, hub, mast, tail rotor, chin gun, rocket pods, intake grilles, antennas and skids gunmetal; glass = the canopy panels dark blue-grey; dark = canopy frame bars, outlines and shadowed olive",
+    "viewTable": {
+      "side": { "body": ["#3c432b", "#545e3e", "#616b4d"], "metal": ["#4e4c4d", "#333132"], "glass": ["#3f4245", "#5b6974", "#586873"], "dark": ["#20201c", "#11110e", "#23251e", "#171a0f"] },
+      "front": { "body": ["#3b442d", "#535f40"], "metal": ["#4d4d4f", "#323234", "#32332e"], "glass": ["#3e4347", "#5a6a76", "#5d6d76"], "dark": ["#1f211e", "#101210", "#252620", "#191b13"] },
+      "rear": { "body": ["#3a412d", "#525c40"], "metal": ["#4c4a4f", "#312f34"], "glass": ["#3d4047", "#596776", "#666562"], "dark": ["#1e1e1e", "#0f0f10", "#25261f", "#161911"] },
+      "top": { "body": ["#3b432b", "#535e3e", "#3b422f"], "metal": ["#4d4c4d", "#323132", "#4e4f4d", "#30332f"], "glass": ["#3e4245", "#5a6974", "#59666d", "#3e4241"], "dark": ["#1f201c", "#10110e", "#24281d", "#161a0f"] }
+    },
+    "_viewTable": "2026-09-29: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/attack_heli/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side -2.4 -3.6 -3.2 · front -3 -3.3 -0.9 · rear -3.9 -6.1 -0.5 · top -3.3 -3.8 -2.8); ambiguous: side #353830 9.9 % metal (vs body); side #414a32 5.2 % body (vs glass); side #2d3520 1.9 % metal (vs body); side #5a5c5a 1.5 % metal (vs glass); front #4c4d47 23.0 % metal (vs glass); front #3b4031 22.9 % body (vs metal); front #53595b 1.9 % metal (vs body); front #41423e 1.5 % glass (vs body); rear #52514f 14.0 % metal (vs body); rear #454542 6.9 % glass (vs metal); rear #2f3229 4.0 % metal (vs body); rear #465135 1.2 % body (vs glass); top #465035 1.8 % body (vs glass); top #5f6a4e 1.1 % body (vs metal). Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "drift": {
+    "audited": "2026-10-02 gold-auditor (proposal, re-audit after S1), owner-approved 2026-10-02",
+    "side": [
+      { "id": "D1", "rect": [90, 384, 126, 403], "decides": "concept", "why": "fore blade tip: side draws the blade 324 px = 6.80 m from the hub axis (px 445), concept + prompt 7.3 m (14.6 m disc: concept fore+aft 622 px / 0.621 z-foreshortening = 1002 s-m = 14.6 m at 68.57 px/m); model reaches px 97" },
+      { "id": "D2", "rect": [771, 384, 805, 403], "decides": "concept", "why": "aft blade tip: side 331 px = 6.94 m from the hub axis, concept 7.3 m; model reaches px 793" }
+    ],
+    "front": [
+      { "id": "D3", "rect": [160, 378, 214, 404], "decides": "concept", "why": "far-flank blade tip: front draws the lateral pair 615 px = 12.9 m tip to tip (px 209..824), concept lateral pair 836 px / 0.837 x-foreshortening = 999 s-m = 14.6 m; model tip at px 164" },
+      { "id": "D4", "rect": [820, 378, 870, 404], "decides": "concept", "why": "near-flank blade tip: front 12.9 m disc vs concept 14.6 m; model tip at px 860" },
+      { "id": "D5", "rect": [550, 405, 568, 466], "decides": "concept", "why": "whip antenna drawn 0.95 m to +x of the mast (comps front metal px 554..565); concept puts both antennas on the spine behind the mast (concept px 610,420 / 645,380 on the fuselage centreline) — in a front view they hide behind the mast" }
+    ],
+    "rear": [
+      { "id": "D6", "rect": [160, 378, 212, 404], "decides": "concept", "why": "near-flank blade tip (rear image left = +x): rear draws 609 px = 12.8 m tip to tip (px 207..816), concept 14.6 m; model tip at px 164" },
+      { "id": "D7", "rect": [812, 378, 870, 404], "decides": "concept", "why": "far-flank blade tip: rear 12.8 m disc vs concept 14.6 m; model tip at px 860" }
+    ],
+    "top": [
+      { "id": "D8", "rect": [852, 470, 915, 562], "decides": "side", "why": "tail end: top body ends at px 892 (boom tip) while the side's fin trailing edge sweeps aft to px 909 (side raw body hi 910, fin top at y 395); concept fin leans aft (crop 760..1000: trailing edge tip at 925,235 beyond the boom end) — the fin strip from above reaches 909" },
+      { "id": "D13", "rect": [384, 496, 432, 540], "decides": "concept", "why": "S1 edit leftover: the rear canopy pane is cut off flat at x 405 and an olive / glass patch fills 405..432 between the pane and the hub (rows 500..540); concept + side end the rear pane at its framed aft edge (side 397 = nose+222 px -> top ~400) with olive spine aft of it" },
+      { "id": "D14", "rect": [528, 432, 548, 452], "decides": "concept", "why": "S1 edit leftover: a 4-px outline spike / notch on the far engine pod aft-top corner (535..540, 438..446); the near pod (mirror, 535..540, 578..586) and the concept draw a clean chamfer" }
+    ],
+    "concept": [
+      { "id": "D9", "rect": [130, 545, 205, 592], "decides": "side", "why": "fore blade tip: concept blade 351 px / 0.621 = 8.24 m from the hub (477,395) while the aft blade is 271 px = 6.36 m — parallel projection needs equal opposite blades (side: 324 / 331 px); model blade 7.3 m ends ~40 px short of the concept tip (170,565)" },
+      { "id": "D10", "rect": [700, 258, 775, 300], "decides": "side", "why": "aft blade tip: concept 6.36 m vs the equal-blade 7.3 m; model tip ~40 px beyond the concept tip (720,275)" },
+      { "id": "D11", "rect": [100, 316, 178, 354], "decides": "top", "why": "far-flank lateral blade tip: concept 362 px / 0.837 = 6.3 m vs the near-flank 474 px = 8.26 m (top: 341 / 341 px equal); model tip ~55 px short of the concept tip (120,335)" },
+      { "id": "D12", "rect": [878, 498, 975, 536], "decides": "top", "why": "near-flank lateral blade tip: concept 8.26 m vs the equal-blade 7.3 m; model tip ~45 px short of the concept tip (935,517)" }
+    ]
+  }
+}

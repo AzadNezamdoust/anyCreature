@@ -1,0 +1,28 @@
+{
+ "provider": "gemini",
+ "model": "gemini-3.8-flash-high",
+ "attempt": 2,
+ "ok": true,
+ "seconds": 47.3,
+ "exit": 0,
+ "prompt": "One image: a 2 x 2 orthographic turnaround sheet of ONE stylised low-poly 3D game creature, four views of the same creature: top-left the SIDE view, top-right the FRONT view, bottom-left the REAR view, bottom-right the TOP view. All four views at one common scale (the same number of pixels per metre in every view), each centred in its own quarter, separated by wide plain white gutters with NO lines between the quarters. No text, no labels, no numbers, no arrows, no frames, no borders, no divider lines. The creature: a wolf: wedge head with tall pointed ears, thick neck ruff, deep chest with a clear tuck-up, long legs, bushy brush tail with a dark tip carried low; long wedge muzzle, black nose pad over a cream lip, amber eyes under a slight brow, tall pointed ears; deep chest, narrow waist, long tapering legs, oval paws with the middle toes leading; neck ruff in clumps, dark back saddle, cream bib, tail brush with a dark tip, toe claws. Size: height 1.1 m to the ear tips, length 1.7 m nose to tail tip, width 0.5 m. Pose: standing on all four legs, head level, the same pose in every view. The views: SIDE view: looking straight at the creature's left flank, its head pointing to the LEFT of the image. FRONT view: a straight-on front elevation, looking exactly head-on at its face; the creature is left-right symmetric about the vertical centre line of its quarter, its body hidden behind its chest, never a three-quarter view; the creature's left flank is on the RIGHT of the image. REAR view: a straight-on rear elevation, looking exactly tail-on; left-right symmetric about the centre line, its body hidden behind its rump, never a three-quarter view; its left flank is on the LEFT of the image. TOP view: a plan view looking straight down; its head points to the LEFT of the image and its left flank is at the BOTTOM of the image. Each feature appears only in the views that can see it. Each view is a true orthographic projection, no perspective. Style: stylised low-poly 3D game creature, faceted flat-shaded planes, flat colours (grey fur, dark saddle, tan legs, cream bib, amber eye, black nose), soft even light, no cast shadows, plain pure white background.",
+ "command": [
+  "~\\AppData\\Local\\agy\\bin\\agy.exe",
+  "--print",
+  "<instruction>",
+  "--add-dir",
+  "~\\AppData\\Local\\Temp\\refs-gemini-wolf-yy2sohlo",
+  "--dangerously-skip-permissions",
+  "--effort",
+  "high",
+  "--output-format",
+  "text",
+  "--print-timeout",
+  "8m",
+  "--model",
+  "gemini-3.8-flash-high"
+ ],
+ "reply": "",
+ "stderr": "",
+ "created": "2026-09-27 23:12:26"
+}

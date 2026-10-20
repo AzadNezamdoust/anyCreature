@@ -1,0 +1,136 @@
+{
+ "source": "fitted_1.png",
+ "layout": "2x2",
+ "views": [
+  "side",
+  "front",
+  "rear",
+  "top"
+ ],
+ "sheet_size": [
+  1431,
+  1431
+ ],
+ "background_rgb": [
+  255.0,
+  255.0,
+  255.0
+ ],
+ "thresh": 40.0,
+ "height_m": 1.1,
+ "length_arg": null,
+ "metres_per_pixel": {
+  "side": 0.002,
+  "front": 0.002,
+  "rear": 0.002,
+  "top": 0.002
+ },
+ "figure_px_w_h": {
+  "side": [
+   408,
+   550
+  ],
+  "front": [
+   441,
+   550
+  ],
+  "rear": [
+   502,
+   550
+  ],
+  "top": [
+   408,
+   442
+  ]
+ },
+ "cells_rows_cols": {
+  "side": [
+   101,
+   668,
+   169,
+   594
+  ],
+  "front": [
+   101,
+   668,
+   822,
+   1276
+  ],
+  "rear": [
+   770,
+   1336,
+   122,
+   641
+  ],
+  "top": [
+   770,
+   1336,
+   837,
+   1261
+  ]
+ },
+ "traced": {
+  "side_points": 49,
+  "front_points": 22,
+  "top_points": 27,
+  "length_m": 0.816,
+  "width_m": 0.88,
+  "head_end_z": 0.724
+ },
+ "crops": {
+  "side": {
+   "box_rows_cols": [
+    109,
+    659,
+    177,
+    585
+   ],
+   "crop_origin": [
+    72,
+    75
+   ],
+   "crop_size": 618
+  },
+  "front": {
+   "box_rows_cols": [
+    108,
+    658,
+    828,
+    1269
+   ],
+   "crop_origin": [
+    740,
+    74
+   ],
+   "crop_size": 618
+  },
+  "rear": {
+   "box_rows_cols": [
+    777,
+    1327,
+    130,
+    632
+   ],
+   "crop_origin": [
+    72,
+    743
+   ],
+   "crop_size": 618
+  },
+  "top": {
+   "box_rows_cols": [
+    818,
+    1260,
+    845,
+    1253
+   ],
+   "crop_origin": [
+    800,
+    790
+   ],
+   "crop_size": 497,
+   "rotated": "CW 90 (head up, left flank on the image left, as the kit top view)"
+  }
+ },
+ "warnings": []
+}

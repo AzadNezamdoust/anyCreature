@@ -1,0 +1,164 @@
+{
+ "quadruped:{\"ear\": 2, \"fore\": {\"cap\": 0, \"hinge\": [3, 2], \"mass\": [0, 0]}, \"head\": 5, \"hind\": {\"cap\": 0, \"hinge\": [3, 2], \"mass\": [0, 0, 0]}, \"muzzle\": 2, \"neck\": 2, \"tail\": 1, \"trunk_mid\": 3}": {
+  "conn": "198dc85a8543d1bb",
+  "faces": 302,
+  "hash": "07750ab32073bc24",
+  "kind": "quadruped",
+  "loops": {
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "fore.border": 8,
+   "fore.socket": 8,
+   "hind.border": 8,
+   "hind.socket": 8,
+   "muzzle.border": 5,
+   "muzzle.socket": 5,
+   "neck.border": 7,
+   "neck.socket": 7,
+   "tail.border": 4,
+   "tail.socket": 4
+  },
+  "rings": 44,
+  "seam": 52,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 12,
+   "limb": 8,
+   "muzzle": 8,
+   "neck": 12,
+   "tail": 6,
+   "trunk": 14
+  },
+  "valence": {
+   "3": 24,
+   "4": 285,
+   "5": 20
+  },
+  "verts": 329
+ },
+ "quadruped:{\"ear\": 2, \"fore\": {\"cap\": 2, \"hinge\": [3, 2], \"mass\": [0, 0]}, \"head\": 4, \"hind\": {\"cap\": 2, \"hinge\": [3, 2], \"mass\": [0, 0, 0]}, \"muzzle\": 2, \"neck\": 0, \"tail\": 1, \"trunk_mid\": 1}": {
+  "conn": "fa6a9f715887dfd0",
+  "faces": 302,
+  "hash": "f38d20a90986dac4",
+  "kind": "quadruped",
+  "loops": {
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "fore.border": 8,
+   "fore.socket": 8,
+   "hind.border": 8,
+   "hind.socket": 8,
+   "muzzle.border": 5,
+   "muzzle.socket": 5,
+   "neck.border": 7,
+   "neck.socket": 7,
+   "tail.border": 4,
+   "tail.socket": 4
+  },
+  "rings": 43,
+  "seam": 42,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 12,
+   "limb": 8,
+   "muzzle": 8,
+   "neck": 12,
+   "tail": 6,
+   "trunk": 14
+  },
+  "valence": {
+   "3": 25,
+   "4": 279,
+   "5": 19,
+   "6": 1
+  },
+  "verts": 324
+ },
+ "quadruped:{\"ear\": 2, \"fore\": {\"cap\": 2, \"hinge\": [3, 2], \"mass\": [0, 1]}, \"head\": 4, \"hind\": {\"cap\": 2, \"hinge\": [3, 3], \"mass\": [0, 0, 1]}, \"muzzle\": 2, \"neck\": 1, \"tail\": 6, \"trunk_mid\": 3}": {
+  "conn": "0a2703d9b6f8b39f",
+  "faces": 361,
+  "hash": "113997bd6e2dab47",
+  "kind": "quadruped",
+  "loops": {
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "fore.border": 8,
+   "fore.socket": 8,
+   "hind.border": 8,
+   "hind.socket": 8,
+   "muzzle.border": 5,
+   "muzzle.socket": 5,
+   "neck.border": 7,
+   "neck.socket": 7,
+   "tail.border": 4,
+   "tail.socket": 4
+  },
+  "rings": 54,
+  "seam": 58,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 12,
+   "limb": 8,
+   "muzzle": 8,
+   "neck": 12,
+   "tail": 6,
+   "trunk": 14
+  },
+  "valence": {
+   "3": 25,
+   "4": 346,
+   "5": 19,
+   "6": 1
+  },
+  "verts": 391
+ },
+ "quadruped:{\"ear\": 3, \"fore\": {\"cap\": 0, \"hinge\": [3, 2], \"mass\": [0, 1]}, \"head\": 5, \"hind\": {\"cap\": 0, \"hinge\": [3, 3], \"mass\": [0, 0, 1]}, \"muzzle\": 3, \"neck\": 2, \"tail\": 4, \"trunk_mid\": 3}": {
+  "conn": "6a8d1bd9ae2cdb40",
+  "faces": 345,
+  "hash": "1df9d778c16e2f09",
+  "kind": "quadruped",
+  "loops": {
+   "ear.border": 6,
+   "ear.socket": 6,
+   "eye": 8,
+   "eye.border": 8,
+   "fore.border": 8,
+   "fore.socket": 8,
+   "hind.border": 8,
+   "hind.socket": 8,
+   "muzzle.border": 5,
+   "muzzle.socket": 5,
+   "neck.border": 7,
+   "neck.socket": 7,
+   "tail.border": 4,
+   "tail.socket": 4
+  },
+  "rings": 52,
+  "seam": 60,
+  "sides": {
+   "ear": 6,
+   "eye": 8,
+   "head": 12,
+   "limb": 8,
+   "muzzle": 8,
+   "neck": 12,
+   "tail": 6,
+   "trunk": 14
+  },
+  "valence": {
+   "3": 24,
+   "4": 332,
+   "5": 20
+  },
+  "verts": 376
+ }
+}

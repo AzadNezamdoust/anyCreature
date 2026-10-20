@@ -1,0 +1,46 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck loop between nape and shoulder hump: the head-to-body bend",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "barrel loop behind the elbow: belly skin between fore- and mid-body stops folding in the trot",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "mid-back loop: the spine flex for the trot and the charge",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "tail root bend: splits the long thin tail quads",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "tail mid bend: splits the long thin tail quads",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "inset",
+   "reason": "eye socket under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

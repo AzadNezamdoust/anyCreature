@@ -1,0 +1,25 @@
+{
+  "id": "ambulance",
+  "class": "vehicle",
+  "title": "Cartoon box-body ambulance (WF-v7 gold subject)",
+  "_comment": "Minimal v6 manifest: target + solved concept camera + module; layoutMeasured holds only _frame.quadPx (the concept registration quad, measured by fitting the turnaround-registered visual hull to the concept foreground — no regions.json / census / layout exist for this subject). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/ambulance.v2.png",
+    "camera": "subjects/ambulance/camera.json",
+    "module": "subjects/ambulance/module.mjs",
+    "layoutMeasured": "subjects/ambulance/layout.measured.json"
+  },
+  "outDir": "out/ambulance",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Added 2026-09-28 at the r1 boundary (orchestrator, owner 'go marathon'); printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "stripe"
+        ]
+      },
+      "evidence": "parts the target draws in their own flat colours that the vehicle class list lacks (setup audit gate-class WARN; model-r1): stripe = 17 part(s), e.g. stripe_box_l"
+    }
+  }
+}

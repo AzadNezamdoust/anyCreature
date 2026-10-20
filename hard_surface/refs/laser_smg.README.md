@@ -1,0 +1,15 @@
+# TARGET provenance — laser_smg
+
+- date: 2026-10-04
+- generator: GPT image generation through scripts/v7/imagegen.mjs --gen gpt (text to image, no reference; agent gpt-6-astra); GPT / Gemini are used only to generate the image
+- raw output: 1536 x 1024 px, 1191958 bytes, sha256 7c4c4b0bfe869b44b9ac96f19a568e4da772b7266872aca7e6415905b9e7c8fc (out/concept/laser_smg/raw.png)
+- image: refs/laser_smg.png = the raw output padded with white to a square (centred) and resized to 1024 x 1024 (lanczos3); nothing else changed
+- bytes: 501211
+- sha256: 8764050aaab3d12484031daed27b5966b51d3be09969eda113bdaba3e529ebab
+- style: scifi_toon (scripts/v7/styles.json styles.scifi_toon.text), after the description and the hidden-face rule (RUNBOOK 2026-09-27; gold.mjs new --style scifi_toon)
+
+## Full prompt (image prompt, verbatim)
+
+```
+A cartoon science-fiction rapid laser gun, one game weapon model. A compact rounded light grey body with a short barrel made of three thin mid grey tubes bundled in a triangle, held by a bright red ring at the muzzle and another where they meet the body. Under the body in front of the grip a straight clear glass battery stick pointing down, filled flat bright yellow, with a mid grey foot cap. A dark teal pistol grip raked backward with a bright red trigger in a rounded mid grey guard. On top a low off-white rounded cover with a small upright bright red sight fin at the front and a mid grey notch block at the rear. At the rear a thin mid grey wire stock: one bent rod to a small flat off-white butt pad. A bright yellow selector dial is on the right flank, hidden in this view. About 0.52 m long, 0.08 m wide and 0.26 m tall. Anything on a face this view cannot show (the rear face, the far flank, the underside) faces away and is not visible in this view: never move it onto a visible face; the visible faces are drawn exactly as described. Orthographic isometric view, 30 degree elevation, 45 degree azimuth from front-left, no perspective, vertical edges perfectly vertical. Futuristic cartoon science-fiction gadget weapon model in a modern adult-animation style: one single handheld ray gun held level in the air, its emitter axis horizontal, the emitter end being its front. Simple rounded, bulbous, slightly wonky forms with exaggerated proportions, tubes, domes, fins, coils and dials, clean smooth surfaces, flat cel shading, one solid flat colour per surface, even dark outlines of constant thickness. Off-white and light grey shells, mid grey metal, and the bright saturated accent colours described; glowing parts are one flat bright colour with no glow halo. No textures, no gradients, no wear, no scratches, no decals, no text, no numbers, no logos or markings. Glass and lenses are a single flat colour with no reflections, streaks, highlights or shine. No hands, no people, no animals, no stand, no table, no other weapons, no props beyond those described, no beams, sparks or effects, no ground shadow. Solid white background, whole object in frame with margin, centred.
+```

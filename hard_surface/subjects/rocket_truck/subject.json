@@ -1,0 +1,51 @@
+{
+  "id": "rocket_truck",
+  "class": "vehicle",
+  "title": "RTS-style rocket truck (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/rocket_truck.v2.png",
+    "camera": "subjects/rocket_truck/camera.json",
+    "layoutMeasured": "subjects/rocket_truck/layout.measured.json"
+  },
+  "outDir": "out/rocket_truck",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 6,
+        "axles": 3,
+        "diameters": "equal"
+      },
+      "evidence": "concept refs/rocket_truck.v2.png + side turnaround: six wheels of one size, one axle under the cab and two close-set rear axles"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "launcher",
+          "launcher_tube",
+          "turntable",
+          "stowage_box",
+          "fuel_tank"
+        ]
+      },
+      "evidence": "the concept draws a rectangular rocket launcher box (3 x 6 tube openings) raised ~20 deg on a turntable, a stowage box on the bed and a fuel tank under the cab door (refs/rocket_truck.README.md)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "launcher",
+          "gunmetal",
+          "bore"
+        ]
+      },
+      "evidence": "the concept paints the launcher box olive (its own part), the turntable / bumper / fuel tank dark gunmetal and the tube bores near black (family bore)"
+    },
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    }
+  }
+}

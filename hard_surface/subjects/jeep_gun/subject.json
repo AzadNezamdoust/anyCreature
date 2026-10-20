@@ -1,0 +1,55 @@
+{
+  "id": "jeep_gun",
+  "class": "vehicle",
+  "title": "RTS-style jeep gun (WF v8 gold subject; gold.mjs new --style generals)",
+  "style": "generals",
+  "_comment": "Minimal v6 manifest (gold.mjs new 2026-09-28): target + solved concept camera; layoutMeasured holds only _frame.quadPx (hull.mjs --write-frame). Colour families come from turnaround/views.json families.table.",
+  "paths": {
+    "target": "refs/jeep_gun.v2.png",
+    "camera": "subjects/jeep_gun/camera.json",
+    "layoutMeasured": "subjects/jeep_gun/layout.measured.json"
+  },
+  "outDir": "out/jeep_gun",
+  "missingKeyPolicy": "report",
+  "ruleOverrides": {
+    "_comment": "WF v8 WP2 (owner 2026-09-26: TARGET WINS; override names pending ratification). Written by scripts/v7/gold.mjs override; printed as RULE_OVERRIDE advisories. limits.json unchanged.",
+    "wheels": {
+      "value": {
+        "count": 4,
+        "axles": 2,
+        "diameters": "equal",
+        "diameterFrac": [
+          0.2,
+          0.3
+        ]
+      },
+      "evidence": "jeep wheels D 0.94 m over L 3.85 m = 0.244 (setup audit decided D 0.94 from the side view; chunky RTS utility vehicle); band 0.2..0.3 = measured +- rounding"
+    },
+    "roles": {
+      "value": {
+        "extra": [
+          "gun",
+          "gun_mount",
+          "gun_shield",
+          "jerrycan",
+          "spare_wheel"
+        ]
+      },
+      "evidence": "the concept draws a roof ring mount with a heavy machine gun on a post and a small gun shield, a jerry can on the left rear flank; the rear face carries a spare wheel (refs/jeep_gun.README.md)"
+    },
+    "paletteZones": {
+      "value": {
+        "extra": [
+          "gun",
+          "dark",
+          "red"
+        ]
+      },
+      "evidence": "the gun, ring mount and shield are dark gunmetal, a zone a road car does not have; parts the target draws in their own flat colours that the vehicle class list lacks (gold.mjs override --palette-auto on out/ref/gold/jeep_gun/model.mjs): dark = 9 part(s), e.g. diff_f; red = 2 part(s), e.g. taillamp_l"
+    },
+    "tris": {
+      "value": 8000,
+      "evidence": "owner 2026-09-29: detailed like the combat bike"
+    }
+  }
+}

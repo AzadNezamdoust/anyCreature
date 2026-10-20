@@ -1,0 +1,18 @@
+{
+  "theta_deg": 15.5,
+  "phi_deg": 58.75,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_rivet_pistol.png",
+  "sha256": "a480aaf37e1f57be3693b793754f3a607044f88bee36dc67e9fcd6b0f291edc4",
+  "solved": "2026-10-11T09:17:21.955Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.789,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.683
+  }
+}

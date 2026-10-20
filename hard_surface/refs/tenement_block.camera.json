@@ -1,0 +1,15 @@
+{
+  "theta_deg": 29.1981,
+  "phi_deg": 43.0925,
+  "slopes": {
+    "mX": 0.456383,
+    "mZ": 0.521443
+  },
+  "residual_px": 0.4345,
+  "vertical_tilt_deg": 0.0044,
+  "source": "refs/tenement-iso.png",
+  "sha256": "fec54178dc52c92a90cf67e119049d1c1fa55b85fb14eb614f625a85d0898c28",
+  "solved": "2026-09-12T11:25:31.691Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

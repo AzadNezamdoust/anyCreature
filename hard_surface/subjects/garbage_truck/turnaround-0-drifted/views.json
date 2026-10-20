@@ -1,0 +1,26 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md). Vehicle author frame: nose +z, near flank +x, y up, ground y = 0, x and z centred. Views: GPT turnaround of the concept (turnaround/README.md). No regions.json: families.table = flat colours sampled (median clusters) off the concept; families.body names the body family.",
+  "views": {
+    "side": { "file": "side.png", "right": [0, 0, -1], "up": [0, 1, 0] },
+    "front": { "file": "front.png", "right": [1, 0, 0], "up": [0, 1, 0] },
+    "rear": { "file": "rear.png", "right": [-1, 0, 0], "up": [0, 1, 0] },
+    "top": { "file": "top.png", "right": [0, 0, -1], "up": [-1, 0, 0] }
+  },
+  "anchor": { "dim": "W", "m": 2.5 },
+  "families": {
+    "body": "body",
+    "enclosedFg": false,
+    "_enclosedFg": "off: no white parts (lamps are pale yellow, the grab bar / mirror brackets enclose see-through white loops)",
+    "table": {
+      "body": ["#43863b", "#367131"],
+      "hopper": "#2d5c34",
+      "mouth": "#153b21",
+      "glass": "#a1b4c4",
+      "bumper": "#adacac",
+      "dark": ["#36393c", "#26292c"],
+      "grille": "#7e848a",
+      "lamp": "#feeaa4"
+    },
+    "_body": "body = the cab + refuse-body green; the rear-loader hopper (darker green) and its loading mouth are their own families, so the body span (L, x / z origin) runs from the cab nose to the refuse body's rear edge"
+  }
+}

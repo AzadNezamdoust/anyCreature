@@ -1,0 +1,32 @@
+{
+  "subject": "it_jetpack",
+  "noun": "chunky backpack with two fuel cylinders (game prop)",
+  "style": "chunky_gear",
+  "sources": "gold.mjs new 2026-10-10: description + proportions = the concept prompt's paragraph (refs/it_jetpack.README.md Full prompt; its size sentence as the proportions); shape / dims = that stated size (estimates: re-measure dims on the installed set, hull.mjs); sides / asymmetric / faces: edit from the concept (hidden faces, parts on one flank) | 2026-10-11 S1 of the owner-picked v4 hero (refs/it_jetpack.png = out/concept-items30/25_jetpack/v4b_hero_1.png; FPS refs/it_jetpack.fps.png). Facts written from the NEW hero as drawn (chunky v4 design: charcoal back frame plate, exactly 2 ochre cylinders each with 2 bands + a small top cap, 1 valve block with the lamp between them, exactly 2 bell nozzles down, 1 arched grab handle on top, 2 shoulder straps with slide buckles + 1 waist strap with a buckle; the v3 vent slot, curved pipes, chest strap and back pad are NOT drawn and dropped). FRAME as the v3 subject: +x = the OUTER (cylinder) face (the left flank, the SIDE view), -x = the wearer-side back (straps, belt), +z / -z = the pack's two width ends, y up, nozzles down, symmetric about z = 0; anchor H 0.58; re-measured after install. | 2026-10-11 REFRAME after attempt-0: GPT drew the cylinder face as the FRONT view and the width end as the SIDE view (viewOnly front 34 %); the frame is now the one the generator follows: FRONT +z = the OUTER (cylinder) face (the face the hero shows, with the valve block and lamp), REAR -z = the wearer side (frame back, straps, belt), the LEFT flank +x = a pack width end, right flank -x = the other width end, y up, nozzles down; symmetric about x = 0.",
+  "description": "A fictional short-burn jetpack game prop for a demolition engineer, chunky low-poly, shown alone with no person. One thick charcoal back frame plate behind two upright fat ochre painted fuel cylinders mounted side by side, each with a wide chamfered domed top carrying a small charcoal cap, a tapering bottom, and exactly two wide charcoal bands round it. Between the cylinders one boxy ochre valve block with one small teal lamp window in a thick charcoal bezel on its face. Under each cylinder one thick dark steel bell nozzle pointing straight down on a short charcoal neck. On top of the frame between the cylinders one thick charcoal arched grab handle. On the wearer-side face behind the frame two fat padded charcoal shoulder straps rise from the frame's top edge and loop backward and down, and one wide charcoal waist strap with a big rectangular buckle runs round the lower part. No flame.",
+  "proportions": "About 0.37 m long front to back, 0.41 m wide and 0.58 m tall. (length : width : height = 0.90 : 1 : 1.41)",
+  "sides": "the pack is symmetric about its centre plane (x = 0): the valve block with its teal lamp window is on that plane on the front face, the two cylinders and the two nozzles are mirror images, the two shoulder straps are mirror images. Frame words: the pack's FRONT is the big OUTER face with the two cylinders; its REAR is the wearer side (the back of the charcoal frame with the shoulder straps and the waist strap); its LEFT and RIGHT flanks are the two narrow width ends.",
+  "shape": {
+    "side": "in this view the chunky backpack with two fuel cylinders (game prop) is 0.64 times as long as it is tall",
+    "front": "in this view its width is 0.71 of its height",
+    "rear": "in this view its width is 0.71 of its height",
+    "top": "in this view it is 1.11 times as wide as it is deep"
+  },
+  "faces": {
+    "side": "Seen from the left flank, the front (cylinder face) to the image LEFT: the pack in profile: one fat ochre cylinder in front (the second hidden behind it) with its small charcoal cap, two wide charcoal bands and the dark steel bell nozzle below it, the thick charcoal back frame plate behind the cylinder at the image right, the arched grab handle arching over the top, the two shoulder straps rising from the frame's top edge at the right and looping back and down with a slide buckle, the waist strap with its big rectangular buckle round the lower part at the right.",
+    "front": "Seen from the front (the OUTER cylinder face): two upright fat ochre cylinders side by side, each with a small charcoal cap, two wide charcoal bands and a dark steel bell nozzle below; the boxy ochre valve block between them with the teal lamp window in its bezel on its face; the charcoal back frame plate behind and below the valve block; the arched grab handle across the top between the cylinders.",
+    "rear": "Seen from the back (the wearer side): the flat charcoal back frame plate in the middle, the two padded shoulder straps rising from its top edge and curving outward and down with slide buckles, the waist strap with its big rectangular buckle across the lower part, the arched grab handle on top, the two cylinder edges and the two nozzles below / beside the frame; the valve block and lamp are hidden.",
+    "top": "Seen from above (front, the cylinder face, to the LEFT, left flank at the BOTTOM): the two ochre cylinder tops with their small charcoal caps at the left end, one above the other in the image (one toward each flank), the valve block between them, the charcoal back frame plate behind them toward the right with the arched grab handle across it, the shoulder straps looping back at the right end."
+  },
+  "asymmetric": [],
+  "dims": {
+    "L": 0.37,
+    "W": 0.41,
+    "H": 0.58,
+    "_": "front-back depth 0.37 (L), left-right width 0.41 (W) after the reframe (v3 had them the other way round); H 0.58 anchor; re-measure with hull.mjs after install"
+  },
+  "decided": [
+    "exactly two cylinders with exactly two bands each, exactly two nozzles, one valve block with one lamp, one grab handle, two shoulder straps, one waist strap",
+    "no flame, no vent slot, no pipes"
+  ]
+}

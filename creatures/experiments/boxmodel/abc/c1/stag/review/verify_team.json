@@ -1,0 +1,9 @@
+{"items":[
+{"title":"1. Cream belly band paints the forelegs","verdict":"DONE","evidence":"1_beauty az000: both forelegs brown shoulder to knee, one cream diamond on the chest; 2_closeups front limb colour: brown legs, only a small grey-cream scrap at the elbow."},
+{"title":"2. Eyes are slits","verdict":"DONE","evidence":"1_beauty az000: two clearly visible dark round eyes at thumbnail; 2_closeups head colour: faceted almond eye; techqa float 0."},
+{"title":"3. Mane locks stand off as cards; mane ends in a skirt","verdict":"PARTLY","evidence":"1_beauty hero: shoulder plate gone, 3_tech has no blue marks; but az000 mane still reads as a dark trapezoid with a jagged fringe and only a shallow V point, not the tapered V to mid-chest (builder admits shallow V)."},
+{"title":"4. Antlers read as a rake","verdict":"PARTLY","evidence":"1_beauty az000 and hero: tan antlers, tines up-and-out, small dark burr, slivers 1.7%; but az000 tip-to-tip spread is ~1.9 head widths (~183 px vs ~97 px head), above the 1.6 limit; tines still thin."},
+{"title":"5. Ears stick out sideways like wings","verdict":"DONE","evidence":"1_beauty az000/back34: ears angle up with tips above roots, inside antler spread; techqa float 0, ear clip 0, total clip 8 tris (under 14)."}
+],
+"regressions":[],
+"all_done":false}

@@ -1,0 +1,32 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "upper foreleg loop: shoulder/elbow bend support",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "upper hind-leg loop: hip/stifle bend support",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "eye socket in the side plane of the muzzle, under the brow",
+   "new_verts": 4,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "inset",
+   "reason": "nostril in the snout disc",
+   "new_verts": 6,
+   "extra_base_edges": []
+  }
+ ]
+}

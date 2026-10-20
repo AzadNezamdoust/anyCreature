@@ -1,0 +1,8 @@
+{
+ "settings": {
+  "t7": "N",
+  "w4": "G",
+  "k3": "O"
+ },
+ "note": "N = text brief only; G = Gemini (agy) sheet; O = GPT (Codex) sheet. Judges never see this file."
+}

@@ -1,0 +1,18 @@
+{
+  "theta_deg": 22.25,
+  "phi_deg": 61.25,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_flamethrower.png",
+  "sha256": "cc0f9bdd5b7957e3447069184c5fdc1cb522dfa5dab8db9cf46014184bf6be42",
+  "solved": "2026-10-11T08:25:21.819Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.775,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.597
+  }
+}

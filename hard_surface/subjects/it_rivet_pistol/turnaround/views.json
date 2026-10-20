@@ -1,0 +1,135 @@
+{
+  "_comment": "WF-V6 per-subject turnaround contract (scripts/v6/README.md), written by gold.mjs new --class weapon 2026-10-10 (WF v10, pipeline direct). Author frame: muzzle +z, the weapon's left flank +x, y up, y = 0 at its lowest point, x and z centred (classes/weapon.md). Views: side = the left flank with the muzzle to the image left, front = muzzle on, rear = butt on, top = plan with the muzzle to the image left.",
+  "_note": "2026-10-11: turnaround regenerated (image-generated sheet + repairs, scripts/v7/turnaround.mjs; generator recorded per attempt in out/turnaround/<s>/state.json; any previous set is kept beside it); per-view shift / scale / drift / holes measured on the previous images are not carried over — re-measure them on these images at the setup audit. Dropped (measured on the previous images): none present.",
+  "views": {
+    "side": {
+      "file": "side.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    },
+    "front": {
+      "file": "front.png",
+      "right": [
+        1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": {
+        "right": -0.00064
+      }
+    },
+    "rear": {
+      "file": "rear.png",
+      "right": [
+        -1,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "shift": {
+        "right": 0.00064
+      },
+      "scale": { "right": 1.065 }
+    },
+    "top": {
+      "file": "top.png",
+      "right": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        -1,
+        0,
+        0
+      ],
+      "shift": {
+        "up": 0.00064
+      }
+    }
+  },
+  "anchor": {
+    "dim": "L",
+    "m": 0.34
+  },
+  "families": {
+    "body": "body",
+    "spanOpen": 2,
+    "enclosedFg": false,
+    "_enclosedFg": "off: a trigger-guard opening / skeleton stock is background",
+    "table": {
+      "body": ["#3b3a3a", "#252524", "#4e4d4d", "#a77527", "#bf872d", "#e2a83f", "#5f5e5e", "#815a1e", "#4ac5c6"]
+    },
+    "_table": "ONE family (classes/weapon.json _anchor_comment): body = every foreground colour cluster >= 2 % of the concept (share % {\"f2\":27.87,\"dark\":14.24,\"body\":8.55,\"f3\":7.1,\"f4\":6.83,\"f5\":6.46,\"f6\":6.33,\"f7\":4.32}); the registration's spans are then the whole foreground. Add a colour here when a view's part classifies as \"other\" (> 120 RGB from every listed colour).",
+    "_note_accent": "2026-10-11: #4ac5c6 = the teal lamp window (< 2 %, measure.mjs sample refs/it_rivet_pistol.png 480,295,40,15).",
+    "viewTable": {
+      "side": { "body": ["#3d3d3c", "#272826", "#50504f", "#a97829", "#c18a2f", "#e4ab41", "#616160", "#835d20", "#4cc8c8", "#dea133", "#c78c2a", "#5f5e5f", "#1a1b1a", "#92641b", "#6e6e6f", "#f2b53f", "#aa7620"] },
+      "front": { "body": ["#413f3f", "#2b2a29", "#545252", "#ad7a2c", "#c58c32", "#e8ad44", "#656363", "#875f23", "#50cacb", "#414142", "#313030", "#222221", "#c68a25", "#e5a733", "#656566", "#f8ba3c", "#aa751c", "#875c16", "#d6982b"] },
+      "rear": { "body": ["#424242", "#2c2d2c", "#555555", "#ae7d2f", "#c68f35", "#e9b047", "#666666", "#886226", "#51cdce", "#303030", "#646464", "#222221", "#be8421", "#d39629", "#976719"] },
+      "top": { "body": ["#3e3a30", "#28251a", "#514d43", "#aa751d", "#c28723", "#e5a835", "#625e54", "#845a14", "#4dc5bc", "#d6992d", "#444444", "#2c2c2c", "#f0b033", "#996919", "#626162", "#535253", "#af781e", "#1b1c1b", "#775418"] }
+    },
+    "_viewTable": "2026-10-12: per-view colours of the families (scripts/v7/turnaround.mjs families --apply; out/turnaround/it_rivet_pistol/families.proposal.json): each view's foreground colour clusters (>= 1 %) matched to the table's families with ONE per-view colour offset (side +1.8 +2.5 +1.9 · front +6.1 +4.5 +5.3 · rear +7.2 +8 +8.3 · top +2.6 -0.2 -10.2); ambiguous: none. Measured on these images: turnaround.mjs re-derives it for any other image set and install writes it for the installed one."
+  },
+  "_boreplane": {
+    "at": "2026-10-11",
+    "by": "scripts/v7/boreplane.mjs --write",
+    "why": "x = 0 on the bore plane (classes/weapon.md): the views' x origin moved from the silhouette bbox centre to its mirror-symmetry axis (protruding one-flank parts: the four round dark steel rivet heads along the magazine post)",
+    "mode": "shared (the mean of the front / rear mirror axes, every x-seeing view)",
+    "boreXmm": -0.6,
+    "views": {
+      "front": {
+        "mirrorAxisPx": 510.5,
+        "bboxCentrePx": 512,
+        "mirrorIoU": 0.9636,
+        "ownBoreXmm": -0.8,
+        "shift.right": -0.00064
+      },
+      "rear": {
+        "mirrorAxisPx": 513,
+        "bboxCentrePx": 512,
+        "mirrorIoU": 0.9358,
+        "ownBoreXmm": -0.4,
+        "shift.right": 0.00064
+      },
+      "top": {
+        "mirrorAxisPx": 510.5,
+        "bboxCentrePx": 512.5,
+        "mirrorIoU": 0.9632,
+        "ownBoreXmm": -0.4,
+        "shift.up": 0.00064
+      }
+    }
+  },
+  "drift": {
+    "audited": "2026-10-13 gold-auditor, owner-approved 2026-10-12",
+    "side": [],
+    "front": [],
+    "rear": [],
+    "top": [
+      { "id": "D1", "rect": [264, 387, 716, 401], "decides": "front", "why": "top draws the head -x flank at 0.046 m (head 0.092 wide, profile --view top --axis col); front 0.104 m (profile --view front rows 0.19-0.24): head width from the front view" },
+      { "id": "D2", "rect": [264, 613, 716, 640], "decides": "front", "why": "top +x head flank at 0.046 m vs front 0.050 (+ lamp bezel to 0.055); the two rivet domes drawn beside the head (y 630..633) sit at x <= 0.031 in front, under the head: hidden from above" }
+    ],
+    "concept": [
+      { "id": "D3", "rect": [395, 875, 640, 956], "decides": "side", "why": "conceptOnly blob 1.6 % (hull.mjs): the concept's magazine foot / bottom bar hang below the ortho hull; side (foot bottom y 838 = up 0, level with the grip base) settles" },
+      { "id": "D4", "rect": [55, 296, 102, 401], "decides": "side", "why": "conceptOnly blob 0.5 %: concept tube tip drawn proud of the hull (non-orthographic, front end enlarged); side tube 112..195 px = 0.035 m long settles" },
+      { "id": "D5", "rect": [103, 201, 161, 295], "decides": "side", "why": "conceptOnly blob 0.6 %: concept nose plate top-front corner proud of the hull (same front-end enlargement); side settles" }
+    ]
+  }
+}

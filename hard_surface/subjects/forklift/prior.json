@@ -1,0 +1,67 @@
+{
+  "_comment": "WF-V6 PRIOR CARD (schema = subjects/school_bus/prior.json): real dims = soft plausibility only (the turnaround wins); stylisation measured on subjects/forklift/turnaround at the W anchor (L = the yellow span body front .. counterweight back, forks excluded: overall with forks 3.80; H = ground to the mast top). Setup audit 2026-09-27: global proportions within 5 % of the concept (visual-hull fit through camera.json: side L/H +3 %, front W/H -1 %, top L/W +4 %), no view regenerated; local drift (mast height, guard roof, fork tips) in out/ref/gold/forklift/LEDGER.md.",
+  "class": "vehicle",
+  "real": {
+    "source": "counterbalance IC forklift, 2.5 t (Toyota 8FG25 / Hyster H2.5FT class), mast lowered",
+    "W": 1.15,
+    "H": [
+      2,
+      2.2
+    ],
+    "L": [
+      2.3,
+      2.6
+    ],
+    "forkL": [
+      1.07,
+      1.22
+    ],
+    "wheelD": [
+      0.65,
+      0.72
+    ],
+    "wheelbaseOverL": [
+      0.6,
+      0.7
+    ],
+    "LoverW": [
+      2,
+      2.3
+    ],
+    "HoverW": [
+      1.75,
+      1.95
+    ]
+  },
+  "anchor": {
+    "dim": "W",
+    "m": 1.2,
+    "why": "yellow body / overhead-guard width; fixes px/m of the turnaround"
+  },
+  "stylisation": {
+    "_comment": "tall mast, long forks, small rear wheels (front R 0.36, rear 0.27)",
+    "LoverW": 1.81,
+    "HoverW": 2.23,
+    "overallLoverW": 3.16,
+    "wheelDoverH": 0.27,
+    "wheelbaseOverL": 0.81
+  },
+  "softRanges": {
+    "L": [
+      1.8,
+      2.8
+    ],
+    "W": [
+      1,
+      1.4
+    ],
+    "H": [
+      2.2,
+      3.4
+    ],
+    "wheelR": [
+      0.28,
+      0.45
+    ]
+  }
+}

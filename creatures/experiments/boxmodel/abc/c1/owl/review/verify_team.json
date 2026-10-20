@@ -1,0 +1,9 @@
+{"items":[
+{"title":"M1 brows float as dark planks","verdict":"DONE","evidence":"1_beauty az000/hero and 2_closeups head: brow is a seated wedge on the disc top with no gap, tips inside head outline; techqa piece_brow sliver 0."},
+{"title":"M2 two goggle rings instead of one facial disc","verdict":"DONE","evidence":"1_beauty az000: one cream disc with the beak root between the eyes, dark rim on outer edge only, eye domes inside head outline; az090 dome not past brow line."},
+{"title":"M3 feet are tan bricks","verdict":"PARTLY","evidence":"1_beauty az000 feet: narrower, cream leg runs to ankle, talons at toe tips, but each foot is still one flat tan plate, not separate toes; 2_closeups hind limb shows a flat slab."},
+{"title":"M4 tail is a lump, no fan","verdict":"PARTLY","evidence":"1_beauty back34 and 5_reference top show a dark scalloped fan, but it is small against the reference fan and az090 shows it edge-on as a thin stick; 3_tech back34 shows a teal clip patch at the tail root."},
+{"title":"M5 belly cream blob with saw border","verdict":"DONE","evidence":"1_beauty az000: three bands (brown upper chest, mid-tan band, cream lower belly), cream no longer reaches the face, borders snapped to loops; edge is still faceted but straight."}
+],
+"regressions":[],
+"all_done":false}

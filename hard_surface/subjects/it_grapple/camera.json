@@ -1,0 +1,18 @@
+{
+  "theta_deg": 59.75,
+  "phi_deg": 67,
+  "slopes": null,
+  "residual_px": null,
+  "vertical_tilt_deg": null,
+  "source": "refs/it_grapple.png",
+  "sha256": "8079149216f5d2f5363eb49e42b837881dcffc9107152e84c39db051a87df403",
+  "solved": "2026-10-11T08:58:28.349Z",
+  "provisional": false,
+  "method": "hull silhouette fit (scripts/v7/solve-camera-hull.mjs, WF v10): the registered turnaround's visual hull through an orthographic camera without roll, scale / offset from the bbox, best IoU against the concept target",
+  "iou": 0.726,
+  "fixedIsometric": {
+    "theta_deg": 30,
+    "phi_deg": 45,
+    "iou": 0.63
+  }
+}

@@ -1,0 +1,31 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "71567290dc4c3eeff03f4a27415caac02c8738d7d36d14a9a77ffdb23f5ffde5",
+  "collapsed_edge_hash": "71567290dc4c3eeff03f4a27415caac02c8738d7d36d14a9a77ffdb23f5ffde5",
+  "logged_ops": 4,
+  "logged_new_verts": 22,
+  "errors": []
+ },
+ "colours": [
+  "cream",
+  "dark",
+  "fur",
+  "glint",
+  "iris",
+  "sock"
+ ],
+ "colour_count": 6,
+ "tris": 1824,
+ "attach": [],
+ "pieces": {
+  "piece_claws_0": 100,
+  "piece_claws_1": 100,
+  "piece_eye_L": 80,
+  "piece_eye_R": 80,
+  "piece_ear_L": 38,
+  "piece_ear_R": 38,
+  "piece_nose": 48,
+  "piece_cheek": 96
+ }
+}

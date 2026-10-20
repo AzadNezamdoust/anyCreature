@@ -1,0 +1,15 @@
+{
+  "theta_deg": 20.3618,
+  "phi_deg": 43.4066,
+  "slopes": {
+    "mX": 0.329113,
+    "mZ": 0.367858
+  },
+  "residual_px": 0.5269,
+  "vertical_tilt_deg": null,
+  "source": "refs/transport_heli.v2.png",
+  "sha256": "73ae655f7f1d49a924fc05cd651226dec4dbc2898dacced0141318e320468b18",
+  "solved": "2026-09-29T18:29:26.239Z",
+  "provisional": false,
+  "method": "two-slope ground-edge fit"
+}

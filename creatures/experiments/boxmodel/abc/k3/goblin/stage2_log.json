@@ -1,0 +1,25 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "neck bend: second loop between the shoulder ring R5 and the neck ring R6",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "grin: a loop in the chin band R7-R8, its front pushed in as the mouth slot",
+   "new_verts": 6,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "inset",
+   "reason": "eye socket under the brow (R11-R12, P1-P2)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

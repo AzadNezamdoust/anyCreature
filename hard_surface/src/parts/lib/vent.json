@@ -1,0 +1,29 @@
+{
+  "schema": "pg/1-composite",
+  "version": 1,
+  "name": "vent",
+  "note": "Roof vent / stair-bulkhead louvre box. The louvre is ZONE-ONLY: a single thin plate in the `louvre` zone on the +Z face, never a repeat of slats. Per-slat geometry at this scale is sub-pixel at the frozen 900 px capture (V5 would collapse it anyway) and would cost ~8 tris a slat for nothing.",
+  "params": { "louvreThickness": 0.06, "louvreInsetU": 0.14, "louvreInsetV": 0.2 },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": ["$w", "$h", "$d"],
+      "role": "vent"
+    },
+    {
+      "id": "louvre",
+      "prim": "plate",
+      "dims": ["$w - 2 * $louvreInsetU", "$h - 2 * $louvreInsetV", "$louvreThickness"],
+      "role": "vent_louvre",
+      "zoneKey": "louvre",
+      "attach": {
+        "to": "body",
+        "face": "+Z",
+        "uv": [0.5, 0.5],
+        "contact": "flush",
+        "embed": "$louvreThickness / 2"
+      }
+    }
+  ]
+}

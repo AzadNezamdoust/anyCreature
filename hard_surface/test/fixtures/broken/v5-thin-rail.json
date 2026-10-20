@@ -1,0 +1,65 @@
+{
+  "schema": "pg/1",
+  "subject": "v5_thin_rail",
+  "seed": 1,
+  "class": "prop",
+  "note": "V5: a 1 cm rail, under the 4 cm prop style floor. Repairable: grow the thin axis to MIN_FEAT.",
+  "palette": {
+    "wood": "#b98a4e",
+    "band": "#6d5030"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "prim": "bevelBox",
+      "dims": [
+        0.6,
+        0.45,
+        0.6
+      ],
+      "ground": true,
+      "role": "crate",
+      "zone": "wood"
+    },
+    {
+      "id": "lid",
+      "prim": "plate",
+      "dims": [
+        0.64,
+        0.05,
+        0.64
+      ],
+      "role": "lid",
+      "zone": "band",
+      "attach": {
+        "to": "body",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    },
+    {
+      "id": "rail",
+      "prim": "box",
+      "dims": [
+        0.5,
+        0.01,
+        0.05
+      ],
+      "role": "rail",
+      "zone": "band",
+      "attach": {
+        "to": "lid",
+        "face": "+Y",
+        "uv": [
+          0.5,
+          0.5
+        ],
+        "contact": "rests-on-top"
+      }
+    }
+  ]
+}
