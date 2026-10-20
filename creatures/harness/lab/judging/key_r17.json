@@ -1,0 +1,62 @@
+{
+ "735": {
+  "method": "hunyuan",
+  "animal": "eagle"
+ },
+ "337": {
+  "method": "hunyuan",
+  "animal": "elephant"
+ },
+ "682": {
+  "method": "hunyuan",
+  "animal": "horse"
+ },
+ "622": {
+  "method": "hunyuan",
+  "animal": "kangaroo"
+ },
+ "755": {
+  "method": "hunyuan",
+  "animal": "wolf"
+ },
+ "488": {
+  "method": "mvadapter",
+  "animal": "eagle"
+ },
+ "340": {
+  "method": "mvadapter",
+  "animal": "elephant"
+ },
+ "412": {
+  "method": "mvadapter",
+  "animal": "horse"
+ },
+ "639": {
+  "method": "mvadapter",
+  "animal": "kangaroo"
+ },
+ "849": {
+  "method": "mvadapter",
+  "animal": "wolf"
+ },
+ "485": {
+  "method": "seqinpaint",
+  "animal": "eagle"
+ },
+ "113": {
+  "method": "seqinpaint",
+  "animal": "elephant"
+ },
+ "288": {
+  "method": "seqinpaint",
+  "animal": "horse"
+ },
+ "754": {
+  "method": "seqinpaint",
+  "animal": "kangaroo"
+ },
+ "390": {
+  "method": "seqinpaint",
+  "animal": "wolf"
+ }
+}

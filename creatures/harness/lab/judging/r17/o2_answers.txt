@@ -1,0 +1,15 @@
+113: elephant | 2 | left side washed-out near-white vs brown right side; back split half white/half brown
+288: horse | 3 | left side bleached cream vs bay right side; dark baked blotch on flank, glossy shine
+337: elephant | 5 | strong baked specular/AO gradients (orange sheen on back), black trunk tip, striped front
+340: elephant | 6 | baked shading/AO darkening on belly and legs; otherwise consistent grey-brown
+390: wolf | 3 | left side washed pale vs dark grey right side; tail colour flips between views
+412: horse | 5 | heavy baked glossy highlights; tail grey-white on back/right vs black on left
+485: eagle | 2 | left side and front bleached near-white; back split white/brown seam
+488: eagle | 5 | uniform carved-wood look with baked specular; feathers lack bald-eagle/golden pattern variety
+622: kangaroo | 4 | flat saturated red, cartoon, no fur detail; dark ear interior only on front
+639: kangaroo | 4 | flat salmon-pink cartoon, baked sheen; white tail tip, low detail
+682: horse | 6 | consistent bay, but flat, baked dark blotch on flank and rib striping
+735: eagle | 5 | baked shading/sheen; cartoon feather scales, pale wing patches inconsistent
+754: kangaroo | 2 | left side very dark vs right side light, white belly only one side; glossy shine
+755: wolf | 4 | saturated orange patches, left/right mismatch on chest and legs
+849: wolf | 5 | blue-tinted fur, rust patches differ left vs right, painterly smear

@@ -268,3 +268,16 @@ fur) come out as open jagged sheets; crocodile 1-2/10. Wins on cost: peak VRAM
 ~3.5 GB CUDA / ~2.9 GB Vulkan (fits 8 GB without offload), ~12 s GPU, texture
 bake without nvdiffrast (MIT + DINOv3 terms). 1024 cascade untested (weights
 download stalled). Scripts: trellis_cpp/.
+
+## Round 17 — commercial-safe texturers vs Hunyuan Paint 2.1 (unlit albedo, 5 animals, two blind Opus judges)
+
+| method | licence | quality O1 / O2 | VRAM @7.5 GiB cap |
+|---|---|---|---|
+| **MV-Adapter ig2mv (SDXL) + own moderngl bake** | Apache-2.0 + OpenRAIL++ | **5.8 / 5.0** | 6.5 GiB, ~2 min |
+| Hunyuan Paint 2.1 (tex13) | Tencent (EU/UK/KR excluded) | 5.4 / 4.8 | 7.3 GiB |
+| Sequential inpaint (SDXL depth CN + IP-Adapter) | Apache-2.0 + OpenRAIL++ | 2.8 / 2.4 | 6.3 GiB, 8-13 min |
+
+MV-Adapter matches or slightly beats Hunyuan Paint and is commercially safe:
+new default texturer. Defects shared by both: baked shading/specular, flat
+cartoon kangaroo. Seq-inpaint views drift (one side bleached white). Albedo
+only (fixed metallic/roughness). Scripts + report: texc/.

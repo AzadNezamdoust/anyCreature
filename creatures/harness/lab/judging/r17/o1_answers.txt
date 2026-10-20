@@ -1,0 +1,15 @@
+113: elephant | 2 | left side washed out near-white with brown smudge; huge L/R mismatch, half-white back
+288: horse | 3 | left side bleached cream vs right bay; baked specular highlights, tail grey/brown mismatch
+337: elephant | 6 | heavy baked AO/specular sheen, black trunk tip, front-face stripe banding
+340: elephant | 7 | baked dark shading on underside/rear; otherwise consistent wrinkled grey skin
+390: wolf | 4 | left side washed pale vs dark grey right; strong L/R inconsistency
+412: horse | 5 | strong baked glossy highlights; tail white on right/back vs black left
+485: eagle | 2 | left side and front bleached white, back half white/half brown seam
+488: eagle | 6 | baked lighting/varnish look, uniform orange-wood tone not real plumage
+622: kangaroo | 5 | flat saturated cartoon red, unrealistic colour, little detail
+639: kangaroo | 5 | flat salmon-pink cartoon colour, faint baked shading
+682: horse | 6 | flat bay with baked muscle/rib shading; dull flat black mane/tail
+735: eagle | 6 | baked dark shading on back/underside; muddy, front darker than sides
+754: kangaroo | 3 | left side dark maroon vs light orange right; glossy baked highlights
+755: wolf | 4 | saturated orange patches unnatural; grey/brown tail mismatch
+849: wolf | 6 | blotchy blue-grey tints on face/shoulder; minor L/R pattern drift
