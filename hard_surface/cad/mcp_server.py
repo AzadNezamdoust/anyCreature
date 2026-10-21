@@ -130,5 +130,8 @@ def export(name: str, fmt: str = "glb", dest: str = "") -> str:
     return json.dumps({"ok": True, "files": src})
 
 
+import mcp_tools  # noqa: E402  direct-modelling ops (cadkit.tools)
+mcp_tools.register(server)
+
 if __name__ == "__main__":
     server.run()
