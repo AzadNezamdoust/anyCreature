@@ -4,8 +4,7 @@ Sources: plasticity-mcp source (E:\Github\plasticity-mcp, targets Plasticity 26.
 read from src/plasticity/*.ts and docs/tool-reference.md), plus public Plasticity docs, release notes and
 tutorials, and the MIT Blender bridge add-on (nkallen/plasticity-blender-addon), as remembered from public
 material. No binaries were inspected.
-Tags: (mcp) = confirmed by names in the plasticity-mcp source. (pub) = public/community knowledge, NOT
-re-verified online in this pass. Check (pub) items against doc.plasticity.xyz before you rely on them.
+Tags: (mcp) = confirmed by names in the plasticity-mcp source. (verified: url) = checked 2026-10-21; (unverified) = no primary source found.
 
 ## 0. What Plasticity is
 - An Electron/TypeScript + three.js desktop app by Nick Kallen. Kernel: **Parasolid** (Siemens) in current
@@ -13,7 +12,7 @@ re-verified online in this pass. Check (pub) items against doc.plasticity.xyz be
   Blender ergonomics".
 - **Direct (history-free) modelling.** There is no parametric feature tree, only an undo/redo stack. A command
   you just finished stays "hot": you can re-open and adjust it until you run the next op, and Space repeats the
-  last command. Newer versions add limited editable/"live" features (pub), but the core model is still direct.
+  last command. Newer versions add limited editable/"live" features (unverified), but the core model is still direct.
   plasticity-mcp adds its own journal (docs/construction-history.md) because the app has none.
 - Why artists love it: a gizmo on every parameter, a Blender-style keymap, fast modal tools, no sketch
   constraint solver to fight, regions found automatically from any closed curves, robust Parasolid fillets and
@@ -84,7 +83,7 @@ re-verified online in this pass. Check (pub) items against doc.plasticity.xyz be
   solid, reverse sheet normals (ReverseSheetFactory), extend sheet edges, insert sheet.
 
 ### Mirror / patterns / instances
-- Mirror across a plane or face (keep or replace, auto-union across the symmetry plane) (pub).
+- Mirror across a plane or face (keep or replace, auto-union across the symmetry plane) (verified section exists: https://doc.plasticity.xyz/); options not re-read.
 - Radial and rectangular arrays of bodies/faces (RadialArrayFacesFactory, RectangularArrayFacesFactory: count,
   spacing, angle), curve pattern along a path. Linked instances (CreateInstanceFactory, realize instances back to
   independent copies with RealizeInstanceFactory). Duplicate (DuplicateCommand).
@@ -97,12 +96,12 @@ re-verified online in this pass. Check (pub) items against doc.plasticity.xyz be
 - Every tool shows a **gizmo**: arrows for distances, arcs for angles, rings for radius/thickness. You drag it,
   or click it and type a number. The dialog panel mirrors the same values.
 
-### Selection modes (pub)
+### Selection modes (verified section exists: https://doc.plasticity.xyz/); details unverified
 - Control point / edge / face / body / curve modes, which can be combined. Click to select, Shift to add, Ctrl to
   remove; box select; X-ray select-through; loop and tangent-chain select; select adjacent; select by type.
   Works both ways: select first and then run the command, or start the command and it asks for picks.
 
-### Snaps (pub)
+### Snaps (verified section exists: https://doc.plasticity.xyz/); snap list unverified
 - Grid, end/vertex, midpoint, center, on-edge, on-face, normal, tangent, perpendicular, curve-curve intersection,
   axis lock, angle increments, circle quadrants. Snap markers preview where a point will land, and a modifier
   key turns snapping off temporarily.
@@ -141,26 +140,27 @@ re-verified online in this pass. Check (pub) items against doc.plasticity.xyz be
 - **Topology naming is not stable.** IDs change between operations. plasticity-mcp uses "revision-bound
   references": a body/face/edge ref stops being valid after the next mutation. An LLM tool therefore has to
   re-resolve picks from geometry (position, normal, area, adjacency), not from IDs.
-- Native file: `.plasticity`, a proprietary container holding Parasolid data plus scene metadata (pub).
+- Native file: `.plasticity`, a proprietary container holding Parasolid data plus scene metadata (unverified; docs silent).
 - Import: STEP, IGES, Parasolid x_t/x_b (ParasolidImportFactory), OBJ/STL reference meshes, SVG/DXF curves.
 - Export: STEP / IGES / Parasolid (ExportCadFactory), OBJ (OBJExportFactory), STL, 3MF (ThreeMfExportFactory),
   SVG and hidden-line SVG.
-- **Mesh facet settings** (export and bridge, pub): presets (coarse/medium/fine) plus advanced controls: curve
-  chord tolerance (sag), surface plane tolerance, plane angle (normal deviation), min/max facet width, max
-  sides (triangles vs convex n-gons), and match topology (watertight across edges). Normals are smooth within a
+- **Mesh facet settings** (bridge (verified: https://github.com/nkallen/plasticity-blender-addon client.py/__init__.py); export-dialog presets unverified): refacet params = relative_to_bbox, curve_chord_tolerance
+  (0.01), curve_chord_angle (0.35), curve_chord_max, surface_plane_tolerance (0.01), surface_plane_angle (0.35),
+  plane_angle, min_width, max_width, max_sides (3 = tris), match_topology (True), shape ANY/CUT/CONVEX (default CUT). Normals are smooth within a
   face and split at hard edges.
-- **Blender bridge** (MIT add-on, pub; the field list is from memory, so re-read the repo before you implement
-  it): Plasticity runs a local WebSocket server (default localhost:8980) and sends binary little-endian
+- **Blender bridge** (MIT add-on (verified: https://github.com/nkallen/plasticity-blender-addon client.py/__init__.py); message enum checked, payload field list still from memory): Plasticity runs a local WebSocket server (default localhost:8980, ws://, verified) and sends binary little-endian
   messages, each with a message type and id.
-  - Message types: TRANSACTION_FILE, TRANSACTION_ALL, ADD, UPDATE, DELETE, MOVE, ATTRIBUTE, NEW_VERSION,
-    NEW_FILE, LIST_ALL, LIST_SOME, LIST_VISIBLE, SUBSCRIBE_ALL, SUBSCRIBE_SOME, UNSUBSCRIBE_ALL, REFACET_SOME.
+  - Message types (uint32 LE, all suffixed _1): TRANSACTION=0, ADD=1, UPDATE=2, DELETE=3, MOVE=4, ATTRIBUTE=5,
+    NEW_VERSION=10, NEW_FILE=11, LIST_ALL=20, LIST_SOME=21, LIST_VISIBLE=22, SUBSCRIBE_ALL=23, SUBSCRIBE_SOME=24,
+    UNSUBSCRIBE_ALL=25, REFACET_SOME=26, PUT_SOME=31, HANDSHAKE=100 (client handshakes, then checks supported set).
+    (No TRANSACTION_FILE/TRANSACTION_ALL.) ObjectType SOLID=0, SHEET=1, WIRE=2, GROUP=5, EMPTY=6.
   - Per-object payload: type (SOLID/SHEET/WIRE/GROUP/EMPTY), id, version, name, visibility/selectability flags,
     material, parent group, then float32 vertices, triangle indices, float32 normals, and **per-CAD-face groups
     / face_ids**. Blender uses the face groups to select by CAD face, mark sharp edges and place UV seams.
   - A refacet request carries the tolerance params above. Live link = subscribe, after which the server pushes
     an update on every transaction.
 
-## 4. Pain points users report (forums/Discord/reviews, pub)
+## 4. Pain points users report (forums/Discord/reviews, unverified)
 - **No parametric history**: you cannot go back and change a fillet radius from 20 ops ago. This is the most
   requested feature.
 - Mesh export is triangles or n-gons, not clean quads. Games need cleanup or retopo, facet tuning is trial and
