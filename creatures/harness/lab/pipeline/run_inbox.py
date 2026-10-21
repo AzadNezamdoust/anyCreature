@@ -1,4 +1,4 @@
-﻿"""run_inbox.py - reference images -> finished creature asset, by calling the existing stage scripts.
+"""run_inbox.py - reference images -> finished creature asset, by calling the existing stage scripts.
 
   python run_inbox.py <animal> [--seeds 0,1] [--lowvram]            # generate + clean + render candidates
   python run_inbox.py <animal> --pick <candidate>                   # + texture, QuadriFlow, rig, assets
@@ -344,12 +344,12 @@ def stage_finish(c, pick):
         else: print(f'WARNING: missing lp_{b}')
     if os.path.exists(f'{O}/lp_5000.obj'):
         c.run('wire', [SYS_PY, f'{LAB}/wire.py', f'{O}/lp_5000.obj', f'{O}/wire.png'], cwd=LAB)
-    # --bake-normals (default off): Blender Cycles hi->LOD tangent normal + albedo bake on fresh UVs, plus Marigold-LCM
+    # bake (default ON, --no-bake-normals to skip; Marigold detail only with --bake-detail): Blender Cycles hi->LOD tangent normal + albedo bake on fresh UVs, plus Marigold-LCM
     # (Apache-2.0) image-derived fine normal detail; lit comparison sheets. -> {O}/baked/lod<N>/{lod.obj,albedo.png,n_tan*.png}
-    if c.a.bake_normals and os.path.exists(f'{td}/{c.an}/textured.obj'):
+    if not c.a.no_bake_normals and os.path.exists(f'{td}/{c.an}/textured.obj'):
         lods = [f'{O}/lp_{b}.obj:{1024 if b < 3000 else 2048}' for b in (1500, 5000) if os.path.exists(f'{O}/lp_{b}.obj')]
         c.run('bake_normals', [VENV, f'{G}/bake/bake_lods.py', f'{td}/{c.an}/textured.obj', f'{O}/baked', *lods,
-                               '--detail', '--vram-cap', str(c.a.vram_cap or 7.0)], check=False)
+                               *(['--detail'] if c.a.bake_detail else []), '--vram-cap', str(c.a.vram_cap or 7.0)], check=False)
     # rig: rig_robust.py = rig.py (untouched) + leak-proof voxel fill + foot-contact leg detection + body-plan gate
     rigged = False
     for f in ('rigged.glb', 'rig_skip.json'):
@@ -387,7 +387,7 @@ def batch(a):
             if ln: jobs.append((ln[0], ['--pick', ln[1]]))
     else:
         jobs = [(d, []) for d in sorted(os.listdir(f'{G}/inbox')) if os.path.isfile(f'{G}/inbox/{d}/hero.png')]
-    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) + (['--turing'] if a.turing else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else [])
+    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) + (['--turing'] if a.turing else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else []) + (['--no-bake-normals'] if a.no_bake_normals else []) + (['--bake-detail'] if a.bake_detail else [])
     res = {}
     for an, extra in jobs:
         print(f'\n[{ts()}] ===== {an} {" ".join(extra)}', flush=True); t = time.time()
@@ -411,7 +411,8 @@ def main():
     ap.add_argument('--pick', help='candidate name from candidates.json: texture + lowpoly + rig + assets')
     ap.add_argument('--force', action='store_true', help='regenerate even if outputs exist')
     ap.add_argument('--no-rig', action='store_true')
-    ap.add_argument('--bake-normals', action='store_true', help='phase 2: bake hi->LOD normal+albedo maps (Blender) + Marigold detail normals, comparison sheets')
+    ap.add_argument('--no-bake-normals', action='store_true', help='skip hi->LOD normal+albedo bake (Blender); on by default')
+    ap.add_argument('--bake-detail', action='store_true', help='add Marigold-LCM image-derived detail normals to the bake')
     ap.add_argument('--turing', action='store_true', help='force RTX 20xx (sm_75) mode on a newer card: flash/cuDNN SDPA off, '
                     'bf16 off (auto-on when the GPU compute capability < 8.0)')
     # r18 upgrade knobs (all default off = previous behaviour)
