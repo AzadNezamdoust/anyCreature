@@ -1,0 +1,17 @@
+{
+    "7c4b05":  {
+                   "candidate_B":  "build123d r2",
+                   "candidate_A":  "MISSING: current bpy build (out/blender-hs) not on this machine",
+                   "asset":  "mbt_turret"
+               },
+    "26fb08":  {
+                   "candidate_B":  "build123d r4",
+                   "candidate_A":  "MISSING: current bpy build (out/blender-hs) not on this machine",
+                   "asset":  "assault_rifle"
+               },
+    "107e56":  {
+                   "candidate_B":  "build123d r3",
+                   "candidate_A":  "MISSING: current bpy build (out/blender-hs) not on this machine",
+                   "asset":  "tenement_green"
+               }
+}
