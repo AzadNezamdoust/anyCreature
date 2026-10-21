@@ -1,0 +1,20 @@
+681: crocodile/alligator | 3 | tail fused into a flat ground slab/plate under body; limbs merged to plate
+495: eagle/hawk | 5 | stringy/frayed tail-feather fan with torn edges, shallow stamped feather relief
+235: elephant | 7 | ear edges thin/sheet-like with seams; mild belly/leg wrinkle noise
+285: tree frog | 5 | toes fused into blobby merged pads; feet webbed together on ground
+417: giraffe | 6 | tail tuft split into flat shards; lumpy neck/shoulder surface
+364: horse (draft) | 5 | tail and mane are torn shell-like ribbons with holes/flaps
+105: kangaroo | 3 | tail/hind feet smeared into flat ground slab with comb-like streaks (top view)
+488: great white shark | 6 | bloated midbody, mouth/gill area muddled; pelvic fins stubby
+760: tortoise | 2 | shell layers delaminated, limbs lumpy, stray stretched strand polygons to ground
+106: wolf | 4 | tail and chest fur crumpled, noisy blotchy surface tearing
+325: crocodile/alligator | 6 | blobby inflated body, soft undefined limbs and feet
+829: eagle | 6 | taloned feet are sausage blobs, wing/tail feather layering sheet-thin
+434: elephant | 7 | ear/belly folds have thin double-skin seam; feet slightly melted
+199: horse | 6 | tail shredded into jagged shell layers; mane seam crack
+559: giraffe | 7 | tail tuft frayed; ossicones/ears slightly soft
+944: tree frog | 4 | hand/foot webbing flat planar slab glued to ground (grey backface sheet)
+204: kangaroo | 7 | cartoonish smooth, feet/toes undefined paddles
+428: great white shark | 7 | soft/undefined mouth and gills; fins slightly thick
+773: wolf | 6 | front leg bend odd, soft paws, head mesh noisy
+777: tortoise | 4 | feet smeared into thin ground skirts, shell layering artifacts, lumpy limbs

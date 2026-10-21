@@ -1,0 +1,20 @@
+105: kangaroo | 3 | ground-plane slab fused to tail/feet with comb-like spikes (bake/floor artifact)
+106: wolf | 5 | tail and chest fur as torn layered shell flaps with cracks
+199: horse | 6 | tail a shredded stack of flaps; mane seam crack
+204: kangaroo | 7 | soft blobby hands/feet, low surface detail
+235: elephant (African) | 7 | leg/feet merged with ground shadow lumps, belly fold seams
+285: frog | 6 | feet fused into flat ground blobs; noisy ridged skin
+325: crocodile | 6 | hollow/flat belly blob, mushy forelimbs, no jaw detail
+364: horse (draft) | 5 | tail/mane are thin peeling sheet strands with holes
+417: giraffe | 7 | tail tuft split into shell flaps; lumpy torso
+428: shark (great white) | 7 | pectoral fin fused along flank; mushy mouth
+434: elephant (African) | 7 | belly underside skirt/fold artifact; soft feet
+488: shark (great white) | 6 | bloated lumpy head, warped mouth/gills
+495: eagle | 4 | feather layers as cracked shell flaps; tail fan broken/torn
+559: giraffe | 7 | tail tuft frayed shards; soft head detail
+681: crocodile | 3 | large flat ground slab fused under body, tail detached loop
+760: tortoise | 3 | shell plates broken/layered, stray thin strut lines between feet
+773: wolf/fox | 6 | blobby tail, noisy fur surface, mushy face front
+777: tortoise | 5 | plastron/shell overlap broken, floor-plane fragments at feet
+829: eagle | 6 | feather/wing edges thin shell layers with seams
+944: frog | 4 | flat ground-plane sheets fused to feet (gray slab)

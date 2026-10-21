@@ -320,3 +320,18 @@ Pixal3D loses clearly: faceted/noisy surfaces, ground slab fused under feet,
 shredded tails, holes (frog head). Also fails 8 GB (36 GiB peak; OOM at 7 GiB
 cap even in 1024 low-VRAM mode), bf16 weights, sm_120-only extensions,
 nvdiffrast in texture bake, weights EU-gated. Not adopted.
+
+## Round 21 — Direct3D-S2 (512, MIT) vs Hunyuan3D-2.1, untextured shape
+
+| | recognised O1 / O2 | quality O1 / O2 |
+|---|---|---|
+| **Hunyuan3D-2.1** (r9 picks) | 10 / 10 | **6.1 / 6.0** |
+| Direct3D-S2 512 | 10 / 10 | 4.9 / 4.6 |
+
+Hunyuan wins. D3D-S2 defects: thin parts (tails, feet, frog webbing) fused into
+flat ground slabs, layered tortoise shell, shredded tails. Cleaner licence (MIT
+code + weights, no nvdiffrast) but 3/10 animals OOM at 7 GiB (need ~9 GiB),
+host RAM 18-23 GiB; 1024 OOM. Not adopted; keep as MIT-licence fallback idea.
+
+Shape challengers so far (16, 20, 21): TRELLIS.2, Pixal3D, Direct3D-S2 all lose
+to Hunyuan3D-2.1 on the same refs.
