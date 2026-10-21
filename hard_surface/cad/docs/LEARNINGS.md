@@ -33,3 +33,8 @@
 - Owner verdict: promising but reads as polygonal box-modelling, not CAD.
   -> difficulty ladder L1-L5 (bracket, mouse/controller, drill/headphones,
   helmet/nozzle, sports car) with smooth tessellation + zebra renders.
+
+## EULA (2026-10-21, docs/plasticity_eula_summary.md)
+RE / source access / derivative works / circumvention banned (EULA 3.2-3.3).
+Trial = evaluation only, commercial use prohibited. Output belongs to user.
+Clean-room from public docs is our path; no hands-on trial mining for product.

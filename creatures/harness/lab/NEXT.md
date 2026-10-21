@@ -44,3 +44,9 @@ Stopped mid-run (resume these):
 Then: blind Opus judge vs Hunyuan r9pick; if one wins, mesh refinement vs refs
 (needs non-nvdiffrast renderer). Item 7 needs Azad's multi-view refs in
 E:\gen3d\inbox\<animal>\.
+
+## 2026-10-21
+Shape challengers all lose to Hunyuan3D-2.1 (rounds 16, 20, 21: TRELLIS.2,
+Pixal3D, Direct3D-S2). Azad: D3D-S2 more detailed but more artifacts -> tuning
+lane (E:\gen3d\d3ds2_tuned). Roach in bake pose lane (E:\gen3d\assets\roach,
+out/roach_summary.jpg). Normal-map bake now default on.
