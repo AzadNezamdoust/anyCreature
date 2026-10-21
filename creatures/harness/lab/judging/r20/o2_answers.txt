@@ -1,0 +1,20 @@
+137: elephant | 6 | ear plates read as thin detached shells with seam gap at head; tusk tips thin/frayed
+158: horse | 5 | tail is shredded layered sheet geometry with jagged torn edges; mane seam crack
+163: tree frog | 3 | eye/face region broken: hole in head, shell fragments, garbage geometry at throat
+169: shark (great white) | 6 | pectoral fins thin/flat with ragged edges; soft mouth detail
+189: giraffe | 6 | tail tuft frayed/split; hooves splayed flat discs
+300: kangaroo | 7 | soft/blobby face and paws; hind feet flattened; little surface detail
+311: wolf/fox | 5 | lumpy noisy fur surface; head region deformed in 3/4 front; flattened paws
+345: giraffe | 3 | faceted triangle shading across body, ragged mane fringe, disjoint hoof clutter
+424: tortoise | 4 | limbs wrinkled/lumpy, ground-plane fringe fused to feet, shell rim seam
+477: crocodile/alligator | 6 | bloated round belly (front view dome), stubby limbs; otherwise clean
+590: eagle | 6 | feather layers as thin shells with visible edge seams; blobby talons
+729: shark (great white) | 4 | noisy speckled surface, torn fin/tail edges, garbled teeth
+745: wolf/fox | 3 | heavy noise/striation artifacts on fur and tail, ground fragments, shredded edges
+796: tortoise | 3 | faceted noisy shell, ground plane debris fused to feet, cracked seams
+808: tree frog | 4 | flat ground-plane sheet fused under feet (large planar artifact)
+809: horse | 4 | noisy speckled tail/mane, ragged surface artifacts, faceted shading
+839: crocodile/alligator | 3 | lumpy faceted body, mangled tail/limb topology, seam ring around flank
+870: kangaroo | 3 | tail surface heavily noisy/speckled, ground shadow fused geometry, rough skin
+884: eagle | 3 | heavily faceted triangle noise, ground-plane fragments fused to base
+888: elephant | 4 | noisy faceted surface, ragged ears, ground-plane sliver fused to feet

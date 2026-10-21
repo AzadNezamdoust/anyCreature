@@ -308,3 +308,15 @@ Cycles selected-to-active tangent normal + albedo bake, 2-3 s/map; Marigold
 normals LCM v0.1 (Apache) detail overlay, 3.8 GiB. Baked normal clearly adds
 fur clumps / ear and jaw creases on 1.5k-15k face LODs; Marigold detail subtle.
 Flag --bake-normals (default off; recommended on). Sheets: pipeline/bake/.
+
+## Round 20 — Pixal3D (TencentARC, TRELLIS.2 backbone, 1536 cascade) vs Hunyuan3D-2.1, untextured shape
+
+| | recognised O1 / O2 | quality O1 / O2 |
+|---|---|---|
+| **Hunyuan3D-2.1** (r9 picks) | 10 / 10 | **6.2 / 5.5** |
+| Pixal3D | 10 / 10 | 3.5 / 3.3 |
+
+Pixal3D loses clearly: faceted/noisy surfaces, ground slab fused under feet,
+shredded tails, holes (frog head). Also fails 8 GB (36 GiB peak; OOM at 7 GiB
+cap even in 1024 low-VRAM mode), bf16 weights, sm_120-only extensions,
+nvdiffrast in texture bake, weights EU-gated. Not adopted.
