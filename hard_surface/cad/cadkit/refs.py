@@ -77,3 +77,22 @@ def edges_longer(shape, length):
 
 def edges_circular(shape):
     return shape.edges().filter_by(GeomType.CIRCLE)
+
+
+def new_edges(result, *inputs, tol=1e-4):
+    """Edges of `result` that did not exist (same midpoint) in any of `inputs` = the intersection curves a
+    fuse/cut created. The thing you want to blend after a boolean; seam/spine edges of sweeps are excluded."""
+    from build123d import Vector
+    old = []
+    for s in inputs:
+        for e in s.edges():
+            old.append(e)
+
+    def is_old(e):
+        c = e.center()
+        p = e.position_at(0.37)
+        for o in old:
+            if (o.center() - c).length < tol * 10 + 1e-9 or o.distance_to(p) < tol:
+                return True
+        return False
+    return [e for e in result.edges() if not is_old(e)]

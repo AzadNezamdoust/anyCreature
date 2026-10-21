@@ -48,10 +48,49 @@ def _round(kind, part, edges, radius, min_frac=0.15, label=""):
         except Exception:
             return None
 
+    def run_edges(es, r):
+        try:
+            x = _apply(fn, part, es, r)
+            return x if _ok(x) else None
+        except Exception:
+            return None
+
+    def run_set(es):
+        return run_edges(es, radius) is not None
+
+    def remap(newpart, olds):
+        out_ = []
+        ne = newpart.edges()
+        for e in olds:
+            c, ln = e.center(), e.length
+            best_ = min(ne, key=lambda x: (x.center() - c).length + 0.2 * abs(x.length - ln), default=None)
+            if best_ is not None and (best_.center() - c).length < 1e-6 + 0.02 * ln:
+                out_.append(best_)
+        return out_
+
     res = run(radius)
     if res is not None:
         LOG.append(rec)
         return res
+    # split: one bad edge used to drag the whole set's bisection down (L1 ladder: 44 edges -> 0.25 mm).
+    # Fillet the edges that work alone at full radius, then retry the rest (remapped by centre) smaller.
+    if len(edges) > 1:
+        good, bad = [], []
+        for e in edges:
+            rec["retries"] += 1
+            (good if run_set([e]) else bad).append(e)
+        if good and bad:
+            r1 = run_edges(good, radius)
+            if r1 is not None:
+                bad2 = remap(r1, bad)
+                rec.update(status="split", split_bad=len(bad))
+                LOG.append(rec)
+                if bad2:
+                    try:
+                        r1 = _round(kind, r1, bad2, radius, min_frac, label + "/rest")
+                    except CadOpError:
+                        LOG[-1]["status"] = "rest_skipped"  # keep the good part; rest stays sharp
+                return r1
     # bisection for max feasible radius
     lo, hi, best = 0.0, radius, None
     for _ in range(7):
@@ -102,7 +141,11 @@ def safe_chamfer(part, edges, length, min_frac=0.15, label=""):
 # ---------------------------------------------------------------- booleans
 def _occ_bool(kind, a, b, fuzzy=0.0):
     from OCP.BRepAlgoAPI import BRepAlgoAPI_Cut, BRepAlgoAPI_Fuse, BRepAlgoAPI_Common
-    from OCP.TopTools import TopTools_ListOfShape
+    try:  # OCP 8.x moved NCollection list bindings to OCP.collections (fuzzy retry always ImportError'd before)
+        from OCP.collections import List_TopoDS_Shape as TopTools_ListOfShape
+    except ImportError:
+        from OCP.TopTools import TopTools_ListOfShape
+
     op = {"cut": BRepAlgoAPI_Cut, "fuse": BRepAlgoAPI_Fuse, "common": BRepAlgoAPI_Common}[kind]()
     la, lb = TopTools_ListOfShape(), TopTools_ListOfShape()
     la.Append(a.wrapped)
@@ -136,7 +179,16 @@ def _manifold_bool(kind, a, b):
 
     def man(s):
         v, f = _to_mesh(s)
-        return m3.Manifold(m3.Mesh(vert_properties=v.astype("float32"), tri_verts=f))
+        # weld: OCCT tessellation duplicates verts along B-rep face seams -> Manifold saw an open mesh and returned
+        # empty (L4: 'Null TopoDS_Shape' on every fallback). Quantise + unique to make it watertight.
+        q = np.round(v / 1e-6).astype(np.int64)
+        _, first, inv = np.unique(q, axis=0, return_index=True, return_inverse=True)
+        v, f = v[first], inv.reshape(-1)[f]
+        f = f[(f[:, 0] != f[:, 1]) & (f[:, 1] != f[:, 2]) & (f[:, 0] != f[:, 2])]
+        mm = m3.Manifold(m3.Mesh(vert_properties=v.astype("float32"), tri_verts=f.astype("uint32")))
+        if mm.is_empty():
+            raise RuntimeError(f"manifold input not watertight: {mm.status()}")
+        return mm
     ma = man(a)
     for t in (b if isinstance(b, (list, tuple)) else [b]):
         mb = man(t)
@@ -164,11 +216,21 @@ def _sew(v, f):
             sew.Add(fc.Face())
     sew.Perform()
     sh = sew.SewedShape()
-    try:
-        solid = BRepBuilderAPI_MakeSolid(TopoDS.Shell_s(sh)).Solid()
-        return Part(Solid(solid))
-    except Exception:
-        return Part(Shape.cast(sh))
+    from build123d.topology.shape_core import downcast  # OCP 8.x: TopoDS.Shell_s is gone (fallback always died)
+    from OCP.TopExp import TopExp_Explorer
+    from OCP.TopAbs import TopAbs_SHELL
+    from OCP.ShapeFix import ShapeFix_Solid
+    shells = []
+    ex = TopExp_Explorer(sh, TopAbs_SHELL)
+    while ex.More():  # hollow results (skins, shells) sew into >1 shell -> compound (L5: MakeSolid TypeError)
+        shells.append(downcast(ex.Current()))
+        ex.Next()
+    mk = BRepBuilderAPI_MakeSolid()
+    for shl in shells:
+        mk.Add(shl)
+    fx = ShapeFix_Solid(mk.Solid())  # orients the inner shell(s) as voids
+    fx.Perform()
+    return Solid(downcast(fx.Solid()))
 
 
 def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mesh=True):
@@ -176,11 +238,26 @@ def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mes
     rec = {"op": "boolean", "kind": kind, "label": label, "status": "ok", "retries": 0}
     if isinstance(b, (list, tuple)):
         b = Compound(list(b))  # list tools -> one compound (pilot bug: lists always failed)
+    va = a.volume
+    vb = sum(t.volume for t in b.solids()) if hasattr(b, "solids") else b.volume
+
+    def sane(r):  # volume sanity: OCCT sometimes returns a VALID but wrong (inverted/partial) solid (L5 r6)
+        if not _ok(r):
+            return False
+        v, tol = r.volume, 1e-3 * max(va, vb) + 1e-9
+        if kind == "cut":
+            return v <= va + tol and v >= va - vb - tol
+        if kind == "fuse":
+            return v >= max(va, vb) - tol and v <= va + vb + tol
+        return v <= min(va, vb) + tol
+
     try:
         res = {"cut": lambda: a - b, "fuse": lambda: a + b, "common": lambda: a & b}[kind]()
     except Exception:
         res = None
-    if not _ok(res):
+    if res is not None and _ok(res) and not sane(res):
+        rec["insane_plain"] = round(res.volume / max(va, 1e-12), 4)
+    if not sane(res):
         res = None
         diag = max((a.bounding_box().diagonal), 1e-9)
         for fz in fuzzy_steps:
@@ -189,7 +266,7 @@ def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mes
                 r = _occ_bool(kind, a, b, fuzzy=fz * diag)
             except Exception:
                 r = None
-            if _ok(r):
+            if sane(r):
                 res = r
                 rec.update(status="fuzzy", fuzzy=fz * diag)
                 break
@@ -197,7 +274,7 @@ def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mes
         rec["retries"] += 1
         try:
             r = _manifold_bool(kind, a, b)
-            if r is not None and r.volume > 1e-12:
+            if r is not None and sane(r):
                 res = r
                 rec.update(status="manifold", note="mesh fallback: later fillets on this body will fail")
         except Exception as e:  # noqa
@@ -207,6 +284,7 @@ def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mes
         LOG.append(rec)
         raise CadOpError(f"boolean {kind} '{label}' failed (plain, fuzzy {fuzzy_steps}, manifold). Try: move the "
                          f"tool off coplanar/tangent faces by ~1e-4, simplify the tool, or fillet after the boolean.")
+    rec["vol"] = round(res.volume, 6)
     LOG.append(rec)
     return res
 
@@ -221,3 +299,33 @@ def fuse(a, b, label=""):
 
 def common(a, b, label=""):
     return safe_boolean("common", a, b, label)
+
+
+def variable_fillet(part, edges, r_start, r_end, label=""):
+    """Linear-varying radius fillet per edge (OCCT BRepFilletAPI_MakeFillet.Add(r1, r2, edge)); build123d has no
+    variable fillet. On failure scales both radii down (x0.75 up to 6x) and logs; raises CadOpError if none work."""
+    from OCP.BRepFilletAPI import BRepFilletAPI_MakeFillet
+    edges = list(edges)
+    rec = {"op": "fillet", "label": label or "variable", "radius": [r_start, r_end], "edges": len(edges),
+           "retries": 0, "status": "ok", "applied": [r_start, r_end], "variable": True}
+    k = 1.0
+    for i in range(7):
+        try:
+            mk = BRepFilletAPI_MakeFillet(part.wrapped)
+            for e in edges:
+                mk.Add(r_start * k, r_end * k, e.wrapped)
+            mk.Build()
+            if mk.IsDone():
+                res = Part(Shape.cast(mk.Shape()))
+                if _ok(res):
+                    if i:
+                        rec.update(status="reduced", applied=[r_start * k, r_end * k])
+                    LOG.append(rec)
+                    return res
+        except Exception:
+            pass
+        rec["retries"] += 1
+        k *= 0.75
+    rec.update(status="failed", applied=0)
+    LOG.append(rec)
+    raise CadOpError(f"variable fillet '{label}' {r_start}->{r_end} failed on {len(edges)} edges even at x{k:.2f}")

@@ -9,6 +9,6 @@ Model script contract (one file = whole model, re-run = undo):
     TRI_BUDGET = 8000                                # optional
 """
 from build123d import *  # noqa: F401,F403
-from .ops import safe_fillet, safe_chamfer, safe_boolean, cut, fuse, common, CadOpError, LOG  # noqa: F401
+from .ops import safe_fillet, safe_chamfer, variable_fillet, safe_boolean, cut, fuse, common, CadOpError, LOG  # noqa: F401
 from .refs import tag, tagged, face_at, edges_of_face, edges_parallel, edges_on_plane, edges_near, \
-    edges_longer, edges_circular  # noqa: F401
+    edges_longer, edges_circular, new_edges  # noqa: F401

@@ -19,6 +19,20 @@ def _hex(c):
     return [int(c[i:i + 2], 16) / 255 for i in (0, 2, 4)]
 
 
+def _mm_to_m(shp):
+    """Uniform 0.001 scale that also scales the TopLoc location (build123d Shape.scale left located parts at
+    mm offsets: L1 knob ended up 3 m away)."""
+    from OCP.BRepBuilderAPI import BRepBuilderAPI_Transform
+    from OCP.gp import gp_Trsf, gp_Pnt
+    from build123d import Shape
+    t = gp_Trsf()
+    t.SetScale(gp_Pnt(0, 0, 0), 0.001)
+    return Shape.cast(BRepBuilderAPI_Transform(shp.wrapped, t, True).Shape())
+
+
+S = 1.0  # model-unit -> metre factor for reporting / mesh.npz
+
+
 def collect_parts(ns):
     parts = ns.get("PARTS")
     if parts is None:
@@ -29,6 +43,8 @@ def collect_parts(ns):
     out = {}
     for k, v in parts.items():
         shp, col = (v if isinstance(v, tuple) else (v, "#808080"))
+        # UNITS="mm": shapes stay in mm (OCCT fillets fail far more at metre scale); the worker reports metres
+        # (S below) and exports with unit=MM. Scaling the B-rep itself broke located parts in glTF (L5 r6-7).
         out[k] = (shp, col)
     return out
 
@@ -88,18 +104,18 @@ def state_of(parts, ns, t_exec):
         except Exception:
             valid = False
         bodies[k] = {
-            "colour": col, "volume": round(s.volume, 9), "solids": len(s.solids()),
+            "colour": col, "volume": round(s.volume * S ** 3, 9), "solids": len(s.solids()),
             "faces": len(s.faces()), "edges": len(s.edges()), "valid": valid,
-            "bbox_min": [round(v, 5) for v in tuple(bb.min)], "bbox_max": [round(v, 5) for v in tuple(bb.max)],
-            "size": [round(v, 5) for v in tuple(bb.size)],
+            "bbox_min": [round(v * S, 5) for v in tuple(bb.min)], "bbox_max": [round(v * S, 5) for v in tuple(bb.max)],
+            "size": [round(v * S, 5) for v in tuple(bb.size)],
         }
     allbb = Compound([s for s, _ in parts.values()]).bounding_box()
     st = {
         "ok": True, "exec_s": round(t_exec, 2),
         "bodies": bodies, "body_count": len(bodies),
         "all_valid": all(b["valid"] for b in bodies.values()),
-        "bbox": {"min": [round(v, 5) for v in tuple(allbb.min)], "max": [round(v, 5) for v in tuple(allbb.max)],
-                 "size": [round(v, 5) for v in tuple(allbb.size)]},
+        "bbox": {"min": [round(v * S, 5) for v in tuple(allbb.min)], "max": [round(v * S, 5) for v in tuple(allbb.max)],
+                 "size": [round(v * S, 5) for v in tuple(allbb.size)]},
         "faces": sum(b["faces"] for b in bodies.values()), "edges": sum(b["edges"] for b in bodies.values()),
         "tags": describe_tags(), "ops": LOG,
         "ops_summary": {
@@ -129,6 +145,8 @@ def main(argv):
     t0 = time.time()
     try:
         ns = runpy.run_path(model, run_name="__cadmodel__")
+        global S
+        S = 0.001 if ns.get("UNITS", "m") == "mm" else 1.0
         parts = collect_parts(ns)
         st = state_of(parts, ns, time.time() - t0)
         budget = budget or ns.get("TRI_BUDGET")
@@ -138,19 +156,31 @@ def main(argv):
             os.path.join(out, "mesh.npz"),
             names=np.array(list(meshes)),
             colours=np.array([_hex(parts[k][1]) for k in meshes], "f4"),
-            **{f"v_{i}": m[0] for i, m in enumerate(meshes.values())},
+            **{f"v_{i}": m[0] * S for i, m in enumerate(meshes.values())},
             **{f"t_{i}": m[1] for i, m in enumerate(meshes.values())},
             **{f"f_{i}": m[2] for i, m in enumerate(meshes.values())},
         )
         if "--no-step" not in argv:
-            from build123d import Compound, export_step
+            from build123d import Compound, export_step, Unit
             kids = []
             for k, (s, _) in parts.items():
                 s.label = k
                 kids.append(s)
             comp = Compound(children=kids)
-            export_step(comp, os.path.join(out, "model.step"))
+            export_step(comp, os.path.join(out, "model.step"), unit=Unit.MM if S != 1.0 else Unit.M)
             st["step"] = os.path.join(out, "model.step")
+        if "--hq" in argv:  # fine B-rep tessellation for surface-quality renders (not the game mesh)
+            from build123d import Compound, export_gltf, Unit, Color
+            kids = []
+            for k, (s, c) in parts.items():
+                s.label, s.color = k, Color(c)
+                kids.append(s)
+            comp = Compound(children=kids)
+            dg = comp.bounding_box().diagonal
+            t1 = time.time()
+            export_gltf(comp, os.path.join(out, "model_hq.glb"), unit=Unit.MM if S != 1.0 else Unit.M, binary=True,
+                        linear_deflection=dg * 3e-4, angular_deflection=0.08)
+            st["hq_glb"], st["hq_s"] = os.path.join(out, "model_hq.glb"), round(time.time() - t1, 2)
     except Exception as e:
         tb = traceback.format_exc()
         from cadkit.ops import LOG
