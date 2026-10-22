@@ -38,3 +38,19 @@
 RE / source access / derivative works / circumvention banned (EULA 3.2-3.3).
 Trial = evaluation only, commercial use prohibited. Output belongs to user.
 Clean-room from public docs is our path; no hands-on trial mining for product.
+
+## Robustness + surfacing pass (2026-10-22)
+- Crash isolation must be process-level: OCCT segfaults (loft cap fillets) can't be caught in Python. MCP tools now
+  run in a persistent worker; journal on disk (atomic write after success) is the source of truth; restart = replay.
+  On Windows ctypes turns a null read into OSError, so the crash test uses faulthandler._sigsegv() and os.abort().
+- OCP 8 binding moves: Array2 types live in OCP.collections (Array2_gp_Pnt); BRep_Tool.Curve_s returns only the
+  curve (params via BRepAdaptor_Curve); build123d 0.13 has no Solid.make_solid (use BRepBuilderAPI_MakeSolid +
+  ShapeFix_Solid).
+- Shell openings after "offset + cut": punch with the INNER solid's matching face pushed out, not the outer face
+  (outer face cutter eats the side walls).
+- Loft cap rims: detect (closed edge of a one-edge planar face beside a B-spline face) and never call the OCCT
+  fillet; trim r off and loft a quarter-round of inset sections instead.
+- Fillet sets: per-edge staged radius ladder on the evolving body beats set-wide bisection.
+- Multi-rail loft without a native OCCT op: blend neighbouring profiles, frame-fit contact points onto each rail
+  (similarity for 2 rails, LSQ in-plane scale for 3+), loft the fitted stations.
+- G2 bridge: quintic Bezier, P2 = 2P1 - P0 + kappa*N*(n d)^2/(n(n-1)) gives exact end curvature.

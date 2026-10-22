@@ -26,6 +26,7 @@ def section(x, w, ztop, zb=-8.0, n=20, p=2.6):
 ST = [(-61.5, 3, 1.5), (-60, 16, 5), (-58, 30, 9), (-52, 44, 19), (-40, 52, 26.5), (-20, 56, 32), (0, 58, 35), (20, 62, 35.5),
       (38, 58, 31), (52, 44, 21), (57.5, 26, 13), (60.5, 4, 3)]
 body = loft([section(*s_) for s_ in ST])
+# (r10: blunt caps + cap_round worked, but the later flat-base cut then fell to Manifold -> kept near-point ends)
 body = cut(body, Pos(0, 0, -50) * Box(300, 300, 100), "flat base")
 # (nose/tail cap fillet r=3 SEGFAULTED OCCT in round 2 -> end stations shrunk to near-points instead)
 # variable fillet on the base rim: 3 mm at the palm (rear) -> 1 mm at the nose

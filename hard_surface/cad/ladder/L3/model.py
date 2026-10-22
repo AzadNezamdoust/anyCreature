@@ -8,9 +8,11 @@ UNITS = "mm"
 
 # ---------------- motor housing: loft through elliptic stations along X
 ST = [(-72, 19, 19), (-62, 23, 24), (-35, 27, 29), (0, 28.5, 31), (35, 28, 31), (58, 25, 28), (70, 20, 23),
-      (75, 13.5, 16), (77.5, 4, 5)]
+      (76, 15, 18)]
 house = loft([Plane.YZ.offset(x) * Ellipse(ry, rz) for x, ry, rz in ST])
-# (rear-cap fillet on loft end failed at every r, r1 -> closing near-point station instead)
+# v2: real rear cap + rim round (kit routes loft-cap rims to cap_round; OCCT fillet failed/segfaulted here in r1)
+rear = [e for e in house.edges() if abs(e.bounding_box().min.X - 76) < 1e-3 and abs(e.bounding_box().max.X - 76) < 1e-3]
+house = safe_fillet(house, rear, 6.0, label="rear cap round")
 
 # ---------------- handle: elliptic section swept along a curved spine, raked back
 spine = Spline((2, 0, 5), (8, 0, -40), (20, 0, -90), (30, 0, -122), tangents=[(0.05, 0, -1), (0.35, 0, -1)])

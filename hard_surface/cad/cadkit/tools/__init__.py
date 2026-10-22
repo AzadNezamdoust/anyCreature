@@ -9,7 +9,7 @@
 See docs/TOOLS.md for the op list + provenance, describe_ops() for live docs.
 """
 from .core import Model, ToolError, OPS, describe, describe_ops, resolve, tangent_chain  # noqa: F401
-from . import geom, solids, edit, pattern  # noqa: F401  (registers ops)
+from . import geom, solids, edit, pattern, surfacing  # noqa: F401  (registers ops)
 from .export import export_file, write_run, game_mesh, render  # noqa: F401
 
 

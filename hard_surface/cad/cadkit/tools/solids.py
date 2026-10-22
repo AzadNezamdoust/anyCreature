@@ -1,4 +1,4 @@
-﻿"""Shape-from-profile: extrude (push/pull), revolve, sweep, loft (+guide/spine), pipe."""
+"""Shape-from-profile: extrude (push/pull), revolve, sweep, loft (+guide/spine), pipe."""
 from __future__ import annotations
 
 import math
@@ -80,7 +80,10 @@ def loft_op(m, name, profiles, ruled=False, guide=None, mode="new", target=None)
         new = _guided_loft(fs, _wire(m, guide))
     if not new.is_valid:
         raise ToolError("loft produced an invalid solid", "use profiles with equal edge counts and no twist")
-    return {"name": apply_mode(m, name, new, mode, target)}
+    out = apply_mode(m, name, new, mode, target)
+    if mode == "new" and all(f.geom_type.name == "PLANE" for f in fs):
+        m.get(out).meta["_sections"] = fs  # lets shell re-loft shrunk sections (robust_shell "sections")
+    return {"name": out}
 
 
 def _guided_loft(faces, spine):

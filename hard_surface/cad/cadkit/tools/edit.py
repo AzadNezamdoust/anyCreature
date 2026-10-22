@@ -175,16 +175,25 @@ def chamfer_op(m, body, edges, distance, distance2=None, angle=None):
 
 
 # ------------------------------------------------------------------ shell / thicken / offset (spec 1 Shell, 5.8)
-@op("shell", "spec 1 Shell/hollow: faces to remove, thickness, inward/outward", out=False)
-def shell(m, body, thickness, open_faces=None, outward=False):
+@op("shell", "spec 1 Shell/hollow: faces to remove, thickness, inward/outward; robust fallbacks (cadkit.surf."
+             "robust_shell: offset arc/intersection, MakeThickSolid joins/tol, offset+cut, re-loft sections, "
+             "Manifold erosion)", out=False)
+def shell(m, body, thickness, open_faces=None, outward=False, strategy=None):
+    """Hollow body to wall `thickness`, removing open_faces (ref). strategy = force one of
+    arc|intersection|thick_arc|thick_intersection|thick_tol|offset_cut|sections|manifold (default: try in order,
+    validated). Result info.method says which one worked."""
+    from cadkit.surf import robust_shell
+    from cadkit.ops import LOG
     s = _solid(m, body)
     faces = list(resolve(m, open_faces, "faces")) if open_faces else []
-    res = offset(s, amount=thickness if outward else -thickness, openings=faces or None, kind=Kind.ARC)
-    if not res.is_valid or res.volume <= 0:
-        raise ToolError("shell result invalid", "thickness < smallest fillet radius; shell before filleting")
-    m.put(body, "solid", res, **m.get(body).meta)
-    return {"name": body, "volume": round(res.volume, 9)}
-
+    try:
+        res = robust_shell(s, thickness, faces, outward, sections=m.get(body).meta.get("_sections"),
+                           strategy=strategy, label=body)
+    except CadOpError as e:
+        raise ToolError(str(e), "thickness < smallest fillet radius; shell before filleting") from e
+    meta = {k: v for k, v in m.get(body).meta.items() if k != "_sections"}
+    m.put(body, "solid", res, **meta)
+    return {"name": body, "volume": round(res.volume, 9), "method": LOG[-1].get("method")}
 
 @op("thicken", "spec 1 Thicken sheet -> solid (thickness1/2)")
 def thicken_op(m, name, face, thickness, both=False):
@@ -201,22 +210,13 @@ def offset_face(m, body, faces, distance):
     fs = list(resolve(m, {"obj": body, "faces": faces} if "obj" not in faces else faces, "faces"))
     if not fs:
         raise ToolError("face ref matched nothing")
-    res = _per_face_offset(s, fs, distance)
-    method = "brep_offset"
-    if res is None:
-        method = "push_pull"
-        res = s
-        for f in fs:
-            if f.geom_type.name != "PLANE":
-                raise ToolError("offset_face failed on a non-planar face", "offset fewer faces / remove fillets first")
-            n = f.normal_at(f.center())
-            if distance > 0:
-                res = safe_boolean("fuse", res, extrude(f, amount=distance, dir=n), "offset_face")
-            else:
-                res = safe_boolean("cut", res, extrude(f, amount=-distance, dir=-n), "offset_face")
+    from cadkit.surf import robust_offset_face
+    try:
+        res, method = robust_offset_face(s, fs, distance, label=body)
+    except CadOpError as e:
+        raise ToolError(str(e), "smaller distance, or offset before filleting the neighbours") from e
     m.put(body, "solid", res, **m.get(body).meta)
     return {"name": body, "method": method, "volume": round(res.volume, 9)}
-
 
 def _per_face_offset(s, fs, d):
     try:

@@ -68,6 +68,32 @@ def _round(kind, part, edges, radius, min_frac=0.15, label=""):
                 out_.append(best_)
         return out_
 
+    # loft/sweep end caps: OCCT fillet fails or SEGFAULTS on the closed rim of a planar cap (ladder L2/L3) ->
+    # never hand those to OCCT; round them with surf.cap_round (trim + quarter-round loft), then do the rest.
+    if kind == "fillet":
+        from .surf import is_loft_cap_edge, cap_round
+        caps = [(e, is_loft_cap_edge(part, e)) for e in edges]
+        caps = [(e, f) for e, f in caps if f is not None]
+        if caps:
+            rest = [e for e in edges if not any(e.is_same(c) for c, _ in caps)]
+            cur = part
+            for e, f in caps:
+                rr = radius
+                for k in (1.0, 0.75, 0.5, 0.35, 0.25):  # staged: largest radius the cap can take
+                    try:
+                        cur2 = remap_face(cur, f)
+                        cur = cap_round(cur, cur2, radius * k, label=f"{label}/cap")
+                        rr = None
+                        break
+                    except Exception:
+                        continue
+                if rr is not None:
+                    LOG.append({"op": kind, "label": f"{label}/cap", "status": "cap_failed", "radius": radius})
+            rec.update(status="cap_round", caps=len(caps))
+            LOG.append(rec)
+            if not rest:
+                return cur
+            return _round(kind, cur, remap(cur, rest), radius, min_frac, label + "/rest")
     res = run(radius)
     if res is not None:
         LOG.append(rec)
@@ -81,15 +107,39 @@ def _round(kind, part, edges, radius, min_frac=0.15, label=""):
             (good if run_set([e]) else bad).append(e)
         if good and bad:
             r1 = run_edges(good, radius)
+            if r1 is None:  # good edges fail together (they interact): apply them one by one instead
+                r1, n_ok = part, 0
+                for e in good:
+                    hit = remap(r1, [e])
+                    x = _apply_on(fn, r1, hit, radius) if hit else None
+                    if x is not None:
+                        r1, n_ok = x, n_ok + 1
+                    else:
+                        bad.append(e)
+                rec["sequential"] = n_ok
+                if n_ok == 0:
+                    r1 = None
             if r1 is not None:
-                bad2 = remap(r1, bad)
                 rec.update(status="split", split_bad=len(bad))
                 LOG.append(rec)
-                if bad2:
-                    try:
-                        r1 = _round(kind, r1, bad2, radius, min_frac, label + "/rest")
-                    except CadOpError:
-                        LOG[-1]["status"] = "rest_skipped"  # keep the good part; rest stays sharp
+                # staged: each remaining edge alone on the evolving body at the largest radius from a ladder
+                # that works; one bad edge never shrinks the whole set (L3 foot blend, L5 flare blend)
+                staged, skipped = 0, 0
+                for e in bad:
+                    hit = remap(r1, [e])
+                    done = False
+                    for k in (1.0, 0.75, 0.5, 0.35, 0.25, 0.15):
+                        if k < min_frac or not hit:
+                            break
+                        x = _apply_on(fn, r1, hit, radius * k)
+                        if x is not None:
+                            r1, done = x, True
+                            staged += 1
+                            break
+                    skipped += not done
+                rec.update(staged=staged, rest_skipped=skipped)
+                if skipped:
+                    rec["status"] = "split_partial"
                 return r1
     # bisection for max feasible radius
     lo, hi, best = 0.0, radius, None
@@ -121,6 +171,21 @@ def _round(kind, part, edges, radius, min_frac=0.15, label=""):
         f" (bisection). {len(bad)} edge(s) fail alone at r={radius:g}: {_edges_desc(bad)}. "
         f"Try: r<={lo * 0.9:.4g}, drop/split those edges into a separate smaller {kind}, "
         f"or {kind} before the boolean that created short edges.")
+
+
+def remap_face(part, f):
+    """Same planar face in a newer revision (by centre + normal)."""
+    c, n = f.center(), f.normal_at(f.center())
+    best = min(part.faces(), key=lambda g: (g.center() - c).length)
+    return best
+
+
+def _apply_on(fn, part, edges, r):
+    try:
+        x = fn(edges, r)
+        return x if _ok(x) else None
+    except Exception:
+        return None
 
 
 def _apply(fn, part, edges, r):
