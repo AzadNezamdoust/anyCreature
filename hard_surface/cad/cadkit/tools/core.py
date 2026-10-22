@@ -102,15 +102,21 @@ class Model:
 
     def run(self, opname, **params):
         """Apply op, record it as child of head. Returns info dict (adds 'node')."""
+        from .query import diff, summary
         params = json.loads(json.dumps(params))  # params must be JSON (refs, numbers, strings)
         if OPS.get(opname, {}).get("out") and not params.get("name"):
             params["name"] = self._autoname(opname)
+        cache = getattr(self, "_sum", None)
+        before = cache[1] if cache and cache[0] == self.head else summary(self)
         info = self._exec(opname, params)
         nid = len(self.nodes)
         self.nodes.append({"id": nid, "parent": self.head, "op": opname, "params": params})
         self.head = nid
         self._snap[nid] = self._take()
+        after = summary(self)
+        self._sum = (nid, after)
         info["node"] = nid
+        info["diff"] = diff(before, after)  # concise: added / removed / only the changed fields
         return info
 
     def _autoname(self, opname):
@@ -129,6 +135,7 @@ class Model:
 
     def checkout(self, nid):
         """Rebuild state at node nid (None = empty) from the nearest cached ancestor."""
+        self._sum = None  # state diff cache is per head revision
         p = self.path(nid) if nid is not None else []
         start = 0
         self.objects, self.tags, self.cplanes = {}, {}, {}
@@ -448,7 +455,9 @@ def describe(items, n=12):
 
 
 def describe_ops():
-    return {k: {"spec": v["spec"], "doc": v["doc"]} for k, v in sorted(OPS.items())}
+    from .examples import EXAMPLES
+    return {k: {"spec": v["spec"], "doc": v["doc"], **({"example": EXAMPLES[k]} if k in EXAMPLES else {})}
+            for k, v in sorted(OPS.items())}
 
 
 def apply_mode(model, name, new, mode="new", target=None, label=""):

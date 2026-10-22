@@ -97,7 +97,24 @@ HANDLERS = {
     "game_mesh": h_game_mesh,
     "render": h_render,
     "ping": lambda: {"pid": os.getpid()},
+    # read-only queries (no journal entry) - cadkit/tools/query.py
+    "measure": lambda session, a, b=None: _q().measure(_load(session), a, b),
+    "curvature": lambda session, face, point=None: _q().curvature(_load(session), face, point),
+    "draft_analysis": lambda session, body, pull="+z", min_draft=1.0: _q().draft_analysis(_load(session), body,
+                                                                                          pull, min_draft),
+    "deviation": lambda session, a, b, samples=20000: _q().deviation(_load(session), a, b, samples),
+    "compare_to_ref": lambda session, image, view="front", names=None, m_per_px=None, origin_px=None,
+    threshold=128, out=None: _q().compare_to_ref(_load(session), image, view, names, m_per_px, origin_px,
+                                                 threshold, out),
+    "suggest_refs": lambda session, obj, near=None, kind="faces", n=6: _q().suggest_refs(_load(session), obj, near,
+                                                                                       kind, n),
+    "explain_failure": lambda session, op, params=None: _q().explain_failure(_load(session), op, params or {}),
 }
+
+
+def _q():
+    from cadkit.tools import query
+    return query
 
 
 def inproc(method, args):
@@ -132,8 +149,10 @@ def _op_tool(server, opname, meta):
     def f(session: str, params: dict | None = None) -> str:
         return dispatch("run", {"session": session, "op": opname, "params": params or {}})
     f.__name__ = f"op_{opname}"
-    desc = f"{meta['doc']}\n[provenance: {meta['spec']}]\nparams = this op's keyword args as a JSON object; refs: " \
-           f"see cad_help."
+    from cadkit.tools.examples import EXAMPLES
+    ex = f"\nexample params: {json.dumps(EXAMPLES[opname])}" if opname in EXAMPLES else ""
+    desc = f"{meta['doc']}{ex}\n[provenance: {meta['spec']}]\nparams = this op's keyword args as a JSON object; " \
+           f"refs: see cad_help. Result has diff (added/removed/changed fields). On error: cad_explain_failure."
     server.tool(name=f"op_{opname}", description=desc[:1800])(f)
 
 
@@ -206,3 +225,48 @@ def register(server):
     def cad_render(session: str, res: int = 900) -> str:
         """Smooth + clay + zebra surface render sheet (Blender Workbench). Returns sheet.png path - look at it."""
         return dispatch("render", {"session": session, "res": res}, timeout=900)
+
+    @server.tool(name="cad_measure")
+    def cad_measure(session: str, a: dict | str, b: dict | str | None = None) -> str:
+        """a alone: length/area/volume/radius/normal/bbox. a+b: min distance, closest points, angle (planar faces /
+        straight edges). e.g. a={"obj":"body","faces":{"normal":"+z"}}, b={"obj":"body","faces":{"normal":"-z"}}"""
+        return dispatch("measure", {"session": session, "a": a, "b": b})
+
+    @server.tool(name="cad_curvature")
+    def cad_curvature(session: str, face: dict | str, point: list[float] | None = None) -> str:
+        """Principal curvatures k1/k2 (1/m), radii, directions of one face at the point nearest `point`."""
+        return dispatch("curvature", {"session": session, "face": face, "point": point})
+
+    @server.tool(name="cad_draft_analysis")
+    def cad_draft_analysis(session: str, body: str, pull: str | list[float] = "+z", min_draft: float = 1.0) -> str:
+        """Per-face draft vs pull direction; lists faces needing draft with a near-ref to feed op_draft_face."""
+        return dispatch("draft_analysis", {"session": session, "body": body, "pull": pull, "min_draft": min_draft})
+
+    @server.tool(name="cad_deviation")
+    def cad_deviation(session: str, a: dict | str, b: dict | str, samples: int = 20000) -> str:
+        """Surface deviation a vs b (object/ref or mesh file .stl/.obj/.glb): max/mean/rms/p95/hausdorff, worst point."""
+        return dispatch("deviation", {"session": session, "a": a, "b": b, "samples": samples})
+
+    @server.tool(name="cad_compare_to_ref")
+    def cad_compare_to_ref(session: str, image: str, view: str = "front", names: list[str] | None = None,
+                           m_per_px: float | None = None, origin_px: list[float] | None = None,
+                           threshold: int = 128, out: str | None = None) -> str:
+        """Silhouette IoU vs a reference image (view front=XZ, side=YZ, top=XY). With m_per_px+origin_px (pixel of
+        world 0,0) = absolute; without = shape-only (height-fit) and returns implied m_per_px. out = diff png path
+        (red model-only, blue ref-only)."""
+        return dispatch("compare_to_ref", {"session": session, "image": image, "view": view, "names": names,
+                                           "m_per_px": m_per_px, "origin_px": origin_px, "threshold": threshold,
+                                           "out": out})
+
+    @server.tool(name="cad_suggest_refs")
+    def cad_suggest_refs(session: str, obj: str, near: list[float] | None = None, kind: str = "faces",
+                         n: int = 6) -> str:
+        """Entities of obj nearest `near` with VERIFIED ref specs: stable_refs (semantic, survive edits) + near_ref.
+        Paste one into any op's faces/edges param."""
+        return dispatch("suggest_refs", {"session": session, "obj": obj, "near": near, "kind": kind, "n": n})
+
+    @server.tool(name="cad_explain_failure")
+    def cad_explain_failure(session: str, op: str, params: dict | None = None) -> str:
+        """Dry-run an op (state untouched): missing/unknown params, what each ref resolves to, op checks (fillet
+        shortest neighbour edge, boolean overlap, profile closed), kernel error + hint."""
+        return dispatch("explain_failure", {"session": session, "op": op, "params": params or {}})

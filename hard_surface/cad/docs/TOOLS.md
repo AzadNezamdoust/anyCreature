@@ -85,3 +85,17 @@ Tests: tests/test_tools_*.py. Demo: examples/tools_crate_demo.py -> out/tools_ru
 - blend_surface G2 assumes ~zero cross-curvature of the support faces (exact for planar/ruled); result is a sheet (sew it).
 - cap_round: G1 at the trim junction only to loft-fit accuracy; insets via 2D offset or point offset (convex-ish caps).
 - cadkit/ops.py untouched (other lane). Wrapped: safe_boolean/safe_fillet/safe_chamfer; CadOpError -> ToolError with data.max_feasible.
+
+## Parity pass (2026-10-22) - see docs/PARITY.md
+| op | implements |
+|---|---|
+| push_pull | spec 2.5: move faces on a filleted body; blends removed, face offset, healed edges re-filleted at old radii |
+| boolean_fillet | spec 1 Booleans + Fillet: boolean then round only the seam (section-curve) edges |
+| symmetrize | spec 1 Mirror auto-union / 5.6: cut at plane, keep master half, mirror + fuse |
+| curve_network | spec 1 Surfaces: boundary loop + interior network curves (GeomPlate free constraints; approx, not Gordon) |
+| offset_curve_on_face | spec 1 Curves edit: offset a curve along a surface (tangent-plane step + re-project) |
+| draft_face | spec 1 Direct edit: draft face (angle, pull dir, neutral plane) |
+Queries (cadkit/tools/query.py, MCP cad_*, no journal entry): measure, curvature, draft_analysis, deviation (exact
+point-triangle), compare_to_ref (silhouette IoU), suggest_refs (verified unique refs), explain_failure (dry run).
+Every op result now carries `diff` (added/removed/changed fields). Worked examples per op: cadkit/tools/examples.py.
+Tests: tests/test_tools_parity.py.
