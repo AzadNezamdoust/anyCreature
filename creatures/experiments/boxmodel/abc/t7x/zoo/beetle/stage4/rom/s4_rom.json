@@ -1,0 +1,842 @@
+{
+ "summary": {
+  "poses": 42,
+  "pass_": 39,
+  "min_vol": 0.413,
+  "max_stretch": 1.723,
+  "inverted_total": 15,
+  "overlap_new_total": 120,
+  "fail_vol": 3,
+  "fail_stretch": 0,
+  "fail_inv": 2,
+  "fail_ov": 3,
+  "body": "body",
+  "verts": 14111,
+  "tris": 4896,
+  "rest_overlap": 0,
+  "joints": "auto",
+  "reweight": null,
+  "ok": false
+ },
+ "rows": [
+  {
+   "vol": 0.982,
+   "stretch": 1.299,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "flex",
+   "deg": -20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.563,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "ext",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 1.008,
+   "stretch": 1.591,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "side+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 1.008,
+   "stretch": 1.591,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "side-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 1.004,
+   "stretch": 1.668,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "twist+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 1.004,
+   "stretch": 1.668,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1680,
+   "bone": "thorax",
+   "type": "ball",
+   "pose": "twist-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 84
+  },
+  {
+   "vol": 0.97,
+   "stretch": 1.29,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "flex",
+   "deg": -20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 1.012,
+   "stretch": 1.17,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "ext",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 0.998,
+   "stretch": 1.21,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "side+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 0.998,
+   "stretch": 1.21,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "side-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 0.988,
+   "stretch": 1.166,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "twist+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 0.988,
+   "stretch": 1.166,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 1274,
+   "bone": "head",
+   "type": "ball",
+   "pose": "twist-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 63
+  },
+  {
+   "vol": 1.032,
+   "stretch": 1.667,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 60,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.969,
+   "stretch": 1.359,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.989,
+   "stretch": 1.12,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.982,
+   "stretch": 1.183,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.986,
+   "stretch": 1.3,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.985,
+   "stretch": 1.217,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 331,
+   "bone": "femur1.L",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 16
+  },
+  {
+   "vol": 0.686,
+   "stretch": 1.019,
+   "inverted": 0,
+   "overlap_new": 19,
+   "region_tris": 15,
+   "bone": "tibia1.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": -90,
+   "ok": false,
+   "fail": [
+    "vol",
+    "overlap"
+   ],
+   "overlap_cap": 0
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.007,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 15,
+   "bone": "tibia1.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": 5,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 0
+  },
+  {
+   "vol": 0.956,
+   "stretch": 1.223,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 28,
+   "bone": "tarsus1.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": 40,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.969,
+   "stretch": 1.318,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 28,
+   "bone": "tarsus1.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.972,
+   "stretch": 1.504,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 60,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 1.007,
+   "stretch": 1.267,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 1.025,
+   "stretch": 1.122,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 0.991,
+   "stretch": 1.191,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 1.018,
+   "stretch": 1.248,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 1.007,
+   "stretch": 1.254,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 290,
+   "bone": "femur2.L",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 14
+  },
+  {
+   "vol": 0.413,
+   "stretch": 1.441,
+   "inverted": 8,
+   "overlap_new": 68,
+   "region_tris": 127,
+   "bone": "tibia2.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": -90,
+   "ok": false,
+   "fail": [
+    "vol",
+    "inverted",
+    "overlap"
+   ],
+   "overlap_cap": 6
+  },
+  {
+   "vol": 1.002,
+   "stretch": 1.021,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 127,
+   "bone": "tibia2.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": 5,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 6
+  },
+  {
+   "vol": 0.937,
+   "stretch": 1.18,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 50,
+   "bone": "tarsus2.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": 40,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 0.996,
+   "stretch": 1.185,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 50,
+   "bone": "tarsus2.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.723,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 60,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.973,
+   "stretch": 1.376,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.97,
+   "stretch": 1.155,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.989,
+   "stretch": 1.316,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.965,
+   "stretch": 1.183,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.957,
+   "stretch": 1.521,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 944,
+   "bone": "femur3.L",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 47
+  },
+  {
+   "vol": 0.65,
+   "stretch": 1.179,
+   "inverted": 7,
+   "overlap_new": 33,
+   "region_tris": 78,
+   "bone": "tibia3.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": 90,
+   "ok": false,
+   "fail": [
+    "vol",
+    "inverted",
+    "overlap"
+   ],
+   "overlap_cap": 3
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.041,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 78,
+   "bone": "tibia3.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": -5,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 3
+  },
+  {
+   "vol": 0.949,
+   "stretch": 1.393,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 35,
+   "bone": "tarsus3.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": -40,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.98,
+   "stretch": 1.187,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 35,
+   "bone": "tarsus3.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  }
+ ],
+ "axes": {
+  "thorax": [
+   "X",
+   -1,
+   "Z"
+  ],
+  "head": [
+   "X",
+   -1,
+   "Z"
+  ],
+  "femur1.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "tibia1.L": [
+   "Z",
+   -1,
+   "X"
+  ],
+  "tarsus1.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "femur2.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "tibia2.L": [
+   "Z",
+   -1,
+   "X"
+  ],
+  "tarsus2.L": [
+   "Z",
+   1,
+   "X"
+  ],
+  "femur3.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "tibia3.L": [
+   "Z",
+   1,
+   "X"
+  ],
+  "tarsus3.L": [
+   "X",
+   -1,
+   "Z"
+  ]
+ },
+ "joints": [
+  {
+   "bone": "thorax",
+   "role": "spine",
+   "type": "ball",
+   "flex": 20,
+   "ext": 15,
+   "side": 15,
+   "twist": 15,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.173
+  },
+  {
+   "bone": "head",
+   "role": "spine",
+   "type": "ball",
+   "flex": 20,
+   "ext": 15,
+   "side": 15,
+   "twist": 15,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.1373
+  },
+  {
+   "bone": "femur1.L",
+   "role": "root",
+   "type": "twist",
+   "flex": 60,
+   "ext": 30,
+   "side": 30,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0659
+  },
+  {
+   "bone": "tibia1.L",
+   "role": "mid",
+   "type": "hinge",
+   "flex": 90,
+   "ext": 5,
+   "flex_dir": [
+    -0.9747570157051086,
+    -0.2218719869852066,
+    -0.024934157729148865
+   ],
+   "r": 0.0253
+  },
+  {
+   "bone": "tarsus1.L",
+   "role": "distal",
+   "type": "hinge",
+   "flex": 40,
+   "ext": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0242
+  },
+  {
+   "bone": "femur2.L",
+   "role": "root",
+   "type": "twist",
+   "flex": 60,
+   "ext": 30,
+   "side": 30,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0623
+  },
+  {
+   "bone": "tibia2.L",
+   "role": "mid",
+   "type": "hinge",
+   "flex": 90,
+   "ext": 5,
+   "flex_dir": [
+    -0.9599890112876892,
+    0.07823733985424042,
+    -0.26888662576675415
+   ],
+   "r": 0.0502
+  },
+  {
+   "bone": "tarsus2.L",
+   "role": "distal",
+   "type": "hinge",
+   "flex": 40,
+   "ext": 30,
+   "flex_dir": [
+    0.5010719299316406,
+    -0.5726448893547058,
+    0.648848831653595
+   ],
+   "r": 0.0242
+  },
+  {
+   "bone": "femur3.L",
+   "role": "root",
+   "type": "twist",
+   "flex": 60,
+   "ext": 30,
+   "side": 30,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.1211
+  },
+  {
+   "bone": "tibia3.L",
+   "role": "mid",
+   "type": "hinge",
+   "flex": 90,
+   "ext": 5,
+   "flex_dir": [
+    -0.9671609997749329,
+    0.18369348347187042,
+    -0.17565976083278656
+   ],
+   "r": 0.0435
+  },
+  {
+   "bone": "tarsus3.L",
+   "role": "distal",
+   "type": "hinge",
+   "flex": 40,
+   "ext": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0242
+  }
+ ],
+ "gates": {
+  "vol_min": 0.7,
+  "stretch_max": 2.0,
+  "inverted_max": 0,
+  "overlap_new_max": 0,
+  "overlap_new_frac": 0.05
+ },
+ "reweight_stats": null
+}

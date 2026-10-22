@@ -1,0 +1,84 @@
+{
+ "name": "hippo",
+ "mode": "baseline",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\hippo\\stage4\\hippo.glb",
+ "tris": [
+  3192
+ ],
+ "clipqa": {
+  "H": 1.6379897594451904,
+  "feet": [
+   "hand.L",
+   "hand.R",
+   "toe.L",
+   "toe.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 1.07,
+    "foot_slide_std_pctH": 0.716,
+    "planted_frames": 106,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.14,
+    "foot_slide_std_pctH": 0.072,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 5.15,
+    "foot_slide_std_pctH": 1.316,
+    "planted_frames": 40,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\baseline\\renders\\base_lod0_192.png"
+ },
+ "roundtrip": {
+  "baseline_glb": {
+   "file": "hippo.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": false,
+     "detail": "[]"
+    },
+    "lods": {
+     "ok": false,
+     "detail": "[]"
+    },
+    "hurtboxes": {
+     "ok": false,
+     "detail": "0/1"
+    },
+    "collision": {
+     "ok": false,
+     "detail": "[]"
+    }
+   },
+   "pass_core": true,
+   "pass_all": false
+  }
+ }
+}

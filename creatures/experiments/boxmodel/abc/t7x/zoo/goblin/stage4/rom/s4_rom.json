@@ -1,0 +1,856 @@
+{
+ "summary": {
+  "poses": 44,
+  "pass_": 39,
+  "min_vol": 0.688,
+  "max_stretch": 1.637,
+  "inverted_total": 7,
+  "overlap_new_total": 184,
+  "fail_vol": 1,
+  "fail_stretch": 0,
+  "fail_inv": 2,
+  "fail_ov": 5,
+  "body": "body",
+  "verts": 6102,
+  "tris": 2144,
+  "rest_overlap": 4,
+  "joints": "auto",
+  "reweight": null,
+  "ok": false
+ },
+ "rows": [
+  {
+   "vol": 0.985,
+   "stretch": 1.331,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "flex",
+   "deg": 20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.257,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "ext",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 0.991,
+   "stretch": 1.257,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "side+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.257,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "side-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 0.997,
+   "stretch": 1.13,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "twist+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 0.997,
+   "stretch": 1.129,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 428,
+   "bone": "spine",
+   "type": "ball",
+   "pose": "twist-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 21
+  },
+  {
+   "vol": 0.993,
+   "stretch": 1.219,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "flex",
+   "deg": 20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.176,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "ext",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 0.994,
+   "stretch": 1.344,
+   "inverted": 0,
+   "overlap_new": 19,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "side+",
+   "deg": 15,
+   "ok": false,
+   "fail": [
+    "overlap"
+   ],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 0.994,
+   "stretch": 1.344,
+   "inverted": 0,
+   "overlap_new": 19,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "side-",
+   "deg": -15,
+   "ok": false,
+   "fail": [
+    "overlap"
+   ],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 0.996,
+   "stretch": 1.224,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "twist+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 0.996,
+   "stretch": 1.224,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 312,
+   "bone": "chest",
+   "type": "ball",
+   "pose": "twist-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 15
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.389,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 1.006,
+   "stretch": 1.375,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.308,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.308,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.296,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 0.992,
+   "stretch": 1.296,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 230,
+   "bone": "neck",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 11
+  },
+  {
+   "vol": 0.986,
+   "stretch": 1.251,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "flex",
+   "deg": 20,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 1.024,
+   "stretch": 1.159,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "ext",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 1.0,
+   "stretch": 1.238,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "side+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 1.007,
+   "stretch": 1.238,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "side-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 0.999,
+   "stretch": 1.149,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "twist+",
+   "deg": 15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 0.998,
+   "stretch": 1.149,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 398,
+   "bone": "head",
+   "type": "ball",
+   "pose": "twist-",
+   "deg": -15,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 19
+  },
+  {
+   "vol": 0.917,
+   "stretch": 1.389,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 60,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.964,
+   "stretch": 1.201,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 1.005,
+   "stretch": 1.211,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.984,
+   "stretch": 1.118,
+   "inverted": 0,
+   "overlap_new": 90,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -30,
+   "ok": false,
+   "fail": [
+    "overlap"
+   ],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.983,
+   "stretch": 1.278,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.968,
+   "stretch": 1.17,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 31,
+   "bone": "upperarm.L",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 1
+  },
+  {
+   "vol": 0.688,
+   "stretch": 1.367,
+   "inverted": 2,
+   "overlap_new": 28,
+   "region_tris": 40,
+   "bone": "forearm.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": 90,
+   "ok": false,
+   "fail": [
+    "vol",
+    "inverted",
+    "overlap"
+   ],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 1.006,
+   "stretch": 1.046,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 40,
+   "bone": "forearm.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": -5,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 0.968,
+   "stretch": 1.379,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 53,
+   "bone": "hand.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": -40,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 0.984,
+   "stretch": 1.341,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 53,
+   "bone": "hand.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 2
+  },
+  {
+   "vol": 0.948,
+   "stretch": 1.589,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "flex",
+   "deg": 60,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.987,
+   "stretch": 1.199,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.97,
+   "stretch": 1.384,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "side+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.989,
+   "stretch": 1.223,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "side-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.983,
+   "stretch": 1.344,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "twist+",
+   "deg": 30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.998,
+   "stretch": 1.279,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 141,
+   "bone": "thigh.L",
+   "type": "twist",
+   "pose": "twist-",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 7
+  },
+  {
+   "vol": 0.761,
+   "stretch": 1.637,
+   "inverted": 5,
+   "overlap_new": 28,
+   "region_tris": 69,
+   "bone": "shin.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": -90,
+   "ok": false,
+   "fail": [
+    "inverted",
+    "overlap"
+   ],
+   "overlap_cap": 3
+  },
+  {
+   "vol": 0.995,
+   "stretch": 1.072,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 69,
+   "bone": "shin.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": 5,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 3
+  },
+  {
+   "vol": 1.031,
+   "stretch": 1.24,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 174,
+   "bone": "foot.L",
+   "type": "hinge",
+   "pose": "flex",
+   "deg": 40,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 8
+  },
+  {
+   "vol": 0.956,
+   "stretch": 1.468,
+   "inverted": 0,
+   "overlap_new": 0,
+   "region_tris": 174,
+   "bone": "foot.L",
+   "type": "hinge",
+   "pose": "ext",
+   "deg": -30,
+   "ok": true,
+   "fail": [],
+   "overlap_cap": 8
+  }
+ ],
+ "axes": {
+  "spine": [
+   "X",
+   1,
+   "Z"
+  ],
+  "chest": [
+   "X",
+   1,
+   "Z"
+  ],
+  "neck": [
+   "X",
+   1,
+   "Z"
+  ],
+  "head": [
+   "X",
+   1,
+   "Z"
+  ],
+  "upperarm.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "forearm.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "hand.L": [
+   "Z",
+   -1,
+   "X"
+  ],
+  "thigh.L": [
+   "X",
+   1,
+   "Z"
+  ],
+  "shin.L": [
+   "X",
+   -1,
+   "Z"
+  ],
+  "foot.L": [
+   "X",
+   1,
+   "Z"
+  ]
+ },
+ "joints": [
+  {
+   "bone": "spine",
+   "role": "spine",
+   "type": "ball",
+   "flex": 20,
+   "ext": 15,
+   "side": 15,
+   "twist": 15,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.1082
+  },
+  {
+   "bone": "chest",
+   "role": "spine",
+   "type": "ball",
+   "flex": 20,
+   "ext": 15,
+   "side": 15,
+   "twist": 15,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0985
+  },
+  {
+   "bone": "neck",
+   "role": "neck",
+   "type": "twist",
+   "flex": 30,
+   "ext": 20,
+   "side": 20,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0831
+  },
+  {
+   "bone": "head",
+   "role": "spine",
+   "type": "ball",
+   "flex": 20,
+   "ext": 15,
+   "side": 15,
+   "twist": 15,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0973
+  },
+  {
+   "bone": "upperarm.L",
+   "role": "root",
+   "type": "twist",
+   "flex": 60,
+   "ext": 30,
+   "side": 30,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0548
+  },
+  {
+   "bone": "forearm.L",
+   "role": "mid",
+   "type": "hinge",
+   "flex": 90,
+   "ext": 5,
+   "flex_dir": [
+    -0.4261617362499237,
+    -0.8394936323165894,
+    0.33710020780563354
+   ],
+   "r": 0.0455
+  },
+  {
+   "bone": "hand.L",
+   "role": "distal",
+   "type": "hinge",
+   "flex": 40,
+   "ext": 30,
+   "flex_dir": [
+    -0.9294182658195496,
+    0.3624987006187439,
+    -0.06911060959100723
+   ],
+   "r": 0.0458
+  },
+  {
+   "bone": "thigh.L",
+   "role": "root",
+   "type": "twist",
+   "flex": 60,
+   "ext": 30,
+   "side": 30,
+   "twist": 30,
+   "flex_dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "r": 0.0738
+  },
+  {
+   "bone": "shin.L",
+   "role": "mid",
+   "type": "hinge",
+   "flex": 90,
+   "ext": 5,
+   "flex_dir": [
+    -0.1686854362487793,
+    0.9108244180679321,
+    0.37675490975379944
+   ],
+   "r": 0.0412
+  },
+  {
+   "bone": "foot.L",
+   "role": "distal",
+   "type": "hinge",
+   "flex": 40,
+   "ext": 30,
+   "flex_dir": [
+    -0.20151938498020172,
+    -0.2707504630088806,
+    0.9413203597068787
+   ],
+   "r": 0.0597
+  }
+ ],
+ "gates": {
+  "vol_min": 0.7,
+  "stretch_max": 2.0,
+  "inverted_max": 0,
+  "overlap_new_max": 0,
+  "overlap_new_frac": 0.05
+ },
+ "reweight_stats": null
+}

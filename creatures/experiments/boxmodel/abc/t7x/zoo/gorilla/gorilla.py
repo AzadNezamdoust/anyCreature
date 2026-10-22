@@ -101,9 +101,11 @@ SECS = [
     tb('T2', (-0.675, 0.865), (-0.285, 1.40), 0.36, TRAPP),    # neck / throat under the jaw
     tb('H0u', (-0.725, 0.885), (-0.33, 1.425), 0.29, JAW),    # jaw line (the jaw underside, ahead of the throat)
     tb('H0', (-0.775, 0.925), (-0.375, 1.45), 0.255, JAW),    # chin
+    ('Hm', None, None, ('H0', 'H1', 0.8), 'LERP'),             # HEAD pass: the mouth line ring (a lip step, S1)
     tb('H1', (-0.81, 1.0), (-0.415, 1.47), 0.235, HEAD),       # mouth
     tb('H2', (-0.79, 1.09), (-0.45, 1.485), 0.225, HEAD),      # nose
     tb('H3', (-0.765, 1.165), (-0.48, 1.493), 0.215, HEAD),    # eye
+    ('He', None, None, ('H3', 'H4', 0.6), 'LERP'),             # HEAD pass: the upper-lid ring under the brow overhang
     tb('H4', (-0.755, 1.225), (-0.505, 1.498), 0.2, HEAD),   # brow ridge
     tb('H5', (-0.70, 1.30), (-0.525, 1.50), 0.145, HEAD),      # forehead
     tb('H6', (-0.63, 1.39), (-0.54, 1.50), 0.07, HEAD),       # crest
@@ -116,10 +118,50 @@ def sec_pts(F, B, W, p):
     return [(fx * W, (m - u * fh).y, (m - u * fh).z) for fx, fh in p]
 
 
-def P(nm):
+# HEAD pass (2026-10-22): the face is built in the loft. Two new head rings (Hm the mouth line between the chin H0
+# and the upper lip H1, He the upper lid between the eye ring H3 and the brow H4) and hand-placed face vertices j0-j4
+# on the head rings (x, y, z): a rounded muzzle (H1/H2) wider than tall that turns back into the cheeks, the mouth a
+# thin ring step under the upper-lip overhang, the nose bridge (H3 j0) back, the eye band (H3/He j1-j2) sunk under a
+# brow ring (H4) that overhangs it in two arches, cheekbone vertices (H3 j3-j4) between the socket and the muzzle,
+# the chin (H0) under the muzzle, the jaw underside (H0u) behind it. (The r24e S2 face moves are replaced by this.)
+# r2b (Q2/Q3: the muzzle front read flat with hard vertical side edges, too little jut in profile): the muzzle rings
+# 1-2 cm further forward at the centre and rounder in plan (j1/j2/j3 fall back progressively), the chin rounder
+FACE = {
+    'H0u': {0: (0.0, -0.765, 0.885), 1: (0.080, -0.760, 0.888), 2: (0.165, -0.728, 0.898)},
+    'H0': {0: (0.0, -0.862, 0.940), 1: (0.052, -0.855, 0.942), 2: (0.100, -0.830, 0.950), 3: (0.135, -0.790, 0.966),
+           4: (0.182, -0.738, 1.005)},
+    'Hm': {0: (0.0, -0.868, 0.996), 1: (0.053, -0.861, 0.998), 2: (0.104, -0.838, 1.003), 3: (0.144, -0.798, 1.014),
+           4: (0.190, -0.748, 1.046)},
+    'H1': {0: (0.0, -0.892, 1.010), 1: (0.054, -0.884, 1.012), 2: (0.106, -0.858, 1.018), 3: (0.146, -0.812, 1.032),
+           4: (0.186, -0.764, 1.068)},
+    'H2': {0: (0.0, -0.858, 1.078), 1: (0.056, -0.851, 1.080), 2: (0.106, -0.829, 1.088), 3: (0.148, -0.792, 1.104),
+           4: (0.188, -0.752, 1.140)},
+    'H3': {0: (0.0, -0.778, 1.150), 1: (0.060, -0.763, 1.152), 2: (0.122, -0.757, 1.158), 3: (0.170, -0.746, 1.172),
+           4: (0.198, -0.720, 1.205)},
+    'He': {0: (0.0, -0.772, 1.198), 1: (0.058, -0.760, 1.202), 2: (0.122, -0.755, 1.206), 3: (0.160, -0.726, 1.216),
+           4: (0.182, -0.712, 1.242)},
+    'H4': {0: (0.0, -0.800, 1.236), 1: (0.058, -0.815, 1.250), 2: (0.122, -0.812, 1.254), 3: (0.162, -0.766, 1.252),
+           4: (0.172, -0.732, 1.272)},
+}
+
+def _raw(nm):
     for (n, F, B, W, p) in SECS:
         if n == nm:
-            return [Vector(q) for q in sec_pts(F, B, W, p)]
+            if p == 'LERP':
+                a, b, t = W
+                return [tuple(x_ + (y_ - x_) * t for x_, y_ in zip(qa, qb)) for qa, qb in zip(_raw(a), _raw(b))]
+            return sec_pts(F, B, W, p)
+
+
+def ring_pts(nm):
+    pts = list(_raw(nm))
+    for j, q in FACE.get(nm, {}).items():
+        pts[j] = q
+    return pts
+
+
+def P(nm):
+    return [Vector(q) for q in ring_pts(nm)]
 
 
 # ---- arm (minotaur/troll method): frame rings (centre, (r lateral, r front-back)) after the hug ring
@@ -263,7 +305,7 @@ def grow_win(bm, rings, spans, i0, j0, A, B, secs, t1):
 def stage1(k):
     bm = bmesh.new()
     idx = {nm: i for i, (nm, *_r) in enumerate(SECS)}
-    rings = [ring(bm, sec_pts(F, B, W, p)) for (nm, F, B, W, p) in SECS]
+    rings = [ring(bm, ring_pts(nm)) for (nm, *_r) in SECS]
     spans = [bridge(bm, rings[i], rings[i + 1]) for i in range(len(rings) - 1)]
     rump = cap(bm, rings[0])
     top = cap(bm, rings[-1])
@@ -334,17 +376,31 @@ def stage2(k, body):
     for why, fe in cuts:
         with k.topo(bm, 'loop', why):
             loopcut(bm, fe(), t=0.5)
-    ec = face_c(*EYE_SPAN, EYE_COL)
-    f = face_near(bm, ec)
-    fn = f.normal.copy()
-    with k.topo(bm, 'inset', 'eye socket: a ring in the eye face under the brow, its floor pushed in'):
-        inner = inset(bm, [f], 0.22, 0.0)
-    ev = list(inner[0].verts)
-    move(ev, -fn * 0.003)                            # s2 r5: a shallow socket (the side view needs the lens clear)
-    sc = sum((v.co for v in ev), Vector()) / len(ev)
-    SOCKET[:] = [Vector((abs(sc.x), sc.y, sc.z)), fn.copy()]
-    H4 = P('H4')
-    move([vert_near(bm, H4[j]) for j in (0, 1, 2, 3)], (0.0, -0.013, 0.004))    # the heavy brow ridge over the eye (r5: 1.8 -> 1.3 cm)
+    # face pass: handles on every head-ring vertex, taken at the S1 positions (vert_near on moved verts can pick a
+    # neighbour or a socket vertex once moves pass ~1 cm)
+    HV = {(nm, j): vert_near(bm, P(nm)[j]) for nm in ('H0u', 'H0', 'Hm', 'H1', 'H2', 'H3', 'He', 'H4', 'H5', 'H6') for j in range(NV)}
+    hv = lambda nm, j: HV[(nm, j)]
+    # B r16b (Q9/Q10): the arm reads as masses, not a tube - each arm ring (after the elbow loop) scaled about its own
+    # centre in its frame (lateral s1, front-back s2): elbow ring pinched, the forearm swells just below the elbow, the
+    # wrist narrows into the knuckle pad; the elbow loop's rear verts pushed back 2 cm (the elbow knob)
+    ARM_SC = {2: (0.90, 0.92), 3: (1.15, 1.10), 4: (1.06, 1.04), 5: (0.96, 0.96), 6: (0.88, 0.90)}
+
+    def arm_ring(c, e1, e2):
+        d = e1.cross(e2).normalized()
+        return [v for v in bm.verts if v.co.x > 0.12 and abs((v.co - c).dot(d)) < 0.012 and (v.co - c).length < 0.30]
+    for i_, (s1, s2) in ARM_SC.items():
+        c, e1, e2, _r1, _r2 = af[i_]
+        for v in arm_ring(c, e1, e2):
+            a_, b_ = (v.co - c).dot(e1), (v.co - c).dot(e2)
+            v.co += e1 * a_ * (s1 - 1) + e2 * b_ * (s2 - 1)
+    ce = (af[ARM_ELBOW][0] + af[ARM_ELBOW + 1][0]) / 2
+    e1m, e2m = (af[ARM_ELBOW][1] + af[ARM_ELBOW + 1][1]).normalized(), (af[ARM_ELBOW][2] + af[ARM_ELBOW + 1][2]).normalized()
+    eloop = arm_ring(ce, e1m, e2m)
+    for v in eloop:
+        if (v.co - ce).dot(e2m) > 0.05:
+            v.co += e2m * 0.02
+    print('BMK B r16b arm rings', {i_: len(arm_ring(*af[i_][:3])) for i_ in ARM_SC}, 'elbow loop', len(eloop))
+    # HEAD pass: the brow, muzzle, mouth and cheek shapes are S1 ring vertices now (FACE); the S2 face moves are gone
     # s2 r2: the collar step C2 -> T1 -> T2 (W 0.51 / 0.46 / 0.36; a ledge round the neck seen from the top and az000):
     # the shoulder-to-crest rings relaxed along the loft (each vertex half way to the mean of its neighbours up and down
     # the column, twice), so the trapezius is one sloping mass from the deltoid line to the crest
@@ -373,14 +429,27 @@ def stage2(k, body):
         dy = 0.02 if v.co.y < 0.40 else 0.0
         v.co += Vector((dx, dy, 0.0))
         t_.co += Vector((dx * 0.5, dy * 0.5, 0.0))
-    # s2 r6: the face was a flat box plate under a brow shelf (hero close-up 0). The muzzle juts (mouth ring H1 2 cm,
-    # chin H0 1.5 cm, nose H2 1 cm forward on the front columns j0-j2) and the face's side columns j3 of H0-H4 step
-    # back 1.5 cm, so the face front rounds into the cheeks
-    for nm, dy in (('H0', -0.015), ('H1', -0.02), ('H2', -0.01)):
-        for jj in (0, 1, 2):
-            vert_near(bm, P(nm)[jj]).co.y += dy * (1.0 if jj < 2 else 0.6)
-    for nm in ('H0', 'H1', 'H2', 'H3', 'H4'):
-        vert_near(bm, P(nm)[3]).co.y += 0.015
+    # B r18b (Q4): the sagittal crest is a ridge, not a dome - the dorsal seam (j13) of H1-H6 raised (peak 3 cm over the
+    # brow-to-crown H4/H5), j12 drawn in to 0.7 x and j11 to 0.9 x its width (a peaked cross-section), the top cap's
+    # poke vertex raised with the seam
+    for nm, dz in (('Hm', 0.004), ('H1', 0.005), ('H2', 0.012), ('H3', 0.02), ('He', 0.026), ('H4', 0.03), ('H5', 0.03), ('H6', 0.025)):
+        Q = P(nm)
+        hv(nm, 13).co.z += dz
+        hv(nm, 12).co.x *= 0.7
+        hv(nm, 11).co.x *= 0.9
+        hv(nm, 12).co.z += dz * 0.5
+    Q6 = P('H6')
+    vert_near(bm, sum(Q6, Vector()) / len(Q6) + Vector((0, 0, 0.008))).co.z += 0.025
+    # the eye socket, cut after the face is shaped: an inset in the eye face (H3 -> He, column 1, under the brow ring),
+    # its floor 6 mm in
+    f = (set(hv('H3', 1).link_faces) & set(hv('H3', 2).link_faces) & set(hv('He', 1).link_faces) & set(hv('He', 2).link_faces)).pop()
+    fn = f.normal.copy()
+    with k.topo(bm, 'inset', 'eye socket: a ring in the eye face under the brow, its floor pushed in'):
+        inner = inset(bm, [f], 0.22, 0.0)
+    ev = list(inner[0].verts)
+    move(ev, -fn * 0.006)
+    sc = sum((v.co for v in ev), Vector()) / len(ev)
+    SOCKET[:] = [Vector((abs(sc.x), sc.y, sc.z)), fn.copy()]
     # s2 r5: the groin (probe s4 r03: 96-98 deg where the level crotch strip met the thigh's vertical inner wall along
     # the window's inner edge, x 0.15): the ventral seam between the thighs dropped 3 cm (R1-R5, R6 1.5 cm) - a shallow
     # V, the crotch faces turn down-and-in into the inner thigh
@@ -393,7 +462,7 @@ def stage2(k, body):
 
 
 # ---------------------------------------------------------------- stage 3
-PAL = {'fur': '#55545a', 'saddle': '#a9a9ae', 'skin': '#3d3a3b', 'eye': '#5b3a20', 'pupil': '#140f0c'}
+PAL = {'fur': '#55545a', 'saddle': '#a9a9ae', 'skin': '#3d3a3b', 'skin2': '#49474b', 'eye': '#5b3a20', 'pupil': '#140f0c'}
 # s3 r2: colour follows topology - each face is coloured by the loft ring and column (j) it sits on (the r1 rule cut
 # across tilted rings by height: a stepped 'tetris' saddle border)
 _RINGPTS = None
@@ -415,19 +484,32 @@ def ring_col(c):
 
 
 SADDLE_BACK = ('R0', 'R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8', 'R9')
+SADDLE_J = dict(R0=3, R1=5, R2=5, R3=5, R4=5, R5=6, R6=7, R7=8, R8=9, R9=11, R10=12)
 HAUNCH_SIDE = ('R0', 'R1', 'R2', 'R3', 'R4')
+
+
+# HEAD pass: skin = the face spans (lower ring of the span -> last skin column): the chin underside, lower lip, mouth
+# step, muzzle front and top (out to the muzzle side j3), the eye band (j0-j2: the outer orbit stays fur) and the brow
+# underside (j0-j3); the brow top, forehead and cheeks behind j3 stay fur
+BLEND = False     # HEAD pass variant b: one face column of a mid tone between the skin and the fur round the face
+SKIN_J = {'H0u': 0, 'H0': 1, 'Hm': 2, 'H1': 3, 'H2': 3, 'H3': 3, 'He': 3}
 
 
 def body_rule(c, n, i):
     nm, j, d = ring_col(c)
     if d < 0.07:
-        if nm in ('H0', 'H1', 'H2', 'H3') and j <= 2:
-            return 'skin'                               # the face: chin to brow, the front plane only (no wide mask)
+        if j <= SKIN_J.get(nm, -1):
+            return 'skin'                               # HEAD pass: the face skin follows the new head loops
+        if BLEND and (j == SKIN_J.get(nm, -9) + 1 or (nm == 'H4' and j <= 3)):
+            return 'skin2'                              # the blend band: the face edge and the brow top
         # review fix 1: ONE border column (j >= 6) along the whole back and haunch, the rump end (R0-R1) all silver;
         # the j9/j5/j2 mix stepped the border face by face on the haunch (thigh crops B)
         # review fix 2: no rump exception (R0-R1 j >= 1 made one big zigzag notch at the haunch, az135 / az225)
-        if nm in SADDLE_BACK and j >= 5:
-            return 'saddle'                             # the silver saddle: back, rump, haunch sides
+        # B r13a (Q6/Q7/Q8): per-ring lower column limit - low on the rump and haunch (j >= 3-5), rising forward along
+        # the flank (R5 6 .. R9 11) and a dorsal tip on R10 (j >= 12): a patch on the lower back + rump that narrows
+        # toward the shoulders (the sheet's rear V), not a rectangular blanket down the flanks
+        if nm in SADDLE_J and j >= SADDLE_J[nm]:
+            return 'saddle'
         return 'fur'
     if c.y > 0.73 and c.z > 0.55:
         return 'saddle'                                 # the rump cap (s4 r8: it showed as a dark hole from behind)
@@ -516,8 +598,58 @@ def ear_slab(c, nrm, up, w, h, th):
     return bm
 
 
+def ring_chain(bm, rows):
+    """Closed n-point sections bridged in order, both ends capped (a solid piece)."""
+    R = [[bm.verts.new(Vector(q)) for q in r] for r in rows]
+    bm.faces.new(list(reversed(R[0])))
+    n = len(R[0])
+    for a, b in zip(R, R[1:]):
+        for j in range(n):
+            bm.faces.new([a[j], a[(j + 1) % n], b[(j + 1) % n], b[j]])
+    bm.faces.new(R[-1])
+    recalc_normals(bm)
+
+
+def nose_rows():
+    """F r22c: the gorilla nose pad - a broad chunky block over the nose face (H2 -> H3, columns 0-1), widest at the
+    nostril line, narrowing up between the eyes; its back buried in the face. (z, half width, front y, back y)."""
+    out = []
+    for z, w, f, b in ((1.072, 0.070, -0.828, -0.79), (1.097, 0.080, -0.860, -0.79), (1.165, 0.034, -0.776, -0.72)):
+        # 8-point section: back, wing, nostril out, septum, septum, nostril out, wing, back (the nostrils are the
+        # small slanted faces between nostril-out and septum on the lower band; the septum dips 7 mm)
+        dz = (0.0, 0.0, 0.003, -0.005, -0.005, 0.003, 0.0, 0.0) if z < 1.08 else (0,) * 8
+        xs = (-0.8, -1.0, -0.74, -0.16, 0.16, 0.74, 1.0, 0.8)
+        ys = (b, f + 0.016, f + 0.004, f, f, f + 0.004, f + 0.016, b)
+        out.append([(xf * w, y_, z + d_) for xf, y_, d_ in zip(xs, ys, dz)])
+    return out
+
+
+# HEAD pass nose pad rows, bottom (nostril line, on the muzzle front just above the lip) -> top (the bridge between
+# the eyes): (z, half width, lift out of the surface)
+NOSE_ROWS = ((1.060, 0.050, 0.008), (1.076, 0.068, 0.020), (1.100, 0.062, 0.017), (1.128, 0.038, 0.010), (1.152, 0.022, 0.007))
+
+
+def nose_pad(tree):
+    """8-point closed sections (back, edge, four front points, edge, back) whose front points are the body surface
+    (a ray from the front at that x, z) lifted out, the back points sunk 1.2 cm: a pad that follows the muzzle."""
+    out = []
+    for z, w, lift in NOSE_ROWS:
+        sec = []
+        for xf, kind in ((-0.45, 'b'), (-1.0, 'e'), (-0.6, 'f'), (-0.2, 'f'), (0.2, 'f'), (0.6, 'f'), (1.0, 'e'), (0.45, 'b')):
+            x = xf * w
+            loc, _n = hit(tree, (x, -1.5, z), (0, 1, 0))
+            sy = loc.y if loc is not None else -0.8
+            dy = {'b': 0.016, 'e': -max(0.3 * lift, 0.004), 'f': -lift * (1.0 - 0.25 * abs(xf))}[kind]
+            sec.append((x, sy + dy, z))
+        out.append(sec)
+    return out
+
+
 def stage3(k, body):
-    paint(body, {kk: PAL[kk] for kk in ('fur', 'saddle', 'skin')}, body_rule)
+    paint(body, {kk: PAL[kk] for kk in ('fur', 'saddle', 'skin') + (('skin2',) if BLEND else ())}, body_rule)
+    from smooth_borders import smooth_borders
+    hl = Vector(J['hipL'])
+    smooth_borders(body, k=k, pairs=[('fur', 'saddle'), ('fur', 'skin'), ('fur', 'skin2'), ('skin', 'skin2')], guard=[(hl, 0.25, 0.3), (Vector((-hl.x, hl.y, hl.z)), 0.25, 0.3)])
     tree = full_bvh(body)
     pieces = []
     # eyes: small round lenses in the sockets, facing forward-out
@@ -526,12 +658,20 @@ def stage3(k, body):
         n0 = Vector((-n0.x, n0.y, n0.z))
     n = (n0 + Vector((1.9, -0.1, 0.0))).normalized()     # s3 r2-3: turned out (side view 0.03 / 0.13)
     bm = bmesh.new()
-    lens(bm, c0 + n * 0.015, n, 0.023, 0.010)          # s3 r2/r4: 46 mm (0.054 of the head was < 0.06)
+    lens(bm, c0 + n * 0.008, n, 0.023, 0.010)          # F r20a: seated in the socket (was 15 mm out: 27 mm proud)          # s3 r2/r4: 46 mm (0.054 of the head was < 0.06)
     eye = object_from_bm('eye', bm)
-    tip = c0 + n * 0.025
+    tip = c0 + n * 0.018                              # F r20a: the lens crown (offset 8 + 10 mm)
     paint(eye, {'eye': PAL['eye'], 'pupil': PAL['pupil']},
           lambda c_, n_, i: 'pupil' if (Vector((abs(c_.x), c_.y, c_.z)) - tip).length < 0.010 else 'eye')
     pieces.append(eye)
+    # HEAD pass (Q5): the nose is a broad flat pad lying flush on the muzzle top, two dark nostril faces on its lower
+    # front (the pupil colour: no new colour); the r22c wedge read as a beak in profile
+    bm = bmesh.new()
+    ring_chain(bm, nose_pad(tree))
+    nose = object_from_bm('nose', bm, mirror=False)
+    paint(nose, {'skin': PAL['skin'], 'pupil': PAL['pupil']},
+          lambda c_, n_, i: 'pupil' if (c_.z < NOSE_ROWS[1][0] - 0.004 and n_.z < -0.2 and abs(c_.x) > 0.012) else 'skin')
+    pieces.append(nose)
     # ears (s3 r3): small closed slabs flat to the skull side, 1.3 cm thick (the ear_cup rim was 3-4 mm: membrane FAIL)
     for side in (1, -1):
         o = Vector((side * 0.30, -0.51, 1.23))

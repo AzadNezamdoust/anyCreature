@@ -1,0 +1,27 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "b49ce906736316a6e23ff5a945914d2448eb8d69155097e29a9ab3cd82d33bc7",
+  "collapsed_edge_hash": "b49ce906736316a6e23ff5a945914d2448eb8d69155097e29a9ab3cd82d33bc7",
+  "logged_ops": 7,
+  "logged_new_verts": 91,
+  "errors": []
+ },
+ "colours": [
+  "back",
+  "cream",
+  "dark",
+  "eye",
+  "fur",
+  "tan"
+ ],
+ "colour_count": 6,
+ "tris": 3896,
+ "attach": [],
+ "borders": null,
+ "pieces": {
+  "piece_eye": 64,
+  "piece__rest_hand": 100,
+  "piece__rest_paw": 256
+ }
+}

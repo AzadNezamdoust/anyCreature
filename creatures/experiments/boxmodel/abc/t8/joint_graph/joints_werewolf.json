@@ -1,0 +1,16 @@
+{
+ "_doc": "werewolf joint graph (research 1.3/3). type hinge|ball|twist; flex_dir = world dir the child tip moves on flexion; rom deg; r = probe radius m. Only .L swept (mirror).",
+ "joints": [
+  {"bone": "spine",      "type": "ball",  "flex_dir": [0,-1,0], "flex": 25, "ext": 15, "side": 15, "twist": 20, "r": 0.20},
+  {"bone": "chest",      "type": "ball",  "flex_dir": [0,-1,0], "flex": 20, "ext": 10, "side": 10, "twist": 20, "r": 0.20},
+  {"bone": "neck",       "type": "twist", "flex_dir": [0,-1,0], "flex": 30, "ext": 20, "side": 20, "twist": 40, "r": 0.16},
+  {"bone": "upperarm.L", "type": "twist", "flex_dir": [0,-1,0], "flex": 90, "ext": 40, "side": 60, "twist": 45, "r": 0.17},
+  {"bone": "forearm.L",  "type": "hinge", "flex_dir": [0,-1,0], "flex": 110, "ext": 10, "r": 0.13},
+  {"bone": "hand.L",     "type": "hinge", "flex_dir": [0,1,0],  "flex": 50, "ext": 40, "r": 0.10},
+  {"bone": "thigh.L",    "type": "twist", "flex_dir": [0,-1,0], "flex": 70, "ext": 25, "side": 40, "twist": 30, "r": 0.18},
+  {"bone": "shin.L",     "type": "hinge", "flex_dir": [0,1,0],  "flex": 90, "ext": 10, "r": 0.13},
+  {"bone": "foot.L",     "type": "hinge", "flex_dir": [0,-1,0], "flex": 50, "ext": 30, "r": 0.10},
+  {"bone": "tail0",      "type": "ball",  "flex_dir": [0,0,1],  "flex": 40, "ext": 30, "side": 40, "twist": 0,  "r": 0.15}
+ ],
+ "gates": {"vol_min": 0.70, "stretch_max": 2.0, "inverted_max": 0, "overlap_new_max": 0}
+}

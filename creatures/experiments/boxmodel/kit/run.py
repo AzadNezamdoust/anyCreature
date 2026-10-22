@@ -29,6 +29,10 @@
              view next to the model's beauty render from the matching angle. A cage build also gets
              6_topology.jpg: the quad wire of the base as modelled (never the export triangles) with the
              poles, the density heatmap, and the topology table with the triangle budget per region and piece.
+--pack       the game pack (kit/game_pack.py, headless Blender) on the stage4 GLB, no rebuild: LOD0-3
+             (100/50/25/15 %, IoU gate >= 0.9), hurtboxes, colliders, sockets, glTF + FBX for Unity and Unreal,
+             round-trip verified; writes <creature>/game_pack/ and pack_report.json. Exit 0 only when the
+             LOD gates and every round-trip check pass.
 --blockout   the blockout sign-off packet of a cage build (META['cage']), blockout/: 1_grey.jpg and
              1_thumbs.jpg (four grey views, full size and 256 px), 2_silhouette.jpg (model | reference
              | difference, with the IoU), 3_proportions.jpg, 4_wire.jpg (joints and their loop counts),
@@ -637,6 +641,33 @@ def blockout(cdir, scr):
 
 
 # ---------------------------------------------------------------- main
+def pack(cdir, scr):
+    """Run kit/game_pack.py on the stage4 GLB into <creature>/game_pack/ (read-only on the source)."""
+    glbs = sorted(glob.glob(os.path.join(cdir, 'stage4', '*.glb')))
+    if not glbs:
+        print('BMK pack: no stage4 GLB (build stage 4 first)')
+        return 2
+    out = os.path.join(cdir, 'game_pack')
+    name = os.path.basename(cdir)
+    rc, lines, tb = blender(os.path.join(KIT, 'game_pack.py'), ['--glb', glbs[0], '--out', out, '--name', name],
+                            os.path.join(scr, 'pack.log'))
+    for l in lines:
+        print(l)
+    if tb:
+        print('\n'.join(tb)); return 2
+    try:
+        rep = json.load(open(os.path.join(out, 'pack_report.json')))
+    except Exception as e:
+        print('BMK pack: no pack_report.json', e)
+        return 2
+    lods_ok = all(l['gate'] for l in rep['lods'])
+    rt_ok = all(v.get('pass_all') for v in rep['roundtrip'].values())
+    print('BMK pack LODs:', ' | '.join(f"LOD{l['lod']} {l['tris']} tris x{l['tri_ratio']} IoU>={l['iou_min']}" for l in rep['lods']))
+    print('BMK pack round-trip:', 'PASS' if rt_ok else 'FAIL', '|', 'LOD gate', 'PASS' if lods_ok else 'FAIL')
+    print('BMK pack:', os.path.relpath(out, ROOT))
+    return 0 if (lods_ok and rt_ok) else 1
+
+
 def main():
     try:
         sys.stdout.reconfigure(encoding='utf-8')
@@ -652,12 +683,21 @@ def main():
     ap.add_argument('--no-orbit', action='store_true')
     ap.add_argument('--review', action='store_true')
     ap.add_argument('--blockout', action='store_true')
+    ap.add_argument('--pack', action='store_true',
+                    help='game pack (kit/game_pack.py) on the stage4 GLB into <creature>/game_pack/')
     ap.add_argument('--junctions', action='store_true',
                     help='also run the junction probe, eye and membrane checks (kit/junction_gate.py) on the stage GLB: '
                          'stageN/junctions/ crops + rounds/sN_rRR_junctions.jpg; a FAIL makes the round NOT OK')
+    ap.add_argument('--rom', action='store_true',
+                    help='ROM sweep gate (kit/rom_gate.py) on the stage-4 GLB, joints auto from the rig: '
+                         'stage4/rom/; a FAIL exits 1 (standalone, no rebuild)')
     ap.add_argument('--details', action='store_true',
                     help='also run the chunky-detail gate (kit/detail_gate.py) on the stage GLB: '
                          'rounds/sN_rRR_details.jpg; a FAIL makes the round NOT OK')
+    ap.add_argument('--clips', action='store_true',
+                    help='clip gate (kit/clip_gate.py) on the stage-4 GLB: penetration, foot slide, loop, NaN/flips; '
+                         'with --fix-clips also repair the clips in place (stage4/before_clips/ backup)')
+    ap.add_argument('--fix-clips', action='store_true')
     a = ap.parse_args()
     prog = os.path.abspath(a.program)
     cdir = os.path.dirname(prog)
@@ -669,6 +709,9 @@ def main():
 
     if a.review:
         return review(cdir, scr)
+
+    if a.pack:
+        return pack(cdir, scr)
 
     if a.blockout:
         rc, lines, tb = blender(prog, ['--out', cdir, '--scratch', scr, '--stage', '1', '--blockout'],
@@ -702,6 +745,30 @@ def main():
         print('BMK side-by-side:', out and os.path.relpath(out, ROOT))
         return 0
 
+    if a.clips:
+        import clip_gate
+        g = sorted(glob.glob(os.path.join(cdir, 'stage4', '*.glb')))
+        if not g:
+            ap.error('no stage-4 GLB')
+        fix = None
+        if a.fix_clips:
+            bk = os.path.join(cdir, 'stage4', 'before_clips'); os.makedirs(bk, exist_ok=True)
+            if not os.path.exists(os.path.join(bk, os.path.basename(g[0]))):   # first fix only: keep the original
+                shutil.copy2(g[0], os.path.join(bk, os.path.basename(g[0])))
+            base = os.path.join(scr, 'clips_base_' + os.path.basename(g[0]))   # current GLB (its weights) is the base
+            os.makedirs(scr, exist_ok=True); shutil.copy2(g[0], base); fix = g[0]
+            g = [os.path.join(bk, os.path.basename(g[0]))]                     # authored clips come from the backup
+            if clip_gate.same_rest(base, g[0]) > 1e-3:   # GLB rebuilt since the backup (new rest): its own clips are authored
+                print('BMK clip fix: stage-4 rest differs from before_clips backup -> clips read from the current GLB')
+                g = [base]
+        else:
+            base = None
+        cok, clines, _, csheet = clip_gate.gate(g[0], os.path.join(cdir, 'stage4', 'clips'), scr, tag='s4', fix=fix, base=base,
+                                                title=f'{os.path.basename(cdir)} clips', cfg=os.path.join(cdir, 'clips.json'))
+        for l in clines:
+            print(l)
+        print('BMK clip sheet:', csheet)
+        return 0 if cok else 1
     N = a.stage
     if N < 1 and a.details and not a.junctions:   # detail gate on the latest built stage, no rebuild
         import detail_gate
@@ -716,6 +783,15 @@ def main():
                 print('BMK detail sheet:', dsheet)
                 return 0 if dok else 1
         ap.error('no stage GLB to probe')
+    if a.rom:                              # ROM sweep on the stage-4 GLB (no rebuild)
+        import rom_gate
+        g = sorted(glob.glob(os.path.join(cdir, 'stage4', '*.glb')))
+        if not g:
+            ap.error('no stage4 GLB for --rom')
+        rok, rlines, _ = rom_gate.gate(g[0], os.path.join(cdir, 'stage4', 'rom'), scr, tag='s4_rom')
+        for l in rlines:
+            print(l)
+        return 0 if rok else 1
     if N < 1 and a.junctions:              # probe the latest built stage without rebuilding (a review pass)
         import junction_gate
         for n in (4, 3, 2, 1):

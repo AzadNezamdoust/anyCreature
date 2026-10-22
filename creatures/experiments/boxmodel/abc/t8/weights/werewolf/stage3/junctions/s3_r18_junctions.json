@@ -1,0 +1,103 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage3\\s3.glb",
+ "tag": "s3_r18",
+ "ok": true,
+ "size_m": 2.215,
+ "limits": {
+  "REGION_K": 2.0,
+  "EXPOSED": 2,
+  "WELD": 1e-05,
+  "KNIFE_DEG": 90.0,
+  "KNIFE_LEN_K": 1.0,
+  "STRIP_W": 0.4,
+  "STRIP_ASPECT": 3.0,
+  "STRIP_CREASE_DEG": 30.0,
+  "STRIP_LEN_K": 1.0,
+  "SLIT_K": 0.1,
+  "SLIT_PCT": 1.5,
+  "GAP_K": 1.0,
+  "PINCH_RAD": 2.2,
+  "CLIP_PCT": 1.0,
+  "EYE_VIS": {
+   "front": 0.15,
+   "threeq": 0.35,
+   "side": 0.4
+  },
+  "EYE_SIZE": [
+   0.06,
+   0.24
+  ],
+  "EYE_ROUND": 0.7,
+  "SEAT_LIFT": 0.004,
+  "SEAT_FAR": 0.05,
+  "SEAT_PCT": 10.0,
+  "MEMBRANE_ABS": 0.006,
+  "MEMBRANE_REL": 0.004
+ },
+ "body": {
+  "open_edges": 0,
+  "nonmanifold_edges": 0
+ },
+ "junctions": [],
+ "eyes": [
+  {
+   "side": "L",
+   "centre": [
+    0.123,
+    -0.509,
+    1.902
+   ],
+   "diam_mm": 42.0,
+   "round": 1.0,
+   "embed_mm": 31.6,
+   "proud_mm": 9.7,
+   "visible": {
+    "front": 0.35,
+    "threeq": 0.53,
+    "side": 0.43
+   },
+   "unoccluded": {
+    "front": 0.52,
+    "threeq": 0.6,
+    "side": 0.6
+   },
+   "fail": [],
+   "ok": true
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.123,
+    -0.509,
+    1.902
+   ],
+   "diam_mm": 42.0,
+   "round": 1.0,
+   "embed_mm": 31.6,
+   "proud_mm": 9.7,
+   "visible": {
+    "front": 0.35,
+    "threeq": 0.53,
+    "side": 0.43
+   },
+   "unoccluded": {
+    "front": 0.52,
+    "threeq": 0.6,
+    "side": 0.6
+   },
+   "fail": [],
+   "ok": true
+  }
+ ],
+ "membranes": [],
+ "seats": [],
+ "crops": [
+  "s3_r18_eyeL_front_beauty.png",
+  "s3_r18_eyeL_threeq_beauty.png",
+  "s3_r18_eyeL_side_beauty.png",
+  "s3_r18_eyeR_front_beauty.png",
+  "s3_r18_eyeR_threeq_beauty.png",
+  "s3_r18_eyeR_side_beauty.png"
+ ],
+ "views": {}
+}

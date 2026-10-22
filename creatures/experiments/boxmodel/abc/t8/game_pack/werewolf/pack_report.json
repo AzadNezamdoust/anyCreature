@@ -1,0 +1,327 @@
+{
+ "name": "werewolf",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\werewolf.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 3896,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 1944,
+   "tri_ratio": 0.499,
+   "iou_min": 0.9892,
+   "iou_mean": 0.992,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 978,
+   "tri_ratio": 0.251,
+   "iou_min": 0.9679,
+   "iou_mean": 0.9732,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 426,
+   "tri_ratio": 0.109,
+   "iou_min": 0.9303,
+   "iou_mean": 0.9353,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.2617,
+   "h": 0.5262
+  },
+  {
+   "bone": "spine",
+   "r": 0.3049,
+   "h": 0.6098
+  },
+  {
+   "bone": "chest",
+   "r": 0.3887,
+   "h": 0.7861
+  },
+  {
+   "bone": "neck",
+   "r": 0.2855,
+   "h": 0.5977
+  },
+  {
+   "bone": "head",
+   "r": 0.2091,
+   "h": 0.4884
+  },
+  {
+   "bone": "ear.L",
+   "r": 0.0827,
+   "h": 0.3359
+  },
+  {
+   "bone": "ear.R",
+   "r": 0.085,
+   "h": 0.3385
+  },
+  {
+   "bone": "upperarm.L",
+   "r": 0.1754,
+   "h": 0.7906
+  },
+  {
+   "bone": "forearm.L",
+   "r": 0.127,
+   "h": 0.5324
+  },
+  {
+   "bone": "hand.L",
+   "r": 0.1246,
+   "h": 0.509
+  },
+  {
+   "bone": "upperarm.R",
+   "r": 0.1754,
+   "h": 0.7906
+  },
+  {
+   "bone": "forearm.R",
+   "r": 0.127,
+   "h": 0.5324
+  },
+  {
+   "bone": "hand.R",
+   "r": 0.1246,
+   "h": 0.509
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.1736,
+   "h": 0.7136
+  },
+  {
+   "bone": "shin.L",
+   "r": 0.0864,
+   "h": 0.3948
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.0669,
+   "h": 0.3616
+  },
+  {
+   "bone": "toe.L",
+   "r": 0.102,
+   "h": 0.3374
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.1736,
+   "h": 0.7136
+  },
+  {
+   "bone": "shin.R",
+   "r": 0.0864,
+   "h": 0.3948
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.0669,
+   "h": 0.3616
+  },
+  {
+   "bone": "toe.R",
+   "r": 0.102,
+   "h": 0.3374
+  },
+  {
+   "bone": "tail0",
+   "r": 0.1428,
+   "h": 0.4846
+  },
+  {
+   "bone": "tail1",
+   "r": 0.2104,
+   "h": 0.6113
+  },
+  {
+   "bone": "tail2",
+   "r": 0.1196,
+   "h": 0.3543
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 2.2203478813171387,
+  "feet": [
+   "hand.L",
+   "hand.R",
+   "toe.L",
+   "toe.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 36,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.601,
+    "planted_frames": 86,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.008,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 33,
+    "penetration_pctH": 0.94,
+    "foot_slide_std_pctH": 0.601,
+    "planted_frames": 80,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\werewolf\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "werewolf.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 35, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece', 'rest']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_werewolf_root', 'UCX_werewolf_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "werewolf.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 35, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece', 'rest']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_werewolf_root', 'UCX_werewolf_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "werewolf.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 35, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece', 'rest']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_werewolf_root', 'UCX_werewolf_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

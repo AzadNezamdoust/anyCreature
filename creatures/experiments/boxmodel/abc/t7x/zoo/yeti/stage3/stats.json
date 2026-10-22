@@ -1,9 +1,9 @@
 {
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "4026fa21b68dbb0e9aaefdcc6b52602bb99e6086226188a54ba8d45dfe677df8",
-  "collapsed_edge_hash": "4026fa21b68dbb0e9aaefdcc6b52602bb99e6086226188a54ba8d45dfe677df8",
-  "logged_ops": 3,
+  "lock_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
+  "collapsed_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
+  "logged_ops": 4,
   "logged_new_verts": 32,
   "errors": []
  },
@@ -16,7 +16,7 @@
   "skin"
  ],
  "colour_count": 6,
- "tris": 5142,
+ "tris": 5362,
  "attach": [
   {
    "kind": "piece_attach",
@@ -35,8 +35,36 @@
    "reason": "parts-library 4-finger hand in the wrist ring under the fur cuff"
   }
  ],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 2,
+   "relaxed": 8,
+   "undone": 0,
+   "max_move": 0.02103,
+   "mean_move": 0.01018,
+   "before": {
+    "border_edges": 43,
+    "length": 3.4362,
+    "paths": 3,
+    "corners": 7,
+    "corner_quads": 8,
+    "corners_per_m": 2.0
+   },
+   "after": {
+    "border_edges": 41,
+    "length": 3.3454,
+    "paths": 3,
+    "corners": 3,
+    "corner_quads": 5,
+    "corners_per_m": 0.9
+   }
+  }
+ ],
  "pieces": {
   "piece_eye": 64,
+  "piece_nose": 76,
   "piece_hand_L": 196,
   "piece_hand_R": 196,
   "piece_toes_L": 100,

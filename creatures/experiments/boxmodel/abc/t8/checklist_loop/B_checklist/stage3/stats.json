@@ -1,0 +1,56 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "84dfdc7687a2c855e4d3908dd156e926107881ae0c79cdec84b403dec050c042",
+  "collapsed_edge_hash": "84dfdc7687a2c855e4d3908dd156e926107881ae0c79cdec84b403dec050c042",
+  "logged_ops": 4,
+  "logged_new_verts": 30,
+  "errors": []
+ },
+ "colours": [
+  "eye",
+  "fur",
+  "pupil",
+  "saddle",
+  "skin"
+ ],
+ "colour_count": 5,
+ "tris": 2796,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 8,
+   "relaxed": 15,
+   "undone": 3,
+   "max_move": 0.01052,
+   "mean_move": 0.00643,
+   "before": {
+    "border_edges": 24,
+    "length": 2.035,
+    "paths": 1,
+    "corners": 16,
+    "corner_quads": 15,
+    "corners_per_m": 7.9
+   },
+   "after": {
+    "border_edges": 16,
+    "length": 1.7511,
+    "paths": 1,
+    "corners": 2,
+    "corner_quads": 0,
+    "corners_per_m": 1.1
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_ear_L": 28,
+  "piece_ear_R": 28,
+  "piece_fingers_L": 80,
+  "piece_toes_L": 100,
+  "piece_fingers_R": 80,
+  "piece_toes_R": 100
+ }
+}

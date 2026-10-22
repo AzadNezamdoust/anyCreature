@@ -1,9 +1,9 @@
 {
  "report": {
-  "verts": 1100,
-  "faces": 1120,
-  "tris": 2196,
-  "quads": 1062,
+  "verts": 1152,
+  "faces": 1172,
+  "tris": 2300,
+  "quads": 1114,
   "ngons": 2,
   "components": 1,
   "nonmanifold_edges": 0,
@@ -12,7 +12,7 @@
   "bbox": [
    [
     -0.5394,
-    -0.81,
+    -0.892,
     0.0
    ],
    [

@@ -189,3 +189,48 @@ skirts; groin dark but closed. Flaws seen: (1) the grey ear pucks stand off the 
   the mantle are smooth (tiers mostly read from the front); the ears still show as small grey knobs from above; the
   thigh seam strip sits exactly at the gate (1.0 r); review/ (run.py --review), side_by_side.jpg (--compare),
   side_by_side_sheet.jpg (sheet vs model, checks.py).
+
+## FACE pass (2026-10-22): checklist + champion loop (FACE_CHECKLIST.md, frozen)
+Backup of the zoo state: before_face/. Views per build: versions/TAG/fc (head close-ups front/3q/side + 192 px whole
+creature). Judge = Opus art-director seats, blind, one per order; a variant must win BOTH orders vs the champion.
+Builds: run.py --stage 4 --junctions --details --no-orbit.
+- r24 baseline (zoo code rebuilt on the latest kit): all gates PASS (posed fold-overs 22 tris 0.43 %, under 0.5 %), 5142
+  tris, eyes 0.38/0.62/0.58. Checklist: Q1 N (front: straight brow bar) Q2 N (side: one convex beak curve) Q3 Y Q4 N
+  Q5 N Q6 N (90 deg box walls) Q7 N (weak chin) Q8 N (grey box plate, jaw wings flare out) Q9 Y Q10 N Q11 Y = 3.
+- Round 1. Critique: the face is a grey box plate in the hood, no nose, a beak profile.
+  - r25a (S2): face moves on S1 vertex handles; brow arches (F0 v1/v2 +2/2.5 cm, glabella V), forehead back, eye corner
+    sunk, muzzle block (M0 v1-v3 1-2 cm), cheek chamfer (M0/N1 v4 out + forward); socket cut after the moves. Gates
+    PASS, eyes 0.34/0.55/0.51. Pairwise: won order 1, lost order 2 (sharp brow beak in profile, jaw wings) = flip.
+  - r26b (S3): chunky broad ape nose pad (gorilla r22c method; 8-point sections, back buried in N1->E0) with two dark
+    nostrils on its lower band (eye colour, no new colour). Gates PASS (hit 0, float 0, z-fight 0). Q4 Y Q10 Y; score 5.
+    Pairwise: won BOTH orders. CHAMPION r26b. Judge notes: nostrils read as wide slots; no mouth line; weak chin; jaw
+    wings flare (visor).
+- Round 2 (champion r26b; NOs Q1 Q2 Q5 Q6 Q7 Q8).
+  - r27c (S2): upper lip N1 v0-v3 1.5 cm forward (nose piece with it), mouth crease M0 v0-v3 2 cm back, chin J0 v0-v2
+    1.5 cm forward. Gates PASS. Pairwise: lost order 1 (nostrils now low on a wide lower plate, read as a mouth; beak
+    nose), won order 2 (muzzle depth) = flip.
+  - r28d (S3): jaw 'wings' (z < 2.0, x > 0.14) painted hood fur; nostrils narrower (2.6 cm). Pairwise: lost order 1
+    (the flares had read as cheek/jaw planes), won order 2 (compact face inside the hood) = flip.
+  - DECISION: no variant wins both orders; champion stays r26b. Shared judge critique: a full-width dark brow band =
+    visor stripe.
+- Round 3 (champion r26b; NOs Q1 Q2 Q5 Q6 Q7 Q8).
+  - r29e (S2, vertex handles): a nose BRIDGE between the eyes (E0 v0/v1 forward 3/2 cm) splits the dark brow band into
+    two sockets; the brow dips into a V (F0 v0 down 1.2 cm), arches over each eye (F0 v1/v2 up 0.8, forward 1 cm) and
+    falls at the outer corner. Gates PASS. Pairwise: won order 1 (arched ape brow), lost order 2 = flip.
+  - r30f (S2): mouth crease M0 v0-v3 back 2 cm, chin J0 v0-v2 forward 1.5 cm, lower face narrowed (M0/J0 v3 in 1.5 cm).
+    Gates PASS. Pairwise: lost order 1, won order 2 = flip.
+  - DECISION: no both-order win; champion stays r26b. Note: the yeti judges picked the bottom row in 9 of 12 calls - the
+    differences are below the judges' resolution, so round 4 stacks the flipped edits into one bigger change.
+- Round 4 (champion r26b): the flipped edits stacked.
+  - r31g = r29e (bridge + arched brow) + r30f (mouth crease, chin, narrowed lower face). Gates PASS. Pairwise: won BOTH
+    orders (two arches + own sockets instead of a visor stripe; cheek and chin planes turn). Q1 Y Q2 Y; score 7.
+  - r32h = r31g + r28d paint (jaw wings to fur, nostrils narrower) in the ear-inner slate instead of near-black. Pairwise:
+    lost order 1 (nostrils too faint at 192 px), won order 2 = flip.
+  - DECISION: CHAMPION r31g. Budget (4 rounds, 8 variants) spent.
+- FINAL r31g (s4 r33 full run + orbit): ALL kit gates PASS (glbcheck OK; posed fold-overs 22 tris 0.42 % < 0.5 %; warn
+  stretch 24 tris, posed clip 0.20 %, as before), junction probe PASS (arms knife 0 / 61 deg / strip 1.0 r; thighs knife
+  0 / 85.6 deg / strip 1.0 r), detail gate PASS (7 groups, nose new), eyes PASS 0.38/0.61/0.57 and 0.37/0.61/0.57, S1
+  lock PASS, IoU vs S1 min 0.994, separation PASS. 5186 tris (S1 1976), 6 colours. Face checklist 7/11 (baseline 3).
+  Still NO: Q5 muzzle block (nose wedge beak-like in profile), Q6 cheek planes, Q7 chin (soft under the beard), Q8 the
+  grey area is still a rectangle with flared jaw wings. orbit18_sheet.jpg (old: orbit18_sheet_before_face.jpg),
+  face_before_after.jpg, versions/.

@@ -105,3 +105,47 @@ crops: no shelf from +45 az180 or the top, no slit, the armpit reads as a soft c
 - Residual: the face is still a flat plate with the eyes at its top corners (no nose or lip planes); the arms are long
   straight tubes (no forearm swell or elbow knob from the side); the trapezius/head from the side reads as one smooth
   dome (crest ridge soft).
+
+## FACE pass (2026-10-22): checklist + champion loop (FACE_CHECKLIST.md, frozen), start = B_checklist r18b
+Backup of the zoo state: before_face/. Code = abc/t8/checklist_loop/B_checklist/gorilla.py. Views per build:
+versions/TAG/fc (head close-ups front/3q/side + 192 px whole creature). Judge = Opus art-director seats, blind, one per
+order; a variant must win BOTH orders vs the champion. Builds: run.py --stage 4 --junctions --details --no-orbit.
+- r19 baseline (B r18b rebuilt on the latest kit; face moves refactored onto S1 vertex handles `hv()` - vert_near on
+  moved verts had raised a socket vertex instead of the brow arch: eyes 0.46/0.73 -> 0.47/0.75). All gates PASS, 2796
+  tris. Face checklist: Q1 N (front: brow a flat bar) Q2 Y Q3 N (lens 27 mm proud at the plate's top corners) Q4 N Q5 N
+  Q6 N Q7 Y Q8 N (rectangular dark plate) Q9 Y Q10 N Q11 Y = 4. CHAMPION r19.
+- Round 1. Critique: the face is a flat visor plate (front/3q), eyes on its top edge.
+  - r20a (S2): brow H4 j0-j4 forward 2-3 cm as one shelf, forehead H5 back 1 cm, eye band H3 j1/j2 back 1 cm, outer orbit
+    open, nose H2 j0 forward 1.5 cm; socket cut AFTER the face moves (6 mm deep), lens offset 15 -> 8 mm. Gates PASS,
+    eyes 0.43/0.67/0.45. Q1 Y Q3 Y; score 6. Pairwise: lost order 1, won order 2 = flip -> no preference (ties to the
+    champion). Judge: the continuous shelf makes ONE dark eye band = a visor slot at 192 px.
+  - r21b (S3 paint): skin as a shield (eye band + brow top + cheeks), lighter warm #4b4645. Lost both orders (a pale
+    mask). Result: champion stays r19; dark skin kept (#3d3a3b).
+- Round 2 (champion r19; NOs Q1 Q3 Q4 Q5 Q6 Q8 Q10).
+  - r22c (S3): a hand-built chunky nose pad (8-point sections, 3 rows, back buried; widest at the nostril line, narrowing
+    up between the eyes) with two nostrils on its down-facing lower band (pupil colour, no new colour). Two tries at the
+    nostrils first (vertical dark slots read as teeth). Gates PASS (hit 0, float 0), 5 colours. Q4 Y Q5 Y Q10 Y; score 7.
+    Pairwise: won BOTH orders (nose + muzzle mass step forward).
+  - r23d (S2): r20a's brow turned into two ARCHES (glabella H4 j0 only 0.5 cm fwd and 0.8 cm down: a V into the bridge,
+    separate sockets) + a mouth-line loop (loopcut H0->H1, front j0-j3 creased back 0.8-2.2 cm) with the lower lip/chin H0
+    j0-j2 1-1.5 cm forward. Gates PASS, eyes 0.42/0.67/0.43, junctions unchanged. Q1 Y Q3 Y Q5 Y Q10 Y; score 8.
+    Pairwise: won BOTH orders (V brow shelf over sunken sockets, stepped brow-muzzle-lip-chin profile).
+  - DECISION: both qualify; 8 > 7 -> CHAMPION r23d. r22c's nose (independent, S3) goes to round 3 as variant e.
+- Round 3 (champion r23d; NOs Q4 Q6 Q8).
+  - r24e: r23d + the r22c nose pad (S3). Gates PASS. Q4 Y; score 9. Pairwise: won BOTH orders (nose wedge + mouth slit
+    read at 192 px front).
+  - r25f (S2): cheek H2 j2 back 1.5 cm, cheekbone H2 j3 out 0.8 cm, muzzle corners H1 j2/j3 back 1.2/0.5 cm. Gates PASS.
+    Q6 Y; score 9. Pairwise: won BOTH orders (rounded, faceted muzzle turning into the cheeks; modest).
+  - DECISION: tie 9/9 -> r24e (its change reads at game distance; r25f only close up). Champion r24e; r25f to round 4.
+- Round 4 (champion r24e; NOs Q6 Q8).
+  - r26g: r24e + the r25f cheek block. Pairwise: won one order, lost the other (judge 2: the muzzle becomes a sharp
+    beak wedge in profile) = flip -> no preference, ties to the champion.
+  - r27h (S3 paint): skin out to the muzzle sides (H1/H2 j3). Lost both orders (indistinguishable / squarer plate).
+  - DECISION: champion stays r24e. Budget (4 rounds, 8 variants) spent.
+- FINAL r24e (s4 r28 full run + orbit): ALL kit gates PASS (glbcheck OK; warn posed clip 0.65 %, as before), junction
+  probe PASS (upperarm knife 0 / 79 deg / strip 0.86 r; thigh knife 0.89 r / 91 deg / strip 0.62 r), detail gate PASS
+  (6 groups), eyes PASS 0.42/0.67/0.43 (diam 0.068 head), S1 lock PASS, IoU vs S1 min 0.981, separation PASS.
+  2892 tris (S1 2196), 5 colours. Face checklist 9/11 (r19 baseline 4). Still NO: Q6 cheek planes (r25f's gain flipped
+  when stacked on the nose), Q8 at 192 px the dark skin area still reads as a rectangular plate in front view.
+  orbit18_sheet.jpg (old: orbit18_sheet_before_face.jpg), face_before_after.jpg, versions/ (every variant: program,
+  GLB, face renders).

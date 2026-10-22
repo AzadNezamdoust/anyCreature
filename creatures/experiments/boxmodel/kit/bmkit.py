@@ -1079,9 +1079,23 @@ def armature(bones, name='rig', roll=None):
     return rig
 
 
-def skin(body, rig):
+def skin(body, rig, weights=None):
     """Automatic (bone heat) weights on the base mesh; the Mirror is applied first.
-    Vertices heat leaves unweighted fall back to the nearest bone."""
+    Vertices heat leaves unweighted fall back to the nearest bone.
+    weights: None -> env BMKIT_WEIGHTS (default 'heat'); 'heat' = bone heat only (pre 2026-10-22);
+    'v2' = kit/weights.refine() defaults (half-rotation helper bones at limb joints, elbow/knee falloff,
+    smoothing, 4-influence cap, mirror-exact; ROM-gated, t8/weights); a dict = refine() overrides."""
+    fixed = _skin_heat(body, rig)
+    mode = weights if weights is not None else os.environ.get('BMKIT_WEIGHTS', 'heat')
+    if mode and mode != 'heat':
+        import weights as _W
+        st = _W.refine(body, rig, **(mode if isinstance(mode, dict) else {}))
+        say('WEIGHTS', json.dumps({k: v for k, v in st.items() if k != 'joints'}))
+        fixed += _fill_unweighted(body, rig)
+    return fixed
+
+
+def _skin_heat(body, rig):
     apply_mirror(body)
     for o in bpy.context.scene.objects:
         o.select_set(False)

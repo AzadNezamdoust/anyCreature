@@ -1,0 +1,82 @@
+{
+ "name": "penguin",
+ "mode": "baseline",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\penguin\\stage4\\penguin.glb",
+ "tris": [
+  2776
+ ],
+ "clipqa": {
+  "H": 1.098000168800354,
+  "feet": [
+   "foot.L",
+   "foot.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 62,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 94,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 33,
+    "penetration_pctH": 2.31,
+    "foot_slide_std_pctH": 0.107,
+    "planted_frames": 64,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\penguin\\baseline\\renders\\base_lod0_192.png"
+ },
+ "roundtrip": {
+  "baseline_glb": {
+   "file": "penguin.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": false,
+     "detail": "[]"
+    },
+    "lods": {
+     "ok": false,
+     "detail": "[]"
+    },
+    "hurtboxes": {
+     "ok": false,
+     "detail": "0/1"
+    },
+    "collision": {
+     "ok": false,
+     "detail": "[]"
+    }
+   },
+   "pass_core": true,
+   "pass_all": false
+  }
+ }
+}

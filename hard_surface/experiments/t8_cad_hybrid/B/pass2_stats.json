@@ -1,0 +1,290 @@
+{
+ "subject": "assault_rifle",
+ "pass": 2,
+ "tris": 7408,
+ "budget": 8000,
+ "over_budget": false,
+ "topology_clean": false,
+ "topology": {
+  "objects": {
+   "receiver": {
+    "tris": 468,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "upper": {
+    "tris": 1294,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 4,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "bolt": {
+    "tris": 92,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "handguard": {
+    "tris": 312,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "handguard_band": {
+    "tris": 28,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "barrel": {
+    "tris": 92,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "muzzle_brake": {
+    "tris": 668,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "front_sight": {
+    "tris": 528,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "rail": {
+    "tris": 724,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "rear_sight": {
+    "tris": 548,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 1,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "stock": {
+    "tris": 1764,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 631,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "grip": {
+    "tris": 134,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "magazine": {
+    "tris": 164,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "trigger_guard": {
+    "tris": 148,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "trigger": {
+    "tris": 116,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "charging_handle": {
+    "tris": 92,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "selector": {
+    "tris": 236,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   }
+  },
+  "tris": 7408,
+  "totals": {
+   "non_manifold_edges": 0,
+   "boundary_edges": 0,
+   "zero_area_faces": 636,
+   "duplicate_faces": 0,
+   "loose": 0,
+   "coincident_faces_across_objects": 0
+  }
+ },
+ "scoring": "judge_mesh.mjs = scripts/v6/judge.mjs sigma fit + ortho/concept iou/agree",
+ "sigma": 1.0004,
+ "scores": {
+  "side": {
+   "iou": 0.9252,
+   "agree": 0.9252,
+   "drift": 0,
+   "ref_only_px": 1460,
+   "model_only_px": 121
+  },
+  "front": {
+   "iou": 0.7181,
+   "agree": 0.7181,
+   "drift": 0,
+   "ref_only_px": 470,
+   "model_only_px": 833
+  },
+  "rear": {
+   "iou": 0.7337,
+   "agree": 0.7337,
+   "drift": 0,
+   "ref_only_px": 570,
+   "model_only_px": 694
+  },
+  "top": {
+   "iou": 0.8547,
+   "agree": 0.8547,
+   "drift": 0,
+   "ref_only_px": 1312,
+   "model_only_px": 469
+  },
+  "concept": {
+   "iou": 0.7959,
+   "agree": 0.7959,
+   "drift": 0,
+   "ref_only_px": 20830,
+   "model_only_px": 12691
+  }
+ },
+ "judge": {
+  "source": "D:\\Git\\anyCreature\\hard_surface\\experiments\\t8_cad_hybrid\\B\\pass2_mesh.json",
+  "sigma": 1.0004,
+  "sigmaRaw": 1.0003776334504337,
+  "sigmaFit": {
+   "method": "golden",
+   "golden": 1.0004,
+   "goldenObj": 0.8073,
+   "scan": 1.0009,
+   "scanObj": 0.8074,
+   "keep": 0.001,
+   "evals": 328
+  },
+  "views": {
+   "side": {
+    "iou": 0.9252,
+    "agree": 0.9252,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 1460,
+    "model_only_px": 121
+   },
+   "front": {
+    "iou": 0.7181,
+    "agree": 0.7181,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 470,
+    "model_only_px": 833
+   },
+   "rear": {
+    "iou": 0.7337,
+    "agree": 0.7337,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 570,
+    "model_only_px": 694
+   },
+   "top": {
+    "iou": 0.8547,
+    "agree": 0.8547,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 1312,
+    "model_only_px": 469
+   },
+   "concept": {
+    "iou": 0.7959,
+    "agree": 0.7959,
+    "drift": 0,
+    "px": 1024,
+    "ref_only_px": 20830,
+    "model_only_px": 12691
+   }
+  },
+  "concept": {
+   "target": "refs/assault_rifle.png",
+   "front": "+Z",
+   "frame": {
+    "scale": 1,
+    "tx": 0,
+    "ty": 0
+   }
+  },
+  "minAgree": 0.7181,
+  "tris": 7408
+ },
+ "current": {
+  "source": "none (direct --gate-ref mature: only block-outs so far; block-outs skipped: pass1)",
+  "sigma": null,
+  "agree": {},
+  "iou": {}
+ },
+ "delta_agree": {},
+ "delta_iou": {},
+ "concept_ref": "refs/assault_rifle.png",
+ "pipeline": "direct",
+ "gate": {
+  "rule": "tris <= budget, topology 0, no ortho view more than 0.04 below the best earlier pass (--gate-ref mature: block-outs = the first pass and passes under 5% of the budget are not a reference)",
+  "ref_rule": "mature",
+  "ref_source": "none (direct --gate-ref mature: only block-outs so far; block-outs skipped: pass1)",
+  "tris_ok": true,
+  "topology_clean": false,
+  "below_best_earlier": {},
+  "pass": false
+ }
+}

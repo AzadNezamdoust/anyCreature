@@ -1,0 +1,342 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\chameleon.glb",
+ "H": 1.1200174073237577,
+ "feet": [
+  "hand.L",
+  "hand.R",
+  "foot.L",
+  "foot.R"
+ ],
+ "bones": 25,
+ "gait": "quad_trot",
+ "clips": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.008,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 124,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.R",
+    31
+   ],
+   "slide_foot": "hand.R"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.005,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 188,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "foot.L",
+    44
+   ],
+   "slide_foot": "hand.R"
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 0.007,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.101,
+   "planted_frames": 62,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "foot.L",
+    15
+   ],
+   "slide_foot": "hand.L"
+  }
+ },
+ "sheet_after": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\after_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.504,
+   "foot_slide_std_pctH": 0.192,
+   "foot_speed_planted_pctH": 0.271,
+   "planted_frames": 124,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "foot.R",
+    16
+   ],
+   "slide_foot": "hand.L"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.49,
+   "foot_slide_std_pctH": 0.055,
+   "foot_speed_planted_pctH": 0.125,
+   "planted_frames": 188,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tail4",
+    36
+   ],
+   "slide_foot": "hand.R"
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 6.835,
+   "foot_slide_std_pctH": 1.027,
+   "foot_speed_planted_pctH": 1.536,
+   "planted_frames": 98,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.L",
+    23
+   ],
+   "slide_foot": "hand.R"
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {
+    "hand.L": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      2.24,
+      2.91
+     ],
+     "z_range_pctH": 1.5
+    },
+    "hand.R": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      2.24,
+      2.91
+     ],
+     "z_range_pctH": 1.5
+    },
+    "foot.L": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.76
+    },
+    "foot.R": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.76
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    0.008,
+    "hand.L",
+    1
+   ]
+  },
+  "idle": {
+   "feet": {
+    "hand.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.46
+     ],
+     "z_range_pctH": 0.6
+    },
+    "hand.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.46
+     ],
+     "z_range_pctH": 0.6
+    },
+    "foot.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "foot.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    44,
+    0.005,
+    "foot.R",
+    2
+   ]
+  },
+  "move": {
+   "feet": {
+    "hand.L": {
+     "stance": 25,
+     "src": "contact",
+     "xy_range_pctH": [
+      1.19,
+      23.67
+     ],
+     "z_range_pctH": 9.44
+    },
+    "hand.R": {
+     "stance": 25,
+     "src": "contact",
+     "xy_range_pctH": [
+      1.19,
+      23.67
+     ],
+     "z_range_pctH": 9.44
+    },
+    "foot.L": {
+     "stance": 26,
+     "src": "contact",
+     "xy_range_pctH": [
+      1.94,
+      22.59
+     ],
+     "z_range_pctH": 3.94
+    },
+    "foot.R": {
+     "stance": 26,
+     "src": "contact",
+     "xy_range_pctH": [
+      1.94,
+      22.59
+     ],
+     "z_range_pctH": 3.94
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    6,
+    0.007,
+    "foot.R",
+    3
+   ]
+  }
+ },
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\chameleon\\stage4\\clips\\s4_frames\\before_move_75.png"
+ ],
+ "blender_roundtrip": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.008,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 124,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.R",
+    31
+   ],
+   "slide_foot": "hand.L"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.005,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 188,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "foot.R",
+    44
+   ],
+   "slide_foot": "hand.R"
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 0.007,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.101,
+   "planted_frames": 62,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "foot.L",
+    15
+   ],
+   "slide_foot": "hand.R"
+  }
+ },
+ "rest_drift": 0.0,
+ "mesh_identity": {
+  "ok": true,
+  "detail": "verts 6549, unmatched positions 0, max weight diff 0.0000"
+ },
+ "gate": {
+  "ok": true,
+  "lines": [
+   "BMK clip before move    pen 6.835  slide 1.027  plant 1.536  loop 0.000",
+   "BMK clip before idle    pen 0.490  slide 0.055  plant 0.125  loop 0.000",
+   "BMK clip before attack  pen 0.504  slide 0.192  plant 0.271  loop 0.000",
+   "BMK clip attack  PASS  pen 0.008  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip idle    PASS  pen 0.005  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.007  slide 0.000  plant 0.101  loop 0.000",
+   "BMK clip mesh/skin identity PASS: verts 6549, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip gate PASS (feet ['hand.L', 'hand.R', 'foot.L', 'foot.R'], gait quad_trot)"
+  ]
+ }
+}

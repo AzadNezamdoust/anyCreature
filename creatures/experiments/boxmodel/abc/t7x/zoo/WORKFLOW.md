@@ -218,3 +218,42 @@ The creatures are for GAMES. Every detail must be chunky, visible and understand
 8. **Colour borders:** call `smooth_borders(ob, k=k)` (kit/smooth_borders.py) right after every `paint()` of a body with region colours. This is owner-approved 2026-10-21. The borders then follow the form instead of stair-stepping along the quad grid. Re-run the junction probe after it: a relaxed border vertex can thin a strip at a limb root.
 
 `zoo/detail_audit.md` holds the first sweep: 10 of 40 PASS, every tier-3 creature short on detail count, and per-creature lists of missing details vs the sheet.
+
+## 11. Fix loop (adopted 2026-10-22)
+
+Source: `abc/t8/checklist_loop/RESULT.md` (gorilla A/B, free-form vs checklist + champion) and the frozen list `abc/t8/checklist_loop/B_checklist/CHECKLIST.md`. The checklist arm beat free-form review in both judge orders, so every fix pass (an art-director FIX, an owner redline, a rebuild round) now runs this loop instead of free-form critique.
+
+1. **Frozen per-species checklist, written before the first edit.**
+   - 10-20 yes/no questions, each tied to one named view (az000 front, az090 side, az180 rear, top, hero/az045, a junction crop, a 192 px thumbnail).
+   - Each question says what YES looks like, with the reference sheet as referee, and names the edit target if the answer is NO (the loop, ring, region or param in `<creature>.py`: for example "stage2 H0-H2 j0-j2 y", "ARM_R forearm rings", "stage3 body_rule").
+   - The last question is always the gate row: kit gates + junction + detail gate PASS, tris inside META range. A NO there rejects the variant whatever else it scores.
+   - The list is frozen for the run. Do not edit a question mid-run; a wrong question is noted and fixed in the next run.
+   - Score = number of YES, answered per variant with the image cited. Record the baseline score first.
+2. **Every critique is a concrete edit.** A NO is not prose; it becomes a change to the named loop / param in the program. No "improve the head" notes.
+3. **Two variants per round.** Each variant is a different edit for the same worst NO(s); build both.
+4. **Champion loop.** The current best build is the champion (the baseline at round 0).
+   - One Opus seat judges each variant against the champion, pairwise, blind, in **both orders**, with the owner rules and the reference sheet in the prompt.
+   - A variant becomes champion only if it wins both orders. A flip (one order each way) is a tie, and a tie goes to the champion.
+   - Never judge a variant on its own checklist score alone, and never let the builder be the judge.
+5. **Revert regressions.** A variant that fails any gate, drops a YES that the champion had, or moves the S1 lock is reverted, not patched forward. Never revert density to do it (section 3).
+6. **At most 5 rounds per stage.** Stop earlier when the checklist is all YES or two rounds in a row end in ties. Residual NOs go to the owner packet.
+7. **Open every image** before reporting (a numeric pass is not a visual pass). **Owner taste is final**: the owner's pick or redline beats the judge and the checklist score.
+8. Log per round in NOTES.md: checklist score for champion and variants, judge result in both orders, which edit won.
+
+## 12. Standard S4 gates and the game export rule
+
+**S4 gates run on every stage-4 build:**
+- `run.py <prog> --stage 4 --round R --junctions --details`: glbcheck, techqa, junction probe, detail gate (sections 6-10).
+- `run.py <prog> --rom`: range-of-motion check. Being added by another agent; not implemented in this file's change.
+- `run.py <prog> --clips`: clip QA (foot slide, ground penetration, loop continuity). Being added by another agent; not implemented in this file's change.
+- `run.py <prog> --pack`: the game pack on the stage-4 GLB (below). Added with this section (`kit/run.py`, runs `kit/game_pack.py`; writes `<creature>/game_pack/`, exit 0 only when the LOD gates and the round-trip pass).
+
+Until `--rom` and `--clips` land, the equivalents are the BRIEF's ROM packet and the clip QA inside `game_pack.py`.
+
+**Rule: game export = game pack.** A creature is exported for a game only as a game pack, never as the bare stage-4 GLB:
+- **LOD0-3 at 100 / 50 / 25 / 15 % of LOD0 triangles** (small pieces floored at 24 tris); silhouette IoU of each LOD vs LOD0 over 8 views >= 0.90;
+- **hurtboxes**: one capsule per bone (`HB_<bone>`, bone-parented, radius / height in glTF extras);
+- **colliders**: `UCX_<name>_00` convex hull of LOD3 and a `CAP_root` capsule proxy;
+- **sockets**: mouth, hand_L / hand_R (or claw / paw), back empties, bone-parented;
+- **formats**: glTF (Y-up, m) and FBX for Unity (Y-up, m), FBX for Unreal (Z-up, cm);
+- **round-trip verified**: every export is re-imported and checked for bone count, bind pose, unit scale, clip lengths, socket names, LOD names and hurtbox count. A pack with any FAIL is not shippable.

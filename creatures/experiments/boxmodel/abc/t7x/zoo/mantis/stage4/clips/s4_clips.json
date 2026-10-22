@@ -1,0 +1,342 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\mantis.glb",
+ "H": 0.5346497179707512,
+ "feet": [
+  "tarsus2.L",
+  "tarsus2.R",
+  "tarsus3.L",
+  "tarsus3.R"
+ ],
+ "bones": 27,
+ "gait": "quad_trot",
+ "clips": {
+  "attack": {
+   "frames": 33,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.055,
+   "planted_frames": 80,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    5
+   ],
+   "slide_foot": "tarsus3.L"
+  },
+  "idle": {
+   "frames": 49,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 192,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    19
+   ],
+   "slide_foot": "tarsus3.R"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.875,
+   "planted_frames": 42,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    7
+   ],
+   "slide_foot": "tarsus2.R"
+  }
+ },
+ "sheet_after": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\after_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 33,
+   "penetration_pctH": 1.155,
+   "foot_slide_std_pctH": 0.248,
+   "foot_speed_planted_pctH": 0.301,
+   "planted_frames": 128,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    14
+   ],
+   "slide_foot": "tarsus2.R"
+  },
+  "idle": {
+   "frames": 49,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.028,
+   "foot_speed_planted_pctH": 0.023,
+   "planted_frames": 192,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ],
+   "slide_foot": "tarsus2.L"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 6.815,
+   "foot_slide_std_pctH": 0.885,
+   "foot_speed_planted_pctH": 1.821,
+   "planted_frames": 38,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus3.L",
+    19
+   ],
+   "slide_foot": "tarsus2.R"
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {
+    "tarsus2.L": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      3.53
+     ],
+     "z_range_pctH": 2.12
+    },
+    "tarsus2.R": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      3.53
+     ],
+     "z_range_pctH": 2.12
+    },
+    "tarsus3.L": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      3.53
+     ],
+     "z_range_pctH": 2.12
+    },
+    "tarsus3.R": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      3.53
+     ],
+     "z_range_pctH": 2.12
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    -0.0,
+    "tarsus2.R",
+    0
+   ]
+  },
+  "idle": {
+   "feet": {
+    "tarsus2.L": {
+     "stance": 48,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.56,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "tarsus2.R": {
+     "stance": 48,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.56,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "tarsus3.L": {
+     "stance": 48,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.56,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "tarsus3.R": {
+     "stance": 48,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.56,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    -0.0,
+    "tarsus2.R",
+    0
+   ]
+  },
+  "move": {
+   "feet": {
+    "tarsus2.L": {
+     "stance": 12,
+     "src": "contact",
+     "xy_range_pctH": [
+      5.5,
+      19.03
+     ],
+     "z_range_pctH": 14.65
+    },
+    "tarsus2.R": {
+     "stance": 12,
+     "src": "contact",
+     "xy_range_pctH": [
+      6.94,
+      18.82
+     ],
+     "z_range_pctH": 15.01
+    },
+    "tarsus3.L": {
+     "stance": 11,
+     "src": "contact",
+     "xy_range_pctH": [
+      8.0,
+      17.16
+     ],
+     "z_range_pctH": 19.38
+    },
+    "tarsus3.R": {
+     "stance": 11,
+     "src": "contact",
+     "xy_range_pctH": [
+      9.39,
+      17.33
+     ],
+     "z_range_pctH": 19.28
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    0.0,
+    "tarsus2.R",
+    0
+   ]
+  }
+ },
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\mantis\\stage4\\clips\\s4_frames\\before_move_75.png"
+ ],
+ "blender_roundtrip": {
+  "attack": {
+   "frames": 33,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.055,
+   "planted_frames": 80,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    22
+   ],
+   "slide_foot": "tarsus3.L"
+  },
+  "idle": {
+   "frames": 49,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 192,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    19
+   ],
+   "slide_foot": "tarsus2.L"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.875,
+   "planted_frames": 42,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    4
+   ],
+   "slide_foot": "tarsus3.R"
+  }
+ },
+ "rest_drift": 0.0,
+ "mesh_identity": {
+  "ok": true,
+  "detail": "verts 13277, unmatched positions 0, max weight diff 0.0000"
+ },
+ "gate": {
+  "ok": true,
+  "lines": [
+   "BMK clip before move    pen 6.815  slide 0.885  plant 1.821  loop 0.000",
+   "BMK clip before idle    pen -0.000  slide 0.028  plant 0.023  loop 0.000",
+   "BMK clip before attack  pen 1.155  slide 0.248  plant 0.301  loop 0.000",
+   "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.055  loop 0.000",
+   "BMK clip idle    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.000  slide 0.000  plant 0.875  loop 0.000",
+   "BMK clip mesh/skin identity PASS: verts 13277, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip gate PASS (feet ['tarsus2.L', 'tarsus2.R', 'tarsus3.L', 'tarsus3.R'], gait quad_trot)"
+  ]
+ }
+}

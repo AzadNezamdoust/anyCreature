@@ -1,0 +1,290 @@
+{
+ "subject": "assault_rifle",
+ "pass": 1,
+ "tris": 6048,
+ "budget": 8000,
+ "over_budget": false,
+ "topology_clean": true,
+ "topology": {
+  "objects": {
+   "receiver": {
+    "tris": 668,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "upper": {
+    "tris": 992,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "bolt": {
+    "tris": 92,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "handguard": {
+    "tris": 792,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "handguard_band": {
+    "tris": 28,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "barrel": {
+    "tris": 92,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "muzzle_brake": {
+    "tris": 764,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "front_sight": {
+    "tris": 542,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "rail": {
+    "tris": 284,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "rear_sight": {
+    "tris": 636,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "stock": {
+    "tris": 198,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "grip": {
+    "tris": 96,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "magazine": {
+    "tris": 216,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "trigger_guard": {
+    "tris": 148,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "trigger": {
+    "tris": 120,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "charging_handle": {
+    "tris": 120,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   },
+   "selector": {
+    "tris": 260,
+    "non_manifold_edges": 0,
+    "boundary_edges": 0,
+    "zero_area_faces": 0,
+    "duplicate_faces": 0,
+    "loose": 0
+   }
+  },
+  "tris": 6048,
+  "totals": {
+   "non_manifold_edges": 0,
+   "boundary_edges": 0,
+   "zero_area_faces": 0,
+   "duplicate_faces": 0,
+   "loose": 0,
+   "coincident_faces_across_objects": 0
+  }
+ },
+ "scoring": "judge_mesh.mjs = scripts/v6/judge.mjs sigma fit + ortho/concept iou/agree",
+ "sigma": 1.0004,
+ "scores": {
+  "side": {
+   "iou": 0.9246,
+   "agree": 0.9246,
+   "drift": 0,
+   "ref_only_px": 1449,
+   "model_only_px": 147
+  },
+  "front": {
+   "iou": 0.7179,
+   "agree": 0.7179,
+   "drift": 0,
+   "ref_only_px": 469,
+   "model_only_px": 836
+  },
+  "rear": {
+   "iou": 0.734,
+   "agree": 0.734,
+   "drift": 0,
+   "ref_only_px": 580,
+   "model_only_px": 678
+  },
+  "top": {
+   "iou": 0.8547,
+   "agree": 0.8547,
+   "drift": 0,
+   "ref_only_px": 1311,
+   "model_only_px": 470
+  },
+  "concept": {
+   "iou": 0.7943,
+   "agree": 0.7943,
+   "drift": 0,
+   "ref_only_px": 20760,
+   "model_only_px": 13109
+  }
+ },
+ "judge": {
+  "source": "D:\\Git\\anyCreature\\hard_surface\\experiments\\t8_cad_hybrid\\A\\pass1_mesh.json",
+  "sigma": 1.0004,
+  "sigmaRaw": 1.0004266610692438,
+  "sigmaFit": {
+   "method": "golden",
+   "golden": 1.0004,
+   "goldenObj": 0.8074,
+   "scan": 1.0008,
+   "scanObj": 0.8075,
+   "keep": 0.001,
+   "evals": 328
+  },
+  "views": {
+   "side": {
+    "iou": 0.9246,
+    "agree": 0.9246,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 1449,
+    "model_only_px": 147
+   },
+   "front": {
+    "iou": 0.7179,
+    "agree": 0.7179,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 469,
+    "model_only_px": 836
+   },
+   "rear": {
+    "iou": 0.734,
+    "agree": 0.734,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 580,
+    "model_only_px": 678
+   },
+   "top": {
+    "iou": 0.8547,
+    "agree": 0.8547,
+    "drift": 0,
+    "zone": 1,
+    "fam": {},
+    "px": 512,
+    "ref_only_px": 1311,
+    "model_only_px": 470
+   },
+   "concept": {
+    "iou": 0.7943,
+    "agree": 0.7943,
+    "drift": 0,
+    "px": 1024,
+    "ref_only_px": 20760,
+    "model_only_px": 13109
+   }
+  },
+  "concept": {
+   "target": "refs/assault_rifle.png",
+   "front": "+Z",
+   "frame": {
+    "scale": 1,
+    "tx": 0,
+    "ty": 0
+   }
+  },
+  "minAgree": 0.7179,
+  "tris": 6048
+ },
+ "current": {
+  "source": "none (direct: the first pass is its own reference)",
+  "sigma": null,
+  "agree": {},
+  "iou": {}
+ },
+ "delta_agree": {},
+ "delta_iou": {},
+ "concept_ref": "refs/assault_rifle.png",
+ "pipeline": "direct",
+ "gate": {
+  "rule": "tris <= budget, topology 0, no ortho view more than 0.04 below the best earlier pass (--gate-ref mature: block-outs = the first pass and passes under 5% of the budget are not a reference)",
+  "ref_rule": "mature",
+  "ref_source": "none (direct: the first pass is its own reference)",
+  "tris_ok": true,
+  "topology_clean": true,
+  "below_best_earlier": {},
+  "pass": true
+ }
+}

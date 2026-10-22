@@ -1,0 +1,322 @@
+{
+ "name": "hippo",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\hippo\\stage4\\hippo.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 3192,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 1596,
+   "tri_ratio": 0.5,
+   "iou_min": 0.9955,
+   "iou_mean": 0.9963,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 804,
+   "tri_ratio": 0.252,
+   "iou_min": 0.9905,
+   "iou_mean": 0.9912,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 332,
+   "tri_ratio": 0.104,
+   "iou_min": 0.9734,
+   "iou_mean": 0.9744,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.6098,
+   "h": 1.6663
+  },
+  {
+   "bone": "spine",
+   "r": 0.6115,
+   "h": 1.2839
+  },
+  {
+   "bone": "chest",
+   "r": 0.4866,
+   "h": 0.9731
+  },
+  {
+   "bone": "head",
+   "r": 0.3869,
+   "h": 1.116
+  },
+  {
+   "bone": "ear.L",
+   "r": 0.1057,
+   "h": 0.3389
+  },
+  {
+   "bone": "ear.R",
+   "r": 0.1057,
+   "h": 0.3389
+  },
+  {
+   "bone": "upperarm.L",
+   "r": 0.2902,
+   "h": 0.9954
+  },
+  {
+   "bone": "forearm.L",
+   "r": 0.1847,
+   "h": 0.5668
+  },
+  {
+   "bone": "hand.L",
+   "r": 0.1601,
+   "h": 0.4387
+  },
+  {
+   "bone": "upperarm.R",
+   "r": 0.2902,
+   "h": 0.9954
+  },
+  {
+   "bone": "forearm.R",
+   "r": 0.1847,
+   "h": 0.5668
+  },
+  {
+   "bone": "hand.R",
+   "r": 0.1601,
+   "h": 0.4387
+  },
+  {
+   "bone": "tail0",
+   "r": 0.1177,
+   "h": 0.4637
+  },
+  {
+   "bone": "tail1",
+   "r": 0.039,
+   "h": 0.1119
+  },
+  {
+   "bone": "tail2",
+   "r": 0.0333,
+   "h": 0.1298
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.2921,
+   "h": 1.0499
+  },
+  {
+   "bone": "shin.L",
+   "r": 0.189,
+   "h": 0.4319
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.196,
+   "h": 0.3919
+  },
+  {
+   "bone": "toe.L",
+   "r": 0.1241,
+   "h": 0.2605
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.2921,
+   "h": 1.0499
+  },
+  {
+   "bone": "shin.R",
+   "r": 0.189,
+   "h": 0.4319
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.196,
+   "h": 0.392
+  },
+  {
+   "bone": "toe.R",
+   "r": 0.1241,
+   "h": 0.2605
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 1.6379897594451904,
+  "feet": [
+   "hand.L",
+   "hand.R",
+   "toe.L",
+   "toe.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 1.07,
+    "foot_slide_std_pctH": 0.716,
+    "planted_frames": 106,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.14,
+    "foot_slide_std_pctH": 0.072,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 5.15,
+    "foot_slide_std_pctH": 1.316,
+    "planted_frames": 40,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack\\hippo\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "hippo.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_hippo_root', 'UCX_hippo_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "hippo.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_hippo_root', 'UCX_hippo_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "hippo.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_hippo_root', 'UCX_hippo_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

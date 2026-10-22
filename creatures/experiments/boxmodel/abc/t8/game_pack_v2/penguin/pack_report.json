@@ -1,0 +1,280 @@
+{
+ "name": "penguin",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\penguin\\stage4\\penguin.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 2776,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 1392,
+   "tri_ratio": 0.501,
+   "iou_min": 0.9959,
+   "iou_mean": 0.9962,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 714,
+   "tri_ratio": 0.257,
+   "iou_min": 0.9878,
+   "iou_mean": 0.989,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 454,
+   "tri_ratio": 0.164,
+   "iou_min": 0.9737,
+   "iou_mean": 0.9778,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.2527,
+   "h": 0.5672
+  },
+  {
+   "bone": "spine",
+   "r": 0.2478,
+   "h": 0.5627
+  },
+  {
+   "bone": "chest",
+   "r": 0.1512,
+   "h": 0.3025
+  },
+  {
+   "bone": "neck",
+   "r": 0.13,
+   "h": 0.26
+  },
+  {
+   "bone": "head",
+   "r": 0.1202,
+   "h": 0.3283
+  },
+  {
+   "bone": "wing.L",
+   "r": 0.0637,
+   "h": 0.3615
+  },
+  {
+   "bone": "wingtip.L",
+   "r": 0.0575,
+   "h": 0.3472
+  },
+  {
+   "bone": "wing.R",
+   "r": 0.0637,
+   "h": 0.3615
+  },
+  {
+   "bone": "wingtip.R",
+   "r": 0.0575,
+   "h": 0.3472
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.0799,
+   "h": 0.2515
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.0508,
+   "h": 0.2607
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.0799,
+   "h": 0.2515
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.0508,
+   "h": 0.2607
+  },
+  {
+   "bone": "tail0",
+   "r": 0.0987,
+   "h": 0.2805
+  },
+  {
+   "bone": "tail1",
+   "r": 0.0343,
+   "h": 0.1442
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 1.098000168800354,
+  "feet": [
+   "foot.L",
+   "foot.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 62,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": -0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 94,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 33,
+    "penetration_pctH": 2.31,
+    "foot_slide_std_pctH": 0.107,
+    "planted_frames": 64,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\game_pack_v2\\penguin\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "penguin.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_penguin_root', 'UCX_penguin_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "penguin.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_penguin_root', 'UCX_penguin_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "penguin.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 32}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "15/15"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_penguin_root', 'UCX_penguin_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

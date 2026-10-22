@@ -5,9 +5,9 @@
  "counts": {
   "legL": 713,
   "legR": 713,
-  "armL": 531,
-  "armR": 531,
-  "torso": 1394
+  "armL": 524,
+  "armR": 524,
+  "torso": 1398
  },
  "verdict": "PASS"
 }

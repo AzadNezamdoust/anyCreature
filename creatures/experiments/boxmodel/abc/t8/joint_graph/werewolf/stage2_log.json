@@ -1,0 +1,116 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "loop",
+   "reason": "shoulder twist loop (span 0-1)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "shoulder twist loop (span 0-1)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "shoulder twist loop (span 1-2)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 4,
+   "kind": "loop",
+   "reason": "elbow hinge loop (span 2-3, pivot ring 3)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 5,
+   "kind": "loop",
+   "reason": "elbow hinge loop (span 3-4, pivot ring 3)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 6,
+   "kind": "loop",
+   "reason": "wrist hinge loop (span 5-6, pivot ring 6)",
+   "new_verts": 10,
+   "extra_base_edges": []
+  },
+  {
+   "op": 7,
+   "kind": "loop",
+   "reason": "hip twist loop (span 0-1)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 8,
+   "kind": "loop",
+   "reason": "hip twist loop (span 0-1)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 9,
+   "kind": "loop",
+   "reason": "knee hinge loop (span 1-2, pivot ring 2)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 10,
+   "kind": "loop",
+   "reason": "knee hinge loop (span 2-3, pivot ring 2)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 11,
+   "kind": "loop",
+   "reason": "hock hinge loop (span 4-5, pivot ring 5)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 12,
+   "kind": "loop",
+   "reason": "hock hinge loop (span 5-6, pivot ring 5)",
+   "new_verts": 18,
+   "extra_base_edges": []
+  },
+  {
+   "op": 13,
+   "kind": "loop",
+   "reason": "neck twist loop (C3-T0)",
+   "new_verts": 13,
+   "extra_base_edges": []
+  },
+  {
+   "op": 14,
+   "kind": "loop",
+   "reason": "neck twist loop (T0-T1)",
+   "new_verts": 13,
+   "extra_base_edges": []
+  },
+  {
+   "op": 15,
+   "kind": "loop",
+   "reason": "waist ball loop (B0-B1)",
+   "new_verts": 13,
+   "extra_base_edges": []
+  },
+  {
+   "op": 16,
+   "kind": "inset",
+   "reason": "eye socket: a ring in the eye face, its floor pushed in",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

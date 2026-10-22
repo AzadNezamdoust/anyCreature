@@ -1,0 +1,398 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\beetle.glb",
+ "H": 0.6187635138630867,
+ "feet": [
+  "tarsus1.L",
+  "tarsus1.R",
+  "tarsus2.L",
+  "tarsus2.R",
+  "tarsus3.L",
+  "tarsus3.R"
+ ],
+ "bones": 21,
+ "gait": null,
+ "clips": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.018,
+   "foot_speed_planted_pctH": 0.149,
+   "planted_frames": 134,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    31
+   ],
+   "slide_foot": "tarsus1.R"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 282,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus1.L",
+    3
+   ],
+   "slide_foot": "tarsus2.L"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.001,
+   "foot_slide_std_pctH": 0.115,
+   "foot_speed_planted_pctH": 0.327,
+   "planted_frames": 88,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus1.L",
+    10
+   ],
+   "slide_foot": "tarsus1.R"
+  }
+ },
+ "sheet_after": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\after_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 7.914,
+   "foot_slide_std_pctH": 0.808,
+   "foot_speed_planted_pctH": 0.832,
+   "planted_frames": 166,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus1.L",
+    14
+   ],
+   "slide_foot": "tarsus2.R"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.003,
+   "foot_slide_std_pctH": 0.052,
+   "foot_speed_planted_pctH": 0.118,
+   "planted_frames": 282,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.L",
+    19
+   ],
+   "slide_foot": "tarsus2.R"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 8.417,
+   "foot_slide_std_pctH": 0.802,
+   "foot_speed_planted_pctH": 1.977,
+   "planted_frames": 84,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus3.L",
+    13
+   ],
+   "slide_foot": "tarsus1.R"
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {
+    "tarsus1.L": {
+     "stance": 7,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      13.13
+     ],
+     "z_range_pctH": 14.53
+    },
+    "tarsus1.R": {
+     "stance": 7,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      13.13
+     ],
+     "z_range_pctH": 14.53
+    },
+    "tarsus2.L": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      12.89
+     ],
+     "z_range_pctH": 1.05
+    },
+    "tarsus2.R": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      12.89
+     ],
+     "z_range_pctH": 1.05
+    },
+    "tarsus3.L": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "tarsus3.R": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    31,
+    0.004,
+    "tarsus2.R",
+    0
+   ]
+  },
+  "idle": {
+   "feet": {
+    "tarsus1.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.36
+     ],
+     "z_range_pctH": 1.6
+    },
+    "tarsus1.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.36
+     ],
+     "z_range_pctH": 1.6
+    },
+    "tarsus2.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.38
+     ],
+     "z_range_pctH": 0.15
+    },
+    "tarsus2.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.38
+     ],
+     "z_range_pctH": 0.15
+    },
+    "tarsus3.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "tarsus3.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    3,
+    0.004,
+    "tarsus1.L",
+    1
+   ]
+  },
+  "move": {
+   "feet": {
+    "tarsus1.L": {
+     "stance": 16,
+     "src": "contact",
+     "xy_range_pctH": [
+      20.41,
+      5.78
+     ],
+     "z_range_pctH": 14.96
+    },
+    "tarsus1.R": {
+     "stance": 16,
+     "src": "contact",
+     "xy_range_pctH": [
+      20.41,
+      5.78
+     ],
+     "z_range_pctH": 14.96
+    },
+    "tarsus2.L": {
+     "stance": 15,
+     "src": "contact",
+     "xy_range_pctH": [
+      14.11,
+      5.06
+     ],
+     "z_range_pctH": 16.59
+    },
+    "tarsus2.R": {
+     "stance": 15,
+     "src": "contact",
+     "xy_range_pctH": [
+      14.11,
+      5.06
+     ],
+     "z_range_pctH": 16.59
+    },
+    "tarsus3.L": {
+     "stance": 16,
+     "src": "contact",
+     "xy_range_pctH": [
+      14.36,
+      5.3
+     ],
+     "z_range_pctH": 18.61
+    },
+    "tarsus3.R": {
+     "stance": 16,
+     "src": "contact",
+     "xy_range_pctH": [
+      14.44,
+      5.56
+     ],
+     "z_range_pctH": 16.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    2,
+    0.001,
+    "tarsus1.R",
+    9
+   ]
+  }
+ },
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\clips\\s4_frames\\before_move_75.png"
+ ],
+ "blender_roundtrip": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.018,
+   "foot_speed_planted_pctH": 0.149,
+   "planted_frames": 134,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus2.R",
+    31
+   ],
+   "slide_foot": "tarsus1.R"
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 282,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus1.L",
+    3
+   ],
+   "slide_foot": "tarsus2.L"
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.001,
+   "foot_slide_std_pctH": 0.115,
+   "foot_speed_planted_pctH": 0.327,
+   "planted_frames": 88,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tarsus1.L",
+    10
+   ],
+   "slide_foot": "tarsus1.R"
+  }
+ },
+ "rest_drift": 0.0,
+ "mesh_identity": {
+  "ok": true,
+  "detail": "verts 15809, unmatched positions 0, max weight diff 0.0000"
+ },
+ "gate": {
+  "ok": true,
+  "lines": [
+   "BMK clip before move    pen 8.417  slide 0.802  plant 1.977  loop 0.000",
+   "BMK clip before idle    pen 0.003  slide 0.052  plant 0.118  loop 0.000",
+   "BMK clip before attack  pen 7.914  slide 0.808  plant 0.832  loop 0.000",
+   "BMK clip attack  PASS  pen 0.004  slide 0.018  plant 0.149  loop 0.000",
+   "BMK clip idle    PASS  pen 0.004  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.001  slide 0.115  plant 0.327  loop 0.000",
+   "BMK clip mesh/skin identity PASS: verts 15809, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip gate PASS (feet ['tarsus1.L', 'tarsus1.R', 'tarsus2.L', 'tarsus2.R', 'tarsus3.L', 'tarsus3.R'], gait None)"
+  ]
+ }
+}

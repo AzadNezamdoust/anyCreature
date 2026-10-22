@@ -1,0 +1,277 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\w.glb",
+ "H": 2.2203479921245446,
+ "feet": [
+  "toe.L",
+  "toe.R"
+ ],
+ "bones": 24,
+ "gait": "biped_walk",
+ "clips": {
+  "attack": {
+   "frames": 36,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 70,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 94,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.253,
+   "planted_frames": 36,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "toe.R",
+    22
+   ]
+  }
+ },
+ "sheet_after": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\after_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 36,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 70,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 94,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 0.936,
+   "foot_slide_std_pctH": 1.025,
+   "foot_speed_planted_pctH": 1.419,
+   "planted_frames": 40,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "toe.R",
+    1
+   ]
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {
+    "toe.L": {
+     "stance": 35,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "toe.R": {
+     "stance": 35,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    -0.0,
+    "toe.R",
+    0
+   ]
+  },
+  "idle": {
+   "feet": {
+    "toe.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "toe.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    -0.0,
+    "toe.R",
+    0
+   ]
+  },
+  "move": {
+   "feet": {
+    "toe.L": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.99,
+      21.68
+     ],
+     "z_range_pctH": 11.36
+    },
+    "toe.R": {
+     "stance": 25,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.83,
+      23.92
+     ],
+     "z_range_pctH": 4.21
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    22,
+    0.004,
+    "toe.R",
+    0
+   ]
+  }
+ },
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\werewolf_test\\s4_frames\\before_move_75.png"
+ ],
+ "blender_roundtrip": {
+  "attack": {
+   "frames": 36,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 70,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": -0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 94,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    null,
+    null
+   ]
+  },
+  "move": {
+   "frames": 33,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.934,
+   "foot_speed_planted_pctH": 0.645,
+   "planted_frames": 37,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "toe.R",
+    22
+   ]
+  }
+ },
+ "rest_drift": 0.0,
+ "mesh_identity": {
+  "ok": true,
+  "detail": "verts 11045, unmatched positions 0, max weight diff 0.0000"
+ },
+ "gate": {
+  "ok": true,
+  "lines": [
+   "BMK clip before move    pen 0.936  slide 1.025  plant 1.419  loop 0.000",
+   "BMK clip before idle    pen -0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before attack  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip attack  PASS  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip idle    PASS  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.004  slide 0.000  plant 0.253  loop 0.000",
+   "BMK clip mesh/skin identity PASS: verts 11045, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip gate PASS (feet ['toe.L', 'toe.R'], gait biped_walk)"
+  ]
+ }
+}

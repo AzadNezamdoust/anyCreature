@@ -1,9 +1,9 @@
 {
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "84dfdc7687a2c855e4d3908dd156e926107881ae0c79cdec84b403dec050c042",
-  "collapsed_edge_hash": "84dfdc7687a2c855e4d3908dd156e926107881ae0c79cdec84b403dec050c042",
-  "logged_ops": 3,
+  "lock_edge_hash": "bd0fb9cf4d79b54c07b9e5d2be55a94fc802030b3ea97e4d2924f612c4e65471",
+  "collapsed_edge_hash": "bd0fb9cf4d79b54c07b9e5d2be55a94fc802030b3ea97e4d2924f612c4e65471",
+  "logged_ops": 4,
   "logged_new_verts": 30,
   "errors": []
  },
@@ -15,10 +15,38 @@
   "skin"
  ],
  "colour_count": 5,
- "tris": 2796,
+ "tris": 2976,
  "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 12,
+   "relaxed": 48,
+   "undone": 7,
+   "max_move": 0.01163,
+   "mean_move": 0.0047,
+   "before": {
+    "border_edges": 65,
+    "length": 5.0038,
+    "paths": 4,
+    "corners": 24,
+    "corner_quads": 23,
+    "corners_per_m": 4.8
+   },
+   "after": {
+    "border_edges": 53,
+    "length": 4.5584,
+    "paths": 4,
+    "corners": 4,
+    "corner_quads": 1,
+    "corners_per_m": 0.9
+   }
+  }
+ ],
  "pieces": {
   "piece_eye": 64,
+  "piece_nose": 76,
   "piece_ear_L": 28,
   "piece_ear_R": 28,
   "piece_fingers_L": 80,

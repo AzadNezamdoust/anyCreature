@@ -84,13 +84,54 @@ KEY = [   # (name, z, 5 control points (x, y)) bottom -> top, read off reference
 INSERT = ['L0b', 'C1']      # a ring inserted ABOVE each of these keys
 
 
+# HEAD pass (2026-10-22): the face is built in the loft. Three new head rings, straight lerps of their neighbours
+# (Mm the mouth line between the lower lip M0 and the upper lip N1, N2 the muzzle top / nose base between N1 and E0,
+# Eu the upper lid between the eye ring E0 and the brow F0), and hand-placed face vertices v0-v5 (x, y, z: a face
+# vertex may sit off its ring's height): a rounded muzzle wider than tall that juts 13 cm ahead of the eyes (the
+# sheet's side view) and turns back into the cheeks, the mouth a thin ring step under the upper-lip overhang, the
+# nose bridge (E0 v0) forward between the eyes, the eye band (E0/Eu v1-v3) sunk under a brow ring (F0) that
+# overhangs it in two arches, cheekbone vertices (E0 v3-v4), the lower face narrowing to the chin, and the jaw (J0)
+# tucked under the muzzle inside the hood: no grey jaw 'wings' (J0 v4 was x 0.29). The r31g S2 face moves are gone.
+EXTRA = {'M0': ('Mm', 'N1', 0.45), 'N1': ('N2', 'E0', 0.5), 'E0': ('Eu', 'F0', 0.55)}   # lower key -> (name, upper key, t)
+FACE = {
+    'J0': {0: (0.0, -0.470, 1.950), 1: (0.050, -0.465, 1.950), 2: (0.095, -0.450, 1.950), 3: (0.130, -0.420, 1.950),
+           4: (0.160, -0.370, 1.950), 5: (0.250, -0.290, 1.950)},
+    'M0': {0: (0.0, -0.512, 2.000), 1: (0.050, -0.507, 2.002), 2: (0.098, -0.490, 2.008), 3: (0.136, -0.455, 2.018),
+           4: (0.152, -0.390, 2.030), 5: (0.280, -0.275, 2.030)},
+    'Mm': {0: (0.0, -0.517, 2.040), 1: (0.052, -0.512, 2.041), 2: (0.102, -0.495, 2.045), 3: (0.144, -0.462, 2.045),
+           4: (0.166, -0.390, 2.050)},
+    'N1': {0: (0.0, -0.538, 2.054), 1: (0.054, -0.533, 2.056), 2: (0.106, -0.513, 2.061), 3: (0.150, -0.474, 2.066),
+           4: (0.176, -0.392, 2.082), 5: (0.280, -0.270, 2.110)},
+    'N2': {0: (0.0, -0.526, 2.108), 1: (0.054, -0.520, 2.110), 2: (0.104, -0.499, 2.115), 3: (0.150, -0.452, 2.122),
+           4: (0.180, -0.372, 2.138)},
+    'E0': {0: (0.0, -0.445, 2.165), 1: (0.050, -0.425, 2.167), 2: (0.095, -0.406, 2.170), 3: (0.150, -0.386, 2.175),
+           4: (0.178, -0.332, 2.180), 5: (0.265, -0.250, 2.180)},
+    'Eu': {0: (0.0, -0.443, 2.206), 1: (0.050, -0.419, 2.208), 2: (0.095, -0.402, 2.210), 3: (0.150, -0.370, 2.214),
+           4: (0.180, -0.324, 2.220)},
+    'F0': {0: (0.0, -0.462, 2.240), 1: (0.050, -0.470, 2.255), 2: (0.100, -0.466, 2.260), 3: (0.152, -0.418, 2.256),
+           4: (0.186, -0.356, 2.250), 5: (0.240, -0.260, 2.240)},
+}
+
+
+def _face(nm, pts):
+    pts = list(pts)
+    for j, q in FACE.get(nm, {}).items():
+        pts[j] = q
+    return pts
+
+
 def stations():
     out = []
     for i, (nm, z, c5) in enumerate(KEY):
-        out.append((nm, ring13(c5, z)))
+        out.append((nm, _face(nm, ring13(c5, z))))
         if nm in INSERT and i + 1 < len(KEY):
             a, b = ring13(c5, z), ring13(KEY[i + 1][2], KEY[i + 1][1])
             out.append((nm + '~', [tuple((Vector(p) + Vector(q)) / 2) for p, q in zip(a, b)]))
+        if nm in EXTRA:
+            en, up, t = EXTRA[nm]
+            ku = next(q for q in KEY if q[0] == up)
+            a, b = _face(nm, ring13(c5, z)), _face(up, ring13(ku[2], ku[1]))
+            out.append((en, _face(en, [tuple(Vector(p).lerp(Vector(q), t)) for p, q in zip(a, b)])))
     return out
 
 
@@ -282,7 +323,7 @@ def stage1(k):
 
 
 # ---------------------------------------------------------------- stage 2
-EYE_LO, EYE_HI, EYE_COL = 'E0', 'F0', 2     # s4 r8: column 2 (x 0.11-0.16), by the face corner: seen from the side
+EYE_LO, EYE_HI, EYE_COL = 'E0', 'Eu', 2     # s4 r8: column 2, by the face corner: seen from the side (HEAD pass: under the new upper-lid ring)
 
 
 def eye_face_centre():
@@ -316,10 +357,11 @@ def stage2(k, body):
     for why, fe in cuts:
         with k.topo(bm, 'loop', why):
             loopcut(bm, fe(), t=0.5)
-    # s4 r10: the face box's front corner (E0/F0 v3) bevelled back 4 cm (N1 v3 2 cm): the eye face (column 2) turns
-    # forward-OUT, so the lens shows from the side (it sat on the front plane, seen edge-on at az090: 0.30)
-    for nm, dy in (('E0', 0.04), ('F0', 0.04), ('N1', 0.02)):
-        move([vert_near(bm, P(nm)[3])], (-0.01, dy, 0))
+    # face pass: handles on the head-ring vertices at their S1 positions
+    HV = {(nm, j): vert_near(bm, P(nm)[j]) for nm in ('T0', 'J0', 'M0', 'N1', 'E0', 'F0', 'F1', 'F2') for j in range(13)}
+    hv = lambda nm, j: HV[(nm, j)]
+    # HEAD pass: the face (brow, muzzle, mouth, cheeks, chin) is S1 ring vertices now (FACE); the r10 bevel and the
+    # r29e / r30f face moves are gone
     ec0 = eye_face_centre()
     f = face_near(bm, ec0)
     fn = f.normal.copy()
@@ -342,8 +384,6 @@ def stage2(k, body):
     # faces forward-down into the thigh front.
     for j, dz in ((3, 0.03), (4, 0.06)):     # r18: UP (r17 down turned it to face back: 150 deg)
         move([vert_near(bm, Vector((L0[j].x * 0.55, L0[j].y, L0[j].z + (0.012 if j == 3 else 0.0))))], (0, 0, dz))
-    F0 = P('F0')
-    move([vert_near(bm, F0[j]) for j in (0, 1, 2, 3)], (0.0, -0.012, 0.004))     # brow ridge forward over the eye (r2: the seam vertex too: no notch)
     recalc_normals(bm)
     commit(body, bm)
     bm.free()
@@ -351,12 +391,41 @@ def stage2(k, body):
 
 
 # ---------------------------------------------------------------- stage 3
-PAL = {'fur': '#e6e3dc', 'shade': '#c4bfb4', 'skin': '#7b8596', 'nail': '#a9b0bc', 'eye': '#3a281b',
+PAL = {'skin2': '#b1b5bd', 'fur': '#e6e3dc', 'shade': '#c4bfb4', 'skin': '#7b8596', 'nail': '#a9b0bc', 'eye': '#3a281b',
        'inner': '#5f6878'}
+# HEAD pass: the grey face follows the new head loops - each face of the head front is coloured by the loft span
+# (lower ring) and column v it sits on: the chin front (J0 -> M0, v0-v1: the beard hides the rest), the lower lip,
+# mouth step, muzzle front and top, eye band and brow underside out to the face side (v3 -> v4); the brow top (white
+# eyebrows), the face side walls into the hood and the jaw stay fur (the r31g box rule painted the jaw 'wings' grey)
+BLEND = False     # HEAD pass variant b: one face column of a mid tone between the grey skin and the white fur
+SKIN_J = {'J0': 1, 'M0': 3, 'Mm': 3, 'N1': 3, 'N2': 3, 'E0': 3, 'Eu': 3}
+_FQ = None
+
+
+def face_span(c):
+    """(lower ring, column, distance) of the nearest S1 head quad (J0 .. F1, columns 0-5), or (None, -1, 1e9)."""
+    global _FQ
+    if _FQ is None:
+        _FQ = []
+        names = [n for n, _p in SECS]
+        for a, b in zip(names, names[1:]):
+            if a in SKIN_J:
+                A, B_ = P(a), P(b)
+                for j in range(6):
+                    _FQ.append((a, j, (A[j] + A[j + 1] + B_[j] + B_[j + 1]) / 4))
+    q = Vector((abs(c.x), c.y, c.z))
+    d, nm, j = min(((q - p).length, nm, j) for nm, j, p in _FQ)
+    return nm, j, d
+
+
 def body_rule(c, n, i):
     x, y, z = abs(c.x), c.y, c.z
-    if x < 0.20 and y < -0.33 and 1.93 < z < 2.285 and n.y < -0.25:     # review fix 3: the brow is part of the mask
-        return 'skin'                                                    # the face mask
+    if 1.9 < z < 2.3 and y < -0.3:
+        nm, j, d = face_span(c)
+        if d < 0.035 and j <= SKIN_J[nm]:
+            return 'skin'                                                # the face
+        if BLEND and d < 0.035 and j == SKIN_J[nm] + 1:
+            return 'skin2'                                               # the blend band round the face
     if z < 0.10:
         return 'skin'                                                    # the big grey feet
     if x > 0.6 and z < 0.88:
@@ -499,8 +568,60 @@ def toes(bm, tree, side):
         box_chain(bm, rows)
 
 
+def ring_chain(bm, rows):
+    """Closed n-point sections bridged in order, both ends capped (a solid piece)."""
+    R = [[bm.verts.new(Vector(q)) for q in r] for r in rows]
+    bm.faces.new(list(reversed(R[0])))
+    n = len(R[0])
+    for a, b in zip(R, R[1:]):
+        for j in range(n):
+            bm.faces.new([a[j], a[(j + 1) % n], b[(j + 1) % n], b[j]])
+    bm.faces.new(R[-1])
+    recalc_normals(bm)
+
+
+def nose_rows():
+    """F r26b: the yeti nose - a broad, short, flat ape nose over the N1 -> E0 faces (columns 0-1): widest at the
+    nostril line, narrowing up into the bridge between the eyes, its back buried. (z, half width, front y, back y);
+    8-point sections: back, wing, nostril out, septum, septum, nostril out, wing, back."""
+    out = []
+    for z, w, f, b in ((2.088, 0.066, -0.497, -0.46), (2.115, 0.076, -0.518, -0.45), (2.178, 0.034, -0.442, -0.385)):
+        dz = (0.0, 0.0, 0.003, -0.005, -0.005, 0.003, 0.0, 0.0) if z < 2.1 else (0,) * 8
+        xs = (-0.8, -1.0, -0.74, -0.16, 0.16, 0.74, 1.0, 0.8)
+        ys = (b, f + 0.016, f + 0.004, f, f, f + 0.004, f + 0.016, b)
+        out.append([(xf * w, y_, z + d_) for xf, y_, d_ in zip(xs, ys, dz)])
+    return out
+
+
+# HEAD pass nose pad rows, bottom (nostril line, on the upper lip top) -> top (the bridge between the eyes):
+# (z, half width, lift out of the surface)
+# r2a (Q6: the pad + the upper-lip edge ended in a forward tip in profile): an even, lower pad (1.0-1.4 cm everywhere)
+NOSE_ROWS = ((2.096, 0.040, 0.010), (2.112, 0.056, 0.014), (2.132, 0.050, 0.013), (2.152, 0.034, 0.012), (2.172, 0.022, 0.010))
+
+
+def nose_pad(tree):
+    """8-point closed sections (back, edge, four front points, edge, back) whose front points are the body surface
+    (a ray from the front at that x, z) lifted out, the back points sunk 1.2 cm: a pad that follows the muzzle."""
+    out = []
+    for z, w, lift in NOSE_ROWS:
+        sec = []
+        for xf, kind in ((-0.45, 'b'), (-1.0, 'e'), (-0.6, 'f'), (-0.2, 'f'), (0.2, 'f'), (0.6, 'f'), (1.0, 'e'), (0.45, 'b')):
+            x = xf * w
+            loc, nr = hit(tree, (x, -1.5, z), (0, 1, 0))
+            if loc is None:
+                loc, nr = Vector((x, -0.5, z)), Vector((0, -1, 0))
+            nr = nr if nr.y < 0 else -nr
+            d_ = {'b': -0.016, 'e': max(0.4 * lift, 0.008), 'f': lift * (1.0 - 0.25 * abs(xf))}[kind]
+            q = loc + nr * d_                                  # r2a: lifted along the surface normal (z-fight on the slope)
+            sec.append((x, q.y, z))
+        out.append(sec)
+    return out
+
+
 def stage3(k, body):
-    paint(body, {kk: PAL[kk] for kk in ('fur', 'skin')}, body_rule)
+    paint(body, {kk: PAL[kk] for kk in ('fur', 'skin') + (('skin2',) if BLEND else ())}, body_rule)
+    from smooth_borders import smooth_borders
+    smooth_borders(body, k=k, pairs=[('fur', 'skin'), ('fur', 'skin2'), ('skin', 'skin2')], pin=lambda c: c.z < 1.85)     # HEAD pass: the face border only
     tree = full_bvh(body)
     pieces = []
     one = lambda key: (lambda c_, n_, i: key)
@@ -514,12 +635,21 @@ def stage3(k, body):
     loc, fnn = hit(tree, ec + n * 0.05, -n)
     if loc is not None:
         c, n = loc, (fnn if fnn.dot(n) > 0 else -fnn)
-    n = (n + Vector((1.8, 0, 0.0))).normalized()      # s4 r8 (r9: 0.9 -> 1.8): the lens looks forward-OUT (side view >= 0.40)
+    n = (n + Vector((2.4, 0, 0.0))).normalized()      # s4 r8 (r9: 0.9 -> 1.8; HEAD pass 2.4): the lens looks forward-OUT (side view >= 0.40)
     bm = bmesh.new()
-    lens(bm, c - n * 0.004, n, 0.024, 0.016)
+    lens(bm, c + n * 0.002, n, 0.024, 0.016)          # HEAD pass: 6 mm further out (side view margin)
     eye = object_from_bm('eye', bm)
     paint(eye, {'eye': PAL['eye']}, one('eye'))
     pieces.append(eye)
+    # HEAD pass (Q6): the nose is a broad flat pad lying flush on the muzzle top (N2 -> E0), its lower band bevelled
+    # forward-down with two dark nostrils (the eye colour: no new colour); the r26b wedge read as a beak in profile
+    bm = bmesh.new()
+    ring_chain(bm, nose_pad(tree))
+    nose = object_from_bm('nose', bm, mirror=False)
+    paint(nose, {'skin': PAL['skin'], 'eye': PAL['eye']},
+          lambda c_, n_, i: 'eye' if (c_.z < (NOSE_ROWS[0][0] + NOSE_ROWS[1][0]) / 2 + 0.002 and (n_.y < -0.2 or n_.z < -0.2)
+                                      and 0.2 * NOSE_ROWS[1][1] < abs(c_.x) < 0.9 * NOSE_ROWS[1][1]) else 'skin')
+    pieces.append(nose)
     # hands: the parts-library four-finger hand, rooted in the wrist ring under the fur cuff
     wr = wrist_ring(body)
     for side in (1, -1):

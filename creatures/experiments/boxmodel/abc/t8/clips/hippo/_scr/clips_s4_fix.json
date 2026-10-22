@@ -1,0 +1,257 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\hippo_before.glb",
+ "H": 1.6379897457672996,
+ "feet": [
+  "hand.L",
+  "hand.R",
+  "toe.L",
+  "toe.R"
+ ],
+ "bones": 24,
+ "gait": "quad_trot",
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t8\\clips\\hippo\\s4_frames\\before_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 1.067,
+   "foot_slide_std_pctH": 0.727,
+   "foot_speed_planted_pctH": 0.862,
+   "planted_frames": 106,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "toe.R",
+    15
+   ]
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.139,
+   "foot_slide_std_pctH": 0.071,
+   "foot_speed_planted_pctH": 0.109,
+   "planted_frames": 188,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "forearm.R",
+    12
+   ]
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 5.155,
+   "foot_slide_std_pctH": 1.412,
+   "foot_speed_planted_pctH": 1.943,
+   "planted_frames": 32,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.R",
+    7
+   ]
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {
+    "hand.L": {
+     "stance": 23,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      4.99
+     ],
+     "z_range_pctH": 3.51
+    },
+    "hand.R": {
+     "stance": 23,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      4.99
+     ],
+     "z_range_pctH": 3.51
+    },
+    "toe.L": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      13.37
+     ],
+     "z_range_pctH": 1.46
+    },
+    "toe.R": {
+     "stance": 31,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      13.37
+     ],
+     "z_range_pctH": 1.46
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    26,
+    0.034,
+    "hand.L",
+    0
+   ]
+  },
+  "idle": {
+   "feet": {
+    "hand.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.27
+     ],
+     "z_range_pctH": 0.36
+    },
+    "hand.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      1.27
+     ],
+     "z_range_pctH": 0.36
+    },
+    "toe.L": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    },
+    "toe.R": {
+     "stance": 47,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.0,
+      0.0
+     ],
+     "z_range_pctH": 0.0
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    3,
+    0.028,
+    "hand.R",
+    0
+   ]
+  },
+  "move": {
+   "feet": {
+    "hand.L": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.1,
+      19.64
+     ],
+     "z_range_pctH": 8.35
+    },
+    "hand.R": {
+     "stance": 22,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.1,
+      19.64
+     ],
+     "z_range_pctH": 8.35
+    },
+    "toe.L": {
+     "stance": 17,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.16,
+      16.96
+     ],
+     "z_range_pctH": 5.06
+    },
+    "toe.R": {
+     "stance": 17,
+     "src": "contact",
+     "xy_range_pctH": [
+      0.17,
+      16.96
+     ],
+     "z_range_pctH": 5.06
+    }
+   },
+   "cyclic": true,
+   "worst_resid": [
+    1,
+    0.004,
+    "forearm.L",
+    4
+   ]
+  }
+ },
+ "clips": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.034,
+   "foot_slide_std_pctH": 0.013,
+   "foot_speed_planted_pctH": 0.207,
+   "planted_frames": 106,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.L",
+    26
+   ]
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.029,
+   "foot_slide_std_pctH": 0.004,
+   "foot_speed_planted_pctH": 0.002,
+   "planted_frames": 188,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "hand.L",
+    3
+   ]
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.051,
+   "foot_speed_planted_pctH": 0.111,
+   "planted_frames": 60,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "forearm.R",
+    13
+   ]
+  }
+ }
+}

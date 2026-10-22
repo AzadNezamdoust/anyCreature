@@ -1,0 +1,7 @@
+{
+ "leg_L_vs_R": 0.21,
+ "armL_vs_torso": 0.1344,
+ "armR_vs_torso": 0.1211,
+ "armL_vs_legL": 0.5211,
+ "verdict": "PASS"
+}
