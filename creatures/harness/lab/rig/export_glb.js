@@ -1,6 +1,6 @@
 // Bridge: rig.py build JSON -> anyCreature engine skeleton/anim/GLB writer (no new writer).
 const fs = require('fs');
-const E = 'E:/Github/anyCreature/engine/core/';
+const E = 'E:/Github/anyCreature/creatures/engine/core/';
 const { buildSkeleton, inverseBindMatrices, exportNames } = require(E + 'skeleton.js');
 const { compileAnims } = require(E + 'anim.js');
 const { writeGLB } = require(E + 'glb.js');
