@@ -138,7 +138,79 @@ def pool():
     return _POOL
 
 
+# ---------------------------------------------------------------- C++ engine backend (CADKIT_BACKEND=cpp)
+_ENG = None
+_ENG_LOADED: set = set()
+CPP_METHODS = {"new", "run", "state", "journal", "select", "undo", "redo", "checkout", "set_param", "measure", "ping",
+               "render"}
+
+
+def _engine():
+    """cadkit/engine_client.py loaded by path (no cadkit/__init__ -> no build123d import)."""
+    global _ENG
+    if _ENG is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("cadkit_engine_client",
+                                                      os.path.join(HERE, "cadkit", "engine_client.py"))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        _ENG = (mod, mod.Engine())
+    return _ENG
+
+
+def cpp_dispatch(method, args):
+    """Same JSON results as the Python handlers; journal saved to SESS_DIR/<session>.json after every change, so
+    sessions move freely between CADKIT_BACKEND=cpp and the Python kit."""
+    mod, eng = _engine()
+    s = args.get("session", "default")
+    p = os.path.join(SESS_DIR, f"{s}.json")
+    try:
+        if not eng.alive():
+            _ENG_LOADED.clear()
+        if method == "ping":
+            return json.dumps({"ok": True, **eng.call("ping"), "backend": "cpp"})
+        if method == "new":
+            eng.new(s)
+            _ENG_LOADED.add(s)
+        elif s not in _ENG_LOADED:
+            if os.path.exists(p):
+                eng.load(json.load(open(p)), s)
+            elif method != "run":
+                raise mod.EngineError(f"no session '{s}'", "cad_new(session) first")
+            _ENG_LOADED.add(s)
+        if method == "new":
+            res = {"session": s}
+        elif method == "run":
+            res = {"info": eng.run(args["op"], session=s, **(args.get("params") or {})),
+                   "objects": eng.state(s)["objects"]}
+        elif method in ("undo", "redo"):
+            res = eng.call(method, session=s)
+        elif method == "checkout":
+            res = eng.checkout(args["node"], s)
+        elif method == "set_param":
+            eng.set_param(args["node"], args["key"], args["value"], s)
+            res = eng.state(s)
+        elif method == "render":
+            out = os.path.join(HERE, "out", "tools_runs", s)
+            os.makedirs(out, exist_ok=True)
+            res = {"sheet": eng.render(os.path.join(out, "sheet.png"), s, res=int(args.get("res", 900)) // 3,
+                                       modes=["clay", "zebra"])["path"]}
+        else:
+            res = eng.call(method, session=s, **{k: v for k, v in args.items() if k != "session"})
+        if method in ("new", "run", "undo", "redo", "checkout", "set_param"):
+            os.makedirs(SESS_DIR, exist_ok=True)
+            json.dump(eng.journal(s), open(p + ".tmp", "w"), indent=1)
+            os.replace(p + ".tmp", p)
+        return json.dumps({"ok": True, **res}, default=str)
+    except mod.EngineError as e:
+        if e.crashed:
+            _ENG_LOADED.clear()
+        return json.dumps(e.as_dict(), default=str)
+
+
 def dispatch(method, args, timeout=None):
+    if os.environ.get("CADKIT_BACKEND", "py").lower() == "cpp" and method in CPP_METHODS:
+        return cpp_dispatch(method, args)
     if os.environ.get("CADKIT_INPROC") == "1":
         return inproc(method, args)
     return pool().request(method, args, SESS_DIR, timeout)

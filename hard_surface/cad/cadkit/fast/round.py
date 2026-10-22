@@ -13,6 +13,8 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+
+_NOWIN_KW = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}  # no stray console windows (Windows)
 import sys
 import time
 
@@ -37,8 +39,8 @@ def _src_sig():
 
 def _spawn_daemon(base, pf):
     log = open(os.path.join(base, "serve.log"), "ab")
-    flags = 0x00000008 | 0x00000200 if os.name == "nt" else 0   # DETACHED_PROCESS | NEW_PROCESS_GROUP
-    subprocess.Popen([sys.executable, "-m", "cadkit.fast.serve", pf], cwd=CAD, stdout=log, stderr=log,
+    flags = 0x08000000 | 0x00000200 if os.name == "nt" else 0   # CREATE_NO_WINDOW | NEW_PROCESS_GROUP (detached-from-console but no window)
+    subprocess.Popen(args=[sys.executable, "-m", "cadkit.fast.serve", pf], cwd=CAD, stdout=log, stderr=log,
                      stdin=subprocess.DEVNULL, env=dict(os.environ, PYTHONPATH=CAD), creationflags=flags)
 
 
@@ -136,7 +138,7 @@ def run_round(src_dir, name=None, rnd=None, timeout=600, op_timeout=240, cache=T
         except _DaemonLost as e:
             se = str(e)
     else:
-        p = subprocess.Popen(cmd, cwd=CAD, env=dict(os.environ, PYTHONPATH=CAD), stdout=subprocess.PIPE,
+        p = subprocess.Popen(**_NOWIN_KW, args=cmd, cwd=CAD, env=dict(os.environ, PYTHONPATH=CAD), stdout=subprocess.PIPE,
                              stderr=subprocess.PIPE, text=True)
         try:
             so, se = p.communicate(timeout=timeout)

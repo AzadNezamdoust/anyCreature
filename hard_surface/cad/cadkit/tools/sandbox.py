@@ -1,4 +1,4 @@
-﻿"""Crash isolation for the direct-modelling MCP tools.
+"""Crash isolation for the direct-modelling MCP tools.
 
 Every call that can touch OCCT runs in ONE persistent kernel worker subprocess (`python -m cadkit.tools.sandbox`).
 The parent (MCP server) never imports build123d for ops. JSON lines over the worker's stdin/stdout:
@@ -13,6 +13,8 @@ import json
 import os
 import queue
 import subprocess
+
+_NOWIN_KW = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}  # no stray console windows (Windows)
 import sys
 import threading
 import time
@@ -34,7 +36,7 @@ class KernelPool:
         env = dict(os.environ, PYTHONPATH=CAD + os.pathsep + os.environ.get("PYTHONPATH", ""), **self.extra_env)
         env.pop("CADKIT_INPROC", None)
         self._log = open(self.log_path, "a", buffering=1)
-        self.proc = subprocess.Popen([sys.executable, "-u", "-m", "cadkit.tools.sandbox", "--serve"], cwd=CAD,
+        self.proc = subprocess.Popen(**_NOWIN_KW, args=[sys.executable, "-u", "-m", "cadkit.tools.sandbox", "--serve"], cwd=CAD,
                                      env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self._log,
                                      text=True, encoding="utf-8", bufsize=1)
         self.q = queue.Queue()

@@ -9,6 +9,8 @@ from __future__ import annotations
 import json
 import os
 import subprocess
+
+_NOWIN_KW = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}  # no stray console windows (Windows)
 import sys
 import time
 
@@ -20,7 +22,7 @@ PY = os.environ.get("CADKIT_PYTHON", sys.executable)
 
 def _blender(script, args, timeout):
     cmd = [BLENDER, "-b", "--factory-startup", "--python-exit-code", "1", "--python", os.path.join(HERE, script), "--"] + args
-    p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    p = subprocess.run(**_NOWIN_KW, args=cmd, capture_output=True, text=True, timeout=timeout)
     if p.returncode != 0:
         tail = (p.stdout[-1500:] + "\n" + p.stderr[-1500:]).strip()
         raise RuntimeError(f"blender {script} failed (exit {p.returncode}):\n{tail}")
@@ -38,7 +40,7 @@ def run_model(script, out, timeout=180, tris=None, step=True):
     env = dict(os.environ, PYTHONPATH=CAD + os.pathsep + os.environ.get("PYTHONPATH", ""))
     t0 = time.time()
     try:
-        p = subprocess.run(args, capture_output=True, text=True, timeout=timeout, env=env, cwd=CAD)
+        p = subprocess.run(**_NOWIN_KW, args=args, capture_output=True, text=True, timeout=timeout, env=env, cwd=CAD)
     except subprocess.TimeoutExpired:
         st = {"ok": False, "error": f"timeout after {timeout}s",
               "hint": "model too slow: big fillet sets / many booleans / fine splines. Split work, fillet fewer "

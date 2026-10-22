@@ -15,6 +15,8 @@ import json
 import os
 import queue
 import subprocess
+
+_NOWIN_KW = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}  # no stray console windows (Windows)
 import sys
 import tempfile
 import threading
@@ -78,7 +80,7 @@ class OpWorker:
 
     def _start(self):
         env = dict(os.environ, PYTHONPATH=CAD + os.pathsep + os.environ.get("PYTHONPATH", ""))
-        self.proc = subprocess.Popen([sys.executable, "-u", "-m", "cadkit.isolate", "--serve"], cwd=CAD, env=env,
+        self.proc = subprocess.Popen(**_NOWIN_KW, args=[sys.executable, "-u", "-m", "cadkit.isolate", "--serve"], cwd=CAD, env=env,
                                      stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                      text=True, encoding="utf-8", bufsize=1)
         self.q = queue.Queue()

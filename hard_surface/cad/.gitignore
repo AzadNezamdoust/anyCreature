@@ -1,1 +1,4 @@
 refs/
+engine/build/
+engine/bin/
+engine/tests/*_report.json

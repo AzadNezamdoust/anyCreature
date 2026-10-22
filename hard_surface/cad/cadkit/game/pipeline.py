@@ -1,10 +1,12 @@
-﻿"""Host orchestration: model.py -> out/game/<name>/ {meshes.npz, game.blend, maps/LOD*/..., *.glb, *.fbx, preview/, report.json}."""
+"""Host orchestration: model.py -> out/game/<name>/ {meshes.npz, game.blend, maps/LOD*/..., *.glb, *.fbx, preview/, report.json}."""
 from __future__ import annotations
 
 import json
 import os
 import shutil
 import subprocess
+
+_NOWIN_KW = {"creationflags": getattr(subprocess, "CREATE_NO_WINDOW", 0)}  # no stray console windows (Windows)
 import threading
 import time
 
@@ -28,7 +30,7 @@ class VramPeak:
     @staticmethod
     def used():
         try:
-            o = subprocess.run(["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
+            o = subprocess.run(**_NOWIN_KW, args=["nvidia-smi", "--query-gpu=memory.used", "--format=csv,noheader,nounits"],
                                capture_output=True, text=True, timeout=5).stdout
             return int(o.split()[0])
         except Exception:  # noqa: BLE001
@@ -60,7 +62,7 @@ def blender(mode, args, out, timeout=1800):
     json.dump(args, open(ap, "w"), indent=1)
     cmd = [BLENDER, "-b", "--factory-startup", "--python-exit-code", "1", "--python",
            os.path.join(HERE, "bl_game.py"), "--", mode, ap]
-    p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    p = subprocess.run(**_NOWIN_KW, args=cmd, capture_output=True, text=True, timeout=timeout)
     open(os.path.join(out, f"log_{mode}.txt"), "w", encoding="utf-8").write(p.stdout + "\n---\n" + p.stderr)
     if p.returncode != 0:
         raise RuntimeError(f"blender {mode} failed:\n{p.stdout[-2500:]}\n{p.stderr[-1500:]}")
