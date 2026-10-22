@@ -125,7 +125,7 @@ def shell_check(s, r, t, outward, openings):
 
 
 SHELL_STRATEGIES = ("arc", "intersection", "thick_arc", "thick_intersection", "thick_tol", "offset_cut",
-                    "sections", "manifold")
+                    "sections", "simple", "manifold")
 
 
 def robust_shell(s, thickness, openings=(), outward=False, sections=None, strategy=None, label="shell"):
@@ -157,6 +157,16 @@ def robust_shell(s, thickness, openings=(), outward=False, sections=None, strate
             return _thick_solid(s, sgn * t, openings, False, 1e-6)
         if name == "thick_tol":
             return _thick_solid(s, sgn * t, openings, True, max(1e-4 * diag, 1e-6))
+        if name == "simple":  # BRepOffset simple algorithm: exact NURBS offset, robust on smooth free-form bodies
+            o = simple_offset_solid(s, sgn * t)
+            if o is None:
+                return None
+            if outward:
+                r = safe_boolean("cut", o, s, f"{label}:simple", allow_mesh=False)
+                for c in _open_cutters(openings, s, t):
+                    r = safe_boolean("cut", r, c, f"{label}:opening", allow_mesh=False)
+                return r
+            return hollow(o, "simple")
         if outward:
             return None  # the remaining strategies build an INNER solid
         if name == "offset_cut":
@@ -168,7 +178,11 @@ def robust_shell(s, thickness, openings=(), outward=False, sections=None, strate
             return hollow(_manifold_erode(s, t), "erode")
         raise CadOpError(f"unknown shell strategy {name}; use one of {SHELL_STRATEGIES}")
 
-    for name in ([strategy] if strategy else SHELL_STRATEGIES):
+    order = list(SHELL_STRATEGIES)
+    from .isolate import needs_isolation
+    if needs_isolation(s):  # free-form (L4 Xbox): arc/thick variants burn ~4 min then Manifold facets the body
+        order = ["simple"] + [n for n in order if n != "simple"]
+    for name in ([strategy] if strategy else order):
         try:
             r = cand(name)
         except CadOpError:
@@ -185,6 +199,30 @@ def robust_shell(s, thickness, openings=(), outward=False, sections=None, strate
     _rec(op="shell", label=label, status="failed", tried=tried)
     raise CadOpError(f"shell '{label}' t={t:g} failed with every strategy {tried}. Try: thinner wall (< smallest "
                      f"fillet / curvature radius), shell BEFORE fillets/features, or pass sections=<loft stations>.")
+
+
+def simple_offset_solid(s, d):
+    """Closed offset solid by BRepOffsetAPI_MakeOffsetShape.PerformBySimple (no join arcs; needs a G1 body)."""
+    from OCP.BRepOffsetAPI import BRepOffsetAPI_MakeOffsetShape
+    from OCP.BRepBuilderAPI import BRepBuilderAPI_MakeSolid
+    try:
+        mk = BRepOffsetAPI_MakeOffsetShape()
+        mk.PerformBySimple(s.wrapped, d)
+        if not mk.IsDone():
+            return None
+        o = Shape.cast(mk.Shape())
+        if o.solids():
+            r = o.solids()[0]
+        else:
+            ms = BRepBuilderAPI_MakeSolid()
+            for sh in o.shells():
+                ms.Add(sh.wrapped)
+            r = Solid(ms.Solid())
+        if r.volume < 0:
+            r = Solid(r.wrapped.Reversed())
+        return r if r.is_valid and abs(r.volume - s.volume) > 1e-12 else None
+    except Exception:
+        return None
 
 
 def inset_face(f, d):

@@ -280,3 +280,42 @@ def draft_face(m, body, faces, angle, pull="+z", neutral=None):
         raise ToolError("draft gave an invalid body", "smaller angle / fewer faces")
     m.put(body, "solid", res, **m.get(body).meta)
     return {"name": body, "faces": len(fs), "volume": round(res.volume, 9)}
+
+
+@op("network_surface", "spec 1 Surfaces (network): Gordon surface through a u/v curve network (sections x feature "
+                       "lines), normalised + fitted as one C2 B-spline; reports per-curve deviation")
+def network_surface(m, name, u_curves, v_curves, tol=None, grid=60):
+    """u_curves: sections (curve refs), v_curves: feature lines; every u-curve must cross every v-curve (any
+    direction/degree/knots: they are oriented, sorted and reparametrised). Result: sheet (one C2 face).
+    info.max_dev = worst distance of a network curve to the surface (model units). Then mirror / sew / thicken."""
+    from cadkit.network import gordon_surface
+    from cadkit.ops import CadOpError
+    us = [_wire(m, c) for c in u_curves]
+    vs = [_wire(m, c) for c in v_curves]
+    try:
+        f, rep = gordon_surface(us, vs, nu=grid, nv=grid, tol=tol)
+    except CadOpError as e:
+        raise ToolError(str(e), "make sure each section crosses each feature line (snap ends onto the lines)") from e
+    m.put(name, "sheet", f)
+    return {"name": name, "area": round(f.area, 9), "max_dev": rep["max_dev"], "per_curve_max_dev":
+            rep["per_curve_max_dev"]}
+
+
+@op("continuity", "query: edge continuity report G0/G1/G2 (gap, normal angle, cross-curvature jump) per shared edge",
+    out=False)
+def continuity_op(m, obj, edges=None, g1_deg=0.1, g2_rel=0.05):
+    """For every edge shared by 2 faces of obj (or the edge ref): gap, angle_deg, dk_rel, cls G2|G1|G0|open.
+    Use after sew / blend to prove class-A joins (target: G2 on visible joins)."""
+    from cadkit.network import edge_continuity
+    s = m.get(obj).shape
+    es = list(resolve(m, edges, "edges")) if edges else None
+    r = edge_continuity(s, es, g1_deg=g1_deg, g2_rel=g2_rel)
+    r["edges"] = r["edges"][:60]
+    return r
+
+
+@op("zebra", "query: isophote zebra of a face - kink (crease detector, ~1-3 smooth) / wiggle (waviness) + png",
+    out=False)
+def zebra_op(m, face, png=None, light=(0.35, -0.45, 0.82)):
+    from cadkit.network import zebra
+    return zebra(_one_face(m, face), png=png, light=light)

@@ -54,3 +54,24 @@ Clean-room from public docs is our path; no hands-on trial mining for product.
 - Multi-rail loft without a native OCCT op: blend neighbouring profiles, frame-fit contact points onto each rail
   (similarity for 2 rails, LSQ in-plane scale for 3+), loft the fitted stations.
 - G2 bridge: quintic Bezier, P2 = 2P1 - P0 + kappa*N*(n d)^2/(n(n-1)) gives exact end curvature.
+
+## Phase A blockers (2026-10-22, real-product replicas)
+- Spline-rim fillet crash (L3 drill, heap corruption 0xc0000374 / >600 s hang) root cause: requested r (14 / 9) >
+  the profile's tightest radius of curvature (6.4 / 5.6). No rolling-ball solution; OCCT then crashes in the
+  retry/cap paths instead of failing. Fix: safe_fillet on free-form bodies checks planar-rim curvature first and
+  FAILS LOUDLY with max_feasible (no silent shrink; CADKIT_ALLOW_SHRINK=1 to accept partial/reduced). Every OCCT
+  attempt runs in cadkit.isolate (persistent child, edges by TopExp index, per-attempt timeout CADKIT_OP_TIMEOUT,
+  per-call budget CADKIT_OP_BUDGET; only that child is killed). Bug found on the way: caching breps by id() of a
+  freed shape -> stale geometry; and Part(TopoDS_Solid) has volume 0 in build123d 0.13 (return the Solid).
+- L4 shell: arc/thick offsets burn ~4 min then Manifold faceted the body. BRepOffsetAPI_MakeOffsetShape
+  .PerformBySimple gives the exact inner skin in 0.1 s on a G1 body -> strategy "simple", tried first on free-form.
+- L4 underside skin cut(B, B shifted 0.6) returned VALID with the FULL volume (silent no-op; glue/fuzzy options
+  all wrong too). safe_boolean now probes the overlap (6^3 point classification) and rejects such no-ops. The cut
+  itself is still unsolved in OCCT (near-coincident free-form faces): build skins as offsets, not shifted copies.
+- Gordon network: GeomFill rejects real networks; normalise instead (orient, sort, reparametrise every curve so
+  crossings sit at common params) and fit G = Lu + Lv - T on a grid as ONE C2 B-spline. The reparam map must be
+  C2 (cubic, not PCHIP) and must SNAP end crossings to 0/1 (a pin 1e-6 away made the map overshoot -> folded
+  boundary row, zebra kink 31-54 -> 1.6 after the fix). Zebra metric: isophote n.L phase, kink = max |2nd diff|
+  / p99 (smooth ~1-3).
+- STEP/IGES import is the legal reference-geometry route (Azad exports STEP from his own Plasticity models).
+  .plasticity and Parasolid .x_t/.x_b are intentionally out of scope (proprietary; EULA 3.2-3.3) and refused.

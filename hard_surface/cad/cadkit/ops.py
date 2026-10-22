@@ -5,6 +5,8 @@ Every call appends a record to LOG (the worker dumps it into state.json -> "ops"
 from __future__ import annotations
 
 import math
+import os
+import time
 
 from build123d import Shape, Solid, Compound, Part, fillet as _fillet, chamfer as _chamfer
 
@@ -182,25 +184,175 @@ def remap_face(part, f):
 
 def _apply_on(fn, part, edges, r):
     try:
-        x = fn(edges, r)
+        x = _apply(fn, part, edges, r)
         return x if _ok(x) else None
     except Exception:
         return None
 
 
+_DEADLINE = [None]
+_ISO_EVENTS: list = []
+
+
 def _apply(fn, part, edges, r):
-    # build123d's fillet()/chamfer() act on the edges' topo_parent (edges taken from `part`)
+    # build123d's fillet()/chamfer() act on the edges' topo_parent (edges taken from `part`).
+    # Free-form bodies: the attempt runs in the isolation child (crash/hang kills only that child; cadkit.isolate).
+    from . import isolate
+    if _DEADLINE[0] is not None and time.time() > _DEADLINE[0]:
+        raise CadOpError("op time budget exceeded (CADKIT_OP_BUDGET)")
+    if fn in (_fillet, _chamfer) and isolate.needs_isolation(part):
+        left = isolate.timeout_s()
+        if _DEADLINE[0] is not None:
+            left = max(1.0, min(left, _DEADLINE[0] - time.time()))
+        try:
+            res = isolate.worker().run("fillet" if fn is _fillet else "chamfer", part, list(edges), r, left)
+        except isolate.IsolationFailure as e:
+            _ISO_EVENTS.append(str(e))
+            return None
+        if res is None:
+            return None
+        sols = res.solids()
+        return sols[0] if len(sols) == 1 else res
     return fn(edges, r)
+
+
+def edge_curvature_limit(edges, n=400):
+    """Smallest radius of curvature over the edges (sampled). A rolling-ball fillet larger than the wall's radius of
+    curvature has no solution; on free-form edges OCCT then crashes/hangs instead of failing (L3 root cause:
+    r=14 asked on a periodic-spline rim whose tightest corner is r=6.4)."""
+    from OCP.BRepAdaptor import BRepAdaptor_Curve
+    from OCP.BRepLProp import BRepLProp_CLProps
+    from OCP.GeomAbs import GeomAbs_Line
+    kmax = 0.0
+    for e in edges:
+        c = BRepAdaptor_Curve(e.wrapped)
+        if c.GetType() == GeomAbs_Line:
+            continue
+        u0, u1 = c.FirstParameter(), c.LastParameter()
+        for i in range(n + 1):
+            try:
+                pr = BRepLProp_CLProps(c, u0 + (u1 - u0) * i / n, 2, 1e-7)
+                kmax = max(kmax, pr.Curvature())
+            except Exception:
+                pass
+    return 1.0 / kmax if kmax > 1e-12 else math.inf
+
+
+def _guarded(kind, part, edges, radius, min_frac, label):
+    """Free-form bodies: (1) clamp the radius below the edge curvature limit, (2) whole set isolated first,
+    (3) heal (ShapeFix tolerances + split C0 faces) and retry, (4) the retry ladder (_round) with every OCCT
+    attempt isolated and a time budget for the whole call."""
+    from . import isolate
+    edges = list(edges)
+    if not edges or not isolate.needs_isolation(part):
+        return _round(kind, part, edges, radius, min_frac, label)
+    fn = _fillet if kind == "fillet" else _chamfer
+    outer = _DEADLINE[0] is None
+    if outer:
+        _DEADLINE[0] = time.time() + isolate.budget_s()
+    n_ev = len(_ISO_EVENTS)
+    try:
+        r = radius
+        if kind == "fillet":
+            # only edges bounding a planar face: there the edge curvature IS the wall section curvature
+            pl = [e for e in edges if any(f.geom_type.name == "PLANE" for f in part.faces()
+                                          if any(x.is_same(e) for x in f.edges()))]
+            lim = edge_curvature_limit(pl) if pl else math.inf
+            if r > 0.9 * lim:
+                # no silent shrink: report as failure with the geometric reason + the feasible ceiling
+                LOG.append({"op": kind, "label": label, "status": "failed", "reason": "curvature_limit",
+                            "radius": radius, "applied": 0, "max_feasible": round(0.9 * lim, 6)})
+                raise CadOpError(f"{kind} '{label}' r={radius:g} impossible: the rim's tightest radius of curvature "
+                                 f"is {lim:.4g} (a larger rolling ball has no solution; OCCT used to crash/hang "
+                                 f"here). max feasible ~{0.9 * lim:.4g}: lower r, or soften that profile corner.")
+        from .surf import is_loft_cap_edge
+        if kind == "fillet" and any(is_loft_cap_edge(part, e) is not None for e in edges):
+            return _strict(_round(kind, part, edges, r, min_frac, label), label, radius)
+        x = _apply_on(fn, part, edges, r)
+        if x is not None:
+            LOG.append({"op": kind, "label": label, "radius": radius, "edges": len(edges), "retries": 0,
+                        "status": "ok" if r == radius else "reduced", "applied": r, "isolated": True})
+            return x
+        healed = heal(part)
+        if healed is not part:
+            hed = _remap_edges(healed, edges)
+            if hed:
+                x = _apply_on(fn, healed, hed, r)
+                if x is not None:
+                    LOG.append({"op": kind, "label": label, "radius": radius, "edges": len(edges),
+                                "status": "healed", "applied": r, "isolated": True})
+                    return x
+        return _strict(_round(kind, part, edges, r, min_frac, label), label, radius)
+    finally:
+        if len(_ISO_EVENTS) > n_ev:
+            LOG.append({"op": kind, "label": label, "status": "isolated_events", "events": _ISO_EVENTS[n_ev:][:6]})
+        if outer:
+            _DEADLINE[0] = None
+
+
+def _strict(res, label, radius):
+    """Free-form path: a reduced / partial result is a FAILURE (caller asked for r), not a quiet shrink."""
+    rec = next((o for o in reversed(LOG) if o.get("label", "").startswith(label) and o.get("op") in
+                ("fillet", "chamfer") and "status" in o and o["status"] != "isolated_events"), None)
+    if rec and rec["status"] in ("reduced", "split_partial", "cap_failed") and os.environ.get(
+            "CADKIT_ALLOW_SHRINK") != "1":
+        raise CadOpError(f"fillet '{label}' r={radius:g} could only be applied partially/reduced "
+                         f"({rec['status']}, applied {rec.get('applied')}); set CADKIT_ALLOW_SHRINK=1 to accept, or "
+                         f"lower r / split the edge set.")
+    return res
+
+
+def heal(part):
+    """ShapeFix (tolerances, small edges) + split faces at C0 knots (ShapeUpgrade_ShapeDivideContinuity C1).
+    Returns `part` itself when nothing changed / healing failed."""
+    try:
+        from OCP.ShapeFix import ShapeFix_Shape
+        from OCP.ShapeUpgrade import ShapeUpgrade_ShapeDivideContinuity
+        from OCP.GeomAbs import GeomAbs_C1
+        fx = ShapeFix_Shape(part.wrapped)
+        fx.SetPrecision(1e-6)
+        fx.SetMaxTolerance(1e-3)
+        fx.Perform()
+        dv = ShapeUpgrade_ShapeDivideContinuity(fx.Shape())
+        dv.SetBoundaryCriterion(GeomAbs_C1)
+        dv.SetPCurveCriterion(GeomAbs_C1)
+        dv.SetSurfaceCriterion(GeomAbs_C1)
+        dv.Perform()
+        sols = Shape.cast(dv.Result()).solids()
+        if len(sols) != 1 or not sols[0].is_valid:
+            return part
+        res = sols[0]
+        if len(res.faces()) == len(part.faces()) and len(res.edges()) == len(part.edges()):
+            return part
+        return res
+    except Exception:
+        return part
+
+
+def _remap_edges(newpart, olds):
+    """Edges of newpart lying on any of the old edges (healing may split an edge into pieces)."""
+    out = []
+    for ne in newpart.edges():
+        pm = ne.position_at(0.5)
+        for e in olds:
+            try:
+                if e.distance_to(pm) < 1e-4:
+                    out.append(ne)
+                    break
+            except Exception:
+                pass
+    return out
 
 
 def safe_fillet(part, edges, radius, min_frac=0.15, label=""):
     """Fillet `edges` (of `part`). On failure bisect to the max feasible radius; apply it if >= min_frac*radius,
-    else raise CadOpError naming the bad edges and the max feasible radius."""
-    return _round("fillet", part, edges, radius, min_frac, label)
+    else raise CadOpError naming the bad edges and the max feasible radius. Free-form bodies: curvature clamp, heal,
+    crash/hang-isolated attempts + time budget (cadkit.isolate)."""
+    return _guarded("fillet", part, edges, radius, min_frac, label)
 
 
 def safe_chamfer(part, edges, length, min_frac=0.15, label=""):
-    return _round("chamfer", part, edges, length, min_frac, label)
+    return _guarded("chamfer", part, edges, length, min_frac, label)
 
 
 # ---------------------------------------------------------------- booleans
@@ -298,6 +450,34 @@ def _sew(v, f):
     return Solid(downcast(fx.Solid()))
 
 
+def _overlap_estimate(a, b, n=6):
+    """Monte-Carlo-on-a-grid volume of a & b inside the bbox intersection (n^3 probes, point classification)."""
+    try:
+        from OCP.BRepClass3d import BRepClass3d_SolidClassifier
+        from OCP.TopAbs import TopAbs_IN
+        from OCP.gp import gp_Pnt
+        A, B = a.bounding_box(), b.bounding_box()
+        lo = [max(x, y) for x, y in zip(tuple(A.min), tuple(B.min))]
+        hi = [min(x, y) for x, y in zip(tuple(A.max), tuple(B.max))]
+        if any(h <= l for l, h in zip(lo, hi)):
+            return 0.0
+        ca, cb = BRepClass3d_SolidClassifier(a.wrapped), BRepClass3d_SolidClassifier(b.wrapped)
+        hit = 0
+        for i in range(n):
+            for j in range(n):
+                for k in range(n):
+                    p = gp_Pnt(*[l + (h - l) * (q + 0.5) / n for l, h, q in zip(lo, hi, (i, j, k))])
+                    ca.Perform(p, 1e-7)
+                    if ca.State() != TopAbs_IN:
+                        continue
+                    cb.Perform(p, 1e-7)
+                    hit += cb.State() == TopAbs_IN
+        vol = (hi[0] - lo[0]) * (hi[1] - lo[1]) * (hi[2] - lo[2])
+        return vol * hit / n ** 3
+    except Exception:
+        return None
+
+
 def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mesh=True):
     """kind in cut|fuse|common. Plain OCCT -> fuzzy OCCT (growing tol) -> Manifold mesh boolean (sewn back)."""
     rec = {"op": "boolean", "kind": kind, "label": label, "status": "ok", "retries": 0}
@@ -311,7 +491,15 @@ def safe_boolean(kind, a, b, label="", fuzzy_steps=(1e-6, 1e-5, 1e-4), allow_mes
             return False
         v, tol = r.volume, 1e-3 * max(va, vb) + 1e-9
         if kind == "cut":
-            return v <= va + tol and v >= va - vb - tol
+            if not (v <= va + tol and v >= va - vb - tol):
+                return False
+            # silent no-op guard (L4 underside skin: cut of a near-coincident shifted copy came back VALID with
+            # the full volume): if the tool clearly overlaps `a`, the cut must remove a matching share of it
+            est = _overlap_estimate(a, b)
+            if est is not None and est > 0.02 * va and (va - v) < 0.4 * est:
+                rec["noop_rejected"] = round(est / va, 4)
+                return False
+            return True
         if kind == "fuse":
             return v >= max(va, vb) - tol and v <= va + vb + tol
         return v <= min(va, vb) + tol

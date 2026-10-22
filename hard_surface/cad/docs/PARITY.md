@@ -11,6 +11,7 @@ Before = state at commit 3106957; After = this pass (2026-10-22). Tests = tests/
 |---|---|---|---|---|
 | before | 61 | 20 | 70 | 151 |
 | after  | 75 | 20 | 56 | 151 |
+| phase A (2026-10-22b) | 75 | 21 | 55 | 151 |
 
 New this pass: push_pull (face move + auto re-fillet), boolean_fillet, symmetrize, curve_network,
 offset_curve_on_face, draft_face, and read-only queries measure / curvature / draft_analysis / deviation /
@@ -222,7 +223,7 @@ compare_to_ref / suggest_refs / explain_failure, per-op state diff, per-op worke
 |---|---|---|---|---|
 | Export STEP / OBJ / STL / glTF | cad_export | W | W | export::test_export |
 | Export 3MF / SVG / hidden-line | - | M | M | (2 rows) |
-| Import STEP / IGES / x_t | - | M | M | |
+| Import STEP / IGES (x_t / .plasticity: intentionally NOT parsed - proprietary; export STEP from the source app) | import_step, export_step, deviation_to_ref | M | P | import::test_import_edit_roundtrip (kit-written STEP + IGES; public sample test opt-in via CADKIT_SAMPLE_STEP, not yet run) |
 | Facet settings / tri budget, LODs, seams | cad_game_mesh | W | W | export::test_game_mesh_blender, test_game |
 | Live DCC bridge | game_mesh (batch) | P | P | not live |
 | Undo / redo / branches | journal | W | W | journal::test_undo_redo_branch |
