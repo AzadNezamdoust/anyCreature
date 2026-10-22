@@ -1,0 +1,21 @@
+{
+ "_note": "Xbox Series controller gate. Overall 153x102x61 mm (S1), plan/rear masks from refs/L4 (bbox registration, as replica/L4/iou.py). Face-feature centres from P1 trace.",
+ "views": [
+  {"name": "top", "u": "+y", "v": "-x", "mask": "refs/L4/mask_top_trace.png", "register": "bbox", "px_per_mm": 4, "min_iou": 0.93},
+  {"name": "back", "u": "-y", "v": "+z", "mask": "refs/L4/mask_back.png", "register": "bbox", "px_per_mm": 4, "min_iou": 0.90}
+ ],
+ "features": [
+  {"name": "overall width 153", "find": {"part": "body"}, "size": [null, 153.0, null]},
+  {"name": "overall depth 102", "find": {"part": "body"}, "size": [102.0, null, null]},
+  {"name": "height 61 incl. stick caps", "find": {"region": [[-200, -200, -200], [200, 200, 200]]}, "size": [null, null, 61.0]},
+  {"name": "left stick at (-23.3,-44)", "find": {"part": "stick_L"}, "center": [-23.3, -44.0, null]},
+  {"name": "right stick at (1.8,24)", "find": {"part": "stick_R"}, "center": [1.8, 24.0, null]},
+  {"name": "guide button at (-39,0) d13.6", "find": {"part": "btn_guide"}, "center": [-39.0, 0.0, null], "size": [13.6, 13.6, null], "tol": 0.5},
+  {"name": "d-pad at (1.8,-24)", "find": {"part": "dpad"}, "center": [1.8, -24.0, null]},
+  {"name": "USB-C port on rear", "find": {"region": [[-56, -6, 18], [-46, 6, 26]], "part": "body"}, "center": [null, 0.0, 22.0]}
+ ],
+ "main_surfaces": ["body"],
+ "min_g1_frac": 0.95, "min_g2_frac": 0.0,
+ "max_manifold": 0,
+ "judge": {"ref_images": ["refs/L4/Xbox_Series_Controller_Carbon_Black.jpg", "refs/L4/Xbox_Series_Controller_Gold_Shadow_Special_Edition_top.jpg"], "views": ["top", "back"], "min_score": 7}
+}

@@ -1,0 +1,21 @@
+{
+ "_note": "DCD777 gate. Numbers = ref measurements (side photo DCD777C2_1, S=0.13871 mm/px) + dealer spec head length 191 mm. Widths are EST in the model (no ref) -> not checked.",
+ "views": [
+  {"name": "side", "u": "+x", "v": "+z", "mask": "refs/L3/side_mask.png", "register": "anchor",
+   "px_per_mm": 7.20942, "origin_px": [1521, 259], "min_iou": 0.93}
+ ],
+ "features": [
+  {"name": "chuck tip at head-length 191", "find": {"part": "chuck_nose"}, "min": [-191.0, null, null]},
+  {"name": "housing top Z 33", "find": {"part": "housing"}, "max": [null, null, 33.0]},
+  {"name": "housing rear X 0", "find": {"part": "housing"}, "max": [0.0, null, null], "tol": 1.5},
+  {"name": "pack bottom Z -193.8", "find": {"part": "battery"}, "min": [null, null, -193.8]},
+  {"name": "chuck sleeve dia 42.4", "find": {"part": "chuck"}, "size": [null, 42.4, 42.4]},
+  {"name": "clutch collar dia 55.2", "find": {"part": "clutch"}, "size": [null, 55.2, 55.2]},
+  {"name": "bit bore r5", "find": {"cyl": [-185, 0, 0], "part": "chuck", "axis": "x"}, "radius": 5.0, "center": [null, 0, 0], "tol": 0.3},
+  {"name": "trigger front X -105.5", "find": {"part": "trigger"}, "min": [-105.5, null, null]}
+ ],
+ "main_surfaces": ["housing", "grip"],
+ "min_g1_frac": 0.95, "min_g2_frac": 0.0,
+ "max_manifold": 0,
+ "judge": {"ref_images": ["refs/L3/DCD777C2_1.png", "refs/L3/DCD777B_2.png"], "views": ["front", "iso"], "min_score": 7}
+}
