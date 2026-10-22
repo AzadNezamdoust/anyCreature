@@ -143,5 +143,8 @@ def sheet(path, out, res=512):
 
 
 if __name__ == '__main__':
-    v, f = sheet(sys.argv[1], sys.argv[2])
-    print(f'{sys.argv[2]}: {v} verts, {f} tris')
+    # several mesh/sheet pairs per call share one GL context (context creation is ~13-17 s on the dev box; render ~2 s)
+    a = sys.argv[1:]
+    for m, o in zip(a[0::2], a[1::2]):
+        v, f = sheet(m, o)
+        print(f'{o}: {v} verts, {f} tris', flush=True)

@@ -13,7 +13,7 @@ from scipy.sparse.csgraph import dijkstra
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = 'E:/gen3d/lowpoly/quadriflow/%s_5000.obj'
-WOLF = 'E:/Github/anyCreature/example/wolf.json'
+WOLF = 'E:/Github/anyCreature/creatures/example/wolf.json'
 P = 0.01  # voxel pitch
 
 

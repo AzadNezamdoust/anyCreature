@@ -43,28 +43,41 @@ def _rss():   # peak host working set of this process (GiB)
 def _peak(tag='exit'):
     if _t.cuda.is_available():
         print(f'PEAK {tag} cap={_CAP} alloc {_t.cuda.max_memory_allocated()/2**30:.2f} GiB reserved {_t.cuda.max_memory_reserved()/2**30:.2f} GiB rss_peak {_rss():.2f} GiB t {_tm.time()-_T0:.0f}s', flush=True)
-_ae.register(_peak, 'exit')
+import builtins as _bi
+_SRV = hasattr(_bi, '_MODEL_CACHE')   # running inside model_server.py (--server): weights cached across jobs
+def _cached(key, fn): return _bi._cached_impl(key, fn) if _SRV else fn()
+def _cleanup(fn):   # undo a class-level monkeypatch after the job (server mode only; subprocess exits anyway)
+    if _SRV: _bi._JOB_CLEANUP.append(fn)
+if not _SRV: _ae.register(_peak, 'exit')
+def _mark(tag):   # stage profile marks (parsed by Ctx.run into timings '<stage>:<tag>', seconds since script start)
+    print(f'MARK {tag} {_tm.time()-_T0:.1f}', flush=True)
 """
 
 # low-VRAM shape: load on CPU, accelerate cpu_offload_with_hook chain conditioner -> DiT -> VAE (bit-identical mesh, 6.45 GiB peak)
-OFFLOAD_CHAIN = """_tl = torch.load   # low host RAM: mmap ckpt + build modules directly in fp16 (no fp32 copy); see RTX2070M.md
-torch.load = lambda *a, **k: _tl(*a, **{{**k, "mmap": True}})
-torch.set_default_dtype(torch.float16)
-{v} = {ctor}
-torch.set_default_dtype(torch.float32); torch.load = _tl
-import gc; gc.collect()
-from accelerate import cpu_offload_with_hook as _cow
-_h = None
-for _n in ('conditioner', 'model', 'vae'):
-    _, _h = _cow(getattr({v}, _n), 'cuda', prev_module_hook=_h)
-{v}.device = torch.device('cuda')
+OFFLOAD_CHAIN = """def _build_{v}():
+    _tl = torch.load   # low host RAM: mmap ckpt + build modules directly in fp16 (no fp32 copy); see RTX2070M.md
+    torch.load = lambda *a, **k: _tl(*a, **{{**k, "mmap": True}})
+    torch.set_default_dtype(torch.float16)
+    {v} = {ctor}
+    torch.set_default_dtype(torch.float32); torch.load = _tl
+    import gc; gc.collect()
+    from accelerate import cpu_offload_with_hook as _cow
+    _h = None
+    for _n in ('conditioner', 'model', 'vae'):
+        _, _h = _cow(getattr({v}, _n), 'cuda', prev_module_hook=_h)
+    {v}.device = torch.device('cuda'); {v}._last_hook = _h   # server offloads the last module after each job
+    return {v}
+{v} = _cached({key!r}, _build_{v})   # plain call outside --server
 """
+SERVER_URL = 'http://127.0.0.1:{port}'
+PREVIEW = dict(steps=30, octree=256)   # --preview tier (candidate screening); the pick is re-run at full quality
 
 
 # --octree > 512: VanillaVolumeDecoder keeps all query points (res^3 x 3) + logits on the GPU (6.4 GiB at 1024 -> OOM under cap).
 # Streamed variant: query points built per chunk from flat indices, logits moved to host per chunk. Same math.
 STREAM_DECODER = """import numpy as _np
 from hy3dshape.models.autoencoders import volume_decoders as _vd
+_vd_orig = _vd.VanillaVolumeDecoder.__call__; _cleanup(lambda: setattr(_vd.VanillaVolumeDecoder, '__call__', _vd_orig))
 @torch.no_grad()
 def _stream(self, latents, geo_decoder, bounds=1.01, num_chunks=10000, octree_resolution=None, enable_pbar=True, **kw):
     if isinstance(bounds, float): bounds = [-bounds] * 3 + [bounds] * 3
@@ -95,6 +108,18 @@ if _TR > 0:   # --tex-trust-inpaint T: texels whose summed view trust (w*cos^4) 
         return tm / torch.clamp(tr, min=1e-8), keep
     _rd.fast_bake_texture = _fbt
 """
+
+
+# --server: paint pipeline cached per (views, res, offload opts, hook env); class patches undone after each job
+PAINT_SERVER_SUBS = [
+    ("    mvu.multiviewDiffusionNet.__init__, mvu.multiviewDiffusionNet.__call__ = init, call\n",
+     "    mvu.multiviewDiffusionNet.__init__, mvu.multiviewDiffusionNet.__call__ = init, call\n"
+     "    _cleanup(lambda _i=_init, _c=_call: (setattr(mvu.multiviewDiffusionNet, '__init__', _i), setattr(mvu.multiviewDiffusionNet, '__call__', _c)))\n"),
+    ("pipe = tgp.Hunyuan3DPaintPipeline(cfg)",
+     "pipe = _cached('paint|' + repr(sorted(o.items())) + '|' + os.environ.get('NO_SR', '') + '|' + os.environ.get('TRUST_INPAINT', ''), lambda: tgp.Hunyuan3DPaintPipeline(cfg))"),
+    ("cfg.texture_size = int(o['tex'])\n", "cfg.texture_size = int(o['tex'])\n_mark('load_start')\n"),
+    ("up = pipe.models['super_model'].upsampler", "_mark('load'); up = pipe.models['super_model'].upsampler"),
+]
 
 
 def seam_blend(d):
@@ -151,6 +176,7 @@ class Ctx:
         for d in (s.work, s.stage, s.logs, f'{s.work}/cand', f'{s.work}/sheets'): os.makedirs(d, exist_ok=True)
         s.tfile = f'{s.work}/timings.json'
         s.timings = json.load(open(s.tfile)) if os.path.exists(s.tfile) else {}
+        import threading; s.lock = threading.Lock()
 
     def run(s, name, cmd, cwd=G, env=None, check=True, cpu=False):
         # CUDA-13 DLL dir: paint21.py add_dll_directory()s CUDA13_DLL itself (PATH prepend breaks torch DLL load)
@@ -164,9 +190,15 @@ class Ctx:
         t = time.time(); print(f'[{ts()}] {name}: {" ".join(os.path.basename(str(c)) if i == 0 else str(c) for i, c in enumerate(cmd))[:200]}', flush=True)
         with open(f'{s.logs}/{name}.log', 'w', encoding='utf-8') as lf:
             r = subprocess.run([str(c) for c in cmd], cwd=cwd, env=e, stdout=lf, stderr=subprocess.STDOUT)
-        dt = time.time() - t; s.timings[name] = round(dt, 1)
+        dt = time.time() - t
+        with s.lock: return s._post_run(name, r, dt, check)
+
+    def _post_run(s, name, r, dt, check):
+        s.timings[name] = round(dt, 1)
         pk = re.findall(r'^PEAK .*$', open(f'{s.logs}/{name}.log', encoding='utf-8', errors='replace').read(), re.M)
         if pk: s.timings['peak_' + name] = pk[-1]; print(f'[{ts()}]   {pk[-1]}', flush=True)
+        for tag, sec in re.findall(r'^MARK (\S+) ([\d.]+)', open(f'{s.logs}/{name}.log', encoding='utf-8', errors='replace').read(), re.M):
+            s.timings[f'{name}:{tag}'] = float(sec)
         json.dump(s.timings, open(s.tfile, 'w'), indent=1)
         print(f'[{ts()}]   -> rc {r.returncode} in {dt:.0f}s', flush=True)
         if check and r.returncode:
@@ -183,7 +215,32 @@ class Ctx:
         if gpu: txt = CAP_PREFIX + txt
         p = f'{s.stage}/{name}.py'
         open(p, 'w', encoding='utf-8').write(txt)
+        if gpu and s.a.server and py == VENV: return s.run_server(name, p, args, **kw)
         return s.run(name, [py, p] + list(args), cpu=not gpu, **kw)
+
+    def run_server(s, name, script, args, cwd=G, env=None, check=True):
+        """--server: same templated script, executed inside model_server.py (weights stay loaded across jobs)."""
+        import urllib.request
+        e = {'PYTHONIOENCODING': 'utf-8'}
+        if env: e.update(env)
+        if s.a.vram_cap: e['VRAM_CAP'] = str(s.a.vram_cap)
+        if s.a.turing: e['TURING'] = '1'
+        log = f'{s.logs}/{name}.log'; t = time.time()
+        print(f'[{ts()}] {name} (server): {os.path.basename(script)} {" ".join(map(str, args))[:160]}', flush=True)
+        req = urllib.request.Request(SERVER_URL.format(port=s.a.server_port) + '/run', method='POST',
+                                     data=json.dumps(dict(script=script, argv=[str(x) for x in args], cwd=cwd, env=e, log=log)).encode())
+        try: r = json.loads(urllib.request.urlopen(req, timeout=36000).read())
+        except OSError as ex: sys.exit(f'--server: no model_server on port {s.a.server_port} ({ex}); start pipeline/model_server.py')
+        dt = time.time() - t; s.timings[name] = round(dt, 1); txt = open(log, encoding='utf-8', errors='replace').read()
+        pk = re.findall(r'^PEAK .*$', txt, re.M)
+        if pk: s.timings['peak_' + name] = pk[-1]; print(f'[{ts()}]   {pk[-1]}', flush=True)
+        for tag, sec in re.findall(r'^MARK (\S+) ([\d.]+)', txt, re.M): s.timings[f'{name}:{tag}'] = float(sec)
+        s.timings[f'{name}:cache'] = 'hit' if 'CACHE hit' in txt else 'miss'
+        json.dump(s.timings, open(s.tfile, 'w'), indent=1)
+        print(f'[{ts()}]   -> rc {r["rc"]} in {dt:.0f}s ({s.timings[name + ":cache"]})', flush=True)
+        if check and r['rc']:
+            print(txt[-3000:]); sys.exit(f'stage {name} failed (log: {log})')
+        return r['rc']
 
 
 # ---------------------------------------------------------------- masking (runs in venv via --_mask)
@@ -224,22 +281,36 @@ def stage_generate(c):
     a = c.a; W = c.work
     seeds = [int(x) for x in a.seeds.split(',')]
     have_mv = os.path.exists(f'{c.inbox}/side.png')
-    c.run('mask', [VENV, os.path.abspath(__file__), '--_mask', c.an, c.inbox], cpu=True)
+    import hashlib   # mask cache: skip bg removal when every input view is byte-identical to the last masked set
+    hsh = hashlib.sha1(b''.join(open(f'{c.inbox}/{v}.png', 'rb').read() for v in VIEWS if os.path.exists(f'{c.inbox}/{v}.png'))).hexdigest()
+    hf = f'{W}/mask_hash.txt'
+    if a.force or not os.path.exists(f'{W}/ref_rgba.png') or not os.path.exists(hf) or open(hf).read() != hsh:
+        c.run('mask', [VENV, os.path.abspath(__file__), '--_mask', c.an, c.inbox], cpu=True); open(hf, 'w').write(hsh)
+    else: print(f'[{ts()}] mask: cached (inputs sha1 {hsh[:10]})'); c.timings['mask'] = 0.0
     if a.lowvram: print('--lowvram: shape = accelerate offload chain (conditioner->DiT->VAE); CPU-only mask/clean/quadriflow/rig')
     cands = []
     seed_t = ', '.join(map(str, seeds))
     # Hunyuan3D-2.1, single image (hero)
-    if not all(os.path.exists(f'{W}/raw21_s{s}.obj') for s in seeds) or a.force:
+    P = 'p' if a.preview else ''          # --preview tier: separate files/candidate names (raw21p_s*, h21p_s*)
+    if a.preview:
+        a.steps = a.steps or PREVIEW['steps']; a.octree = a.octree or PREVIEW['octree']
+    if not all(os.path.exists(f'{W}/raw21{P}_s{s}.obj') for s in seeds) or a.force:
         subs = [('seeds = [0, 1]', f'seeds = [{seed_t}]'), ('r8/{an}', W)]
+        if P: subs.append(('raw21_s{s}.obj', 'raw21p_s{s}.obj'))
         if a.steps or a.guidance or a.octree or a.chunks:   # r18 shape knobs (default off = gen21.py values: 50 steps, cfg 5.0, octree 380, chunks 8000)
             kw = f'num_inference_steps={a.steps or 50}, octree_resolution={a.octree or 380}, guidance_scale={a.guidance or 5.0}, num_chunks={a.chunks or 8000}'
             subs.append(('num_inference_steps=50, octree_resolution=380', kw))
             if (a.octree or 380) > 512: subs.append(('for an in ans:', STREAM_DECODER + 'for an in ans:'))
         if a.lowvram:
             old = 'shp = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1")\n'
-            subs.append((old, OFFLOAD_CHAIN.format(v='shp', ctor='Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1", device="cpu")')))
+            subs.append((old, OFFLOAD_CHAIN.format(v='shp', key='h21_offload', ctor='Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1", device="cpu")')))
+        elif a.server:
+            subs.append(('shp = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1")\n',
+                         'shp = _cached("h21_gpu", lambda: Hunyuan3DDiTFlowMatchingPipeline.from_pretrained("tencent/Hunyuan3D-2.1"))\n'))
+        subs += [('for an in ans:', "_mark('load')\nfor an in ans:"),
+                 ("; print(time.strftime('%X'), an, s,", "; _mark(f'seed{s}'); print(time.strftime('%X'), an, s,")]
         c.templated('gen21', f'{G}/gen21.py', subs, VENV, [c.an], gpu=True)
-    for s in seeds: cands.append(dict(name=f'h21_s{s}', raw=f'{W}/raw21_s{s}.obj', method='hunyuan2.1-single', seed=s))
+    for s in seeds: cands.append(dict(name=f'h21{P}_s{s}', raw=f'{W}/raw21{P}_s{s}.obj', method='hunyuan2.1-single' + ('-preview' if P else ''), seed=s))
     # Hunyuan3D-2mv, multi-view: slots front/left/back/right. side -> left, front -> front, back -> back,
     # mirrored side -> right ONLY if there is no front/back view. Variant name = slot letters (l,f,b,r).
     if have_mv:
@@ -253,7 +324,7 @@ def stage_generate(c):
                     ('    if "f" in v: ims["front"] = L("front")\n', '')]
             if a.lowvram:   # same offload chain as 2.1 (verified horse: bit-identical raw mesh, 3.19 GiB peak); num_chunks 20000 -> 8000
                 old = "p = Hunyuan3DDiTFlowMatchingPipeline.from_pretrained('tencent/Hunyuan3D-2mv', subfolder='hunyuan3d-dit-v2-mv', variant='fp16')\n"
-                subs += [(old, OFFLOAD_CHAIN.format(v='p', ctor="Hunyuan3DDiTFlowMatchingPipeline.from_pretrained('tencent/Hunyuan3D-2mv', subfolder='hunyuan3d-dit-v2-mv', variant='fp16', device='cpu')")),
+                subs += [(old, OFFLOAD_CHAIN.format(v='p', key='h2mv_offload', ctor="Hunyuan3DDiTFlowMatchingPipeline.from_pretrained('tencent/Hunyuan3D-2mv', subfolder='hunyuan3d-dit-v2-mv', variant='fp16', device='cpu')")),
                          ('num_chunks=20000', 'num_chunks=8000')]
             c.templated('gen_mv', f'{G}/mv/gen_mv.py', subs, VENV, [f'work:{v}' for v in var], gpu=True)
         for v in var:
@@ -261,18 +332,37 @@ def stage_generate(c):
     else:
         print('no side.png -> single-view path only')
     # clean8 + render sheets
+    todo = []
     for k in cands:
         k['clean'] = f'{W}/cand/{k["name"]}.obj'; k['sheet'] = f'{W}/sheets/{k["name"]}.png'
         if not os.path.exists(k['raw']): k['error'] = 'raw missing'; continue
-        if not os.path.exists(k['clean']) or a.force:
-            c.run(f'clean8_{k["name"]}', [VENV, f'{G}/clean8.py', k['raw'], k['clean']] + (['--declast'] if a.decimate_last else []), cpu=True)
-        c.run(f'render_{k["name"]}', [SYS_PY, f'{LAB}/render.py', k['clean'], k['sheet']], cwd=LAB)
+        if not os.path.exists(k['clean']) or a.force: todo.append(k)
+    mk = lambda k: (f'clean8_{k["name"]}', [VENV, f'{G}/clean8.py', k['raw'], k['clean']] + (['--declast'] if a.decimate_last else []))
+    if a.fast_post and len(todo) > 1:   # clean8 is single-threaded CPU: candidates in parallel processes (same outputs)
+        from concurrent.futures import ThreadPoolExecutor
+        t = time.time()
+        with ThreadPoolExecutor(min(len(todo), max(1, (os.cpu_count() or 4) // 2))) as ex:
+            list(ex.map(lambda k: c.run(*mk(k), cpu=True), todo))
+        c.timings['clean8_parallel_wall'] = round(time.time() - t, 1)
+    else:
+        for k in todo: c.run(*mk(k), cpu=True)
+    ok = [k for k in cands if 'error' not in k]
+    if a.fast_post:   # one render.py process for all sheets: GL context created once (13-17 s each otherwise)
+        c.run('render_batch', [SYS_PY, f'{LAB}/render.py'] + [x for k in ok for x in (k['clean'], k['sheet'])], cwd=LAB)
+    else:
+        for k in ok: c.run(f'render_{k["name"]}', [SYS_PY, f'{LAB}/render.py', k['clean'], k['sheet']], cwd=LAB)
     # keep earlier candidates (other seeds/variants) whose clean mesh still exists, so a `--all --seeds 0` run
     # does not drop e.g. h21_s1 that a picks.txt still refers to
     cj = f'{W}/candidates.json'
     if os.path.exists(cj) and not a.force:
         have = {k['name'] for k in cands}
         cands += [k for k in json.load(open(cj))['candidates'] if k['name'] not in have and 'error' not in k and os.path.exists(k.get('clean', ''))]
+    if a.gates:   # cheap geometry gates (pipeline/gates.py) -> candidates.json 'gate' + contact-sheet label
+        todo = [k for k in cands if 'error' not in k and 'gate' not in k]
+        if todo:
+            c.run('gates', [VENV, f'{LAB}/pipeline/gates.py', *[k['clean'] for k in todo], '--ref', f'{W}/ref_rgba.png', '--json', f'{W}/gates.json'], cpu=True)
+            g = {r['mesh']: r for r in json.load(open(f'{W}/gates.json'))}
+            for k in todo: k['gate'] = g.get(k['clean'])
     contact_sheet(c, [k for k in cands if 'error' not in k])
     json.dump(dict(animal=c.an, views=[v for v in VIEWS if os.path.exists(f'{c.inbox}/{v}.png')],
                    contact_sheet=f'{W}/contact_sheet.png', candidates=cands, chosen=None), open(f'{W}/candidates.json', 'w'), indent=1)
@@ -284,7 +374,8 @@ def contact_sheet(c, cands):
     tiles = []
     for k in cands:
         im = Image.open(k['sheet']).convert('RGB').resize((768, 512)); d = ImageDraw.Draw(im)
-        d.rectangle((0, 0, 200, 22), fill=(0, 0, 0)); d.text((6, 5), k['name'], fill=(255, 255, 255)); tiles.append(im)
+        lab = k['name'] + ('' if not k.get('gate') else ('  PASS' if k['gate']['pass'] else '  FAIL ' + ', '.join(k['gate']['fails'])))
+        d.rectangle((0, 0, 8 + 6 * len(lab), 22), fill=(0, 0, 0)); d.text((6, 5), lab, fill=(255, 255, 255)); tiles.append(im)
     cols = 2; rows = (len(tiles) + cols - 1) // cols
     out = Image.new('RGB', (768 * cols, 512 * rows), 'white')
     for i, t in enumerate(tiles): out.paste(t, ((i % cols) * 768, (i // cols) * 512))
@@ -308,7 +399,7 @@ def stage_finish(c, pick):
             shutil.rmtree(f'{td}/{c.an}', ignore_errors=True)
             c.templated('paint13', f'{LV}/paint.py',
                         [("sys.path.insert(0, 'E:/gen3d/lowvram'); import cap", 'import sys'), ("cap.peak('paint')", "_peak('paint')"),
-                         ("sm = type(pipe.render).save_mesh", PAINT_HOOKS + "sm = type(pipe.render).save_mesh")],
+                         ("sm = type(pipe.render).save_mesh", PAINT_HOOKS + "sm = type(pipe.render).save_mesh")] + (PAINT_SERVER_SUBS if c.a.server else []),
                         VENV, [hi, hero, f'{td}/{c.an}', f'v={nv}', f'r={res}', 'off=1', 'tile=256', 'vt=1', 'dil=0', 'ds=1'], gpu=True, check=False,
                         env=dict(NO_SR='1' if c.a.no_esrgan else '0', TRUST_INPAINT=str(c.a.tex_trust_inpaint)))
             log = open(f'{c.logs}/paint13.log', encoding='utf-8', errors='replace').read()
@@ -387,7 +478,7 @@ def batch(a):
             if ln: jobs.append((ln[0], ['--pick', ln[1]]))
     else:
         jobs = [(d, []) for d in sorted(os.listdir(f'{G}/inbox')) if os.path.isfile(f'{G}/inbox/{d}/hero.png')]
-    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) + (['--turing'] if a.turing else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else []) + (['--no-bake-normals'] if a.no_bake_normals else []) + (['--bake-detail'] if a.bake_detail else [])
+    flags = ['--seeds', a.seeds] + (['--lowvram'] if a.lowvram else []) + (['--vram-cap', str(a.vram_cap)] if a.vram_cap else []) + (['--turing'] if a.turing else []) +(['--force'] if a.force else []) + (['--no-rig'] if a.no_rig else []) + (['--no-bake-normals'] if a.no_bake_normals else []) + (['--bake-detail'] if a.bake_detail else []) + (['--server', '--server-port', str(a.server_port)] if a.server else []) + (['--preview'] if a.preview else []) + (['--gates'] if a.gates else []) + (['--fast-post'] if a.fast_post else [])
     res = {}
     for an, extra in jobs:
         print(f'\n[{ts()}] ===== {an} {" ".join(extra)}', flush=True); t = time.time()
@@ -425,6 +516,16 @@ def main():
     ap.add_argument('--tex-trust-inpaint', type=float, default=0, help='paint: re-inpaint texels with view trust < T via Paint uv_inpaint (e.g. 0.003)')
     ap.add_argument('--no-esrgan', action='store_true', help='paint: RealESRGAN slot off')
     ap.add_argument('--texture-only', action='store_true', help='phase 2: stop after texture (no QuadriFlow/rig/validate)')
+    # speed / iteration knobs (all default off = previous behaviour)
+    ap.add_argument('--server', action='store_true', help='send GPU stages to pipeline/model_server.py (weights stay loaded across runs/seeds)')
+    ap.add_argument('--server-port', type=int, default=8765)
+    ap.add_argument('--preview', action='store_true', help=f'fast screening tier: shape {PREVIEW} -> candidates h21p_s*; '
+                    '--pick h21p_sN then regenerates seed N at full quality and finishes h21_sN')
+    ap.add_argument('--fast-post', action='store_true', help='CPU post: parallel clean8 per candidate + one batched render.py (identical outputs)')
+    ap.add_argument('--gates', action='store_true', help='cheap geometry gates (gates.py) on every candidate -> candidates.json + contact sheet')
+    ap.add_argument('--ref-critic', action='store_true', help='Opus anatomy critic on hero.png before shape (ref_critic.py); fail -> stop')
+    ap.add_argument('--species', help='anatomy checklist key for --ref-critic (default: animal name)')
+    ap.add_argument('--ref-regen', type=int, default=0, help='with --ref-critic: on fail, regenerate up to N HunyuanDiT refs and keep the first that passes')
     ap.add_argument('--inbox-root', help='inbox root dir (default E:/gen3d/inbox)')
     ap.add_argument('--assets-root', help='assets root dir (default E:/gen3d/assets)')
     a = ap.parse_args()
@@ -432,7 +533,15 @@ def main():
     if not a.animal: ap.error('animal required (or --all / --pick-file)')
     c = Ctx(a)
     if not os.path.exists(f'{c.inbox}/hero.png'): sys.exit(f'missing {c.inbox}/hero.png')
-    if not os.path.exists(f'{c.work}/candidates.json') or a.force or not a.pick: stage_generate(c)
+    if a.ref_critic and not a.pick:
+        rc = c.run('ref_critic', [SYS_PY, f'{LAB}/pipeline/ref_critic.py', c.inbox, '--species', a.species or c.an,
+                                  '--regen', str(a.ref_regen)] + (['--server'] if a.server else []), cwd=LAB, check=False)
+        print(open(f'{c.logs}/ref_critic.log', encoding='utf-8', errors='replace').read().strip()[-1500:])
+        if rc: sys.exit(f'ref critic: hero.png failed the {a.species or c.an} anatomy checklist (see {c.inbox}/ref_critic.json)')
+    m = re.fullmatch(r'h21p_s(\d+)', a.pick or '')
+    if m:   # two-tier: preview pick -> same seed at full quality, then finish that
+        a.preview = False; a.seeds = m.group(1); stage_generate(c); a.pick = f'h21_s{m.group(1)}'
+    elif not os.path.exists(f'{c.work}/candidates.json') or a.force or not a.pick: stage_generate(c)
     if a.pick: stage_finish(c, a.pick)
 
 

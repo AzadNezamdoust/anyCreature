@@ -335,3 +335,14 @@ host RAM 18-23 GiB; 1024 OOM. Not adopted; keep as MIT-licence fallback idea.
 
 Shape challengers so far (16, 20, 21): TRELLIS.2, Pixal3D, Direct3D-S2 all lose
 to Hunyuan3D-2.1 on the same refs.
+
+## Speed pass (2026-10-22, wolf, --lowvram on the 96 GB card, GPU shared with another lane -> +-20% compute noise)
+| run | before (subprocess) | after |
+|---|---|---|
+| 3-seed full sweep | 1339 s (shape load 239, 130 s/seed, clean8 serial 474, renders 175) | 733 s warm server (load 0, clean8 parallel 173, renders 2) |
+| 3-seed preview sweep (octree 256, 30 steps) | - | 600 s cold server / 203 s warm |
+| pick -> assets | 660 s (paint load 278 + 154 compute) | 790 s warm incl. full-quality regen of the seed (111 s); paint load 0 |
+| preview sweep + pick | 1999 s (full sweep + pick) | 1418 s cold, 993 s warm |
+Byte-identical vs subprocess mode: raw21_s0.obj, cand/h21_s0.obj, sheet png, textured.jpg.
+Gates caught 3/6 preview seeds with a detached ground stick (symmetry 0.20-0.36); rig stage fails in both modes:
+rig.py looks for E:/Github/anyCreature/example/wolf.json (path broken by the repo split, pre-existing).

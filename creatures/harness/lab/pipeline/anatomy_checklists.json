@@ -1,0 +1,21 @@
+{
+ "_meta": "Per-species anatomy checklist for ref_critic.py. Each item must be visibly TRUE in the reference image. 'pose' = rules for a shape-friendly reference (Hunyuan3D input). Add species as needed; '_default' applies to every species.",
+ "_default": [
+  "exactly one creature, whole body in frame, nothing cropped",
+  "plain white or transparent background, no ground plane, no shadow, no pedestal, no text",
+  "limbs, tail and head are separated from the body silhouette (no limb hidden behind another along the full length)",
+  "no extra or missing body parts, no merged or duplicated limbs"
+ ],
+ "wolf": ["exactly 4 legs, each ending in a paw on the ground line", "long muzzle, 2 erect pointed ears", "one bushy tail, hanging low", "standing pose, legs roughly straight, side or 3/4 side view", "canine proportions: deep chest, narrow waist, long legs"],
+ "horse": ["exactly 4 long legs ending in hooves", "long arched neck with mane", "one tail", "standing square, side or 3/4 side view"],
+ "roach": ["insect (cockroach), NOT a bee, beetle-with-wings-spread, ant or spider", "exactly 6 jointed legs, 3 per side, attached to the thorax", "broad flat shield-like pronotum covering the head from above", "2 long thin antennae, at least body length", "flat oval body, wings folded flat over the abdomen (not spread, not translucent bee wings)", "2 short cerci at the rear tip of the abdomen", "no stinger, no stripes of a bee/wasp, no fur"],
+ "giraffe": ["exactly 4 long thin legs", "very long neck, about leg length", "2 ossicones on head", "back slopes straight down from withers to rump, no hump"],
+ "crocodile": ["exactly 4 short legs splayed sideways", "long flat snout", "long heavy tail", "low body close to the ground line"],
+ "eagle": ["2 legs with talons", "wings folded against the body", "hooked beak", "upright perched pose"],
+ "frog": ["exactly 4 legs: 2 short front, 2 long folded hind", "2 bulging eyes on top of the head", "no tail"],
+ "tortoise": ["exactly 4 stout legs", "domed shell", "head and neck extended out of the shell"],
+ "kangaroo": ["2 large hind legs + 2 small forearms", "thick tail touching the ground", "upright stance, long ears"],
+ "bear": ["exactly 4 legs, plantigrade feet", "short tail, small round ears", "shoulder hump (if grizzly/brown bear)"],
+ "elephant": ["exactly 4 pillar legs", "one trunk", "2 large ears", "2 tusks (if African/adult male)"],
+ "shark": ["1 tall dorsal fin, 2 pectoral fins", "crescent tail fin", "horizontal torpedo body, side view"]
+}

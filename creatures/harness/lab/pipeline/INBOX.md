@@ -56,3 +56,22 @@ Do NOT put the CUDA-13 dir on PATH (torch fails to load); paint21 does `add_dll_
   crocodile -> skip. There is no biped/bird/fish skeleton yet (rig.py spec is the wolf quadruped).
 - validate.py checks: mesh, UV, baseColor texture+image, skin, joints, inverse binds == joints, JOINTS_0/WEIGHTS_0, weight sums within
   0.01 of 1, animations idle+walk, triangle ranges (textured 1k-2M, rigged 500-100k), file sizes (80 / 40 MB).
+
+## Fast iteration (2026-10-22; all flags default off, outputs byte-identical to subprocess mode)
+```
+E:/gen3d/venv/Scripts/python.exe model_server.py --lowvram          # once; keeps shape/2mv/Paint/T2I weights loaded
+python run_inbox.py wolf --lowvram --server --fast-post --gates --preview --seeds 0,1,2   # screen seeds (octree 256, 30 steps)
+python run_inbox.py wolf --lowvram --server --fast-post --pick h21p_s1                     # same seed at full quality + finish
+python judge_auto.py --round wolf_r1 --species wolf --ref <work>/ref_rgba.png --candidates-json <work>/candidates.json
+python ref_critic.py E:/gen3d/inbox/roach --species roach [--regen 6 --server]             # or run_inbox --ref-critic
+```
+- `--server`: GPU stages run in model_server.py (runpy, same templated scripts). Cache keys: h21_offload/h21_gpu, h2mv_offload,
+  paint|<opts>|NO_SR|TRUST, t2i_hunyuandit. After each job accelerate hooks offload + empty_cache (8 GB swap; weights in host RAM).
+  Class monkeypatches (stream decoder, paint offload) are undone per job. Start the server with the same --lowvram/env as the client.
+- `--preview`: candidates `h21p_s*`; `--pick h21p_sN` reruns seed N at full quality (`h21_sN`) then finishes it.
+- `--fast-post`: clean8 per candidate in parallel processes; one render.py process for all sheets (GL context init 13-17 s each).
+- `--gates`: gates.py (watertight, floor slab, thin parts, symmetry, silhouette IoU vs ref) -> candidates.json + contact-sheet label.
+- mask stage is cached by sha1 of the input views (work/mask_hash.txt).
+- `MARK` lines -> timings.json `<stage>:load`, `<stage>:seedN` (seconds from script start).
+- Headless Opus (judge_auto / ref_critic) needs `claude` logged in on this box (`claude /login`); until then both write
+  PROMPT files and take answers back (`judge_auto --score`, `ref_critic --answer x.json`). Anchor: E:/gen3d/judge_auto/fixed/anchor_<species>.png (Azad supplies).
