@@ -1,12 +1,72 @@
 # Night log 2026-10-23 (01:31 → 09:34)
 
 ## Morning summary
-(written at end)
+64 log rows overnight (01:31 to 08:45). No Fable was used, everything ran headless, and there were four checkpoint pushes plus a final one.
+
+**Done**
+- **Clips:** the clip gate now passes 40/40 (it was 29/40).
+  - Fixes: toe roll, pelvis drop, a final IK solve, per-creature clips.json, an 8-leg crab gait, and the octopus name clash.
+  - `--fix-clips` no longer replaces clips edited in the .py with stale ones.
+- **Kit:** 7 kit bugs fixed:
+  - eye head length;
+  - mirrored root radius;
+  - drift anchors;
+  - centre-line fins;
+  - shoulder-shelf check;
+  - region exclusion;
+  - `--compare` file name.
+
+  Audit: kit_bug_audit.md.
+- **Borders (smooth_borders)**
+  - Adopted: werewolf, hippo, lizardman, penguin, bear, griffin, imp, mantis, boar. Tiger and elephant got it through other passes.
+  - Reverted (ties): beetle, stag, minotaur, scorpion, knight, fox.
+- **Detail, tier 3:** all 7 creatures now pass the feature count.
+  - Before → after: rhino 15, troll 14, ogre 13, golem 12, dragon 13, elephant 12, hippo 12.
+- **Detail, thin fixes**
+  - Adopted: owl, croc teeth, chameleon, penguin, griffin claws, koi barbels, stag tines, spider claws, raven toes.
+  - Reverted: beetle claws and mantis spines.
+- **Heads:** gorilla and yeti heads rebuilt with the muzzle in the loft (won both orders).
+- **Weak-model fixes**
+  - Adopted: turtle neck/head and tail clip, eagle body/tail/face, manta lobes and float, shark +0.40 m, koi +0.25 m, raven_wyvern horns/claws/spines, boar hind gap, fox tail clip, tiger cream chest.
+  - Reverted: spider.
+- **Shoulder and fin roots:** ogre deltoid shelf fixed (shelf 3.45 → 0); seahorse dorsal fin root fixed.
+- **Rebuilds from scratch (abc/t9):** fox beats the zoo fox in both orders (an owner pick below); bear loses, so the zoo bear stays.
+
+**Failed / open**
+- Junction FAILs that were already there (not from tonight's passes): rhino ear strip, ogre chin/eye, golem, dragon, croc, owl, stag, eagle thigh strip 1.02 r, shark/koi fin roots, fox/tiger/boar ear and hip knife folds.
+- Raven_wyvern move clip foot slide is 1.56 % H; probably from the shorter toes, not tested.
+- Tiger chest underside is still grey from shade; it needs geometry.
+- Spider abdomen still reads as a disc; the stripe paint should follow the abdomen axis.
+- Turtle rump shelves; turtle and manta detail count is below the floor.
+- Detail pieces (kneecaps, navels, knuckles) are hex-faceted and look like bolts.
+- smooth_borders despeckle erases intentional one-face features. Cuts can't be kept off a region, so they can't be shielded from ear roots.
+
+**Next**
+1. Owner picks below.
+2. Kit:
+   - smooth_borders: despeckle guard plus a cut guard;
+   - round knob pieces instead of hex;
+   - tune the shelf thresholds.
+3. Junction cleanup pass on the pre-existing FAILs.
+4. Continue rebuilding the originals in abc/t9: boar, stag, tiger, shark, koi, then the rest.
+5. Clean up: abc/t8/fixclips_test (~300 MB scratch) and C:enders.
+
 
 ## Owner picks needed
+- mantis: stubby antennae (taste change, not judged alone) — keep?
+- golem: forearm bracer slab flagged by both judges — keep or remove?
+- fox: t9 rebuild (abc/t9/fox) beat zoo fox in both orders — promote it to zoo? (image abc/t9/fox/ab_vs_zoo.jpg). Bear rebuild lost; zoo bear stays.
+- raven_wyvern: horns, wrist claws, back spines added beyond the (plain raven) sheet — keep?
+- tiger: cream chest value (warmer cream adopted by judge) — confirm taste.
+- tiger: grey chest underside from downward faces needs a geometry pass (not done).
+- ogre: eye hidden by brow from side (vis 0.08 < 0.40) and chin/neck step trips shoulder probe — both owner-protected; change brow/eye or accept?
 - griffin: wing covert tan/brown border is a sawtooth on the separate wing piece (not body; smooth_borders not applied there) — smooth it or keep as feather edge?
 - kit: should the elephant trunk root count as a junction (probed)? Shelf-check thresholds calibrated on one synthetic case — name a real case to tune.
 - tiger attack: quick lifted step pops ~5% H in one frame (slightly abrupt) — accept or soften?
+
+- fox: border pass wins the blind A/B both orders (flank/chest border smooth) but the ear-root knife metric worsens 1.69 -> 3.57 r (gate already FAIL) — reverted by rule; adopt the candidate (fox/before_borders/fox_r12_borders_candidate.glb, fox/border_before_after_CANDIDATE.jpg)?
+- snake: border pass wins blind A/B both orders but rewrites the blotch pattern (small side spots despeckled away, dorsal blotches become rounded lobes) — adopt? candidate snake/before_borders/snake_r05_borders_candidate.glb, image snake/border_before_after_CANDIDATE.jpg
+- kit (smooth_borders): the despeckle step erases one-face features (boar snout n-gon disc) — add an n-gon/area guard? (boar worked around with pairs)
 
 ## Log
 | time | creature/item | change | gates | verdict | image |
@@ -52,3 +112,26 @@
 | 06:49 | crocodile (thin) | s4 r09: teeth as chunky blunt pegs (frustum >= 6.5 mm; were 4 mm wedges) | detail PASS (was FAIL x10 teeth), kit OK, clips PASS after --fix-clips; junction/eye FAILs from the unchanged body | ADOPT (judge both orders) | crocodile/rounds/s4_r09.jpg |
 | 06:53 | imp | kit/smooth_borders after body paint (iters 8), s4 r34 | stairs 4->1, 3-to-1 4->0, 3 cuts, 8 relaxed; kit gates PASS, junction PASS, clips PASS (after --fix-clips); detail FAIL tail tip 17.7 mm < 19.3 (tail has no colour border; not re-probed on baseline) | ADOPT (after wins both orders: belly patch oval) | imp/border_before_after.jpg |
 | 07:19 | mantis | kit/smooth_borders after body paint (iters 8), s4 r21 (A/B before = r22 no-border build of the same mantis.py) | stairs 38->21, 3-to-1 24->0, 18 cuts, 50 relaxed; junction PASS, clips PASS (after --fix-clips); techqa hit 2 (piece_spines) NOT from borders: the r22 no-border build also hits (10-23 detail-pass fat spines, unbuilt by their author); detail FAIL | ADOPT (after wins both orders: head-underside pale patch rounded) | mantis/border_before_after.jpg |
+| 07:26 | fox | weakfix s4 r11 (clips only): move holds tail0 -32 deg (brush lifted, streaming behind), side sway 5 -> 3; --fix-clips base refreshed (old before_clips GLB moved to before_weakfix/before_clips_orig: a clips-only edit never reached the GLB, r09/r10 TIEs) | junction tail0 vs thigh posed clip 7-8 % -> 0.0 %, techqa clip warning gone; kit gates PASS, clips PASS; other junction FAILs untouched geometry; detail FAIL claws (detail lane) | ADOPT (variant wins both orders) | fox/stage4/clips/s4_clip_sheet.jpg |
+| 07:27 | hippo | s4 r11: mouth line taller (r10 z-fight) - closes the r09-r11 detail pass logged 06:42 | ALL gates PASS (kit, junction, eyes 0.57/0.74/0.48, detail 12 groups, was 4 FAIL), 3976 tris, clips PASS after --fix-clips | ADOPT (judge both orders, r10 visuals) | hippo/rounds/s4_r11.jpg |
+| 07:32 | turtle | posed clip fix s4 r33-r36 (stage 4 only; backup before_tailclip/): tail lifted X +18 in move + stride A 12 -> 9 (r33 swing 0 = no change, r34 X -12 worse, r35 X +12 tail PASS / thighs 1.5%) | tail0 clip 3.3 -> 0%, thigh.L/R 1.54 -> 0.3%: junction PASS 5/5; clips PASS (move pen 0.132); residual pre-existing: detail count 5 < 6, techqa drift piece_shell 1 | ADOPT (posed move@19 A/B both orders) | turtle/stage4/junctions/s4_review_junction_sheet.jpg |
+| 07:32 | ogre | attack clip fix s4 r43-r44: blow ends higher (upperarm.R 35 -> 52 / 25 -> 40) + arm swings out (Z -14/-10) | posed clip arm.R/thigh.R 3.8/6.2 -> 2.6/4.2 (r43) -> 0/0% (r44); clips PASS; techqa clip tris 129 -> 89; residual FAILs: upperarm.R strip 1.16 r = chin/neck step N0-H0u inside the 2r region (owner chin), eye side 0.08 (owner eye), techqa drift piece_strap 1 (same on champion r39) | ADOPT (posed attack@18 A/B both orders) | zoo/ogre/review/1_beauty.jpg |
+| 07:32 | kit (report only) | --fix-clips reads authored clips from stage4/before_clips/ when the joint rest is unchanged (clip_gate.same_rest = joints only): a clip edited in the .py is silently replaced by the old backup's clip; workaround used: copy the fresh build into before_clips/ before --fix-clips | turtle r33 + ogre r43 needed it | owner/kit pick | - |
+| 07:33 | chameleon (thin) | s4 r10-r11: dorsal crest as blunt half-frustum stubs (were pointed, t 14.6 mm), toe bundles blunter, shorter, taller (L/t 6.8 -> <= 4.5) | detail PASS (was FAIL x14), kit OK, eyes PASS, clips PASS after --fix-clips; junction knives = unchanged body | ADOPT (judge both orders) | chameleon/rounds/s4_r11.jpg |
+| 07:38 | penguin (thin) | s4 r08-r09: webbed toes 24 mm tall to the tip (were 3.5 mm), claws as blunt frustums leading out of the toe tips (were 3 mm spikes) | ALL gates PASS (kit, junction, eyes, detail; count now >= 6), --fix-clips PASS, verify --clips PASS (08:15 re-run; the 07:38 one hit a transient SyntaxError in kit/clip_gate.py while another agent edited it) | ADOPT (judge both orders) | penguin/rounds/s4_r09.jpg |
+| 07:41 | minotaur | kit/smooth_borders after body paint (iters 8), s4 r43 | stairs 13->11, 3-to-1 2->0, 2 cuts, 11 relaxed; all gates PASS (kit, junction, details, clips) | REVERT (order 1 TIE, order 2 before wins -> champion; few stairs to fix) | minotaur/border_before_after_REVERTED.jpg |
+| 07:42 | spider | weakfix s4 r10-r12: rear rings tightened to an apex (r10: no visible change), abdomen tilt 12/7 deg (r11 FAIL s2 IoU az180 0.886; r12 gates PASS) | r12 kit gates PASS, detail PASS, clips PASS; rear still disc-like, stripes go jagged on the tilt (y-ruled paint) | REVERT (visible regression; restored before_weakfix incl. detail agent's claw edit); next: paint bands along the tilted axis | spider/before_weakfix/checks/h180.png |
+| 07:49 | griffin (thin) | s4 r08: hind lion claws with blunt chunky tips (were 10 x 7 mm tips) | ALL gates PASS (kit, junction, eyes, detail, was claws FAIL x4), clips PASS after --fix-clips | ADOPT (judge both orders) | griffin/rounds/s4_r08.jpg |
+| 07:56 | manta_ray | weakfix s4 r15 (stage 2, lock kept): lobes as J-scroll sections (lower edge rolled in, root level a plate), wing tips swept back into points + curl up; checks ground at real z 0 (GLB already lifted 0.45 m) | all kit gates PASS (slivers 1.96 %), junction PASS, clips PASS; detail FAIL 5 groups (pre-existing); r10-r14 FAIL (lobe side sign swap, roll self-hits, flap dip, slivers) | ADOPT (variant wins both orders; roll modest) | manta_ray/checks/hero.png |
+| 07:56 | kit | --fix-clips: compare authored clips too (clip_gate.clip_hashes per clip, keys quantised 1e-5) not just joint rest; fix outputs marked (asset.extras.bmk_clipfix_hash; legacy = clips match scratch clips_s4_blender.glb); fresh build whose rest or clips differ -> before_clips/ refreshed from it, old copy -> before_clips_prev/; replaces the 07:32 manual-copy workaround | scratch abc/t8/fixclips_test/turtle: idle head key edited -> clips changed [idle] -> refresh, edit survives (head vs zoo 16.0 deg, vs fresh 0.03 deg); unchanged rebuild -> 'matches backup' path; rerun w/o rebuild -> 'earlier fix output' path; clip gate PASS, mesh/skin identity PASS x3; legacy census 39 own / 3 same / 5 fresh-changed (boar rebuilt 07:41 = genuine) | ADOPT | - |
+| 07:59 | boar | kit/smooth_borders after body paint, s4 r23-r24 (r23 unrestricted: despeckle erased the one-face pink snout disc -> r24 pairs among fur/saddle/cream/leg/hoof only) | stairs 25->7, 3-to-1 15->0, 9 cuts, 65 relaxed; kit gates PASS, clips PASS; junction FAIL pre-existing (ears 3.05 r, upperarm 1.04 r, tail0 1.85 r = the 04:59 weakfix numbers; thighs PASS 0.51 r) | ADOPT (after wins both orders: saddle stripe lower edge smoother) | boar/border_before_after.jpg |
+| 08:04 | fox (t9 RECREATE, abc/t9/fox) | from-scratch rebuild: 14-vert 2x loft, 4x3 leg windows + 45% transition, 4-face skull-side ear windows + ring morph + 45% transition, smooth_borders, chunky claws/nose/ruff/tuft, small lens eye; fix loop r1 v2 (brush wider/deeper + white tip third) won both orders, r2 ear variants tied | kit gates PASS, junction 7/7 PASS, eyes 0.70/0.84/0.52, detail PASS 7 groups, clips PASS after --fix-clips, pack PASS, ROM audit 3 fails (thigh ext/side, shin flex), IoU 0.797/0.870/0.859 (zoo 0.770/0.802/0.761), 3,624 tris | ADOPT as champion candidate (rebuild beats zoo/fox both orders; zoo not touched) | abc/t9/fox/ab_vs_zoo.jpg |
+| 08:06 | koi (thin) | s4 r16-r17: barbels as stubby chunky blocks, section perpendicular to the barbel axis (r15/r16 level squares were sheared slices, t 3-4 mm) | detail PASS (was barbels FAIL), kit OK, eyes PASS, clips PASS after --fix-clips; junction pec/tail FAILs = unchanged body | ADOPT (judge both orders) | koi/rounds/s4_r17.jpg |
+| 08:13 | fox | kit/smooth_borders after body paint, s4 r12-r13 (r13 ear-root guard: no change) | stairs 41->10, 3-to-1 27->0, 16 cuts, 52 relaxed; kit gates PASS, clips PASS; junction FAIL pre-existing but ear knife WORSE 3 (1.69 r) -> 5 (3.57 r), thigh knife 3.78 -> 3.88 r (cuts on the ear cream/sock border; guard only limits relax) | REVERT by gate rule despite A/B win both orders (flank/chest border smooth) -> owner pick: candidate kept fox/before_borders/fox_r12_borders_candidate.glb | fox/border_before_after_CANDIDATE.jpg |
+| 08:14 | mantis (thin) | antennae short + chunky (>= 13 mm) KEPT; fat frustum spines r21-r23 REVERTED in r24 (techqa hit 2-4: the fat base crosses both faces of the thin blade; still thin by the gate) | r24: kit OK, antennae PASS, eyes PASS, clips PASS after --fix-clips; detail FAIL = pre-night spines only (t 1.6-2.3 mm) | REVERT spines / keep antennae (no judge: gate-driven) | mantis/rounds/s4_r24.jpg |
+| 08:21 | scorpion | kit/smooth_borders after body paint (iters 8), s4 r08 | stairs 49->34, 3-to-1 8->0, 3 cuts, 64 relaxed; all gates PASS (kit, junction, clips) | REVERT (TIE both orders -> champion) | scorpion/border_before_after_REVERTED.jpg |
+| 08:22 | stag (thin) | s4 r43: chunkier shorter antler tines (my 03:00 edit, built in the border agent's r38-r42 with techqa hit 2) + a narrow sunk tine root ring (hit fixed) | kit gates OK, detail PASS (was tines FAIL x8), clips PASS after --fix-clips; junction/eye-size FAILs pre-existing | ADOPT (judge both orders) | stag/rounds/s4_r43.jpg |
+| 08:30 | knight | kit/smooth_borders after body paint (iters 8), s4 r14 | stairs 13->1, 3-to-1 4->0, 0 cuts, 23 relaxed; kit gates PASS, clips PASS; junction FAIL pre-existing (baseline probed: upperarm strip 1.55 r, thigh.L gaps, no eye piece) | REVERT (TIE both orders -> champion) | knight/border_before_after_REVERTED.jpg |
+| 08:34 | bear (t9 RECREATE, abc/t9/bear) | from-scratch rebuild from the t9 fox program: 14-vert 2x loft, 4x3 leg windows + 45% transition, 2-face ear windows + ring morph, smooth_borders, chunky claws/nose/tail/brow, lens eye; fix1 (stage-2 hump +5.5 cm/saddle, leg dark from z 0.30) tied r2 and tied zoo -> reverted | r2: kit gates PASS, junction PASS (ear strip 1.0 r, thigh 0.78 r), eyes 0.72/0.81/0.46, detail PASS 6, clips PASS after --fix-clips, pack PASS, ROM audit 3 fails, IoU 0.889/0.900/0.828, 3,036 tris | KEEP zoo/bear (zoo wins both orders: hump + crisp planes) | abc/t9/bear/ab_vs_zoo.jpg |
+| 08:41 | snake | kit/smooth_borders after body paint (iters 8), s4 r05 | stairs 99->15, 3-to-1 62->0, 24 despeckled, 40 cuts, 149 relaxed; kit gates, clips PASS; eye R front 0.05 FAIL (eye gate changed tonight; baseline not re-probed); detail FAIL | KEPT CHAMPION -> owner pick: blind A/B after wins both orders, but despeckle removed the small side blotches and reshaped the dorsal ones (pattern = taste). Candidate: snake/before_borders/snake_r05_borders_candidate.glb | snake/border_before_after_CANDIDATE.jpg |
+| 08:43 | beetle (thin) | s4 r10-r12: one fat blunt hook per tarsus + fatter mandibles | r12 kit OK, mandibles PASS, claws t 13.9 < 14.4 mm still FAIL; judge FLIP (paired hooks read as tarsi, the fat hook as a stump) = tie | REVERT (beetle.py + stage4 GLB/renders restored from beetle/before_detail) | beetle/rounds/s4_r12.jpg |

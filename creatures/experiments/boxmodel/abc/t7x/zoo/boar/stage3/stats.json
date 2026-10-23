@@ -23,19 +23,19 @@
  "borders": [
   {
    "tag": "borders",
-   "despeckled": 8,
+   "despeckled": 7,
    "cuts": 9,
    "relaxed": 65,
    "undone": 6,
    "max_move": 0.01832,
    "mean_move": 0.00492,
    "before": {
-    "border_edges": 126,
-    "length": 6.9496,
-    "paths": 13,
+    "border_edges": 115,
+    "length": 6.7479,
+    "paths": 12,
     "corners": 25,
     "corner_quads": 15,
-    "corners_per_m": 3.6
+    "corners_per_m": 3.7
    },
    "after": {
     "border_edges": 90,

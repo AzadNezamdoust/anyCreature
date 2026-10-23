@@ -1,0 +1,12 @@
+{
+ "tail_vs_hind": 0.0726,
+ "fore_L_vs_R": 0.1,
+ "hind_L_vs_R": 0.1976,
+ "counts": {
+  "tail": 1570,
+  "hind": 176,
+  "foreL": 183,
+  "foreR": 152
+ },
+ "verdict": "PASS"
+}

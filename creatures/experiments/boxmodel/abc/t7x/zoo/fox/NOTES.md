@@ -69,3 +69,12 @@ Weaknesses: one symmetric hind pair against the ref's staggered pair; cheek ruff
 - s4 r10. Fix: tail0 -32 deg (a visibly lifted, streaming brush).
 - r10 result: junction tail0/thigh posed clip 0.0 % (authored clips), clips PASS; but the move frames are identical to r09: the --fix-clips pass reads the authored clips from stage4/before_clips/fox.glb (the 10-22 original) whenever the rest pose is unchanged, so a clips-only edit never reaches the shipped GLB. The r09 TIE was this, not the lift.
 - s4 r11. Fix (pipeline): rebuild, move the old before_clips/fox.glb to before_weakfix/before_clips_orig/, then --fix-clips --clips on the freshly authored clips.
+- r11 result: kit gates PASS (no posed-clip warning), clips PASS (move pen 3.24 -> 0, slide 2.70 -> 0 after the fix on the fresh base); junction tail0 vs thighs clip 0.0 % (was 7.1-7.9 %); other junction FAILs (ears, shoulders, thighs knife 3.78 r) are untouched geometry; detail FAIL claws 6.3 mm (detail lane). A/B on the trot frames (2 fresh Opus seats): variant wins both orders: ADOPT. Judge note: the brush rides a bit flatter/higher than the sheet's droop; a small notch on top of the tail root.
+
+## Border pass (night 2026-10-23, s4 r12-r13) - REVERTED, owner pick
+- kit/smooth_borders(body, k=k, iters=8): 6 despeckled, 16 cuts, 52 relaxed; stair corners 41 -> 10, 3-to-1 27 -> 0.
+  Kit gates, clips PASS. Junction (already FAIL) worsens at the ears: knife 3 (1.69 r) -> 5 (3.57 r); thigh 3.78 -> 3.88 r.
+  r13 guard (no relax within 0.16 m of the ear roots) changed nothing -> the knives come from the anti-stair cuts on the
+  ear's cream/sock border (a cut cannot be guarded with the current kit options).
+- Blind A/B (r12 vs champion): after wins both orders. Reverted by the gate rule; candidate kept:
+  before_borders/fox_r12_borders_candidate.glb, before_borders/fox_r13_borders_candidate.py, border_before_after_CANDIDATE.jpg.

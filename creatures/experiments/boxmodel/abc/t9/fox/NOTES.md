@@ -56,3 +56,11 @@ cheek ruff 0.19 (front z 0.80), legs x 0.045-0.145 (chunky 0.10 socks), brush 0.
   tail-hind 0.081 m). Score v2 13/15 (5, 6 YES). Remaining NOs: 4 (ear spike from the side), 7 (stifle cuff).
 - Round 2 target NO 4. v3 (s4 r5): ear rings above the root x1.4 front-back about the ear axis; v4 (s4 r6): x1.25
   front-back + x1.1 across.
+- Round 2 judge: v3 AB -> v3, BA -> champion: flip = TIE; v4 AB -> v4, BA -> champion: flip = TIE (pixel diff: only
+  the ears change; both seats leaned to the bottom row). Ties -> champion v2 kept. NO 4 (ear depth from the side)
+  and NO 7 (stifle cuff) stay open -> owner packet. Loop stopped (round 2 all ties, 07:40 time box).
+- Rebuild (v2) vs zoo champion (zoo/fox/stage4/fox.glb frozen 06:51 into zoo_champ/): fresh Opus seat per order,
+  sheet referee: AB (A zoo, B rebuild) -> B; BA (A rebuild, B zoo) -> A: rebuild WINS both orders -> ADOPT
+  (champion candidate; zoo/ not touched). Judges' reasons: chest/brush bulk matches the sheet, clean colour borders,
+  broad blended leg/tail roots; zoo keeps crisper planes; rebuild ears/head read a little small (one seat).
+- r7 FINAL: the v2 program rebuilt clean (FOX_VAR default v2), all S4 gates re-run.

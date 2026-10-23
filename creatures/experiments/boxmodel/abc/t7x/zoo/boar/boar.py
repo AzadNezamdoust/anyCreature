@@ -468,7 +468,9 @@ def toe(bm, h, d):
 def stage3(k, body):
     paint(body, PAL, body_rule)
     # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
-    smooth_borders(body, k=k, iters=8)
+    # r24: the snout disc left out (r23: despeckle turned the one-face pink snout disc into fur)
+    SB = ('fur', 'saddle', 'cream', 'leg', 'hoof')
+    smooth_borders(body, k=k, iters=8, pairs=[(a, b) for a in SB for b in SB if a < b])
     tree = body_bvh(body)
     # eyes (fix pass 5, owner: eyes still bad): was a 1.4 cm dark-brown dot sunk in a narrow slot. Now a 1.7 cm
     # amber lens with a big black pupil, centred on the open socket floor, facing the eye face's own normal

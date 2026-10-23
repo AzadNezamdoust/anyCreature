@@ -11,7 +11,7 @@ must stay put; move clips may treadmill); loop gap <= 0.5 % H; no NaN keys; no f
 (positions) and skin (joint names + weights per vertex) are identical to the input.
 Writes <outdir>/<tag>_clips.json and <outdir>/<tag>_clip_sheet.jpg. Exit 0 only when every gate passed.
 """
-import json, os, struct, sys
+import hashlib, json, os, struct, sys
 import numpy as np
 from PIL import Image, ImageDraw
 
@@ -185,7 +185,55 @@ def splice(orig, anim_src, out):
         anims.append(dict(name=an.get('name'), samplers=samplers, channels=chans))
     A['animations'] = anims; A['accessors'] = accs; A['bufferViews'] = bvs
     A['buffers'] = [dict(byteLength=len(new_bin))]
+    # mark the output as a clip-fix result: --fix-clips must not mistake it for a fresh build's authored clips
+    A.setdefault('asset', {}).setdefault('extras', {})[FIX_MARK] = clips_hash(anim_src)
     _write_glb(out, A, bytes(new_bin))
+
+
+FIX_MARK = 'bmk_clipfix_hash'
+
+
+def clip_hashes(path):
+    """{clip name: sha1} over each animation's keyframes (times + values quantised to 1e-5, interpolation),
+    channels keyed by target node name + path, order-independent. Mesh/skin/rest are not part of it."""
+    js, bin_ = _glb(path)
+    out = {}
+    for an in js.get('animations', []):
+        rows = []
+        for ch in an['channels']:
+            sm = an['samplers'][ch['sampler']]
+            nm = js['nodes'][ch['target']['node']].get('name', '')
+            t = np.round(_acc(js, bin_, sm['input']) * 1e5).astype(np.int64)
+            v = np.round(_acc(js, bin_, sm['output']) * 1e5).astype(np.int64)
+            rows.append((nm, ch['target']['path'], sm.get('interpolation', 'LINEAR'), t.tobytes(), v.tobytes()))
+        h = hashlib.sha1()
+        for nm, pa, ip, t, v in sorted(rows):
+            h.update(f'{nm}|{pa}|{ip}|'.encode()); h.update(t); h.update(b'|'); h.update(v); h.update(b';')
+        out[an.get('name') or f'anim{len(out)}'] = h.hexdigest()
+    return out
+
+
+def clips_hash(path):
+    return hashlib.sha1(json.dumps(sorted(clip_hashes(path).items())).encode()).hexdigest()
+
+
+def is_fix_output(path, qa=None, last_fix=None):
+    """True when the GLB at path is an earlier --fix-clips result (not a fresh build). New outputs carry
+    asset.extras[FIX_MARK] = clips_hash of the spliced clips. Legacy (pre-mark) outputs: its clips equal the last
+    repair's Blender export (last_fix = scratch clips_s4_blender.glb), or the clip report qa (written right after
+    the splice) holds a 'fix' section and is newer than the GLB."""
+    js, _ = _glb(path)
+    mark = js.get('asset', {}).get('extras', {}).get(FIX_MARK)
+    if mark:
+        return mark == clips_hash(path)
+    if last_fix and os.path.exists(last_fix) and clips_hash(last_fix) == clips_hash(path):
+        return True
+    if qa and os.path.exists(qa):
+        try:
+            return 'fix' in json.load(open(qa)) and os.path.getmtime(qa) >= os.path.getmtime(path)
+        except (ValueError, OSError):
+            return False
+    return False
 
 
 def same_rest(a, b):

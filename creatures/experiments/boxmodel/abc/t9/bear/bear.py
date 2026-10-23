@@ -107,14 +107,14 @@ SECS = [
 
 # leg sections: (cx, cy, z, rx, ry, exponent): level rounded boxes, deeper front-to-back; secs[0] is the target the
 # transition ring slopes toward. Chunky legs (sheet front: socks 0.09-0.10 wide), broad paws.
-FORE = [(0.200, -0.230, 0.380, 0.150, 0.170, 2.6),   # upper arm under the hump
-        (0.200, -0.235, 0.300, 0.136, 0.150, 2.6),   # elbow
+FORE = [(0.218, -0.230, 0.380, 0.138, 0.170, 2.6),   # upper arm under the hump (s1 r2: inner wall clear of the belly)
+        (0.208, -0.235, 0.300, 0.132, 0.150, 2.6),   # elbow
         (0.200, -0.240, 0.220, 0.130, 0.140, 2.6),   # forearm
         (0.200, -0.248, 0.130, 0.128, 0.138, 2.6),   # wrist
         (0.200, -0.262, 0.060, 0.145, 0.170, 2.4),   # paw
         (0.200, -0.275, 0.0, 0.150, 0.190, 2.4)]
-HIND = [(0.200, 0.640, 0.360, 0.160, 0.200, 2.6),    # thigh under the haunch
-        (0.200, 0.655, 0.290, 0.140, 0.160, 2.6),
+HIND = [(0.220, 0.640, 0.360, 0.140, 0.200, 2.6),    # thigh under the haunch (s1 r2: inner wall clear of the belly)
+        (0.210, 0.655, 0.290, 0.133, 0.160, 2.6),
         (0.200, 0.670, 0.210, 0.130, 0.142, 2.6),
         (0.200, 0.680, 0.130, 0.128, 0.138, 2.6),    # hock
         (0.200, 0.670, 0.060, 0.145, 0.170, 2.4),
@@ -292,8 +292,8 @@ def _leg(c):
 
 def body_rule(c, n, i):
     x, y, z = abs(c.x), c.y, c.z
-    if y < -0.905 and z > 0.80:
-        return 'nose'                                   # nose pad
+    if y < -0.915 and z > 0.835 and x < 0.05:
+        return 'nose'                                   # nose pad (s4 r2: the tip only; r1 blacked the whole cap)
     if z > 1.13 and -0.66 < y < -0.53 and x > 0.08:
         return 'dark'                                   # ears
     if _leg(c):
@@ -303,7 +303,7 @@ def body_rule(c, n, i):
     if y < -0.79:
         return 'muzzle'                                 # tan muzzle box, on the H4 loop
     if y > -0.47:
-        return 'dark' if fh < -0.62 else 'fur'          # belly + lower flank on the leg-window top loop (BODY j9)
+        return 'dark' if fh < -0.80 else 'fur'          # s4 r2: belly underside only (r1: the lower half went dark)
     return 'fur'
 
 
@@ -395,6 +395,12 @@ def details(tree):
     bm = bmesh.new()
     D.knob(bm, h_[0], h_[1], 0.055, 0.05, sides=8, sq=(1.0, 0.9), top=0.5)
     piece('tail', bm, 'fur', mirror=False)
+    # s4 r2: brow mounds above-behind each eye (the bear's heavy brow; detail count 5 -> 6)
+    e = SOCKET[0]
+    h_ = D.cast_in(tree, (e.x + 1.0, e.y + 0.035, e.z + 0.05), (-1, 0, 0))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], h_[1], 0.04, 0.016, sides=7, sq=(0.8, 1.3), top=0.5)
+    piece('brow', bm, 'fur')
     return out
 
 

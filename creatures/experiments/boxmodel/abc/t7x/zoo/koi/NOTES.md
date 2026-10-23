@@ -73,3 +73,4 @@ Weaknesses: fins are ~1 cm thick (the sliver gate's price); the caudal fork notc
 ## Detail pass (2026-10-23 night; backup before_detail/)
 - s4 r16: barbels 2x fatter: still FAIL t 4.1 mm (mean width 13 mm): the level square section on a down-forward
   barbel is a sheared thin slice. Fix r17: the section built perpendicular to the barbel axis.
+- r17 Result: kit OK, detail PASS (barbels 9 mm square, perpendicular to their axis), eyes PASS; junction pec knife / tail strip = unchanged body (weakfix r15 note). A/B Opus both orders (vs pre-night renders): variant won BOTH -> ADOPT.

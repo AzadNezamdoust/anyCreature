@@ -16,12 +16,13 @@
   "shell"
  ],
  "colour_count": 6,
- "tris": 5566,
+ "tris": 5338,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 80,
   "piece_horn_thorax": 58,
   "piece_mandible": 76,
-  "piece_claws": 456
+  "piece_claws": 228
  }
 }

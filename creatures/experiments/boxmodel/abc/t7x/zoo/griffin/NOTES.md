@@ -56,3 +56,7 @@ Flaws seen: (1) the wing colour border stepped face by face across the slab (a t
   (owner pick: smooth it too, or keep as a feather edge).
 - A/B (fresh Opus seat per order, blind): after wins both orders (belly patch a rounded oval). ADOPT.
 - Files: border_before_after.jpg, before_borders/.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r08: hind lion claws with blunt chunky tips (tip ring 19.6 x 19.5 mm; was 10 x 7 mm, t 17.0 < 18.2 mm). ALL
+  gates PASS (kit, junction, eyes, detail). A/B Opus both orders: variant won BOTH -> ADOPT.

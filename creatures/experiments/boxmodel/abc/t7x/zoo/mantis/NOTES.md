@@ -110,3 +110,12 @@ Residual (visible, not fixed: fix-round budget used):
   pass (3 fat frustum spines), which was not rebuilt before tonight. Needs that pass's owner. Detail gate FAIL.
 - A/B vs r22 (fresh Opus seat per order, blind): after wins both orders (head-underside pale patch). ADOPT; stage4 holds
   the r21 (border) build; r22 GLB kept as before_borders/mantis_r22_noborders.glb.
+
+## Detail pass (2026-10-23 night, detail lane; backup before_detail/)
+- Edits (03:13): 3 fat blunt femur spines + 2 tibia spines (frustums), short chunky antennae (>= 13 mm). Built in the
+  border agent's r21/r22 (07:19) and re-run here as r21 (same program): antennae PASS; spines FAIL t 5.7-7.7 mm and
+  techqa hit 2: seated at 0.8 rw the fat base crosses both faces of the thin blade.
+- r23 Fix: spines seated on the blade edge (1.02 rw), base r 9.5 mm.
+- r23 Result: worse: techqa hit 4, spines t 5-10 mm. No time for another spine design tonight -> r24 REVERTS the
+  spines to the pre-night pieces (keeps the chunky antennae, which pass).
+- r24 Result: kit gates OK (hit gone), antennae PASS, eyes PASS, clips PASS after --fix-clips; detail FAIL = the pre-night thin spines (t 1.6-2.3 mm). Spines are an open item: a blade too thin for a 12 mm spine; needs a thicker blade edge ridge to seat them.

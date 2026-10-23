@@ -177,3 +177,7 @@ Probe flags not visible: none left. Shoulder over ribcage reads connected from h
   pec/ab planes beyond one pec shelf); hands are small two-finger mitts and the tail stem is plain.
 - Files: orbit18_sheet.jpg, side_by_side.jpg (--compare), side_by_side_sheet.jpg (sheet | model), review/,
   rounds/s4_r42_junctions.jpg, face_separation.jpg.
+
+## Border pass (night 2026-10-23, s4 r43) - REVERTED
+- kit/smooth_borders(body, k=k, iters=8): 2 cuts, 11 relaxed; stair corners 13 -> 11, 3-to-1 2 -> 0; all gates PASS.
+- A/B: order 1 TIE, order 2 the champion (before) wins -> REVERT; py/GLB/checks restored from before_borders/.

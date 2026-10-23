@@ -1,0 +1,55 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "b150ef02ef69056849076797e5ae8a3023b879e284c184f02d8419fd5d9d1931",
+  "collapsed_edge_hash": "b150ef02ef69056849076797e5ae8a3023b879e284c184f02d8419fd5d9d1931",
+  "logged_ops": 2,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "claw",
+  "dark",
+  "fur",
+  "iris",
+  "muzzle",
+  "nose"
+ ],
+ "colour_count": 6,
+ "tris": 3036,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 8,
+   "cuts": 14,
+   "relaxed": 67,
+   "undone": 20,
+   "max_move": 0.02636,
+   "mean_move": 0.00626,
+   "before": {
+    "border_edges": 118,
+    "length": 6.7947,
+    "paths": 7,
+    "corners": 38,
+    "corner_quads": 16,
+    "corners_per_m": 5.6
+   },
+   "after": {
+    "border_edges": 86,
+    "length": 5.0915,
+    "paths": 6,
+    "corners": 14,
+    "corner_quads": 0,
+    "corners_per_m": 2.7
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_claws": 512,
+  "piece_nose": 44,
+  "piece_tail": 44,
+  "piece_brow": 76
+ }
+}

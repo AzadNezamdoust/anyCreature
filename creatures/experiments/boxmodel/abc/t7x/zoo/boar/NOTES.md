@@ -78,3 +78,11 @@ Not fixed: faint shade steps remain on the mid flank next to the stage-2 shoulde
 ## Weakfix 2026-10-23 (night, backup before_weakfix/)
 - s4 r22. Critique: rear view — the hind legs stand 3-8 cm apart all the way down: a narrow slit under the tail (sheet: the hams meet, the lower legs part with clear space). Fix (stage 2 vertex moves, lock kept): hind-leg vertices below the stifle ring move out 2.4 cm (ramped from the stifle to full at the gaskin), the hind toes and the hock/hpaw/htoe joints with them.
 - Result: kit gates PASS (clip warn 3 tris), detail PASS, clips PASS after --fix-clips; junction: thighs PASS (knife 0, strip 0.51 r); FAIL ears (knife 3.05 r), upperarm strip 1.04 r, tail0 strip 1.85 r (untouched geometry). A/B (2 fresh Opus seats): variant wins both orders: ADOPT. Both judges: tiny pale specks beside the tail base in the rear view, in both builds (pre-existing).
+
+## Border pass (night 2026-10-23, s4 r23-r24)
+- r23 kit/smooth_borders(body, k=k, iters=8): the despeckle step recoloured the one-face pink snout disc to fur (snout
+  lost). r24: pairs restricted to fur/saddle/cream/leg/hoof (snout, tusk, eye out): 7 despeckled, 9 cuts, 65 relaxed;
+  stair corners 25 -> 7, 3-to-1 quads 15 -> 0; snout kept. Kit gates PASS, clips PASS (after --fix-clips). Junction
+  FAIL pre-existing (ears / upperarm strip / tail0 strip = the r22 numbers; thighs PASS).
+- A/B (fresh Opus seat per order, blind): after wins both orders (saddle stripe edge). ADOPT.
+- Kit note: _despeckle erases intentional one-face features (an n-gon disc ringed by one colour) -> needs a guard.

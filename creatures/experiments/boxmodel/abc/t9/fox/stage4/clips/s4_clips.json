@@ -4782,7 +4782,7 @@
  "rest_drift": 0.0,
  "mesh_identity": {
   "ok": true,
-  "detail": "verts 9960, unmatched positions 0, max weight diff 0.0000"
+  "detail": "verts 9956, unmatched positions 0, max weight diff 0.0000"
  },
  "gate": {
   "ok": true,
@@ -4793,7 +4793,7 @@
    "BMK clip attack  PASS  pen 0.004  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip idle    PASS  pen 0.005  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip move    PASS  pen 0.010  slide 0.003  plant 1.082  loop 0.000",
-   "BMK clip mesh/skin identity PASS: verts 9960, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip mesh/skin identity PASS: verts 9956, unmatched positions 0, max weight diff 0.0000",
    "BMK clip gate PASS (feet ['paw.L', 'paw.R', 'toe.L', 'toe.R'], gait quad_trot)"
   ]
  }

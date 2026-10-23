@@ -384,7 +384,7 @@ def stage2(k, body):
 
 
 # ---- weakfix 2026-10-23: rolled scroll lobes (were flat vertical plates), swept pointed wing tips
-ROLL = [0.0, 0.3, 0.55, 0.55, 0.45, 0.3]           # r14: gentler (r13: 12 hits where the rolled lower edges of levels 1-3 cross as the lobe path turns)
+ROLL = [0.0, 0.25, 0.47, 0.47, 0.38, 0.25]          # r15: x0.85 (r14 slivers 2.0 % at the limit); r14 gentler (r13: 12 hits)
 ROLL_R = 0.05                                      # roll radius
 
 
@@ -437,7 +437,7 @@ def swept_tips(bm):
             continue
         s = min(1.0, (x - 0.95) / (WING_TIP[0] - 0.95))
         ym = (interp(LE, min(x, 1.25)) + interp(TE, min(x, 1.25))) / 2
-        v.co.y = ym + (v.co.y - ym) * (1 - 0.3 * s * s) + 0.10 * s * s   # r14: chord squeeze 0.5 -> 0.3 (slivers 2.2 %)
+        v.co.y = ym + (v.co.y - ym) * (1 - 0.0 * s * s) + 0.10 * s * s   # r15: no chord squeeze (r14 0.3: slivers 2.0 %)
         v.co.z += 0.05 * s * s                        # r11: no span extension (r10 +7 cm: tips dipped under the belly in the flap)
 
 

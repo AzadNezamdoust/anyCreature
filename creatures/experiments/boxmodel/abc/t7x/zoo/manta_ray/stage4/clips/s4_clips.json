@@ -1,6 +1,6 @@
 {
  "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\manta_ray.glb",
- "H": 0.5450001955032349,
+ "H": 0.5450002253055573,
  "feet": [],
  "bones": 14,
  "gait": null,
@@ -232,7 +232,7 @@
  "rest_drift": 0.0,
  "mesh_identity": {
   "ok": true,
-  "detail": "verts 5703, unmatched positions 0, max weight diff 0.0000"
+  "detail": "verts 5645, unmatched positions 0, max weight diff 0.0000"
  },
  "gate": {
   "ok": true,
@@ -243,7 +243,7 @@
    "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip idle    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip move    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip mesh/skin identity PASS: verts 5703, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip mesh/skin identity PASS: verts 5645, unmatched positions 0, max weight diff 0.0000",
    "BMK clip gate PASS (feet [], gait None)"
   ]
  }

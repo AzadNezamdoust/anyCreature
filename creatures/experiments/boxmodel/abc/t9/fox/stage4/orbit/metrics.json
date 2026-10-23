@@ -1,5 +1,5 @@
 {
- "vertices": 9936,
+ "vertices": 9956,
  "triangles": 3624,
  "materials": [
   "fur",
@@ -22,64 +22,64 @@
   "fur": {
    "size": [
     0.4,
-    0.845,
-    1.5432
+    0.8623,
+    1.4959
    ],
-   "span_ratio": 0.8998,
-   "height_ratio": 0.7626,
+   "span_ratio": 0.8724,
+   "height_ratio": 0.7783,
    "share": {
-    "az000": 0.44207,
-    "az045": 0.63117,
-    "az090": 0.77973,
-    "az135": 0.69886,
-    "az180": 0.60071,
-    "az225": 0.69885,
-    "az270": 0.77973,
-    "az315": 0.63124,
-    "top": 0.92107,
-    "bottom": 0.42712
+    "az000": 0.43807,
+    "az045": 0.62882,
+    "az090": 0.76182,
+    "az135": 0.65937,
+    "az180": 0.50672,
+    "az225": 0.65936,
+    "az270": 0.76181,
+    "az315": 0.62888,
+    "top": 0.89251,
+    "bottom": 0.41887
    }
   },
   "cream": {
    "size": [
-    0.3439,
-    0.9362,
-    1.7082
+    0.3424,
+    0.9387,
+    1.7114
    ],
-   "span_ratio": 0.9834,
-   "height_ratio": 0.8449,
+   "span_ratio": 0.9833,
+   "height_ratio": 0.8472,
    "share": {
-    "az000": 0.3652,
-    "az045": 0.17085,
-    "az090": 0.10315,
-    "az135": 0.10153,
-    "az180": 0.21807,
-    "az225": 0.10153,
-    "az270": 0.10315,
-    "az315": 0.17087,
-    "top": 0.04611,
-    "bottom": 0.38316
+    "az000": 0.36896,
+    "az045": 0.17629,
+    "az090": 0.1239,
+    "az135": 0.14603,
+    "az180": 0.32636,
+    "az225": 0.14602,
+    "az270": 0.1239,
+    "az315": 0.1763,
+    "top": 0.07557,
+    "bottom": 0.39539
    }
   },
   "sock": {
    "size": [
-    0.3439,
+    0.3424,
     1.108,
     0.9862
    ],
-   "span_ratio": 0.5895,
+   "span_ratio": 0.5882,
    "height_ratio": 1.0,
    "share": {
-    "az000": 0.15554,
-    "az045": 0.17855,
-    "az090": 0.10994,
-    "az135": 0.19703,
-    "az180": 0.18121,
-    "az225": 0.19703,
-    "az270": 0.10994,
-    "az315": 0.17857,
-    "top": 0.02411,
-    "bottom": 0.1735
+    "az000": 0.15551,
+    "az045": 0.17588,
+    "az090": 0.10706,
+    "az135": 0.19211,
+    "az180": 0.16691,
+    "az225": 0.19211,
+    "az270": 0.10706,
+    "az315": 0.17589,
+    "top": 0.02339,
+    "bottom": 0.17003
    }
   },
   "nose": {
@@ -88,18 +88,18 @@
     0.1555,
     0.219
    ],
-   "span_ratio": 0.2089,
+   "span_ratio": 0.2085,
    "height_ratio": 0.1403,
    "share": {
-    "az000": 0.0227,
-    "az045": 0.00875,
-    "az090": 0.00272,
-    "az135": 0.00042,
+    "az000": 0.02273,
+    "az045": 0.00861,
+    "az090": 0.00268,
+    "az135": 0.00041,
     "az225": 0.00043,
-    "az270": 0.00272,
-    "az315": 0.00863,
-    "top": 0.008,
-    "bottom": 0.00195
+    "az270": 0.0027,
+    "az315": 0.00851,
+    "top": 0.00788,
+    "bottom": 0.00193
    }
   },
   "claw": {
@@ -108,17 +108,17 @@
     0.024,
     0.7821
    ],
-   "span_ratio": 0.4762,
+   "span_ratio": 0.4754,
    "height_ratio": 0.0217,
    "share": {
-    "az000": 0.01201,
-    "az045": 0.00977,
-    "az090": 0.00396,
-    "az135": 0.00209,
-    "az225": 0.00209,
-    "az270": 0.00396,
-    "az315": 0.00978,
-    "bottom": 0.01427
+    "az000": 0.01206,
+    "az045": 0.0095,
+    "az090": 0.00409,
+    "az135": 0.00203,
+    "az225": 0.00203,
+    "az270": 0.00409,
+    "az315": 0.0095,
+    "bottom": 0.01376
    }
   },
   "amber": {
@@ -127,17 +127,17 @@
     0.0335,
     0.0206
    ],
-   "span_ratio": 0.172,
+   "span_ratio": 0.1717,
    "height_ratio": 0.0302,
    "share": {
-    "az000": 0.00248,
+    "az000": 0.00267,
     "az045": 0.00091,
-    "az090": 0.0005,
-    "az135": 7e-05,
-    "az225": 7e-05,
-    "az270": 0.0005,
+    "az090": 0.00044,
+    "az135": 5e-05,
+    "az225": 5e-05,
+    "az270": 0.00044,
     "az315": 0.00091,
-    "top": 0.0007
+    "top": 0.00065
    }
   }
  },
@@ -145,7 +145,7 @@
   "size": [
    0.4,
    1.108,
-   1.7261
+   1.7292
   ]
  },
  "facing": {
@@ -159,53 +159,53 @@
  },
  "views": {
   "az000": {
-   "W_over_H": 0.338,
-   "fill": 0.786,
+   "W_over_H": 0.339,
+   "fill": 0.785,
    "px": [
     122,
-    361
+    360
    ],
    "thirds_cols": [
     0.34,
-    0.3,
+    0.31,
     0.35
    ],
    "thirds_rows": [
     0.34,
     0.4,
-    0.26
+    0.27
    ],
    "protrusions": 4,
    "thinnest_px48": 2.4,
-   "area_px": 34628,
-   "box_fill": 0.786,
+   "area_px": 34492,
+   "box_fill": 0.785,
    "sq_fill": 0.266,
-   "extent": 2.959,
-   "convexity": 0.849,
+   "extent": 2.951,
+   "convexity": 0.848,
    "mirror_sym": 1.0,
    "median_lum": 115.0,
-   "coloured_area": 0.6001,
-   "saturated_area": 0.4446,
+   "coloured_area": 0.5963,
+   "saturated_area": 0.4407,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.4446,
-   "head_share": 0.404,
-   "head_out": 0.291,
+   "saturated_area_shipped": 0.4407,
+   "head_share": 0.4024,
+   "head_out": 0.287,
    "head_px48": 18.0,
    "head_distinct": true,
    "share": {
-    "fur": 0.44207,
-    "cream": 0.3652,
-    "sock": 0.15554,
-    "nose": 0.0227,
-    "claw": 0.01201,
-    "amber": 0.00248
+    "fur": 0.43807,
+    "cream": 0.36896,
+    "sock": 0.15551,
+    "nose": 0.02273,
+    "claw": 0.01206,
+    "amber": 0.00267
    }
   },
   "az045": {
-   "W_over_H": 1.048,
-   "fill": 0.439,
+   "W_over_H": 1.051,
+   "fill": 0.44,
    "px": [
-    373,
+    374,
     356
    ],
    "thirds_cols": [
@@ -219,37 +219,37 @@
     0.29
    ],
    "protrusions": 8,
-   "thinnest_px48": 1.6,
-   "area_px": 58314,
-   "box_fill": 0.439,
-   "sq_fill": 0.419,
-   "extent": 1.048,
-   "convexity": 0.677,
+   "thinnest_px48": 1.4,
+   "area_px": 58524,
+   "box_fill": 0.44,
+   "sq_fill": 0.418,
+   "extent": 1.051,
+   "convexity": 0.679,
    "mirror_sym": 0.89,
    "median_lum": 115.0,
-   "coloured_area": 0.8106,
-   "saturated_area": 0.6321,
+   "coloured_area": 0.8056,
+   "saturated_area": 0.6297,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.6321,
-   "head_share": 0.1916,
-   "head_out": 0.476,
-   "head_px48": 15.6,
+   "saturated_area_shipped": 0.6297,
+   "head_share": 0.1894,
+   "head_out": 0.474,
+   "head_px48": 15.5,
    "head_distinct": true,
    "share": {
-    "fur": 0.63117,
-    "cream": 0.17085,
-    "sock": 0.17855,
-    "nose": 0.00875,
-    "claw": 0.00977,
+    "fur": 0.62882,
+    "cream": 0.17629,
+    "sock": 0.17588,
+    "nose": 0.00861,
+    "claw": 0.0095,
     "amber": 0.00091
    }
   },
   "az090": {
-   "W_over_H": 1.505,
-   "fill": 0.353,
+   "W_over_H": 1.509,
+   "fill": 0.356,
    "px": [
     498,
-    331
+    330
    ],
    "thirds_cols": [
     0.36,
@@ -257,85 +257,85 @@
     0.3
    ],
    "thirds_rows": [
-    0.17,
-    0.59,
+    0.18,
+    0.58,
     0.24
    ],
    "protrusions": 5,
-   "thinnest_px48": 0.9,
-   "area_px": 58111,
-   "box_fill": 0.353,
-   "sq_fill": 0.234,
-   "extent": 1.505,
-   "convexity": 0.567,
-   "mirror_sym": 0.889,
+   "thinnest_px48": 0.8,
+   "area_px": 58473,
+   "box_fill": 0.356,
+   "sq_fill": 0.236,
+   "extent": 1.509,
+   "convexity": 0.57,
+   "mirror_sym": 0.887,
    "median_lum": 115.0,
-   "coloured_area": 0.8902,
-   "saturated_area": 0.7802,
+   "coloured_area": 0.8693,
+   "saturated_area": 0.7623,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.7802,
-   "head_share": 0.094,
+   "saturated_area_shipped": 0.7623,
+   "head_share": 0.0926,
    "head_out": 0.754,
    "head_px48": 9.2,
    "head_distinct": true,
    "share": {
-    "fur": 0.77973,
-    "cream": 0.10315,
-    "sock": 0.10994,
-    "nose": 0.00272,
-    "claw": 0.00396,
-    "amber": 0.0005
+    "fur": 0.76182,
+    "cream": 0.1239,
+    "sock": 0.10706,
+    "nose": 0.00268,
+    "claw": 0.00409,
+    "amber": 0.00044
    }
   },
   "az135": {
    "W_over_H": 1.135,
-   "fill": 0.479,
+   "fill": 0.482,
    "px": [
     370,
     326
    ],
    "thirds_cols": [
-    0.39,
+    0.38,
     0.36,
-    0.25
+    0.26
    ],
    "thirds_rows": [
-    0.2,
+    0.19,
     0.49,
     0.32
    ],
    "protrusions": 6,
    "thinnest_px48": 1.6,
-   "area_px": 57797,
-   "box_fill": 0.479,
-   "sq_fill": 0.422,
+   "area_px": 58174,
+   "box_fill": 0.482,
+   "sq_fill": 0.425,
    "extent": 1.135,
-   "convexity": 0.725,
-   "mirror_sym": 0.889,
+   "convexity": 0.728,
+   "mirror_sym": 0.888,
    "median_lum": 115.0,
-   "coloured_area": 0.896,
-   "saturated_area": 0.6989,
+   "coloured_area": 0.8515,
+   "saturated_area": 0.6594,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.6989,
-   "head_share": 0.0535,
-   "head_out": 0.36,
+   "saturated_area_shipped": 0.6594,
+   "head_share": 0.0521,
+   "head_out": 0.354,
    "head_px48": 13.6,
    "head_distinct": true,
    "share": {
-    "fur": 0.69886,
-    "cream": 0.10153,
-    "sock": 0.19703,
-    "nose": 0.00042,
-    "claw": 0.00209,
-    "amber": 7e-05
+    "fur": 0.65937,
+    "cream": 0.14603,
+    "sock": 0.19211,
+    "nose": 0.00041,
+    "claw": 0.00203,
+    "amber": 5e-05
    }
   },
   "az180": {
-   "W_over_H": 0.388,
-   "fill": 0.721,
+   "W_over_H": 0.389,
+   "fill": 0.718,
    "px": [
     124,
-    320
+    319
    ],
    "thirds_cols": [
     0.31,
@@ -348,31 +348,31 @@
     0.32
    ],
    "protrusions": 4,
-   "thinnest_px48": 2.2,
-   "area_px": 28596,
-   "box_fill": 0.721,
+   "thinnest_px48": 2.1,
+   "area_px": 28410,
+   "box_fill": 0.718,
    "sq_fill": 0.279,
-   "extent": 2.581,
-   "convexity": 0.848,
+   "extent": 2.573,
+   "convexity": 0.845,
    "mirror_sym": 1.0,
    "median_lum": 115.0,
-   "coloured_area": 0.7819,
-   "saturated_area": 0.6007,
+   "coloured_area": 0.6736,
+   "saturated_area": 0.5067,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.6007,
-   "head_share": 0.0755,
-   "head_out": 0.25,
+   "saturated_area_shipped": 0.5067,
+   "head_share": 0.0738,
+   "head_out": 0.246,
    "head_px48": 15.8,
    "head_distinct": true,
    "share": {
-    "fur": 0.60071,
-    "cream": 0.21807,
-    "sock": 0.18121
+    "fur": 0.50672,
+    "cream": 0.32636,
+    "sock": 0.16691
    }
   },
   "az225": {
    "W_over_H": 1.135,
-   "fill": 0.479,
+   "fill": 0.482,
    "px": [
     370,
     326
@@ -383,42 +383,42 @@
     0.39
    ],
    "thirds_rows": [
-    0.2,
+    0.19,
     0.49,
     0.32
    ],
    "protrusions": 6,
    "thinnest_px48": 1.6,
-   "area_px": 57798,
-   "box_fill": 0.479,
-   "sq_fill": 0.422,
+   "area_px": 58175,
+   "box_fill": 0.482,
+   "sq_fill": 0.425,
    "extent": 1.135,
-   "convexity": 0.725,
-   "mirror_sym": 0.889,
+   "convexity": 0.728,
+   "mirror_sym": 0.888,
    "median_lum": 115.0,
-   "coloured_area": 0.8959,
-   "saturated_area": 0.6989,
+   "coloured_area": 0.8515,
+   "saturated_area": 0.6594,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.6989,
-   "head_share": 0.0535,
-   "head_out": 0.361,
+   "saturated_area_shipped": 0.6594,
+   "head_share": 0.0521,
+   "head_out": 0.354,
    "head_px48": 13.6,
    "head_distinct": true,
    "share": {
-    "fur": 0.69885,
-    "cream": 0.10153,
-    "sock": 0.19703,
+    "fur": 0.65936,
+    "cream": 0.14602,
+    "sock": 0.19211,
     "nose": 0.00043,
-    "claw": 0.00209,
-    "amber": 7e-05
+    "claw": 0.00203,
+    "amber": 5e-05
    }
   },
   "az270": {
-   "W_over_H": 1.505,
-   "fill": 0.353,
+   "W_over_H": 1.509,
+   "fill": 0.356,
    "px": [
     498,
-    331
+    330
    ],
    "thirds_cols": [
     0.3,
@@ -426,41 +426,41 @@
     0.36
    ],
    "thirds_rows": [
-    0.17,
-    0.59,
+    0.18,
+    0.58,
     0.24
    ],
    "protrusions": 5,
-   "thinnest_px48": 0.9,
-   "area_px": 58111,
-   "box_fill": 0.353,
-   "sq_fill": 0.234,
-   "extent": 1.505,
-   "convexity": 0.567,
-   "mirror_sym": 0.889,
+   "thinnest_px48": 0.8,
+   "area_px": 58474,
+   "box_fill": 0.356,
+   "sq_fill": 0.236,
+   "extent": 1.509,
+   "convexity": 0.57,
+   "mirror_sym": 0.887,
    "median_lum": 115.0,
-   "coloured_area": 0.8902,
-   "saturated_area": 0.7802,
+   "coloured_area": 0.8693,
+   "saturated_area": 0.7623,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.7802,
-   "head_share": 0.094,
+   "saturated_area_shipped": 0.7623,
+   "head_share": 0.0926,
    "head_out": 0.754,
    "head_px48": 9.2,
    "head_distinct": true,
    "share": {
-    "fur": 0.77973,
-    "cream": 0.10315,
-    "sock": 0.10994,
-    "nose": 0.00272,
-    "claw": 0.00396,
-    "amber": 0.0005
+    "fur": 0.76181,
+    "cream": 0.1239,
+    "sock": 0.10706,
+    "nose": 0.0027,
+    "claw": 0.00409,
+    "amber": 0.00044
    }
   },
   "az315": {
-   "W_over_H": 1.048,
-   "fill": 0.439,
+   "W_over_H": 1.051,
+   "fill": 0.44,
    "px": [
-    373,
+    374,
     356
    ],
    "thirds_cols": [
@@ -474,113 +474,113 @@
     0.29
    ],
    "protrusions": 8,
-   "thinnest_px48": 1.6,
-   "area_px": 58307,
-   "box_fill": 0.439,
-   "sq_fill": 0.419,
-   "extent": 1.048,
-   "convexity": 0.677,
-   "mirror_sym": 0.891,
+   "thinnest_px48": 1.4,
+   "area_px": 58518,
+   "box_fill": 0.44,
+   "sq_fill": 0.418,
+   "extent": 1.051,
+   "convexity": 0.679,
+   "mirror_sym": 0.89,
    "median_lum": 115.0,
-   "coloured_area": 0.8107,
-   "saturated_area": 0.6322,
+   "coloured_area": 0.8057,
+   "saturated_area": 0.6298,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.6322,
-   "head_share": 0.1915,
-   "head_out": 0.476,
-   "head_px48": 15.6,
+   "saturated_area_shipped": 0.6298,
+   "head_share": 0.1894,
+   "head_out": 0.474,
+   "head_px48": 15.5,
    "head_distinct": true,
    "share": {
-    "fur": 0.63124,
-    "cream": 0.17087,
-    "sock": 0.17857,
-    "nose": 0.00863,
-    "claw": 0.00978,
+    "fur": 0.62888,
+    "cream": 0.1763,
+    "sock": 0.17589,
+    "nose": 0.00851,
+    "claw": 0.0095,
     "amber": 0.00091
    }
   },
   "top": {
    "W_over_H": 0.232,
-   "fill": 0.762,
+   "fill": 0.771,
    "px": [
     114,
     492
    ],
    "thirds_cols": [
     0.29,
-    0.43,
+    0.42,
     0.29
    ],
    "thirds_rows": [
     0.33,
     0.39,
-    0.28
+    0.29
    ],
    "protrusions": 2,
    "thinnest_px48": 1.2,
-   "area_px": 42724,
-   "box_fill": 0.762,
-   "sq_fill": 0.176,
+   "area_px": 43271,
+   "box_fill": 0.771,
+   "sq_fill": 0.179,
    "extent": 4.316,
-   "convexity": 0.923,
+   "convexity": 0.928,
    "mirror_sym": 1.0,
    "median_lum": 115.0,
-   "coloured_area": 0.9459,
-   "saturated_area": 0.9218,
+   "coloured_area": 0.9165,
+   "saturated_area": 0.8932,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.9218,
-   "head_share": 0.2088,
-   "head_out": 0.653,
+   "saturated_area_shipped": 0.8932,
+   "head_share": 0.2042,
+   "head_out": 0.651,
    "head_px48": 10.5,
    "head_distinct": true,
    "share": {
-    "fur": 0.92107,
-    "cream": 0.04611,
-    "sock": 0.02411,
-    "nose": 0.008,
-    "amber": 0.0007
+    "fur": 0.89251,
+    "cream": 0.07557,
+    "sock": 0.02339,
+    "nose": 0.00788,
+    "amber": 0.00065
    }
   },
   "bottom": {
    "W_over_H": 0.236,
-   "fill": 0.715,
+   "fill": 0.729,
    "px": [
     120,
     508
    ],
    "thirds_cols": [
-    0.27,
-    0.46,
-    0.27
+    0.28,
+    0.45,
+    0.28
    ],
    "thirds_rows": [
     0.31,
-    0.4,
-    0.29
+    0.39,
+    0.3
    ],
    "protrusions": 2,
-   "thinnest_px48": 1.8,
-   "area_px": 43585,
-   "box_fill": 0.715,
-   "sq_fill": 0.169,
+   "thinnest_px48": 0.8,
+   "area_px": 44462,
+   "box_fill": 0.729,
+   "sq_fill": 0.172,
    "extent": 4.233,
-   "convexity": 0.915,
+   "convexity": 0.919,
    "mirror_sym": 1.0,
    "median_lum": 115.0,
-   "coloured_area": 0.6006,
-   "saturated_area": 0.4271,
+   "coloured_area": 0.5889,
+   "saturated_area": 0.4189,
    "palette_source": "shipped",
-   "saturated_area_shipped": 0.4271,
-   "head_share": 0.0914,
-   "head_out": 0.493,
+   "saturated_area_shipped": 0.4189,
+   "head_share": 0.0895,
+   "head_out": 0.497,
    "head_px48": 9.5,
    "head_distinct": true,
    "share": {
-    "fur": 0.42712,
-    "cream": 0.38316,
-    "sock": 0.1735,
-    "nose": 0.00195,
-    "claw": 0.01427
+    "fur": 0.41887,
+    "cream": 0.39539,
+    "sock": 0.17003,
+    "nose": 0.00193,
+    "claw": 0.01376
    }
   }
  },
@@ -588,121 +588,121 @@
   "ring": [
    {
     "view": "az000",
-    "area_rel": 0.594,
-    "W_over_H": 0.338,
-    "convexity": 0.849,
+    "area_rel": 0.589,
+    "W_over_H": 0.339,
+    "convexity": 0.848,
     "protrusions": 4,
     "thinnest_px48": 2.4,
-    "cd96": 0.1188,
+    "cd96": 0.1153,
     "cd48": 0.0866,
     "blob_ratio": null,
-    "head_share": 0.404,
-    "head_out": 0.291,
+    "head_share": 0.4024,
+    "head_out": 0.287,
     "head_distinct": true
    },
    {
     "view": "az045",
     "area_rel": 1.0,
-    "W_over_H": 1.048,
-    "convexity": 0.677,
+    "W_over_H": 1.051,
+    "convexity": 0.679,
     "protrusions": 8,
-    "thinnest_px48": 1.6,
-    "cd96": 0.3044,
-    "cd48": 0.2955,
-    "blob_ratio": 3.412,
-    "head_share": 0.1916,
-    "head_out": 0.476,
+    "thinnest_px48": 1.4,
+    "cd96": 0.3007,
+    "cd48": 0.2915,
+    "blob_ratio": 3.366,
+    "head_share": 0.1894,
+    "head_out": 0.474,
     "head_distinct": true
    },
    {
     "view": "az090",
-    "area_rel": 0.997,
-    "W_over_H": 1.505,
-    "convexity": 0.567,
+    "area_rel": 0.999,
+    "W_over_H": 1.509,
+    "convexity": 0.57,
     "protrusions": 5,
-    "thinnest_px48": 0.9,
-    "cd96": 0.4205,
-    "cd48": 0.4041,
-    "blob_ratio": 1.73,
-    "head_share": 0.094,
+    "thinnest_px48": 0.8,
+    "cd96": 0.4184,
+    "cd48": 0.4016,
+    "blob_ratio": 1.726,
+    "head_share": 0.0926,
     "head_out": 0.754,
     "head_distinct": true
    },
    {
     "view": "az135",
-    "area_rel": 0.991,
+    "area_rel": 0.994,
     "W_over_H": 1.135,
-    "convexity": 0.725,
+    "convexity": 0.728,
     "protrusions": 6,
     "thinnest_px48": 1.6,
-    "cd96": 0.2515,
-    "cd48": 0.2336,
-    "blob_ratio": 3.381,
-    "head_share": 0.0535,
-    "head_out": 0.36,
+    "cd96": 0.2502,
+    "cd48": 0.2327,
+    "blob_ratio": 3.368,
+    "head_share": 0.0521,
+    "head_out": 0.354,
     "head_distinct": true
    },
    {
     "view": "az180",
-    "area_rel": 0.49,
-    "W_over_H": 0.388,
-    "convexity": 0.848,
+    "area_rel": 0.485,
+    "W_over_H": 0.389,
+    "convexity": 0.845,
     "protrusions": 4,
-    "thinnest_px48": 2.2,
-    "cd96": 0.1184,
+    "thinnest_px48": 2.1,
+    "cd96": 0.1235,
     "cd48": 0.0691,
     "blob_ratio": null,
-    "head_share": 0.0755,
-    "head_out": 0.25,
+    "head_share": 0.0738,
+    "head_out": 0.246,
     "head_distinct": true
    },
    {
     "view": "az225",
-    "area_rel": 0.991,
+    "area_rel": 0.994,
     "W_over_H": 1.135,
-    "convexity": 0.725,
+    "convexity": 0.728,
     "protrusions": 6,
     "thinnest_px48": 1.6,
-    "cd96": 0.2515,
-    "cd48": 0.2336,
-    "blob_ratio": 3.381,
-    "head_share": 0.0535,
-    "head_out": 0.361,
+    "cd96": 0.2502,
+    "cd48": 0.2327,
+    "blob_ratio": 3.368,
+    "head_share": 0.0521,
+    "head_out": 0.354,
     "head_distinct": true
    },
    {
     "view": "az270",
-    "area_rel": 0.997,
-    "W_over_H": 1.505,
-    "convexity": 0.567,
+    "area_rel": 0.999,
+    "W_over_H": 1.509,
+    "convexity": 0.57,
     "protrusions": 5,
-    "thinnest_px48": 0.9,
-    "cd96": 0.4205,
-    "cd48": 0.4041,
-    "blob_ratio": 1.73,
-    "head_share": 0.094,
+    "thinnest_px48": 0.8,
+    "cd96": 0.4184,
+    "cd48": 0.4016,
+    "blob_ratio": 1.726,
+    "head_share": 0.0926,
     "head_out": 0.754,
     "head_distinct": true
    },
    {
     "view": "az315",
     "area_rel": 1.0,
-    "W_over_H": 1.048,
-    "convexity": 0.677,
+    "W_over_H": 1.051,
+    "convexity": 0.679,
     "protrusions": 8,
-    "thinnest_px48": 1.6,
-    "cd96": 0.3044,
-    "cd48": 0.2955,
-    "blob_ratio": 3.412,
-    "head_share": 0.1915,
-    "head_out": 0.476,
+    "thinnest_px48": 1.4,
+    "cd96": 0.3007,
+    "cd48": 0.2915,
+    "blob_ratio": 3.366,
+    "head_share": 0.1894,
+    "head_out": 0.474,
     "head_distinct": true
    }
   ],
   "flags": [],
   "mirror_iou": {
    "az045/az315": 0.9999,
-   "az090/az270": 1.0,
+   "az090/az270": 0.9999,
    "az135/az225": 1.0
   },
   "read_set": [
@@ -713,13 +713,13 @@
    "az180",
    "top"
   ],
-  "area_rel_min": 0.49,
+  "area_rel_min": 0.485,
   "most_blobby": "az090",
   "blob_flanks": {
-   "az045+az135": 3.412,
-   "az315+az225": 3.412
+   "az045+az135": 3.368,
+   "az315+az225": 3.368
   },
-  "head_best": 0.404,
+  "head_best": 0.4024,
   "head_distinct_views": [
    "az000",
    "az045",
@@ -731,6 +731,6 @@
    "az315"
   ]
  },
- "thinnest_px48": 0.9,
- "seconds": 20.2
+ "thinnest_px48": 0.8,
+ "seconds": 64.9
 }

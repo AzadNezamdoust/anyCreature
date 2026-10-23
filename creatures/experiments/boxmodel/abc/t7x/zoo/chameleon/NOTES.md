@@ -65,3 +65,4 @@ Merged fix list (shape first): legs straight stilts -> bent, elbows/knees out (b
 - s4 r10: crest spikes as blunt half-frustum blocks (>= 28 mm to the top; were pointed, t 14.6 mm) -> crest PASS;
   toe bundles blunter tips + shorter: still FAIL L/t 4.6-5.2 > 4.5 (tier 1), back toes t 26.7 < 26.9 mm.
 - r11 Fix: toe bundles 25 mm shorter, 5 mm taller.
+- r11 Result: kit OK, detail gate PASS (crest + toes), eyes PASS; junction shoulder/hip knives = unchanged body. A/B Opus both orders: variant won BOTH (blunt crest stubs, compact toe blocks) -> ADOPT.

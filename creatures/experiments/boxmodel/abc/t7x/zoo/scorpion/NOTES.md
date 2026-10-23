@@ -124,3 +124,7 @@ Residual (visible, not fixed: fix-round budget used):
 Also: the pincer fingers graze each other in the snap (tech QA pink, warn only).
 Outputs: orbit18_sheet.jpg and side_by_side_sheet.jpg (checks.py), side_by_side.jpg (run.py --compare), review/,
 rounds/s4_r07_junctions.jpg.
+
+## Border pass (night 2026-10-23, s4 r08) - REVERTED
+- kit/smooth_borders(body, k=k, iters=8): 4 despeckled, 3 cuts, 64 relaxed; stair corners 49 -> 34, 3-to-1 8 -> 0; all gates PASS.
+- A/B: TIE both orders -> champion kept; py/GLB/checks restored from before_borders/.

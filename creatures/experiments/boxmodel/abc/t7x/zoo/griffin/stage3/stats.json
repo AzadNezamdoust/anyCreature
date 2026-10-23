@@ -24,10 +24,10 @@
    "tag": "borders",
    "despeckled": 0,
    "cuts": 12,
-   "relaxed": 59,
+   "relaxed": 60,
    "undone": 13,
    "max_move": 0.02893,
-   "mean_move": 0.00538,
+   "mean_move": 0.00536,
    "before": {
     "border_edges": 81,
     "length": 4.4247,
@@ -38,7 +38,7 @@
    },
    "after": {
     "border_edges": 69,
-    "length": 3.6755,
+    "length": 3.7584,
     "paths": 5,
     "corners": 7,
     "corner_quads": 0,

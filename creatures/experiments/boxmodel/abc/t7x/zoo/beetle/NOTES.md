@@ -115,3 +115,12 @@ rim) through a 45 % transition ring, 14-sided legs carried in a parallel-transpo
   checks restored from before_borders/ (rounds/s4_r08, r09 sheets stay as history). The underside plates' stairs sit
   around the leg sockets where the guard keeps the border fixed; a next try needs the plate rule itself (body_rule) to
   follow the socket rings. Image: border_before_after_REVERTED.jpg.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r10: one fat blunt hook per tarsus (was 2 needle hooks, t 6.6 mm), mandibles fatter -> mandibles + middle claws
+  PASS; front/rear claws FAIL t 8.9 mm (their hooks reach below the ground, L 63 mm). Fix r11: hooks 30 mm, 60 deg.
+- r11 Result: kit OK, eyes PASS; claws t 13.3-13.6 mm vs floor 14.4 (5 of 6 hooks). Fix r12: hooks 13 % fatter.
+- r12 Result: kit OK, claws t 13.9-14.2 mm still < 14.4 (detail FAIL). A/B Opus: FLIP (order 1 champion: the single
+  fat hook reads as a stump, the paired hooks read as beetle tarsi; order 2 variant) = tie -> champion. REVERTED:
+  beetle.py and the stage4 GLB/renders restored from before_detail/ (08:44). Next idea: one thick hook that visibly
+  curls down and back, keeping the fat mandibles.

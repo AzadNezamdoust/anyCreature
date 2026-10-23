@@ -25,9 +25,9 @@
    "despeckled": 0,
    "cuts": 11,
    "relaxed": 60,
-   "undone": 15,
-   "max_move": 0.01021,
-   "mean_move": 0.0026,
+   "undone": 17,
+   "max_move": 0.01019,
+   "mean_move": 0.00259,
    "before": {
     "border_edges": 102,
     "length": 3.8075,
@@ -38,7 +38,7 @@
    },
    "after": {
     "border_edges": 91,
-    "length": 3.648,
+    "length": 3.6311,
     "paths": 9,
     "corners": 11,
     "corner_quads": 0,

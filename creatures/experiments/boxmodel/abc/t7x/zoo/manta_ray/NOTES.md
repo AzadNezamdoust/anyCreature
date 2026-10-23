@@ -104,3 +104,6 @@ rounds/s4_r09_junctions.jpg.
 - s4 r13. Fix: side sign corrected.
 - r13 result: s2 hits 22 -> 12 (now where the rolled lower edges of levels 1-3 cross as the lobe path turns in plan, z ~0.53); lobe junctions PASS (knife 0.52 r, slit 0); slivers 2.2 % FAIL (body 46 vs champion 16); clip gate PASS.
 - s4 r14. Fix: ROLL max 0.55; wing-tip chord squeeze 0.5 -> 0.3.
+- r14 result: s2 hits 0, lobe junctions PASS, clips PASS; slivers 42 = 2.0 % FAIL (at the limit; champion 16).
+- s4 r15. Fix: roll x0.85, no tip chord squeeze (sweep back + curl only).
+- r15 result: ALL kit gates PASS (slivers 40 = 1.96 %, s2 0 hits), junction probe PASS (lobes knife 0.52 r), eyes PASS, clips PASS; detail FAIL count 5 groups (tier 2 wants 6; pre-existing). A/B (2 fresh Opus seats): variant wins both orders: ADOPT. Judges: tips now swept crescent points (sweep shallower than the sheet), it visibly floats; the lobe roll is modest (the near lobe still fairly plate-like in the 3/4 close-up).

@@ -57,3 +57,8 @@ Weaknesses: the blotches are rectangular span blocks, not the ref's rounded sadd
 - Pattern: saddles were span blocks that broke into squares at the denser rows; now one continuous diamond per saddle (half width falls with height) plus a staggered side blotch, so the edge steps diagonally along the rings.
 - Stage 1 re-locked (pass-4 lock, script and renders in before9/): gates PASS, 1302 verts, 2600 tris (pass 3 level), edge sha256 5e4de9c36c3515ec, side IoU 0.794.
 - Stage 4: all gates PASS, lock assert PASS, every vertex weighted, glbcheck OK; posed plan IoU 0.84, side 0.619, self gap > 8 cm (nothing fused). stage4, orbit18_sheet, side_by_side re-rendered; fix9.jpg: hero before9 | after plus neck close-ups.
+
+## Border pass (night 2026-10-23, s4 r05) - owner pick
+- kit/smooth_borders(body, k=k, iters=8): 24 despeckled, 40 cuts, 149 relaxed; stair corners 99 -> 15, 3-to-1 62 -> 0.
+- Blind A/B: after wins both orders, but the pattern changes (small side spots removed by despeckle) -> taste call, champion kept.
+  Candidate: before_borders/snake_r05_borders_candidate.glb / .py, border_before_after_CANDIDATE.jpg.

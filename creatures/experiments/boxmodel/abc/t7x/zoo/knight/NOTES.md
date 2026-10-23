@@ -59,3 +59,7 @@ Not fixed: cape one flat plate; face stays the visor slit (closed helm, no lens 
 - Stage 1 re-locked r14 (r13 lock in before9/): 1880 tris, IoU side/front 0.662/0.753.
 - Stage 4 r13: all gates PASS, lock assert PASS, glbcheck OK; posed folds 0.16 %; warning only (4 stretch tris). Total 3036 tris. Separation PASS (legs 0.208 m, arm-torso 0.117 m). Junctions checked in the 18-view orbit: no holes, specks or slits.
 - before9/ = the mix-pass renders; fix9.jpg = hero before9 | after + arm and leg close-ups. orbit18_sheet.jpg, side_by_side.jpg rebuilt.
+
+## Border pass (night 2026-10-23, s4 r14) - REVERTED
+- kit/smooth_borders(body, k=k, iters=8): 3 despeckled, 0 cuts, 23 relaxed; stair corners 13 -> 1. Gates as baseline.
+- A/B: TIE both orders -> champion kept; py/GLB/checks restored from before_borders/.

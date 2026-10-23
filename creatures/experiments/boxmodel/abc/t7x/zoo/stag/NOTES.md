@@ -75,3 +75,9 @@ Review: the 2x pass lost the faceted torso muscle planes (a generic tube) and ad
 - Junction FAIL (ears, upperarms, tail0, thighs) and eye size FAIL (0.036 head) are pre-existing (baseline GLB probed).
 - A/B vs the r41 no-border build: TIE in both orders -> champion kept -> REVERT. stag.py, stage3/stage4 GLB and checks
   restored from before_borders/ (r41 GLB kept as before_borders/stag_r41_noborders.glb).
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- Tines 1.35x thicker, 0.88x shorter, less taper (03:00 edit; built in the border agent's r38-r42: detail PASS but
+  techqa hit 2 on piece_tines). s4 r43 (08:16): the tine root ring narrowed to 0.5 r0 inside the beam -> kit gates OK
+  (hit gone), detail PASS, clips PASS after --fix-clips; junction/eye-size FAILs pre-existing (border agent baseline).
+  A/B Opus both orders vs pre-night: variant won BOTH -> ADOPT.

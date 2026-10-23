@@ -108,3 +108,5 @@ the chest yellow is a uniform band (no fade); the tail meets the rump with a dar
 ## Detail pass (2026-10-23 night; backup before_detail/)
 - s4 r08: toes 24 mm tall to the tip (were 3.5 mm) -> toes PASS; claws as frustums still FAIL t 4-8 mm (they sat
   under the toe tip, only a sliver showed). Fix r09: claws lead out of the toe tip, 14 mm square to the end.
+- r09 Result: ALL gates PASS (kit, junction, eyes, detail incl. count >= 6: toes + claws now readable). A/B Opus both orders: variant won BOTH (feet read as solid webbed paddles) -> ADOPT.
+- 08:15 verify --clips PASS (the 07:38 verify hit a transient SyntaxError in kit/clip_gate.py).

@@ -56,3 +56,5 @@ Merged list, concept sheet as referee, shape first: (1) legs too straight (fable
 - s4 r11. Fix: the abdomen rings (AT..A10, Wa) tilt 12 deg tail-down about the pedicel (sheet side: a raised egg whose rear dips), so from behind the bands read as arcs.
 - r11 result: FAIL s2 silhouette IoU vs stage 1: az135/az180/az225 0.891/0.886/0.891 (< 0.9); detail PASS, clips PASS.
 - s4 r12. Fix: tilt 7 deg.
+- r12 result: kit gates PASS (s2 IoU min 0.932), detail PASS, clips PASS; but checks/h180 still reads as a disc and the y-ruled stripe paint turns jagged/checkered on the tilted abdomen (side view). No A/B run: a visible regression -> REVERTED (spider.py = before_weakfix copy, which keeps the detail agent's claw-cap edit; stage4/ and checks/ restored).
+- Diagnosis for next time: the disc is the band paint seen end-on (rings round a level y axis); the fix is to paint the bands by station along the tilted abdomen axis (or tilt + re-rule the bands together), plus a darker spinneret nub at the rear apex.

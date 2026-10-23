@@ -655,9 +655,8 @@ def spike(bm, base, d, side_hint, r=0.0032, ln=0.014, tip_r=None):
         bm.faces.new([vs[(a + 1) % 3], vs[a], bot])
 
 
-FEMUR_SPIKES = (0.50, 0.62, 0.74)   # detail pass 10-23: 3 fat spines (were 4 thin)
-FEMUR_SPIKES_OLD = (0.46, 0.555, 0.65, 0.745)  # review f2: off the trochanter (the 0.38 spike reached the coxa)      # fractions along the foreleg path (on the blade's grasping edge)
-TIBIA_SPIKES = (0.82, 0.92)
+FEMUR_SPIKES = (0.46, 0.555, 0.65, 0.745)   # r24: reverted (the 3 fat spines failed)  # review f2: off the trochanter (the 0.38 spike reached the coxa)      # fractions along the foreleg path (on the blade's grasping edge)
+TIBIA_SPIKES = (0.80, 0.87, 0.93)
 
 
 def build_spines():
@@ -676,10 +675,10 @@ def build_spines():
         return a[0].lerp(b[0], g), a[1].lerp(b[1], g).normalized(), a[3].lerp(b[3], g).normalized(), a[4] + (b[4] - a[4]) * g
     for fr in FEMUR_SPIKES:
         p, U, T, rw = at(fr)
-        spike(bm, p + U * rw * 0.8, U - T * 0.35, T, r=0.0105, ln=0.017, tip_r=0.0089)   # review f2: bolder (were 3.2 x 16 mm), seated at 0.8 rw (the blade edge is thin: at 0.9 the base crossed both corner faces)
+        spike(bm, p + U * rw * 0.8, U - T * 0.35, T, r=0.004, ln=0.019)   # r24: REVERTED to the pre-night spines (fat frustum spines r21-r23: techqa hit on the thin blade, still thin by the gate)   # review f2: bolder (were 3.2 x 16 mm), seated at 0.8 rw (the blade edge is thin: at 0.9 the base crossed both corner faces)
     for fr in TIBIA_SPIKES:
         p, U, T, rw = at(fr)
-        spike(bm, p + U * rw * 0.85, U + T * 0.3, T, r=0.0100, ln=0.015, tip_r=0.0088)
+        spike(bm, p + U * rw * 0.85, U + T * 0.3, T, r=0.0028, ln=0.013)
     return object_from_bm('spines', bm)
 
 

@@ -24,24 +24,24 @@
    "despeckled": 7,
    "cuts": 16,
    "relaxed": 74,
-   "undone": 26,
+   "undone": 27,
    "max_move": 0.01474,
    "mean_move": 0.00399,
    "before": {
     "border_edges": 133,
-    "length": 4.8092,
+    "length": 4.7895,
     "paths": 10,
-    "corners": 44,
+    "corners": 43,
     "corner_quads": 30,
-    "corners_per_m": 9.1
+    "corners_per_m": 9.0
    },
    "after": {
     "border_edges": 101,
-    "length": 3.8172,
+    "length": 3.7983,
     "paths": 9,
-    "corners": 15,
+    "corners": 14,
     "corner_quads": 1,
-    "corners_per_m": 3.9
+    "corners_per_m": 3.7
    }
   }
  ],

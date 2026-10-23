@@ -46,24 +46,24 @@
    "name": "ear.L",
    "kind": "ear",
    "source": "bone",
-   "r_mm": 56.8,
+   "r_mm": 53.5,
    "root": [
     0.1,
     -0.51,
     0.99
    ],
-   "region_tris": 92,
+   "region_tris": 90,
    "other_chain_tris": 0,
-   "r_side_mm": 56.8,
+   "r_side_mm": 53.5,
    "open_edges": 0,
-   "max_concave_deg": 79.1,
-   "hidden_max_concave_deg": 79.1,
+   "max_concave_deg": 78.2,
+   "hidden_max_concave_deg": 78.2,
    "knife_edges": 0,
    "knife_len_r": 0.0,
-   "strip_max_len_r": 0.86,
-   "strip_min_width_mm": 13.9,
+   "strip_max_len_r": 0.85,
+   "strip_min_width_mm": 9.6,
    "strip_count": 0,
-   "median_face_mm": 35.2,
+   "median_face_mm": 34.9,
    "slit_pct": 0.0,
    "poke_tris": 0,
    "pinch_verts": 0,
@@ -79,24 +79,24 @@
    "name": "ear.R",
    "kind": "ear",
    "source": "bone",
-   "r_mm": 56.8,
+   "r_mm": 53.5,
    "root": [
     -0.1,
     -0.51,
     0.99
    ],
-   "region_tris": 92,
+   "region_tris": 90,
    "other_chain_tris": 0,
-   "r_side_mm": 56.8,
+   "r_side_mm": 53.5,
    "open_edges": 0,
-   "max_concave_deg": 79.1,
-   "hidden_max_concave_deg": 79.1,
+   "max_concave_deg": 78.2,
+   "hidden_max_concave_deg": 78.2,
    "knife_edges": 0,
    "knife_len_r": 0.0,
-   "strip_max_len_r": 0.86,
-   "strip_min_width_mm": 13.9,
+   "strip_max_len_r": 0.85,
+   "strip_min_width_mm": 9.6,
    "strip_count": 0,
-   "median_face_mm": 35.2,
+   "median_face_mm": 34.9,
    "slit_pct": 0.0,
    "poke_tris": 0,
    "pinch_verts": 0,
@@ -155,8 +155,8 @@
     -0.3,
     0.58
    ],
-   "region_tris": 123,
-   "other_chain_tris": 1,
+   "region_tris": 124,
+   "other_chain_tris": 0,
    "r_side_mm": 119.1,
    "open_edges": 0,
    "max_concave_deg": 53.2,
@@ -289,15 +289,15 @@
     -0.638,
     0.862
    ],
-   "diam_mm": 34.0,
+   "diam_mm": 33.3,
    "round": 1.0,
-   "diam_head": 0.098,
+   "diam_head": 0.096,
    "embed_mm": 8.6,
    "proud_mm": 12.5,
    "visible": {
-    "front": 0.69,
-    "threeq": 0.83,
-    "side": 0.51
+    "front": 0.71,
+    "threeq": 0.86,
+    "side": 0.53
    },
    "unoccluded": {
     "front": 0.94,
@@ -314,15 +314,15 @@
     -0.638,
     0.862
    ],
-   "diam_mm": 33.5,
+   "diam_mm": 32.0,
    "round": 1.0,
-   "diam_head": 0.096,
+   "diam_head": 0.092,
    "embed_mm": 8.6,
    "proud_mm": 12.5,
    "visible": {
-    "front": 0.71,
-    "threeq": 0.85,
-    "side": 0.53
+    "front": 0.77,
+    "threeq": 0.93,
+    "side": 0.58
    },
    "unoccluded": {
     "front": 0.94,
@@ -336,8 +336,8 @@
  "membranes": [
   {
    "target": "body:ear.L",
-   "p10_mm": 56.9,
-   "p50_mm": 83.7,
+   "p10_mm": 39.6,
+   "p50_mm": 81.6,
    "floor_mm": 6.9,
    "thin_area_pct": 0.0,
    "open_edges": 0,
@@ -346,8 +346,8 @@
   },
   {
    "target": "body:ear.R",
-   "p10_mm": 56.9,
-   "p50_mm": 83.7,
+   "p10_mm": 39.6,
+   "p50_mm": 81.6,
    "floor_mm": 6.9,
    "thin_area_pct": 0.0,
    "open_edges": 0,
@@ -442,4 +442,5 @@
    "B",
    "C"
   ]
- }
+ }
+}
