@@ -134,8 +134,27 @@ def _candidates(bm, border, ok):
     return out
 
 
-def _despeckle(bm, ok):
-    n = 0
+def _island_area(f, limit, sc2):
+    """World area of f's connected same-colour island (edge-adjacent), stopping once it reaches limit."""
+    m, seen, todo, A = f.material_index, {f}, [f], 0.0
+    while todo:
+        g = todo.pop()
+        A += g.calc_area() * sc2
+        if A >= limit:
+            return A
+        for e in g.edges:
+            for h in e.link_faces:
+                if h not in seen and h.material_index == m:
+                    seen.add(h)
+                    todo.append(h)
+    return A
+
+
+def _despeckle(bm, ok, names=None, keep=None, keep_ngons=False, keep_area=None, sc2=1.0):
+    """keep: colour names never despeckled; keep_ngons: faces with >4 verts stay (one-face features such as a snout
+    disc); keep_area: a face whose same-colour island has world area >= this (m^2) stays. Returns (changed, kept)."""
+    keepset = set(keep or ())
+    n, kept = 0, set()
     for _ in range(3):
         border = _border_edges(bm, ok)
         ch = 0
@@ -145,12 +164,16 @@ def _despeckle(bm, ok):
                 continue
             ms = {_other(e, f).material_index for e in es}
             if len(ms) == 1:
+                if ((keep_ngons and len(f.verts) > 4) or (keepset and names[f.material_index] in keepset)
+                        or (keep_area is not None and _island_area(f, keep_area, sc2) >= keep_area)):
+                    kept.add(f)
+                    continue
                 f.material_index = ms.pop()
                 ch += 1
         n += ch
         if not ch:
             break
-    return n
+    return n, len(kept)
 
 
 def _tri_w(a, b, c):
@@ -171,12 +194,18 @@ def _width(f):
 
 
 def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu=-0.53, pin=None, k=None, log=None,
-                   crease_deg=CREASE_DEG, keep_width=0.8, cut_keep=0.6, guard=None, tag='borders'):
+                   crease_deg=CREASE_DEG, keep_width=0.8, cut_keep=0.6, guard=None, tag='borders',
+                   despeckle=True, keep=None, keep_ngons=False, keep_area=None, guard_cuts=False, no_cut=None):
     """Smooth every colour border of `ob` (or only `pairs` of material names). See the module doc.
     pin(world_co) -> True keeps a vertex where it is (junction roots, a mouth line on purpose).
     keep_width: no face linked to a moved vertex may end thinner than this share of its own width (no slivers/strips).
     guard: [(centre, radius, factor)] scales max_slide by factor within radius (limb roots the junction probe reads).
-    k (the stage's K) or log (bmkit Log): connectivity changes are logged so the lock assertion passes."""
+    k (the stage's K) or log (bmkit Log): connectivity changes are logged so the lock assertion passes.
+    Shields for intentional features (all off by default = the original behaviour):
+      despeckle=False skips step 1; keep=[colour names] never despeckled (snake spots); keep_ngons=True leaves faces
+      with >4 verts (a snout n-gon disc); keep_area=A (m^2) leaves a face whose same-colour island is >= A;
+      guard_cuts=True: no anti-stair cut on a quad with a vertex inside any guard sphere;
+      no_cut=[(colour, colour)]: no anti-stair cut between those two colours."""
     log = log if log is not None else (k.log if k is not None else None)
     h0 = geometry_hash(ob)
     prev = ob.get('bmk_borders')
@@ -187,7 +216,17 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
     ok = _allowed(pairs, names)
     bm = edit(ob)
     mw = ob.matrix_world
-    n_speck = _despeckle(bm, ok)
+    s3 = mw.to_scale()
+    sc2 = abs(s3.x * s3.y * s3.z) ** (2.0 / 3.0)
+    n_speck, n_kept = _despeckle(bm, ok, names, keep, keep_ngons, keep_area, sc2) if despeckle else (0, 0)
+    NC = {frozenset(p) for p in no_cut or ()}
+    gcut = [(Vector(c), rad) for c, rad, _fac in guard or ()] if guard_cuts else []
+    n_block = 0
+
+    def cut_blocked(f, m2):
+        if NC and frozenset((names[f.material_index], names[m2])) in NC:
+            return True
+        return any((mw @ v.co - c).length < rad for v in f.verts for c, rad in gcut)
 
     # ---- 2. anti-stair cuts, picked walking each border path (no two cuts share a border edge)
     n_cut = 0
@@ -204,6 +243,9 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
                     for c in cand.get(v, ()):
                         f, corner, m2, (a, b), es = c
                         if f in taken or any(e in used for e in es):
+                            continue
+                        if (NC or gcut) and cut_blocked(f, m2):
+                            n_block += 1
                             continue
                         opp = next(x for x in f.verts if x not in (a, b, corner))
                         if min(_tri_w(a.co, corner.co, b.co), _tri_w(a.co, b.co, opp.co)) < cut_keep * _width(f):
@@ -319,6 +361,9 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
     out = dict(tag=tag, despeckled=n_speck, cuts=n_cut, relaxed=len(mov), undone=n_undo,
                max_move=round(max(moved, default=0.0), 5), mean_move=round(sum(moved) / max(1, len(moved)), 5),
                before=before, after=after)
+    if not despeckle or keep or keep_ngons or keep_area is not None or NC or gcut:
+        out.update(despeckle=bool(despeckle), speck_kept=n_kept, cuts_blocked=n_block)
+        say(f"borders {tag}: shields kept {n_kept} speckle faces, blocked {n_block} cut candidates")
     say(f"borders {tag}: {n_speck} despeckled, {n_cut} anti-stair cuts, {len(mov)} border verts relaxed "
         f"(max {out['max_move'] * 1000:.1f} mm, {n_undo} undone); stair corners {before['corners']} -> {after['corners']}, "
         f"3-to-1 quads {before['corner_quads']} -> {after['corner_quads']}")
