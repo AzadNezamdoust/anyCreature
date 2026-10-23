@@ -17,12 +17,13 @@
   "tooth"
  ],
  "colour_count": 7,
- "tris": 3548,
+ "tris": 3628,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 48,
   "piece_scutes": 576,
-  "piece_teeth": 40,
+  "piece_teeth": 120,
   "piece_claws": 320
  }
 }

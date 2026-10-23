@@ -212,3 +212,9 @@ with claws - OK.
 Residual (fix budget used): the ear root is a boxy neck with a flat back face (dark slab from back34) and the leaf is
 slimmer than the sheet's cupped ear; the far wing edge-on from az135/225 reads as a plank on the back; the belly
 colour border steps along quad edges; body slimmer / legs a bit longer than the sheet's chubby proportions.
+
+## Border pass (night 2026-10-23, s4 r34)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint: 3 cuts, 8 relaxed (max 5.1 mm, 4 undone); stair corners
+  4 -> 1, 3-to-1 quads 4 -> 0. Kit gates, junction probe PASS; clips PASS (after --fix-clips). Detail gate FAIL: tail tip
+  thickness 17.7 mm < 19.3 mm (no colour border on the tail; the detail gate is new tonight).
+- A/B (fresh Opus seat per order, blind): after wins both orders (belly patch a clean oval). ADOPT.

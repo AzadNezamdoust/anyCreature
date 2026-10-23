@@ -16,7 +16,7 @@
   "skin"
  ],
  "colour_count": 6,
- "tris": 3964,
+ "tris": 3976,
  "attach": [],
  "borders": [
   {
@@ -49,7 +49,7 @@
   "piece_eye": 64,
   "piece_nails": 512,
   "piece_nostril": 76,
-  "piece_brow": 76,
+  "piece_brow": 88,
   "piece_mouth": 120,
   "piece_cheek": 76,
   "piece_fold_neck": 140,

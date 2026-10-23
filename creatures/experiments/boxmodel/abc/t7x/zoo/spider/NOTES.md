@@ -48,3 +48,11 @@ Merged list, concept sheet as referee, shape first: (1) legs too straight (fable
 - Stage 2 follows: joint rings now 8-vertex loops at the 0.52 and 0.79 leg spans, pedicel ring on A10-Wa, eye socket on the new head face. Lock assertion PASS.
 - Stage 3: leg bands painted by the nearest 3D leg centre line (the plan projection checkered the bands on the steep tibia).
 - Stage 4 r9: all gates PASS, clip warning 0.01 %. Separation PASS (closest L1-L2 16.6 cm). Tris 1640 -> 3372 (body 1496 -> 3228, details 144 unchanged).
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r10. Critique: rear view — the abdomen end reads as a flat disc (the 14 cm AT cap n-gon facing straight back). Fix (stage 2 vertex moves, lock kept): AT ring x/z scaled 0.48 about its centre and 2.2 cm further back, A1 0.92 / +1 cm, A2 0.97 / +3 mm: the dome turns in to a small apex. Build includes the detail agent's pending claw-cap edit (spider.py 02:50).
+- Result: kit gates PASS (clip warn 17 tris), detail PASS (4 groups, tier 1), clips PASS after --fix-clips; junction FAIL leg1a knife 0.94 r..., eye side 0.22 (untouched geometry).
+- r10 A/B not run: the EEVEE rear views (checks/h180) barely differ: the disc read comes from the bands seen end-on as concentric rings (the abdomen axis is level and points at the rear camera), not from the cap alone.
+- s4 r11. Fix: the abdomen rings (AT..A10, Wa) tilt 12 deg tail-down about the pedicel (sheet side: a raised egg whose rear dips), so from behind the bands read as arcs.
+- r11 result: FAIL s2 silhouette IoU vs stage 1: az135/az180/az225 0.891/0.886/0.891 (< 0.9); detail PASS, clips PASS.
+- s4 r12. Fix: tilt 7 deg.

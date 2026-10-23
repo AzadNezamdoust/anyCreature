@@ -85,3 +85,7 @@ Old stage 4, orbit/side sheets, hero, script and lock kept in before7/ (with bef
   brow 1.5 cm higher, clear of the lens.
 - r22 Result: tris 5956 PASS, detail PASS, mouth z-fight gone; FAIL hit 2 (the brow band still crosses the head
   twice) and slivers 2.2 % (brow 16, mouth 12). Fix r23: brow = one elongated low dome over the eye; mouth ends blunter.
+- r23 crashed: the brow ray at eye + 5.5 cm missed the head (TypeError). Fix: try +4/+3/+2 cm, first hit.
+- r23 Result: kit gates OK (5,980 tris, techqa clean), detail PASS, eyes PASS; junction/membrane FAILs = champion
+  residuals (horn/shoulder/hip knife folds, wing p10 5 mm; WORKFLOW s9). A/B Opus on r22 (same pieces except the brow
+  dome): variant won BOTH (cheek spikes read) -> ADOPT r23. Residual: elbow spur reads as a dark lump under the wing root.

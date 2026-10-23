@@ -497,9 +497,10 @@ def toe(bm, bc, root, d, L, w0, h0):
     bm.faces.new(rows[-1])
     tip = root + d * (L - 0.004)
     # detail pass 10-23: a chunky blunt claw (a frustum >= 14 mm thick to its tip; floor 13.2 mm; was t 3 mm)
-    base = [bc.verts.new(tip + side * su * 0.0088 + Vector((0, 0, zz))) for su, zz in ((-1, 0.002), (1, 0.002), (1, 0.0185), (-1, 0.0185))]
-    tq = tip + d * 0.016
-    top = [bc.verts.new(tq + side * su * 0.0074 + Vector((0, 0, zz))) for su, zz in ((-1, 0.0015), (1, 0.0015), (1, 0.0158), (-1, 0.0158))]
+    tip = root + d * (L - 0.003)                 # r09: the claw leads OUT of the toe tip (r08 sat under it: a thin visible sliver)
+    base = [bc.verts.new(tip + side * su * 0.0082 + Vector((0, 0, zz))) for su, zz in ((-1, 0.0055), (1, 0.0055), (1, 0.0195), (-1, 0.0195))]
+    tq = tip + d * 0.017
+    top = [bc.verts.new(tq + side * su * 0.0075 + Vector((0, 0, zz))) for su, zz in ((-1, 0.003), (1, 0.003), (1, 0.0172), (-1, 0.0172))]
     bc.faces.new(list(reversed(base))); bc.faces.new(top)
     for j in range(4):
         bc.faces.new([base[j], base[(j + 1) % 4], top[(j + 1) % 4], top[j]])

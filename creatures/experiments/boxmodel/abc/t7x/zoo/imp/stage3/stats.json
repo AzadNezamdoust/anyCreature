@@ -3,7 +3,7 @@
   "verdict": "PASS",
   "lock_edge_hash": "e4d2e62d202caf28b46d8201147c5a500d7c73c070542ae4c9fe9f9981f0425b",
   "collapsed_edge_hash": "e4d2e62d202caf28b46d8201147c5a500d7c73c070542ae4c9fe9f9981f0425b",
-  "logged_ops": 3,
+  "logged_ops": 4,
   "logged_new_verts": 32,
   "errors": []
  },
@@ -34,6 +34,33 @@
    "part_ring": 8,
    "new_faces": 13,
    "reason": "parts-library 3-finger clawed hand on the wrist ring"
+  }
+ ],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 3,
+   "relaxed": 8,
+   "undone": 4,
+   "max_move": 0.00509,
+   "mean_move": 0.00281,
+   "before": {
+    "border_edges": 13,
+    "length": 0.3975,
+    "paths": 1,
+    "corners": 4,
+    "corner_quads": 4,
+    "corners_per_m": 10.1
+   },
+   "after": {
+    "border_edges": 10,
+    "length": 0.3405,
+    "paths": 1,
+    "corners": 1,
+    "corner_quads": 0,
+    "corners_per_m": 2.9
+   }
   }
  ],
  "pieces": {

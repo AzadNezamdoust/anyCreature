@@ -187,3 +187,8 @@ Builds: re-lock S1 then run.py --stage 4 --junctions --details --no-orbit (scrat
   straight-ish vertical sides (a soft panel, no longer a rectangle with a slot), Q3 the muzzle front is one plane with
   a side crease, Q5 the nose reads as a small wedge tip in profile and has no readable nostrils (every painted
   nostril variant read as a grille mouth, so they were dropped).
+- FINAL RUN (s4 r39, orbit, h4b code): S1 re-lock 1152 verts / 2300 tris, edge sha256 747e26af982ef8cf; ALL kit gates
+  PASS (glbcheck OK; warn posed clip 0.91 %), junction probe PASS, detail gate PASS, eyes 0.46/0.71/0.40, IoU vs S1 min
+  0.983, 2976 tris, 5 colours. --review, --compare (compare_engine.jpg), --clips --fix-clips then --clips: clip gate
+  PASS (move pen 6.6 -> 0.08, attack 4.5 -> 0). face_before_after_head.jpg, orbit18_sheet.jpg (old:
+  orbit18_sheet_before_head.jpg; underside tiles rendered clay).

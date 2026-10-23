@@ -16,7 +16,7 @@
   "skin"
  ],
  "colour_count": 6,
- "tris": 5050,
+ "tris": 4898,
  "attach": [],
  "borders": [
   {
@@ -31,9 +31,9 @@
     "border_edges": 61,
     "length": 8.7325,
     "paths": 5,
-    "corners": 7,
+    "corners": 8,
     "corner_quads": 4,
-    "corners_per_m": 0.8
+    "corners_per_m": 0.9
    },
    "after": {
     "border_edges": 50,
@@ -51,7 +51,7 @@
   "piece_tusk_R": 94,
   "piece_nails": 384,
   "piece_fold_trunk": 450,
-  "piece_fold_knee": 240,
+  "piece_lip": 88,
   "piece_brow": 100,
   "piece_tuft": 44,
   "piece_fold_shoulder": 160

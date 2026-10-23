@@ -102,3 +102,11 @@ Residual (visible, not fixed: fix-round budget used):
 2. The femur blade is shallower than the sheet's (about 0.05 deep at mid but thin in the front view) and the
    spines are fewer/smaller than the sheet's comb.
 3. Legs are smooth octagon tubes with no knee knobs; the wings read as one slab with a faint midline groove.
+
+## Border pass (night 2026-10-23, s4 r21-r22)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint: 5 despeckled, 18 cuts, 50 relaxed (max 7.0 mm, 12 undone);
+  stair corners 38 -> 21, 3-to-1 quads 24 -> 0. Junction probe PASS, clips PASS (after --fix-clips).
+- techqa hit 2 (piece_spines): r22 = the same mantis.py WITHOUT the border pass also hits -> caused by the 10-23 detail
+  pass (3 fat frustum spines), which was not rebuilt before tonight. Needs that pass's owner. Detail gate FAIL.
+- A/B vs r22 (fresh Opus seat per order, blind): after wins both orders (head-underside pale patch). ADOPT; stage4 holds
+  the r21 (border) build; r22 GLB kept as before_borders/mantis_r22_noborders.glb.

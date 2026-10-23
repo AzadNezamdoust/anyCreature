@@ -1,0 +1,265 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\seahorse.glb",
+ "tag": "s4_review",
+ "ok": true,
+ "tier": 1,
+ "tier_source": "auto",
+ "tier_auto": 1,
+ "mass_size_m": 0.144,
+ "body_volume_m3": 0.003,
+ "H_m": 0.505,
+ "S_m": 0.505,
+ "size_m": [
+  0.167,
+  0.283,
+  0.505
+ ],
+ "floor_mm": 12.11,
+ "floor_px": 6.1,
+ "limits": {
+  "THICK_H": 0.012,
+  "TIER_MUL": {
+   "1": 2.0,
+   "2": 1.0,
+   "3": 1.0
+  },
+  "GAME_PX": 256,
+  "PX_MIN": 3.0,
+  "DIGIT_LEN_H": 0.04,
+  "DIGIT_ASPECT": {
+   "1": 4.5,
+   "2": 6.0,
+   "3": 6.0
+  },
+  "TIER_SIZE": [
+   0.45,
+   1.0
+  ],
+  "COUNT": {
+   "1": [
+    3,
+    8
+   ],
+   "2": [
+    6,
+    16
+   ],
+   "3": [
+    12,
+    30
+   ]
+  },
+  "DIGITS_PER_GROUP_T1": 4,
+  "PERSIST": [
+   0.012,
+   0.06
+  ],
+  "BUMP": 1.0,
+  "BLOB": 1.5,
+  "WINDOW": {
+   "pointed": 0.7,
+   "blunt": 0.85
+  },
+  "RINGS": 14,
+  "INSIDE_EPS": 0.0015,
+  "GAME_RES": 192
+ },
+ "count": {
+  "readable": 5,
+  "min": 3,
+  "max": 8,
+  "ok": true,
+  "warn": false
+ },
+ "features": [
+  {
+   "group": "body:tail",
+   "items": 1,
+   "gated": 1,
+   "passed": 1,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "eye",
+   "items": 2,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "paint:deep",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.273
+  },
+  {
+   "group": "paint:belly",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.142
+  },
+  {
+   "group": "paint:fin",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.093
+  }
+ ],
+ "warns": [],
+ "items": [
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail6",
+   "side": "C",
+   "tip": [
+    -0.0,
+    0.001,
+    0.146
+   ],
+   "centre": [
+    0.005,
+    0.025,
+    0.151
+   ],
+   "length_mm": 235.2,
+   "thick_mm": 40.6,
+   "meanw_mm": 105.0,
+   "thick_px": 20.6,
+   "meanw_px": 53.3,
+   "length_H": 0.466,
+   "thick_H": 0.0805,
+   "aspect": 5.8,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     51.6,
+     109.1
+    ],
+    [
+     0.11,
+     48.0,
+     96.6
+    ],
+    [
+     0.18,
+     45.9,
+     104.2
+    ],
+    [
+     0.25,
+     43.6,
+     100.7
+    ],
+    [
+     0.32,
+     42.4,
+     93.1
+    ],
+    [
+     0.39,
+     39.8,
+     109.2
+    ],
+    [
+     0.46,
+     46.0,
+     112.7
+    ],
+    [
+     0.54,
+     54.5,
+     112.6
+    ],
+    [
+     0.61,
+     46.4,
+     105.8
+    ],
+    [
+     0.68,
+     43.3,
+     104.1
+    ],
+    [
+     0.75,
+     40.4,
+     95.3
+    ],
+    [
+     0.82,
+     67.2,
+     154.1
+    ],
+    [
+     0.89,
+     56.3,
+     139.6
+    ],
+    [
+     0.96,
+     43.2,
+     100.7
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 3.35
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 1,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 2,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  }
+ ],
+ "renders": {
+  "game": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_game_g315h.png"
+  ],
+  "flags": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\seahorse\\stage4\\details\\s4_review_dflag_back34.png"
+  ]
+ }
+}

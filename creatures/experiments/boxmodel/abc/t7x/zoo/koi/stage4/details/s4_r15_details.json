@@ -1,0 +1,904 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\koi.glb",
+ "tag": "s4_r15",
+ "ok": false,
+ "tier": 1,
+ "tier_source": "auto",
+ "tier_auto": 1,
+ "mass_size_m": 0.19,
+ "body_volume_m3": 0.0069,
+ "H_m": 0.247,
+ "S_m": 0.703,
+ "size_m": [
+  0.354,
+  0.703,
+  0.247
+ ],
+ "floor_mm": 5.93,
+ "floor_px": 6.1,
+ "limits": {
+  "THICK_H": 0.012,
+  "TIER_MUL": {
+   "1": 2.0,
+   "2": 1.0,
+   "3": 1.0
+  },
+  "GAME_PX": 256,
+  "PX_MIN": 3.0,
+  "DIGIT_LEN_H": 0.04,
+  "DIGIT_ASPECT": {
+   "1": 4.5,
+   "2": 6.0,
+   "3": 6.0
+  },
+  "TIER_SIZE": [
+   0.45,
+   1.0
+  ],
+  "COUNT": {
+   "1": [
+    3,
+    8
+   ],
+   "2": [
+    6,
+    16
+   ],
+   "3": [
+    12,
+    30
+   ]
+  },
+  "DIGITS_PER_GROUP_T1": 4,
+  "PERSIST": [
+   0.012,
+   0.06
+  ],
+  "BUMP": 1.0,
+  "BLOB": 1.5,
+  "WINDOW": {
+   "pointed": 0.7,
+   "blunt": 0.85
+  },
+  "RINGS": 14,
+  "INSIDE_EPS": 0.0015,
+  "GAME_RES": 192
+ },
+ "count": {
+  "readable": 5,
+  "min": 3,
+  "max": 8,
+  "ok": true,
+  "warn": false
+ },
+ "features": [
+  {
+   "group": "body:tail",
+   "items": 3,
+   "gated": 3,
+   "passed": 3,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "body:fin",
+   "items": 2,
+   "gated": 2,
+   "passed": 2,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "barbels",
+   "items": 2,
+   "gated": 2,
+   "passed": 0,
+   "readable": false,
+   "counted": true
+  },
+  {
+   "group": "eye",
+   "items": 2,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "paint:orange",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.277
+  },
+  {
+   "group": "paint:black",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.047
+  }
+ ],
+ "warns": [],
+ "items": [
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail3",
+   "side": "R",
+   "tip": [
+    -0.006,
+    0.35,
+    0.468
+   ],
+   "centre": [
+    0.034,
+    0.072,
+    0.381
+   ],
+   "length_mm": 99.8,
+   "thick_mm": 11.2,
+   "meanw_mm": 22.7,
+   "thick_px": 11.6,
+   "meanw_px": 23.5,
+   "length_H": 0.404,
+   "thick_H": 0.0453,
+   "aspect": 8.9,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     15.0,
+     29.4
+    ],
+    [
+     0.11,
+     15.0,
+     28.4
+    ],
+    [
+     0.18,
+     15.0,
+     27.5
+    ],
+    [
+     0.25,
+     15.0,
+     26.4
+    ],
+    [
+     0.32,
+     14.9,
+     25.2
+    ],
+    [
+     0.39,
+     14.6,
+     23.4
+    ],
+    [
+     0.46,
+     14.5,
+     22.0
+    ],
+    [
+     0.54,
+     14.3,
+     20.6
+    ],
+    [
+     0.61,
+     14.2,
+     18.9
+    ],
+    [
+     0.68,
+     13.7,
+     17.3
+    ],
+    [
+     0.75,
+     10.9,
+     15.5
+    ],
+    [
+     0.82,
+     7.9,
+     13.5
+    ],
+    [
+     0.89,
+     4.7,
+     11.4
+    ],
+    [
+     0.96,
+     1.5,
+     9.3
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 1.89
+  },
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail3",
+   "side": "C",
+   "tip": [
+    0.0,
+    0.35,
+    0.287
+   ],
+   "centre": [
+    0.032,
+    0.077,
+    0.365
+   ],
+   "length_mm": 94.3,
+   "thick_mm": 10.7,
+   "meanw_mm": 22.2,
+   "thick_px": 11.1,
+   "meanw_px": 23.0,
+   "length_H": 0.382,
+   "thick_H": 0.0432,
+   "aspect": 8.8,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     15.0,
+     30.2
+    ],
+    [
+     0.11,
+     15.0,
+     29.0
+    ],
+    [
+     0.18,
+     15.0,
+     28.0
+    ],
+    [
+     0.25,
+     15.0,
+     26.5
+    ],
+    [
+     0.32,
+     14.8,
+     25.2
+    ],
+    [
+     0.39,
+     14.6,
+     22.9
+    ],
+    [
+     0.46,
+     14.4,
+     21.4
+    ],
+    [
+     0.54,
+     14.3,
+     20.0
+    ],
+    [
+     0.61,
+     14.1,
+     18.4
+    ],
+    [
+     0.68,
+     13.1,
+     16.9
+    ],
+    [
+     0.75,
+     10.4,
+     15.1
+    ],
+    [
+     0.82,
+     7.4,
+     13.2
+    ],
+    [
+     0.89,
+     4.4,
+     11.2
+    ],
+    [
+     0.96,
+     1.4,
+     9.2
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 1.8
+  },
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail1",
+   "side": "C",
+   "tip": [
+    0.0,
+    0.175,
+    0.32
+   ],
+   "centre": [
+    0.042,
+    -0.009,
+    0.35
+   ],
+   "length_mm": 43.5,
+   "thick_mm": 8.0,
+   "meanw_mm": 17.5,
+   "thick_px": 8.3,
+   "meanw_px": 18.1,
+   "length_H": 0.176,
+   "thick_H": 0.0324,
+   "aspect": 5.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     16.2,
+     31.1
+    ],
+    [
+     0.11,
+     12.7,
+     23.6
+    ],
+    [
+     0.18,
+     11.4,
+     19.6
+    ],
+    [
+     0.25,
+     10.5,
+     19.2
+    ],
+    [
+     0.32,
+     9.2,
+     18.6
+    ],
+    [
+     0.39,
+     8.9,
+     18.3
+    ],
+    [
+     0.46,
+     8.8,
+     16.6
+    ],
+    [
+     0.54,
+     8.7,
+     14.9
+    ],
+    [
+     0.61,
+     8.6,
+     13.2
+    ],
+    [
+     0.68,
+     8.5,
+     11.8
+    ],
+    [
+     0.75,
+     7.9,
+     10.3
+    ],
+    [
+     0.82,
+     5.6,
+     8.8
+    ],
+    [
+     0.89,
+     3.3,
+     7.3
+    ],
+    [
+     0.96,
+     1.1,
+     5.8
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 1.35
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "pec.R",
+   "side": "R",
+   "tip": [
+    -0.177,
+    -0.124,
+    0.299
+   ],
+   "centre": [
+    -0.003,
+    -0.152,
+    0.382
+   ],
+   "length_mm": 178.9,
+   "thick_mm": 11.0,
+   "meanw_mm": 46.5,
+   "thick_px": 11.4,
+   "meanw_px": 48.2,
+   "length_H": 0.724,
+   "thick_H": 0.0447,
+   "aspect": 16.2,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     86.0,
+     123.2
+    ],
+    [
+     0.11,
+     66.8,
+     92.5
+    ],
+    [
+     0.18,
+     48.9,
+     85.5
+    ],
+    [
+     0.25,
+     22.5,
+     39.6
+    ],
+    [
+     0.32,
+     19.7,
+     43.8
+    ],
+    [
+     0.39,
+     18.2,
+     49.8
+    ],
+    [
+     0.46,
+     16.7,
+     49.2
+    ],
+    [
+     0.54,
+     18.8,
+     103.0
+    ],
+    [
+     0.61,
+     11.5,
+     43.0
+    ],
+    [
+     0.68,
+     11.2,
+     41.9
+    ],
+    [
+     0.75,
+     11.0,
+     39.1
+    ],
+    [
+     0.82,
+     10.2,
+     34.6
+    ],
+    [
+     0.89,
+     10.1,
+     31.4
+    ],
+    [
+     0.96,
+     8.1,
+     26.0
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 7.85
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "pec.L",
+   "side": "L",
+   "tip": [
+    0.177,
+    -0.124,
+    0.299
+   ],
+   "centre": [
+    0.085,
+    -0.153,
+    0.342
+   ],
+   "length_mm": 178.9,
+   "thick_mm": 11.0,
+   "meanw_mm": 44.4,
+   "thick_px": 11.4,
+   "meanw_px": 46.0,
+   "length_H": 0.724,
+   "thick_H": 0.0447,
+   "aspect": 16.2,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     63.7,
+     104.6
+    ],
+    [
+     0.11,
+     64.3,
+     84.7
+    ],
+    [
+     0.18,
+     48.9,
+     85.5
+    ],
+    [
+     0.25,
+     22.5,
+     39.6
+    ],
+    [
+     0.32,
+     19.7,
+     43.8
+    ],
+    [
+     0.39,
+     18.2,
+     49.8
+    ],
+    [
+     0.46,
+     16.7,
+     49.2
+    ],
+    [
+     0.54,
+     13.5,
+     45.0
+    ],
+    [
+     0.61,
+     11.5,
+     43.0
+    ],
+    [
+     0.68,
+     11.2,
+     41.9
+    ],
+    [
+     0.75,
+     11.0,
+     39.1
+    ],
+    [
+     0.82,
+     10.2,
+     34.6
+    ],
+    [
+     0.89,
+     10.1,
+     31.4
+    ],
+    [
+     0.96,
+     8.1,
+     26.0
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 7.49
+  },
+  {
+   "obj": "piece_barbels",
+   "kind": "antenna",
+   "cls": "blunt",
+   "shell": 1,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.019,
+    -0.353,
+    0.344
+   ],
+   "centre": [
+    0.021,
+    -0.344,
+    0.348
+   ],
+   "length_mm": 14.6,
+   "thick_mm": 3.2,
+   "meanw_mm": 7.6,
+   "thick_px": 3.3,
+   "meanw_px": 7.9,
+   "length_H": 0.059,
+   "thick_H": 0.0129,
+   "aspect": 4.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     3.6,
+     7.5
+    ],
+    [
+     0.11,
+     4.5,
+     8.1
+    ],
+    [
+     0.18,
+     4.8,
+     8.2
+    ],
+    [
+     0.25,
+     4.7,
+     8.1
+    ],
+    [
+     0.32,
+     4.7,
+     7.9
+    ],
+    [
+     0.39,
+     4.6,
+     7.8
+    ],
+    [
+     0.46,
+     4.5,
+     7.7
+    ],
+    [
+     0.54,
+     4.4,
+     7.5
+    ],
+    [
+     0.61,
+     4.4,
+     7.4
+    ],
+    [
+     0.68,
+     4.4,
+     7.2
+    ],
+    [
+     0.75,
+     3.2,
+     6.5
+    ],
+    [
+     0.82,
+     2.3,
+     5.9
+    ],
+    [
+     0.89,
+     1.7,
+     5.4
+    ],
+    [
+     0.96,
+     0.8,
+     3.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 3.2 mm (3.3 px) < 5.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.54
+  },
+  {
+   "obj": "piece_barbels",
+   "kind": "antenna",
+   "cls": "blunt",
+   "shell": 2,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.019,
+    -0.353,
+    0.344
+   ],
+   "centre": [
+    -0.021,
+    -0.344,
+    0.348
+   ],
+   "length_mm": 14.6,
+   "thick_mm": 3.2,
+   "meanw_mm": 7.6,
+   "thick_px": 3.3,
+   "meanw_px": 7.9,
+   "length_H": 0.059,
+   "thick_H": 0.0129,
+   "aspect": 4.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     3.6,
+     7.5
+    ],
+    [
+     0.11,
+     4.5,
+     8.1
+    ],
+    [
+     0.18,
+     4.8,
+     8.2
+    ],
+    [
+     0.25,
+     4.7,
+     8.1
+    ],
+    [
+     0.32,
+     4.7,
+     7.9
+    ],
+    [
+     0.39,
+     4.6,
+     7.8
+    ],
+    [
+     0.46,
+     4.5,
+     7.7
+    ],
+    [
+     0.54,
+     4.4,
+     7.5
+    ],
+    [
+     0.61,
+     4.4,
+     7.4
+    ],
+    [
+     0.68,
+     4.4,
+     7.2
+    ],
+    [
+     0.75,
+     3.2,
+     6.5
+    ],
+    [
+     0.82,
+     2.3,
+     5.9
+    ],
+    [
+     0.89,
+     1.7,
+     5.4
+    ],
+    [
+     0.96,
+     0.8,
+     3.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 3.2 mm (3.3 px) < 5.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.54
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 3,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 4,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  }
+ ],
+ "renders": {
+  "game": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_game_g315h.png"
+  ],
+  "crops": [
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dcrop_0.png",
+    "piece_barbels/antenna L: thickness 3.2 mm (3.3 px) < 5.9 mm"
+   ],
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dcrop_1.png",
+    "piece_barbels/antenna R: thickness 3.2 mm (3.3 px) < 5.9 mm"
+   ]
+  ],
+  "flags": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\koi\\stage4\\details\\s4_r15_dflag_back34.png"
+  ]
+ }
+}

@@ -153,3 +153,7 @@ Rig: neck -> skull -> head (cranium only, for the eye check's head length) and s
   smooth_borders. ALL gates PASS (detail 12 groups, eyes, junction). Critique (hero/az090): the ear face reads pink
   (not on the sheet: ears are grey); knee arcs read as cuffs. Fix r19: ear face a lighter grey (#a39488), knee arcs
   replaced by a lower-lip mound under the trunk root.
+- r19 crashed: the lip ray missed (empty piece). Fix: four fallback points down the cheek; no piece if none hits.
+- r19 Result: ALL gates PASS (kit, junction, eyes 0.58/0.89/0.66, detail 12 groups: trunk rings, shoulder fold, brow,
+  lower lip, tail brush, lighter ear face + tusks, nails, ears, tail, pale feet). A/B Opus both orders: variant won
+  BOTH (trunk wrinkles read at 160 px) -> ADOPT. Residual: the tail brush reads smaller than the sheet's leaf tuft.

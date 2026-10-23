@@ -105,3 +105,12 @@ window 5, neck 2, head 4 + muzzle 6), legs from 4 x 3 lower-flank windows, ears 
   --clips --fix-clips. Detail gate FAIL pre-existing (tier-3 detail count 4 < 12; not a border issue).
 - A/B (fresh Opus seat per order, blind): after wins both orders (belly patch a rounded oval, no boxy corners). ADOPT.
 - Files: border_before_after.jpg, before_borders/.
+
+## Detail pass (2026-10-23 night, tier 3: 4 -> 12+ groups; backup before_detail/)
+- r09 (S4): nostril mounds (dark cap), eye bumps, mouth line, cheek bulge, neck fold (STEP), wrist wrinkles, tail
+  brush; muzzle + inner ears a lighter pink paint. Detail PASS 12 groups, colours 6, 3,964 tris. FAIL: eye visible
+  3/4 0.32 / side 0.20 (the eye bump sits over the lens), mouth z-fight 4. Fix r10: bump behind/above the eye,
+  smaller; mouth 26 mm tall.
+- r10 Result: eyes PASS again (0.57/0.74/0.48), detail PASS, junction PASS; kit FAIL only mouth z-fight 4.
+  Fix r11: mouth line 32 mm tall, blunter ends, keel 2 cm deep.
+- r10 A/B Opus both orders: variant won BOTH (eye bumps, nostrils, mouth, pink ears read) -> adopt once r11 clears the mouth z-fight. Residuals: neck fold a little collar-like from the hero view; cheek knob hex reads like a bolt.

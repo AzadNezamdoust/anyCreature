@@ -60,3 +60,8 @@ Merged fix list (shape first): legs straight stilts -> bent, elbows/knees out (b
 - Stage 1: r13 FAIL (flat collar cut the flank), r14 PASS with the tilted collar, r15 LOCK: 960 verts, 1916 tris, edge sha256 e83bc80b089a9db3, IoU 0.756/0.563/0.806 (front pays for the wider shoulders).
 - Stage 4 r09: all gates PASS (hit/float/zfight 0, fold 0, drift 0, slivers 0.3 %), lock assert PASS, glbcheck OK. Separation PASS (tail-hind 32 cm, fore 31, hind 31). Tris 2284 -> 2364.
 - orbit18_sheet.jpg, side_by_side.jpg rebuilt; fix9.jpg = before9 | after hero + fore shoulder and hind hip close-ups.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r10: crest spikes as blunt half-frustum blocks (>= 28 mm to the top; were pointed, t 14.6 mm) -> crest PASS;
+  toe bundles blunter tips + shorter: still FAIL L/t 4.6-5.2 > 4.5 (tier 1), back toes t 26.7 < 26.9 mm.
+- r11 Fix: toe bundles 25 mm shorter, 5 mm taller.

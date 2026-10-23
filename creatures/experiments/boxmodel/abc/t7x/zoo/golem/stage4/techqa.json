@@ -9,21 +9,21 @@
   "drift": 0
  },
  "totals": {
-  "area": 13.642380644491695,
-  "open": 0,
   "sliver": 10,
+  "open": 0,
+  "valley": 0,
+  "flip": 2,
+  "fold": 0,
+  "drift": 0,
+  "clip_area": 0.09432496868934903,
+  "hit": 0,
+  "zfight": 0,
+  "stretch_max": 0.0,
+  "area": 13.642380610608253,
   "flip_area": 0.012795142053317487,
   "stretch": 0,
-  "stretch_max": 0.0,
-  "zfight": 0,
   "clip": 6,
-  "flip": 2,
-  "drift": 0,
-  "fold": 0,
-  "valley": 0,
-  "clip_area": 0.09432496868934903,
-  "float": 0,
-  "hit": 0
+  "float": 0
  },
  "triangles": 2324,
  "turned": 190,
@@ -196,7 +196,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.16533860715422416,
+   "area": 0.16533857327078297,
    "flip_area": 0
   },
   "piece_brow": {

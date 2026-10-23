@@ -57,3 +57,9 @@ Breast fixes without losing rings: every breast ring (R1..C1) shares the same pe
 Junctions checked in orbit18 (legs, tufts, neck, wing roots): no holes, specks or slits. Eye unchanged (pass-4 size).
 Stage 1 re-locked as r51 (pass-5 lock in before9/): 580 verts, 1156 tris, edge sha256 3d4593a85727a5ac, IoU side/front/top 0.747/0.860/0.675. r50 = trial without the planarize step (blotchy lower chest).
 r51: all gates PASS, lock assert PASS, glbcheck OK, separation PASS (legs 2.9 cm, wings separate shells, 73% outside). Total 1822 tris (pass 5: 1734). QA warns only (8 stretched, 14 posed-clip triangles). fix9.jpg = before9 | after, hero plus breast and chest close-ups.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r52: chunky toes (20 mm tall, 21 mm wide to the tip) and blunt hooked-frustum talons (>= 14.5 mm; were 8 mm
+  pyramids, t 1.5 mm). Detail gate PASS (was 16 FAIL). Kit: drift 2 = piece_wing in the night's new clips (wing
+  untouched; champion techqa predates the clip round 2); junction/eye FAILs (eye side 0.02 under the brow, wing/tail
+  posed clips, thigh strips) are not from this change. A/B Opus both orders: variant won BOTH -> ADOPT.

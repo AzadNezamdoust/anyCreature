@@ -14,10 +14,11 @@
   "orange"
  ],
  "colour_count": 4,
- "tris": 3372,
+ "tris": 3420,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 96,
-  "piece_claws": 48
+  "piece_claws": 96
  }
 }

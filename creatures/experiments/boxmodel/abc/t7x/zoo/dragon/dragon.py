@@ -631,7 +631,9 @@ def detail_pass(body, tree):
     piece('scute', bm, 'belly')
     # 2. brow ridge over the eye: one elongated low dome (r22: a band along the brow crossed the head twice = hit)
     e = eye_face_centre()
-    h_ = D.cast_in(tree, (1.0, e.y, e.z + 0.055), (-1, 0, 0))
+    h_ = None
+    for dz in (0.04, 0.03, 0.02):                 # the highest point over the eye that still lands on the head side
+        h_ = h_ or D.cast_in(tree, (1.0, e.y + 0.01, e.z + dz), (-1, 0, 0))
     bm = bmesh.new()
     D.knob(bm, h_[0], h_[1], 0.03, 0.022, sides=6, sq=(0.75, 1.5), up=(0, 0, 1), top=0.5)
     piece('brow', bm, 'red')

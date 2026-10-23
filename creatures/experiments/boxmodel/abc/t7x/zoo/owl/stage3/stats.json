@@ -16,13 +16,14 @@
   "tan"
  ],
  "colour_count": 6,
- "tris": 1822,
+ "tris": 1934,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 64,
   "piece_beak": 14,
   "piece_wing": 136,
   "piece_toes": 160,
-  "piece_talons": 48
+  "piece_talons": 160
  }
 }

@@ -9,21 +9,21 @@
   "drift": 0
  },
  "totals": {
-  "flip_area": 0,
-  "clip_area": 0.000375624544722489,
-  "open": 0,
-  "stretch_max": 0.0,
-  "drift": 0,
-  "hit": 0,
-  "flip": 0,
-  "zfight": 0,
-  "valley": 0,
-  "area": 0.29720402238824556,
-  "clip": 24,
-  "stretch": 0,
-  "float": 0,
+  "fold": 0,
   "sliver": 24,
-  "fold": 0
+  "hit": 0,
+  "float": 0,
+  "area": 0.29865909085177117,
+  "flip_area": 0,
+  "valley": 0,
+  "zfight": 0,
+  "stretch": 0,
+  "flip": 0,
+  "clip": 24,
+  "stretch_max": 0.0,
+  "open": 0,
+  "drift": 0,
+  "clip_area": 0.00037562437576027963
  },
  "triangles": 1432,
  "turned": 120,
@@ -43,7 +43,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.2956414037375748,
+   "area": 0.29564140235550784,
    "flip_area": 0
   },
   "piece_eye": {
@@ -59,8 +59,8 @@
    "clip": 24,
    "stretch": 0,
    "stretch_max": 0.0,
-   "clip_area": 0.000375624544722489,
-   "area": 0.0009638808387150518,
+   "clip_area": 0.00037562437576027963,
+   "area": 0.0009638807489427262,
    "flip_area": 0
   },
   "piece_barbels": {
@@ -77,7 +77,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.0005987378119556984,
+   "area": 0.002053807747320584,
    "flip_area": 0
   }
  },

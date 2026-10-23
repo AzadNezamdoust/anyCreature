@@ -306,7 +306,13 @@ def lens(bm, c, n, r, h):
 
 def barbel(bm, rows):
     """A tapered square barbel: rows of (x, y, z, half size), root sunk in the lip."""
-    R = [[bm.verts.new((x + sx * s, y + sy * s, z)) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    # detail pass r17: the square section is built PERPENDICULAR to the barbel axis (r15/r16: a level square on a
+    # barbel running down-forward was a thin sheared slice, t 3-4 mm)
+    p0, p1 = Vector(rows[0][:3]), Vector(rows[-1][:3])
+    d = (p1 - p0).normalized()
+    u = d.cross(Vector((1, 0, 0))).normalized()
+    w = d.cross(u).normalized()
+    R = [[bm.verts.new(Vector((x, y, z)) + (u * sx + w * sy) * s) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
          for x, y, z, s in rows]
     bm.faces.new(R[0])
     for a, b in zip(R, R[1:]):
@@ -330,7 +336,7 @@ def stage3(k, body):
           lambda c_, n_, i: 'black' if ((c_ - c) - n * (c_ - c).dot(n)).length < 0.0035 and n_.dot(n) > 0.5 else 'iris')
     # barbels: one pair at the mouth corners, hanging down and a little forward
     bm = bmesh.new()
-    barbel(bm, [(0.020, -0.338, 0.103, 0.0042), (0.022, -0.350, 0.094, 0.0034)])  # detail pass 10-23: stubby + chunky (tier-1 floor 5.9 mm; was t 2.2 mm)
+    barbel(bm, [(0.020, -0.338, 0.103, 0.0046), (0.022, -0.348, 0.095, 0.0039)])  # detail pass 10-23: stubby + chunky (tier-1 floor 5.9 mm; was t 2.2 mm, r15 3.2 mm)
     bar = object_from_bm('barbels', bm)
     paint(bar, {'white': PAL['white']}, lambda c_, n_, i: 'white')
     return [eye, bar]

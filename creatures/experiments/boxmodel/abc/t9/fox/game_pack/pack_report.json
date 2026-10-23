@@ -1,0 +1,327 @@
+{
+ "name": "fox",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\stage4\\fox.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 3624,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 1814,
+   "tri_ratio": 0.501,
+   "iou_min": 0.9947,
+   "iou_mean": 0.9956,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 940,
+   "tri_ratio": 0.259,
+   "iou_min": 0.9831,
+   "iou_mean": 0.9868,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 588,
+   "tri_ratio": 0.162,
+   "iou_min": 0.964,
+   "iou_mean": 0.9675,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.1633,
+   "h": 0.576
+  },
+  {
+   "bone": "spine",
+   "r": 0.2012,
+   "h": 0.475
+  },
+  {
+   "bone": "chest",
+   "r": 0.1837,
+   "h": 0.3674
+  },
+  {
+   "bone": "neck",
+   "r": 0.1655,
+   "h": 0.331
+  },
+  {
+   "bone": "head",
+   "r": 0.1196,
+   "h": 0.4239
+  },
+  {
+   "bone": "ear.L",
+   "r": 0.0542,
+   "h": 0.2367
+  },
+  {
+   "bone": "ear.R",
+   "r": 0.0542,
+   "h": 0.2367
+  },
+  {
+   "bone": "upperarm.L",
+   "r": 0.1071,
+   "h": 0.4334
+  },
+  {
+   "bone": "forearm.L",
+   "r": 0.0536,
+   "h": 0.2284
+  },
+  {
+   "bone": "paw.L",
+   "r": 0.0643,
+   "h": 0.2079
+  },
+  {
+   "bone": "upperarm.R",
+   "r": 0.1071,
+   "h": 0.4334
+  },
+  {
+   "bone": "forearm.R",
+   "r": 0.0536,
+   "h": 0.2284
+  },
+  {
+   "bone": "paw.R",
+   "r": 0.0643,
+   "h": 0.2079
+  },
+  {
+   "bone": "tail0",
+   "r": 0.0975,
+   "h": 0.2382
+  },
+  {
+   "bone": "tail1",
+   "r": 0.132,
+   "h": 0.4202
+  },
+  {
+   "bone": "tail2",
+   "r": 0.1027,
+   "h": 0.2883
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.1055,
+   "h": 0.4447
+  },
+  {
+   "bone": "shin.L",
+   "r": 0.0568,
+   "h": 0.2725
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.0542,
+   "h": 0.19
+  },
+  {
+   "bone": "toe.L",
+   "r": 0.0549,
+   "h": 0.1682
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.1055,
+   "h": 0.4447
+  },
+  {
+   "bone": "shin.R",
+   "r": 0.0568,
+   "h": 0.2725
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.0542,
+   "h": 0.19
+  },
+  {
+   "bone": "toe.R",
+   "r": 0.0549,
+   "h": 0.1682
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 1.1080331802368164,
+  "feet": [
+   "paw.L",
+   "paw.R",
+   "toe.L",
+   "toe.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.439,
+    "planted_frames": 124,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.009,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 0.01,
+    "foot_slide_std_pctH": 3.731,
+    "planted_frames": 35,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\fox\\game_pack\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "fox.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_fox_root', 'UCX_fox_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "fox.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_fox_root', 'UCX_fox_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "fox.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_fox_root', 'UCX_fox_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

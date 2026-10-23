@@ -375,10 +375,10 @@ def stage3(k, body):
     bm = bmesh.new()
     for sole in (FORE[4], HIND[4]):
         (cx, cy, _), rx, ry = sole
-        for j, (d, L) in enumerate((((-0.35, -1.0), 0.06), ((0.35, 1.0), 0.05))):   # detail pass: shorter (L/t 6.8)
+        for j, (d, L) in enumerate((((-0.35, -1.0), 0.035), ((0.35, 1.0), 0.028))):   # detail pass r11: shorter (L/t 6.8 -> r10 4.6-5.2 > 4.5)
             dv = Vector((d[0], d[1], 0.0)).normalized()
             root = Vector((cx + dv.x * 0.015, cy + dv.y * (ry * 0.35), 0.0))
-            bundle(bm, root, dv, ry * 0.6 + L + 0.02, 0.036 - 0.003 * j, 0.04 - 0.003 * j, 0.006 + 0.002 * j)
+            bundle(bm, root, dv, ry * 0.6 + L + 0.02, 0.036 - 0.003 * j, 0.045 - 0.002 * j, 0.006 + 0.002 * j)   # r11: 5 mm taller (t 26.7 < 26.9 mm)
     toes = object_from_bm('toes', bm)
     paint(toes, {'cream': PAL['cream']}, lambda c_, n_, i: 'cream')
     return [eye, cr, toes]

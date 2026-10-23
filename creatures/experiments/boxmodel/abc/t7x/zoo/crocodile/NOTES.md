@@ -62,3 +62,9 @@ Started from the poly pass 3 script (pass3/); the REVERT is undone. Earlier rend
 - s2: the vertices beside the upper-jaw ridge follow it half way, so the jaw planes stay flat (no cream slits).
 - Stage 1 re-locked r9: PASS, 2388 tris, IoU side/front/top 0.891/0.609/0.701. s4 r8: all gates PASS, glbcheck OK, z-fight 0. Warning: 2 tris (0.10 %) clip in a pose. Separation PASS (tail-hind 33 cm, fore L-R 60 cm, hind L-R 60 cm). Leg, neck and tail junctions checked: no holes or slits. Eye unchanged (lens r 14 mm).
 - fix9.jpg = before9 | after hero, plus head and leg close-ups. orbit18_sheet.jpg, side_by_side.jpg rebuilt.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r09: teeth as chunky blunt pegs (4-sided frustum >= 6.5 mm to the tip; were 4 mm wedges, t 1.5 mm). Detail
+  gate PASS (was 10 tooth FAILs). Kit gates OK; junction strips/knives + eye front 0.13 / size 0.047 are from the
+  unchanged body. A/B Opus both orders: variant won BOTH (teeth read as the sheet's) -> ADOPT.
+  Residual: at 160 px the teeth are ~1 px; bigger teeth would need a longer jaw edge.

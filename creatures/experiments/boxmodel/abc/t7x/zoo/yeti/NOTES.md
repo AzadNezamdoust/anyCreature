@@ -266,3 +266,7 @@ Backup: before_head/; old lock old_locks/lock_r13_face_r31g.json. Builds as gori
 - FINAL h4a (4 rounds, 8 variants spent). Residual NOs: Q6 the nose still ends in a small tip in profile and the
   nostrils can read as a split slot at close front, Q10 the grey border is a hard cut (worst under the chin, no beard
   over it), Q1 the outline is a rounded shield (no longer a box), straight-ish sides at 192 px.
+- FINAL RUN (s4 r45, orbit, h4a code): S1 re-lock 1062 verts / 2120 tris, edge sha256 942986521bf670da; ALL kit gates
+  PASS (glbcheck OK; warn stretch 24 tris, posed clip 0.15 %), junction probe PASS, detail gate PASS, eyes
+  0.52/0.66/0.52, IoU vs S1 min 0.997, 5346 tris, 6 colours. --review, --compare, --clips --fix-clips then --clips:
+  clip gate PASS (move pen 3.5 -> 0). face_before_after_head.jpg, orbit18_sheet.jpg (old: orbit18_sheet_before_head.jpg).

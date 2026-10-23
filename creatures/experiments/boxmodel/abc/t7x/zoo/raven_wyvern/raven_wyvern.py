@@ -423,20 +423,15 @@ def wyvern_pieces(tree):
     horns = object_from_bm('horns', bm)
     paint(horns, {'beak': PAL['beak']}, lambda c_, n_, i: 'beak')
     out.append(horns)
-    # spines: three blade spines on the tail top (mirror=False: one piece on the seam)
+    # spines: three chunky cone spines on the back / tail top, raking back (r18: cones r 32 mm; r17 blades were
+    # 10-13 mm thin at game size)
     bm = bmesh.new()
-    for y, h, L in ((0.10, 0.075, 0.10), (0.27, 0.065, 0.09), (0.44, 0.05, 0.08)):
+    for y, h, r in ((0.10, 0.085, 0.034), (0.27, 0.075, 0.030), (0.44, 0.062, 0.026)):
         hit = tree.ray_cast(Vector((0.0, y, 1.0)), Vector((0, 0, -1)), 2.0)[0]
         if hit is None:
             continue
-        z0 = hit.z - 0.012
-        w = 0.022
-        A = [bm.verts.new(Vector(p)) for p in ((-w, y - L / 2, z0), (w, y - L / 2, z0), (w, y + L / 2, z0), (-w, y + L / 2, z0))]
-        T = bm.verts.new(Vector((0.0, y + L * 0.45, z0 + h + 0.012)))
-        Tf = bm.verts.new(Vector((0.0, y - L * 0.1, z0 + h * 0.55 + 0.012)))
-        for q in ((A[3], A[2], A[1], A[0]), (A[0], A[1], Tf), (A[1], A[2], T, Tf), (A[2], A[3], T), (A[3], A[0], Tf, T)):
-            bm.faces.new(q)
-    recalc_normals(bm)
+        b0 = Vector((0.0, y, hit.z - 0.015))
+        tube(bm, [b0, b0 + Vector((0, 0.02, h * 0.55 + 0.015)), b0 + Vector((0, 0.05, h + 0.015))], [r, r * 0.6, 0.0])
     spines = object_from_bm('spines', bm, mirror=False)
     paint(spines, {'beak': PAL['beak']}, lambda c_, n_, i: 'beak')
     out.append(spines)

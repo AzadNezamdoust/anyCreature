@@ -15,11 +15,12 @@
   "yellow"
  ],
  "colour_count": 5,
- "tris": 2364,
+ "tris": 2400,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 72,
-  "piece_crest": 36,
+  "piece_crest": 72,
   "piece_toes": 160
  }
 }

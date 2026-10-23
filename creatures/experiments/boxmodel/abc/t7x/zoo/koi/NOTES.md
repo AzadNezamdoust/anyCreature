@@ -65,3 +65,11 @@ Weaknesses: fins are ~1 cm thick (the sliver gate's price); the caudal fork notc
 - Stage 1 re-locked (r14 LOCK; mix-pass lock and script in before9/): 620 verts, 1236 tris, edge sha256 be20c8d60d58480a; IoU 0.819/0.515/0.655.
 - s4 r14: all gates PASS, lock assert PASS, fold-overs 0 (clip warning 24 tris, 0.13 %). Separation PASS: pelvic 10.8 cm, pectoral 23.2 cm, caudal lobes 13.5 cm. Total 1432 tris (mix pass 1324, pass3 1432).
 - before9/ = the mix-pass renders; fix9.jpg = hero before9 | after + head and peduncle close-ups; orbit18_sheet.jpg, side_by_side.jpg rebuilt.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r15. Critique: the pectoral/pelvic fins sat 3.7 cm off the floor (side/front: the koi reads as resting on the ground). Fix: stage 4 lifts the rig object (body + pieces parented) SWIM 0.25 m; checks_blender.py ground at the real z 0. The build includes the detail agent's pending barbel edit (stubby barbels, koi.py 02:58).
+- Result: kit gates PASS (clip warn 24 tris 0.13 %), clips PASS after --fix-clips; junction FAIL pec.L/R knife 2.22 r / strip 1.45 r, tail1 strip 1.05 r (geometry unchanged); detail FAIL barbels 3.2 mm (detail agent's lane). A/B (2 fresh Opus seats): variant wins both orders: ADOPT.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r16: barbels 2x fatter: still FAIL t 4.1 mm (mean width 13 mm): the level square section on a down-forward
+  barbel is a sheared thin slice. Fix r17: the section built perpendicular to the barbel axis.

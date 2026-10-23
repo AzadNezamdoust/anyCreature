@@ -65,3 +65,7 @@ Weaknesses: one symmetric hind pair against the ref's staggered pair; cheek ruff
 - s4 r08. Critique: the brush hangs into the hind legs' swing in the trot (calibration: tail vs thigh posed clip 7.1-7.9 %). Fix (clips only): tail0 held at +16 deg X through move (meant to lift it), tail1 side sway 5 -> 3 deg.
 - r08 result: worse: tail0 vs thighs clip 14.7-16.1 % (move@1/13/19), techqa posed clip warn 14 % of surface: +X on this tail bone swings it down/forward. Kit gates PASS otherwise, clips PASS.
 - s4 r09. Fix: tail0 -16 deg.
+- r09 result: tail0 vs thighs posed clip 0.0 % (was 7-8 %, r08 16 %), techqa posed-clip warning gone, kit gates PASS, clips PASS. A/B on the trot frames: TIE in both orders (the 16 deg lift is hardly visible from the side; the brush still overlaps the far leg in depth) -> champion. Program kept as weakfix_r09_fox.py.
+- s4 r10. Fix: tail0 -32 deg (a visibly lifted, streaming brush).
+- r10 result: junction tail0/thigh posed clip 0.0 % (authored clips), clips PASS; but the move frames are identical to r09: the --fix-clips pass reads the authored clips from stage4/before_clips/fox.glb (the 10-22 original) whenever the rest pose is unchanged, so a clips-only edit never reaches the shipped GLB. The r09 TIE was this, not the lift.
+- s4 r11. Fix (pipeline): rebuild, move the old before_clips/fox.glb to before_weakfix/before_clips_orig/, then --fix-clips --clips on the freshly authored clips.

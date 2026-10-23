@@ -106,3 +106,12 @@ rim) through a 45 % transition ring, 14-sided legs carried in a parallel-transpo
   front view; the legs are still a little thinner and less bulbous than the sheet's bead legs; the abdomen underside
   is a flat plate where the sheet shows a rounded segmented belly under the rim; the head/face is one smooth mass (no
   clypeus step over the mandibles); the elytra suture is faint under EEVEE's soft light.
+
+## Border pass (night 2026-10-23, s4 r08-r09) - REVERTED
+- r08 kit/smooth_borders(body, k=k, iters=8): femur2 seam strip 1.04 r FAIL (baseline 0.84 r PASS). r09 guard (factor 0
+  within 0.11 m of each LEG_ROOTS centre, mirrored): junction PASS, 28 cuts, 65 relaxed, stair corners 53 -> 24,
+  3-to-1 quads 36 -> 0; kit gates and clips PASS.
+- A/B: order 1 TIE, order 2 after wins -> a flip/tie goes to the champion -> REVERT. beetle.py, stage3/stage4 GLB and
+  checks restored from before_borders/ (rounds/s4_r08, r09 sheets stay as history). The underside plates' stairs sit
+  around the leg sockets where the guard keeps the border fixed; a next try needs the plate rule itself (body_rule) to
+  follow the socket rings. Image: border_before_after_REVERTED.jpg.

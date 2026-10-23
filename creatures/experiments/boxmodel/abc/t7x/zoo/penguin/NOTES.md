@@ -104,3 +104,7 @@ the chest yellow is a uniform band (no fade); the tail meets the rump with a dar
   Detail gate FAIL pre-existing (count 5 < 6; claws/toes unreadable).
 - A/B (fresh Opus seat per order, blind): after wins both orders (orange ear patch rounded, no stepped edge). ADOPT.
 - Files: border_before_after.jpg, before_borders/.
+
+## Detail pass (2026-10-23 night; backup before_detail/)
+- s4 r08: toes 24 mm tall to the tip (were 3.5 mm) -> toes PASS; claws as frustums still FAIL t 4-8 mm (they sat
+  under the toe tip, only a sliver showed). Fix r09: claws lead out of the toe tip, 14 mm square to the end.

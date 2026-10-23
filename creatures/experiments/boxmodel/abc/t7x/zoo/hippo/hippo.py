@@ -441,16 +441,16 @@ def detail_pass(body, tree):
           rule=lambda c_, n_, i: 'dark' if n_.dot(nn) > 0.9 else 'muzzle')
     # 2. eye bumps: the eyes sit on raised knobs on the skull top (a brow mound over each eye)
     e = SOCKET[0]
-    h_ = D.cast_in(tree, (e.x - 0.01, e.y + 0.02, 3.0), (0, 0, -1))
+    h_ = D.cast_in(tree, (e.x - 0.03, e.y + 0.075, 3.0), (0, 0, -1))      # r10: behind + above the eye (r09 hid the lens)
     bm = bmesh.new()
-    D.knob(bm, h_[0], (h_[1] + Vector((0.4, 0, 0))).normalized(), 0.065, 0.035, sides=7, sq=(0.9, 1.15), top=0.5)
+    D.knob(bm, h_[0], h_[1], 0.055, 0.028, sides=8, sq=(0.9, 1.15), top=0.5)
     piece('brow', bm, 'skin')
     # 3. mouth line: a dark lip line from the muzzle front back to the cheek
     pts = [(1.5, y, z) for y, z in ((-1.57, 0.875), (-1.47, 0.855), (-1.37, 0.848), (-1.27, 0.852), (-1.18, 0.868),
                                     (-1.11, 0.895))]
     bm = bmesh.new()
-    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.032, 0.02,
-           prof=D.ROUND)
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.036, 0.032,
+           prof=D.ROUND, taper=0.7, sink=0.02)
     piece('mouth', bm, 'dark')
     # 4. cheek bulge at the mouth corner (side view)
     h_ = D.cast_in(tree, (1.5, -1.08, 0.86), (-1, 0, 0))

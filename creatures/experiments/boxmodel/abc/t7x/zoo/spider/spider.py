@@ -194,6 +194,7 @@ def stage2(k, body):
     with k.topo(bm, 'inset', 'eye socket: a loop inside the top-outer head front face'):
         inner = inset(bm, [f], 0.35, 0.0)
     move(list(inner[0].verts), -fn * 0.006)
+    ABD_VS = {vert_near(bm, q) for nm in [n_[0] for n_ in _abd()] + ['Wa'] for q in P(nm)}   # weakfix r11
     # s2 r2: rounded abdomen end (the rear view showed a flat octagon): the tip and A1 rings pushed back
     move([vert_near(bm, q) for q in P('AT')], (0, 0.03, 0))   # fix pass 2: 0.07 -> 0.03 (stage-1 abdomen now longer)
     move([vert_near(bm, q) for q in P('A1')], (0, 0.02, 0))
@@ -208,6 +209,13 @@ def stage2(k, body):
             v.co.x *= sc
             v.co.z = zc + (v.co.z - zc) * sc
             v.co.y += dy
+    # weakfix r11: the abdomen tilts 12 deg tail-down about the pedicel (sheet side: a raised egg whose rear dips), so
+    # from behind its bands read as arcs over the top, not concentric rings round a flat disc (r10: a tighter tip alone
+    # left the disc read)
+    piv = Vector((0.0, 0.11, 0.40))
+    rot = Matrix.Rotation(math.radians(-7.0), 3, 'X')    # r12: 7 deg (r11 12 deg: s2 IoU az180 0.886 < 0.9)
+    for v in ABD_VS:
+        v.co = piv + rot @ (v.co - piv)
     # flat carapace top: the C1-C3 top seam vertices level
     flatten([vert_near(bm, q) for nm in ('C1', 'C2', 'C3') for q in P(nm)[:3]])
     recalc_normals(bm)

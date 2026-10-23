@@ -13,329 +13,294 @@
   "attack": {
    "frames": 32,
    "penetration_pctH": 0.003,
-   "foot_slide_std_pctH": 0.076,
-   "foot_speed_planted_pctH": 0.14,
-   "planted_frames": 68,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.L",
-    1
-   ],
-   "slide_foot": "paw.L"
-  },
-  "idle": {
-   "frames": 48,
-   "penetration_pctH": 0.0,
-   "foot_slide_std_pctH": 0.188,
-   "foot_speed_planted_pctH": 0.11,
-   "planted_frames": 188,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.L",
-    1
-   ],
-   "slide_foot": "paw.L"
-  },
-  "move": {
-   "frames": 25,
-   "penetration_pctH": 0.0,
-   "foot_slide_std_pctH": 0.139,
-   "foot_speed_planted_pctH": 0.698,
-   "planted_frames": 40,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.L",
-    14
-   ],
-   "slide_foot": "paw.R"
-  }
- },
- "sheet_after": [
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_attack_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_attack_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_attack_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_attack_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_idle_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_idle_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_idle_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_idle_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_move_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_move_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_move_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\after_move_75.png"
- ],
- "before": {
-  "attack": {
-   "frames": 32,
-   "penetration_pctH": 3.997,
-   "foot_slide_std_pctH": 0.726,
-   "foot_speed_planted_pctH": 0.865,
-   "planted_frames": 124,
+   "foot_slide_std_pctH": 0.001,
+   "foot_speed_planted_pctH": 0.001,
+   "planted_frames": 66,
    "loop_gap_pctH": 0.0,
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
     "paw.R",
-    16
+    30
    ],
-   "slide_foot": "paw.L"
+   "slide_foot": "toe.L",
+   "track": {
+    "z": [
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.02,
+     0.02,
+     0.01,
+     0.02,
+     0.01,
+     0.01,
+     0.0,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.01,
+     0.0,
+     0.0,
+     0.0,
+     0.01,
+     0.01,
+     0.01,
+     0.01
+    ],
+    "v": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
   },
   "idle": {
    "frames": 48,
-   "penetration_pctH": 0.0,
-   "foot_slide_std_pctH": 0.04,
-   "foot_speed_planted_pctH": 0.091,
+   "penetration_pctH": 0.004,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.001,
    "planted_frames": 188,
    "loop_gap_pctH": 0.0,
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "foot.R",
-    1
+    "forearm.R",
+    35
    ],
-   "slide_foot": "paw.R"
+   "slide_foot": "paw.L",
+   "track": {
+    "z": [
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.21,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22,
+     1.22
+    ],
+    "v": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
   },
   "move": {
    "frames": 25,
-   "penetration_pctH": 8.854,
-   "foot_slide_std_pctH": 1.07,
-   "foot_speed_planted_pctH": 1.783,
-   "planted_frames": 60,
+   "penetration_pctH": 0.084,
+   "foot_slide_std_pctH": 0.013,
+   "foot_speed_planted_pctH": 0.617,
+   "planted_frames": 26,
    "loop_gap_pctH": 0.0,
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
     "paw.R",
-    7
+    3
    ],
-   "slide_foot": "paw.L"
+   "slide_foot": "paw.R",
+   "track": {
+    "z": [
+     6.15,
+     7.77,
+     10.04,
+     13.02,
+     15.1,
+     16.29,
+     16.24,
+     14.5,
+     11.16,
+     6.6,
+     1.89,
+     2.46,
+     0.41,
+     5.0,
+     5.01,
+     5.0,
+     0.13,
+     0.19,
+     1.03,
+     2.01,
+     3.41,
+     4.49,
+     5.37,
+     5.87,
+     6.15
+    ],
+    "v": [
+     0.63,
+     1.2,
+     1.13,
+     0.68,
+     0.22,
+     1.36,
+     2.8,
+     4.03,
+     4.7,
+     0.6,
+     0.66,
+     0.62,
+     0.83,
+     0.45,
+     0.62,
+     0.64,
+     0.63,
+     0.6,
+     0.67,
+     0.61,
+     0.64,
+     0.62,
+     0.65,
+     0.61
+    ]
+   }
   }
  },
- "fix": {
-  "attack": {
-   "feet": {
-    "paw.L": {
-     "stance": 6,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      13.41
-     ],
-     "z_range_pctH": 2.24
-    },
-    "paw.R": {
-     "stance": 6,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      13.41
-     ],
-     "z_range_pctH": 2.24
-    },
-    "toe.L": {
-     "stance": 31,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      4.82
-     ],
-     "z_range_pctH": 1.21
-    },
-    "toe.R": {
-     "stance": 31,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      4.82
-     ],
-     "z_range_pctH": 1.21
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    1,
-    0.003,
-    "foot.L",
-    0
-   ]
-  },
-  "idle": {
-   "feet": {
-    "paw.L": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      1.07
-     ],
-     "z_range_pctH": 0.18
-    },
-    "paw.R": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      1.07
-     ],
-     "z_range_pctH": 0.18
-    },
-    "toe.L": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    },
-    "toe.R": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    1,
-    0.0,
-    "foot.L",
-    9
-   ]
-  },
-  "move": {
-   "feet": {
-    "paw.L": {
-     "stance": 17,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.34,
-      22.3
-     ],
-     "z_range_pctH": 5.24
-    },
-    "paw.R": {
-     "stance": 17,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.34,
-      22.3
-     ],
-     "z_range_pctH": 5.24
-    },
-    "toe.L": {
-     "stance": 13,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.94,
-      16.4
-     ],
-     "z_range_pctH": 4.44
-    },
-    "toe.R": {
-     "stance": 13,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.94,
-      16.4
-     ],
-     "z_range_pctH": 4.44
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    1,
-    0.001,
-    "foot.R",
-    6
-   ]
-  }
- },
- "sheet_before": [
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_attack_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_attack_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_attack_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_attack_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_idle_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_idle_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_idle_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_idle_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_move_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_move_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_move_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\before_move_75.png"
+ "sheet_qa": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\dragon\\stage4\\clips\\s4_frames\\qa_move_75.png"
  ],
- "blender_roundtrip": {
-  "attack": {
-   "frames": 32,
-   "penetration_pctH": 0.003,
-   "foot_slide_std_pctH": 0.743,
-   "foot_speed_planted_pctH": 0.891,
-   "planted_frames": 124,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.L",
-    1
-   ],
-   "slide_foot": "paw.L"
-  },
-  "idle": {
-   "frames": 48,
-   "penetration_pctH": 0.0,
-   "foot_slide_std_pctH": 0.205,
-   "foot_speed_planted_pctH": 0.12,
-   "planted_frames": 188,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.L",
-    2
-   ],
-   "slide_foot": "paw.L"
-  },
-  "move": {
-   "frames": 25,
-   "penetration_pctH": 0.0,
-   "foot_slide_std_pctH": 0.235,
-   "foot_speed_planted_pctH": 0.974,
-   "planted_frames": 31,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "foot.R",
-    1
-   ],
-   "slide_foot": "paw.R"
-  }
- },
- "rest_drift": 0.0,
- "mesh_identity": {
-  "ok": true,
-  "detail": "verts 13578, unmatched positions 0, max weight diff 0.0000"
- },
  "gate": {
   "ok": true,
   "lines": [
-   "BMK clip before move    pen 8.854  slide 1.070  plant 1.783  loop 0.000",
-   "BMK clip before idle    pen 0.000  slide 0.040  plant 0.091  loop 0.000",
-   "BMK clip before attack  pen 3.997  slide 0.726  plant 0.865  loop 0.000",
-   "BMK clip attack  PASS  pen 0.003  slide 0.076  plant 0.140  loop 0.000",
-   "BMK clip idle    PASS  pen 0.000  slide 0.188  plant 0.110  loop 0.000",
-   "BMK clip move    PASS  pen 0.000  slide 0.139  plant 0.698  loop 0.000",
-   "BMK clip mesh/skin identity PASS: verts 13578, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip attack  PASS  pen 0.003  slide 0.001  plant 0.001  loop 0.000",
+   "BMK clip idle    PASS  pen 0.004  slide 0.000  plant 0.001  loop 0.000",
+   "BMK clip move    PASS  pen 0.084  slide 0.013  plant 0.617  loop 0.000",
    "BMK clip gate PASS (feet ['paw.L', 'paw.R', 'toe.L', 'toe.R'], gait quad_trot)"
   ]
  }

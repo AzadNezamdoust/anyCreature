@@ -66,3 +66,12 @@ Review: the 2x pass lost the faceted torso muscle planes (a generic tube) and ad
 - Stage 1 re-locked r37: 1078 verts, 2152 tris, edge sha256 c8e5692f70240a7e, IoU 0.761/0.752/0.741.
 - Stage 4 r37: all gates PASS, lock OK, glbcheck OK; stretch/clip warnings only (clip 0.41%). Separation PASS (tail-hind 26 cm, fore 17, hind 15). Orbit: no holes, specks or slits at leg, ear, neck or tail junctions.
 - Tris 2972 (2x level). orbit18_sheet.jpg, side_by_side.jpg rebuilt; fix9.jpg = before9 | after hero plus torso and shoulder close-ups.
+
+## Border pass (night 2026-10-23, s4 r38-r42) - REVERTED
+- kit/smooth_borders(body, k=k, iters=8): 4 despeckled, 17 cuts, 87 relaxed; stair corners 43 -> 23, 3-to-1 26 -> 0.
+- techqa hit 0 -> 2 (piece_tines). r39 (pin z > 1.5) and r40 (antler pairs excluded) still hit; r41 = the current stag.py
+  WITHOUT the border pass also hits 2 -> the cause is the 10-23 detail-pass tine change (r0 x1.35 roots through the
+  beam), which was never rebuilt (the 00:23 GLB predates it). Needs a fix by that pass's owner.
+- Junction FAIL (ears, upperarms, tail0, thighs) and eye size FAIL (0.036 head) are pre-existing (baseline GLB probed).
+- A/B vs the r41 no-border build: TIE in both orders -> champion kept -> REVERT. stag.py, stage3/stage4 GLB and checks
+  restored from before_borders/ (r41 GLB kept as before_borders/stag_r41_noborders.glb).

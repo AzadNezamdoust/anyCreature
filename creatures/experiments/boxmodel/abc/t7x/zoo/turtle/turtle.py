@@ -776,16 +776,20 @@ def stage4(k, body, pieces):
                        24: {'neck': (0, 0, 0), 'neck1': (0, 0, 0), 'head': (-2, 0, 0)},
                        36: {'neck': (-3, 0, 0), 'neck1': (-2, 0, -4), 'head': (3, 0, -4), 'tail0': (0, 0, -6)},
                        48: {}})
-    A = 12
+    A = 9                     # night fix r36: shorter stride (was 12): the thigh roots stay off the rump
+    # night fix 10-23: after --fix-clips (leg aim IK) the rump faces on tail0 crossed the thigh roots at move@7/@19
+    # (posed clip 3.3%; tail swing 0 changed nothing, so it is the rump, not the swing): the tail is carried lifted in
+    # the trot (TLX on tail0), pulling its rump faces up and back off the thigh roots
+    TSW, TLX = 5, 18
     clip(rig, 'move', {
         1: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0),
-            'neck': (0, 0, 3), 'tail0': (0, 0, 5)},
-        7: {'hand.R': (-10, 0, 0), 'foot.L': (8, 0, 0), 'head': (2, 0, 0)},
+            'neck': (0, 0, 3), 'tail0': (TLX, 0, TSW)},
+        7: {'hand.R': (-10, 0, 0), 'foot.L': (8, 0, 0), 'head': (2, 0, 0), 'tail0': (TLX, 0, 0)},
         13: {'upperarm.L': (-A, 0, 0), 'upperarm.R': (A, 0, 0), 'thigh.L': (A, 0, 0), 'thigh.R': (-A, 0, 0),
-             'neck': (0, 0, -3), 'tail0': (0, 0, -5)},
-        19: {'hand.L': (-10, 0, 0), 'foot.R': (8, 0, 0), 'head': (2, 0, 0)},
+             'neck': (0, 0, -3), 'tail0': (TLX, 0, -TSW)},
+        19: {'hand.L': (-10, 0, 0), 'foot.R': (8, 0, 0), 'head': (2, 0, 0), 'tail0': (TLX, 0, 0)},
         25: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0),
-             'neck': (0, 0, 3), 'tail0': (0, 0, 5)}},
+             'neck': (0, 0, 3), 'tail0': (TLX, 0, TSW)}},
         loc={1: {'hips': (0, 0, 0)}, 7: {'hips': (0, 0, 0.006)}, 13: {'hips': (0, 0, 0)}, 19: {'hips': (0, 0, 0.006)},
              25: {'hips': (0, 0, 0)}})
     clip(rig, 'attack', {

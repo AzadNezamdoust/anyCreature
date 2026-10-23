@@ -81,3 +81,7 @@ Not fixed: boulders still angular wedges; moss a flat colour zone; head still re
 - r15 Result: kit OK; detail FAIL only the middle toe (unchanged L 156 mm, t 20.9 mm, tip off to the side: the hit
   normal of the sloped foot front tilts the block sideways). Fix r16: toe blocks square to the front (n = -Y), 2 cm in.
 - r15 A/B (Opus, both orders): variant won BOTH (brow slab over the eyes, blockier toes) -> adopt once r16 passes the detail gate.
+- r16 Result: kit gates OK, detail PASS 12 groups (was 5 FAIL; toe sticks fixed). Junction shoulder knife 5.2 r /
+  thigh strip 1.7 r and eye side 0.19 come from the unchanged body (not part of this pass). ADOPT (r15 judge won
+  both orders; r16 only squares the toe blocks). Residuals: toe blocks small; forearm bracer slab sticks out (both
+  judges); the sheet's chest crack and boulder shoulders not done.

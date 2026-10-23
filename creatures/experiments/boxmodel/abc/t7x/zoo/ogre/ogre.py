@@ -482,8 +482,11 @@ def stage4(k, body, pieces):
     clip(rig, 'attack', {
         1: {},
         10: {'upperarm.R': (80, 0, 0), 'forearm.R': (55, 0, 0), 'chest': (-6, 0, 0), 'head': (-4, 0, 0)},
-        18: {'upperarm.R': (35, 0, 0), 'forearm.R': (10, 0, 0), 'chest': (12, 0, 0), 'spine': (5, 0, 0), 'head': (6, 0, 0)},
-        24: {'upperarm.R': (25, 0, 0), 'forearm.R': (8, 0, 0), 'chest': (8, 0, 0), 'spine': (3, 0, 0)},
+        # night fix r43: the blow ends higher (52 / 40 deg, was 35 / 25): at 35 deg + the 12 deg lean the fist went
+        # through the right thigh (posed clip arm.R / thigh.R 3.8 / 6.2 % at attack@17-18)
+        # r44: r43 only cut the clip to 2.6 / 4.2 %: the arm also swings out (Z -14 = away from the body) through the blow
+        18: {'upperarm.R': (52, 0, -14), 'forearm.R': (10, 0, 0), 'chest': (12, 0, 0), 'spine': (5, 0, 0), 'head': (6, 0, 0)},
+        24: {'upperarm.R': (40, 0, -10), 'forearm.R': (8, 0, 0), 'chest': (8, 0, 0), 'spine': (3, 0, 0)},
         32: {}})
     return rig
 

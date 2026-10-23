@@ -9,23 +9,23 @@
   "drift": 0
  },
  "totals": {
-  "float": 0,
-  "sliver": 34,
-  "hit": 0,
+  "sliver": 14,
+  "area": 15.089425601539785,
   "open": 0,
-  "valley": 0,
-  "drift": 0,
-  "flip": 0,
+  "hit": 0,
   "fold": 0,
-  "clip": 8,
-  "clip_area": 0.01437499069295688,
   "flip_area": 0,
-  "area": 15.068271573259791,
+  "clip": 8,
+  "valley": 0,
+  "flip": 0,
+  "clip_area": 0.01437499069295688,
+  "drift": 0,
   "stretch": 0,
-  "zfight": 4,
+  "zfight": 0,
+  "float": 0,
   "stretch_max": 0.0
  },
- "triangles": 3964,
+ "triangles": 3976,
  "turned": 274,
  "stuck": 0,
  "per_object": {
@@ -111,24 +111,24 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.07331128708543504,
+   "area": 0.052766720960878304,
    "flip_area": 0
   },
   "piece_mouth": {
    "valley": 0,
    "fold": 0,
-   "sliver": 26,
+   "sliver": 6,
    "hit": 0,
    "open": 0,
    "float": 0,
-   "zfight": 4,
+   "zfight": 0,
    "flip": 0,
    "drift": 0,
    "clip": 0,
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.07346583128747695,
+   "area": 0.11516442569202806,
    "flip_area": 0
   },
   "piece_cheek": {
@@ -200,5 +200,5 @@
    "flip_area": 0
   }
  },
- "ok": false
+ "ok": true
 }

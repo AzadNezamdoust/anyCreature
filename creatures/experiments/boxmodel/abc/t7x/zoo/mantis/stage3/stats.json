@@ -16,12 +16,13 @@
   "wing"
  ],
  "colour_count": 6,
- "tris": 4780,
+ "tris": 4716,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 64,
   "piece_wing": 1004,
-  "piece_spines": 84,
-  "piece_antenna": 156
+  "piece_spines": 100,
+  "piece_antenna": 76
  }
 }

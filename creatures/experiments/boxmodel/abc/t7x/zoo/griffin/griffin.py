@@ -375,8 +375,9 @@ def claw(bm, h, d, lead):
     yr, ym, yt = h.y + 0.014, h.y - 0.01 - lead * 0.5, h.y - 0.03 - lead
     xm, xt = x0 + d * 0.1, x0 + d * 0.2
     rows = [[(x0 - 0.014, yr, 0.008), (x0 + 0.014, yr, 0.008), (x0 + 0.014, yr, 0.038), (x0 - 0.014, yr, 0.038)],
-            [(xm - 0.011, ym, 0.006), (xm + 0.011, ym, 0.006), (xm + 0.01, ym, 0.028), (xm - 0.01, ym, 0.028)],
-            [(xt - 0.005, yt, 0.003), (xt + 0.005, yt, 0.003), (xt + 0.005, yt, 0.01), (xt - 0.005, yt, 0.01)]]
+            [(xm - 0.0125, ym, 0.005), (xm + 0.0125, ym, 0.005), (xm + 0.0115, ym, 0.031), (xm - 0.0115, ym, 0.031)],
+            [(xt - 0.0098, yt, 0.003), (xt + 0.0098, yt, 0.003), (xt + 0.0098, yt, 0.0225), (xt - 0.0098, yt, 0.0225)]]
+    # detail pass 10-23: a blunt chunky tip (>= 19.5 mm; floor 18.2 mm), the tip ring was 10 x 7 mm (t 17.0 mm)
     R = [[bm.verts.new(p) for p in r] for r in rows]
     bm.faces.new(list(reversed(R[0])))
     for a, b in ((R[0], R[1]), (R[1], R[2])):

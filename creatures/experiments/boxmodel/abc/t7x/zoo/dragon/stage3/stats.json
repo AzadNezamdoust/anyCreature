@@ -16,7 +16,7 @@
   "red"
  ],
  "colour_count": 6,
- "tris": 5956,
+ "tris": 5980,
  "attach": [],
  "borders": null,
  "pieces": {
@@ -25,7 +25,7 @@
   "piece_wing": 1168,
   "piece_claws": 320,
   "piece_scute": 300,
-  "piece_brow": 40,
+  "piece_brow": 64,
   "piece_nostril": 64,
   "piece_mouth": 80,
   "piece_spike_cheek": 104,

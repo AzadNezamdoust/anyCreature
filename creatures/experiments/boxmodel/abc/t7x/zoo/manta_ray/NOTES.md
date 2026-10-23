@@ -98,3 +98,9 @@ rounds/s4_r09_junctions.jpg.
 - s4 r10. Critique: (face 3/4, az090) the cephalic lobes are flat boxy vertical plates; the wing tips are blunt caps; the sheet renders put the ground under the belly so it read as lying on the floor. Fix (stage 2 vertex moves, lock kept): each lobe cross-section placed as a J-scroll (straight outer face, the lower edge rolled in and up, ROLL per level); wing x > 0.95 narrows, sweeps back 10 cm into a point, tip +3.5 cm up, span +7 cm; checks_blender ground at the real z 0.
 - r10 result: FAIL s2 46 self-hits + slivers 2.5 % (the rolled lobe's inner side crosses itself), lobe junction knife 1.44 r / poke 14; clip gate FAIL move/attack pen 3.9/5.2 % H (the longer tips dip under the rest floor in the flap). Top view: tips now swept points, lobes read as C hooks.
 - s4 r11. Fix: gentler roll (ROLL 0.2-0.85, R 5 cm, rolled edge 30 % thinner), no span extension, tip curl +5 cm.
+- r11 result: still FAIL s2 22 hits at (0.23, -1.11, 0.63-0.71) = the lobe's first level crossing its head root; slivers 2.2 %; lobe junction knife 1.44 r, poke 10; clip gate PASS (no span extension fixed the flap dip).
+- s4 r12. Fix: ROLL[0] = 0 (the root level stays a plate), level 1 0.45.
+- r12 result: still 22 s2 hits, now at y -1.19 (between lobe levels 0 and 1) -> the cause is not the roll: scroll_pt put the 'r' side at -n (the original lobe_place has 'r' at +n), so every level was mirrored through its centre plane and the lobe twisted between the head root and level 0.
+- s4 r13. Fix: side sign corrected.
+- r13 result: s2 hits 22 -> 12 (now where the rolled lower edges of levels 1-3 cross as the lobe path turns in plan, z ~0.53); lobe junctions PASS (knife 0.52 r, slit 0); slivers 2.2 % FAIL (body 46 vs champion 16); clip gate PASS.
+- s4 r14. Fix: ROLL max 0.55; wing-tip chord squeeze 0.5 -> 0.3.

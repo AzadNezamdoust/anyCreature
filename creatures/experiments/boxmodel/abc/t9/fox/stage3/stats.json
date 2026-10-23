@@ -1,0 +1,55 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "c560fd87c06a780915d5cfe28b492708b4a76188ef859e486d4dbc7c7d134236",
+  "collapsed_edge_hash": "c560fd87c06a780915d5cfe28b492708b4a76188ef859e486d4dbc7c7d134236",
+  "logged_ops": 2,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "claw",
+  "cream",
+  "fur",
+  "nose",
+  "sock"
+ ],
+ "colour_count": 6,
+ "tris": 3624,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 7,
+   "cuts": 16,
+   "relaxed": 74,
+   "undone": 26,
+   "max_move": 0.01474,
+   "mean_move": 0.00399,
+   "before": {
+    "border_edges": 133,
+    "length": 4.8092,
+    "paths": 10,
+    "corners": 44,
+    "corner_quads": 30,
+    "corners_per_m": 9.1
+   },
+   "after": {
+    "border_edges": 101,
+    "length": 3.8172,
+    "paths": 9,
+    "corners": 15,
+    "corner_quads": 1,
+    "corners_per_m": 3.9
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_claws": 512,
+  "piece_nose": 44,
+  "piece_ruff": 176,
+  "piece_tuft": 44
+ }
+}

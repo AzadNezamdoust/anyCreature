@@ -17,12 +17,15 @@
   "talon"
  ],
  "colour_count": 7,
- "tris": 3056,
+ "tris": 3218,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 48,
-  "piece_wing": 388,
+  "piece_wing": 464,
   "piece_feathers": 144,
-  "piece_toes": 272
+  "piece_toes": 224,
+  "piece_horns": 68,
+  "piece_spines": 66
  }
 }

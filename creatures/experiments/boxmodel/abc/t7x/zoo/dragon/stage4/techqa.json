@@ -9,24 +9,24 @@
   "drift": 0
  },
  "totals": {
-  "clip_area": 0.07048107364169869,
-  "zfight": 0,
-  "hit": 2,
-  "drift": 0,
-  "open": 0,
-  "sliver": 132,
-  "flip": 0,
-  "stretch": 0,
-  "area": 15.140348222999963,
-  "clip": 41,
-  "fold": 0,
-  "float": 0,
+  "hit": 0,
   "stretch_max": 0.0,
+  "stretch": 0,
+  "fold": 0,
+  "clip": 37,
+  "sliver": 108,
+  "open": 0,
+  "flip_area": 0,
+  "float": 0,
+  "flip": 0,
+  "area": 15.153821749468824,
   "valley": 0,
-  "flip_area": 0
+  "zfight": 0,
+  "clip_area": 0.0689380665868315,
+  "drift": 0
  },
- "triangles": 5956,
- "turned": 443,
+ "triangles": 5980,
+ "turned": 441,
  "stuck": 0,
  "per_object": {
   "body": {
@@ -134,18 +134,18 @@
   "piece_brow": {
    "valley": 0,
    "fold": 0,
-   "sliver": 16,
-   "hit": 2,
+   "sliver": 0,
+   "hit": 0,
    "open": 0,
    "float": 0,
    "zfight": 0,
    "flip": 0,
    "drift": 0,
-   "clip": 4,
+   "clip": 0,
    "stretch": 0,
    "stretch_max": 0.0,
-   "clip_area": 0.001543007054867178,
-   "area": 0.010104219704200444,
+   "clip_area": 0,
+   "area": 0.02030893020913264,
    "flip_area": 0
   },
   "piece_nostril": {
@@ -168,7 +168,7 @@
   "piece_mouth": {
    "valley": 0,
    "fold": 0,
-   "sliver": 12,
+   "sliver": 4,
    "hit": 0,
    "open": 0,
    "float": 0,
@@ -179,7 +179,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.022530757439063992,
+   "area": 0.025799573402991667,
    "flip_area": 0
   },
   "piece_spike_cheek": {
@@ -217,5 +217,5 @@
    "flip_area": 0
   }
  },
- "ok": false
+ "ok": true
 }
