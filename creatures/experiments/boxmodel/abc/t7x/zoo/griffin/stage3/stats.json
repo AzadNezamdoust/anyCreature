@@ -3,7 +3,7 @@
   "verdict": "PASS",
   "lock_edge_hash": "4836cc132bd50f54e44901cf4993ef05d05afe45ac2f04a572b71583cb08fa0d",
   "collapsed_edge_hash": "4836cc132bd50f54e44901cf4993ef05d05afe45ac2f04a572b71583cb08fa0d",
-  "logged_ops": 1,
+  "logged_ops": 2,
   "logged_new_verts": 4,
   "errors": []
  },
@@ -19,6 +19,33 @@
  "colour_count": 7,
  "tris": 4394,
  "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 12,
+   "relaxed": 59,
+   "undone": 13,
+   "max_move": 0.02893,
+   "mean_move": 0.00538,
+   "before": {
+    "border_edges": 81,
+    "length": 4.4247,
+    "paths": 5,
+    "corners": 18,
+    "corner_quads": 17,
+    "corners_per_m": 4.1
+   },
+   "after": {
+    "border_edges": 69,
+    "length": 3.6755,
+    "paths": 5,
+    "corners": 7,
+    "corner_quads": 0,
+    "corners_per_m": 1.9
+   }
+  }
+ ],
  "pieces": {
   "piece_eye": 80,
   "piece_wing": 888,

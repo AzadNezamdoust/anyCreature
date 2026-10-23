@@ -545,7 +545,7 @@ def wrist_ring(body):
 
 def toes(bm, tree, side):
     (cx, cy, _), rx, ry = LEG[-1][:3]
-    for o, w, L, hgt in ((-0.136, 0.042, 0.066, 0.088),   # detail pass r34: big toe apart from toe 2 (r33: the overlap read as one 18 cm stick), taller, shorter
+    for o, w, L, hgt in ((-0.138, 0.044, 0.066, 0.064),   # detail pass r35: big toe apart from toe 2, its top UNDER the foot top (r33/r34: the toe top ran back over the foot = an 18 cm 'stick'), blunt tip
                          (-0.055, 0.034, 0.068, 0.062), (0.0, 0.031, 0.062, 0.056),
                          (0.05, 0.029, 0.055, 0.05), (0.095, 0.027, 0.046, 0.044)):
         x = cx + o
@@ -553,9 +553,10 @@ def toes(bm, tree, side):
         if loc is None:
             continue
         h = Vector((x, loc.y, 0.0))
+        tf = 0.72 if o < -0.1 else 0.55
         rows = [[h + Vector((-w, 0.03, 0.007)), h + Vector((w, 0.03, 0.007)), h + Vector((w, 0.03, hgt)), h + Vector((-w, 0.03, hgt))],
                 [h + Vector((-w, -L * 0.5, 0.006)), h + Vector((w, -L * 0.5, 0.006)), h + Vector((w * 0.92, -L * 0.5, hgt * 0.85)), h + Vector((-w * 0.92, -L * 0.5, hgt * 0.85))],
-                [h + Vector((-w * 0.8, -L, 0.006)), h + Vector((w * 0.8, -L, 0.006)), h + Vector((w * 0.7, -L, hgt * 0.55)), h + Vector((-w * 0.7, -L, hgt * 0.55))]]
+                [h + Vector((-w * 0.8, -L, 0.006)), h + Vector((w * 0.8, -L, 0.006)), h + Vector((w * 0.7, -L, hgt * tf)), h + Vector((-w * 0.7, -L, hgt * tf))]]
         if side < 0:
             rows = [[Vector((-p.x, p.y, p.z)) for p in reversed(r)] for r in rows]
         box_chain(bm, rows)

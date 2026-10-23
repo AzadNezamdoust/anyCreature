@@ -1,9 +1,9 @@
 {
  "report": {
-  "verts": 2034,
-  "faces": 2020,
-  "tris": 4064,
-  "quads": 2016,
+  "verts": 2068,
+  "faces": 2054,
+  "tris": 4132,
+  "quads": 2050,
   "ngons": 4,
   "components": 1,
   "nonmanifold_edges": 0,
@@ -17,15 +17,15 @@
    ],
    [
     0.0836,
-    0.1409,
+    0.1414,
     0.503
    ]
   ]
  },
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "6d723a15ad780a5c20dd91d910913c6a947a4fa7a07d19df94979a9986326a43",
-  "collapsed_edge_hash": "6d723a15ad780a5c20dd91d910913c6a947a4fa7a07d19df94979a9986326a43",
+  "lock_edge_hash": "f1a6f03f367dfbd6e35dacdbfbb0ef19cc4682e07f4b205a3840b382ab895a7c",
+  "collapsed_edge_hash": "f1a6f03f367dfbd6e35dacdbfbb0ef19cc4682e07f4b205a3840b382ab895a7c",
   "logged_ops": 2,
   "logged_new_verts": 14,
   "errors": []
@@ -39,7 +39,7 @@
   "az225": 0.999,
   "az270": 1.0,
   "az315": 0.999,
-  "top": 0.996,
+  "top": 0.994,
   "bottom": 0.999
  }
 }

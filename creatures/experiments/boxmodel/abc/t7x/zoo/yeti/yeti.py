@@ -597,7 +597,8 @@ def nose_rows():
 
 # HEAD pass nose pad rows, bottom (nostril line, on the upper lip top) -> top (the bridge between the eyes):
 # (z, half width, lift out of the surface)
-NOSE_ROWS = ((2.096, 0.036, 0.008), (2.112, 0.054, 0.022), (2.132, 0.048, 0.020), (2.152, 0.032, 0.015), (2.172, 0.020, 0.010))
+# r4a = r3b + r3a's short broad nose bulb (lift along the surface normal, smaller nostrils)
+NOSE_ROWS = ((2.096, 0.042, 0.010), (2.110, 0.058, 0.015), (2.126, 0.054, 0.014), (2.142, 0.036, 0.010))
 
 
 def nose_pad(tree):
@@ -608,10 +609,13 @@ def nose_pad(tree):
         sec = []
         for xf, kind in ((-0.45, 'b'), (-1.0, 'e'), (-0.6, 'f'), (-0.2, 'f'), (0.2, 'f'), (0.6, 'f'), (1.0, 'e'), (0.45, 'b')):
             x = xf * w
-            loc, _n = hit(tree, (x, -1.5, z), (0, 1, 0))
-            sy = loc.y if loc is not None else -0.5
-            dy = {'b': 0.016, 'e': -max(0.4 * lift, 0.008), 'f': -lift * (1.0 - 0.25 * abs(xf))}[kind]
-            sec.append((x, sy + dy, z))
+            loc, nr = hit(tree, (x, -1.5, z), (0, 1, 0))
+            if loc is None:
+                loc, nr = Vector((x, -0.5, z)), Vector((0, -1, 0))
+            d_ = {'b': -0.016, 'e': max(0.4 * lift, 0.008), 'f': lift * (1.0 - 0.25 * abs(xf))}[kind]
+            # r3a: the lift is measured along the surface normal (a y lift on the sloping muzzle top was half as thick:
+            # z-fight), applied along y so the sections stay level
+            sec.append((x, loc.y - d_ / max(abs(nr.y), 0.35), z))
         out.append(sec)
     return out
 
@@ -646,7 +650,7 @@ def stage3(k, body):
     nose = object_from_bm('nose', bm, mirror=False)
     paint(nose, {'skin': PAL['skin'], 'eye': PAL['eye']},
           lambda c_, n_, i: 'eye' if (c_.z < (NOSE_ROWS[0][0] + NOSE_ROWS[1][0]) / 2 + 0.002 and (n_.y < -0.2 or n_.z < -0.2)
-                                      and 0.2 * NOSE_ROWS[1][1] < abs(c_.x) < 0.9 * NOSE_ROWS[1][1]) else 'skin')
+                                      and 0.3 * NOSE_ROWS[1][1] < abs(c_.x) < 0.7 * NOSE_ROWS[1][1]) else 'skin')
     pieces.append(nose)
     # hands: the parts-library four-finger hand, rooted in the wrist ring under the fur cuff
     wr = wrist_ring(body)

@@ -1,0 +1,676 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\manta_ray.glb",
+ "tag": "s4_r11",
+ "ok": false,
+ "tier": 2,
+ "tier_source": "auto",
+ "tier_auto": 2,
+ "mass_size_m": 0.658,
+ "body_volume_m3": 0.2843,
+ "H_m": 0.545,
+ "S_m": 2.934,
+ "size_m": [
+  2.43,
+  2.934,
+  0.545
+ ],
+ "floor_mm": 6.54,
+ "floor_px": 3.1,
+ "limits": {
+  "THICK_H": 0.012,
+  "TIER_MUL": {
+   "1": 2.0,
+   "2": 1.0,
+   "3": 1.0
+  },
+  "GAME_PX": 256,
+  "PX_MIN": 3.0,
+  "DIGIT_LEN_H": 0.04,
+  "DIGIT_ASPECT": {
+   "1": 4.5,
+   "2": 6.0,
+   "3": 6.0
+  },
+  "TIER_SIZE": [
+   0.45,
+   1.0
+  ],
+  "COUNT": {
+   "1": [
+    3,
+    8
+   ],
+   "2": [
+    6,
+    16
+   ],
+   "3": [
+    12,
+    30
+   ]
+  },
+  "DIGITS_PER_GROUP_T1": 4,
+  "PERSIST": [
+   0.012,
+   0.06
+  ],
+  "BUMP": 1.0,
+  "BLOB": 1.5,
+  "WINDOW": {
+   "pointed": 0.7,
+   "blunt": 0.85
+  },
+  "RINGS": 14,
+  "INSIDE_EPS": 0.0015,
+  "GAME_RES": 192
+ },
+ "count": {
+  "readable": 5,
+  "min": 6,
+  "max": 16,
+  "ok": false,
+  "warn": false
+ },
+ "features": [
+  {
+   "group": "body:fin",
+   "items": 4,
+   "gated": 4,
+   "passed": 4,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "body:tail",
+   "items": 1,
+   "gated": 1,
+   "passed": 1,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "eye",
+   "items": 2,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "paint:belly",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.474
+  },
+  {
+   "group": "paint:fin",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.041
+  }
+ ],
+ "warns": [],
+ "items": [
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "wing1.L",
+   "side": "L",
+   "tip": [
+    1.215,
+    -0.11,
+    0.791
+   ],
+   "centre": [
+    0.601,
+    -0.378,
+    0.656
+   ],
+   "length_mm": 908.8,
+   "thick_mm": 45.3,
+   "meanw_mm": 372.5,
+   "thick_px": 21.3,
+   "meanw_px": 175.0,
+   "length_H": 1.667,
+   "thick_H": 0.0831,
+   "aspect": 20.1,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     169.1,
+     667.2
+    ],
+    [
+     0.11,
+     142.0,
+     618.4
+    ],
+    [
+     0.18,
+     125.0,
+     568.2
+    ],
+    [
+     0.25,
+     113.7,
+     511.7
+    ],
+    [
+     0.32,
+     101.5,
+     448.6
+    ],
+    [
+     0.39,
+     91.3,
+     395.8
+    ],
+    [
+     0.46,
+     81.5,
+     349.2
+    ],
+    [
+     0.54,
+     71.3,
+     304.7
+    ],
+    [
+     0.61,
+     62.2,
+     263.0
+    ],
+    [
+     0.68,
+     53.2,
+     227.0
+    ],
+    [
+     0.75,
+     44.4,
+     177.4
+    ],
+    [
+     0.82,
+     35.1,
+     143.2
+    ],
+    [
+     0.89,
+     25.2,
+     90.6
+    ],
+    [
+     0.96,
+     18.3,
+     57.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 56.96
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "lobe1.L",
+   "side": "L",
+   "tip": [
+    0.087,
+    -1.449,
+    0.591
+   ],
+   "centre": [
+    0.219,
+    -1.069,
+    0.632
+   ],
+   "length_mm": 489.9,
+   "thick_mm": 57.4,
+   "meanw_mm": 177.2,
+   "thick_px": 27.0,
+   "meanw_px": 83.2,
+   "length_H": 0.899,
+   "thick_H": 0.1054,
+   "aspect": 8.5,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     163.9,
+     241.5
+    ],
+    [
+     0.11,
+     160.4,
+     236.7
+    ],
+    [
+     0.18,
+     122.0,
+     172.3
+    ],
+    [
+     0.25,
+     57.1,
+     125.6
+    ],
+    [
+     0.32,
+     54.1,
+     140.0
+    ],
+    [
+     0.39,
+     60.2,
+     155.1
+    ],
+    [
+     0.46,
+     64.1,
+     167.3
+    ],
+    [
+     0.54,
+     74.6,
+     178.5
+    ],
+    [
+     0.61,
+     83.1,
+     188.4
+    ],
+    [
+     0.68,
+     81.6,
+     191.5
+    ],
+    [
+     0.75,
+     71.8,
+     184.0
+    ],
+    [
+     0.82,
+     70.6,
+     175.9
+    ],
+    [
+     0.89,
+     48.0,
+     139.2
+    ],
+    [
+     0.96,
+     35.2,
+     99.3
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 27.1
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "wing1.R",
+   "side": "R",
+   "tip": [
+    -1.215,
+    -0.11,
+    0.791
+   ],
+   "centre": [
+    -0.182,
+    -0.313,
+    0.68
+   ],
+   "length_mm": 908.8,
+   "thick_mm": 45.3,
+   "meanw_mm": 372.5,
+   "thick_px": 21.3,
+   "meanw_px": 175.0,
+   "length_H": 1.667,
+   "thick_H": 0.0831,
+   "aspect": 20.1,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     169.1,
+     667.2
+    ],
+    [
+     0.11,
+     142.0,
+     618.4
+    ],
+    [
+     0.18,
+     125.0,
+     568.2
+    ],
+    [
+     0.25,
+     113.7,
+     511.7
+    ],
+    [
+     0.32,
+     101.5,
+     448.6
+    ],
+    [
+     0.39,
+     91.3,
+     395.8
+    ],
+    [
+     0.46,
+     81.5,
+     349.2
+    ],
+    [
+     0.54,
+     71.3,
+     304.7
+    ],
+    [
+     0.61,
+     62.2,
+     263.0
+    ],
+    [
+     0.68,
+     53.2,
+     227.0
+    ],
+    [
+     0.75,
+     44.4,
+     177.4
+    ],
+    [
+     0.82,
+     35.1,
+     143.2
+    ],
+    [
+     0.89,
+     25.2,
+     90.6
+    ],
+    [
+     0.96,
+     18.3,
+     57.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 56.96
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "lobe1.R",
+   "side": "R",
+   "tip": [
+    -0.087,
+    -1.449,
+    0.591
+   ],
+   "centre": [
+    -0.001,
+    -0.459,
+    0.683
+   ],
+   "length_mm": 489.9,
+   "thick_mm": 60.6,
+   "meanw_mm": 189.9,
+   "thick_px": 28.5,
+   "meanw_px": 89.2,
+   "length_H": 0.899,
+   "thick_H": 0.1112,
+   "aspect": 8.1,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     295.1,
+     346.9
+    ],
+    [
+     0.11,
+     271.6,
+     314.6
+    ],
+    [
+     0.18,
+     186.6,
+     286.0
+    ],
+    [
+     0.25,
+     145.6,
+     286.1
+    ],
+    [
+     0.32,
+     54.1,
+     140.0
+    ],
+    [
+     0.39,
+     60.2,
+     155.1
+    ],
+    [
+     0.46,
+     64.1,
+     167.3
+    ],
+    [
+     0.54,
+     193.6,
+     363.8
+    ],
+    [
+     0.61,
+     83.1,
+     188.4
+    ],
+    [
+     0.68,
+     81.6,
+     191.5
+    ],
+    [
+     0.75,
+     71.8,
+     184.0
+    ],
+    [
+     0.82,
+     70.6,
+     175.9
+    ],
+    [
+     0.89,
+     48.0,
+     139.2
+    ],
+    [
+     0.96,
+     35.2,
+     99.3
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 29.04
+  },
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail2",
+   "side": "C",
+   "tip": [
+    -0.0,
+    1.48,
+    0.603
+   ],
+   "centre": [
+    0.112,
+    0.142,
+    0.644
+   ],
+   "length_mm": 1161.6,
+   "thick_mm": 17.9,
+   "meanw_mm": 38.2,
+   "thick_px": 8.4,
+   "meanw_px": 17.9,
+   "length_H": 2.131,
+   "thick_H": 0.0328,
+   "aspect": 65.0,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     76.2,
+     106.8
+    ],
+    [
+     0.11,
+     63.9,
+     81.6
+    ],
+    [
+     0.18,
+     60.4,
+     67.4
+    ],
+    [
+     0.25,
+     41.0,
+     51.3
+    ],
+    [
+     0.32,
+     34.3,
+     44.8
+    ],
+    [
+     0.39,
+     30.8,
+     40.1
+    ],
+    [
+     0.46,
+     27.8,
+     36.3
+    ],
+    [
+     0.54,
+     25.1,
+     32.7
+    ],
+    [
+     0.61,
+     22.7,
+     29.6
+    ],
+    [
+     0.68,
+     20.1,
+     26.3
+    ],
+    [
+     0.75,
+     17.6,
+     23.0
+    ],
+    [
+     0.82,
+     15.2,
+     19.9
+    ],
+    [
+     0.89,
+     12.6,
+     16.5
+    ],
+    [
+     0.96,
+     10.1,
+     13.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.73
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 1,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 2,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  }
+ ],
+ "renders": {
+  "game": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_game_g315h.png"
+  ],
+  "flags": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\manta_ray\\stage4\\details\\s4_r11_dflag_back34.png"
+  ]
+ }
+}

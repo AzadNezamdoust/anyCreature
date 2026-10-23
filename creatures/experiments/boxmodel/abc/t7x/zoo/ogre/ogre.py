@@ -73,9 +73,13 @@ LEG = [((0.30, 0.06, 0.60), 0.22, 0.26, -0.04), ((0.315, 0.08, 0.51), 0.215, 0.2
        ((0.34, 0.12, 0.14), 0.14, 0.20), ((0.355, 0.08, 0.10), 0.17, 0.25), ((0.37, 0.03, 0.06), 0.20, 0.30),
        ((0.38, 0.03, 0.0), 0.20, 0.32)]
 # fix 8: deltoid cap - the first ring tilted outer side up, the second a bulge wider than the upper arm below it
-ARM = [((0.60, 0.19, 1.44), 0.09, 0.27, -0.03),   # fix 8c: a broad transition ring hugging the chest side
-        ((0.72, 0.21, 1.39), 0.19, 0.25, -0.02), ((0.745, 0.215, 1.30), 0.18, 0.23), ((0.74, 0.22, 1.23), 0.16, 0.20),
-       ((0.765, 0.215, 1.11), 0.16, 0.20), ((0.79, 0.20, 1.02), 0.165, 0.195), ((0.825, 0.17, 0.93), 0.19, 0.215),
+# night fix 10-23 (kit shelf check: the deltoid top was a level disc, 3.45 r^2 x 2.55 r from the top): the deltoid now
+# SLOPES from the trapezius over the arm and rolls into the outer wall - outer line C1 (0.545, 1.50) -> ring 0
+# (0.69, 1.43, ~26 deg) -> ring 1 (0.88, 1.33, ~28 deg) -> ring 2 (0.92, 1.21, ~70 deg); the 5-face root and the
+# broad first ring hugging the chest side are kept (no narrow crease strip)
+ARM = [((0.60, 0.19, 1.40), 0.09, 0.27, -0.03, 0.035),   # fix 8c: a broad transition ring hugging the chest side
+        ((0.72, 0.21, 1.30), 0.16, 0.25, -0.03, 0.05), ((0.75, 0.215, 1.21), 0.17, 0.23), ((0.75, 0.22, 1.15), 0.16, 0.20),
+       ((0.77, 0.215, 1.085), 0.16, 0.20), ((0.79, 0.20, 1.02), 0.165, 0.195), ((0.825, 0.17, 0.93), 0.19, 0.215),
        ((0.84, 0.15, 0.89), 0.188, 0.21), ((0.85, 0.13, 0.85), 0.18, 0.20), ((0.86, 0.10, 0.77), 0.13, 0.15), ((0.86, 0.08, 0.72), 0.10, 0.115),
        ((0.865, 0.05, 0.67), 0.19, 0.22), ((0.87, 0.03, 0.60), 0.21, 0.24), ((0.88, 0.02, 0.49), 0.17, 0.20)]
 LEG_ROOT, ARM_ROOT, EAR_FACE, EYE_J = 4, 5, 7, 1   # fix pass 2: arms x1.2-1.3 thick, forearm bulk, wrist taper, bigger fist   # fix pass: wrist tapered, fists bigger
@@ -99,7 +103,8 @@ def hexpos(sec, a, b, corner=0.55):
     c, rx, ry = sec[0], sec[1], sec[2]
     dz = sec[3] if len(sec) > 3 else 0.0
     k = corner if abs(b) > 0.99 else (0.9 if abs(b) > 0.3 else 1.0)   # poly pass 3: 10-sided ring
-    return (c[0] + a * rx * k, c[1] + b * ry, c[2] - a * dz)
+    dome = sec[4] if len(sec) > 4 else 0.0     # night fix r42: the deltoid rings drop at the front and back (a round cap)
+    return (c[0] + a * rx * k, c[1] + b * ry, c[2] - a * dz - dome * b * b * (1 + a) / 2)
 
 
 def earpos(sec, a, b):

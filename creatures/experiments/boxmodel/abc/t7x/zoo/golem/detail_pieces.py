@@ -138,7 +138,7 @@ def knob(bm, c, n, r, h, sides=6, sink=None, sq=(1.0, 1.0), up=None, top=0.45):
     sink = sink if sink is not None else 0.5 * h + 0.004
     c = Vector(c)
     rings = []
-    for off, rad in ((-sink, 1.0), (0.55 * h, 0.85), (h, top)):
+    for off, rad in ((-sink, 1.0), (0.6 * h, 0.78), (h, top)):          # a rounder dome (troll judge: knobs read as bolts)
         rings.append([bm.verts.new(c + n * off + (u * math.cos(t) * sq[0] + w * math.sin(t) * sq[1]) * r * rad)
                       for t in [2 * math.pi * (k_ + 0.5) / sides for k_ in range(sides)]])
     bm.faces.new(list(reversed(rings[0])))

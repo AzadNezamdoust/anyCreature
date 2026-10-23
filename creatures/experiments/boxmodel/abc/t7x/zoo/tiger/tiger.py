@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # Bengal tiger, t7 hand box-model: one spine loft of 6-vertex half rings (tail tip -> nose), legs extruded as
 # 2-face regions from the lower flank, ears as 1-face extrusions; stage 2 joint rings, eye socket, stripe loops;
@@ -271,7 +272,7 @@ def stage2(k, body):
     bm.free()
 
 
-PAL = {'orange': '#d27326', 'stripe': '#2a221e', 'cream': '#f6e7c9',   # weakfix 10-23: warmer cream (was #eee3cf: read grey in shade)
+PAL = {'orange': '#d27326', 'stripe': '#2a221e', 'cream': '#f6e7c9',   # weakfix 10-23 v2: warmer cream (was #eee3cf)
        'nose': '#9a5a52',
        'amber': '#e0a030', 'pupil': '#1a1615'}
 
@@ -287,7 +288,9 @@ def body_rule(c, n, s):
     if y < -0.76 and (z < 0.755 or n.z < -0.5):
         return 'cream'                                   # lips and chin
     if -0.67 < y < -0.40 and n.y < -0.2 and z < 0.80 and x < 0.13:
-        return 'cream'                                   # throat and chest (weakfix: up into the ruff, wider)
+        return 'cream'                                   # throat and chest (weakfix v2: up into the ruff, wider)
+    if -0.80 < y < -0.56 and 0.72 < z < 0.88 and x > 0.07 and n.x > 0.45 and n.z < 0.5:
+        return 'cream'                                   # weakfix v2: the white cheek ruff (sheet front / side), lit side planes
     if z < 0.11 and y < 0.55:
         return 'cream'                                   # paws
     if (n.z < -0.4 and z < 0.62) or (-0.30 < y < 0.20 and z < 0.47 and n.z < 0.3):
@@ -369,6 +372,8 @@ def claw(bm, h, d, lead):
 def stage3(k, body):
     att = body.data.attributes['stripe'].data
     paint(body, PAL, lambda c, n, i: body_rule(c, n, att[i].value))
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     bm0 = edit(body); tree = BVHTree.FromBMesh(bm0); bm0.free()
     # eye: small amber lens with a dark pupil, proud of the socket floor
     H0b, H1 = P('H0b'), P('H1')

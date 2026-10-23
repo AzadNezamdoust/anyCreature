@@ -123,3 +123,9 @@ eye-bulge head (front view); the pectorals are plain paddles without the sheet's
 2-edge crease beside the dorsal fin bottom (under the gate, a faint line in crop B). Kit quirks: a central fin bone
 (x = 0) counts as trunk, so the dorsal fin is never probed or membrane-checked (built 7.4-9.6 mm thick); refs.py's
 plan view of an upright creature is a lying pose (top outline removed).
+
+## Night fix 2026-10-23: dorsal fin root (kit now probes fin_dorsal; backup before_finroot/)
+- Critique: kit probe (fin_dorsal no longer trunk) FAIL knife 4 edges 1.03 r at 126 deg + seam strip 1.11 r / 1.4 mm; crops j3 A/C show notches at the top and bottom ends of the fin base.
+- Diagnosis (scratch jdbg.py on the GLB): the review-fix squeeze (level 1 22% toward mid height) made a V: root end z -> level 1 dips 1 cm -> level 2 rises back to the arc ends; the 126/109 deg valleys are the level-1 end edges, the strips the two thin triangles of each end wall (19 mm root edge -> 4.8 mm level edge).
+- Fix (S1 positions + root window, re-locked r11, edge sha256 f1a6f03f367dfbd6): the root takes one more back seam face above and below (centre window 0.188-0.300, 9 faces, z 0.186-0.304), no squeeze (end walls slope straight from the taller root to the arc ends, monotone), a fillet level 15% out at 9 mm half thickness. IoU side/front 0.911/0.888 (was 0.915).
+- Result s4 r09: kit gates PASS, junction PASS (fin_dorsal knife 0, max concave 41.8 deg, strip 0.69 r; tail0 strip 0.73 r), membranes PASS (dorsal p10 7.8 mm), eyes PASS, detail PASS (tier 1, 5 groups). 4076 S1 tris. A/B fresh Opus seats: AB -> after, BA -> after: ADOPT. Judge residuals: a bright faceted sliver at the top end of the root, a small pale point below the root.

@@ -336,6 +336,9 @@ def stage3(k, body):
     return [eye, bar]
 
 
+SWIM = 0.25
+
+
 def stage4(k, body, pieces):
     B = [('spine', J['spine'], J['chest'], None),
          ('chest', J['chest'], J['head'], 'spine', True),
@@ -377,6 +380,10 @@ def stage4(k, body, pieces):
         32: {}},
         loc={1: {'spine': (0, 0, 0)}, 9: {'spine': (0, -0.02, 0)}, 15: {'spine': (0, 0.09, 0)},
              20: {'spine': (0, 0.10, 0)}, 32: {'spine': (0, 0, 0)}})
+    # weakfix 2026-10-23: the koi swims: the rig (body + pieces parented to it) rides SWIM above the floor
+    # (the fins were 3.7 cm off z 0)
+    rig.location.z += SWIM
+    bpy.context.view_layer.update()
     return rig
 
 

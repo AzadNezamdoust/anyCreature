@@ -74,3 +74,7 @@ Before renders, script and lock in before9/. Starts from the 2x pass (pass3/), k
 - s4 r20, r21: all gates PASS, slivers 1.9 %, clip warning only; glbcheck OK. Total 2,508 tris (was 2,420). Separation PASS (tail-hind 15.7 cm, fore L/R 4.4 cm, hind L/R 8.6 cm). Eye unchanged (fix-pass-5 lens). Leg/ear roots: fix-pass-6 moves kept; no holes or specks in the hero.
 - fix9.jpg: hero before9 | after, torso and eye close-ups.
 Not fixed: faint shade steps remain on the mid flank next to the stage-2 shoulder/ham bulge.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r22. Critique: rear view — the hind legs stand 3-8 cm apart all the way down: a narrow slit under the tail (sheet: the hams meet, the lower legs part with clear space). Fix (stage 2 vertex moves, lock kept): hind-leg vertices below the stifle ring move out 2.4 cm (ramped from the stifle to full at the gaskin), the hind toes and the hock/hpaw/htoe joints with them.
+- Result: kit gates PASS (clip warn 3 tris), detail PASS, clips PASS after --fix-clips; junction: thighs PASS (knife 0, strip 0.51 r); FAIL ears (knife 3.05 r), upperarm strip 1.04 r, tail0 strip 1.85 r (untouched geometry). A/B (2 fresh Opus seats): variant wins both orders: ADOPT. Both judges: tiny pale specks beside the tail base in the rear view, in both builds (pre-existing).

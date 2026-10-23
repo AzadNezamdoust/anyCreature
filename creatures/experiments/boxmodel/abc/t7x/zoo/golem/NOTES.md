@@ -64,3 +64,20 @@ Not fixed: boulders still angular wedges; moss a flat colour zone; head still re
 - Stage 1 re-locked (r31; old lock in before9/lock): 1748 tris, edge sha256 280e2315811c7a8d, IoU side/front/top 0.775/0.801/0.779. Stage 2 cuts re-indexed to the new sections.
 - All gates PASS (clip warning only, 6 tris = 0.69 %), lock assert PASS. Separation PASS (legs 26.0 cm, arm-torso 10.2 cm, arm-legs 8.5 cm). Junctions checked in the 18-view orbit: no holes, specks or slits. Total 2300 tris.
 - stage4, orbit18_sheet.jpg, side_by_side.jpg re-rendered; fix9.jpg = before9 | after (hero, head/eye close-up, wire).
+
+## Detail pass (2026-10-23 night, tier 3: 5 -> 12+ groups; backup before_detail/)
+- r13 (S4): plates split into named pieces (kneecap, bracer, knuckle, plate_chest/_belly/_back/_lowback) + new
+  plate_thigh, brow blocks, rock lumps; stone toes taller. Kit: z-fight 4 (toes dip below the ground); detail FAIL:
+  all 6 toes 'sticks' (L 172 mm: the taller toe top runs back over the foot top, as troll r33). Junction (shoulder
+  knife 5.2 r, thigh strip 1.7 r) and eye side 0.19 FAILs come from the unchanged body (not run on the champion).
+  Critique (az000): brow blocks meet at the seam as a dark slit; rock lumps too small to read.
+- r14 Fix: toes 56 mm tall centred at z 0.032 (under the foot top, off the ground); one brow block per eye clear of
+  the seam; rock lumps 7-9 cm.
+- r14 Result: kit gates OK (z-fight fixed), detail FAIL only the middle toe each foot (L/t 7.5; crop dcrop_0: it
+  stands proud of the sloped foot front). Fix r15: toes seated deeper (middle 3 cm, outer 1.2 cm).
+- r14 A/B (Opus, both orders): champion won BOTH: the shoulder rock nubs read as fussy cubes poking out of the
+  moss boulders, the thigh slabs as stuck-on tiles. -> r15 also drops rock lumps and the thigh plate (keeps the named
+  plates, brow blocks and the toe fix).
+- r15 Result: kit OK; detail FAIL only the middle toe (unchanged L 156 mm, t 20.9 mm, tip off to the side: the hit
+  normal of the sloped foot front tilts the block sideways). Fix r16: toe blocks square to the front (n = -Y), 2 cm in.
+- r15 A/B (Opus, both orders): variant won BOTH (brow slab over the eyes, blockier toes) -> adopt once r16 passes the detail gate.

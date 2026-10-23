@@ -15,11 +15,19 @@
   "stone"
  ],
  "colour_count": 5,
- "tris": 2300,
+ "tris": 2324,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 48,
-  "piece_plates": 168,
-  "piece_toes": 72
+  "piece_kneecap": 24,
+  "piece_bracer": 24,
+  "piece_knuckle": 24,
+  "piece_plate_chest": 24,
+  "piece_plate_belly": 24,
+  "piece_plate_back": 24,
+  "piece_plate_lowback": 24,
+  "piece_toes": 72,
+  "piece_brow": 24
  }
 }

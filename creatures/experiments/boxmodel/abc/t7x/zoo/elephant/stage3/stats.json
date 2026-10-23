@@ -3,24 +3,57 @@
   "verdict": "PASS",
   "lock_edge_hash": "825866791bee4dfd2932f8a5c2df275fa8be9d561b8edf5d59c8a7a0455f28ee",
   "collapsed_edge_hash": "825866791bee4dfd2932f8a5c2df275fa8be9d561b8edf5d59c8a7a0455f28ee",
-  "logged_ops": 1,
+  "logged_ops": 2,
   "logged_new_verts": 4,
   "errors": []
  },
  "colours": [
   "dark",
   "eye",
+  "inner",
   "ivory",
   "pale",
   "skin"
  ],
- "colour_count": 5,
- "tris": 4056,
+ "colour_count": 6,
+ "tris": 5050,
  "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 3,
+   "cuts": 3,
+   "relaxed": 45,
+   "undone": 3,
+   "max_move": 0.05294,
+   "mean_move": 0.01179,
+   "before": {
+    "border_edges": 61,
+    "length": 8.7325,
+    "paths": 5,
+    "corners": 7,
+    "corner_quads": 4,
+    "corners_per_m": 0.8
+   },
+   "after": {
+    "border_edges": 50,
+    "length": 7.0406,
+    "paths": 4,
+    "corners": 0,
+    "corner_quads": 1,
+    "corners_per_m": 0.0
+   }
+  }
+ ],
  "pieces": {
   "piece_eye": 64,
   "piece_tusk_L": 94,
   "piece_tusk_R": 94,
-  "piece_nails": 384
+  "piece_nails": 384,
+  "piece_fold_trunk": 450,
+  "piece_fold_knee": 240,
+  "piece_brow": 100,
+  "piece_tuft": 44,
+  "piece_fold_shoulder": 160
  }
 }

@@ -378,9 +378,69 @@ def wing_bm():
     for (y, z) in ((-0.45, 0.58), (-0.18, 0.48), (0.08, 0.40)):
         leaf(bm, (wing_x(y) - 0.008, y, z), (0.0, 0.9, -0.38), (1, 0, 0), 0.26, 0.13, 0.03)
     nf = len(bm.faces)
-    cone(bm, (0.303, -0.70, 0.84), (0.33, -0.81, 0.82), 0.014)      # the wyvern wrist claw
+    # weakfix 2026-10-23: the wing-arm's hand: two big hooked claws at the wrist (was one 14 mm spike), the wyvern read
+    for a_, m_, b_, r_ in (((0.300, -0.69, 0.845), (0.322, -0.775, 0.85), (0.338, -0.835, 0.805), 0.026),
+                           ((0.298, -0.70, 0.77), (0.318, -0.775, 0.765), (0.330, -0.815, 0.715), 0.021)):
+        tube(bm, [a_, m_, b_], [r_, r_ * 0.75, 0.0])
     bm.faces.index_update()
     return bm, nw, nf
+
+
+# ---- weakfix 2026-10-23: the wyvern read (owner pick: the sheet itself is a plain raven) -- chunky swept-back
+# horns on the crown, big hooked wing-arm claws at the wrist, a row of blade spines down the tail top
+def tube(bm, pts, radii, sides=6):
+    """A tapered tube along pts (the last radius 0 = a point), closed at the root."""
+    pts = [Vector(p) for p in pts]
+    rows = []
+    for i, (p, r) in enumerate(zip(pts, radii)):
+        d = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
+        u = d.cross(Vector((0, 0, 1)))
+        u = u.normalized() if u.length > 1e-4 else d.orthogonal().normalized()
+        w = d.cross(u).normalized()
+        if r <= 1e-6:
+            rows.append(bm.verts.new(p))
+        else:
+            rows.append([bm.verts.new(p + (u * math.cos(t) + w * math.sin(t)) * r)
+                         for t in [k_ * 2 * math.pi / sides for k_ in range(sides)]])
+    fs = [bm.faces.new(list(reversed(rows[0])))]
+    for a, b in zip(rows, rows[1:]):
+        if isinstance(b, list):
+            fs += [bm.faces.new([a[j], a[(j + 1) % sides], b[(j + 1) % sides], b[j]]) for j in range(sides)]
+        else:
+            fs += [bm.faces.new([a[j], a[(j + 1) % sides], b]) for j in range(sides)]
+    recalc_normals(bm)
+    return fs
+
+
+def wyvern_pieces(tree):
+    out = []
+    # horns: from the crown side, up and back over the nape, then hooking down (beak grey)
+    bm = bmesh.new()
+    c, n, _i, _d = tree.find_nearest(Vector((0.075, -0.74, 1.215)))
+    r0 = c - n * 0.014
+    tube(bm, [r0, r0 + Vector((0.018, 0.06, 0.055)), r0 + Vector((0.034, 0.14, 0.075)), r0 + Vector((0.046, 0.215, 0.05))],
+         [0.030, 0.024, 0.015, 0.0])
+    horns = object_from_bm('horns', bm)
+    paint(horns, {'beak': PAL['beak']}, lambda c_, n_, i: 'beak')
+    out.append(horns)
+    # spines: three blade spines on the tail top (mirror=False: one piece on the seam)
+    bm = bmesh.new()
+    for y, h, L in ((0.10, 0.075, 0.10), (0.27, 0.065, 0.09), (0.44, 0.05, 0.08)):
+        hit = tree.ray_cast(Vector((0.0, y, 1.0)), Vector((0, 0, -1)), 2.0)[0]
+        if hit is None:
+            continue
+        z0 = hit.z - 0.012
+        w = 0.022
+        A = [bm.verts.new(Vector(p)) for p in ((-w, y - L / 2, z0), (w, y - L / 2, z0), (w, y + L / 2, z0), (-w, y + L / 2, z0))]
+        T = bm.verts.new(Vector((0.0, y + L * 0.45, z0 + h + 0.012)))
+        Tf = bm.verts.new(Vector((0.0, y - L * 0.1, z0 + h * 0.55 + 0.012)))
+        for q in ((A[3], A[2], A[1], A[0]), (A[0], A[1], Tf), (A[1], A[2], T, Tf), (A[2], A[3], T), (A[3], A[0], Tf, T)):
+            bm.faces.new(q)
+    recalc_normals(bm)
+    spines = object_from_bm('spines', bm, mirror=False)
+    paint(spines, {'beak': PAL['beak']}, lambda c_, n_, i: 'beak')
+    out.append(spines)
+    return out
 
 
 def stage3(k, body):
@@ -427,7 +487,7 @@ def stage3(k, body):
     talon_idx = {f.index for f in cf}
     toes = object_from_bm('toes', bm)
     paint(toes, {'leg': PAL['leg'], 'talon': PAL['talon']}, lambda c_, n_, i: 'talon' if i in talon_idx else 'leg')
-    return [eye, wing, feathers, toes]
+    return [eye, wing, feathers, toes] + wyvern_pieces(tree)
 
 
 def bind_chain(piece, rig, names, pick=None):

@@ -147,3 +147,9 @@ Rig: neck -> skull -> head (cranium only, for the eye check's head length) and s
   Residuals: ears are flat slabs (thin flippers from above, rounded fans from the front); the rump reads as a flat
   oval cap with a rim from the rear (R2-R0 close rings) where the sheet's rump is a tall split dome; long hard
   shoulder-bevel line down the back; eye socket is a rhombic inset (lens itself round and clear).
+
+## Detail pass (2026-10-23 night, tier 3: 6 -> 12+ groups; backup before_detail/)
+- r18 (S4): trunk rings (5 STEP wrinkle arcs), knee folds, brow, tail brush, shoulder fold, inner-ear paint +
+  smooth_borders. ALL gates PASS (detail 12 groups, eyes, junction). Critique (hero/az090): the ear face reads pink
+  (not on the sheet: ears are grey); knee arcs read as cuffs. Fix r19: ear face a lighter grey (#a39488), knee arcs
+  replaced by a lower-lip mound under the trunk root.

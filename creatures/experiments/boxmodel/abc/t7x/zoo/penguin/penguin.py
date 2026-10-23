@@ -487,7 +487,7 @@ def toe(bm, bc, root, d, L, w0, h0):
     (separate piece bc)."""
     side = Vector((-d.y, d.x, 0.0))
     rows = []
-    for t, w, h in ((0.0, w0, h0), (0.55, w0 * 0.8, h0 * 0.75), (1.0, w0 * 0.55, h0 * 0.5)):
+    for t, w, h in ((0.0, w0, h0), (0.55, w0 * 0.85, h0 * 0.9), (1.0, w0 * 0.7, h0 * 0.82)):   # detail pass 10-23: thick to the tip
         c = root + d * (L * t)
         rows.append([bm.verts.new(c + side * su * w + Vector((0, 0, zz))) for su, zz in ((-1, 0.005), (1, 0.005), (1, h), (-1, h))])
     bm.faces.new(list(reversed(rows[0])))
@@ -496,11 +496,13 @@ def toe(bm, bc, root, d, L, w0, h0):
             bm.faces.new([a[j], a[(j + 1) % 4], b[(j + 1) % 4], b[j]])
     bm.faces.new(rows[-1])
     tip = root + d * (L - 0.004)
-    base = [bc.verts.new(tip + side * su * w0 * 0.45 + Vector((0, 0, zz))) for su, zz in ((-1, 0.002), (1, 0.002), (1, h0 * 0.5), (-1, h0 * 0.5))]
-    pt = bc.verts.new(tip + d * 0.018 + Vector((0, 0, 0.0015)))
-    bc.faces.new(list(reversed(base)))
+    # detail pass 10-23: a chunky blunt claw (a frustum >= 14 mm thick to its tip; floor 13.2 mm; was t 3 mm)
+    base = [bc.verts.new(tip + side * su * 0.0088 + Vector((0, 0, zz))) for su, zz in ((-1, 0.002), (1, 0.002), (1, 0.0185), (-1, 0.0185))]
+    tq = tip + d * 0.016
+    top = [bc.verts.new(tq + side * su * 0.0074 + Vector((0, 0, zz))) for su, zz in ((-1, 0.0015), (1, 0.0015), (1, 0.0158), (-1, 0.0158))]
+    bc.faces.new(list(reversed(base))); bc.faces.new(top)
     for j in range(4):
-        bc.faces.new([base[j], base[(j + 1) % 4], pt])
+        bc.faces.new([base[j], base[(j + 1) % 4], top[(j + 1) % 4], top[j]])
 
 
 def stage3(k, body):
@@ -526,7 +528,7 @@ def stage3(k, body):
     for ang, dx, L in ((-24, -0.034, 0.066), (0, 0.0, 0.074), (24, 0.034, 0.066)):
         d = Vector((math.sin(math.radians(ang)), -math.cos(math.radians(ang)), 0.0))
         root = Vector((cx + dx, cy - ry + 0.03, 0.0))
-        toe(tb_, tc, root, d, L, 0.018, 0.017)
+        toe(tb_, tc, root, d, L, 0.018, 0.024)       # detail pass: toes 24 mm tall (were 3.5 mm at the tip)
     toes = object_from_bm('toes', tb_)
     paint(toes, {'black': PAL['black']}, lambda c_, n_, i: 'black')
     claws = object_from_bm('claws', tc)

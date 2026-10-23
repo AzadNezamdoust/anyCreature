@@ -626,14 +626,14 @@ def detail_pass(body, tree):
         sc = D.section_centre(tree, y)
         if sc is None:
             continue
-        hits = D.ring_stations(tree, sc[0], (0, 1, 0), (0, 0, 1), 180, 138, 4)
+        hits = D.ring_stations(tree, sc[0], (0, 1, 0), (0, 0, 1), 180, 136, 3)   # r22: 3 stations (tri budget)
         D.band(bm, D.stations_from_hits(hits, side_hint=(0, 1, 0)), 0.12, 0.028, prof=D.STEP, open_start=True)
     piece('scute', bm, 'belly')
-    # 2. brow ridge over the eye
+    # 2. brow ridge over the eye: one elongated low dome (r22: a band along the brow crossed the head twice = hit)
     e = eye_face_centre()
-    pts = [(1.0, e.y + 0.045 * t, e.z + 0.045 - 0.012 * t * t) for t in (-1.0, -0.5, 0.0, 0.5, 1.0)]
+    h_ = D.cast_in(tree, (1.0, e.y, e.z + 0.055), (-1, 0, 0))
     bm = bmesh.new()
-    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.04, 0.024)
+    D.knob(bm, h_[0], h_[1], 0.03, 0.022, sides=6, sq=(0.75, 1.5), up=(0, 0, 1), top=0.5)
     piece('brow', bm, 'red')
     # 3. nostrils: a mound each side of the snout tip with a dark cap
     h_ = D.cast_in(tree, (0.035, -2.6, 1.405), (0, 1, 0))
@@ -643,10 +643,10 @@ def detail_pass(body, tree):
     piece('nostril', bm, {'red': PAL['red'], 'pupil': PAL['pupil']},
           rule=lambda c_, n_, i: 'pupil' if n_.dot(nn) > 0.9 else 'red')
     # 4. mouth line: a dark lip line from the snout tip back under the eye
-    pts = [(1.0, y, z) for y, z in ((-1.985, 1.352), (-1.94, 1.347), (-1.89, 1.345), (-1.84, 1.349), (-1.795, 1.36))]
+    pts = [(1.0, y, z) for y, z in ((-1.985, 1.352), (-1.925, 1.346), (-1.86, 1.347), (-1.795, 1.36))]
     bm = bmesh.new()
-    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.022, 0.014,
-           prof=D.ROUND)
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.024, 0.02,
+           prof=D.ROUND, taper=0.65)
     piece('mouth', bm, 'pupil')
     # 5. cheek spikes: two bone spikes swept back off the jaw corner (the sheet's cheek frill)
     bm = bmesh.new()
@@ -654,7 +654,7 @@ def detail_pass(body, tree):
         h_ = D.cast_in(tree, (1.0, y, z), (-1, 0, 0))
         if h_ is not None:
             d = (h_[1] * 0.6 + Vector((0, 0.8, 0.15))).normalized()
-            D.knob(bm, h_[0], d, 0.03, L, sides=6, top=0.2, sink=0.02)
+            D.knob(bm, h_[0], d, 0.03, L, sides=5, top=0.2, sink=0.02)
     piece('spike_cheek', bm, 'bone')
     # 6. elbow spike: a bone spur on the back of each elbow
     h_ = D.cast_out(tree, Vector(J['elbow']) + Vector((0, 0, 0.02)), (0, 1, 0.2))
@@ -662,12 +662,6 @@ def detail_pass(body, tree):
     if h_ is not None:
         D.knob(bm, h_[0], (h_[1] + Vector((0, 0.6, 0.5))).normalized(), 0.032, 0.09, sides=6, top=0.2, sink=0.02)
     piece('spike_elbow', bm, 'bone')
-    # 7. knee plates: a raised scale plate on the front of each hind knee
-    h_ = D.cast_out(tree, Vector(J['knee']), (0, -1, 0.15))
-    bm = bmesh.new()
-    if h_ is not None:
-        D.knob(bm, h_[0], h_[1], 0.05, 0.025, sides=6, top=0.55)
-    piece('kneeplate', bm, 'belly')
     return out
 
 

@@ -60,3 +60,11 @@ Leg hole (owner crop: a white gap at the fore-leg root in the hero view): the br
 Rounds: s1 r13 failed self-intersection (C0 bottom 0.335 cut the fore-root inner edge), r14 PASS; r16/r17 failed (a C1a station behind the moved-forward fore-root front ring folded), so C1a was dropped for C2a; r18 PASS. A stage-2 brisket keel failed (the belly midline crossed the fore-root inner walls), and so did trials that moved the fore root forward (5.55-7.5, 5.25-7.3, 5.25-7.15), so the root stays M1a..C1 (key index 5.25 to 7).
 Base change: stage 1 re-locked in the stage-4 r12 run (the pass-8 r12 lock is kept in before9/): 1688 tris, edge sha256 fe20f810fe416841, IoU side/front/top 0.898/0.879/0.861. Stage 4 r12: all gates PASS, lock assert PASS, glbcheck OK, separation PASS (tail-hind 0.49 m, fore L-R 0.12 m, hind L-R 0.14 m). Total 2528 tris (was 2384). orbit18_sheet.jpg, side_by_side.jpg and fix9.jpg (before9 | after, with fore-leg root and torso close-ups) rebuilt.
 Not fixed: 46 posed triangles clip (QA warn); the torso flank still shows mild vertical shading steps where the hump curve bends; harness advises head merged at az000 and hidden at az180 (true to the sheet).
+
+## Border pass (night 2026-10-23, s4 r13)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint: 1 despeckled, 8 cuts, 32 relaxed (max 23.1 mm, 6 undone);
+  stair corners 24 -> 13, 3-to-1 quads 16 -> 0. Kit gates PASS, clips PASS (after --fix-clips).
+- Junction probe FAIL is pre-existing (the 10-18 baseline GLB probed with the current kit: same ear 2.6 r / thigh 1.13 r
+  knives; upperarm knife 4.93 r -> 3.77 r after). Detail gate FAIL pre-existing (count 4 < 6). Both -> next fix pass.
+- A/B (fresh Opus seat per order, blind): after wins both orders (hind-thigh / rump border). ADOPT.
+- Files: border_before_after.jpg, before_borders/.

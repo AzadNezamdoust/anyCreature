@@ -351,7 +351,7 @@ def stage2(k, body):
 
 
 PAL = {'skin': '#8e8073', 'pale': '#a08f81',   # s4 r17: sheet's warm grey (EEVEE read light)
-       'dark': '#4b4642', 'ivory': '#ece2cf', 'eye': '#3a2a1e', 'inner': '#a88a84'}   # detail pass: pink inner ear (sheet)
+       'dark': '#4b4642', 'ivory': '#ece2cf', 'eye': '#3a2a1e', 'inner': '#a39488'}   # detail pass r19: the ear face a step lighter (sheet; r18 pink was not on the sheet)
 
 
 def body_rule(c, n, i):
@@ -470,12 +470,12 @@ def detail_pass(body, tree):
         if len(hits) >= 3:
             D.band(bm, D.stations_from_hits(hits, side_hint=(0, 0, -1)), 0.06, 0.022, prof=D.STEP, open_start=True)
     piece('fold_trunk', bm, 'skin')
-    # 2. knee folds: a short stepped wrinkle arc on the front of each knee (fore wrist, hind stifle)
+    # 2. lower lip: the lip mound under the trunk root, behind the tusk (sheet side view; r18 knee arcs read as cuffs)
+    h_ = D.cast_in(tree, (1.5, -1.30, 1.70), (-1, 0, 0))
     bm = bmesh.new()
-    for sec in (FORE[2], HIND[2]):
-        hits = D.ring_stations(tree, (sec[0], sec[1], sec[2]), (0, 0, 1), (0, -1, 0), -70, 70, 6)
-        D.band(bm, D.stations_from_hits(hits, side_hint=(0, 0, -1)), 0.09, 0.028, prof=D.STEP)
-    piece('fold_knee', bm, 'skin')
+    if h_ is not None:
+        D.knob(bm, h_[0], h_[1], 0.07, 0.035, sides=8, sq=(0.8, 1.3), top=0.5)
+    piece('lip', bm, 'skin')
     # 3. brow ridge over each eye
     e = SOCKET[0]
     pts = [(1.5, e.y + 0.07 * t, e.z + 0.075 - 0.02 * t * t) for t in (-1.0, -0.5, 0.0, 0.5, 1.0)]

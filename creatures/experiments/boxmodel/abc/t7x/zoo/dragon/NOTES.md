@@ -76,3 +76,12 @@ Old stage 4, orbit/side sheets, hero, script and lock kept in before7/ (with bef
 2. Wing hole: the membrane's leading edge ran straight W-Rf while the arm spar bends W-E-root, leaving an open triangle between spar and membrane at the root. Fix: a last fan ray W-E plus a rim point Q half way down the spar, so the rim follows W-E-Q-Rf inside the spar; that rim is 26 mm thick (inside the 35-40 mm spar) and the Q end is a quad + triangle, not a 5-gon (r16-r19: sliver gate 2.0-2.04 %, fixed by both). Checked at hero, az30, az90, az150 and top: no see-through gap.
 - Stage 4 r20: all gates PASS, glbcheck OK, slivers 104/5304, hit/float/drift 0; warning 8 tris clip in poses. Separation PASS (tail-hind 0.31 m, fore L-R 0.30 m, hind L-R 0.30 m). Parts unfused.
 - orbit18_sheet.jpg, side_by_side.jpg, fix7.jpg (hero, legs, wing root at the owner's crop angle: before | after) rebuilt.
+
+## Detail pass (2026-10-23 night, tier 3 override: 7 -> 12+ groups; backup before_detail/)
+- r21 (S4): belly scutes (6 stepped STEP plates, rear edge steps down), brow, nostrils, mouth line, cheek spikes,
+  elbow spurs, knee plates. Detail PASS; FAIL tris 6204 > 6000; techqa hit 2 (brow crosses the eye lens); mouth
+  z-fight 2. Junction horn/shoulder/hip knives + wing membrane p10 5 mm are the champion's (WORKFLOW s9).
+- r22 Fix: scutes 3 stations, mouth 4 stations 20 mm tall, cheek spikes 5-sided, knee plates dropped (budget);
+  brow 1.5 cm higher, clear of the lens.
+- r22 Result: tris 5956 PASS, detail PASS, mouth z-fight gone; FAIL hit 2 (the brow band still crosses the head
+  twice) and slivers 2.2 % (brow 16, mouth 12). Fix r23: brow = one elongated low dome over the eye; mouth ends blunter.

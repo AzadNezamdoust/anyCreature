@@ -17,6 +17,7 @@
  "colour_count": 5,
  "tris": 2050,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 64
  }

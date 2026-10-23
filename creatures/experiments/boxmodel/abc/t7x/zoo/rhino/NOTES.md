@@ -142,3 +142,7 @@ section (T1 = 0.45), ears from 2-face windows on the skull top.
   a collar round the face (az000) and ankle cuffs. -> variant rejected.
 - r24 Fix (one change: the fold method): folds side-only (no back crossing, no collar), broad (18-22 cm) and low
   (3.5-4 cm) with a gentle front slope and one rear overhang step (STEP profile); ankle cuffs and rump ridges dropped.
+- r24 Result: kit gates OK (techqa clean, posed clip warn 0.05%), detail PASS 15 groups (was 7), junction FAIL ear
+  strip 1.54 r only (unchanged champion residual, not visible), eyes PASS; 4,012 tris. Folds now read as skin plates
+  (az090/back34), no straps. A/B Opus both orders: variant won BOTH -> ADOPT (champion = r24).
+  Residuals: the neck fold still rings the face a little from az000; mouth line thin-ish; ear strip metric.

@@ -128,22 +128,22 @@ def sec_pts(F, B, W, p):
 # 1-2 cm further forward at the centre and rounder in plan (j1/j2/j3 fall back progressively), the chin rounder
 FACE = {
     'H0u': {0: (0.0, -0.765, 0.885), 1: (0.080, -0.760, 0.888), 2: (0.165, -0.728, 0.898)},
-    'H0': {0: (0.0, -0.862, 0.940), 1: (0.052, -0.855, 0.942), 2: (0.100, -0.830, 0.950), 3: (0.135, -0.790, 0.966),
+    'H0': {0: (0.0, -0.862, 0.940), 1: (0.052, -0.855, 0.942), 2: (0.100, -0.830, 0.950), 3: (0.125, -0.788, 0.966),
            4: (0.182, -0.738, 1.005)},
-    'Hm': {0: (0.0, -0.868, 0.996), 1: (0.053, -0.861, 0.998), 2: (0.104, -0.838, 1.003), 3: (0.144, -0.798, 1.014),
+    'Hm': {0: (0.0, -0.868, 0.996), 1: (0.053, -0.861, 0.998), 2: (0.104, -0.838, 1.003), 3: (0.138, -0.797, 1.014),
            4: (0.190, -0.748, 1.046)},
     'H1': {0: (0.0, -0.892, 1.010), 1: (0.054, -0.884, 1.012), 2: (0.106, -0.858, 1.018), 3: (0.146, -0.812, 1.032),
            4: (0.186, -0.764, 1.068)},
-    # r3b (Q5: the upper lip and nose met in a downward wedge tip in profile): the muzzle top H2 forward to the lip
-    # line so the muzzle front stands upright and blunt, the nose pad lower (1.0-1.3 cm)
-    'H2': {0: (0.0, -0.884, 1.078), 1: (0.056, -0.876, 1.080), 2: (0.106, -0.850, 1.088), 3: (0.148, -0.792, 1.104),
+    'H2': {0: (0.0, -0.858, 1.078), 1: (0.056, -0.851, 1.080), 2: (0.106, -0.829, 1.088), 3: (0.158, -0.790, 1.104),
            4: (0.188, -0.752, 1.140)},
-    'H3': {0: (0.0, -0.778, 1.150), 1: (0.060, -0.763, 1.152), 2: (0.122, -0.757, 1.158), 3: (0.170, -0.746, 1.172),
+    'H3': {0: (0.0, -0.778, 1.150), 1: (0.060, -0.763, 1.152), 2: (0.122, -0.757, 1.158), 3: (0.180, -0.746, 1.172),
            4: (0.198, -0.720, 1.205)},
     'He': {0: (0.0, -0.772, 1.198), 1: (0.058, -0.760, 1.202), 2: (0.122, -0.755, 1.206), 3: (0.160, -0.726, 1.216),
            4: (0.182, -0.712, 1.242)},
-    'H4': {0: (0.0, -0.800, 1.236), 1: (0.058, -0.815, 1.250), 2: (0.122, -0.812, 1.254), 3: (0.162, -0.766, 1.252),
-           4: (0.172, -0.732, 1.272)},
+    # r3a (Q6: 'one straight visor bar'): two brow arches - the glabella j0 down 1 cm and back, j1/j2 up 0.8 cm, the
+    # outer corner j3 down 1 cm
+    'H4': {0: (0.0, -0.792, 1.226), 1: (0.058, -0.817, 1.258), 2: (0.122, -0.814, 1.262), 3: (0.162, -0.764, 1.242),
+           4: (0.172, -0.732, 1.268)},
 }
 
 def _raw(nm):
@@ -494,7 +494,9 @@ HAUNCH_SIDE = ('R0', 'R1', 'R2', 'R3', 'R4')
 # step, muzzle front and top (out to the muzzle side j3), the eye band (j0-j2: the outer orbit stays fur) and the brow
 # underside (j0-j3); the brow top, forehead and cheeks behind j3 stay fur
 BLEND = False     # HEAD pass variant b: one face column of a mid tone between the skin and the fur round the face
-SKIN_J = {'H0u': 0, 'H0': 1, 'Hm': 2, 'H1': 3, 'H2': 3, 'H3': 3, 'He': 3}
+# r4b (Q1/Q10: 'straight vertical cheek edges from brow to jaw'): the outline curves - the cheekbone j3 out 1 cm (H3,
+# H2), the lower face j3 in (Hm, H0), and the skin border column steps in below the muzzle top (H1/Hm j0-2, H0 j0-1)
+SKIN_J = {'H0u': 0, 'H0': 1, 'Hm': 2, 'H1': 2, 'H2': 3, 'H3': 3, 'He': 3}
 
 
 def body_rule(c, n, i):
@@ -628,7 +630,7 @@ def nose_rows():
 
 # HEAD pass nose pad rows, bottom (nostril line, on the muzzle front just above the lip) -> top (the bridge between
 # the eyes): (z, half width, lift out of the surface)
-NOSE_ROWS = ((1.060, 0.052, 0.008), (1.076, 0.068, 0.013), (1.100, 0.062, 0.012), (1.128, 0.038, 0.009), (1.152, 0.022, 0.007))
+NOSE_ROWS = ((1.060, 0.050, 0.008), (1.076, 0.068, 0.020), (1.100, 0.062, 0.017), (1.128, 0.038, 0.010), (1.152, 0.022, 0.007))
 
 
 def nose_pad(tree):

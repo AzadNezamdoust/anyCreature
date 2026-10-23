@@ -51,3 +51,7 @@ Fix list, shape first: (1) pectorals and pelvics read as legs (both reviews); (2
 - r11: all gates PASS: slivers 30 (1.8 %), hit/float/zfight/fold 0, lock assert PASS, glbcheck OK; posed clip warning 7 eye tris (0.01 %).
 - Triangles: s1 592 -> 1392, body 684 -> 1532, pieces 168 -> 168, total 852 -> 1700 (2.0x); all of the increase is in the body loft. Budgets: stage 1 1000-2200, total 1400-4500.
 - Separation PASS: pectoral L/R 0.62 m, pelvic 0.25, caudal 0.60, pelvic-anal 0.27. orbit18_sheet.jpg, side_by_side.jpg, before_after3.jpg rebuilt.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r12. Critique: the pectoral tips sat 3.5 cm off the floor (GLB min height 0.035 m); the old checks renders hid it by dropping the ground 0.15 m. Diagnosis: the loft was built on the floor trace. Fix: stage 4 lifts the rig object (body + pieces parented) SWIM 0.40 m; checks_blender.py now puts the ground at the real z 0.
+- Result: GLB min height 0.435 m. Kit gates PASS (clip warn 7 tris 0.01 %), detail PASS, clips PASS after --fix-clips; junction FAIL fin.L/R strip 2.6 r (geometry unchanged by this pass). A/B (2 fresh Opus seats): variant wins both orders: ADOPT.

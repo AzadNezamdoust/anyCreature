@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # brown bear, t7 hand box-model: one spine loft of 10-vertex half rings (tail stub -> nose, 27 stations), legs
 # extruded as 3x3-face regions of the lower flank into 12-sided horizontal rings, ears as 1-face extrusions.
@@ -399,6 +400,8 @@ def body_bvh(body):
 
 def stage3(k, body):
     paint(body, {kk: PAL[kk] for kk in ('fur', 'dark', 'muzzle', 'nose')}, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     tree = body_bvh(body)
     ec = eye_face_centre()
     c, n, _i, _d = tree.find_nearest(ec - Vector((0.012, 0, 0)))

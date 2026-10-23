@@ -149,7 +149,9 @@ Junction roots come from the rig:
 - every bone whose parent is a trunk bone (central, not a tail) and which is not trunk itself: limbs, ears, horns, tails, tentacles;
 - every piece named wing, fin, sail, membrane, frill, dorsal or pectoral, one per side.
 
-`r` is the chain's radius at its root. The region is within 2r of the root and down the first bone at most 0.6 of its length. Folds and strips count only on faces a review camera sees: ≥ 2 of 17 views, 8 azimuths level and at +35 deg, plus the top.
+- centre-line bones named like an appendage (fin_dorsal, crest, a centre horn) are junctions, not trunk.
+
+`r` is the chain's radius at its root (a mirrored pair shares one r). The region excludes other chains' faces (an ear rim inside a shoulder's 2r). The eye check's head length is the skull without ears, horns, tufts or lobes. The region is within 2r of the root and down the first bone at most 0.6 of its length. Folds and strips count only on faces a review camera sees: ≥ 2 of 17 views, 8 azimuths level and at +35 deg, plus the top.
 
 | measure | gate | meaning |
 |---|---|---|
@@ -160,6 +162,7 @@ Junction roots come from the rig:
 | poke | 0 | the body crosses itself near the root at rest |
 | gaps | none | a piece shell near the root hovering off the body (no contact, gap < r) |
 | pinch | warn only | a vertex whose angle sum is off 2 pi by > 2.2 rad |
+| shelf | level patch ≤ 0.5 r², or ≤ 0.8 r wide | (hanging arm roots) the troll T-bar: faces outboard of the arm root, within 20 deg of level, seen from the top (added 2026-10-23; zoo/kit_bug_audit.md) |
 | clip (S4) | ≤ 1.0% of the chain's area | the chain crosses another chain in any sampled frame of idle/move/attack (not crossing at rest); crossings with the trunk are `root_clip` (warn) |
 | eye | visible front ≥ 0.15, 3/4 ≥ 0.35, side ≥ 0.40; diameter 6–24% of head length; round ≥ 0.70; seated (embedded > 0) and proud ≥ 0.5 mm | small, clear, round lens in a socket |
 | membrane | area-weighted p10 thickness ≥ max(6 mm, 0.4% of size), no open edges | no paper-thin wings or fins |

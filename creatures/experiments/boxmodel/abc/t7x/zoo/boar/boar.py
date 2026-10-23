@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # t7 hand box model (the base wolf's technique): one spine loft of half rings tail tip -> snout disc (12-vertex
 # since poly pass 3), legs extruded as 2x2-face regions from the lower flank (octagon legs), ears as 1-face extrusions. keep_valleys is set in stage2.
@@ -466,6 +467,8 @@ def toe(bm, h, d):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     tree = body_bvh(body)
     # eyes (fix pass 5, owner: eyes still bad): was a 1.4 cm dark-brown dot sunk in a narrow slot. Now a 1.7 cm
     # amber lens with a big black pupil, centred on the open socket floor, facing the eye face's own normal

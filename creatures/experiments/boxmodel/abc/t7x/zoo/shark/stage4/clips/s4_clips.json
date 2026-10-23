@@ -1,6 +1,6 @@
 {
  "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\shark.glb",
- "H": 0.9499997496604919,
+ "H": 0.9499998576939106,
  "feet": [],
  "bones": 9,
  "gait": null,
@@ -18,7 +18,8 @@
     "tail2",
     1
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "idle": {
    "frames": 48,
@@ -33,7 +34,8 @@
     "tail2",
     1
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "move": {
    "frames": 25,
@@ -48,7 +50,8 @@
     null,
     null
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   }
  },
  "sheet_after": [
@@ -79,7 +82,8 @@
     "fin.L",
     14
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "idle": {
    "frames": 48,
@@ -94,7 +98,8 @@
     "tail2",
     1
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "move": {
    "frames": 25,
@@ -109,13 +114,19 @@
     null,
     null
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   }
  },
  "fix": {
   "attack": {
    "feet": {},
    "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
    "worst_resid": [
     1,
     0.0,
@@ -126,6 +137,11 @@
   "idle": {
    "feet": {},
    "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
    "worst_resid": [
     1,
     0.0,
@@ -136,6 +152,11 @@
   "move": {
    "feet": {},
    "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
    "worst_resid": [
     9,
     -0.01,
@@ -172,7 +193,8 @@
     null,
     null
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "idle": {
    "frames": 48,
@@ -187,7 +209,8 @@
     null,
     null
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   },
   "move": {
    "frames": 25,
@@ -202,7 +225,8 @@
     null,
     null
    ],
-   "slide_foot": null
+   "slide_foot": null,
+   "track": null
   }
  },
  "rest_drift": 0.0,

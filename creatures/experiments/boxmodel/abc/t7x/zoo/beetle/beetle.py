@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 import parts as PT
 
 # rhinoceros beetle (t7 hand box model, zoo workflow v2). One spine loft of 16-vertex half rings runs the elytra tip ->
@@ -372,6 +373,11 @@ def hook(bm, base, fwd, down, L, w, curve=75.0, segs=4):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    # r09: guard the leg roots (r08 unguarded: femur2 seam strip 1.04 r FAIL)
+    gl = [(tuple(R), 0.11, 0.0) for R, _n in LEG_ROOTS.values()]
+    gl += [((-c[0], c[1], c[2]), r_, f_) for c, r_, f_ in gl]
+    smooth_borders(body, k=k, iters=8, guard=gl)
     pieces = []
     # eye: a small round lens in the socket, a dark pupil disc
     c, n = SOCKET[0].copy(), SOCKET[1].normalized()

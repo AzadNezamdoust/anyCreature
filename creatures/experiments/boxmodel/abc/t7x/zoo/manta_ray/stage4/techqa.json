@@ -9,30 +9,30 @@
   "drift": 0
  },
  "totals": {
-  "clip": 0,
-  "stretch": 0,
-  "zfight": 0,
-  "area": 4.714157191029125,
   "flip": 0,
-  "clip_area": 0,
-  "drift": 0,
-  "stretch_max": 0.0,
-  "flip_area": 0,
-  "fold": 0,
-  "open": 0,
-  "valley": 0,
-  "sliver": 16,
   "float": 0,
-  "hit": 0
+  "area": 4.71007506041464,
+  "stretch_max": 0.0,
+  "fold": 0,
+  "stretch": 0,
+  "flip_area": 0,
+  "sliver": 46,
+  "zfight": 0,
+  "drift": 0,
+  "hit": 0,
+  "clip": 0,
+  "clip_area": 0,
+  "valley": 0,
+  "open": 0
  },
  "triangles": 2050,
- "turned": 110,
+ "turned": 118,
  "stuck": 0,
  "per_object": {
   "body": {
    "valley": 0,
    "fold": 0,
-   "sliver": 16,
+   "sliver": 46,
    "hit": 0,
    "open": 0,
    "float": 0,
@@ -43,7 +43,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 4.707249579193448,
+   "area": 4.703167448578963,
    "flip_area": 0
   },
   "piece_eye": {
@@ -64,5 +64,5 @@
    "flip_area": 0
   }
  },
- "ok": true
+ "ok": false
 }

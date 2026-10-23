@@ -10,42 +10,50 @@
  "colours": [
   "dark",
   "eye",
+  "muzzle",
   "nail",
   "pink",
   "skin"
  ],
- "colour_count": 5,
- "tris": 3192,
+ "colour_count": 6,
+ "tris": 3964,
  "attach": [],
  "borders": [
   {
    "tag": "borders",
    "despeckled": 0,
-   "cuts": 7,
-   "relaxed": 29,
-   "undone": 8,
-   "max_move": 0.03968,
-   "mean_move": 0.01267,
+   "cuts": 9,
+   "relaxed": 34,
+   "undone": 7,
+   "max_move": 0.03969,
+   "mean_move": 0.01284,
    "before": {
-    "border_edges": 48,
-    "length": 5.3109,
-    "paths": 2,
-    "corners": 11,
-    "corner_quads": 8,
+    "border_edges": 67,
+    "length": 6.3213,
+    "paths": 5,
+    "corners": 13,
+    "corner_quads": 11,
     "corners_per_m": 2.1
    },
    "after": {
-    "border_edges": 41,
-    "length": 4.8502,
-    "paths": 2,
-    "corners": 6,
-    "corner_quads": 0,
-    "corners_per_m": 1.2
+    "border_edges": 58,
+    "length": 5.8229,
+    "paths": 5,
+    "corners": 10,
+    "corner_quads": 1,
+    "corners_per_m": 1.7
    }
   }
  ],
  "pieces": {
   "piece_eye": 64,
-  "piece_nails": 512
+  "piece_nails": 512,
+  "piece_nostril": 76,
+  "piece_brow": 76,
+  "piece_mouth": 120,
+  "piece_cheek": 76,
+  "piece_fold_neck": 140,
+  "piece_fold_leg": 240,
+  "piece_tuft": 44
  }
 }

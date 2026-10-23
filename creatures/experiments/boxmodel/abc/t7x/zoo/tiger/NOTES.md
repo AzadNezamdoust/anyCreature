@@ -74,3 +74,7 @@ Not fixed: throat/chest cream still reads grey in shadow; stripes still straight
 - Stage 1 re-locked r14: PASS, 914 verts, 1824 tris, IoU 0.823/0.756/0.811. Stage 2-4 r14 FAIL (a C1-C1b stripe cut at t 1.0 landed on the C1b ring); r15 band 0.35/0.45: all gates PASS, lock assert PASS, glbcheck OK, slivers 0.4 %, posed clip warning 1.10 %.
 - Junctions (orbit 18, low views): no holes, specks, slits or folds at the leg, ear, tail and neck joins. Separation tail-hind 13.5 cm, fore L-R 9 cm, hind L-R 10.5 cm: PASS (no fused parts).
 - Triangles: s1 1480 -> 1824, total -> 3116 (2x pass was 2820). orbit18_sheet.jpg, side_by_side.jpg, fix9.jpg (hero before9 | after, chest/fore-leg and torso/hind-leg wire close-ups) rebuilt.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r16. Critique: front/hero — the chest reads grey (sheet: cream bib). Fix (paint only): cream #eee3cf -> warmer #f6e7c9, chest/throat rule widened (x < 0.13, up to z 0.80, n.y < -0.2).
+- Result: kit gates PASS, clips PASS; junction FAIL ears/shoulders/thighs + eye side 0.39 (geometry unchanged, pre-existing). A/B (2 fresh Opus seats): AB order B, BA order TIE -> tie -> champion kept, REVERTED (tiger.py and stage4/ restored from before_weakfix/). Both judges: neither build reads cream; the chest faces point down/forward and sit in shade (lit chest RGB ~115), so a paint change cannot make them read cream. Real fix = geometry: turn the chest/bib planes up toward the key light (stage 2 chest front), owner pick on the cream value.

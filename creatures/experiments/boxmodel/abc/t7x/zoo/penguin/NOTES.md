@@ -97,3 +97,10 @@ lens in a clean socket in all three eye crops. Separation: legs 13.9 cm apart, f
 Triangles: S1 2356, S2 2468 (loops + socket), total 2776. Rounds: S1 18 (r00-r17; 2 re-locks logged), S2 2, S3 7, S4 6.
 Residual: the head is narrower than the sheet's from the front; the ear patch is a rectangle, not the sheet's comma;
 the chest yellow is a uniform band (no fade); the tail meets the rump with a dark pocket seen from below.
+
+## Border pass (night 2026-10-23, s4 r07)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint: 11 cuts, 60 border verts relaxed (max 10.2 mm, 17 undone);
+  stair corners 20 -> 11, 3-to-1 quads 12 -> 0. Kit gates, junction probe PASS; clips PASS (after --fix-clips).
+  Detail gate FAIL pre-existing (count 5 < 6; claws/toes unreadable).
+- A/B (fresh Opus seat per order, blind): after wins both orders (orange ear patch rounded, no stepped edge). ADOPT.
+- Files: border_before_after.jpg, before_borders/.

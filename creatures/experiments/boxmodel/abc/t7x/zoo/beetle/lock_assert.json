@@ -3,7 +3,7 @@
  "verdict": "PASS",
  "lock_edge_hash": "b0465dbf5d547896a749d7d5e4d032016f9aacabf9662c2846a67e9def704e22",
  "collapsed_edge_hash": "b0465dbf5d547896a749d7d5e4d032016f9aacabf9662c2846a67e9def704e22",
- "logged_ops": 1,
+ "logged_ops": 2,
  "logged_new_verts": 4,
  "errors": []
 }

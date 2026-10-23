@@ -20,6 +20,7 @@
  "colour_count": 8,
  "tris": 2508,
  "attach": [],
+ "borders": null,
  "pieces": {
   "piece_eye": 48,
   "piece_tusk": 64,

@@ -1,0 +1,349 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\ogre\\stage4\\ogre.glb",
+ "tag": "s4_r39",
+ "ok": false,
+ "size_m": 2.16,
+ "limits": {
+  "REGION_K": 2.0,
+  "EXPOSED": 2,
+  "WELD": 1e-05,
+  "KNIFE_DEG": 90.0,
+  "KNIFE_LEN_K": 1.0,
+  "STRIP_W": 0.4,
+  "STRIP_ASPECT": 3.0,
+  "STRIP_CREASE_DEG": 30.0,
+  "STRIP_LEN_K": 1.0,
+  "SLIT_K": 0.1,
+  "SLIT_PCT": 1.5,
+  "GAP_K": 1.0,
+  "PINCH_RAD": 2.2,
+  "CLIP_PCT": 1.0,
+  "EYE_VIS": {
+   "front": 0.15,
+   "threeq": 0.35,
+   "side": 0.4
+  },
+  "EYE_SIZE": [
+   0.06,
+   0.24
+  ],
+  "EYE_ROUND": 0.7,
+  "SEAT_LIFT": 0.004,
+  "SEAT_FAR": 0.05,
+  "SEAT_PCT": 10.0,
+  "MEMBRANE_ABS": 0.006,
+  "MEMBRANE_REL": 0.004,
+  "SHELF_DEG": 20.0,
+  "SHELF_AREA_K": 0.5,
+  "SHELF_W_K": 0.8
+ },
+ "body": {
+  "open_edges": 0,
+  "nonmanifold_edges": 0
+ },
+ "junctions": [
+  {
+   "name": "upperarm.L",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 214.6,
+   "root": [
+    0.56,
+    0.2,
+    1.45
+   ],
+   "region_tris": 200,
+   "other_chain_tris": 2,
+   "r_side_mm": 214.6,
+   "open_edges": 0,
+   "max_concave_deg": 85.4,
+   "hidden_max_concave_deg": 159.9,
+   "knife_edges": 0,
+   "knife_len_r": 0.0,
+   "strip_max_len_r": 1.13,
+   "strip_min_width_mm": 28.5,
+   "strip_count": 2,
+   "median_face_mm": 96.7,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "shelf_area_r2": 3.45,
+   "shelf_width_r": 2.55,
+   "shelf_len_r": 2.07,
+   "shelf": true,
+   "gaps": [],
+   "clip_pct": 0.0,
+   "clip_at": null,
+   "clip_with": [],
+   "root_clip_pct": 0.21,
+   "fail": [
+    "seam strip 1.13 r long, 28.5 mm wide",
+    "shoulder shelf 3.45 r^2 level from the top, 2.55 r wide"
+   ],
+   "ok": false
+  },
+  {
+   "name": "upperarm.R",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 214.6,
+   "root": [
+    -0.56,
+    0.2,
+    1.45
+   ],
+   "region_tris": 200,
+   "other_chain_tris": 2,
+   "r_side_mm": 214.6,
+   "open_edges": 0,
+   "max_concave_deg": 148.4,
+   "hidden_max_concave_deg": 159.9,
+   "knife_edges": 2,
+   "knife_len_r": 0.44,
+   "strip_max_len_r": 1.16,
+   "strip_min_width_mm": 11.0,
+   "strip_count": 3,
+   "median_face_mm": 96.7,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 0,
+   "shelf_area_r2": 3.45,
+   "shelf_width_r": 2.55,
+   "shelf_len_r": 2.07,
+   "shelf": true,
+   "gaps": [],
+   "clip_pct": 3.74,
+   "clip_at": "attack@18",
+   "clip_with": [
+    "thigh.R"
+   ],
+   "root_clip_pct": 4.81,
+   "fail": [
+    "seam strip 1.16 r long, 11.0 mm wide",
+    "posed clip 3.74% with thigh.R at attack@18",
+    "shoulder shelf 3.45 r^2 level from the top, 2.55 r wide"
+   ],
+   "ok": false
+  },
+  {
+   "name": "thigh.L",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 304.3,
+   "root": [
+    0.3,
+    0.08,
+    0.66
+   ],
+   "region_tris": 213,
+   "other_chain_tris": 149,
+   "r_side_mm": 304.3,
+   "open_edges": 0,
+   "max_concave_deg": 45.3,
+   "hidden_max_concave_deg": 162.5,
+   "knife_edges": 0,
+   "knife_len_r": 0.0,
+   "strip_max_len_r": 0.0,
+   "strip_min_width_mm": null,
+   "strip_count": 0,
+   "median_face_mm": 103.3,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 4,
+   "gaps": [],
+   "clip_pct": 0.0,
+   "clip_at": null,
+   "clip_with": [],
+   "root_clip_pct": 0.21,
+   "fail": [],
+   "ok": true
+  },
+  {
+   "name": "thigh.R",
+   "kind": "limb",
+   "source": "bone",
+   "r_mm": 304.3,
+   "root": [
+    -0.3,
+    0.08,
+    0.66
+   ],
+   "region_tris": 213,
+   "other_chain_tris": 149,
+   "r_side_mm": 304.3,
+   "open_edges": 0,
+   "max_concave_deg": 45.3,
+   "hidden_max_concave_deg": 162.5,
+   "knife_edges": 0,
+   "knife_len_r": 0.0,
+   "strip_max_len_r": 0.0,
+   "strip_min_width_mm": null,
+   "strip_count": 0,
+   "median_face_mm": 103.3,
+   "slit_pct": 0.0,
+   "poke_tris": 0,
+   "pinch_verts": 4,
+   "gaps": [],
+   "clip_pct": 6.53,
+   "clip_at": "attack@17",
+   "clip_with": [
+    "upperarm.R"
+   ],
+   "root_clip_pct": 0.18,
+   "fail": [
+    "posed clip 6.53% with upperarm.R at attack@17"
+   ],
+   "ok": false
+  }
+ ],
+ "eyes": [
+  {
+   "side": "L",
+   "centre": [
+    0.091,
+    -0.377,
+    1.874
+   ],
+   "diam_mm": 51.9,
+   "round": 0.89,
+   "diam_head": 0.09,
+   "embed_mm": 6.4,
+   "proud_mm": 20.0,
+   "visible": {
+    "front": 0.74,
+    "threeq": 0.6,
+    "side": 0.08
+   },
+   "unoccluded": {
+    "front": 0.99,
+    "threeq": 0.91,
+    "side": 0.23
+   },
+   "fail": [
+    "side view 0.08 < 0.4"
+   ],
+   "ok": false
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.091,
+    -0.377,
+    1.874
+   ],
+   "diam_mm": 50.9,
+   "round": 0.97,
+   "diam_head": 0.088,
+   "embed_mm": 6.4,
+   "proud_mm": 20.0,
+   "visible": {
+    "front": 0.77,
+    "threeq": 0.62,
+    "side": 0.08
+   },
+   "unoccluded": {
+    "front": 0.99,
+    "threeq": 0.91,
+    "side": 0.23
+   },
+   "fail": [
+    "side view 0.08 < 0.4"
+   ],
+   "ok": false
+  }
+ ],
+ "membranes": [
+  {
+   "target": "piece_flap_back",
+   "p10_mm": 17.2,
+   "p50_mm": 19.2,
+   "floor_mm": 8.6,
+   "thin_area_pct": 0.0,
+   "open_edges": 0,
+   "fail": [],
+   "ok": true
+  },
+  {
+   "target": "piece_flap_front",
+   "p10_mm": 19.4,
+   "p50_mm": 22.4,
+   "floor_mm": 8.6,
+   "thin_area_pct": 0.0,
+   "open_edges": 0,
+   "fail": [],
+   "ok": true
+  }
+ ],
+ "seats": [
+  {
+   "piece": "piece_belt",
+   "lifted_pct": 61.5,
+   "ok": false,
+   "fail": [
+    "61.5% of the inner face lifts off the skin (> 10.0%)"
+   ]
+  },
+  {
+   "piece": "piece_strap",
+   "lifted_pct": 36.4,
+   "ok": false,
+   "fail": [
+    "36.4% of the inner face lifts off the skin (> 10.0%)"
+   ]
+  }
+ ],
+ "crops": [
+  "s4_r39_j0_A_beauty.png",
+  "s4_r39_j0_B_beauty.png",
+  "s4_r39_j0_C_beauty.png",
+  "s4_r39_j1_A_beauty.png",
+  "s4_r39_j1_B_beauty.png",
+  "s4_r39_j1_C_beauty.png",
+  "s4_r39_j2_A_beauty.png",
+  "s4_r39_j2_B_beauty.png",
+  "s4_r39_j2_C_beauty.png",
+  "s4_r39_j3_A_beauty.png",
+  "s4_r39_j3_B_beauty.png",
+  "s4_r39_j3_C_beauty.png",
+  "s4_r39_eyeL_front_beauty.png",
+  "s4_r39_eyeL_threeq_beauty.png",
+  "s4_r39_eyeL_side_beauty.png",
+  "s4_r39_eyeR_front_beauty.png",
+  "s4_r39_eyeR_threeq_beauty.png",
+  "s4_r39_eyeR_side_beauty.png",
+  "s4_r39_j0_A_flags.png",
+  "s4_r39_j0_B_flags.png",
+  "s4_r39_j0_C_flags.png",
+  "s4_r39_j1_A_flags.png",
+  "s4_r39_j1_B_flags.png",
+  "s4_r39_j1_C_flags.png",
+  "s4_r39_j2_A_flags.png",
+  "s4_r39_j2_B_flags.png",
+  "s4_r39_j2_C_flags.png",
+  "s4_r39_j3_A_flags.png",
+  "s4_r39_j3_B_flags.png",
+  "s4_r39_j3_C_flags.png"
+ ],
+ "views": {
+  "j0": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j1": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j2": [
+   "A",
+   "B",
+   "C"
+  ],
+  "j3": [
+   "A",
+   "B",
+   "C"
+  ]
+ }
+}

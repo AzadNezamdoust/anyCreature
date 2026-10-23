@@ -18,7 +18,7 @@
   "skin"
  ],
  "colour_count": 8,
- "tris": 4316,
+ "tris": 4206,
  "attach": [
   {
    "kind": "piece_attach",
@@ -52,7 +52,6 @@
   "piece_kneecap": 76,
   "piece_wart": 192,
   "piece_navel": 32,
-  "piece_fold_chest": 110,
   "piece_mouth": 90
  }
 }

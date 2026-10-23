@@ -1,9 +1,9 @@
 {
  "report": {
-  "verts": 2006,
-  "faces": 1992,
-  "tris": 4008,
-  "quads": 1988,
+  "verts": 2040,
+  "faces": 2026,
+  "tris": 4076,
+  "quads": 2022,
   "ngons": 4,
   "components": 1,
   "nonmanifold_edges": 0,
@@ -17,7 +17,7 @@
    ],
    [
     0.0836,
-    0.1409,
+    0.1414,
     0.503
    ]
   ]

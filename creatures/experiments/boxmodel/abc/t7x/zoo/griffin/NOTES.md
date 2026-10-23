@@ -48,3 +48,11 @@ Flaws seen: (1) the wing colour border stepped face by face across the slab (a t
 - s4 r06 (fix round 1): Critique: flaw 1. Fix: a covert layer, a second closed tan slab 6 mm over the wing's upper front, its lower edge zig-zagging station to station and tapering at station 9, root inside the ruff; the wing slab itself all brown. Orbit/side: reads as the sheet's layered coverts over dark flight feathers. Every kit gate PASS (4394 tris, slivers 0.4 %, posed fold-overs 0 %, hit/float/drift/z-fight 0), glbcheck OK, junction probe PASS (all knife 0, strip <= 0.78 r, wing max concave 48 deg), eyes PASS, membrane p10 18.0 mm. Separation tail-hind 18.7 cm, fore L-R 20.6 cm, hind L-R 24.6 cm PASS.
 - Not fixed (round caps reached: S4 ran 6 rounds against the brief's 4, the extra two were junction re-lock checks): flaws 2-5.
 - Deliverables: orbit18_sheet.jpg, side_by_side.jpg (reference | model, checks.py), compare_engine_grey_final.jpg (run.py --compare), review/, rounds/s4_r06_junctions.jpg.
+
+## Border pass (night 2026-10-23, s4 r07)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint: 12 cuts, 59 relaxed (max 28.9 mm, 13 undone); stair
+  corners 18 -> 7, 3-to-1 quads 17 -> 0. Kit gates, junction probe PASS; clips PASS (after --fix-clips). Detail gate
+  FAIL pre-existing (claw tips short). The wing piece's tan/brown covert zig-zag is a separate piece, not touched
+  (owner pick: smooth it too, or keep as a feather edge).
+- A/B (fresh Opus seat per order, blind): after wins both orders (belly patch a rounded oval). ADOPT.
+- Files: border_before_after.jpg, before_borders/.

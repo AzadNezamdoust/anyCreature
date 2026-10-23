@@ -60,3 +60,8 @@ Weaknesses: one symmetric hind pair against the ref's staggered pair; cheek ruff
 - Junctions checked in the orbit and close-ups: legs, ears, neck, tail meet clean; no holes, specks or slits.
 - Stage 1 re-locked (r11): gates PASS, 1820 tris (2x level: r8 was 1796), edge sha256 5e21cb6412396b9d, IoU 0.770/0.802/0.761.
 - Stage 4 r7: all gates PASS, 2048 tris; clip warning 5.8%. Separation PASS (tail-hind 4.9 cm, fore 13.4, hind 11.4), no fused parts. before9/ holds the old renders; stage4, orbit18, side_by_side, fix9 (before9 | after, hero + torso wire close-ups) re-rendered.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r08. Critique: the brush hangs into the hind legs' swing in the trot (calibration: tail vs thigh posed clip 7.1-7.9 %). Fix (clips only): tail0 held at +16 deg X through move (meant to lift it), tail1 side sway 5 -> 3 deg.
+- r08 result: worse: tail0 vs thighs clip 14.7-16.1 % (move@1/13/19), techqa posed clip warn 14 % of surface: +X on this tail bone swings it down/forward. Kit gates PASS otherwise, clips PASS.
+- s4 r09. Fix: tail0 -16 deg.

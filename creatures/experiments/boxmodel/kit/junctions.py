@@ -92,7 +92,7 @@ LIMITS = dict(
     MEMBRANE_ABS=0.006,      # m
     MEMBRANE_REL=0.004,      # x the creature's largest dimension
     SHELF_DEG=20.0,          # shoulder shelf: an exposed face this close to level (normal within SHELF_DEG of +z) ...
-    SHELF_AREA_K=0.5,        # gate: the largest level patch outboard of an arm root, seen from the top, <= SHELF_AREA_K x r^2 (synthetic troll T-bar 0.93, zoo max see kit_bug_audit.md)
+    SHELF_AREA_K=0.5,        # gate: the largest level patch outboard of an arm root, seen from the top, <= SHELF_AREA_K x r^2 (synthetic troll T-bar 0.93, troll 0.0, ogre 3.45)
     SHELF_W_K=0.8,           # ... counted only when it is also this wide across the limb (x r): a round arm top is a line
 )
 L_ = LIMITS
@@ -105,7 +105,9 @@ PIECE_JUNCTION_WORDS = {'wing', 'fin', 'sail', 'membrane', 'frill', 'dorsal', 'p
 # 2026-10-23: the seahorse's fin_dorsal was trunk, so it was never probed nor membrane-checked)
 APPENDAGE_WORDS = PIECE_JUNCTION_WORDS | {'caudal', 'crest', 'horn', 'antler', 'tusk', 'ear', 'lobe', 'tuft'}
 # shoulder shelf check (top view): front-limb roots only (a hip's top is the haunch, a flat back is not a shelf)
-ARM_WORDS = {'upperarm', 'arm', 'shoulder', 'clavicle', 'humerus', 'foreleg', 'scapula', 'flipper', 'pec'}
+ARM_WORDS = {'upperarm', 'arm', 'shoulder', 'clavicle', 'humerus', 'foreleg', 'scapula', 'flipper'}
+SHELF_HANG = -0.5        # ... and only a hanging arm (bone axis z below this): a sprawling croc leg, a crab or scorpion
+                         # pincer, an octopus arm or a koi fin is level along its top by design
 
 
 def _words(name):
@@ -593,7 +595,7 @@ def probe(m, J, posed=True):
         out['pinch_verts'] = pinch
         # shoulder shelf (top view)
         if j['source'] == 'bone' and j['kind'] == 'limb' and has_word(j['name'], ARM_WORDS) \
-                and abs(j['root'][0]) > 0.01 * m.L:
+                and abs(j['root'][0]) > 0.01 * m.L and j['axis'][2] < SHELF_HANG:
             sh = _shelf(m, g, j, reg, trees)
             out.update(sh['out'])
             for t in sh['tris']:

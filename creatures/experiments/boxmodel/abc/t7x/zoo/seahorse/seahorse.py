@@ -238,7 +238,11 @@ J = dict(spine=(0.0, 0.025, 0.20), chest=(0.0, 0.03, 0.29), neck=(0.0, 0.05, 0.3
 # bottom and top walls folded back over the back at 147 / 133 deg (the red under the fin in the tail0 crops)
 DORSAL_ARC = [(0.118, 0.213), (0.136, 0.232), (0.143, 0.258), (0.138, 0.284), (0.123, 0.299)]
 # review fix 2-3: the first level is squeezed 22% toward the root's middle height: the end walls flare off the back
-DORSAL_LV = [(0.4, 0.0048, 0.22), (0.75, 0.0042, 0.06), (1.0, 0.0037, 0.0)]
+# night fix 10-23 (kit now probes fin_dorsal: knife 1.03 r at 126 deg + strip 1.11 r at the fin ends): the 22% squeeze
+# made a V notch (root -> level 1 dips 1 cm, level 2 rises back to the arc). Now the ROOT is broad: one more back seam
+# face above and below (window 0.188-0.300), so the fin's end walls slope straight from the taller root down to the
+# arc ends (monotone, no V), and a fillet level 15% out at 9 mm half thickness blends the long walls into the back.
+DORSAL_LV = [(0.15, 0.0090, 0.0), (0.4, 0.0048, 0.0), (0.75, 0.0042, 0.0), (1.0, 0.0037, 0.0)]
 # pectoral fin sections: (distance out, chord low, chord high (along the loft, from the root centre), half thickness)
 # s1 r02: a fan, not a board: the chord narrows a little past the hug section, then spreads, and the outer
 # sections bow out at mid chord (round, x sin(pi a)) so the edge is an arc
@@ -325,9 +329,10 @@ def stage1(k):
     grow_seam(bm, crown, lambda b: (-0.012 + (b.y + 0.012) * 0.3, 0.503), CORONET_LV)
     # dorsal fin: the back seam faces with centre z 0.205-0.295 (trunk), fanned back to the sheet's arc
     dfaces = [spans[i][0] for i in range(SI('K%02d' % R0), len(spans))
-              if 0.205 < zc(spans[i][0]) < 0.295 and spans[i][0].calc_center_median().y > 0.06]
+              if 0.188 < zc(spans[i][0]) < 0.300 and spans[i][0].calc_center_median().y > 0.06]
     zr = [v.co.z for f in dfaces for v in f.verts]
     z0, z1 = min(zr), max(zr)
+    say('DORSAL root faces', len(dfaces), 'z', round(z0, 4), round(z1, 4))
 
     def darc(b):
         t = min(max((b.z - z0) / (z1 - z0), 0.0), 1.0) * (len(DORSAL_ARC) - 1)

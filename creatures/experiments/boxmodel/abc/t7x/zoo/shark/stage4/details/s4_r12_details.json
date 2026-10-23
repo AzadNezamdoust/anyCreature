@@ -1,0 +1,1611 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\shark.glb",
+ "tag": "s4_r12",
+ "ok": true,
+ "tier": 2,
+ "tier_source": "auto",
+ "tier_auto": 2,
+ "mass_size_m": 0.648,
+ "body_volume_m3": 0.2716,
+ "H_m": 0.95,
+ "S_m": 2.64,
+ "size_m": [
+  1.205,
+  2.64,
+  0.95
+ ],
+ "floor_mm": 11.4,
+ "floor_px": 3.1,
+ "limits": {
+  "THICK_H": 0.012,
+  "TIER_MUL": {
+   "1": 2.0,
+   "2": 1.0,
+   "3": 1.0
+  },
+  "GAME_PX": 256,
+  "PX_MIN": 3.0,
+  "DIGIT_LEN_H": 0.04,
+  "DIGIT_ASPECT": {
+   "1": 4.5,
+   "2": 6.0,
+   "3": 6.0
+  },
+  "TIER_SIZE": [
+   0.45,
+   1.0
+  ],
+  "COUNT": {
+   "1": [
+    3,
+    8
+   ],
+   "2": [
+    6,
+    16
+   ],
+   "3": [
+    12,
+    30
+   ]
+  },
+  "DIGITS_PER_GROUP_T1": 4,
+  "PERSIST": [
+   0.012,
+   0.06
+  ],
+  "BUMP": 1.0,
+  "BLOB": 1.5,
+  "WINDOW": {
+   "pointed": 0.7,
+   "blunt": 0.85
+  },
+  "RINGS": 14,
+  "INSIDE_EPS": 0.0015,
+  "GAME_RES": 192
+ },
+ "count": {
+  "readable": 6,
+  "min": 6,
+  "max": 16,
+  "ok": true,
+  "warn": false
+ },
+ "features": [
+  {
+   "group": "body:tail",
+   "items": 2,
+   "gated": 2,
+   "passed": 2,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "body:fin",
+   "items": 2,
+   "gated": 2,
+   "passed": 2,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "eye",
+   "items": 2,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "gills",
+   "items": 10,
+   "gated": 10,
+   "passed": 10,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "paint:belly",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.414
+  },
+  {
+   "group": "paint:fin",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.154
+  }
+ ],
+ "warns": [],
+ "items": [
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail3",
+   "side": "C",
+   "tip": [
+    0.0,
+    1.322,
+    1.215
+   ],
+   "centre": [
+    0.119,
+    0.212,
+    0.865
+   ],
+   "length_mm": 393.0,
+   "thick_mm": 29.2,
+   "meanw_mm": 90.8,
+   "thick_px": 7.9,
+   "meanw_px": 24.5,
+   "length_H": 0.414,
+   "thick_H": 0.0307,
+   "aspect": 13.5,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     54.0,
+     115.5
+    ],
+    [
+     0.11,
+     53.1,
+     110.6
+    ],
+    [
+     0.18,
+     52.6,
+     108.4
+    ],
+    [
+     0.25,
+     52.1,
+     105.4
+    ],
+    [
+     0.32,
+     50.0,
+     100.3
+    ],
+    [
+     0.39,
+     47.1,
+     95.1
+    ],
+    [
+     0.46,
+     42.9,
+     86.6
+    ],
+    [
+     0.54,
+     39.4,
+     78.6
+    ],
+    [
+     0.61,
+     35.8,
+     70.7
+    ],
+    [
+     0.68,
+     32.5,
+     64.1
+    ],
+    [
+     0.75,
+     28.8,
+     57.6
+    ],
+    [
+     0.82,
+     23.6,
+     47.9
+    ],
+    [
+     0.89,
+     19.1,
+     39.3
+    ],
+    [
+     0.96,
+     15.1,
+     30.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.56
+  },
+  {
+   "obj": "body",
+   "kind": "tail",
+   "cls": "blunt",
+   "shell": 0,
+   "bone": "tail2",
+   "side": "C",
+   "tip": [
+    -0.0,
+    1.215,
+    0.45
+   ],
+   "centre": [
+    0.13,
+    0.201,
+    0.799
+   ],
+   "length_mm": 304.1,
+   "thick_mm": 26.8,
+   "meanw_mm": 71.9,
+   "thick_px": 7.2,
+   "meanw_px": 19.4,
+   "length_H": 0.32,
+   "thick_H": 0.0282,
+   "aspect": 11.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     44.2,
+     101.8
+    ],
+    [
+     0.11,
+     47.0,
+     97.7
+    ],
+    [
+     0.18,
+     47.7,
+     95.5
+    ],
+    [
+     0.25,
+     45.3,
+     89.7
+    ],
+    [
+     0.32,
+     42.4,
+     82.1
+    ],
+    [
+     0.39,
+     39.8,
+     75.3
+    ],
+    [
+     0.46,
+     37.1,
+     68.4
+    ],
+    [
+     0.54,
+     34.5,
+     61.7
+    ],
+    [
+     0.61,
+     31.9,
+     54.9
+    ],
+    [
+     0.68,
+     29.2,
+     48.2
+    ],
+    [
+     0.75,
+     26.5,
+     43.5
+    ],
+    [
+     0.82,
+     23.2,
+     37.3
+    ],
+    [
+     0.89,
+     19.5,
+     30.7
+    ],
+    [
+     0.96,
+     15.7,
+     17.6
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.35
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "fin.R",
+   "side": "R",
+   "tip": [
+    -0.587,
+    -0.249,
+    0.509
+   ],
+   "centre": [
+    -0.006,
+    -0.825,
+    0.893
+   ],
+   "length_mm": 514.6,
+   "thick_mm": 41.6,
+   "meanw_mm": 270.8,
+   "thick_px": 11.2,
+   "meanw_px": 73.0,
+   "length_H": 0.542,
+   "thick_H": 0.0438,
+   "aspect": 12.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     466.1,
+     676.5
+    ],
+    [
+     0.11,
+     425.2,
+     545.5
+    ],
+    [
+     0.18,
+     69.7,
+     211.0
+    ],
+    [
+     0.25,
+     123.8,
+     336.0
+    ],
+    [
+     0.32,
+     270.0,
+     372.2
+    ],
+    [
+     0.39,
+     234.1,
+     330.6
+    ],
+    [
+     0.46,
+     190.1,
+     333.4
+    ],
+    [
+     0.54,
+     46.7,
+     123.8
+    ],
+    [
+     0.61,
+     45.7,
+     118.9
+    ],
+    [
+     0.68,
+     44.6,
+     113.1
+    ],
+    [
+     0.75,
+     41.3,
+     95.4
+    ],
+    [
+     0.82,
+     39.4,
+     84.2
+    ],
+    [
+     0.89,
+     37.7,
+     72.8
+    ],
+    [
+     0.96,
+     33.0,
+     53.5
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 23.75
+  },
+  {
+   "obj": "body",
+   "kind": "fin",
+   "cls": "plate",
+   "shell": 0,
+   "bone": "fin.L",
+   "side": "L",
+   "tip": [
+    0.587,
+    -0.249,
+    0.509
+   ],
+   "centre": [
+    0.282,
+    -0.365,
+    0.722
+   ],
+   "length_mm": 514.6,
+   "thick_mm": 41.6,
+   "meanw_mm": 270.8,
+   "thick_px": 11.2,
+   "meanw_px": 73.0,
+   "length_H": 0.542,
+   "thick_H": 0.0438,
+   "aspect": 12.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     235.0,
+     334.4
+    ],
+    [
+     0.11,
+     294.1,
+     368.2
+    ],
+    [
+     0.18,
+     69.7,
+     211.0
+    ],
+    [
+     0.25,
+     123.8,
+     336.0
+    ],
+    [
+     0.32,
+     270.0,
+     372.2
+    ],
+    [
+     0.39,
+     234.1,
+     330.6
+    ],
+    [
+     0.46,
+     190.1,
+     333.4
+    ],
+    [
+     0.54,
+     46.7,
+     123.8
+    ],
+    [
+     0.61,
+     45.7,
+     118.9
+    ],
+    [
+     0.68,
+     44.6,
+     113.1
+    ],
+    [
+     0.75,
+     41.3,
+     95.4
+    ],
+    [
+     0.82,
+     39.4,
+     84.2
+    ],
+    [
+     0.89,
+     37.7,
+     72.8
+    ],
+    [
+     0.96,
+     33.0,
+     53.5
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 23.75
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 1,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 2,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 3,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.234,
+    -0.783,
+    0.862
+   ],
+   "centre": [
+    0.219,
+    -0.799,
+    0.83
+   ],
+   "length_mm": 24.7,
+   "thick_mm": 20.0,
+   "meanw_mm": 34.9,
+   "thick_px": 5.4,
+   "meanw_px": 9.4,
+   "length_H": 0.026,
+   "thick_H": 0.0211,
+   "aspect": 1.2,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.0,
+     34.9
+    ],
+    [
+     0.11,
+     20.0,
+     34.9
+    ],
+    [
+     0.18,
+     20.0,
+     34.9
+    ],
+    [
+     0.25,
+     20.0,
+     34.9
+    ],
+    [
+     0.32,
+     20.0,
+     34.9
+    ],
+    [
+     0.39,
+     20.0,
+     34.9
+    ],
+    [
+     0.46,
+     20.0,
+     34.9
+    ],
+    [
+     0.54,
+     20.0,
+     34.9
+    ],
+    [
+     0.61,
+     20.0,
+     34.9
+    ],
+    [
+     0.68,
+     20.0,
+     34.9
+    ],
+    [
+     0.75,
+     20.0,
+     34.9
+    ],
+    [
+     0.82,
+     20.0,
+     34.9
+    ],
+    [
+     0.89,
+     20.0,
+     34.9
+    ],
+    [
+     0.96,
+     20.0,
+     34.9
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 3.06
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 4,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.237,
+    -0.767,
+    0.871
+   ],
+   "centre": [
+    0.226,
+    -0.764,
+    0.83
+   ],
+   "length_mm": 25.1,
+   "thick_mm": 20.2,
+   "meanw_mm": 34.0,
+   "thick_px": 5.5,
+   "meanw_px": 9.2,
+   "length_H": 0.026,
+   "thick_H": 0.0213,
+   "aspect": 1.2,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.2,
+     34.0
+    ],
+    [
+     0.11,
+     20.2,
+     34.0
+    ],
+    [
+     0.18,
+     20.2,
+     34.0
+    ],
+    [
+     0.25,
+     20.2,
+     34.0
+    ],
+    [
+     0.32,
+     20.2,
+     34.0
+    ],
+    [
+     0.39,
+     20.2,
+     34.0
+    ],
+    [
+     0.46,
+     20.2,
+     34.0
+    ],
+    [
+     0.54,
+     20.2,
+     34.0
+    ],
+    [
+     0.61,
+     20.2,
+     34.0
+    ],
+    [
+     0.68,
+     20.2,
+     34.0
+    ],
+    [
+     0.75,
+     20.2,
+     34.0
+    ],
+    [
+     0.82,
+     20.2,
+     34.0
+    ],
+    [
+     0.89,
+     20.2,
+     34.0
+    ],
+    [
+     0.96,
+     20.2,
+     34.0
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.98
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 5,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.245,
+    -0.711,
+    0.87
+   ],
+   "centre": [
+    0.232,
+    -0.73,
+    0.83
+   ],
+   "length_mm": 25.5,
+   "thick_mm": 19.9,
+   "meanw_mm": 76.7,
+   "thick_px": 5.4,
+   "meanw_px": 20.7,
+   "length_H": 0.027,
+   "thick_H": 0.0209,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     11.7,
+     76.8
+    ],
+    [
+     0.11,
+     19.8,
+     81.4
+    ],
+    [
+     0.18,
+     20.5,
+     80.8
+    ],
+    [
+     0.25,
+     20.5,
+     79.8
+    ],
+    [
+     0.32,
+     20.5,
+     78.7
+    ],
+    [
+     0.39,
+     20.5,
+     77.7
+    ],
+    [
+     0.46,
+     20.5,
+     76.6
+    ],
+    [
+     0.54,
+     20.5,
+     75.6
+    ],
+    [
+     0.61,
+     20.5,
+     74.6
+    ],
+    [
+     0.68,
+     20.5,
+     73.5
+    ],
+    [
+     0.75,
+     20.5,
+     72.5
+    ],
+    [
+     0.82,
+     20.5,
+     71.4
+    ],
+    [
+     0.89,
+     19.8,
+     70.0
+    ],
+    [
+     0.96,
+     11.7,
+     64.3
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 6.73
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 6,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.249,
+    -0.675,
+    0.874
+   ],
+   "centre": [
+    0.236,
+    -0.695,
+    0.83
+   ],
+   "length_mm": 25.9,
+   "thick_mm": 20.2,
+   "meanw_mm": 32.2,
+   "thick_px": 5.4,
+   "meanw_px": 8.7,
+   "length_H": 0.027,
+   "thick_H": 0.0213,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.2,
+     32.2
+    ],
+    [
+     0.11,
+     20.2,
+     32.2
+    ],
+    [
+     0.18,
+     20.2,
+     32.2
+    ],
+    [
+     0.25,
+     20.2,
+     32.2
+    ],
+    [
+     0.32,
+     20.2,
+     32.2
+    ],
+    [
+     0.39,
+     20.2,
+     32.2
+    ],
+    [
+     0.46,
+     20.2,
+     32.2
+    ],
+    [
+     0.54,
+     20.2,
+     32.2
+    ],
+    [
+     0.61,
+     20.2,
+     32.2
+    ],
+    [
+     0.68,
+     20.2,
+     32.2
+    ],
+    [
+     0.75,
+     20.2,
+     32.2
+    ],
+    [
+     0.82,
+     20.2,
+     32.2
+    ],
+    [
+     0.89,
+     20.2,
+     32.2
+    ],
+    [
+     0.96,
+     20.2,
+     32.2
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.82
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 7,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.25,
+    -0.638,
+    0.878
+   ],
+   "centre": [
+    0.239,
+    -0.66,
+    0.83
+   ],
+   "length_mm": 26.4,
+   "thick_mm": 20.2,
+   "meanw_mm": 31.5,
+   "thick_px": 5.4,
+   "meanw_px": 8.5,
+   "length_H": 0.028,
+   "thick_H": 0.0212,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.2,
+     31.5
+    ],
+    [
+     0.11,
+     20.2,
+     31.5
+    ],
+    [
+     0.18,
+     20.2,
+     31.5
+    ],
+    [
+     0.25,
+     20.2,
+     31.5
+    ],
+    [
+     0.32,
+     20.2,
+     31.5
+    ],
+    [
+     0.39,
+     20.2,
+     31.5
+    ],
+    [
+     0.46,
+     20.2,
+     31.5
+    ],
+    [
+     0.54,
+     20.2,
+     31.5
+    ],
+    [
+     0.61,
+     20.2,
+     31.5
+    ],
+    [
+     0.68,
+     20.2,
+     31.5
+    ],
+    [
+     0.75,
+     20.2,
+     31.5
+    ],
+    [
+     0.82,
+     20.2,
+     31.5
+    ],
+    [
+     0.89,
+     20.2,
+     31.5
+    ],
+    [
+     0.96,
+     20.2,
+     31.5
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.77
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 8,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.234,
+    -0.783,
+    0.862
+   ],
+   "centre": [
+    -0.219,
+    -0.799,
+    0.83
+   ],
+   "length_mm": 24.7,
+   "thick_mm": 20.0,
+   "meanw_mm": 65.1,
+   "thick_px": 5.4,
+   "meanw_px": 17.5,
+   "length_H": 0.026,
+   "thick_H": 0.0211,
+   "aspect": 1.2,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.0,
+     69.6
+    ],
+    [
+     0.11,
+     20.0,
+     68.8
+    ],
+    [
+     0.18,
+     20.0,
+     68.0
+    ],
+    [
+     0.25,
+     20.0,
+     67.2
+    ],
+    [
+     0.32,
+     20.0,
+     66.3
+    ],
+    [
+     0.39,
+     20.0,
+     65.5
+    ],
+    [
+     0.46,
+     20.0,
+     64.7
+    ],
+    [
+     0.54,
+     20.0,
+     63.9
+    ],
+    [
+     0.61,
+     20.0,
+     63.1
+    ],
+    [
+     0.68,
+     20.0,
+     62.3
+    ],
+    [
+     0.75,
+     20.0,
+     61.4
+    ],
+    [
+     0.82,
+     20.0,
+     60.6
+    ],
+    [
+     0.89,
+     20.0,
+     59.8
+    ],
+    [
+     0.96,
+     20.0,
+     59.0
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 5.71
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 9,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.233,
+    -0.785,
+    0.793
+   ],
+   "centre": [
+    -0.226,
+    -0.764,
+    0.83
+   ],
+   "length_mm": 25.1,
+   "thick_mm": 20.2,
+   "meanw_mm": 34.0,
+   "thick_px": 5.5,
+   "meanw_px": 9.2,
+   "length_H": 0.026,
+   "thick_H": 0.0213,
+   "aspect": 1.2,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.2,
+     34.0
+    ],
+    [
+     0.11,
+     20.2,
+     34.0
+    ],
+    [
+     0.18,
+     20.2,
+     34.0
+    ],
+    [
+     0.25,
+     20.2,
+     34.0
+    ],
+    [
+     0.32,
+     20.2,
+     34.0
+    ],
+    [
+     0.39,
+     20.2,
+     34.0
+    ],
+    [
+     0.46,
+     20.2,
+     34.0
+    ],
+    [
+     0.54,
+     20.2,
+     34.0
+    ],
+    [
+     0.61,
+     20.2,
+     34.0
+    ],
+    [
+     0.68,
+     20.2,
+     34.0
+    ],
+    [
+     0.75,
+     20.2,
+     34.0
+    ],
+    [
+     0.82,
+     20.2,
+     34.0
+    ],
+    [
+     0.89,
+     20.2,
+     34.0
+    ],
+    [
+     0.96,
+     20.2,
+     34.0
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.98
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 10,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.245,
+    -0.711,
+    0.87
+   ],
+   "centre": [
+    -0.232,
+    -0.73,
+    0.83
+   ],
+   "length_mm": 25.5,
+   "thick_mm": 19.9,
+   "meanw_mm": 76.7,
+   "thick_px": 5.4,
+   "meanw_px": 20.7,
+   "length_H": 0.027,
+   "thick_H": 0.0209,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     11.7,
+     76.8
+    ],
+    [
+     0.11,
+     19.8,
+     81.4
+    ],
+    [
+     0.18,
+     20.5,
+     80.8
+    ],
+    [
+     0.25,
+     20.5,
+     79.8
+    ],
+    [
+     0.32,
+     20.5,
+     78.7
+    ],
+    [
+     0.39,
+     20.5,
+     77.7
+    ],
+    [
+     0.46,
+     20.5,
+     76.6
+    ],
+    [
+     0.54,
+     20.5,
+     75.6
+    ],
+    [
+     0.61,
+     20.5,
+     74.6
+    ],
+    [
+     0.68,
+     20.5,
+     73.5
+    ],
+    [
+     0.75,
+     20.5,
+     72.5
+    ],
+    [
+     0.82,
+     20.5,
+     71.4
+    ],
+    [
+     0.89,
+     19.8,
+     70.0
+    ],
+    [
+     0.96,
+     11.7,
+     64.3
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 6.73
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 11,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.246,
+    -0.717,
+    0.786
+   ],
+   "centre": [
+    -0.236,
+    -0.695,
+    0.83
+   ],
+   "length_mm": 25.9,
+   "thick_mm": 20.2,
+   "meanw_mm": 32.2,
+   "thick_px": 5.4,
+   "meanw_px": 8.7,
+   "length_H": 0.027,
+   "thick_H": 0.0213,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     20.2,
+     32.2
+    ],
+    [
+     0.11,
+     20.2,
+     32.2
+    ],
+    [
+     0.18,
+     20.2,
+     32.2
+    ],
+    [
+     0.25,
+     20.2,
+     32.2
+    ],
+    [
+     0.32,
+     20.2,
+     32.2
+    ],
+    [
+     0.39,
+     20.2,
+     32.2
+    ],
+    [
+     0.46,
+     20.2,
+     32.2
+    ],
+    [
+     0.54,
+     20.2,
+     32.2
+    ],
+    [
+     0.61,
+     20.2,
+     32.2
+    ],
+    [
+     0.68,
+     20.2,
+     32.2
+    ],
+    [
+     0.75,
+     20.2,
+     32.2
+    ],
+    [
+     0.82,
+     20.2,
+     32.2
+    ],
+    [
+     0.89,
+     20.2,
+     32.2
+    ],
+    [
+     0.96,
+     20.2,
+     32.2
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.82
+  },
+  {
+   "obj": "piece_gills",
+   "kind": "plate",
+   "cls": "plate",
+   "shell": 12,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.249,
+    -0.657,
+    0.883
+   ],
+   "centre": [
+    -0.239,
+    -0.66,
+    0.83
+   ],
+   "length_mm": 26.4,
+   "thick_mm": 19.9,
+   "meanw_mm": 88.8,
+   "thick_px": 5.4,
+   "meanw_px": 23.9,
+   "length_H": 0.028,
+   "thick_H": 0.0209,
+   "aspect": 1.3,
+   "blob": true,
+   "rings": [
+    [
+     0.04,
+     11.7,
+     89.4
+    ],
+    [
+     0.11,
+     19.8,
+     94.0
+    ],
+    [
+     0.18,
+     20.5,
+     93.2
+    ],
+    [
+     0.25,
+     20.5,
+     91.9
+    ],
+    [
+     0.32,
+     20.5,
+     90.7
+    ],
+    [
+     0.39,
+     20.5,
+     89.5
+    ],
+    [
+     0.46,
+     20.5,
+     88.2
+    ],
+    [
+     0.54,
+     20.5,
+     87.0
+    ],
+    [
+     0.61,
+     20.5,
+     85.8
+    ],
+    [
+     0.68,
+     20.5,
+     84.5
+    ],
+    [
+     0.75,
+     20.5,
+     83.3
+    ],
+    [
+     0.82,
+     20.5,
+     82.0
+    ],
+    [
+     0.89,
+     19.8,
+     80.4
+    ],
+    [
+     0.96,
+     11.7,
+     74.6
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 7.79
+  }
+ ],
+ "renders": {
+  "game": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_game_g315h.png"
+  ],
+  "flags": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\shark\\stage4\\details\\s4_r12_dflag_back34.png"
+  ]
+ }
+}

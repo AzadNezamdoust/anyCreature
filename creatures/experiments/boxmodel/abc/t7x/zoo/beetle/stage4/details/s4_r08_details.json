@@ -1,0 +1,2395 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\beetle.glb",
+ "tag": "s4_r08",
+ "ok": false,
+ "tier": 1,
+ "tier_source": "auto",
+ "tier_auto": 1,
+ "mass_size_m": 0.417,
+ "body_volume_m3": 0.0727,
+ "H_m": 0.619,
+ "S_m": 0.942,
+ "size_m": [
+  0.756,
+  0.942,
+  0.619
+ ],
+ "floor_mm": 14.85,
+ "floor_px": 6.1,
+ "limits": {
+  "THICK_H": 0.012,
+  "TIER_MUL": {
+   "1": 2.0,
+   "2": 1.0,
+   "3": 1.0
+  },
+  "GAME_PX": 256,
+  "PX_MIN": 3.0,
+  "DIGIT_LEN_H": 0.04,
+  "DIGIT_ASPECT": {
+   "1": 4.5,
+   "2": 6.0,
+   "3": 6.0
+  },
+  "TIER_SIZE": [
+   0.45,
+   1.0
+  ],
+  "COUNT": {
+   "1": [
+    3,
+    8
+   ],
+   "2": [
+    6,
+    16
+   ],
+   "3": [
+    12,
+    30
+   ]
+  },
+  "DIGITS_PER_GROUP_T1": 4,
+  "PERSIST": [
+   0.012,
+   0.06
+  ],
+  "BUMP": 1.0,
+  "BLOB": 1.5,
+  "WINDOW": {
+   "pointed": 0.7,
+   "blunt": 0.85
+  },
+  "RINGS": 14,
+  "INSIDE_EPS": 0.0015,
+  "GAME_RES": 192
+ },
+ "count": {
+  "readable": 5,
+  "min": 3,
+  "max": 8,
+  "ok": true,
+  "warn": false
+ },
+ "features": [
+  {
+   "group": "body:limb tips",
+   "items": 6,
+   "gated": 6,
+   "passed": 6,
+   "readable": true,
+   "counted": false
+  },
+  {
+   "group": "claws",
+   "items": 12,
+   "gated": 12,
+   "passed": 0,
+   "readable": false,
+   "counted": true
+  },
+  {
+   "group": "eye",
+   "items": 2,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "horn_thorax",
+   "items": 1,
+   "gated": 1,
+   "passed": 1,
+   "readable": true,
+   "counted": true
+  },
+  {
+   "group": "mandible",
+   "items": 2,
+   "gated": 2,
+   "passed": 0,
+   "readable": false,
+   "counted": true
+  },
+  {
+   "group": "paint:chitin",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.289
+  },
+  {
+   "group": "paint:leg",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.234
+  },
+  {
+   "group": "paint:belly",
+   "items": 1,
+   "gated": 0,
+   "passed": 0,
+   "readable": true,
+   "counted": true,
+   "share": 0.186
+  }
+ ],
+ "warns": [],
+ "items": [
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus2.L",
+   "side": "L",
+   "tip": [
+    0.34,
+    0.019,
+    0.021
+   ],
+   "centre": [
+    0.243,
+    0.05,
+    0.147
+   ],
+   "length_mm": 264.2,
+   "thick_mm": 43.2,
+   "meanw_mm": 62.2,
+   "thick_px": 17.9,
+   "meanw_px": 25.7,
+   "length_H": 0.427,
+   "thick_H": 0.0698,
+   "aspect": 6.1,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     110.5,
+     179.3
+    ],
+    [
+     0.11,
+     63.9,
+     145.0
+    ],
+    [
+     0.18,
+     73.4,
+     154.0
+    ],
+    [
+     0.25,
+     69.9,
+     75.9
+    ],
+    [
+     0.32,
+     61.5,
+     66.4
+    ],
+    [
+     0.39,
+     43.1,
+     50.5
+    ],
+    [
+     0.46,
+     52.3,
+     54.7
+    ],
+    [
+     0.54,
+     53.0,
+     58.0
+    ],
+    [
+     0.61,
+     66.4,
+     71.8
+    ],
+    [
+     0.68,
+     51.8,
+     55.5
+    ],
+    [
+     0.75,
+     37.9,
+     40.1
+    ],
+    [
+     0.82,
+     43.9,
+     46.5
+    ],
+    [
+     0.89,
+     37.3,
+     39.6
+    ],
+    [
+     0.96,
+     14.1,
+     31.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.91
+  },
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus3.L",
+   "side": "L",
+   "tip": [
+    0.316,
+    0.365,
+    0.015
+   ],
+   "centre": [
+    0.253,
+    0.247,
+    0.118
+   ],
+   "length_mm": 210.2,
+   "thick_mm": 37.6,
+   "meanw_mm": 58.8,
+   "thick_px": 15.6,
+   "meanw_px": 24.3,
+   "length_H": 0.34,
+   "thick_H": 0.0607,
+   "aspect": 5.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     75.9,
+     152.4
+    ],
+    [
+     0.11,
+     70.5,
+     76.4
+    ],
+    [
+     0.18,
+     53.3,
+     59.2
+    ],
+    [
+     0.25,
+     48.5,
+     51.3
+    ],
+    [
+     0.32,
+     55.2,
+     58.5
+    ],
+    [
+     0.39,
+     60.4,
+     64.7
+    ],
+    [
+     0.46,
+     66.4,
+     71.3
+    ],
+    [
+     0.54,
+     60.5,
+     65.4
+    ],
+    [
+     0.61,
+     49.7,
+     53.3
+    ],
+    [
+     0.68,
+     36.9,
+     39.4
+    ],
+    [
+     0.75,
+     43.6,
+     46.3
+    ],
+    [
+     0.82,
+     34.3,
+     37.0
+    ],
+    [
+     0.89,
+     39.3,
+     42.0
+    ],
+    [
+     0.96,
+     13.5,
+     28.8
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.53
+  },
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus2.R",
+   "side": "R",
+   "tip": [
+    -0.34,
+    0.019,
+    0.021
+   ],
+   "centre": [
+    0.009,
+    -0.053,
+    0.276
+   ],
+   "length_mm": 264.2,
+   "thick_mm": 43.2,
+   "meanw_mm": 62.2,
+   "thick_px": 17.9,
+   "meanw_px": 25.7,
+   "length_H": 0.427,
+   "thick_H": 0.0698,
+   "aspect": 6.1,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     86.8,
+     112.8
+    ],
+    [
+     0.11,
+     63.9,
+     70.4
+    ],
+    [
+     0.18,
+     73.4,
+     80.1
+    ],
+    [
+     0.25,
+     69.9,
+     75.9
+    ],
+    [
+     0.32,
+     61.5,
+     66.4
+    ],
+    [
+     0.39,
+     43.1,
+     50.5
+    ],
+    [
+     0.46,
+     52.3,
+     54.7
+    ],
+    [
+     0.54,
+     53.0,
+     58.0
+    ],
+    [
+     0.61,
+     66.4,
+     71.8
+    ],
+    [
+     0.68,
+     51.8,
+     55.5
+    ],
+    [
+     0.75,
+     37.9,
+     40.2
+    ],
+    [
+     0.82,
+     44.0,
+     46.5
+    ],
+    [
+     0.89,
+     37.3,
+     39.6
+    ],
+    [
+     0.96,
+     13.9,
+     30.9
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.91
+  },
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus3.R",
+   "side": "R",
+   "tip": [
+    -0.316,
+    0.365,
+    0.015
+   ],
+   "centre": [
+    -0.0,
+    0.01,
+    0.271
+   ],
+   "length_mm": 210.2,
+   "thick_mm": 37.6,
+   "meanw_mm": 58.8,
+   "thick_px": 15.5,
+   "meanw_px": 24.3,
+   "length_H": 0.34,
+   "thick_H": 0.0607,
+   "aspect": 5.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     95.3,
+     186.2
+    ],
+    [
+     0.11,
+     137.0,
+     235.3
+    ],
+    [
+     0.18,
+     53.2,
+     59.1
+    ],
+    [
+     0.25,
+     48.5,
+     51.4
+    ],
+    [
+     0.32,
+     55.2,
+     58.4
+    ],
+    [
+     0.39,
+     60.4,
+     64.7
+    ],
+    [
+     0.46,
+     66.4,
+     71.3
+    ],
+    [
+     0.54,
+     60.5,
+     65.4
+    ],
+    [
+     0.61,
+     49.7,
+     53.3
+    ],
+    [
+     0.68,
+     36.9,
+     39.4
+    ],
+    [
+     0.75,
+     43.6,
+     46.3
+    ],
+    [
+     0.82,
+     34.5,
+     37.3
+    ],
+    [
+     0.89,
+     39.2,
+     42.0
+    ],
+    [
+     0.96,
+     12.9,
+     28.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.53
+  },
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus1.L",
+   "side": "L",
+   "tip": [
+    0.255,
+    -0.32,
+    0.021
+   ],
+   "centre": [
+    0.199,
+    -0.116,
+    0.151
+   ],
+   "length_mm": 255.8,
+   "thick_mm": 40.1,
+   "meanw_mm": 63.0,
+   "thick_px": 16.6,
+   "meanw_px": 26.1,
+   "length_H": 0.413,
+   "thick_H": 0.0648,
+   "aspect": 6.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     68.3,
+     76.6
+    ],
+    [
+     0.11,
+     66.5,
+     73.2
+    ],
+    [
+     0.18,
+     70.4,
+     78.4
+    ],
+    [
+     0.25,
+     59.8,
+     64.8
+    ],
+    [
+     0.32,
+     49.8,
+     54.4
+    ],
+    [
+     0.39,
+     50.7,
+     54.5
+    ],
+    [
+     0.46,
+     57.9,
+     62.1
+    ],
+    [
+     0.54,
+     66.0,
+     71.4
+    ],
+    [
+     0.61,
+     59.4,
+     64.0
+    ],
+    [
+     0.68,
+     47.1,
+     50.5
+    ],
+    [
+     0.75,
+     39.3,
+     41.8
+    ],
+    [
+     0.82,
+     38.2,
+     40.7
+    ],
+    [
+     0.89,
+     38.9,
+     41.3
+    ],
+    [
+     0.96,
+     14.1,
+     29.2
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.7
+  },
+  {
+   "obj": "body",
+   "kind": "limb",
+   "cls": "limb",
+   "shell": 0,
+   "bone": "tarsus1.R",
+   "side": "R",
+   "tip": [
+    -0.255,
+    -0.32,
+    0.021
+   ],
+   "centre": [
+    0.009,
+    -0.132,
+    0.294
+   ],
+   "length_mm": 255.8,
+   "thick_mm": 40.1,
+   "meanw_mm": 63.0,
+   "thick_px": 16.6,
+   "meanw_px": 26.1,
+   "length_H": 0.413,
+   "thick_H": 0.0648,
+   "aspect": 6.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     109.6,
+     180.7
+    ],
+    [
+     0.11,
+     66.5,
+     73.2
+    ],
+    [
+     0.18,
+     70.4,
+     78.4
+    ],
+    [
+     0.25,
+     59.8,
+     64.8
+    ],
+    [
+     0.32,
+     49.8,
+     54.4
+    ],
+    [
+     0.39,
+     50.7,
+     54.5
+    ],
+    [
+     0.46,
+     57.9,
+     62.1
+    ],
+    [
+     0.54,
+     66.0,
+     71.4
+    ],
+    [
+     0.61,
+     59.4,
+     64.0
+    ],
+    [
+     0.68,
+     47.0,
+     50.4
+    ],
+    [
+     0.75,
+     39.3,
+     41.8
+    ],
+    [
+     0.82,
+     38.4,
+     40.9
+    ],
+    [
+     0.89,
+     39.2,
+     41.7
+    ],
+    [
+     0.96,
+     13.6,
+     29.6
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.7
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 1,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.271,
+    -0.345,
+    -0.017
+   ],
+   "centre": [
+    0.264,
+    -0.335,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.5,
+   "meanw_mm": 17.0,
+   "thick_px": 3.5,
+   "meanw_px": 7.0,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     11.1,
+     17.5
+    ],
+    [
+     0.11,
+     14.0,
+     19.0
+    ],
+    [
+     0.18,
+     16.6,
+     20.7
+    ],
+    [
+     0.25,
+     15.6,
+     19.4
+    ],
+    [
+     0.32,
+     15.3,
+     18.8
+    ],
+    [
+     0.39,
+     12.7,
+     16.4
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.7,
+     11.3
+    ],
+    [
+     0.68,
+     6.9,
+     8.7
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.2,
+     5.4
+    ],
+    [
+     0.89,
+     2.6,
+     3.3
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.5 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.57
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 2,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.231,
+    -0.355,
+    -0.017
+   ],
+   "centre": [
+    0.233,
+    -0.343,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.5,
+   "meanw_mm": 16.5,
+   "thick_px": 3.5,
+   "meanw_px": 6.8,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     10.1,
+     16.6
+    ],
+    [
+     0.11,
+     11.5,
+     17.9
+    ],
+    [
+     0.18,
+     14.7,
+     19.8
+    ],
+    [
+     0.25,
+     15.9,
+     19.8
+    ],
+    [
+     0.32,
+     15.5,
+     19.0
+    ],
+    [
+     0.39,
+     12.7,
+     16.3
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.7,
+     11.3
+    ],
+    [
+     0.68,
+     6.9,
+     8.9
+    ],
+    [
+     0.75,
+     6.0,
+     7.7
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.7,
+     3.5
+    ],
+    [
+     0.96,
+     1.1,
+     1.4
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.5 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 3,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.378,
+    0.023,
+    -0.017
+   ],
+   "centre": [
+    0.366,
+    0.025,
+    0.008
+   ],
+   "length_mm": 64.8,
+   "thick_mm": 6.9,
+   "meanw_mm": 15.4,
+   "thick_px": 2.9,
+   "meanw_px": 6.4,
+   "length_H": 0.105,
+   "thick_H": 0.0112,
+   "aspect": 9.4,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     5.4,
+     9.8
+    ],
+    [
+     0.11,
+     10.3,
+     16.5
+    ],
+    [
+     0.18,
+     14.3,
+     19.0
+    ],
+    [
+     0.25,
+     17.7,
+     21.5
+    ],
+    [
+     0.32,
+     15.2,
+     18.7
+    ],
+    [
+     0.39,
+     12.8,
+     16.5
+    ],
+    [
+     0.46,
+     11.2,
+     14.4
+    ],
+    [
+     0.54,
+     10.1,
+     12.8
+    ],
+    [
+     0.61,
+     8.5,
+     11.0
+    ],
+    [
+     0.68,
+     7.1,
+     9.1
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.9,
+     3.7
+    ],
+    [
+     0.96,
+     1.2,
+     1.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 6.9 mm (2.9 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.47
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 4,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.355,
+    -0.011,
+    -0.017
+   ],
+   "centre": [
+    0.349,
+    -0.001,
+    0.008
+   ],
+   "length_mm": 64.8,
+   "thick_mm": 6.6,
+   "meanw_mm": 15.1,
+   "thick_px": 2.7,
+   "meanw_px": 6.3,
+   "length_H": 0.105,
+   "thick_H": 0.0107,
+   "aspect": 9.8,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     2.5,
+     12.9
+    ],
+    [
+     0.11,
+     7.7,
+     15.9
+    ],
+    [
+     0.18,
+     13.0,
+     18.7
+    ],
+    [
+     0.25,
+     17.7,
+     21.5
+    ],
+    [
+     0.32,
+     14.8,
+     18.6
+    ],
+    [
+     0.39,
+     12.6,
+     16.4
+    ],
+    [
+     0.46,
+     11.2,
+     14.4
+    ],
+    [
+     0.54,
+     10.0,
+     12.8
+    ],
+    [
+     0.61,
+     8.4,
+     11.0
+    ],
+    [
+     0.68,
+     7.1,
+     9.1
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.9,
+     3.7
+    ],
+    [
+     0.96,
+     1.2,
+     1.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 6.6 mm (2.7 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.45
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 5,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.301,
+    0.402,
+    -0.017
+   ],
+   "centre": [
+    0.303,
+    0.39,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.6,
+   "meanw_mm": 17.0,
+   "thick_px": 3.5,
+   "meanw_px": 7.0,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     11.1,
+     17.5
+    ],
+    [
+     0.11,
+     14.0,
+     19.0
+    ],
+    [
+     0.18,
+     16.6,
+     20.7
+    ],
+    [
+     0.25,
+     15.6,
+     19.4
+    ],
+    [
+     0.32,
+     15.3,
+     18.8
+    ],
+    [
+     0.39,
+     12.8,
+     16.4
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.8,
+     11.3
+    ],
+    [
+     0.68,
+     6.8,
+     8.6
+    ],
+    [
+     0.75,
+     5.5,
+     7.2
+    ],
+    [
+     0.82,
+     4.0,
+     5.2
+    ],
+    [
+     0.89,
+     2.7,
+     3.4
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.6 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 6,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.341,
+    0.392,
+    -0.017
+   ],
+   "centre": [
+    0.334,
+    0.383,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.7,
+   "meanw_mm": 16.5,
+   "thick_px": 3.6,
+   "meanw_px": 6.8,
+   "length_H": 0.078,
+   "thick_H": 0.014,
+   "aspect": 5.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     10.1,
+     16.6
+    ],
+    [
+     0.11,
+     11.5,
+     17.9
+    ],
+    [
+     0.18,
+     14.7,
+     19.8
+    ],
+    [
+     0.25,
+     15.8,
+     19.7
+    ],
+    [
+     0.32,
+     15.4,
+     19.0
+    ],
+    [
+     0.39,
+     12.9,
+     16.5
+    ],
+    [
+     0.46,
+     11.5,
+     14.7
+    ],
+    [
+     0.54,
+     10.2,
+     13.0
+    ],
+    [
+     0.61,
+     8.9,
+     11.5
+    ],
+    [
+     0.68,
+     6.9,
+     8.8
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.2,
+     5.4
+    ],
+    [
+     0.89,
+     2.6,
+     3.3
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.7 mm (3.6 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 7,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.271,
+    -0.345,
+    -0.017
+   ],
+   "centre": [
+    -0.264,
+    -0.335,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.5,
+   "meanw_mm": 17.0,
+   "thick_px": 3.5,
+   "meanw_px": 7.0,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     11.1,
+     17.5
+    ],
+    [
+     0.11,
+     14.0,
+     19.0
+    ],
+    [
+     0.18,
+     16.6,
+     20.7
+    ],
+    [
+     0.25,
+     15.6,
+     19.4
+    ],
+    [
+     0.32,
+     15.3,
+     18.8
+    ],
+    [
+     0.39,
+     12.7,
+     16.4
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.7,
+     11.3
+    ],
+    [
+     0.68,
+     6.9,
+     8.7
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.2,
+     5.4
+    ],
+    [
+     0.89,
+     2.6,
+     3.3
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.5 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.57
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 8,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.231,
+    -0.355,
+    -0.017
+   ],
+   "centre": [
+    -0.233,
+    -0.343,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.5,
+   "meanw_mm": 16.5,
+   "thick_px": 3.5,
+   "meanw_px": 6.8,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     10.1,
+     16.6
+    ],
+    [
+     0.11,
+     11.5,
+     17.9
+    ],
+    [
+     0.18,
+     14.7,
+     19.8
+    ],
+    [
+     0.25,
+     15.9,
+     19.8
+    ],
+    [
+     0.32,
+     15.5,
+     19.0
+    ],
+    [
+     0.39,
+     12.7,
+     16.3
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.7,
+     11.3
+    ],
+    [
+     0.68,
+     6.9,
+     8.9
+    ],
+    [
+     0.75,
+     6.0,
+     7.7
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.7,
+     3.5
+    ],
+    [
+     0.96,
+     1.1,
+     1.4
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.5 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 9,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.378,
+    0.023,
+    -0.017
+   ],
+   "centre": [
+    -0.366,
+    0.025,
+    0.008
+   ],
+   "length_mm": 64.8,
+   "thick_mm": 6.9,
+   "meanw_mm": 15.3,
+   "thick_px": 2.9,
+   "meanw_px": 6.3,
+   "length_H": 0.105,
+   "thick_H": 0.0112,
+   "aspect": 9.3,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     5.4,
+     9.8
+    ],
+    [
+     0.11,
+     9.6,
+     16.1
+    ],
+    [
+     0.18,
+     13.5,
+     18.8
+    ],
+    [
+     0.25,
+     17.7,
+     21.5
+    ],
+    [
+     0.32,
+     14.8,
+     18.6
+    ],
+    [
+     0.39,
+     12.6,
+     16.4
+    ],
+    [
+     0.46,
+     11.2,
+     14.4
+    ],
+    [
+     0.54,
+     10.0,
+     12.8
+    ],
+    [
+     0.61,
+     8.4,
+     11.0
+    ],
+    [
+     0.68,
+     7.1,
+     9.1
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.9,
+     3.7
+    ],
+    [
+     0.96,
+     1.2,
+     1.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 6.9 mm (2.9 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.47
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 10,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.355,
+    -0.011,
+    -0.017
+   ],
+   "centre": [
+    -0.349,
+    -0.001,
+    0.008
+   ],
+   "length_mm": 64.8,
+   "thick_mm": 6.7,
+   "meanw_mm": 15.1,
+   "thick_px": 2.8,
+   "meanw_px": 6.3,
+   "length_H": 0.105,
+   "thick_H": 0.0108,
+   "aspect": 9.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     2.5,
+     12.9
+    ],
+    [
+     0.11,
+     7.7,
+     15.9
+    ],
+    [
+     0.18,
+     13.0,
+     18.7
+    ],
+    [
+     0.25,
+     17.7,
+     21.5
+    ],
+    [
+     0.32,
+     15.0,
+     18.7
+    ],
+    [
+     0.39,
+     12.6,
+     16.4
+    ],
+    [
+     0.46,
+     11.2,
+     14.4
+    ],
+    [
+     0.54,
+     10.1,
+     12.8
+    ],
+    [
+     0.61,
+     8.5,
+     11.0
+    ],
+    [
+     0.68,
+     7.1,
+     9.1
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.3,
+     5.6
+    ],
+    [
+     0.89,
+     2.9,
+     3.7
+    ],
+    [
+     0.96,
+     1.2,
+     1.5
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 6.7 mm (2.8 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.45
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 11,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.301,
+    0.402,
+    -0.017
+   ],
+   "centre": [
+    -0.303,
+    0.39,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.6,
+   "meanw_mm": 17.0,
+   "thick_px": 3.5,
+   "meanw_px": 7.0,
+   "length_H": 0.078,
+   "thick_H": 0.0138,
+   "aspect": 5.7,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     11.1,
+     17.5
+    ],
+    [
+     0.11,
+     14.0,
+     19.0
+    ],
+    [
+     0.18,
+     16.6,
+     20.7
+    ],
+    [
+     0.25,
+     15.6,
+     19.4
+    ],
+    [
+     0.32,
+     15.3,
+     18.8
+    ],
+    [
+     0.39,
+     12.7,
+     16.4
+    ],
+    [
+     0.46,
+     11.4,
+     14.5
+    ],
+    [
+     0.54,
+     10.0,
+     12.7
+    ],
+    [
+     0.61,
+     8.7,
+     11.3
+    ],
+    [
+     0.68,
+     6.9,
+     8.7
+    ],
+    [
+     0.75,
+     5.7,
+     7.4
+    ],
+    [
+     0.82,
+     4.0,
+     5.2
+    ],
+    [
+     0.89,
+     2.7,
+     3.4
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.6 mm (3.5 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_claws",
+   "kind": "claw",
+   "cls": "claw",
+   "shell": 12,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.341,
+    0.392,
+    -0.017
+   ],
+   "centre": [
+    -0.334,
+    0.383,
+    0.008
+   ],
+   "length_mm": 48.6,
+   "thick_mm": 8.7,
+   "meanw_mm": 16.5,
+   "thick_px": 3.6,
+   "meanw_px": 6.8,
+   "length_H": 0.078,
+   "thick_H": 0.014,
+   "aspect": 5.6,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     10.1,
+     16.6
+    ],
+    [
+     0.11,
+     11.5,
+     17.9
+    ],
+    [
+     0.18,
+     14.7,
+     19.8
+    ],
+    [
+     0.25,
+     15.8,
+     19.7
+    ],
+    [
+     0.32,
+     15.4,
+     19.0
+    ],
+    [
+     0.39,
+     12.9,
+     16.5
+    ],
+    [
+     0.46,
+     11.6,
+     14.7
+    ],
+    [
+     0.54,
+     10.2,
+     13.0
+    ],
+    [
+     0.61,
+     8.9,
+     11.5
+    ],
+    [
+     0.68,
+     6.8,
+     8.6
+    ],
+    [
+     0.75,
+     5.6,
+     7.2
+    ],
+    [
+     0.82,
+     4.2,
+     5.4
+    ],
+    [
+     0.89,
+     2.6,
+     3.3
+    ],
+    [
+     0.96,
+     1.0,
+     1.2
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 8.7 mm (3.6 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.58
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 13,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_eye",
+   "kind": "eye",
+   "cls": "eye",
+   "shell": 14,
+   "gated": false,
+   "ok": true,
+   "fail": []
+  },
+  {
+   "obj": "piece_horn_thorax",
+   "kind": "horn",
+   "cls": "pointed",
+   "shell": 15,
+   "bone": null,
+   "side": "C",
+   "tip": [
+    -0.0,
+    -0.181,
+    0.551
+   ],
+   "centre": [
+    0.0,
+    -0.143,
+    0.472
+   ],
+   "length_mm": 126.7,
+   "thick_mm": 44.4,
+   "meanw_mm": 67.3,
+   "thick_px": 18.4,
+   "meanw_px": 27.9,
+   "length_H": 0.205,
+   "thick_H": 0.0718,
+   "aspect": 2.9,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     79.7,
+     87.3
+    ],
+    [
+     0.11,
+     78.2,
+     85.0
+    ],
+    [
+     0.18,
+     71.9,
+     78.3
+    ],
+    [
+     0.25,
+     67.3,
+     73.4
+    ],
+    [
+     0.32,
+     63.8,
+     70.1
+    ],
+    [
+     0.39,
+     58.8,
+     64.6
+    ],
+    [
+     0.46,
+     54.0,
+     59.2
+    ],
+    [
+     0.54,
+     49.8,
+     54.7
+    ],
+    [
+     0.61,
+     45.0,
+     49.3
+    ],
+    [
+     0.68,
+     38.8,
+     42.2
+    ],
+    [
+     0.75,
+     33.2,
+     36.0
+    ],
+    [
+     0.82,
+     29.6,
+     32.4
+    ],
+    [
+     0.89,
+     24.1,
+     26.0
+    ],
+    [
+     0.96,
+     6.6,
+     7.1
+    ]
+   ],
+   "gated": true,
+   "fail": [],
+   "ok": true,
+   "margin": 2.99
+  },
+  {
+   "obj": "piece_mandible",
+   "kind": "horn",
+   "cls": "pointed",
+   "shell": 16,
+   "bone": null,
+   "side": "L",
+   "tip": [
+    0.016,
+    -0.369,
+    0.193
+   ],
+   "centre": [
+    0.027,
+    -0.362,
+    0.216
+   ],
+   "length_mm": 35.8,
+   "thick_mm": 9.5,
+   "meanw_mm": 19.6,
+   "thick_px": 3.9,
+   "meanw_px": 8.1,
+   "length_H": 0.058,
+   "thick_H": 0.0153,
+   "aspect": 3.8,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     17.9,
+     23.8
+    ],
+    [
+     0.11,
+     18.9,
+     24.1
+    ],
+    [
+     0.18,
+     18.3,
+     23.1
+    ],
+    [
+     0.25,
+     17.3,
+     21.9
+    ],
+    [
+     0.32,
+     15.5,
+     19.8
+    ],
+    [
+     0.39,
+     15.2,
+     19.4
+    ],
+    [
+     0.46,
+     12.9,
+     15.9
+    ],
+    [
+     0.54,
+     10.5,
+     13.2
+    ],
+    [
+     0.61,
+     9.5,
+     12.1
+    ],
+    [
+     0.68,
+     9.0,
+     11.6
+    ],
+    [
+     0.75,
+     6.2,
+     8.0
+    ],
+    [
+     0.82,
+     5.1,
+     6.5
+    ],
+    [
+     0.89,
+     2.8,
+     3.6
+    ],
+    [
+     0.96,
+     0.8,
+     1.0
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 9.5 mm (3.9 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.64
+  },
+  {
+   "obj": "piece_mandible",
+   "kind": "horn",
+   "cls": "pointed",
+   "shell": 17,
+   "bone": null,
+   "side": "R",
+   "tip": [
+    -0.016,
+    -0.369,
+    0.193
+   ],
+   "centre": [
+    -0.027,
+    -0.362,
+    0.216
+   ],
+   "length_mm": 35.8,
+   "thick_mm": 9.5,
+   "meanw_mm": 19.8,
+   "thick_px": 3.9,
+   "meanw_px": 8.2,
+   "length_H": 0.058,
+   "thick_H": 0.0154,
+   "aspect": 3.8,
+   "blob": false,
+   "rings": [
+    [
+     0.04,
+     19.2,
+     24.5
+    ],
+    [
+     0.11,
+     18.8,
+     24.2
+    ],
+    [
+     0.18,
+     18.2,
+     23.2
+    ],
+    [
+     0.25,
+     17.2,
+     21.7
+    ],
+    [
+     0.32,
+     15.4,
+     19.8
+    ],
+    [
+     0.39,
+     15.6,
+     19.8
+    ],
+    [
+     0.46,
+     13.1,
+     16.1
+    ],
+    [
+     0.54,
+     10.4,
+     13.2
+    ],
+    [
+     0.61,
+     9.6,
+     12.2
+    ],
+    [
+     0.68,
+     9.0,
+     11.6
+    ],
+    [
+     0.75,
+     6.2,
+     8.0
+    ],
+    [
+     0.82,
+     5.1,
+     6.5
+    ],
+    [
+     0.89,
+     2.8,
+     3.6
+    ],
+    [
+     0.96,
+     0.8,
+     1.0
+    ]
+   ],
+   "gated": true,
+   "fail": [
+    "thickness 9.5 mm (3.9 px) < 14.9 mm"
+   ],
+   "ok": false,
+   "margin": 0.64
+  }
+ ],
+ "renders": {
+  "game": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_game_g315h.png"
+  ],
+  "crops": [
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dcrop_0.png",
+    "piece_claws/claw L: thickness 6.6 mm (2.7 px) < 14.9 mm"
+   ],
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dcrop_1.png",
+    "piece_claws/claw R: thickness 6.7 mm (2.8 px) < 14.9 mm"
+   ],
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dcrop_2.png",
+    "piece_claws/claw L: thickness 6.9 mm (2.9 px) < 14.9 mm"
+   ],
+   [
+    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dcrop_3.png",
+    "piece_claws/claw R: thickness 6.9 mm (2.9 px) < 14.9 mm"
+   ]
+  ],
+  "flags": [
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\beetle\\stage4\\details\\s4_r08_dflag_back34.png"
+  ]
+ }
+}

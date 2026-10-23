@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 META = dict(creature='fox', model='opus', stage1_tris=(400, 3000), total_tris=(500, 4500))   # keep_valleys is set in stage2 (a lambda cannot go in the lock JSON)
 
@@ -338,6 +339,8 @@ def clumps(spec, colour):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     # eyes: amber lenses with a black pupil fan, proud of the socket floor
     H0b, H1 = P('H0b'), P('H1')
     fn = (H1[3] - H0b[3]).cross(H0b[4] - H0b[3]).normalized()
@@ -396,7 +399,7 @@ def stage4(k, body, pieces):
                        36: {'chest': (1.5, 0, 0), 'neck': (-1.5, 0, 0), 'tail1': (0, 0, -4)}, 48: {}})
     # move: trot, diagonal pairs (LF + RH, then RF + LH); the swinging leg flexes
     A = 18
-    TL = 16      # weakfix 10-23: the trotting fox carries its brush lifted clear of the hind legs' swing (was hanging
+    TL = -16     # r09: negative lifts (r08 +16 pushed the brush into the thighs: clip 16 %); weakfix 10-23: the trotting fox carries its brush lifted clear of the hind legs' swing (was hanging
                  # into it: tail vs thigh posed clip 7-8 %); the side sway 5 -> 3 deg
     clip(rig, 'move', {
         1: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'tail0': (TL, 0, 0), 'tail1': (0, 0, 3)},

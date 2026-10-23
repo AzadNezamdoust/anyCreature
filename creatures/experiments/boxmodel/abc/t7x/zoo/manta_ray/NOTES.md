@@ -93,3 +93,8 @@ Residual (visible, fix budget used):
 3. Head front / mouth: a shallow painted slot (6 mm recess), the sheet has a deep open mouth with a white lip.
 Outputs: orbit18_sheet.jpg, side_by_side_sheet.jpg (checks.py), side_by_side.jpg (--compare), review/,
 rounds/s4_r09_junctions.jpg.
+
+## Weakfix 2026-10-23 (night, backup before_weakfix/)
+- s4 r10. Critique: (face 3/4, az090) the cephalic lobes are flat boxy vertical plates; the wing tips are blunt caps; the sheet renders put the ground under the belly so it read as lying on the floor. Fix (stage 2 vertex moves, lock kept): each lobe cross-section placed as a J-scroll (straight outer face, the lower edge rolled in and up, ROLL per level); wing x > 0.95 narrows, sweeps back 10 cm into a point, tip +3.5 cm up, span +7 cm; checks_blender ground at the real z 0.
+- r10 result: FAIL s2 46 self-hits + slivers 2.5 % (the rolled lobe's inner side crosses itself), lobe junction knife 1.44 r / poke 14; clip gate FAIL move/attack pen 3.9/5.2 % H (the longer tips dip under the rest floor in the flap). Top view: tips now swept points, lobes read as C hooks.
+- s4 r11. Fix: gentler roll (ROLL 0.2-0.85, R 5 cm, rolled edge 30 % thinner), no span extension, tip curl +5 cm.

@@ -384,8 +384,8 @@ def stage2(k, body):
 
 
 # ---- weakfix 2026-10-23: rolled scroll lobes (were flat vertical plates), swept pointed wing tips
-ROLL = [0.25, 0.65, 1.0, 1.0, 0.9, 0.7]           # how far each lobe level rolls (root level stays a plate)
-ROLL_R = 0.045                                     # roll radius
+ROLL = [0.2, 0.55, 0.85, 0.8, 0.6, 0.4]           # how far each lobe level rolls (r11: gentler; r10 1.0 = 46 hits)
+ROLL_R = 0.05                                      # roll radius
 
 
 def scroll_pt(lev, side, v):
@@ -400,7 +400,8 @@ def scroll_pt(lev, side, v):
     R = min(0.42 * H, ROLL_R) * ROLL[lev]
     # (inward u, z) polyline for v = 0, 1/3, 2/3, 1
     flat = [(0.0, zt), (0.0, zt - H / 3), (0.0, zt - 2 * H / 3), (0.0, zb)]
-    roll = [(0.0, zt), (0.0, zb + 2 * R), (0.9 * R, zb + 0.2 * R), (1.9 * R, zb + 1.3 * R)]
+    roll = [(0.0, zt), (0.0, zb + 1.6 * R), (0.7 * R, zb + 0.15 * R), (1.4 * R, zb + 0.6 * R)]
+    th = th * (1 - 0.3 * ROLL[lev])                   # r11: a thinner rolled edge (no inner-side crossing)
     w = ROLL[lev]
     pts = [(fa[0] + (fb[0] - fa[0]) * w, fa[1] + (fb[1] - fa[1]) * w) for fa, fb in zip(flat, roll)]
     k = int(round(v * 3))
@@ -437,8 +438,7 @@ def swept_tips(bm):
         s = min(1.0, (x - 0.95) / (WING_TIP[0] - 0.95))
         ym = (interp(LE, min(x, 1.25)) + interp(TE, min(x, 1.25))) / 2
         v.co.y = ym + (v.co.y - ym) * (1 - 0.5 * s * s) + 0.10 * s * s
-        v.co.x = x + 0.07 * s ** 3
-        v.co.z += 0.035 * s * s
+        v.co.z += 0.05 * s * s                        # r11: no span extension (r10 +7 cm: tips dipped under the belly in the flap)
 
 
 # flat colours off the sheet: slate back, white belly, darker fins / tail, a dark mouth, black lens

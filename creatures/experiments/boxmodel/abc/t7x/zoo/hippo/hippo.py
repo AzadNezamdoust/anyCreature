@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 from smooth_borders import smooth_borders
 import parts as PT
 
@@ -293,7 +294,8 @@ def stage2(k, body):
     commit(body, bm)
 
 
-PAL = {'skin': '#7e7081', 'pink': '#b9888d', 'nail': '#cfc6bc', 'dark': '#40363b', 'eye': '#3b2a22'}
+PAL = {'skin': '#7e7081', 'pink': '#b9888d', 'nail': '#cfc6bc', 'dark': '#40363b', 'eye': '#3b2a22',
+       'muzzle': '#c4959a'}   # detail pass 10-23: the pink muzzle + inner ears a step lighter than the belly (sheet)
 
 # s3 r1: colour borders on edge loops. fh = the face centre's height in its ring's frame (-1 bottom seam .. 1 top), from
 # the loft stations by y: the belly border is the leg-window top loop (BODY j9), the jaw border HEAD j8, the muzzle
@@ -330,10 +332,12 @@ def body_rule(c, n, i):
         return 'dark'                                   # nostril
     if _leg(c) or y > 1.60:
         return 'skin'                                   # legs, tail
+    if z > 1.46 and x > 0.17 and -0.95 < y < -0.75 and n.y < -0.3:
+        return 'muzzle'                                 # detail pass: the inner (front) face of the ear cup
     zc, h = _frame(y)
     fh = (z - zc) / h
     if y < -1.235:
-        return 'pink' if fh < 0.86 or y < -1.585 else 'skin'      # muzzle box below its top plane, the front
+        return 'muzzle' if fh < 0.86 or y < -1.585 else 'skin'    # muzzle box below its top plane, the front
     if y < -0.60:
         return 'pink' if fh < -0.45 else 'skin'         # jaw, throat
     if -0.60 < y < 0.96:
@@ -411,7 +415,71 @@ def stage3(k, body):
     nails = object_from_bm('nails', bm)
     paint(nails, {'nail': PAL['nail']}, lambda c_, n_, i: 'nail')
     pieces.append(nails)
-    return pieces
+    return pieces + detail_pass(body, tree)
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md hippo list): nostril mounds, eye bumps, mouth line, a
+    cheek bulge, a neck fold, wrist wrinkles, a tail brush; chunky blended seated pieces (STEP: raised ridges read
+    as straps - rhino judge)."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    # 1. nostril mounds: a raised dome round each painted nostril, a dark cap
+    q = NOSTRIL[0]
+    h_ = D.cast_in(tree, (q.x, q.y, q.z + 1.0), (0, 0, -1))
+    nn = h_[1]
+    bm = bmesh.new()
+    D.knob(bm, h_[0], nn, 0.05, 0.026, sides=7, top=0.55)
+    piece('nostril', bm, {'muzzle': PAL['muzzle'], 'dark': PAL['dark']},
+          rule=lambda c_, n_, i: 'dark' if n_.dot(nn) > 0.9 else 'muzzle')
+    # 2. eye bumps: the eyes sit on raised knobs on the skull top (a brow mound over each eye)
+    e = SOCKET[0]
+    h_ = D.cast_in(tree, (e.x - 0.01, e.y + 0.02, 3.0), (0, 0, -1))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], (h_[1] + Vector((0.4, 0, 0))).normalized(), 0.065, 0.035, sides=7, sq=(0.9, 1.15), top=0.5)
+    piece('brow', bm, 'skin')
+    # 3. mouth line: a dark lip line from the muzzle front back to the cheek
+    pts = [(1.5, y, z) for y, z in ((-1.57, 0.875), (-1.47, 0.855), (-1.37, 0.848), (-1.27, 0.852), (-1.18, 0.868),
+                                    (-1.11, 0.895))]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.032, 0.02,
+           prof=D.ROUND)
+    piece('mouth', bm, 'dark')
+    # 4. cheek bulge at the mouth corner (side view)
+    h_ = D.cast_in(tree, (1.5, -1.08, 0.86), (-1, 0, 0))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], h_[1], 0.075, 0.03, sides=7, sq=(1.2, 1.0), top=0.55)
+    piece('cheek', bm, 'muzzle')
+    # 5. neck fold: a broad blended skin step on the side of the neck behind the jaw (side only, no collar)
+    hits = []
+    for i in range(7):
+        t = i / 6
+        sc = D.section_centre(tree, -0.70 + 0.05 * t)
+        if sc is None:
+            continue
+        a = 55 + 80 * t
+        hits += D.ring_stations(tree, sc[0], (0, 1, 0), (0, 0, 1), a, a + 1e-3, 2)[:1]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(hits, side_hint=(0, 1, 0)), 0.18, 0.035, prof=D.STEP, taper=0.3)
+    piece('fold_neck', bm, 'skin')
+    # 6. wrist wrinkles: a short stepped arc on the front of each lower leg above the foot
+    bm = bmesh.new()
+    for sec in (FORE[3], HIND[3]):
+        hits = D.ring_stations(tree, (sec[0], sec[1], 0.21), (0, 0, 1), (0, -1, 0), -65, 65, 6)
+        D.band(bm, D.stations_from_hits(hits, side_hint=(0, 0, -1)), 0.065, 0.024, prof=D.STEP)
+    piece('fold_leg', bm, 'skin')
+    # 7. tail brush: a flat dark tuft at the tail tip
+    bm = bmesh.new()
+    D.fan(bm, (0.0, 1.708, 0.765), (0, 0.12, -1), (0, 1, 0), 0.10, 0.06, 0.032)
+    piece('tuft', bm, 'dark', mirror=False)
+    return out
 
 
 def stage4(k, body, pieces):

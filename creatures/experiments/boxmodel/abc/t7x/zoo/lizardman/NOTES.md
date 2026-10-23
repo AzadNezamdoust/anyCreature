@@ -106,3 +106,11 @@ broad and blended (thigh / tail-root crops).
   stubby blocks; the head from the front reads as a narrow hood (snout hides the face, no cheek/jaw planes).
 - Files: orbit18_sheet.jpg, side_by_side.jpg (--compare), side_by_side_sheet.jpg, review/, stage4/lizardman.glb,
   rounds/s4_r34_junctions.jpg, checks/face_separation.jpg.
+
+## Border pass (night 2026-10-23, s4 r35-r36)
+- r35: kit/smooth_borders(body, k=k, iters=8) after the body paint: thigh seam strip 1.06 r / 25.6 mm FAIL (relaxed
+  border verts at the hip). r36: guard=[(hipL/hipR, 0.3 m, 0.0)] (no relax near the thigh roots) -> junction PASS
+  (thigh strip 0.88 r / 17.3 mm). 1 despeckled, 6 cuts, 29 relaxed; stair corners 10 -> 6, 3-to-1 quads 8 -> 0.
+- Kit gates PASS, clips PASS (after --fix-clips). Detail gate FAIL pre-existing (finger/toe sticks, count 5 < 6).
+- A/B (fresh Opus seat per order, blind): after wins both orders (groin V tapers cleanly). ADOPT.
+- Files: border_before_after.jpg, before_borders/.

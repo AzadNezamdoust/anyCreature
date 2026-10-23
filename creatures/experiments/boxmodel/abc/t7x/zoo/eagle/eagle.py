@@ -486,7 +486,7 @@ def stage3(k, body):
     bm = bmesh.new()
     for q in range(6):
         t = 0.08 + q * 0.165
-        root = Vector((x - 0.05 + WDX, ly, lz)) + d_ * (ch * t) + n_ * (CAMBER * math.sin(math.pi * t))
+        root = Vector((x - 0.05 + WDX, ly, lz)) + d_ * (ch * t) + n_ * (CAMBER * math.sin(math.pi * t) - 0.002)   # r37: off the tip's surface plane (z-fight 4)
         spread = math.radians(-8 + q * 7.5)
         dirv = Vector((math.cos(spread), math.sin(spread) * math.cos(math.radians(a)),
                        -math.sin(spread) * math.sin(math.radians(a)) - 0.08)).normalized()

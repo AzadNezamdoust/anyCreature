@@ -343,7 +343,7 @@ def stage3(k, body):
         pieces.append(ob)
     bm = bmesh.new()                                    # fix pass: 3 square stone toes on the foot slab front
     for x in (0.30, 0.40, 0.50):                        # detail pass: stubbier, taller blocks (L/t 7.3 sticks)
-        p_, n_ = hit(tree, (x, -1.5, 0.035), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.046, 0.04, 0.04)
+        p_, n_ = hit(tree, (x, -1.5, 0.032), (0, 1, 0)); slab(bm, p_ + Vector((0, 0.02, 0)), Vector((0, -1, 0)), (0, 0, 1), 0.05, 0.028, 0.04)   # r16: blocks square to the front (the sloped-face normal tilted the middle toe sideways: an L/t 7.5 diagonal 'stick'), seated 2 cm
     toes = object_from_bm('toes', bm)
     paint(toes, {'dark': PAL['dark']}, lambda c_, n_, i: 'dark')
     pieces.append(toes)
@@ -366,22 +366,9 @@ def detail_pass(body, tree):
     # brow block over each glowing eye
     e = eye_face_centre()
     bm = bmesh.new()
-    p_, n_ = hit(tree, (max(e.x, 0.06), -1.5, e.z + 0.055), (0, 1, 0))
-    slab(bm, p_, n_, (0, 0, 1), 0.075, 0.028, 0.035)
+    p_, n_ = hit(tree, (max(e.x, 0.07), -1.5, e.z + 0.05), (0, 1, 0))
+    slab(bm, p_, n_, (0, 0, 1), 0.055, 0.026, 0.035)       # r14: one block per eye, clear of the seam
     piece('brow', bm, 'dark')
-    # thigh plate: a stone slab on the front of each thigh (raised seam lines would read as straps: rhino judge)
-    bm = bmesh.new()
-    p_, n_ = hit(tree, (0.31, -1.5, 0.50), (0, 1, 0))
-    slab(bm, p_, n_, (0, 0, 1), 0.085, 0.075, 0.03)
-    piece('plate_thigh', bm, 'stone')
-    # rock lumps: chunky faceted stones on the shoulder boulders and the forearm
-    bm = bmesh.new()
-    for o, d, r in (((0.62, -0.05, 3.0), (0, 0, -1), 0.06), ((0.50, 0.12, 3.0), (0, 0, -1), 0.05),
-                    ((2.0, 0.05, 0.98), (-1, 0, 0), 0.05)):
-        h_ = D.cast_in(tree, o, d)
-        if h_ is not None:
-            D.knob(bm, h_[0], h_[1], r, 0.8 * r, sides=5, top=0.55)
-    piece('rock', bm, 'stone')
     return out
 
 

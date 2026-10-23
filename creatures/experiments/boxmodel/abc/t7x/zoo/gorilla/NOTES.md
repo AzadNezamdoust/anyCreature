@@ -176,3 +176,14 @@ Builds: re-lock S1 then run.py --stage 4 --junctions --details --no-orbit (scrat
   - h3a: + brow ARCHES on the S1 brow ring (H4 j0 glabella down 1 cm / back, j1-j2 up 0.8 cm, j3 outer corner down
     1 cm). Gates PASS (eyes 0.46/0.71/0.40, junctions + details PASS, 2976 tris). Won BOTH orders (8/11, 8/11:
     lip line instead of the grille, two arches). CHAMPION h3a.
+  - h3b: + the muzzle top H2 forward to the lip line (blunt upright front) and a lower nose pad (1.0-1.3 cm). Gates
+    PASS. Won BOTH orders (7/11, 6/11: lip line, no grille). Both qualify; 8 > 6.5 -> CHAMPION h3a; h3b to round 4.
+- Round 4 (champion h3a; NOs Q1 straight vertical cheek edges, Q3 flat front, Q5 wedge nose): h4a = h3a + h3b
+  (stacked); h4b = h3a + a curved outline (cheekbone j3 out 1 cm, lower-face j3 in, skin column steps in below the
+  muzzle top: H1/Hm j0-2, H0 j0-1).
+  - h4a (r3a + r3b stacked): lost BOTH orders (a boxy forward snout / duck-bill in profile, weaker chin) -> reverted.
+  - h4b (r3a + curved outline): won BOTH orders (8/11, 8/11: straighter wide lip line, outline). CHAMPION h4b.
+- FINAL h4b (4 rounds, 8 variants spent). Residual NOs (all judges): Q1/Q10 at 192 px front the darker face still has
+  straight-ish vertical sides (a soft panel, no longer a rectangle with a slot), Q3 the muzzle front is one plane with
+  a side crease, Q5 the nose reads as a small wedge tip in profile and has no readable nostrils (every painted
+  nostril variant read as a grille mouth, so they were dropped).

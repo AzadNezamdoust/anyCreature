@@ -573,7 +573,8 @@ BELT_Z = 1.065
 def stage3(k, body):
     paint(body, {kk: PAL[kk] for kk in ('skin', 'cream')}, body_rule)
     # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
-    smooth_borders(body, k=k, iters=8)
+    # r36: guard the thigh roots (r35 unguarded: thigh seam strip 1.06 r FAIL)
+    smooth_borders(body, k=k, iters=8, guard=[((0.19, -0.69, 0.76), 0.3, 0.0), ((-0.19, -0.69, 0.76), 0.3, 0.0)])
     tree = full_bvh(body)
     pieces = []
     one = lambda key: (lambda c_, n_, i: key)

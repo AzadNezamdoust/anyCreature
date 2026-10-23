@@ -147,3 +147,10 @@ Old lock moved to old_locks/lock_r36; old sheet kept as orbit18_sheet_before.jpg
   toes_L/R big toe 'stick' L/t 6.7 (len 181 mm: it overlaps toe 2 and reads as one long branch).
   Critique (az000/hero): the pec fold reads as a curved strap/necklace across the chest.
 - r34 Fix: pec fold dropped (strap look); big toe moved clear of toe 2 (x -0.136, w 42 mm, L 66 mm, h 88 mm).
+- r34 Result: gates as r33, pec fold gone; detail FAIL again: big toe L/t 6.7 (crop dcrop_0: the 88 mm-tall toe top
+  stands above the foot top and runs back over it, so its branch measures 18 cm). Fix r35: big toe 64 mm tall (under
+  the foot top), tip 72 % tall (blunt), x -0.138.
+- r35 Result: ALL gates PASS (kit OK, junction PASS, eyes 0.46/0.74/0.56, detail PASS 14 groups: brow, nostril,
+  kneecap, wart, navel, mouth + belt, flaps, hand, toes, eye, ear, belly paint). A/B Opus both orders: variant won
+  BOTH (face reads, knobby knees as the sheet) -> ADOPT. Residuals: kneecap/navel knobs hex-faceted, read a little
+  like bolts; big-toe nail patch smaller.

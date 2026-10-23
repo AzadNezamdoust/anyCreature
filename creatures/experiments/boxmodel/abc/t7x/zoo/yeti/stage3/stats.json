@@ -16,7 +16,7 @@
   "skin"
  ],
  "colour_count": 6,
- "tris": 5362,
+ "tris": 5346,
  "attach": [
   {
    "kind": "piece_attach",
@@ -42,8 +42,8 @@
    "cuts": 2,
    "relaxed": 8,
    "undone": 0,
-   "max_move": 0.02114,
-   "mean_move": 0.00999,
+   "max_move": 0.02372,
+   "mean_move": 0.01156,
    "before": {
     "border_edges": 43,
     "length": 3.4419,
@@ -54,7 +54,7 @@
    },
    "after": {
     "border_edges": 41,
-    "length": 3.3466,
+    "length": 3.3492,
     "paths": 3,
     "corners": 4,
     "corner_quads": 5,
@@ -64,7 +64,7 @@
  ],
  "pieces": {
   "piece_eye": 64,
-  "piece_nose": 76,
+  "piece_nose": 60,
   "piece_hand_L": 196,
   "piece_hand_R": 196,
   "piece_toes_L": 100,

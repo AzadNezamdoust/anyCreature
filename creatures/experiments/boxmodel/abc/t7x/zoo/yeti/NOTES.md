@@ -255,3 +255,14 @@ Backup: before_head/; old lock old_locks/lock_r13_face_r31g.json. Builds as gori
   (bigger nostrils read as a slot, beak longer) -> reverted. h2b lower lip 1 cm / chin 2 cm forward, chin skin to v2:
   flip (won iy3, lost iy4) = tie. Champion stays h1a. Shared NOs: straight vertical face sides (Q1), nose ridge from
   the brow ending in a tip (Q6), hard border (Q10).
+- Round 3 (champion h1a): h3a short broad nose bulb on the muzzle top only (no bridge rows; normal lift; nostrils
+  0.3-0.7 w): flip (won jy1, lost jy2) = tie. h3b heart outline (face side v4 0.194 at the cheekbones E0/N2, 0.178 at
+  the brow, 0.14 at the chin): won BOTH orders (8/11, 8/11: chamfered rounder jaw, the muzzle side turns back in 3q).
+  CHAMPION h3b. Shared NOs: nose tip still a wedge / nostrils read as teeth (Q6), hard grey border (Q10), outline
+  still a rounded box at 192 px (Q1).
+- Round 4 (champion h3b): h4a = h3b + h3a's short nose bulb; h4b = h4a without painted nostrils.
+  - h4a: won BOTH orders (8/11, 9/11: smaller blunter nose, flatter muzzle front, lower chin). h4b (no painted
+    nostrils): flip = tie. CHAMPION h4a.
+- FINAL h4a (4 rounds, 8 variants spent). Residual NOs: Q6 the nose still ends in a small tip in profile and the
+  nostrils can read as a split slot at close front, Q10 the grey border is a hard cut (worst under the chin, no beard
+  over it), Q1 the outline is a rounded shield (no longer a box), straight-ish sides at 192 px.

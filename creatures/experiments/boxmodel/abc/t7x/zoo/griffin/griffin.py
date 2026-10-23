@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # Griffin, t7 hand box-model: one spine loft of 13-point half rings (tail stem -> hooked beak tip), the four legs
 # extruded from broad 3 x 3 face regions of the lower flank (eagle forelegs, lion hind legs), the folded wings,
@@ -386,6 +387,8 @@ def claw(bm, h, d, lead):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     bm0 = edit(body); tree = BVHTree.FromBMesh(bm0); bm0.free()
     pieces = []
     # eye: a round amber lens with a dark pupil, part in the socket, part proud
