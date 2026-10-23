@@ -342,7 +342,8 @@ def clump(bm, a, n, lay, s, L):
 def tine(bm, base, d, r0, L):
     """An antler tine (fix pass): a square root sunk in the beam, two tapering rings and a blunt tip L out along d."""
     n, u, w = frame3(d)
-    rows = [(-0.4 * r0, r0 * 0.75), (L * 0.25, r0 * 0.88), (L * 0.5, r0 * 0.75), (L * 0.75, r0 * 0.6), (L, r0 * 0.42)]
+    r0, L = r0 * 1.35, L * 0.88       # detail pass 10-23: chunkier, shorter tines (floor 24.3 mm; were t 16.9 mm, L/t 9.6)
+    rows = [(-0.4 * r0, r0 * 0.8), (L * 0.25, r0 * 0.92), (L * 0.5, r0 * 0.84), (L * 0.75, r0 * 0.74), (L, r0 * 0.58)]
     cs = [(math.cos(k_ * math.pi / 2), math.sin(k_ * math.pi / 2)) for k_ in range(4)]
     R = [[bm.verts.new(base + n * off + (u * su + w * sw) * r) for su, sw in cs] for off, r in rows]
     bm.faces.new(list(reversed(R[0])))

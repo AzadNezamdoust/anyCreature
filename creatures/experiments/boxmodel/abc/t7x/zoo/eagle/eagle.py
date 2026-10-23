@@ -281,10 +281,78 @@ def relax(bm, c, rad, it, k):
                 v.co.x = 0.0
 
 
+# ---- weakfix 2026-10-23: a fuller body (sheet front: body ~23 % of the span, model 17 %), a cupped tail fan
+WIDEN = {'R0': 1.02, 'R1': 1.03, 'R2': 1.04, 'M0': 1.06, 'M1': 1.15,   # r37: behind the wing root less (16 hits: the
+         # widened M0 flank ran into the wing's trailing root edge at y 0.05, z 0.53)
+         'M2': 1.30, 'C0': 1.30, 'C1': 1.27,
+         'C2': 1.20, 'C3': 1.12, 'N0': 1.05}
+WDX = 0.030                 # the wings move out with the widened shoulder (stage 3 / 4 use it too)
+CUP = {'T0': 0.100, 'T1': 0.080, 'T2': 0.055, 'T3': 0.030, 'T4': 0.012}   # tail fan cupping (edge drop, m)
+BREAST = {'M2': 0.010, 'C0': 0.022, 'C1': 0.026, 'C2': 0.020, 'C3': 0.010}   # the breast pushed forward
+WING_V = set()
+WING_MOVED = []
+
+
+def _tab(tab, nm):
+    """Value for a station (in-between 'Xb' stations: the mean of their two neighbours)."""
+    base = [s[0] for s in BASE]
+    if nm in tab:
+        return tab[nm]
+    if nm.endswith('b') and nm[:-1] in base:
+        i = base.index(nm[:-1])
+        a = tab.get(base[i], None)
+        b = tab.get(base[i + 1], None) if i + 1 < len(base) else None
+        a = a if a is not None else (1.0 if tab is WIDEN else 0.0)
+        b = b if b is not None else (1.0 if tab is WIDEN else 0.0)
+        return (a + b) / 2
+    return 1.0 if tab is WIDEN else 0.0
+
+
+def cup_off(nm, x):
+    _, c, a, T, B, W, p = SECS[IDX[nm]]
+    up = Vector((0, math.sin(math.radians(a)), math.cos(math.radians(a))))
+    return -up * _tab(CUP, nm) * min(1.0, abs(x) / W) ** 2
+
+
+def fuller(bm):
+    keys = {}
+    for s in SECS:
+        for j, q in enumerate(P(s[0])):
+            keys[(round(abs(q.x), 4), round(q.y, 4), round(q.z, 4))] = (s[0], j)
+    loft = {}
+    for v in bm.verts:
+        kk = (round(abs(v.co.x), 4), round(v.co.y, 4), round(v.co.z, 4))
+        if kk in keys:
+            loft[v] = keys[kk]
+    WING_V.clear()
+    wing = [v for v in bm.verts if v not in loft and v.co.x > 0.12 and v.co.z > 0.45]
+    orig = {v: v.co.copy() for v in loft}
+    for v in loft:
+        nm, j = loft[v]
+        f = _tab(WIDEN, nm)
+        wj = {5: 0.8, 6: 0.55, 7: 0.25}.get(j, 1.0 if j <= 4 else 0.0)   # r35: taper off over the thigh tops (r34: 16 hits)
+        v.co.x *= 1 + (f - 1) * wj
+        if j >= 8 and nm != 'M1b':
+            v.co.y -= _tab(BREAST, nm) * (j - 7) / 5
+        if nm.startswith('T'):
+            v.co += cup_off(nm, v.co.x)
+    # r36: each wing vertex follows the shoulder vertex it grew from near the root, the full WDX further out
+    # (r34/r35: a constant WDX sheared the trailing root wall into the flank: 16 hits at y 0.05, z 0.53)
+    reg = [(o, v) for v, o in orig.items() if 2 <= loft[v][1] <= 5 and v.co.z > 0.45]
+    for v in wing:
+        o, rv = min(reg, key=lambda q: (q[0] - v.co).length)
+        dr = rv.co.x - o.x
+        t = min(1.0, max(0.0, (v.co.x - o.x) / 0.10))
+        v.co.x += dr + (WDX - dr) * t
+    for v in wing:
+        WING_V.add((round(abs(v.co.x), 4), round(v.co.y, 4), round(v.co.z, 4)))
+
+
 def stage2(k, body):
     bm = edit(body)
     recalc_normals(bm)
     bm.verts.ensure_lookup_table(); bm.edges.ensure_lookup_table(); bm.faces.ensure_lookup_table()
+    fuller(bm)
     relax(bm, THIGH_ROOT, 0.10, RELAX_IT, RELAX_K)    # s2 r04: radius 0.085 -> 0.10
     f = face_near(bm, EYE, n=Vector((1, 0, 0)))
     fn = f.normal.copy()
@@ -321,9 +389,17 @@ def station_of(c):
     return best[1] if best else None
 
 
+BODY_ME = []
+
+
 def body_rule(c, n, i):
     x, y, z = abs(c.x), c.y, c.z
-    if x > 0.138 and z > 0.4:                       # wing (s3 r04: 0.125 -> 0.138, the flank's widest faces stay body)
+    me = BODY_ME[0]
+    ks = [(round(abs(me.vertices[q].co.x), 4), round(me.vertices[q].co.y, 4), round(me.vertices[q].co.z, 4))
+          for q in me.polygons[i].vertices]
+    inwing = sum(q in WING_V for q in ks) * 2 >= len(ks)    # weakfix: wing faces by their (moved) wing vertices
+    if inwing or (x - WDX > 0.138 and z > 0.4):
+        x = x - WDX
         up = n.y * 0.7 + n.z * 0.7 > 0
         xs = [w[0] for w in WSEC]
         kk = min(range(len(WSEC)), key=lambda q: abs(xs[q] - x))
@@ -347,7 +423,8 @@ def body_rule(c, n, i):
     if s >= IDX['N0']:
         nm_, cc, a, T, B, W, p = SECS[int(s)]
         h = (Vector((0, y - cc[0], z - cc[1]))).dot(Vector((0, math.sin(math.radians(a)), math.cos(math.radians(a)))))
-        return 'gold' if h > -0.25 * T else 'body'      # golden crown, nape and cheek over a brown throat
+        thr = -0.25 if s < IDX['H0'] else -0.25 + 0.85 * min(1.0, (s - IDX['H0']) / (IDX['H3'] - IDX['H0']))
+        return 'gold' if h > thr * T else 'body'        # weakfix: gold crown + nape, the face and cheek brown
     return 'body'
 
 
@@ -389,6 +466,7 @@ def feather(bm, root, d, side, L, w, th, tipw=0.35):
 
 
 def stage3(k, body):
+    BODY_ME[:] = [body.data]
     paint(body, {kk: PAL[kk] for kk in ('body', 'gold', 'cov', 'flight', 'yellow', 'horn')}, body_rule)
     bm0 = edit(body); tree = BVHTree.FromBMesh(bm0); bm0.free()
     pieces = []
@@ -408,12 +486,12 @@ def stage3(k, body):
     bm = bmesh.new()
     for q in range(6):
         t = 0.08 + q * 0.165
-        root = Vector((x - 0.05, ly, lz)) + d_ * (ch * t) + n_ * (CAMBER * math.sin(math.pi * t))
+        root = Vector((x - 0.05 + WDX, ly, lz)) + d_ * (ch * t) + n_ * (CAMBER * math.sin(math.pi * t))
         spread = math.radians(-8 + q * 7.5)
         dirv = Vector((math.cos(spread), math.sin(spread) * math.cos(math.radians(a)),
                        -math.sin(spread) * math.sin(math.radians(a)) - 0.08)).normalized()
         L = 0.17 - abs(q - 2.2) * 0.018
-        feather(bm, root, dirv, d_, L, 0.042, 0.014)
+        feather(bm, root, dirv, d_, L, 0.042, 0.011)   # r36: 0.014 -> 0.011 (z-fight with the wider tip slab)
     prim = object_from_bm('primaries', bm)
     paint(prim, {'flight': PAL['flight']}, lambda c_, n_, i: 'flight')
     pieces.append(prim)
@@ -423,7 +501,7 @@ def stage3(k, body):
     bm = bmesh.new()
     for q in range(3):
         xq = 0.03 + q * 0.065
-        root = Vector((xq, tc[0], tc[1])) - td * 0.03
+        root = Vector((xq, tc[0], tc[1])) - td * 0.03 + cup_off('T0', xq)
         dirv = (td + Vector((0.12 * q, 0, 0))).normalized()
         feather(bm, root, dirv, Vector((1, 0, 0)), 0.075 - q * 0.008, 0.07, 0.018, tipw=0.5)
     tf = object_from_bm('tailfeathers', bm)
@@ -440,6 +518,10 @@ def stage3(k, body):
 
 
 def stage4(k, body, pieces):
+    if not WING_MOVED:
+        for jn in ('wing', 'elbow', 'wrist', 'wtip'):
+            J[jn] = (J[jn][0] + WDX, J[jn][1], J[jn][2])
+        WING_MOVED.append(1)
     B = [('hips', J['hips'], J['spine'], None),
          ('spine', J['spine'], J['chest'], 'hips', True),
          ('chest', J['chest'], J['neck'], 'spine', True),

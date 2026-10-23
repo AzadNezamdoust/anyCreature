@@ -149,3 +149,30 @@ order; a variant must win BOTH orders vs the champion. Builds: run.py --stage 4 
   when stacked on the nose), Q8 at 192 px the dark skin area still reads as a rectangular plate in front view.
   orbit18_sheet.jpg (old: orbit18_sheet_before_face.jpg), face_before_after.jpg, versions/ (every variant: program,
   GLB, face renders).
+
+## HEAD rebuild pass (2026-10-22/23): the face in the loft (HEAD_CHECKLIST.md, frozen), champion at start r24e
+Backup: before_head/ (program, locks, logs, sheets, stage1/, stage4 GLB); old lock old_locks/lock_r16_face_r24e.json.
+Builds: re-lock S1 then run.py --stage 4 --junctions --details --no-orbit (scratch hbuild.sh); views versions/TAG/fc.
+- S1 RE-LOCK (logged): two new head rings in the spine loft - Hm (mouth line, lerp H0->H1 0.8) and He (upper lid, lerp
+  H3->H4 0.6) - and hand-placed face vertices j0-j4 (FACE dict) on H0u..H4; the r24e S2 face moves (muzzle forward,
+  brow shelf/arches, mouth loopcut + crease, cheek moves) are replaced by them. Body, arms, legs, density unchanged
+  (1100 -> 1152 S1 verts, 2196 -> 2300 tris: the two head rings only). S2 keeps elbow/knee loops, collar relax, crest
+  (Hm/He added to the crest list), groin, socket (now H3->He col 1). S3: skin by (span, column) SKIN_J (shield: chin
+  j0, lower lip j0-1, mouth j0-2, muzzle/eye band/brow underside j0-3) + smooth_borders fur/skin; nose = a pad lying on
+  the muzzle surface (ray-cast rows, lifted 0.7-2 cm), not the r22c wedge.
+- dev d29: flatter than r24e (muzzle only -0.828; nostril cells = teeth). d30: stronger forms, nostril band = mouth,
+  z-fight 4 (nose). d31 (profile measured off the sheet side view: upper lip 12 cm ahead of the eye, brow 6 cm, nose
+  9 cm; mouth at 78 % of the face height; eyes +-0.064): all gates PASS, eyes 0.46/0.71/0.40, 2976 tris.
+- Round 1 (champion r24e, score 5/12 by builder): h1a = d31; h1b = h1a + a mid-tone blend band (skin2) round the face.
+  h1a: won BOTH orders (judges 8/11, 8/11). h1b: won both orders (9/11, 6/11). DECISION: CHAMPION h1a (higher mean,
+  one colour fewer). Shared NOs: the dark nostril cells read as a slot / grille mouth (Q4), nose wedge in profile (Q5),
+  flat muzzle front with a vertical edge (Q3).
+- Round 2 (champion h1a): h2a nostrils only under the outer wings + rounder bulb: flip (won order 1, lost order 2) =
+  tie. h2b muzzle 1-2.4 cm further forward, rounder in plan: flip = tie. Judges (all four): every nostril paint reads
+  as a grille mouth; brow still a straight visor (Q6); the upper lip/nose meet in a wedge tip in profile (Q5).
+  Champion stays h1a.
+- Round 3 (champion h1a; NOs Q4 nostril grille, Q5 wedge, Q6 visor brow, Q3 flat front). Both variants on h2b's
+  rounder, more forward muzzle, no painted nostrils.
+  - h3a: + brow ARCHES on the S1 brow ring (H4 j0 glabella down 1 cm / back, j1-j2 up 0.8 cm, j3 outer corner down
+    1 cm). Gates PASS (eyes 0.46/0.71/0.40, junctions + details PASS, 2976 tris). Won BOTH orders (8/11, 8/11:
+    lip line instead of the grille, two arches). CHAMPION h3a.

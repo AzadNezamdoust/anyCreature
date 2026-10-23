@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 import parts as PT
 
 # t7 hand box model (zoo workflow v2), template zoo/rhino: one spine loft of 14-vertex half rings (tail tip -> rump ->
@@ -350,7 +351,7 @@ def stage2(k, body):
 
 
 PAL = {'skin': '#8e8073', 'pale': '#a08f81',   # s4 r17: sheet's warm grey (EEVEE read light)
-       'dark': '#4b4642', 'ivory': '#ece2cf', 'eye': '#3a2a1e'}
+       'dark': '#4b4642', 'ivory': '#ece2cf', 'eye': '#3a2a1e', 'inner': '#a88a84'}   # detail pass: pink inner ear (sheet)
 
 
 def body_rule(c, n, i):
@@ -359,6 +360,8 @@ def body_rule(c, n, i):
         return 'dark'                                   # tail tuft
     if z < 0.22 and x > 0.10 and y > -1.3:
         return 'pale'                                   # the feet, lighter (sheet)
+    if x > 0.55 and z > 2.0 and n.y < -0.35:
+        return 'inner'                                  # detail pass 10-23: the inner (front) face of the ear
     return 'skin'
 
 
@@ -404,6 +407,8 @@ def nail(bm, base, out, w, hgt, d):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    from smooth_borders import smooth_borders
+    smooth_borders(body, k=k)                    # owner 10-21: borders follow the form (the new inner-ear border)
     bmb = edit(body)
     tree = BVHTree.FromBMesh(bmb)
     bmb.free()
@@ -439,7 +444,64 @@ def stage3(k, body):
     nails = object_from_bm('nails', bm)
     paint(nails, {'ivory': PAL['ivory']}, lambda c_, n_, i: 'ivory')
     pieces.append(nails)
-    return pieces
+    return pieces + detail_pass(body, tree)
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md elephant list): trunk rings, knee folds, brow, tail
+    brush, a side fold; chunky blended seated pieces (STEP profile: raised ridges read as straps - rhino judge)."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    # 1. trunk rings: 5 stepped wrinkle arcs round the front and sides of the trunk (open behind)
+    bm = bmesh.new()
+    A, B = Vector(J['tr1']), Vector(J['tr3'])
+    for t in (0.08, 0.28, 0.48, 0.68, 0.88):
+        c = A.lerp(B, t)
+        ax = (B - A).normalized()
+        side = 1 if ax.cross(Vector((0, -1, 0))).x > 0 else -1          # the angle sign that turns toward +x
+        hits = D.ring_stations(tree, c, ax, (0, -1, 0), 0, side * 100, 5)
+        if len(hits) >= 3:
+            D.band(bm, D.stations_from_hits(hits, side_hint=(0, 0, -1)), 0.06, 0.022, prof=D.STEP, open_start=True)
+    piece('fold_trunk', bm, 'skin')
+    # 2. knee folds: a short stepped wrinkle arc on the front of each knee (fore wrist, hind stifle)
+    bm = bmesh.new()
+    for sec in (FORE[2], HIND[2]):
+        hits = D.ring_stations(tree, (sec[0], sec[1], sec[2]), (0, 0, 1), (0, -1, 0), -70, 70, 6)
+        D.band(bm, D.stations_from_hits(hits, side_hint=(0, 0, -1)), 0.09, 0.028, prof=D.STEP)
+    piece('fold_knee', bm, 'skin')
+    # 3. brow ridge over each eye
+    e = SOCKET[0]
+    pts = [(1.5, e.y + 0.07 * t, e.z + 0.075 - 0.02 * t * t) for t in (-1.0, -0.5, 0.0, 0.5, 1.0)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.07, 0.032,
+           prof=D.ROUND)
+    piece('brow', bm, 'skin')
+    # 4. tail brush: a flat dark tuft at the tail tip (sheet)
+    bm = bmesh.new()
+    tp = Vector(J['tail3'])
+    D.fan(bm, tp + Vector((0, 0, 0.14)), (0, 0.04, -1), (0, 1, 0), 0.24, 0.10, 0.05)
+    piece('tuft', bm, 'dark', mirror=False)
+    # 5. shoulder fold: a broad blended skin step on the side behind the ear, down toward the elbow
+    hits = []
+    for i in range(8):
+        t = i / 7
+        y = 0.05 + 0.12 * t
+        sc = D.section_centre(tree, y)
+        if sc is None:
+            continue
+        a = 45 + 70 * t
+        hits += D.ring_stations(tree, sc[0], (0, 1, 0), (0, 0, 1), a, a + 1e-3, 2)[:1]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(hits, side_hint=(0, 1, 0)), 0.24, 0.045, prof=D.STEP, taper=0.3)
+    piece('fold_shoulder', bm, 'skin')
+    return out
 
 
 def stage4(k, body, pieces):

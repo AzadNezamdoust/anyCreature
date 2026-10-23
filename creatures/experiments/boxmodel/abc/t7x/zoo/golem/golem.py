@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 
 # stone golem (biped), t7 hand box-model adapted to a biped: ONE vertical spine loft of 6-vertex half rings
 # (crotch -> crown; each ring horizontal, front seam -> back seam), legs extruded from the 3-face region of the
@@ -325,23 +326,63 @@ def stage3(k, body):
     lens(bm, c, n, 0.027, 0.011)              # fix9: eye +20 % (the 2x brow overhangs it)
     eye = object_from_bm('eye', bm)
     paint(eye, {'glow': PAL['glow']}, lambda c_, n_, i: 'glow')
-    # stone plates: knee caps, forearm guard, knuckles, toes
-    bm = bmesh.new()
-    p_, n_ = hit(tree, (0.35, -1.5, 0.30), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.08, 0.07, 0.03)
-    p_, n_ = hit(tree, (2.0, -0.03, 0.88), (-1, 0, 0)); slab(bm, p_, n_, (0, 0, 1), 0.12, 0.13, 0.035)
-    p_, n_ = hit(tree, (0.87, -1.5, 0.38), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.12, 0.055, 0.04)   # fix2: one knuckle block
-    p_, n_ = hit(tree, (0.22, -1.5, 1.36), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.15, 0.12, 0.03)   # fix pass: pec slab
-    p_, n_ = hit(tree, (0.14, -1.5, 0.98), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.13, 0.08, 0.03)   # fix2: belly plate (sheet)
-    p_, n_ = hit(tree, (0.22, 1.5, 1.42), (0, -1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.17, 0.15, 0.03)   # fix2: upper back plates (sheet rear)
-    p_, n_ = hit(tree, (0.14, 1.5, 1.02), (0, -1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.13, 0.09, 0.03)   # fix2: lower back plate
-    plates = object_from_bm('plates', bm)
-    paint(plates, {'stone': PAL['stone']}, lambda c_, n_, i: 'stone')   # fix2: plates same grey, shape only
+    # stone plates (detail pass 2026-10-23: each plate its own piece, so each reads as its own feature):
+    # knee caps, forearm guard, knuckle block, pec slab, belly plate, back plates
+    pieces = [eye]
+    for nm, o, d, w, h, t in (('kneecap', (0.35, -1.5, 0.30), (0, 1, 0), 0.08, 0.07, 0.03),
+                              ('bracer', (2.0, -0.03, 0.88), (-1, 0, 0), 0.12, 0.13, 0.035),
+                              ('knuckle', (0.87, -1.5, 0.38), (0, 1, 0), 0.12, 0.055, 0.04),   # fix2: one knuckle block
+                              ('plate_chest', (0.22, -1.5, 1.36), (0, 1, 0), 0.15, 0.12, 0.03),  # fix pass: pec slab
+                              ('plate_belly', (0.14, -1.5, 0.98), (0, 1, 0), 0.13, 0.08, 0.03),  # fix2: belly plate (sheet)
+                              ('plate_back', (0.22, 1.5, 1.42), (0, -1, 0), 0.17, 0.15, 0.03),   # fix2: upper back plates
+                              ('plate_lowback', (0.14, 1.5, 1.02), (0, -1, 0), 0.13, 0.09, 0.03)):
+        bm = bmesh.new()
+        p_, n_ = hit(tree, o, d); slab(bm, p_, n_, (0, 0, 1), w, h, t)
+        ob = object_from_bm(nm, bm)
+        paint(ob, {'stone': PAL['stone']}, lambda c_, n_, i: 'stone')   # fix2: plates same grey, shape only
+        pieces.append(ob)
     bm = bmesh.new()                                    # fix pass: 3 square stone toes on the foot slab front
-    for x in (0.30, 0.40, 0.50):
-        p_, n_ = hit(tree, (x, -1.5, 0.035), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.042, 0.032, 0.05)
+    for x in (0.30, 0.40, 0.50):                        # detail pass: stubbier, taller blocks (L/t 7.3 sticks)
+        p_, n_ = hit(tree, (x, -1.5, 0.035), (0, 1, 0)); slab(bm, p_, n_, (0, 0, 1), 0.046, 0.04, 0.04)
     toes = object_from_bm('toes', bm)
     paint(toes, {'dark': PAL['dark']}, lambda c_, n_, i: 'dark')
-    return [eye, plates, toes]          # fix pass: the painted chest crack (a liner) is dropped                 # s4 r7: the moss clumps drift with the boulder skin in the swings; moss stays a colour zone
+    pieces.append(toes)
+    return pieces + detail_pass(body, tree)
+          # fix pass: the painted chest crack (a liner) is dropped                 # s4 r7: the moss clumps drift with the boulder skin in the swings; moss stays a colour zone
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md golem list): brow blocks, rock-block seams and rock
+    lumps; chunky seated pieces in the existing palette."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    # brow block over each glowing eye
+    e = eye_face_centre()
+    bm = bmesh.new()
+    p_, n_ = hit(tree, (max(e.x, 0.06), -1.5, e.z + 0.055), (0, 1, 0))
+    slab(bm, p_, n_, (0, 0, 1), 0.075, 0.028, 0.035)
+    piece('brow', bm, 'dark')
+    # thigh plate: a stone slab on the front of each thigh (raised seam lines would read as straps: rhino judge)
+    bm = bmesh.new()
+    p_, n_ = hit(tree, (0.31, -1.5, 0.50), (0, 1, 0))
+    slab(bm, p_, n_, (0, 0, 1), 0.085, 0.075, 0.03)
+    piece('plate_thigh', bm, 'stone')
+    # rock lumps: chunky faceted stones on the shoulder boulders and the forearm
+    bm = bmesh.new()
+    for o, d, r in (((0.62, -0.05, 3.0), (0, 0, -1), 0.06), ((0.50, 0.12, 3.0), (0, 0, -1), 0.05),
+                    ((2.0, 0.05, 0.98), (-1, 0, 0), 0.05)):
+        h_ = D.cast_in(tree, o, d)
+        if h_ is not None:
+            D.knob(bm, h_[0], h_[1], r, 0.8 * r, sides=5, top=0.55)
+    piece('rock', bm, 'stone')
+    return out
 
 
 def shell_rigid(p):

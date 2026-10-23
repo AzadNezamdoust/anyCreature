@@ -330,7 +330,7 @@ def stage3(k, body):
           lambda c_, n_, i: 'black' if ((c_ - c) - n * (c_ - c).dot(n)).length < 0.0035 and n_.dot(n) > 0.5 else 'iris')
     # barbels: one pair at the mouth corners, hanging down and a little forward
     bm = bmesh.new()
-    barbel(bm, [(0.020, -0.338, 0.103, 0.003), (0.022, -0.352, 0.093, 0.0016)])  # fix pass: half length, thin, forward
+    barbel(bm, [(0.020, -0.338, 0.103, 0.0042), (0.022, -0.350, 0.094, 0.0034)])  # detail pass 10-23: stubby + chunky (tier-1 floor 5.9 mm; was t 2.2 mm)
     bar = object_from_bm('barbels', bm)
     paint(bar, {'white': PAL['white']}, lambda c_, n_, i: 'white')
     return [eye, bar]

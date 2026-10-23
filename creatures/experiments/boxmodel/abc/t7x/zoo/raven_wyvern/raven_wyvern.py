@@ -418,9 +418,10 @@ def stage3(k, body):
     bm = bmesh.new()
     F = Vector((0.16, -0.565, 0.032))
     tf, cf = [], []
-    for tipv, talon in (((0.165, -0.80, 0.026), 0.05), ((0.095, -0.735, 0.026), 0.045), ((0.245, -0.73, 0.026), 0.045),
-                        ((0.15, -0.43, 0.026), 0.045)):
-        a_, b_ = toe(bm, F, tipv, 0.018, 0.012, talon)
+    # detail pass 10-23: shorter, fatter toes (L/t 8.7 sticks -> <= 6): 3/4 length, radius 0.018/0.012 -> 0.022/0.016
+    for tipv, talon in (((0.164, -0.74, 0.026), 0.05), ((0.112, -0.693, 0.026), 0.045), ((0.224, -0.689, 0.026), 0.045),
+                        ((0.152, -0.465, 0.026), 0.045)):
+        a_, b_ = toe(bm, F, tipv, 0.022, 0.016, talon)
         tf += a_; cf += b_
     bm.faces.index_update()
     talon_idx = {f.index for f in cf}

@@ -120,8 +120,9 @@ def root_motion(rxy, H):
 
 
 def pick_frame(tracks, RM, H):
-    """world frame unless the low (contact) feet move less in the root frame: the clip then carries root motion."""
-    if not RM.any():
+    """world frame unless the low (contact) feet move less in the root frame: the clip then carries root motion.
+    CFG world_plants: plants are always judged / locked in the world (root sway is not root motion)."""
+    if not RM.any() or CFG.get('world_plants'):
         return RM
     def cost(off):
         c = 0.0
@@ -332,7 +333,10 @@ def reach(arm, f, t):
     """(excess length, hip head, limb vector) of effector target t beyond 0.985 x full extension."""
     A, B, E = f.chain
     mw = arm.matrix_world
-    a = mw @ arm.pose.bones[A].head; b = mw @ arm.pose.bones[B].head
+    a = mw @ arm.pose.bones[A].head
+    if B is None:                    # one-bone aim leg: fixed length
+        return (t - a).length - 0.985 * (mw @ arm.pose.bones[E].head - a).length, a, 0.985 * (mw @ arm.pose.bones[E].head - a).length
+    b = mw @ arm.pose.bones[B].head
     e = (mw @ arm.pose.bones[E].head) if E else (mw @ arm.pose.bones[B].tail)
     L = 0.985 * ((b - a).length + (e - b).length)
     return (t - a).length - L, a, L
@@ -399,6 +403,11 @@ def plan_targets(f, tr, zc, H, N, cyc, is_move, gait, arm):
         for r in runs(st):
             if len(r) <= 1:
                 st[r] = False
+    if is_move and CFG.get('one_stance', True) and len(runs(st)) > 1 and st.sum() < N:   # one plant per cycle
+        rr = runs(st); keep = max(rr, key=len)
+        for r in rr:
+            if r is not keep:
+                st[r] = False
     if is_move and gait and (st.all() or st.sum() < 2 or gait in CFG.get('force_gait', [])):
         sd, fw = role(arm.data.bones[f.name], arm); g = GAITS[gait]
         if gait == 'octo_tetrapod':
@@ -412,6 +421,8 @@ def plan_targets(f, tr, zc, H, N, cyc, is_move, gait, arm):
         if len(r) == N:               # planted the whole clip (idle, attack plants): lock at the mean
             tgt[:, 0:2] = tr[:, 0:2].mean(0); tgt[:, 2] = zc; w[:] = 1; continue
         p_s, p_e = tr[r[0], :2], tr[r[-1], :2]
+        if not is_move:               # idle / attack plant: no travel inside the window
+            p_s = p_e = tr[r, :2].mean(0)
         for j, i in enumerate(r):
             s = j / max(len(r) - 1, 1)
             tgt[i, :2] = p_s + (p_e - p_s) * s; tgt[i, 2] = zc; w[i] = 1.0
@@ -462,7 +473,8 @@ def fix_action(arm, objs, own, a, H, ground, feet, is_move, gait):
         zc = float(Vr[f.sole, 2])
         targets[f.name], info[f.name] = plan_targets(f, np.array(contact[f.name][:N]) - RM[:N], zc, H, N, cyc, is_move, gait, arm)
         f.zc = zc
-    ik = [f for f in feet if f.chain[1] is not None]
+    ai = CFG.get('aim_ik')
+    ik = [f for f in feet if f.chain[1] is not None or ai is True or (isinstance(ai, list) and clean(a.name) in ai)]
     replans = {}
     aim = [f for f in feet if f.chain[1] is None]     # one-bone legs: pelvis height carries the contact
     # 2. per frame: IK to sole targets, root lift for body penetration, per-foot skin clamp

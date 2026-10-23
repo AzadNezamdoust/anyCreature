@@ -223,3 +223,12 @@ Sheet: refs/gpt/v3/werewolf/sheet_1.png (side TL, front TR, rear BL, top BR). re
   review/, rounds/s4_r32*.jpg. Residual: the head is still narrower above the jaw than the sheet's fluffy head
   (T1/J0 boxed in by the arm probe region); the saddle's lower end steps once (col 9 stops at the waist loop) and its
   top is a level nape line; the tail's dark border is a straight ring, not the sheet's flame shape.
+
+## Border pass (night 2026-10-23, s4 r33)
+- kit/smooth_borders(body, k=k, iters=8) right after the body paint (as frog r17). 5 despeckled, 14 anti-stair cuts,
+  87 border verts relaxed (max 18.6 mm, 6 undone); stair corners 33 -> 13, 3-to-1 quads 22 -> 0.
+- Gates: kit S1-S4 PASS, junction probe PASS (numbers unchanged), eyes PASS; clips: move FAIL (pen 0.94 %H) on the
+  rebuild -> --clips --fix-clips -> all PASS. Detail gate FAIL (finger tips 9.6 mm thick < 26.6 mm, sticks): pre-existing,
+  the border pass does not touch the hand pieces -> owner/next fix pass.
+- A/B (fresh Opus seat per order, blind): after wins both orders (rear saddle V without the waist notch). ADOPT.
+- Files: border_before_after.jpg, before_borders/ (old py, GLB, checks).

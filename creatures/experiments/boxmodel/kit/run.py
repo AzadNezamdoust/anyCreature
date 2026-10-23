@@ -20,8 +20,9 @@
              creatures, >= 3 px at a 256 px creature height), digit length / thickness, and the
              detail count per size tier; game-distance thumbnails; rounds/sN_rRR_details.jpg.
              Gates the round. Alone: probe the latest stage GLB without rebuilding.
---compare    side_by_side.jpg: the shipped engine creature | the stage-1 grey
-             base | the final, each from the same three views.
+--compare    compare_engine.jpg: the shipped engine creature | the stage-1 grey
+             base | the final, each from the same three views (never side_by_side.jpg:
+             that is the concept-sheet vs model sheet).
 --review     the art director's packet, review/: 1_beauty.jpg (four EEVEE views),
              2_closeups.jpg (head, limbs, body side: colour | wire), 3_tech.jpg
              (the tech-QA heatmap, legend on it), 4_posed.jpg, techqa.json; with a
@@ -740,9 +741,9 @@ def main():
             print('\n'.join(tb)); return 2
         cols = [c for c in cols if c[1] and os.path.exists(c[1])]
         tiles = [(os.path.join(scr, 'compare', f'{k}_{v}.png'), f'{lab} — {v}') for v in views for k, _, _, lab in cols]
-        out = sheet(tiles, os.path.join(cdir, 'side_by_side.jpg'), cols=len(cols), tile=560,
+        out = sheet(tiles, os.path.join(cdir, 'compare_engine.jpg'), cols=len(cols), tile=560,
                     title=f"{meta['creature']} ({meta.get('model', '?')}): engine | stage-1 base | final")
-        print('BMK side-by-side:', out and os.path.relpath(out, ROOT))
+        print('BMK compare (engine | s1 | final):', out and os.path.relpath(out, ROOT))
         return 0
 
     if a.clips:

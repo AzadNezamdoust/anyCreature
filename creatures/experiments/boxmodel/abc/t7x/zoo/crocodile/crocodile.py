@@ -317,12 +317,15 @@ def claw(bm, h, d, out):
 
 
 def tooth(bm, p, l):
-    """A small white wedge hanging from the upper-jaw edge."""
-    a, b, c = p + Vector((0, -0.006, 0.004)), p + Vector((0, 0.006, 0.004)), p + Vector((0.004, 0, 0.004))
-    t = p + Vector((0.002, 0, -l))
-    vs = [bm.verts.new(q) for q in (a, b, c, t)]
-    for f in ((0, 1, 2), (0, 3, 1), (1, 3, 2), (2, 3, 0)):
-        bm.faces.new([vs[i] for i in f])
+    """A chunky white peg hanging from the upper-jaw edge (detail pass 2026-10-23: a blunt 4-sided frustum
+    >= 6.5 mm thick to its tip, gate floor 5.6 mm; it was a 4 mm-thin wedge, t 1.5 mm, L/t 11.7)."""
+    top = [p + Vector((sx * 0.0055, sy * 0.008, 0.005)) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    bot = [p + Vector((0.0015 + sx * 0.0036, sy * 0.0042, -l)) for sx, sy in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+    A = [bm.verts.new(q) for q in top]
+    B = [bm.verts.new(q) for q in bot]
+    bm.faces.new(A); bm.faces.new(list(reversed(B)))
+    for j in range(4):
+        bm.faces.new([A[j], B[j], B[(j + 1) % 4], A[(j + 1) % 4]])
 
 
 def stage3(k, body):
@@ -363,7 +366,7 @@ def stage3(k, body):
         a, b, t = sec_at(yy)
         p = surf(a, b, t, float(JAW))
         loc, fn, _i, _d = tree.find_nearest(p)
-        tooth(bm, loc + Vector((-0.004, 0, 0)), 0.02 if yy in (-1.30, -1.12) else 0.014)
+        tooth(bm, loc + Vector((-0.004, 0, 0)), 0.018 if yy in (-1.30, -1.12) else 0.013)
     teeth = object_from_bm('teeth', bm)
     paint(teeth, {'tooth': PAL['tooth']}, lambda c_, n_, i: 'tooth')
     # claws: four per foot along the foot front, spread like a fan

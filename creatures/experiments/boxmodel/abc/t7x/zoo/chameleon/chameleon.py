@@ -306,10 +306,15 @@ def crest(bm, tree, y, s, h):
     up = Vector(nrm); up.x = 0.0; up.normalize()
     fw = Vector((0.0, up.z, -up.y))                       # along the back, toward the tail
     b = Vector((0.0, loc.y, loc.z)) - up * 0.015
+    # detail pass 10-23: a blunt chunky crest block (a half frustum, >= 28 mm thick to its top; tier-1 floor 26.9 mm),
+    # was a pointed half pyramid (t 14.6 mm)
     A = bm.verts.new(b - fw * s); Bv = bm.verts.new(b + fw * s)
     C = bm.verts.new(b + Vector((s * 0.6, 0, 0)))
-    T = bm.verts.new(b + up * (0.015 + h) + fw * s * 0.4)
-    bm.faces.new([A, Bv, C]); bm.faces.new([A, C, T]); bm.faces.new([C, Bv, T])
+    tp = b + up * (0.015 + h) + fw * s * 0.3
+    A2 = bm.verts.new(tp - fw * s * 0.5); B2 = bm.verts.new(tp + fw * s * 0.5)
+    C2 = bm.verts.new(tp + Vector((0.0145, 0, 0)))
+    bm.faces.new([A, Bv, C]); bm.faces.new([A2, C2, B2])
+    bm.faces.new([A, C, C2, A2]); bm.faces.new([C, Bv, B2, C2])
 
 
 def bundle(bm, root, d, L, w, h, z0=0.001):
@@ -317,9 +322,9 @@ def bundle(bm, root, d, L, w, h, z0=0.001):
     tapering to a rounded tip. Returns the tip centre."""
     d = Vector(d).normalized(); s = Vector((-d.y, d.x, 0.0))
     rows = []
-    for t, k in ((-0.02, 1.0), (L * 0.55, 0.9), (L, 0.55)):
+    for t, k in ((-0.02, 1.0), (L * 0.55, 0.92), (L, 0.75)):     # detail pass 10-23: blunter tip (t 23.6 < 26.9 mm)
         p = root + d * t
-        hh = h * (1.0 if t < L else 0.6)
+        hh = h * (1.0 if t < L else 0.82)
         rows.append([bm.verts.new(p + s * su * w * k + Vector((0, 0, z))) for su, z in ((-1, z0), (1, z0), (1, hh), (-1, hh))])
     bm.faces.new(list(reversed(rows[0])))
     for a, b in ((rows[0], rows[1]), (rows[1], rows[2])):
@@ -370,7 +375,7 @@ def stage3(k, body):
     bm = bmesh.new()
     for sole in (FORE[4], HIND[4]):
         (cx, cy, _), rx, ry = sole
-        for j, (d, L) in enumerate((((-0.35, -1.0), 0.085), ((0.35, 1.0), 0.07))):
+        for j, (d, L) in enumerate((((-0.35, -1.0), 0.06), ((0.35, 1.0), 0.05))):   # detail pass: shorter (L/t 6.8)
             dv = Vector((d[0], d[1], 0.0)).normalized()
             root = Vector((cx + dv.x * 0.015, cy + dv.y * (ry * 0.35), 0.0))
             bundle(bm, root, dv, ry * 0.6 + L + 0.02, 0.036 - 0.003 * j, 0.04 - 0.003 * j, 0.006 + 0.002 * j)

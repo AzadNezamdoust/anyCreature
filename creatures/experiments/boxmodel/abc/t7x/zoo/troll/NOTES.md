@@ -140,3 +140,10 @@ Old lock moved to old_locks/lock_r36; old sheet kept as orbit18_sheet_before.jpg
 - Biped checklist (shoulders, S4): trapezius slopes down neck -> deltoid as a round mass yes; deltoid = the torso's
   widest ring, arm root 2x3 faces with its top edge on it yes; shoulder reads connected from hero/az000 yes. Hunch,
   nose, ears, eye and palette unchanged (head rings, N0 back seam and stage 3 untouched; N0 width 0.27 -> 0.31).
+
+## Detail pass (2026-10-23 night, tier 3: 8 -> 12+ groups; backup before_detail/)
+- r33 (S4): seated chunky pieces (detail_pieces.py): brow, nostril (dark cap), kneecap, wart x3, navel, pec fold,
+  mouth line; big toe fatter. Colours stay 8. Kit gates OK, junctions PASS, detail count 15 PASS, but detail FAIL:
+  toes_L/R big toe 'stick' L/t 6.7 (len 181 mm: it overlaps toe 2 and reads as one long branch).
+  Critique (az000/hero): the pec fold reads as a curved strap/necklace across the chest.
+- r34 Fix: pec fold dropped (strap look); big toe moved clear of toe 2 (x -0.136, w 42 mm, L 66 mm, h 88 mm).

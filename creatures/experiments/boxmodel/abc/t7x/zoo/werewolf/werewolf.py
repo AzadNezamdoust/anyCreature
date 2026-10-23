@@ -4,6 +4,7 @@ KIT = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit'))
 sys.path.insert(0, KIT)
 from bmkit import *
 import parts as PT
+from smooth_borders import smooth_borders
 
 # werewolf (biped wolf), t7 hand box model, zoo workflow v2. Template: zoo/minotaur/minotaur.py.
 # ONE upright spine loft of 13-vertex half rings (front seam -> back seam), crotch -> crown, each ring drawn from
@@ -687,6 +688,8 @@ def stage3(k, body):
     face_columns(body)
     ARM_S = [chain_s(Vector(q), ARM_C)[0] for q in ARM_C]
     paint(body, {kk: PAL[kk] for kk in ('fur', 'back', 'cream', 'tan', 'dark')}, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     tree = full_bvh(body)
     pieces = []
     one = lambda key: (lambda c_, n_, i: key)

@@ -24,8 +24,8 @@
  },
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
-  "collapsed_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
+  "lock_edge_hash": "942986521bf670dad71f56d7d46053ee80ce6765dbfd5a8e69f81310ba0d44cb",
+  "collapsed_edge_hash": "942986521bf670dad71f56d7d46053ee80ce6765dbfd5a8e69f81310ba0d44cb",
   "logged_ops": 3,
   "logged_new_verts": 32,
   "errors": []

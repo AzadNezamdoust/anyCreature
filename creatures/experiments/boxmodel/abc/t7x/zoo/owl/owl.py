@@ -373,7 +373,7 @@ def toe(bm, bt, root, d, L):
     """A thin toe block from root along d (tapering, lying on the ground) and its hooked talon (separate piece bt)."""
     side = Vector((-d.y, d.x, 0.0))
     rows = []
-    for t, w, h in ((0.0, 0.007, 0.013), (0.55, 0.006, 0.011), (1.0, 0.0045, 0.008)):
+    for t, w, h in ((0.0, 0.0105, 0.020), (0.55, 0.0095, 0.0185), (1.0, 0.0085, 0.0165)):   # detail pass: chunky toes (gate floor 13.4 mm)
         c = root + d * (L * t)
         rows.append([bm.verts.new(c + side * su * w + Vector((0, 0, zz))) for su, zz in ((-1, 0.0015), (1, 0.0015), (1, h), (-1, h))])
     bm.faces.new(list(reversed(rows[0])))
@@ -382,11 +382,18 @@ def toe(bm, bt, root, d, L):
             bm.faces.new([a[j], a[(j + 1) % 4], b[(j + 1) % 4], b[j]])
     bm.faces.new(rows[-1])
     tip = root + d * (L + 0.002)
-    base = [bt.verts.new(tip + side * su * 0.004 + Vector((0, 0, zz))) for su, zz in ((-1, 0.002), (1, 0.002), (1, 0.009), (-1, 0.009))]
-    pt = bt.verts.new(tip + d * 0.014 + Vector((0, 0, 0.0008)))
-    bt.faces.new(list(reversed(base)))
-    for j in range(4):
-        bt.faces.new([base[j], base[(j + 1) % 4], pt])
+    # detail pass 2026-10-23: a chunky blunt talon (a hooked frustum, >= 14.5 mm thick over its length), its root
+    # sunk 6 mm in the toe tip; it was a 8 mm pyramid (t 1.5 mm, L/t 10)
+    tip = root + d * (L - 0.006)
+    rows_ = []
+    for f_, hw, z0, z1 in ((0.0, 0.0092, 0.0015, 0.0195), (0.012, 0.0085, 0.001, 0.0175), (0.020, 0.0076, 0.0005, 0.0155)):
+        c_ = tip + d * f_
+        rows_.append([bt.verts.new(c_ + side * su * hw + Vector((0, 0, zz))) for su, zz in ((-1, z0), (1, z0), (1, z1), (-1, z1))])
+    bt.faces.new(list(reversed(rows_[0])))
+    for a, b in zip(rows_, rows_[1:]):
+        for j in range(4):
+            bt.faces.new([a[j], a[(j + 1) % 4], b[(j + 1) % 4], b[j]])
+    bt.faces.new(rows_[-1])
 
 
 # folded wing: sections root -> tip, (top (y, z), bottom (y, z), x inner, x outer); the inner face sinks in the flank

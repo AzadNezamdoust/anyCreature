@@ -18,7 +18,7 @@
   "skin"
  ],
  "colour_count": 8,
- "tris": 3652,
+ "tris": 4316,
  "attach": [
   {
    "kind": "piece_attach",
@@ -37,6 +37,7 @@
    "reason": "parts-library 4-finger hand on the wrist ring"
   }
  ],
+ "borders": null,
  "pieces": {
   "piece_eye": 64,
   "piece_hand_L": 196,
@@ -45,6 +46,13 @@
   "piece_toes_R": 100,
   "piece_belt": 288,
   "piece_flap_front": 176,
-  "piece_flap_back": 176
+  "piece_flap_back": 176,
+  "piece_brow": 100,
+  "piece_nostril": 64,
+  "piece_kneecap": 76,
+  "piece_wart": 192,
+  "piece_navel": 32,
+  "piece_fold_chest": 110,
+  "piece_mouth": 90
  }
 }

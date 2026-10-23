@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 
 # ogre (biped), t7 hand box-model: ONE spine loft of 6-vertex half rings standing upright (crotch -> skull top),
 # legs extruded as 2-face regions from the crotch-hip span, arms as 2-face regions from the shoulder span,
@@ -373,7 +374,72 @@ def stage3(k, body):
                                           [0.36, 0.45, 0.40, 0.49, 0.55], False))
     for o in (belt, strap, lf, lb):
         paint(o, {'leather': PAL['leather']}, lambda c_, n_, i: 'leather')
-    return [eye, tusks, nails, belt, strap, lf, lb]
+    return [eye, tusks, nails, belt, strap, lf, lb] + detail_pass(body, tree)
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md ogre list): chunky seated pieces in the existing
+    palette, box-model geometry only (bands, knobs, slabs)."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}     # palette KEY: materials are shared by name
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    # 1. brow ridge: a heavy arc over each small eye
+    e = eye_face_centre()
+    pts = [(e.x + 0.055 * t, -2.0, e.z + 0.05 - 0.02 * t * t) for t in (-0.8, -0.4, 0.0, 0.45, 0.9)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (0, 1, 0)), side_hint=(0, 0, 1)), 0.045, 0.026)
+    piece('brow', bm, 'skin')
+    # 2. nostrils: a flared mound each side of the nose tip, dark nostril cap
+    h_ = D.cast_in(tree, (0.035, -2.0, hz(1.79)), (0, 1, 0))
+    nn = (h_[1] + Vector((0.3, 0, -0.35))).normalized()
+    bm = bmesh.new()
+    D.knob(bm, h_[0], nn, 0.026, 0.016, top=0.6)
+    piece('nostril', bm, {'skin': PAL['skin'], 'mouth': PAL['mouth']},
+          rule=lambda c_, n_, i: 'mouth' if n_.dot(nn) > 0.9 else 'skin')
+    # 3. navel: a belly-coloured rim with a dark centre on the big belly (midline piece)
+    h_ = D.cast_in(tree, (0.0, -2.0, 0.985), (0, 1, 0))
+    nv = h_[1]
+    bm = bmesh.new()
+    D.knob(bm, h_[0], nv, 0.042, 0.015, sides=6, top=0.55)
+    piece('navel', bm, {'belly': PAL['belly'], 'mouth': PAL['mouth']}, mirror=False,
+          rule=lambda c_, n_, i: 'mouth' if n_.dot(nv) > 0.9 else 'belly')
+    # 4. belly fold: the crease band where the belly rolls over the belt (open on the seam)
+    pts = [(x, -2.0, 0.875 + 0.05 * (x / 0.38) ** 2) for x in (0.0, 0.08, 0.16, 0.24, 0.31, 0.37)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (0, 1, 0)), side_hint=(0, 0, -1)), 0.10, 0.03,
+           prof=D.STEP, open_start=True)        # a broad blended step (raised ridges read as straps: rhino judge)
+    piece('fold_belly', bm, 'belly')
+    # 5. kneecaps
+    h_ = D.cast_in(tree, (0.33, -2.0, 0.43), (0, 1, 0))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], h_[1], 0.075, 0.035, sides=7, sq=(1.15, 1.0), top=0.5)
+    piece('kneecap', bm, 'skin')
+    # 6. knuckles: three bumps across the front of each fist
+    bm = bmesh.new()
+    for x in (0.80, 0.87, 0.94):
+        h_ = D.cast_in(tree, (x, -2.0, 0.555), (0, 1, 0))
+        if h_ is not None:
+            D.knob(bm, h_[0], h_[1], 0.032, 0.024, sides=6, top=0.5)
+    piece('knuckle', bm, 'skin')
+    # 7. warts: two chunky bumps on the trapezius / shoulder top
+    bm = bmesh.new()
+    for (x, y, r) in ((0.33, 0.25, 0.034), (0.47, 0.12, 0.03)):
+        h_ = D.cast_in(tree, (x, y, 3.0), (0, 0, -1))
+        D.knob(bm, h_[0], h_[1], r, 0.8 * r, sides=6, top=0.5)
+    piece('wart', bm, 'skin')
+    # 8. lower lip: the heavy lip roll between the tusks (open on the seam)
+    pts = [(x, -2.0, hz(1.758) - 0.01 * (x / 0.13) ** 2) for x in (0.0, 0.035, 0.07, 0.10, 0.125)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (0, 1, 0)), side_hint=(0, 0, -1)), 0.035, 0.02,
+           prof=D.ROUND, open_start=True)
+    piece('lip', bm, 'skin')
+    return out
 
 
 def stage4(k, body, pieces):

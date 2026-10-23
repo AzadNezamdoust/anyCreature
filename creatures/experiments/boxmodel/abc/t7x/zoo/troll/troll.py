@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 import parts as PT
 
 # troll (hunched biped), t7 hand box-model. ONE spine loft of 14-vertex half rings runs crotch -> crown. The torso
@@ -544,7 +545,8 @@ def wrist_ring(body):
 
 def toes(bm, tree, side):
     (cx, cy, _), rx, ry = LEG[-1][:3]
-    for o, w, L, hgt in ((-0.115, 0.042, 0.075, 0.075), (-0.055, 0.034, 0.068, 0.062), (0.0, 0.031, 0.062, 0.056),
+    for o, w, L, hgt in ((-0.136, 0.042, 0.066, 0.088),   # detail pass r34: big toe apart from toe 2 (r33: the overlap read as one 18 cm stick), taller, shorter
+                         (-0.055, 0.034, 0.068, 0.062), (0.0, 0.031, 0.062, 0.056),
                          (0.05, 0.029, 0.055, 0.05), (0.095, 0.027, 0.046, 0.044)):
         x = cx + o
         loc, _n = hit(tree, (x, -1.0, 0.03), (0, 1, 0))
@@ -607,7 +609,62 @@ def stage3(k, body):
     for o_ in (lf, lb):
         paint(o_, {'leather': PAL['leather']}, lambda c_, n_, i: 'leather')
     pieces += [belt, lf, lb]
+    pieces += detail_pass(body, tree)
     return pieces
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md troll list): chunky seated pieces in the existing 8
+    colours (the colour gate is full), box-model geometry only."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}     # palette KEY: materials are shared by name
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    sk = 'skin'
+    # 1. brow ridge: a heavy arc over each eye (front view)
+    e = face_c(*EYE_SPAN, EYE_COL)
+    pts = [(e.x + 0.05 * t, -2.0, e.z + 0.055 - 0.018 * t * t) for t in (-0.9, -0.45, 0.0, 0.45, 0.9)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (0, 1, 0)), side_hint=(0, 0, 1)), 0.045, 0.028,
+           prof=D.FOLD)
+    piece('brow', bm, sk)
+    # 2. nostrils: a flared mound under each side of the nose bulb with a dark nostril cap
+    h_ = D.cast_in(tree, (0.052, -0.585, 1.3), (0, 0, 1))
+    nn = (h_[1] + Vector((0.25, -0.45, 0))).normalized()
+    bm = bmesh.new()
+    D.knob(bm, h_[0], nn, 0.03, 0.018, top=0.6)
+    piece('nostril', bm, {'nose': PAL['nose'], 'pupil': PAL['pupil']},
+          rule=lambda c_, n_, i: 'pupil' if n_.dot(nn) > 0.9 else 'nose')
+    # 3. kneecaps
+    h_ = D.cast_in(tree, (0.355, -2.0, 0.44), (0, 1, 0))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], h_[1], 0.075, 0.035, sides=7, sq=(1.15, 1.0), top=0.5)
+    piece('kneecap', bm, sk)
+    # 4. warts: three chunky bumps on the shoulder hump / trapezius
+    bm = bmesh.new()
+    for (x, y, r) in ((0.40, 0.26, 0.04), (0.52, 0.12, 0.033), (0.24, 0.36, 0.036)):
+        h_ = D.cast_in(tree, (x, y, 3.0), (0, 0, -1))
+        D.knob(bm, h_[0], h_[1], r, 0.8 * r, sides=6, top=0.5)
+    piece('wart', bm, sk)
+    # 5. navel: a belly-coloured rim with a dark centre (one midline piece)
+    h_ = D.cast_in(tree, (0.0, -2.0, 1.105), (0, 1, 0))
+    bm = bmesh.new()
+    D.knob(bm, h_[0], h_[1], 0.04, 0.014, sides=6, top=0.55)
+    nv = h_[1]
+    piece('navel', bm, {'belly': PAL['belly'], 'leather': PAL['leather']}, mirror=False,
+          rule=lambda c_, n_, i: 'leather' if n_.dot(nv) > 0.9 else 'belly')
+    # 7. mouth line: a dark lip line across the mouth (open on the seam)
+    pts = [(x, -2.0, 1.752 - 0.012 * (x / 0.11) ** 2) for x in (0.0, 0.03, 0.06, 0.085, 0.11)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (0, 1, 0)), side_hint=(0, 0, 1)), 0.026, 0.016,
+           prof=D.ROUND, open_start=True)
+    piece('mouth', bm, 'pupil')
+    return out
 
 
 # ---------------------------------------------------------------- stage 4

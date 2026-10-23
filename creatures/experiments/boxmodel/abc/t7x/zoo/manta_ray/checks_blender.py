@@ -30,6 +30,7 @@ V['hero'] = (Vector((1, -1, 0.5)).normalized(), Vector((0, 0, 1)))
 K.VIEWS.update(V)
 
 meshes, frame = RG['load'](glb)
+frame = dict(frame, floor=0.0)      # weakfix 10-23: the real floor (z 0): the manta swims 0.45 m above it
 RG['beauty_setup'](frame)
 names = [f'h{a:03d}' for a in range(0, 360, 45)] + ['top', 'bottom'] + [f'u{a:03d}' for a in (0, 90, 180, 270)] + [f'l{a:03d}' for a in (0, 90, 180, 270)]
 low = ['bottom'] + [f'l{a:03d}' for a in (0, 90, 180, 270)]

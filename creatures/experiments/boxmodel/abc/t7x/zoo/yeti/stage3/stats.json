@@ -1,8 +1,8 @@
 {
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
-  "collapsed_edge_hash": "8d9b650484ada76c26c1c1bf465772ca2de18d4691eb48e3da742c1b53f2e7d7",
+  "lock_edge_hash": "942986521bf670dad71f56d7d46053ee80ce6765dbfd5a8e69f81310ba0d44cb",
+  "collapsed_edge_hash": "942986521bf670dad71f56d7d46053ee80ce6765dbfd5a8e69f81310ba0d44cb",
   "logged_ops": 4,
   "logged_new_verts": 32,
   "errors": []
@@ -42,23 +42,23 @@
    "cuts": 2,
    "relaxed": 8,
    "undone": 0,
-   "max_move": 0.02103,
-   "mean_move": 0.01018,
+   "max_move": 0.02114,
+   "mean_move": 0.00999,
    "before": {
     "border_edges": 43,
-    "length": 3.4362,
+    "length": 3.4419,
     "paths": 3,
-    "corners": 7,
+    "corners": 6,
     "corner_quads": 8,
-    "corners_per_m": 2.0
+    "corners_per_m": 1.7
    },
    "after": {
     "border_edges": 41,
-    "length": 3.3454,
+    "length": 3.3466,
     "paths": 3,
-    "corners": 3,
+    "corners": 4,
     "corner_quads": 5,
-    "corners_per_m": 0.9
+    "corners_per_m": 1.2
    }
   }
  ],

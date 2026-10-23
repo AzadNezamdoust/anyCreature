@@ -127,3 +127,18 @@ section (T1 = 0.45), ears from 2-face windows on the skull top.
   PASS; ear.L/R FAIL on the seam-strip metric only (1.54 r; knife 0, max concave 59 deg), not visible in the beauty crops.
   Separation PASS. Residuals: ear seam-strip flag (metric), muzzle front reads as a round disc at az0, small facet on the
   side of the tail hook, smooth barrel without the sheet's neck/shoulder skin folds.
+
+## Detail pass (2026-10-23 night, tier 3: 7 -> 12+ readable feature groups; backup before_detail/)
+- r21 (S4): added seated chunky pieces via detail_pieces.py (keel-sunk ridge bands, knobs, fan): fold_neck, fold_shoulder,
+  fold_flank, fold_ankle, fold_rump, brow, mouth, nostril, tuft + paint 'belly'; smooth_borders after paint. Detail gate
+  PASS 17 groups. Critique: every new piece rendered near-black (hero/az090). Diagnosis: all pieces shared one material
+  named 'c', the last paint (mouth, dark) recoloured it. Fix: palette keys as material names. Also z-fight 10.
+- r22: Result: colours right (6 colours), detail PASS; FAIL z-fight 8 (mouth 6, ankle 2), slivers 2.2% (band end fans).
+  Critique (az090): the shoulder and flank folds stand as vertical hoops mid-barrel; ankle folds read as cuffs.
+  Fix r23: folds lean per the sheet (shoulder from over the shoulder y -0.17 back to behind the elbow y 0.03; flank
+  fold from mid flank into the thigh front; neck fold), ankle folds a front-outer arc, mouth 22 mm tall, blunt band ends.
+- r23 Result: kit gates OK (techqa 0 z-fight, slivers OK), detail PASS (17 groups), junction FAIL ear strip 1.54 r only
+  (unchanged from the champion). A/B (Opus, both orders): champion won BOTH: the raised bands read as straps/harness,
+  a collar round the face (az000) and ankle cuffs. -> variant rejected.
+- r24 Fix (one change: the fold method): folds side-only (no back crossing, no collar), broad (18-22 cm) and low
+  (3.5-4 cm) with a gentle front slope and one rear overhang step (STEP profile); ankle cuffs and rump ridges dropped.

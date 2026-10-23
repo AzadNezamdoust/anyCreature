@@ -271,7 +271,8 @@ def stage2(k, body):
     bm.free()
 
 
-PAL = {'orange': '#d27326', 'stripe': '#2a221e', 'cream': '#eee3cf', 'nose': '#9a5a52',
+PAL = {'orange': '#d27326', 'stripe': '#2a221e', 'cream': '#f6e7c9',   # weakfix 10-23: warmer cream (was #eee3cf: read grey in shade)
+       'nose': '#9a5a52',
        'amber': '#e0a030', 'pupil': '#1a1615'}
 
 
@@ -285,8 +286,8 @@ def body_rule(c, n, s):
         return 'stripe'                                  # dark tail tip
     if y < -0.76 and (z < 0.755 or n.z < -0.5):
         return 'cream'                                   # lips and chin
-    if -0.67 < y < -0.40 and n.y < -0.3 and z < 0.72 and x < 0.10:
-        return 'cream'                                   # throat and chest
+    if -0.67 < y < -0.40 and n.y < -0.2 and z < 0.80 and x < 0.13:
+        return 'cream'                                   # throat and chest (weakfix: up into the ruff, wider)
     if z < 0.11 and y < 0.55:
         return 'cream'                                   # paws
     if (n.z < -0.4 and z < 0.62) or (-0.30 < y < 0.20 and z < 0.47 and n.z < 0.3):

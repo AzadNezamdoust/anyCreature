@@ -369,7 +369,123 @@ def stage2(k, body):
     SOCKET[:] = [Vector((abs(sc.x), sc.y, sc.z)), fn.copy()]
     ec0 = SOCKET[0].copy()
     k.meta['keep_valleys'] = lambda c: (abs(abs(c.x) - ec0.x) < 0.03 and abs(c.y - ec0.y) < 0.03 and abs(c.z - ec0.z) < 0.03)
+    neck_head(k, bm)
     commit(body, bm)
+
+
+# ---------------------------------------------------------------- weakfix 2026-10-23: neck folds, jaw, beak hook
+MOUTH_V = set()          # vkeys of the mouth-line row (stage 3 paints the band under it dark)
+BEAK_V = set()           # vkeys of the upper-beak vertices (stage 3 dark cap)
+MOUTHB_V = set()         # the row under the mouth line
+
+
+def ring_frame(nm):
+    """Centre and along-axis of a T-section (neck / head rings)."""
+    s = SECS[NAMES.index(nm)]
+    if s[0] != 'T':
+        pts = P(nm)
+        c = sum(pts, Vector()) / len(pts)
+        return Vector((0.0, c.y, c.z)), Vector((0, -1, 0))
+    _k, _nm, (y0, z0), a, *_ = s
+    sn, co = math.sin(math.radians(a)), math.cos(math.radians(a))
+    up = Vector((0.0, sn, co))                     # the ring's own 'up' (top seam direction)
+    return Vector((0.0, y0, z0)), Vector((0.0, co, -sn))   # axis is perpendicular to up in the yz plane
+
+
+def neck_head(k, bm):
+    """Stage-2 vertex moves (+ 2 logged neck loops): thick folded neck, chin step, jaw line, hooked beak."""
+    names = ('N0', 'N1', 'N2', 'K0', 'K1', 'K2', 'K3', 'K4', 'K5')
+    idx = {}
+    for nm in names:
+        for j, p in enumerate(P(nm)):
+            idx[vkey(p)] = (nm, j)
+    RV = {}
+    for v in bm.verts:
+        key = vkey(v.co)
+        if key in idx:
+            RV[idx[key]] = v
+    get = lambda nm, j: RV.get((nm, j))
+
+    def out_dir(nm, v):
+        c, ax = ring_frame(nm)
+        d = v.co - c
+        d -= ax * d.dot(ax)
+        return d.normalized() if d.length > 1e-6 else Vector((0, 0, 1))
+    # 1. two fold loops in the neck (between N0-N1 and N1-N2): ridges, the original rings sink a little = grooves
+    folds = []
+    for a, b in (('N0', 'N1'), ('N1', 'N2')):
+        va, vb = get(a, 9), get(b, 9)
+        e = next((e for e in va.link_edges if e.other_vert(va) is vb), None)
+        if e is None:
+            continue
+        with k.topo(bm, 'loop', f'neck fold ridge between {a} and {b} (sheet: wrinkled neck)'):
+            nv = loopcut(bm, e, t=0.5, near=va)
+        folds.append((a, b, nv))
+    for a, b, nv in folds:
+        ca, axa = ring_frame(a)
+        cb, axb = ring_frame(b)
+        c = (ca + cb) / 2
+        ax = (axa + axb).normalized()
+        for v in nv:
+            d = v.co - c
+            d -= ax * d.dot(ax)
+            if d.length < 1e-6:
+                continue
+            w = 0.45 + 0.55 * max(0.0, -d.normalized().z)     # stronger on the throat, still a ridge on the nape
+            v.co += d.normalized() * 0.011 * w
+    for nm, amt in (('N1', 0.004), ('N2', 0.004)):
+        for j in range(NV):
+            v = get(nm, j)
+            if v is None:
+                continue
+            od = out_dir(nm, v)
+            w = 0.4 + 0.6 * max(0.0, -od.z)
+            v.co -= od * amt * w
+    # 2. chin step: the head's underside drops, the throat ring under it sits back and up
+    for nm, dz in (('K1', -0.006), ('K2', -0.008), ('K3', -0.006)):
+        for j in (11, 12, 13):
+            v = get(nm, j)
+            if v is not None:
+                v.co.z += dz
+    for j in (11, 12, 13):
+        v = get('N2', j)
+        if v is not None:
+            v.co.z += 0.008
+            v.co.y += 0.006
+    # 3. jaw line: the j8 row of K1..K5 sinks 5 mm (a crease), the lower jaw rows sit a little out
+    MOUTH_V.clear(); BEAK_V.clear()
+    for nm, depth in (('K1', 0.002), ('K2', 0.004), ('K3', 0.005), ('K4', 0.004)):
+        for j in range(NV):
+            v = get(nm, j)
+            if v is None:
+                continue
+            od = out_dir(nm, v)
+            if j == 8:
+                v.co -= od * depth
+                MOUTH_V.add(vkey(v.co))
+            elif j in (9, 10) and nm in ('K2', 'K3', 'K4'):
+                v.co += od * 0.002
+    # 4. beak hook: the upper beak (K5 and K4 top half) reaches forward and down over the lower jaw, which sits back
+    # a shear linear in z keeps the K5 cap planar: top forward, bottom back = the overbite of a hooked beak
+    for nm, fy in (('K4', 0.006), ('K5', 0.013)):
+        zz = [get(nm, j).co.z for j in range(NV) if get(nm, j) is not None]
+        zc, hh = (max(zz) + min(zz)) / 2, max(1e-4, (max(zz) - min(zz)) / 2)
+        for j in range(NV):
+            v = get(nm, j)
+            if v is not None:
+                v.co.y -= fy * (v.co.z - zc) / hh + fy * 0.25
+    for nm in ('K4', 'K5'):
+        for j in range(0, 9):
+            v = get(nm, j)
+            if v is not None:
+                BEAK_V.add(vkey(v.co))
+    MOUTH_V.clear(); MOUTHB_V.clear()
+    for nm in ('K2', 'K3', 'K4', 'K5'):
+        for j, S_ in ((8, MOUTH_V), (9, MOUTHB_V)):
+            v = get(nm, j)
+            if v is not None:
+                S_.add(vkey(v.co))
+    # the K5 cap's own centre (n-gon) has no vertex; BEAK_V covers its rim
 
 
 # ---------------------------------------------------------------- stage 3
@@ -565,9 +681,19 @@ def build_shell(btree=None):
 
 def stage3(k, body):
     me = body.data
-    paint(body, {kk: PAL[kk] for kk in ('skin', 'plastron', 'dark')},
-          lambda c, n, i: 'plastron' if all(vkey(me.vertices[v].co) in PLASTRON_V for v in me.polygons[i].vertices)
-          else ('dark' if c.y < -0.712 and c.z > 0.56 else 'skin'))
+    def body_rule(c, n, i):
+        ks = [vkey(me.vertices[v].co) for v in me.polygons[i].vertices]
+        if all(q in PLASTRON_V for q in ks):
+            return 'plastron'
+        if len(ks) >= 10 and c.y < -0.70:                       # the beak's front cap
+            return 'dark'
+        if all(q in BEAK_V for q in ks):                         # weakfix: the upper beak only (the jaw stays skin)
+            return 'dark'
+        if (all(q in MOUTH_V or q in MOUTHB_V for q in ks) and sum(q in MOUTH_V for q in ks) >= 2
+                and sum(q in MOUTHB_V for q in ks) >= 2):
+            return 'dark'                                        # weakfix: the mouth line
+        return 'skin'
+    paint(body, {kk: PAL[kk] for kk in ('skin', 'plastron', 'dark')}, body_rule)
     bmb = edit(body)
     tree = BVHTree.FromBMesh(bmb)
     bmb.free()

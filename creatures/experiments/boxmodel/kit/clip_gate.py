@@ -161,7 +161,9 @@ def splice(orig, anim_src, out):
     for im in A.get('images', []):
         if 'bufferView' in im:
             im['bufferView'] = bv_map[im['bufferView']]
-    by_name = {n.get('name'): i for i, n in enumerate(A['nodes'])}
+    jset = {j for sk in A.get('skins', []) for j in sk['joints']}
+    by_name = {n.get('name'): i for i, n in enumerate(A['nodes']) if i not in jset}
+    by_name.update({A['nodes'][i].get('name'): i for i in jset})   # a bone and a mesh may share a name: the joint wins
     sbv_map = {}; anims = []
     for an in S.get('animations', []):
         samplers = []
@@ -190,10 +192,13 @@ def same_rest(a, b):
     """joint rest TRS of a and b match by name (animation values are absolute local TRS)."""
     A, _ = _glb(a); B, _ = _glb(b)
     jn = {A['nodes'][j].get('name') for s in A.get('skins', []) for j in s['joints']}
-    bn = {n.get('name'): n for n in B['nodes']}
+    bj = {j for sk in B.get('skins', []) for j in sk['joints']}
+    bn = {n.get('name'): n for i, n in enumerate(B['nodes']) if i not in bj}
+    bn.update({B['nodes'][i].get('name'): B['nodes'][i] for i in bj})
     worst = 0.0
-    for n in A['nodes']:
-        if n.get('name') in jn and n['name'] in bn:
+    aj = {j for sk in A.get('skins', []) for j in sk['joints']}
+    for i, n in enumerate(A['nodes']):
+        if i in aj and n['name'] in bn:
             m = bn[n['name']]
             for k, d in (('translation', [0, 0, 0]), ('rotation', [0, 0, 0, 1]), ('scale', [1, 1, 1])):
                 x, y = np.array(n.get(k, d)), np.array(m.get(k, d))

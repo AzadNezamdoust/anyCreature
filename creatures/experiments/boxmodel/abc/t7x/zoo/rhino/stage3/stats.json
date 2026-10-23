@@ -3,24 +3,59 @@
   "verdict": "PASS",
   "lock_edge_hash": "57438054a7feadacf8489d073b1a61b4a7496a01a0a654bb3cd61aeb46577861",
   "collapsed_edge_hash": "57438054a7feadacf8489d073b1a61b4a7496a01a0a654bb3cd61aeb46577861",
-  "logged_ops": 1,
+  "logged_ops": 2,
   "logged_new_verts": 4,
   "errors": []
  },
  "colours": [
+  "belly",
   "dark",
   "eye",
   "horn",
   "leg",
   "skin"
  ],
- "colour_count": 5,
- "tris": 3164,
+ "colour_count": 6,
+ "tris": 4012,
  "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 3,
+   "cuts": 4,
+   "relaxed": 37,
+   "undone": 4,
+   "max_move": 0.01892,
+   "mean_move": 0.00653,
+   "before": {
+    "border_edges": 60,
+    "length": 5.0564,
+    "paths": 4,
+    "corners": 12,
+    "corner_quads": 8,
+    "corners_per_m": 2.4
+   },
+   "after": {
+    "border_edges": 50,
+    "length": 4.3251,
+    "paths": 4,
+    "corners": 4,
+    "corner_quads": 0,
+    "corners_per_m": 0.9
+   }
+  }
+ ],
  "pieces": {
   "piece_eye": 64,
   "piece_horn_front": 58,
   "piece_horn_back": 46,
-  "piece_nails": 384
+  "piece_nails": 384,
+  "piece_fold_neck": 180,
+  "piece_fold_shoulder": 180,
+  "piece_fold_flank": 180,
+  "piece_brow": 100,
+  "piece_mouth": 100,
+  "piece_nostril": 64,
+  "piece_tuft": 44
  }
 }

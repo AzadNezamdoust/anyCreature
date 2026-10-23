@@ -396,12 +396,14 @@ def stage4(k, body, pieces):
                        36: {'chest': (1.5, 0, 0), 'neck': (-1.5, 0, 0), 'tail1': (0, 0, -4)}, 48: {}})
     # move: trot, diagonal pairs (LF + RH, then RF + LH); the swinging leg flexes
     A = 18
+    TL = 16      # weakfix 10-23: the trotting fox carries its brush lifted clear of the hind legs' swing (was hanging
+                 # into it: tail vs thigh posed clip 7-8 %); the side sway 5 -> 3 deg
     clip(rig, 'move', {
-        1: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'tail1': (0, 0, 5)},
-        7: {'forearm.R': (-35, 0, 0), 'paw.R': (-30, 0, 0), 'shin.L': (-20, 0, 0), 'foot.L': (25, 0, 0), 'neck': (2, 0, 0)},
-        13: {'upperarm.L': (-A, 0, 0), 'upperarm.R': (A, 0, 0), 'thigh.L': (A, 0, 0), 'thigh.R': (-A, 0, 0), 'tail1': (0, 0, -5)},
-        19: {'forearm.L': (-35, 0, 0), 'paw.L': (-30, 0, 0), 'shin.R': (-20, 0, 0), 'foot.R': (25, 0, 0), 'neck': (2, 0, 0)},
-        25: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'tail1': (0, 0, 5)}})
+        1: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'tail0': (TL, 0, 0), 'tail1': (0, 0, 3)},
+        7: {'forearm.R': (-35, 0, 0), 'paw.R': (-30, 0, 0), 'shin.L': (-20, 0, 0), 'foot.L': (25, 0, 0), 'neck': (2, 0, 0), 'tail0': (TL, 0, 0)},
+        13: {'upperarm.L': (-A, 0, 0), 'upperarm.R': (A, 0, 0), 'thigh.L': (A, 0, 0), 'thigh.R': (-A, 0, 0), 'tail0': (TL, 0, 0), 'tail1': (0, 0, -3)},
+        19: {'forearm.L': (-35, 0, 0), 'paw.L': (-30, 0, 0), 'shin.R': (-20, 0, 0), 'foot.R': (25, 0, 0), 'neck': (2, 0, 0), 'tail0': (TL, 0, 0)},
+        25: {'upperarm.L': (A, 0, 0), 'upperarm.R': (-A, 0, 0), 'thigh.L': (-A, 0, 0), 'thigh.R': (A, 0, 0), 'tail0': (TL, 0, 0), 'tail1': (0, 0, 3)}})
     # attack: rear back, then a head-down lunge and a snap of the head
     clip(rig, 'attack', {
         1: {},

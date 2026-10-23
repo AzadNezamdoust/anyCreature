@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # emperor penguin, t7 hand box-model (owl / imp line). ONE spine loft of 17-vertex half rings runs bottom -> crown
 # (front seam down the belly, back seam down the back; the head rings tilt so the front seam rides the chin and
@@ -505,6 +506,8 @@ def toe(bm, bc, root, d, L, w0, h0):
 def stage3(k, body):
     TAGS[:] = body_tags(body)
     paint(body, {kk: PAL[kk] for kk in ('black', 'white', 'yellow', 'orange')}, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     pieces = []
     # eyes: small round dark-brown lenses in the sockets, looking out and a little forward
     fc, fn = EYEF['c'], EYEF['n']

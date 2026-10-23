@@ -6,6 +6,20 @@
    "reason": "eye socket: a loop inside the eye face, under the brow",
    "new_verts": 4,
    "extra_base_edges": []
+  },
+  {
+   "op": 2,
+   "kind": "loop",
+   "reason": "neck fold ridge between N0 and N1 (sheet: wrinkled neck)",
+   "new_verts": 14,
+   "extra_base_edges": []
+  },
+  {
+   "op": 3,
+   "kind": "loop",
+   "reason": "neck fold ridge between N1 and N2 (sheet: wrinkled neck)",
+   "new_verts": 14,
+   "extra_base_edges": []
   }
  ]
 }

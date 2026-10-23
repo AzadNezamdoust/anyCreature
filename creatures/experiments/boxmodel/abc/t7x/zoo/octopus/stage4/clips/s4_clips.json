@@ -7,7 +7,7 @@
  "clips": {
   "attack": {
    "frames": 32,
-   "penetration_pctH": 36.008,
+   "penetration_pctH": 0.0,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -15,15 +15,15 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm2c.L",
-    16
+    "arm1c.L",
+    14
    ],
    "slide_foot": null,
    "track": null
   },
   "idle": {
    "frames": 49,
-   "penetration_pctH": 11.512,
+   "penetration_pctH": 0.0,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -31,15 +31,15 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm3c.R",
-    1
+    "arm1c.L",
+    36
    ],
    "slide_foot": null,
    "track": null
   },
   "move": {
    "frames": 25,
-   "penetration_pctH": 19.513,
+   "penetration_pctH": 0.0,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -47,8 +47,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm3c.R",
-    9
+    "arm3c.L",
+    8
    ],
    "slide_foot": null,
    "track": null
@@ -71,7 +71,7 @@
  "before": {
   "attack": {
    "frames": 32,
-   "penetration_pctH": 36.008,
+   "penetration_pctH": 44.846,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -79,7 +79,7 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm2c.L",
+    "arm1c.L",
     16
    ],
    "slide_foot": null,
@@ -129,7 +129,7 @@
    "chains": {},
    "worst_resid": [
     1,
-    -0.0,
+    0.0,
     "arm3c.L",
     0
    ]
@@ -158,9 +158,9 @@
    "dbg": {},
    "chains": {},
    "worst_resid": [
-    7,
+    6,
     0.0,
-    "arm3c.R",
+    "arm3c.L",
     1
    ]
   }
@@ -190,8 +190,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm2c.L",
-    16
+    "arm1c.L",
+    14
    ],
    "slide_foot": null,
    "track": null
@@ -206,8 +206,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "arm1c.R",
-    15
+    "arm1c.L",
+    36
    ],
    "slide_foot": null,
    "track": null
@@ -223,28 +223,28 @@
    "quat_flips": 0,
    "deepest": [
     "arm3c.R",
-    7
+    9
    ],
    "slide_foot": null,
    "track": null
   }
  },
- "rest_drift": 0.14000000059604645,
+ "rest_drift": 0.0,
  "mesh_identity": {
   "ok": true,
   "detail": "verts 12111, unmatched positions 0, max weight diff 0.0000"
  },
  "gate": {
-  "ok": false,
+  "ok": true,
   "lines": [
    "BMK clip before move    pen 19.513  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip before idle    pen 11.512  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip before attack  pen 36.008  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip attack  FAIL  pen 36.008  slide 0.000  plant 0.000  loop 0.000  penetration_pctH 36.008 > 0.5",
-   "BMK clip idle    FAIL  pen 11.512  slide 0.000  plant 0.000  loop 0.000  penetration_pctH 11.512 > 0.5",
-   "BMK clip move    FAIL  pen 19.513  slide 0.000  plant 0.000  loop 0.000  penetration_pctH 19.513 > 0.5",
+   "BMK clip before attack  pen 44.846  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip idle    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip mesh/skin identity PASS: verts 12111, unmatched positions 0, max weight diff 0.0000",
-   "BMK clip gate FAIL (feet [], gait None)"
+   "BMK clip gate PASS (feet [], gait None)"
   ]
  }
 }

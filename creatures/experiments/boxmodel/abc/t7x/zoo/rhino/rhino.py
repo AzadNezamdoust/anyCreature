@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 import parts as PT
 
 # t7 hand box model (zoo workflow v2): one spine loft of 14-vertex half rings (tail tip -> snout front), the thin tail
@@ -308,7 +309,7 @@ def stage2(k, body):
     commit(body, bm)
 
 
-PAL = {'skin': '#aba69f', 'leg': '#c6bfb4', 'dark': '#55504b', 'horn': '#e0d6c4', 'eye': '#4a3322'}   # s4 r18: mid warm grey for both renderers (s3 r2 washed out in EEVEE)
+PAL = {'skin': '#aba69f', 'leg': '#c6bfb4', 'dark': '#55504b', 'horn': '#e0d6c4', 'eye': '#4a3322', 'belly': '#bbb5ab'}   # s4 r18: mid warm grey for both renderers (s3 r2 washed out in EEVEE)
 
 
 def body_rule(c, n, i):
@@ -317,6 +318,8 @@ def body_rule(c, n, i):
         return 'dark'                                   # tail tuft
     if z < 0.30 and x > 0.06:
         return 'leg'                                    # lower legs, lighter
+    if n.z < -0.55 and z < 0.78 and -0.45 < y < 1.15:
+        return 'belly'                                  # detail pass: the paler underside (sheet)
     return 'skin'
 
 
@@ -363,6 +366,8 @@ def nail(bm, base, out, w, hgt, d):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    from smooth_borders import smooth_borders
+    smooth_borders(body, k=k)                    # owner 10-21: borders follow the form
     bmb = edit(body)
     tree = BVHTree.FromBMesh(bmb)
     bmb.free()
@@ -398,7 +403,70 @@ def stage3(k, body):
     nails = object_from_bm('nails', bm)
     paint(nails, {'dark': PAL['dark']}, lambda c_, n_, i: 'dark')
     pieces.append(nails)
+    pieces += detail_pass(body)
     return pieces
+
+
+def detail_pass(body):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md rhino list): chunky seated pieces, flat colour."""
+    import detail_pieces as D
+    tree = D.body_tree(body)
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}     # palette KEY: materials are shared by name
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+
+    def trunk_fold(y0, y1, a0, a1, n=9):
+        """Stations round the barrel from angle a0 to a1 (0 = the back seam), the fold line leaning from y0 (at a0)
+        to y1 (at a1) in the side view: each ray leaves the trunk axis at its own y."""
+        hits = []
+        for i in range(n):
+            t = i / (n - 1)
+            c = D.section_centre(tree, y0 + (y1 - y0) * t)[0]
+            hits += D.ring_stations(tree, c, (0, 1, 0), (0, 0, 1), a0 + (a1 - a0) * t, a0 + (a1 - a0) * t + 1e-3, 2)[:1]
+        return D.stations_from_hits(hits, side_hint=(0, 1, 0))     # STEP: the overhang step faces the rear
+
+    # 1-3. armour skin folds (the sheet's signature, side view): the neck fold behind the head; the shoulder shield's
+    # rear edge from over the shoulder back and down behind the elbow; the flank fold from mid flank down into the
+    # front of the thigh. The first two open on the back seam (they cross the back, top view), all taper into the skin.
+    # r24 (judge r23: raised bands read as straps / a collar / cuffs): side-only folds, broad and low, a gentle front
+    # slope rising to one overhang step at the rear (blended skin step, not a strap); no cuffs, no rump ridges
+    STEP = [(-0.5, 0.12), (-0.15, 0.6), (0.3, 1.0), (0.5, 0.18)]
+    for nm, y0, y1, a0, a1, w, h in (('fold_neck', -0.585, -0.54, 35, 125, 0.18, 0.035),
+                                     ('fold_shoulder', -0.13, 0.03, 30, 118, 0.22, 0.04),
+                                     ('fold_flank', 0.87, 0.72, 48, 124, 0.18, 0.035)):
+        bm = bmesh.new()
+        D.band(bm, trunk_fold(y0, y1, a0, a1), w, h, prof=STEP, taper=0.3)
+        piece(nm, bm, 'skin')
+    # 6. brow ridge: a raised arc over each eye
+    e = SOCKET[0]
+    bm = bmesh.new()
+    pts = [(1.0, e.y + 0.06 * t, e.z + 0.05 - 0.018 * t * t) for t in (-1.0, -0.5, 0.0, 0.5, 1.0)]
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.045, 0.026,
+           prof=D.ROUND)
+    piece('brow', bm, 'skin')
+    # 7. mouth line: a dark lip groove-line from the muzzle front back to under the eye
+    bm = bmesh.new()
+    pts = [(1.0, y, z) for y, z in ((-1.405, 0.905), (-1.34, 0.878), (-1.26, 0.862), (-1.18, 0.866), (-1.11, 0.885))]
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.034, 0.022,
+           prof=D.ROUND)
+    piece('mouth', bm, 'dark')
+    # 8. nostrils: a raised mound on each side of the muzzle front with a dark nostril cap
+    h_ = D.cast_in(tree, (0.072, -2.5, 0.965), (0, 1, 0))
+    bm = bmesh.new()
+    nc, nn = h_[0], (h_[1] + Vector((0.35, 0, 0))).normalized()
+    D.knob(bm, nc, nn, 0.034, 0.02, sides=6, top=0.6)
+    piece('nostril', bm, {'skin': PAL['skin'], 'dark': PAL['dark']},
+          rule=lambda c_, n_, i: 'dark' if n_.dot(nn) > 0.9 else 'skin')
+    # 9. tail-tip tuft: a flat dark brush (one midline piece)
+    bm = bmesh.new()
+    D.fan(bm, (0.0, 1.447, 0.665), (0, 0.06, -1), (0, 1, 0), 0.13, 0.075, 0.038)
+    piece('tuft', bm, 'dark', mirror=False)
+    return out
 
 
 def stage4(k, body, pieces):

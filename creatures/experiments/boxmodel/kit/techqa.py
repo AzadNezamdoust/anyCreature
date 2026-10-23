@@ -211,6 +211,38 @@ def _bary(p, a, b, c):
     return (1.0 - w - x, w, x)
 
 
+ANCHORS = 24              # drift: at most this many skin-contact vertices per seated shell
+
+
+def _skin_anchors(near_b, V, bV, bT, L):
+    """The drift anchors of a seated shell: the vertices that actually touch the skin. near_b holds
+    (distance to the body, vertex, body triangle, nearest point) for every vertex of the shell; the
+    touching ones lie within max(0.4% of the size, the closest + 0.2%) of the skin. Up to ANCHORS of
+    them, spread over the seat by farthest-point sampling. Each anchor keeps the barycentric point it
+    rests on, so a posed frame measures the gap to that same skin point."""
+    if not near_b:
+        return []
+    near_b = sorted(near_b, key=lambda c: c[0])
+    tol = max(0.004 * L, near_b[0][0] + 0.002 * L)
+    touch = [c for c in near_b if c[0] <= tol] or near_b[:6]
+    if len(touch) > ANCHORS:
+        pick = [0]
+        dmin = [(V[c[1]] - V[touch[0][1]]).length for c in touch]
+        while len(pick) < ANCHORS:
+            k = max(range(len(touch)), key=lambda i: dmin[i])
+            if dmin[k] <= 0:
+                break
+            pick.append(k)
+            for i, c in enumerate(touch):
+                dmin[i] = min(dmin[i], (V[c[1]] - V[touch[k][1]]).length)
+        touch = [touch[i] for i in pick]
+    anchors = []
+    for d, v, ti, loc in touch:
+        a, b, c = (bV[i] for i in bT[ti][1])
+        anchors.append((v, ti, _bary(loc, a, b, c), d))
+    return anchors
+
+
 def _clusters(polys, P):
     """How many separate patches a set of polygons forms (sharing a vertex joins them)."""
     polys = list(polys)
@@ -332,22 +364,22 @@ def measure(body, pieces, size, rig=None, acts=None):
                 t2 = BVHTree.FromPolygons(V, [T[ti][1] for ti in tris2], all_triangles=True)
                 if sh_tree.overlap(t2):
                     touched = True
-            body_contact = bool(sh_tree.overlap(trees[body.name])) or min(
-                ((trees[body.name].find_nearest(V[v])[3] or 1e9) for v in list({v for p in sh for v in P[p]})[:40]),
-                default=1e9) <= 0.004 * L
+            # every vertex of the shell against the skin (kit bug 2026-10-23: the contact and drift tests took
+            # the first 40 / 12 vertex ids of an unordered set: on a claw or a horn those could all be the
+            # tip, so a seated piece read as off the body and its drift anchors measured the tip, not the seat)
+            sh_v = sorted({v for p in sh for v in P[p]})
+            near_b = []
+            for v in sh_v:
+                loc, _, ti, d = trees[body.name].find_nearest(V[v])
+                if loc is not None:
+                    near_b.append((d, v, ti, loc))
+            body_contact = bool(sh_tree.overlap(trees[body.name])) or min((c[0] for c in near_b), default=1e9) <= 0.004 * L
             if body_contact:
-                anchors = []
-                for v in list({v for p in sh for v in P[p]})[:12]:
-                    loc, _, ti, d = trees[body.name].find_nearest(V[v])
-                    if loc is None:
-                        continue
-                    a, b, c = (bV[i] for i in bT[ti][1])
-                    anchors.append((v, ti, _bary(loc, a, b, c), d))
-                seated.append((o, sh, anchors))
+                seated.append((o, sh, _skin_anchors(near_b, V, bV, bT, L)))
             if not touched:
                 # a shell may rest on a surface without cutting it: distance test
                 near = min(((trees[x.name].find_nearest(V[v])[3] or 1e9) for x in others
-                            for v in list({v for p in sh for v in P[p]})[:40]), default=1e9)
+                            for v in sh_v), default=1e9)
                 if near > 0.004 * L:
                     counts[o.name]['float'] += 1
                     for p in sh:

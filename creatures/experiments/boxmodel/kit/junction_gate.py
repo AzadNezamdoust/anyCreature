@@ -11,7 +11,8 @@ flag heatmap from the same three angles), then the eyes (front, 3/4, side). run.
 Exit 0 only when every junction, eye and membrane gate passed.
 
 Flag colours (heatmap tile): cyan open edge, red knife fold, yellow seam strip, orange slit,
-magenta poke-through, blue gap, pink posed clip, teal thin membrane, purple pinch (warn),
+magenta poke-through, blue gap, pink posed clip, teal thin membrane, green shoulder shelf,
+purple pinch (warn),
 off-white = the probed region.
 """
 import json, os, subprocess, sys
@@ -23,7 +24,8 @@ import run as R
 
 LEGEND = [('open edge', (26, 204, 242)), ('knife fold', (235, 26, 26)), ('seam strip', (255, 217, 26)),
           ('slit', (255, 128, 13)), ('poke-through', (235, 26, 217)), ('gap', (38, 77, 255)),
-          ('posed clip', (255, 140, 178)), ('thin membrane', (0, 140, 140)), ('pinch (warn)', (140, 38, 217)),
+          ('posed clip', (255, 140, 178)), ('thin membrane', (0, 140, 140)), ('shoulder shelf', (89, 204, 51)),
+          ('pinch (warn)', (140, 38, 217)),
           ('probed region', (237, 237, 230))]
 
 
@@ -45,7 +47,8 @@ def compose(rep, outdir, tag, title, tile=260):
         head = (f"{'PASS' if j['ok'] else 'FAIL'}  {j['name']} ({j['kind']}, r {j['r_mm']} mm): knife {j['knife_edges']} "
                 f"(max {j['max_concave_deg']} deg), strip {j.get('strip_max_len_r', 0)} r, slit {j['slit_pct']}%, "
                 f"open {j['open_edges']}, poke {j['poke_tris']}, gaps {len(j['gaps'])}"
-                + (f", clip {j['clip_pct']}%" if 'clip_pct' in j else ''))
+                + (f", clip {j['clip_pct']}%" if 'clip_pct' in j else '')
+                + (f", shelf {j['shelf_area_r2']} r2/{j['shelf_width_r']} r" if 'shelf_area_r2' in j else ''))
         rows.append((head, j['fail'], tiles, j['ok']))
     for e in rep['eyes']:
         if 'visible' not in e:

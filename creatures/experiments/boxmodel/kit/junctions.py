@@ -17,11 +17,13 @@ is the json's 'ok' (junction_gate.py turns it into its exit code).
 
 JUNCTIONS. A junction is the root of a bone chain that branches off the trunk (the central
 bones that are not a tail: hips, spine, chest, neck, head, jaw): every limb, ear, horn, tail,
-tentacle. A big piece named like a wing / fin / sail that sits on the body is a junction too
+tentacle. A centre-line bone named like an appendage (fin_dorsal, crest, a centre horn) is a
+junction, not trunk. A big piece named like a wing / fin / sail that sits on the body is a junction too
 (its contact patch), one per side. r = the chain's radius at its root (median distance of
-its body vertices to the bone axis over the first half of the first bone). The probe region
-is every triangle whose centre is within REGION_K * r of the root and (bone roots) no further
-down the first bone than ROOT_REACH of its length. Folds and strips count only where a review
+its body vertices to the bone axis over the first half of the first bone; a mirrored pair, e.g.
+thigh.L / thigh.R, shares one r over both sides' samples). The probe region is every triangle whose
+centre is within REGION_K * r of the root and (bone roots) no further down the first bone than
+ROOT_REACH of its length, minus the faces of OTHER chains (an ear rim inside a shoulder's 2r). Folds and strips count only where a review
 camera sees them: a face is exposed when it faces and is unoccluded from >= EXPOSED of the
 17 review views (8 azimuths level and at +35 deg, and the top).
 
@@ -36,6 +38,9 @@ MEASURES (per junction, on the exported triangles welded by position):
   poke      the body crosses itself in the region at rest (a limb root through the torso)
   gap       a piece shell near the root that hovers off the body (no contact, gap < r)
   pinch     (warn) a vertex whose angle sum departs from 2 pi by more than PINCH_RAD
+  shelf     (arm roots) the troll T-bar: the largest patch of faces outboard of the arm root that
+            face up within SHELF_DEG of level and are seen from the top; FAIL when its area >
+            SHELF_AREA_K r^2 and it is wider than SHELF_W_K r across the limb (a round arm top is a line)
   clip      (posed, GLB with clips) the chain's triangles crossing ANOTHER chain (tail
             through a hind leg, arm through the other arm) in any sampled frame that did
             not cross at rest, as % of the chain's area; crossings with the trunk are
@@ -43,8 +48,9 @@ MEASURES (per junction, on the exported triangles welded by position):
 EYE CHECK: the lens shells of every piece named *eye*, one eye per side: visible fraction of
 its camera-facing area from the front (az000), the 3/4 (az045 / az315) and the side (az090 /
 az270) views, ray-tested against every other surface; lens diameter / head length within
-EYE_SIZE; round (PCA extents ratio >= EYE_ROUND); seated (part of it inside the head) and proud
-(part of it outside).
+EYE_SIZE (head length = the extent of the skull's body faces: the head bone and its centre-line
+children, never the ears / horns / tufts on it); round (PCA extents ratio >= EYE_ROUND); seated (part
+of it inside the head) and proud (part of it outside).
 SEAT CHECK: pieces named strap/belt/band/collar/harness/...: the share of the inner face (facing the
 skin, within SEAT_FAR x size) lifted more than SEAT_LIFT x size off it, <= SEAT_PCT. WARN only:
 not calibrated yet (the owner-accepted ogre belt reads 40-60%).
@@ -85,6 +91,9 @@ LIMITS = dict(
     SEAT_PCT=10.0,           # warn (not gated yet): lifted share of a band's inner face
     MEMBRANE_ABS=0.006,      # m
     MEMBRANE_REL=0.004,      # x the creature's largest dimension
+    SHELF_DEG=20.0,          # shoulder shelf: an exposed face this close to level (normal within SHELF_DEG of +z) ...
+    SHELF_AREA_K=0.5,        # gate: the largest level patch outboard of an arm root, seen from the top, <= SHELF_AREA_K x r^2 (synthetic troll T-bar 0.93, zoo max see kit_bug_audit.md)
+    SHELF_W_K=0.8,           # ... counted only when it is also this wide across the limb (x r): a round arm top is a line
 )
 L_ = LIMITS
 TRUNK_RE = re.compile(r'^(root|hips?|pelvis|spine\w*|chest\w*|torso\w*|body\w*|neck\w*|head\w*|jaw\w*|abdomen\w*|'
@@ -92,6 +101,11 @@ TRUNK_RE = re.compile(r'^(root|hips?|pelvis|spine\w*|chest\w*|torso\w*|body\w*|n
 TAILLIKE_RE = re.compile(r'tail|tentacle|antenna|trunk_?tip', re.I)
 MEMBRANE_WORDS = {'wing', 'fin', 'membrane', 'web', 'sail', 'frill', 'cape', 'flap', 'ear', 'dorsal', 'pectoral', 'caudal', 'patagium'}
 PIECE_JUNCTION_WORDS = {'wing', 'fin', 'sail', 'membrane', 'frill', 'dorsal', 'pectoral', 'patagium'}
+# a bone on the centre line is trunk unless it is an appendage: a dorsal fin, a crest, a centre horn (kit bug
+# 2026-10-23: the seahorse's fin_dorsal was trunk, so it was never probed nor membrane-checked)
+APPENDAGE_WORDS = PIECE_JUNCTION_WORDS | {'caudal', 'crest', 'horn', 'antler', 'tusk', 'ear', 'lobe', 'tuft'}
+# shoulder shelf check (top view): front-limb roots only (a hip's top is the haunch, a flat back is not a shelf)
+ARM_WORDS = {'upperarm', 'arm', 'shoulder', 'clavicle', 'humerus', 'foreleg', 'scapula', 'flipper', 'pec'}
 
 
 def _words(name):
@@ -105,8 +119,8 @@ def has_word(name, words):
 FLAG_COL = {'ok': (0.80, 0.80, 0.78), 'open': (0.10, 0.80, 0.95), 'knife': (0.92, 0.10, 0.10),
             'strip': (1.0, 0.85, 0.10), 'slit': (1.0, 0.50, 0.05), 'poke': (0.92, 0.10, 0.85),
             'gap': (0.15, 0.30, 1.0), 'clip': (1.0, 0.55, 0.70), 'thin': (0.0, 0.55, 0.55),
-            'pinch': (0.55, 0.15, 0.85), 'region': (0.93, 0.93, 0.90)}
-FLAG_PRI = ['open', 'poke', 'gap', 'knife', 'strip', 'slit', 'clip', 'thin', 'pinch', 'region']
+            'pinch': (0.55, 0.15, 0.85), 'shelf': (0.35, 0.80, 0.20), 'region': (0.93, 0.93, 0.90)}
+FLAG_PRI = ['open', 'poke', 'gap', 'knife', 'strip', 'slit', 'shelf', 'clip', 'thin', 'pinch', 'region']
 
 
 def say(*a):
@@ -267,7 +281,7 @@ class Model:
     def trunk(self, name):
         b = self.bones[name]
         central = abs(b['head'][0]) < 0.01 * self.L and abs(b['tail'][0]) < 0.01 * self.L
-        return central and not TAILLIKE_RE.search(name)
+        return central and not TAILLIKE_RE.search(name) and not has_word(name, APPENDAGE_WORDS)
 
     def subtree(self, name):
         out, todo = set(), [name]
@@ -296,7 +310,7 @@ def find_junctions(m):
                 'horn' if w & {'horn', 'antler', 'tusk'} else 'wing' if 'wing' in w else
                 'fin' if w & (PIECE_JUNCTION_WORDS - {'wing'}) else 'limb')
         head, tail = b['head'], b['tail']
-        r = None
+        r, rs = None, None
         for o in [m.body] + m.pieces:
             g, dom = m.geo[o.name], m.dom[o.name]
             idx = np.array([i for i, d in enumerate(dom) if d in sub])
@@ -305,7 +319,7 @@ def find_junctions(m):
             d, t = _seg_dist(g.V[idx], head, tail)
             sel = d[t < 0.5]
             if len(sel) >= 6:
-                r = float(np.median(sel))
+                r, rs = float(np.median(sel)), sel
                 break
         r = r or 0.04 * m.L
         # outward: from the parent bone's axis to the root (a tail: along its bone)
@@ -318,7 +332,8 @@ def find_junctions(m):
             out = tail - head
         J.append(dict(name=name, kind=kind, root=head, axis=_unit(tail - head), out=_unit(out), r=r,
                       reach=ROOT_REACH * float(np.linalg.norm(tail - head)),
-                      bones=sorted(sub), parent=p, source='bone'))
+                      bones=sorted(sub), parent=p, source='bone', r_samples=rs))
+    _mirror_radius(m, J)
     # big membrane-like pieces on the body: one junction per side at the contact patch
     bt = m.geo[m.body.name].bvh()
     for o in m.pieces:
@@ -344,6 +359,40 @@ def find_junctions(m):
 
 
 ROOT_REACH = 0.6         # the probe stops this far down the chain's first bone: the root, not the knee
+
+
+def _mirror_radius(m, J):
+    """A mirrored pair (thigh.L / thigh.R) gets ONE radius: the median over both sides' samples (the
+    distances to each side's own bone axis, i.e. measured on the union of the geometry and its mirror).
+    Kit bug 2026-10-23: the eagle's thigh.L read r 72.2 mm and thigh.R 67.4 mm from a few vertices the
+    weights gave to one side only, so the same 69 mm seam strip passed on one side (0.96 r) and failed
+    on the other (1.03 r). Pairs: same kind, roots mirrored across x = 0 within 2% of the size."""
+    used = set()
+    for a, ja in enumerate(J):
+        if a in used or ja['source'] != 'bone' or abs(ja['root'][0]) < 0.01 * m.L:
+            continue
+        mir = ja['root'] * np.array([-1.0, 1, 1])
+        best = None
+        for b, jb in enumerate(J):
+            if b == a or b in used or jb['source'] != 'bone' or jb['kind'] != ja['kind']:
+                continue
+            d = float(np.linalg.norm(jb['root'] - mir))
+            if d < 0.02 * m.L and (best is None or d < best[0]):
+                best = (d, b)
+        if best is None:
+            continue
+        jb = J[best[1]]
+        used |= {a, best[1]}
+        ra, rb = ja.get('r_samples'), jb.get('r_samples')
+        if ra is not None and rb is not None:
+            r = float(np.median(np.concatenate([ra, rb])))
+        else:
+            r = 0.5 * (ja['r'] + jb['r'])
+        ja['r_side'], jb['r_side'] = ja['r'], jb['r']
+        ja['r'] = jb['r'] = r
+        ja['mirror'], jb['mirror'] = jb['name'], ja['name']
+    for j in J:
+        j.pop('r_samples', None)
 
 
 def region(g, j):
@@ -440,14 +489,23 @@ def probe(m, J, posed=True):
         same = (Lv[:, 0] == Lv[:, 1]) | (Lv[:, 0] == Lv[:, 2])
         return np.where(same, Lv[:, 0], Lv[:, 1])
     tlab = {o: tri_lab(o) for o in m.geo}
+    bl = tlab[m.body.name]
 
     res = []
     for ji, j in enumerate(J):
         R = L_['REGION_K'] * j['r']
         reg = region(g, j)
+        # another appendage's own faces are not this root's join (kit bug 2026-10-23: the elephant's ear rim
+        # lay inside the 2r shoulder region and was flagged as a shoulder seam strip): keep the trunk's faces
+        # and this chain's faces only
+        n_all = len(reg)
+        reg = reg[(bl[reg] < 0) | (bl[reg] == ji)]
         rset = set(int(t) for t in reg)
         out = dict(name=j['name'], kind=j['kind'], source=j['source'], r_mm=round(1000 * j['r'], 1),
-                   root=[round(float(x), 3) for x in j['root']], region_tris=int(len(reg)))
+                   root=[round(float(x), 3) for x in j['root']], region_tris=int(len(reg)),
+                   other_chain_tris=int(n_all - len(reg)))
+        if 'r_side' in j:
+            out['r_side_mm'] = round(1000 * j['r_side'], 1)
         for t in reg:
             flag(m.body.name, int(g.poly[t]), 'region')
         # open / non-manifold edges
@@ -533,6 +591,13 @@ def probe(m, J, posed=True):
                 for t in VT[v]:
                     flag(m.body.name, int(g.poly[t]), 'pinch')
         out['pinch_verts'] = pinch
+        # shoulder shelf (top view)
+        if j['source'] == 'bone' and j['kind'] == 'limb' and has_word(j['name'], ARM_WORDS) \
+                and abs(j['root'][0]) > 0.01 * m.L:
+            sh = _shelf(m, g, j, reg, trees)
+            out.update(sh['out'])
+            for t in sh['tris']:
+                flag(m.body.name, int(g.poly[t]), 'shelf')
         # pieces near the root: hovering shells (gap) and seat lift
         gaps = []
         for o in m.pieces:
@@ -567,6 +632,41 @@ def probe(m, J, posed=True):
     if posed and m.rig and bpy.data.actions:
         _posed_clip(m, J, res, tlab, flag)
     return res, flags, dict(open_edges=len(open_e), nonmanifold_edges=len(nonman))
+
+
+def _shelf(m, g, j, reg, trees):
+    """The troll T-bar: seen from above, the shoulder is a level shelf that runs out from the torso over
+    the arm root (the arm's top WAS the shoulder top, levelled out past the torso side) and drops into a
+    vertical outer wall. Measured on the region's faces outboard of the root (|x| beyond the arm bone's
+    head) that face up within SHELF_DEG of +z and are unoccluded from the top view; the largest
+    edge-connected patch of them: its area / r^2 and its width across the limb (/ r). A round arm top is
+    a line of faces one or two columns wide; a shelf is a level slab at least as wide as the arm."""
+    side = 1.0 if j['root'][0] > 0 else -1.0
+    up = np.array([0, 0, 1.0])
+    cz = math.cos(math.radians(L_['SHELF_DEG']))
+    eps = 1e-4 * m.L
+    cand = []
+    for t in reg:
+        if g.N[t][2] < cz or side * g.C[t][0] < side * j['root'][0]:
+            continue
+        o = Vector(g.C[t] + up * eps)
+        if any(tr.ray_cast(o, Vector(up), 3 * m.L)[0] is not None for tr in trees):
+            continue
+        cand.append(int(t))
+    best, area, wid, lat = [], 0.0, 0.0, 0.0
+    for c in _components(g, cand):
+        a = float(g.A[c].sum())
+        if a > area:
+            P = g.V[np.unique(g.T[c])]
+            best, area = c, a
+            lat = float(np.ptp(P[:, 0]))                 # along the shoulder line (out from the torso)
+            wid = float(np.ptp(P[:, 1]))                 # across it, front to back
+    r2 = j['r'] ** 2
+    out = dict(shelf_area_r2=round(area / r2, 2), shelf_width_r=round(wid / j['r'], 2),
+               shelf_len_r=round(lat / j['r'], 2))
+    is_shelf = area > L_['SHELF_AREA_K'] * r2 and wid > L_['SHELF_W_K'] * j['r']
+    out['shelf'] = bool(is_shelf)
+    return dict(out=out, tris=best if is_shelf else [])
 
 
 def _pca1(P):
@@ -695,6 +795,8 @@ def judge(r):
         f.append('gap ' + ', '.join(f"{g['piece']} {g['gap_mm']} mm" for g in r['gaps']))
     if r.get('clip_pct', 0) > L_['CLIP_PCT']:
         f.append(f"posed clip {r['clip_pct']}% with {'/'.join(r['clip_with'])} at {r['clip_at']}")
+    if r.get('shelf'):
+        f.append(f"shoulder shelf {r['shelf_area_r2']} r^2 level from the top, {r['shelf_width_r']} r wide")
     return f
 
 
@@ -707,9 +809,18 @@ def eye_check(m):
     others = [o for o in m.geo if o not in [e.name for e in eyes]]
     trees = {o: m.geo[o].bvh() for o in others}
     head = None
-    if 'head' in m.bones:
-        sub = m.subtree('head')
-        idx = [i for i, d in enumerate(m.dom[m.body.name]) if d in sub]
+    hb = next((b for b in ('head', 'skull', 'cranium') if b in m.bones), None)
+    if hb:
+        # the skull: the head bone and its centre-line (trunk) children such as the jaw or snout; NOT the
+        # ears, horns, tufts or lobes (kit bug 2026-10-23: the head length took the bbox with the ears, so a
+        # tall-eared head forced a big eye) nor a proboscis
+        keep, todo = set(), [hb]
+        while todo:                              # only bones reachable through kept bones
+            n = todo.pop()
+            if n == hb or (m.trunk(n) and not has_word(n, {'trunk', 'proboscis'})):
+                keep.add(n)
+                todo += m.bones[n]['children']
+        idx = [i for i, d in enumerate(m.dom[m.body.name]) if d in keep]
         if len(idx) > 8:
             P = m.geo[m.body.name].V[idx]
             head = float(np.ptp(P, 0).max())
@@ -979,7 +1090,8 @@ def _report(rep):
                 f"{r['max_concave_deg']} deg); strip {r.get('strip_max_len_r', 0)} r/{r.get('strip_min_width_mm')} mm; "
                 f"slit {r['slit_pct']}%; poke {r['poke_tris']}; gaps {len(r['gaps'])}; pinch {r['pinch_verts']}"
                 + (f"; clip {r['clip_pct']}% {'/'.join(r['clip_with'])} {r['clip_at'] or ''}; root clip {r['root_clip_pct']}%"
-                   if 'clip_pct' in r else ''))
+                   if 'clip_pct' in r else '')
+                + (f"; shelf {r['shelf_area_r2']} r2 x {r['shelf_width_r']} r" if 'shelf_area_r2' in r else ''))
         say(('PASS' if r['ok'] else 'FAIL') + f" junction {r['name']} ({r['kind']}): {nums}"
             + ('' if r['ok'] else '  <<  ' + '; '.join(r['fail'])))
     for e in rep['eyes']:

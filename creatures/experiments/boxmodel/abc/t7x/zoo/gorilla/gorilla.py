@@ -134,7 +134,9 @@ FACE = {
            4: (0.190, -0.748, 1.046)},
     'H1': {0: (0.0, -0.892, 1.010), 1: (0.054, -0.884, 1.012), 2: (0.106, -0.858, 1.018), 3: (0.146, -0.812, 1.032),
            4: (0.186, -0.764, 1.068)},
-    'H2': {0: (0.0, -0.858, 1.078), 1: (0.056, -0.851, 1.080), 2: (0.106, -0.829, 1.088), 3: (0.148, -0.792, 1.104),
+    # r3b (Q5: the upper lip and nose met in a downward wedge tip in profile): the muzzle top H2 forward to the lip
+    # line so the muzzle front stands upright and blunt, the nose pad lower (1.0-1.3 cm)
+    'H2': {0: (0.0, -0.884, 1.078), 1: (0.056, -0.876, 1.080), 2: (0.106, -0.850, 1.088), 3: (0.148, -0.792, 1.104),
            4: (0.188, -0.752, 1.140)},
     'H3': {0: (0.0, -0.778, 1.150), 1: (0.060, -0.763, 1.152), 2: (0.122, -0.757, 1.158), 3: (0.170, -0.746, 1.172),
            4: (0.198, -0.720, 1.205)},
@@ -626,7 +628,7 @@ def nose_rows():
 
 # HEAD pass nose pad rows, bottom (nostril line, on the muzzle front just above the lip) -> top (the bridge between
 # the eyes): (z, half width, lift out of the surface)
-NOSE_ROWS = ((1.060, 0.050, 0.008), (1.076, 0.068, 0.020), (1.100, 0.062, 0.017), (1.128, 0.038, 0.010), (1.152, 0.022, 0.007))
+NOSE_ROWS = ((1.060, 0.052, 0.008), (1.076, 0.068, 0.013), (1.100, 0.062, 0.012), (1.128, 0.038, 0.009), (1.152, 0.022, 0.007))
 
 
 def nose_pad(tree):
@@ -670,7 +672,7 @@ def stage3(k, body):
     ring_chain(bm, nose_pad(tree))
     nose = object_from_bm('nose', bm, mirror=False)
     paint(nose, {'skin': PAL['skin'], 'pupil': PAL['pupil']},
-          lambda c_, n_, i: 'pupil' if (c_.z < NOSE_ROWS[1][0] - 0.004 and n_.z < -0.2 and abs(c_.x) > 0.012) else 'skin')
+          lambda c_, n_, i: 'skin')     # r3 (Q4): no painted nostrils - every judge read the dark nostril cells as a grille mouth
     pieces.append(nose)
     # ears (s3 r3): small closed slabs flat to the skull side, 1.3 cm thick (the ear_cup rim was 3-4 mm: membrane FAIL)
     for side in (1, -1):

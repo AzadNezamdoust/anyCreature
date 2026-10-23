@@ -2,6 +2,7 @@ import os, sys, math
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 import parts as PT
 
 # t7 hand box model (zoo workflow v2), template zoo/rhino: one spine loft of 14-vertex hand-placed half rings (tail tip
@@ -382,6 +383,8 @@ def nail(bm, base, out, w, hgt, d):
 
 def stage3(k, body):
     paint(body, PAL, body_rule)
+    # night 10-23 border pass (owner 10-21 approved kit/smooth_borders, as frog r17): anti-stair cuts + tangential relax
+    smooth_borders(body, k=k, iters=8)
     bmb = edit(body)
     tree = BVHTree.FromBMesh(bmb)
     bmb.free()

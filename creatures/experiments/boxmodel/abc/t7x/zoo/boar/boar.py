@@ -281,7 +281,25 @@ def stage2(k, body):
         for s in (-1, 1):
             v = vert_near(bm, role_pos(e0, u, s, 1.0))
             v.co = Vector(role_pos(((e0[0][0] + 0.005, -0.366, e0[0][2] - 0.03), 0.037, 0.033, 0.025), u, s, 1.0))
+    # weakfix 2026-10-23: the hind legs stood 3-8 cm apart down their whole length (a narrow slit under the tail,
+    # rear view); the sheet's hams meet, then the lower legs part with clear space. The hind leg below the stifle
+    # moves out HSPREAD (ramped in from the stifle ring), the hams stay.
+    for v in bm.verts:
+        w = hspread_w(v.co)
+        if w > 0:
+            v.co.x += HSPREAD * w
     commit(body, bm)
+
+
+HSPREAD = 0.024
+SPREAD_DONE = []
+
+
+def hspread_w(co):
+    z0, z1 = HIND[1][0][2], HIND[2][0][2]
+    if co.x <= 0.02 or not (0.33 < co.y < 0.60) or co.z >= z0:
+        return 0.0
+    return min(1.0, (z0 - co.z) / (z0 - z1))
 
 # colours picked off the reference sheet: grey-brown flank, dark crest/saddle, pale jowl and snout, light-brown legs
 PAL = {'fur': '#8a7b70', 'saddle': '#554b46', 'cream': '#bcb2a8', 'leg': '#9c8a7c', 'hoof': '#262321',
@@ -478,6 +496,8 @@ def stage3(k, body):
     bm = bmesh.new()
     for sole in (FORE[-1], HIND[-1]):
         (cx, cy, _), rx, ry = sole
+        if sole is HIND[-1]:
+            cx += HSPREAD                       # weakfix: the hind feet moved out with the lower leg
         for d in (-0.022, 0.022):
             o = Vector((cx + d, cy - ry - 0.15, 0.02))
             hit = tree.ray_cast(o, Vector((0, 1, 0)), 0.3)[0]
@@ -489,6 +509,11 @@ def stage3(k, body):
 
 
 def stage4(k, body, pieces):
+    if not SPREAD_DONE:
+        for nm in ('hock', 'hpaw', 'htoe'):
+            p = J[nm]
+            J[nm] = (p[0] + HSPREAD * hspread_w(Vector((p[0] + 0.001, p[1], p[2]))), p[1], p[2])
+        SPREAD_DONE.append(1)
     B = [('hips', J['hips'], J['spine'], None),
          ('spine', J['spine'], J['chest'], 'hips', True),
          ('chest', J['chest'], J['neck'], 'spine', True),

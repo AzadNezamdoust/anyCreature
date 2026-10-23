@@ -632,22 +632,31 @@ def build_wing():
     return object_from_bm('wing', bm)
 
 
-def spike(bm, base, d, side_hint, r=0.0032, ln=0.014):
+def spike(bm, base, d, side_hint, r=0.0032, ln=0.014, tip_r=None):
+    """A 3-sided spine; with tip_r a blunt frustum (detail pass 10-23: chunky, >= the gate floor to its tip)."""
     d = d.normalized()
     u = d.cross(side_hint)
     u = u.normalized() if u.length > 1e-6 else Vector((1, 0, 0))
     w = d.cross(u).normalized()
     b0 = base - d * 0.003
     vs = [bm.verts.new(b0 + (u * math.cos(t) + w * math.sin(t)) * r) for t in (0, 2.0944, 4.1888)]
-    tip = bm.verts.new(base + d * ln)
     bot = bm.verts.new(b0 - d * 0.002)
+    if tip_r:
+        ts = [bm.verts.new(base + d * ln + (u * math.cos(t) + w * math.sin(t)) * tip_r) for t in (0, 2.0944, 4.1888)]
+        for a in range(3):
+            bm.faces.new([vs[a], vs[(a + 1) % 3], ts[(a + 1) % 3], ts[a]])
+            bm.faces.new([vs[(a + 1) % 3], vs[a], bot])
+        bm.faces.new(ts)
+        return
+    tip = bm.verts.new(base + d * ln)
     for a in range(3):
         bm.faces.new([vs[a], vs[(a + 1) % 3], tip])
         bm.faces.new([vs[(a + 1) % 3], vs[a], bot])
 
 
-FEMUR_SPIKES = (0.46, 0.555, 0.65, 0.745)  # review f2: off the trochanter (the 0.38 spike reached the coxa)      # fractions along the foreleg path (on the blade's grasping edge)
-TIBIA_SPIKES = (0.80, 0.87, 0.93)
+FEMUR_SPIKES = (0.50, 0.62, 0.74)   # detail pass 10-23: 3 fat spines (were 4 thin)
+FEMUR_SPIKES_OLD = (0.46, 0.555, 0.65, 0.745)  # review f2: off the trochanter (the 0.38 spike reached the coxa)      # fractions along the foreleg path (on the blade's grasping edge)
+TIBIA_SPIKES = (0.82, 0.92)
 
 
 def build_spines():
@@ -666,16 +675,17 @@ def build_spines():
         return a[0].lerp(b[0], g), a[1].lerp(b[1], g).normalized(), a[3].lerp(b[3], g).normalized(), a[4] + (b[4] - a[4]) * g
     for fr in FEMUR_SPIKES:
         p, U, T, rw = at(fr)
-        spike(bm, p + U * rw * 0.8, U - T * 0.35, T, r=0.004, ln=0.019)   # review f2: bolder (were 3.2 x 16 mm), seated at 0.8 rw (the blade edge is thin: at 0.9 the base crossed both corner faces)
+        spike(bm, p + U * rw * 0.8, U - T * 0.35, T, r=0.0105, ln=0.017, tip_r=0.0089)   # review f2: bolder (were 3.2 x 16 mm), seated at 0.8 rw (the blade edge is thin: at 0.9 the base crossed both corner faces)
     for fr in TIBIA_SPIKES:
         p, U, T, rw = at(fr)
-        spike(bm, p + U * rw * 0.85, U + T * 0.3, T, r=0.0028, ln=0.013)
+        spike(bm, p + U * rw * 0.85, U + T * 0.3, T, r=0.0100, ln=0.015, tip_r=0.0088)
     return object_from_bm('spines', bm)
 
 
-ANT = [(0.010, -0.300, 0.442), (0.026, -0.318, 0.466), (0.045, -0.338, 0.490), (0.068, -0.360, 0.511),
+ANT = [(0.010, -0.300, 0.442), (0.026, -0.318, 0.466), (0.045, -0.338, 0.490), (0.064, -0.356, 0.508)]   # detail pass 10-23: short + chunky
+ANT_OLD = [(0.010, -0.300, 0.442), (0.026, -0.318, 0.466), (0.045, -0.338, 0.490), (0.068, -0.360, 0.511),
        (0.094, -0.382, 0.526), (0.122, -0.402, 0.534)]
-ANT_N = 10                               # s3 r2: resampled to 10 rings ~2 cm apart (r01: 3.5 cm segments = 64 slivers)
+ANT_N = 5                               # s3 r2: resampled to 10 rings ~2 cm apart (r01: 3.5 cm segments = 64 slivers)
 
 
 def _resample(pts, n):
@@ -702,13 +712,13 @@ def build_antennae():
         T = (pts[min(i + 1, len(pts) - 1)] - pts[max(i - 1, 0)]).normalized()
         S = (S - T * S.dot(T)).normalized()
         U = S.cross(T)
-        r = 0.0034 - 0.0014 * i / (len(pts) - 1)
+        r = 0.0098 - 0.0004 * i / (len(pts) - 1)         # detail pass: >= 13 mm across (tier-1 floor 12.8 mm)
         rings_.append([bm.verts.new(p + (S * math.cos(t) + U * math.sin(t)) * r) for t in (0.0, 1.5708, 3.1416, 4.7124)])
     for a, b in zip(rings_, rings_[1:]):
         for j in range(4):
             bm.faces.new([a[j], a[(j + 1) % 4], b[(j + 1) % 4], b[j]])
     bm.faces.new(list(reversed(rings_[0])))
-    tip = bm.verts.new(pts[-1] + (pts[-1] - pts[-2]).normalized() * 0.006)
+    tip = bm.verts.new(pts[-1] + (pts[-1] - pts[-2]).normalized() * 0.005)
     for j in range(4):
         bm.faces.new([rings_[-1][j], rings_[-1][(j + 1) % 4], tip])
     recalc_normals(bm)

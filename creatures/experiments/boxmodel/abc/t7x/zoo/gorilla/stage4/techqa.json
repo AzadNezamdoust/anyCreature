@@ -9,24 +9,24 @@
   "drift": 0
  },
  "totals": {
-  "flip": 0,
-  "zfight": 0,
+  "valley": 0,
+  "flip_area": 0,
   "stretch_max": 0.0,
-  "hit": 0,
-  "open": 0,
-  "fold": 0,
   "float": 0,
+  "zfight": 2,
+  "open": 0,
+  "area": 8.263699636057801,
   "sliver": 4,
   "clip": 21,
+  "stretch": 0,
   "clip_area": 0.07429871950119457,
+  "fold": 0,
+  "hit": 0,
   "drift": 0,
-  "flip_area": 0,
-  "valley": 0,
-  "area": 8.255335485543224,
-  "stretch": 0
+  "flip": 0
  },
  "triangles": 2976,
- "turned": 440,
+ "turned": 436,
  "stuck": 0,
  "per_object": {
   "body": {
@@ -43,7 +43,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0.0634366914767985,
-   "area": 7.679269876145115,
+   "area": 7.685239937749302,
    "flip_area": 0
   },
   "piece_eye": {
@@ -70,14 +70,14 @@
    "hit": 0,
    "open": 0,
    "float": 0,
-   "zfight": 0,
+   "zfight": 2,
    "flip": 0,
    "drift": 0,
    "clip": 2,
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0.00019753156830664022,
-   "area": 0.030166154912793394,
+   "area": 0.03256024382318303,
    "flip_area": 0
   },
   "piece_ear_L": {

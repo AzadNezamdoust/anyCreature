@@ -98,3 +98,10 @@ window 5, neck 2, head 4 + muzzle 6), legs from 4 x 3 lower-flank windows, ears 
   reads a little like a collar); (2) faint creases either side of the tail root (R0 -> Rt bridge, red flags in the
   probe, barely visible); (3) top IoU 0.78 (the plan view is drawn at ~0.92 x the side scale); the rump reads as a plain
   dome from the rear without the sheet's split haunches; the pink border is hard-edged flat colour (style).
+
+## Border pass (night 2026-10-23, s4 r08)
+- kit/smooth_borders(body, k=k, iters=8) after the body paint. 7 anti-stair cuts, 29 border verts relaxed (max 39.7 mm,
+  8 undone); stair corners 11 -> 6, 3-to-1 quads 8 -> 0. Kit gates, junction probe, eyes PASS; clips PASS after
+  --clips --fix-clips. Detail gate FAIL pre-existing (tier-3 detail count 4 < 12; not a border issue).
+- A/B (fresh Opus seat per order, blind): after wins both orders (belly patch a rounded oval, no boxy corners). ADOPT.
+- Files: border_before_after.jpg, before_borders/.

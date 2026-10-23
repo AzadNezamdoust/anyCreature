@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+sys.path.insert(0, HERE)
 
 # Western dragon, t7 hand box-model: one spine loft of 6-vertex half rings (spade tip -> nose), legs extruded as
 # 2-face regions from the lower flank, horns as 1-face extrusions from the skull; stage 2 joint rings, eye socket,
@@ -604,7 +605,70 @@ def stage3(k, body):
             claw(bm, h, d)
     claws = object_from_bm('claws', bm)
     paint(claws, {'bone': PAL['bone']}, lambda c_, n_, i: 'bone')
-    return [eye, spikes, wing, claws]
+    return [eye, spikes, wing, claws] + detail_pass(body, tree)
+
+
+def detail_pass(body, tree):
+    """Tier-3 detail pass (2026-10-23, zoo/detail_audit.md dragon list): belly scute plates, brow, nostrils,
+    mouth line, cheek and elbow spikes, knee plates; chunky seated pieces in the existing palette."""
+    import detail_pieces as D
+    out = []
+
+    def piece(name, bm, col, mirror=True, rule=None):
+        ob = object_from_bm(name, bm, mirror=mirror)
+        cols = col if isinstance(col, dict) else {col: PAL[col]}
+        paint(ob, cols, rule or (lambda c_, n_, i: next(iter(cols))))
+        out.append(ob)
+        return ob
+    # 1. belly scutes: stepped ventral plates under the belly (rear edge steps down), open on the belly seam
+    bm = bmesh.new()
+    for y in (-1.16, -1.03, -0.90, -0.77, -0.64, -0.51):
+        sc = D.section_centre(tree, y)
+        if sc is None:
+            continue
+        hits = D.ring_stations(tree, sc[0], (0, 1, 0), (0, 0, 1), 180, 138, 4)
+        D.band(bm, D.stations_from_hits(hits, side_hint=(0, 1, 0)), 0.12, 0.028, prof=D.STEP, open_start=True)
+    piece('scute', bm, 'belly')
+    # 2. brow ridge over the eye
+    e = eye_face_centre()
+    pts = [(1.0, e.y + 0.045 * t, e.z + 0.045 - 0.012 * t * t) for t in (-1.0, -0.5, 0.0, 0.5, 1.0)]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.04, 0.024)
+    piece('brow', bm, 'red')
+    # 3. nostrils: a mound each side of the snout tip with a dark cap
+    h_ = D.cast_in(tree, (0.035, -2.6, 1.405), (0, 1, 0))
+    nn = (h_[1] + Vector((0.3, 0, 0.3))).normalized()
+    bm = bmesh.new()
+    D.knob(bm, h_[0], nn, 0.022, 0.014, top=0.6)
+    piece('nostril', bm, {'red': PAL['red'], 'pupil': PAL['pupil']},
+          rule=lambda c_, n_, i: 'pupil' if n_.dot(nn) > 0.9 else 'red')
+    # 4. mouth line: a dark lip line from the snout tip back under the eye
+    pts = [(1.0, y, z) for y, z in ((-1.985, 1.352), (-1.94, 1.347), (-1.89, 1.345), (-1.84, 1.349), (-1.795, 1.36))]
+    bm = bmesh.new()
+    D.band(bm, D.stations_from_hits(D.path_stations(tree, pts, (-1, 0, 0)), side_hint=(0, 0, 1)), 0.022, 0.014,
+           prof=D.ROUND)
+    piece('mouth', bm, 'pupil')
+    # 5. cheek spikes: two bone spikes swept back off the jaw corner (the sheet's cheek frill)
+    bm = bmesh.new()
+    for y, z, L in ((-1.77, 1.40, 0.10), (-1.74, 1.47, 0.08)):
+        h_ = D.cast_in(tree, (1.0, y, z), (-1, 0, 0))
+        if h_ is not None:
+            d = (h_[1] * 0.6 + Vector((0, 0.8, 0.15))).normalized()
+            D.knob(bm, h_[0], d, 0.03, L, sides=6, top=0.2, sink=0.02)
+    piece('spike_cheek', bm, 'bone')
+    # 6. elbow spike: a bone spur on the back of each elbow
+    h_ = D.cast_out(tree, Vector(J['elbow']) + Vector((0, 0, 0.02)), (0, 1, 0.2))
+    bm = bmesh.new()
+    if h_ is not None:
+        D.knob(bm, h_[0], (h_[1] + Vector((0, 0.6, 0.5))).normalized(), 0.032, 0.09, sides=6, top=0.2, sink=0.02)
+    piece('spike_elbow', bm, 'bone')
+    # 7. knee plates: a raised scale plate on the front of each hind knee
+    h_ = D.cast_out(tree, Vector(J['knee']), (0, -1, 0.15))
+    bm = bmesh.new()
+    if h_ is not None:
+        D.knob(bm, h_[0], h_[1], 0.05, 0.025, sides=6, top=0.55)
+    piece('kneeplate', bm, 'belly')
+    return out
 
 
 def stage4(k, body, pieces):

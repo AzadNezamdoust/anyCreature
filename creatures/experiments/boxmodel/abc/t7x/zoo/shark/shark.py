@@ -360,6 +360,9 @@ def stage3(k, body):
     return [eye, gills]
 
 
+SWIM = 0.40
+
+
 def stage4(k, body, pieces):
     B = [('root', J['root'], J['chest'], None),
          ('chest', J['chest'], J['head'], 'root', True),
@@ -395,6 +398,10 @@ def stage4(k, body, pieces):
         32: {}},
         loc={1: {'root': (0, 0, 0)}, 8: {'root': (0, 0.04, 0)}, 14: {'root': (0, -0.18, 0)}, 20: {'root': (0, -0.22, 0)},
              24: {'root': (0, -0.2, 0)}, 32: {'root': (0, 0, 0)}})
+    # weakfix 2026-10-23: the shark swims: the whole rig (body + pieces are parented to it) rides SWIM above the
+    # floor, so the pectoral tips clear z 0 by ~0.44 m (was 0.035: the fins sat on the floor)
+    rig.location.z += SWIM
+    bpy.context.view_layer.update()
     return rig
 
 

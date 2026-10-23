@@ -21,7 +21,84 @@
     null,
     null
    ],
-   "slide_foot": "toe.R"
+   "slide_foot": "toe.R",
+   "track": {
+    "z": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "v": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
   },
   "idle": {
    "frames": 48,
@@ -36,7 +113,108 @@
     null,
     null
    ],
-   "slide_foot": "toe.R"
+   "slide_foot": "toe.R",
+   "track": {
+    "z": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "v": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
   },
   "move": {
    "frames": 33,
@@ -51,235 +229,100 @@
     "toe.R",
     22
    ],
-   "slide_foot": "toe.L"
+   "slide_foot": "toe.L",
+   "track": {
+    "z": [
+     2.03,
+     1.98,
+     1.85,
+     1.65,
+     1.39,
+     1.09,
+     0.74,
+     0.38,
+     0.0,
+     0.08,
+     0.17,
+     0.24,
+     0.31,
+     0.37,
+     0.42,
+     0.45,
+     0.46,
+     0.37,
+     0.13,
+     0.67,
+     2.25,
+     4.97,
+     7.33,
+     9.42,
+     10.72,
+     10.87,
+     10.03,
+     8.51,
+     6.69,
+     5.0,
+     4.23,
+     2.28,
+     2.03
+    ],
+    "v": [
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     0.25,
+     3.61,
+     3.07,
+     2.31,
+     1.5,
+     0.69,
+     0.03,
+     0.59,
+     1.11,
+     1.46,
+     1.53,
+     1.21,
+     0.25
+    ]
+   }
   }
  },
- "sheet_after": [
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_attack_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_attack_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_attack_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_attack_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_idle_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_idle_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_idle_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_idle_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_move_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_move_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_move_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\after_move_75.png"
+ "sheet_qa": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\qa_move_75.png"
  ],
- "before": {
-  "attack": {
-   "frames": 36,
-   "penetration_pctH": -0.0,
-   "foot_slide_std_pctH": 0.0,
-   "foot_speed_planted_pctH": 0.0,
-   "planted_frames": 70,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    null,
-    null
-   ],
-   "slide_foot": "toe.R"
-  },
-  "idle": {
-   "frames": 48,
-   "penetration_pctH": -0.0,
-   "foot_slide_std_pctH": 0.0,
-   "foot_speed_planted_pctH": 0.0,
-   "planted_frames": 94,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    null,
-    null
-   ],
-   "slide_foot": "toe.R"
-  },
-  "move": {
-   "frames": 33,
-   "penetration_pctH": 0.936,
-   "foot_slide_std_pctH": 1.025,
-   "foot_speed_planted_pctH": 1.419,
-   "planted_frames": 40,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "toe.R",
-    1
-   ],
-   "slide_foot": "toe.R"
-  }
- },
- "fix": {
-  "attack": {
-   "feet": {
-    "toe.L": {
-     "stance": 35,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    },
-    "toe.R": {
-     "stance": 35,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    1,
-    -0.0,
-    "toe.R",
-    0
-   ]
-  },
-  "idle": {
-   "feet": {
-    "toe.L": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    },
-    "toe.R": {
-     "stance": 47,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.0,
-      0.0
-     ],
-     "z_range_pctH": 0.0
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    1,
-    -0.0,
-    "toe.R",
-    0
-   ]
-  },
-  "move": {
-   "feet": {
-    "toe.L": {
-     "stance": 22,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.99,
-      21.68
-     ],
-     "z_range_pctH": 11.36
-    },
-    "toe.R": {
-     "stance": 25,
-     "src": "contact",
-     "xy_range_pctH": [
-      0.83,
-      23.92
-     ],
-     "z_range_pctH": 4.21
-    }
-   },
-   "cyclic": true,
-   "worst_resid": [
-    22,
-    0.004,
-    "toe.R",
-    0
-   ]
-  }
- },
- "sheet_before": [
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_attack_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_attack_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_attack_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_attack_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_idle_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_idle_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_idle_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_idle_75.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_move_00.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_move_25.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_move_50.png",
-  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\werewolf\\stage4\\clips\\s4_frames\\before_move_75.png"
- ],
- "blender_roundtrip": {
-  "attack": {
-   "frames": 36,
-   "penetration_pctH": -0.0,
-   "foot_slide_std_pctH": 0.0,
-   "foot_speed_planted_pctH": 0.0,
-   "planted_frames": 70,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    null,
-    null
-   ],
-   "slide_foot": "toe.R"
-  },
-  "idle": {
-   "frames": 48,
-   "penetration_pctH": -0.0,
-   "foot_slide_std_pctH": 0.0,
-   "foot_speed_planted_pctH": 0.0,
-   "planted_frames": 94,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    null,
-    null
-   ],
-   "slide_foot": "toe.R"
-  },
-  "move": {
-   "frames": 33,
-   "penetration_pctH": 0.004,
-   "foot_slide_std_pctH": 0.934,
-   "foot_speed_planted_pctH": 0.645,
-   "planted_frames": 37,
-   "loop_gap_pctH": 0.0,
-   "nan_keys": 0,
-   "quat_flips": 0,
-   "deepest": [
-    "toe.R",
-    22
-   ],
-   "slide_foot": "toe.L"
-  }
- },
- "rest_drift": 0.0,
- "mesh_identity": {
-  "ok": true,
-  "detail": "verts 11045, unmatched positions 0, max weight diff 0.0000"
- },
  "gate": {
   "ok": true,
   "lines": [
-   "BMK clip before move    pen 0.936  slide 1.025  plant 1.419  loop 0.000",
-   "BMK clip before idle    pen -0.000  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip before attack  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip attack  PASS  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip idle    PASS  pen -0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip move    PASS  pen 0.004  slide 0.000  plant 0.253  loop 0.000",
-   "BMK clip mesh/skin identity PASS: verts 11045, unmatched positions 0, max weight diff 0.0000",
    "BMK clip gate PASS (feet ['toe.L', 'toe.R'], gait biped_walk)"
   ]
  }

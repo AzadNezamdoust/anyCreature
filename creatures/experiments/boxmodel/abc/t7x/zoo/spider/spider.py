@@ -296,11 +296,14 @@ def stage3(k, body):
         p, U, S, w, h = s[-1]
         T = (s[-1][0] - s[-2][0]).normalized()
         base = p - T * 0.02 + S * 0.004
-        q = [bm.verts.new(base + U * su * 0.013 + S * ss * 0.011) for su, ss in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
-        tip = bm.verts.new(p + T * 0.022 - S * 0.006)
-        bm.faces.new(list(reversed(q)))
+        # detail pass 2026-10-23: a chunky blunt claw cap (a frustum >= 22 mm thick to its tip; tier-1 floor 21 mm),
+        # was a 4-sided spike (t 8.3 mm)
+        q = [bm.verts.new(base + U * su * 0.0165 + S * ss * 0.0145) for su, ss in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+        tc = p + T * 0.024 - S * 0.007
+        r_ = [bm.verts.new(tc + U * su * 0.0122 + S * ss * 0.0115) for su, ss in ((-1, -1), (1, -1), (1, 1), (-1, 1))]
+        bm.faces.new(list(reversed(q))); bm.faces.new(r_)
         for j in range(4):
-            bm.faces.new([q[j], q[(j + 1) % 4], tip])
+            bm.faces.new([q[j], q[(j + 1) % 4], r_[(j + 1) % 4], r_[j]])
     claws = object_from_bm('claws', bm)
     paint(claws, {'claw': PAL['claw']}, lambda c_, n_, i: 'claw')
     return [eye, claws]

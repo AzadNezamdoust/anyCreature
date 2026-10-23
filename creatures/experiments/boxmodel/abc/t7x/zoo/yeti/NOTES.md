@@ -234,3 +234,24 @@ Builds: run.py --stage 4 --junctions --details --no-orbit.
   Still NO: Q5 muzzle block (nose wedge beak-like in profile), Q6 cheek planes, Q7 chin (soft under the beard), Q8 the
   grey area is still a rectangle with flared jaw wings. orbit18_sheet.jpg (old: orbit18_sheet_before_face.jpg),
   face_before_after.jpg, versions/.
+
+## HEAD rebuild pass (2026-10-22/23): the face in the loft (HEAD_CHECKLIST.md, frozen), champion at start r31g
+Backup: before_head/; old lock old_locks/lock_r13_face_r31g.json. Builds as gorilla (re-lock S1, S4 junctions+details).
+- S1 RE-LOCK (logged): three new head rings (EXTRA, straight lerps: Mm mouth line M0->N1 0.45, N2 muzzle top N1->E0 0.5,
+  Eu upper lid E0->F0 0.55) and hand-placed face vertices v0-v5 (FACE, a vertex may sit off its ring height) on
+  J0..F0: a rounded muzzle 13 cm ahead of the eyes (sheet side view), the mouth a thin step under the upper lip, the
+  bridge forward, the eye band sunk under an arched brow ring, cheekbone vertices, the jaw J0 tucked inside the hood
+  (J0 v4 0.29 -> 0.16, v5 0.44 -> 0.25: no jaw wings). The r10 bevel and r29e/r30f S2 face moves are gone. Body, fur,
+  density unchanged (990 -> 1062 S1 verts, 1976 -> 2120 tris). S2: eye socket in E0->Eu col 2. S3: skin by (span,
+  column) SKIN_J (face_span), smooth_borders fur/skin (pinned below z 1.85), nose = surface pad (rows ray-cast).
+- dev d34: wings gone, smile line, eye side 0.33-0.35 FAIL, nose z-fight 6. d35-d36: outer orbit open, lens out 2.4 x,
+  nose lifts (z-fight 4 then 0). d37: lens 6 mm further out: eyes 0.52/0.66/0.52, all gates PASS, 5362 tris.
+- Round 1 (champion r31g, score 4/12 by builder): h1a = d37; h1b = h1a + a mid-grey blend band. h1a won BOTH orders
+  (10/11, 9/11); h1b won both orders (11/11, 9/11) but read as 'pale see-through cheek plates' (hy4 Q10 NO). DECISION:
+  CHAMPION h1a (plain, no liner-like band: owner face rule). Residual NOs: nose tip a forward wedge in profile (Q6),
+  brow overhang weak (Q7), hard grey line under the chin (Q10).
+- Round 2 (champion h1a): h2a blunter nose (even 1.0-1.4 cm pad, lift along the surface normal: the y lift had been
+  half as thick on the sloping muzzle top = z-fight 6) + the muzzle top N2 1-1.4 cm forward: lost BOTH orders
+  (bigger nostrils read as a slot, beak longer) -> reverted. h2b lower lip 1 cm / chin 2 cm forward, chin skin to v2:
+  flip (won iy3, lost iy4) = tie. Champion stays h1a. Shared NOs: straight vertical face sides (Q1), nose ridge from
+  the brow ending in a tip (Q6), hard border (Q10).

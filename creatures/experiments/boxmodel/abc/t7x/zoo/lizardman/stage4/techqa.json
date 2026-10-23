@@ -9,21 +9,21 @@
   "drift": 0
  },
  "totals": {
-  "open": 0,
+  "area": 5.647445128860939,
+  "hit": 0,
+  "stretch_max": 0.0,
+  "valley": 0,
+  "clip": 39,
+  "clip_area": 0.047960283632131895,
+  "sliver": 8,
   "flip": 0,
-  "float": 0,
-  "stretch": 0,
+  "flip_area": 0,
+  "open": 0,
   "fold": 0,
   "zfight": 0,
-  "area": 5.648067206751623,
-  "clip": 37,
-  "sliver": 8,
-  "drift": 0,
-  "clip_area": 0.04529120248745104,
-  "flip_area": 0,
-  "stretch_max": 0.0,
-  "hit": 0,
-  "valley": 0
+  "stretch": 0,
+  "float": 0,
+  "drift": 0
  },
  "triangles": 3836,
  "turned": 380,
@@ -43,7 +43,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0.013078986266279093,
-   "area": 5.2913274522015605,
+   "area": 5.290685939137816,
    "flip_area": 0
   },
   "piece_eye": {
@@ -73,11 +73,11 @@
    "zfight": 0,
    "flip": 0,
    "drift": 0,
-   "clip": 31,
+   "clip": 33,
    "stretch": 0,
    "stretch_max": 0.0,
-   "clip_area": 0.032212216221171944,
-   "area": 0.26819391448528096,
+   "clip_area": 0.0348812973658528,
+   "area": 0.26821335011308817,
    "flip_area": 0
   },
   "piece_buckle": {
@@ -94,7 +94,7 @@
    "stretch": 0,
    "stretch_max": 0.0,
    "clip_area": 0,
-   "area": 0.030400053269326217,
+   "area": 0.030400052814579775,
    "flip_area": 0
   },
   "piece__rest_hand": {

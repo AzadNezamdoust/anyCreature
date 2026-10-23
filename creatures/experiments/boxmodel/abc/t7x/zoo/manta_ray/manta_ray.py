@@ -377,8 +377,68 @@ def stage2(k, body):
         v.co.y += 0.025
         if j < 3:
             v.co.z -= 0.012
+    scroll_lobes(bm)
+    swept_tips(bm)
     commit(body, bm)
     bm.free()
+
+
+# ---- weakfix 2026-10-23: rolled scroll lobes (were flat vertical plates), swept pointed wing tips
+ROLL = [0.25, 0.65, 1.0, 1.0, 0.9, 0.7]           # how far each lobe level rolls (root level stays a plate)
+ROLL_R = 0.045                                     # roll radius
+
+
+def scroll_pt(lev, side, v):
+    """The lobe cross-section as a J-scroll: straight down the outer face, the lower edge rolled inward and up."""
+    cx, cy, zt, zb, th, curl = LOBE[lev]
+    C = [Vector((c_[0], c_[1], 0)) for c_ in LOBE]
+    a = C[max(0, lev - 1)] if lev > 0 else Vector((J['lobe'][0], J['lobe'][1], 0))
+    b = C[min(len(C) - 1, lev + 1)]
+    T = (b - a).normalized()
+    n = Vector((0, 0, 1)).cross(T).normalized()
+    H = zt - zb
+    R = min(0.42 * H, ROLL_R) * ROLL[lev]
+    # (inward u, z) polyline for v = 0, 1/3, 2/3, 1
+    flat = [(0.0, zt), (0.0, zt - H / 3), (0.0, zt - 2 * H / 3), (0.0, zb)]
+    roll = [(0.0, zt), (0.0, zb + 2 * R), (0.9 * R, zb + 0.2 * R), (1.9 * R, zb + 1.3 * R)]
+    w = ROLL[lev]
+    pts = [(fa[0] + (fb[0] - fa[0]) * w, fa[1] + (fb[1] - fa[1]) * w) for fa, fb in zip(flat, roll)]
+    k = int(round(v * 3))
+    pa, pb = pts[max(0, k - 1)], pts[min(3, k + 1)]
+    tu, tz = pb[0] - pa[0], pb[1] - pa[1]
+    ln = math.hypot(tu, tz) or 1.0
+    nu, nz = tz / ln, -tu / ln                       # outward normal in (u, z): (-1, 0) on the straight part
+    sgn = 1 if side == 'r' else -1
+    u = pts[k][0] - nu * sgn * th / 2 + curl * v * v
+    z = pts[k][1] + nz * sgn * th / 2
+    c = Vector((cx, cy, z + LIFT)) - n * u
+    return c
+
+
+def scroll_lobes(bm):
+    f = lobe_place(lambda v: None)
+    for lev in range(len(LOBE)):
+        for side in ('f', 'r'):
+            for k in range(4):
+                v_ = k / 3
+                p = Vector(f(lev, (side, v_)))
+                vt = vert_near(bm, p)
+                if vt is None or (vt.co - p).length > 1e-4:
+                    continue
+                vt.co = scroll_pt(lev, side, v_)
+
+
+def swept_tips(bm):
+    """The outer wing (x > 0.95) narrows and sweeps back into a point, the tip curling up (sheet top / front)."""
+    for v in bm.verts:
+        x = v.co.x
+        if x <= 0.95:
+            continue
+        s = min(1.0, (x - 0.95) / (WING_TIP[0] - 0.95))
+        ym = (interp(LE, min(x, 1.25)) + interp(TE, min(x, 1.25))) / 2
+        v.co.y = ym + (v.co.y - ym) * (1 - 0.5 * s * s) + 0.10 * s * s
+        v.co.x = x + 0.07 * s ** 3
+        v.co.z += 0.035 * s * s
 
 
 # flat colours off the sheet: slate back, white belly, darker fins / tail, a dark mouth, black lens
