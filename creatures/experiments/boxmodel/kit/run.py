@@ -756,26 +756,32 @@ def main():
             nm = os.path.basename(g[0])
             bk = os.path.join(cdir, 'stage4', 'before_clips'); os.makedirs(bk, exist_ok=True)
             bkf = os.path.join(bk, nm)
-            own = False
-            if not os.path.exists(bkf):   # first fix: keep the original authored clips
+            path, why = clip_gate.backup_plan(g[0], bkf, os.path.join(cdir, 'stage4', 'clips', 's4_clips.json'),
+                                              os.path.join(scr, 'clips_s4_blender.glb'))
+            own = path.startswith('own')
+            prev = os.path.join(cdir, 'stage4', 'before_clips_prev')
+            if path == 'first':   # first fix: keep the original authored clips
                 shutil.copy2(g[0], bkf)
                 print('BMK clip fix: first fix -> before_clips/ backup made from the current GLB')
-            elif clip_gate.is_fix_output(g[0], os.path.join(cdir, 'stage4', 'clips', 's4_clips.json'),
-                                           os.path.join(scr, 'clips_s4_blender.glb')):
-                own = True   # no rebuild since the last fix: the backup still holds the authored clips
+            elif path == 'own':   # no rebuild since the last fix: the backup still holds the authored clips
                 print('BMK clip fix: current GLB is an earlier --fix-clips output -> clips read from before_clips/ backup')
-            else:   # a fresh build: compare its rest AND its authored clips against the backup
-                drift = clip_gate.same_rest(g[0], bkf)
-                hc, hb = clip_gate.clip_hashes(g[0]), clip_gate.clip_hashes(bkf)
-                changed = sorted(n for n in set(hc) | set(hb) if hc.get(n) != hb.get(n))
-                if drift > 1e-3 or changed:   # authored in the .py since the backup: refresh it, keep the old one
-                    prev = os.path.join(cdir, 'stage4', 'before_clips_prev'); os.makedirs(prev, exist_ok=True)
-                    os.replace(bkf, os.path.join(prev, nm)); shutil.copy2(g[0], bkf)
-                    print(f'BMK clip fix: fresh build differs from before_clips backup (rest drift {drift:.2g}, '
-                          f'clips changed {changed or "none"}) -> backup refreshed from the fresh build '
-                          f'(old one in before_clips_prev/), clips read from it')
-                else:
-                    print('BMK clip fix: fresh build matches before_clips backup (rest + clips) -> clips read from the backup')
+            elif path == 'own_rebase':   # fixed on a stale-mesh backup: authored clips onto the current mesh
+                os.makedirs(prev, exist_ok=True); os.makedirs(scr, exist_ok=True)
+                tmp = os.path.join(scr, 'rebase_' + nm)
+                clip_gate.splice(g[0], bkf, tmp, mark=False)
+                os.replace(bkf, os.path.join(prev, nm)); shutil.move(tmp, bkf)
+                print(f'BMK clip fix: current GLB is an earlier --fix-clips output on a mesh newer than the backup ({why}) '
+                      f'-> backup re-based (its authored clips spliced onto the current mesh; old one in '
+                      f'before_clips_prev/), clips read from it')
+            elif path == 'own_legacy':
+                pass   # warned below
+            elif path == 'refresh':   # authored in the .py since the backup: refresh it, keep the old one
+                os.makedirs(prev, exist_ok=True)
+                os.replace(bkf, os.path.join(prev, nm)); shutil.copy2(g[0], bkf)
+                print(f'BMK clip fix: fresh build differs from before_clips backup ({why}) -> backup refreshed from the '
+                      f'fresh build (old one in before_clips_prev/), clips read from it')
+            else:
+                print('BMK clip fix: fresh build matches before_clips backup (rest + clips + mesh) -> clips read from the backup')
             base = os.path.join(scr, 'clips_base_' + nm)   # current GLB (its weights) is the base
             os.makedirs(scr, exist_ok=True); shutil.copy2(g[0], base); fix = g[0]
             g = [bkf]                                          # authored clips come from the backup

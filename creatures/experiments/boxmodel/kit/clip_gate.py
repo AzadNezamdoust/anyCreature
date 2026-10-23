@@ -85,6 +85,32 @@ def mesh_signature(path):
     return rows
 
 
+def mesh_key(path):
+    """{skinned mesh node name: (vertex count, bbox min/max rounded 1e-4, sha1 of rest positions rounded 1e-4)}.
+    Cheap mesh identity for --fix-clips: a mesh-only rebuild (new pieces/toes) changes it while rest + clips stay."""
+    js, bin_ = _glb(path)
+    out = {}
+    for i, nd in enumerate(js.get('nodes', [])):
+        if 'mesh' not in nd or 'skin' not in nd:
+            continue
+        P = [_acc(js, bin_, p['attributes']['POSITION']) for p in js['meshes'][nd['mesh']]['primitives']]
+        P = np.concatenate(P) if P else np.zeros((0, 3))
+        q = np.round(P * 1e4).astype(np.int64)
+        bb = tuple(int(x) for x in np.concatenate([q.min(0), q.max(0)])) if len(q) else ()
+        out[nd.get('name') or f'node{i}'] = (len(P), bb, hashlib.sha1(q.tobytes()).hexdigest()[:16])
+    return out
+
+
+def mesh_diff(a, b):
+    """'' when the skinned meshes of GLBs a and b match by mesh_key, else a short reason."""
+    A, B = mesh_key(a), mesh_key(b)
+    if A == B:
+        return ''
+    va, vb = sum(x[0] for x in A.values()), sum(x[0] for x in B.values())
+    names = sorted(n for n in set(A) | set(B) if A.get(n) != B.get(n))
+    return f'mesh {vb} -> {va} verts, changed {names}'
+
+
 def same_mesh(a, b):
     A, B = mesh_signature(a), mesh_signature(b)
     da = {}
@@ -113,7 +139,7 @@ def _write_glb(path, js, bin_):
         f.write(struct.pack('<II', len(bin_), 0x004E4942)); f.write(bin_)
 
 
-def splice(orig, anim_src, out):
+def splice(orig, anim_src, out, mark=True):
     """out = orig (meshes, skins, nodes, materials byte-identical in content) + the animations of anim_src.
     Channels are re-targeted by node name; orig's old animation data is dropped."""
     A, abin = _glb(orig)
@@ -186,7 +212,11 @@ def splice(orig, anim_src, out):
     A['animations'] = anims; A['accessors'] = accs; A['bufferViews'] = bvs
     A['buffers'] = [dict(byteLength=len(new_bin))]
     # mark the output as a clip-fix result: --fix-clips must not mistake it for a fresh build's authored clips
-    A.setdefault('asset', {}).setdefault('extras', {})[FIX_MARK] = clips_hash(anim_src)
+    ex = A.setdefault('asset', {}).setdefault('extras', {})
+    if mark:
+        ex[FIX_MARK] = clips_hash(anim_src)
+    else:   # a re-based before_clips backup holds authored clips, not a fix: drop orig's mark too
+        ex.pop(FIX_MARK, None)
     _write_glb(out, A, bytes(new_bin))
 
 
@@ -234,6 +264,28 @@ def is_fix_output(path, qa=None, last_fix=None):
         except (ValueError, OSError):
             return False
     return False
+
+
+def backup_plan(glb, bkf, qa=None, last_fix=None):
+    """--fix-clips path decision for the stage-4 GLB glb vs its before_clips backup bkf (read-only).
+    Returns (path, reason): 'first' (no backup: make it), 'own' (glb is an earlier fix output, backup current),
+    'own_rebase' (fix output on a mesh newer than the backup, same rest: re-base the backup's authored clips onto
+    glb's mesh), 'own_legacy' (fix output on a newer rest: read clips from glb), 'refresh' (fresh build differs in
+    rest, clips or mesh: backup <- fresh build), 'match' (fresh build equals the backup)."""
+    if not os.path.exists(bkf):
+        return 'first', 'no before_clips backup'
+    drift = same_rest(glb, bkf); md = mesh_diff(glb, bkf)
+    if is_fix_output(glb, qa, last_fix):
+        if drift > 1e-3:
+            return 'own_legacy', f'fix output, rest drift {drift:.2g} vs backup'
+        if md:
+            return 'own_rebase', f'fix output, {md}'
+        return 'own', 'fix output, backup rest + mesh match'
+    hc, hb = clip_hashes(glb), clip_hashes(bkf)
+    changed = sorted(n for n in set(hc) | set(hb) if hc.get(n) != hb.get(n))
+    if drift > 1e-3 or changed or md:
+        return 'refresh', f'rest drift {drift:.2g}, clips changed {changed or "none"}, {md or "mesh same"}'
+    return 'match', 'rest + clips + mesh match'
 
 
 def same_rest(a, b):

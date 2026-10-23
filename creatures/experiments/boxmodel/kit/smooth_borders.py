@@ -47,13 +47,23 @@ def _allowed(pairs, names):
     return lambda a, b: a != b and frozenset((names[a], names[b])) in P
 
 
+def _reindex(bm):
+    """Fresh element indices (face_split appends edges/faces): every ordered walk below keys on them, never on Python
+    set/hash order of BMesh elements (pointer-based, so it changes from run to run)."""
+    bm.verts.index_update()
+    bm.edges.index_update()
+    bm.faces.index_update()
+
+
 def _border_edges(bm, ok):
-    out = set()
+    """Border edges as an insertion-ordered dict (edge -> None) in edge-index order: O(1) membership, stable iteration."""
+    _reindex(bm)
+    out = {}
     for e in bm.edges:
         if len(e.link_faces) == 2:
             a, b = e.link_faces
             if ok(a.material_index, b.material_index):
-                out.add(e)
+                out[e] = None
     return out
 
 
@@ -65,11 +75,12 @@ def _other(e, f):
 def _chains(border):
     """Border edges -> ordered vertex paths (open paths run junction to junction; loops are closed)."""
     adj = {}
-    for e in border:
-        for v in e.verts:
+    for e in sorted(border, key=lambda e: e.index):
+        for v in sorted(e.verts, key=lambda v: v.index):
             adj.setdefault(v, []).append(e)
     seen, paths = set(), []
-    starts = [v for v, es in adj.items() if len(es) != 2] + [v for v, es in adj.items() if len(es) == 2]
+    order = sorted(adj, key=lambda v: v.index)          # deterministic: junctions first, then loops, by vertex index
+    starts = [v for v in order if len(adj[v]) != 2] + [v for v in order if len(adj[v]) == 2]
     for s in starts:
         for e0 in adj[s]:
             if e0 in seen:
@@ -286,15 +297,15 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
     fn0 = {f: f.normal.copy() for f in bm.faces}
     fa0 = {f: f.calc_area() for f in bm.faces}
     fw0 = {f: _width(f) for f in bm.faces}
-    nbr = {}
+    nbr = {}                                              # v -> {neighbour: None}: ordered set, path order
     for p in paths:
         for i, v in enumerate(p):
             if len(adj[v]) == 2:
-                nbr.setdefault(v, set())
+                nbr.setdefault(v, {})
                 if i > 0:
-                    nbr[v].add(p[i - 1])
+                    nbr[v][p[i - 1]] = None
                 if i < len(p) - 1:
-                    nbr[v].add(p[i + 1])
+                    nbr[v][p[i + 1]] = None
 
     def pinned(v):
         if abs(v.co.x) < SEAM_EPS or any(not e.is_manifold for e in v.link_edges) or v.is_boundary:
@@ -306,7 +317,7 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
                     return True
         return bool(pin and pin(mw @ v.co))
 
-    mov = [v for v, ns in nbr.items() if len(ns) == 2 and not pinned(v)]
+    mov = sorted((v for v, ns in nbr.items() if len(ns) == 2 and not pinned(v)), key=lambda v: v.index)
     lim = {}
     for v in mov:
         s = max_slide
@@ -318,7 +329,7 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
         for w in (lam, mu):
             new = {}
             for v in mov:
-                a, b = nbr[v]
+                a, b = sorted(nbr[v], key=lambda x: x.index)
                 d = (a.co + b.co) * 0.5 - v.co
                 n = v.normal
                 d = (d - n * d.dot(n)) * w
@@ -337,7 +348,7 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
     # narrow seam strip behind (the junction probe's strip rule: thin triangles on a crease at a limb root)
     n_undo = 0
     for it in range(10):
-        bad = set()
+        bad = {}                                          # ordered (mov is index-sorted)
         for v in mov:
             if (v.co - orig[v]).length < 1e-9:
                 continue
@@ -345,7 +356,7 @@ def smooth_borders(ob, pairs=None, iters=6, cut=True, max_slide=0.5, lam=0.5, mu
                 f.normal_update()
                 if (f.calc_area() < 0.25 * fa0[f] or (fn0[f].length > 0 and f.normal.dot(fn0[f]) < math.cos(math.radians(45)))
                         or _width(f) < keep_width * fw0[f]):
-                    bad.add(v)
+                    bad[v] = None
         if not bad:
             break
         for v in bad:

@@ -16,7 +16,7 @@
    "quat_flips": 0,
    "deepest": [
     "tail2",
-    1
+    20
    ],
    "slide_foot": null,
    "track": null
@@ -87,7 +87,7 @@
   },
   "idle": {
    "frames": 48,
-   "penetration_pctH": 0.0,
+   "penetration_pctH": -0.0,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -95,8 +95,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "tail2",
-    1
+    null,
+    null
    ],
    "slide_foot": null,
    "track": null
@@ -129,7 +129,7 @@
    "chains": {},
    "worst_resid": [
     1,
-    0.0,
+    -0.0,
     "tail2",
     0
    ]
@@ -144,7 +144,7 @@
    "chains": {},
    "worst_resid": [
     1,
-    0.0,
+    -0.0,
     "tail2",
     0
    ]
@@ -182,7 +182,7 @@
  "blender_roundtrip": {
   "attack": {
    "frames": 32,
-   "penetration_pctH": -0.0,
+   "penetration_pctH": 0.0,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -190,8 +190,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    null,
-    null
+    "fin.L",
+    15
    ],
    "slide_foot": null,
    "track": null
@@ -238,7 +238,7 @@
   "ok": true,
   "lines": [
    "BMK clip before move    pen -0.000  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip before idle    pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before idle    pen -0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip before attack  pen 2.443  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip idle    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",

@@ -15,8 +15,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "chest",
-    27
+    "wing1.L",
+    15
    ],
    "slide_foot": null,
    "track": null
@@ -47,8 +47,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "chest",
-    1
+    "wing1.R",
+    29
    ],
    "slide_foot": null,
    "track": null
@@ -71,7 +71,7 @@
  "before": {
   "attack": {
    "frames": 32,
-   "penetration_pctH": 35.128,
+   "penetration_pctH": 31.521,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -103,7 +103,7 @@
   },
   "move": {
    "frames": 33,
-   "penetration_pctH": 28.054,
+   "penetration_pctH": 24.402,
    "foot_slide_std_pctH": 0.0,
    "foot_speed_planted_pctH": 0.0,
    "planted_frames": 0,
@@ -112,7 +112,7 @@
    "quat_flips": 0,
    "deepest": [
     "wing1.R",
-    26
+    27
    ],
    "slide_foot": null,
    "track": null
@@ -207,7 +207,7 @@
    "quat_flips": 0,
    "deepest": [
     "chest",
-    4
+    1
    ],
    "slide_foot": null,
    "track": null
@@ -222,8 +222,8 @@
    "nan_keys": 0,
    "quat_flips": 0,
    "deepest": [
-    "wing1.R",
-    24
+    "wing1.L",
+    25
    ],
    "slide_foot": null,
    "track": null
@@ -237,9 +237,9 @@
  "gate": {
   "ok": true,
   "lines": [
-   "BMK clip before move    pen 28.054  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before move    pen 24.402  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip before idle    pen 2.301  slide 0.000  plant 0.000  loop 0.000",
-   "BMK clip before attack  pen 35.128  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before attack  pen 31.521  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip idle    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
    "BMK clip move    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",

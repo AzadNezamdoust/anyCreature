@@ -2,6 +2,7 @@ import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
+from smooth_borders import smooth_borders
 
 # giant spider (t7x zoo): the spine loft of 6-vertex half rings runs abdomen tip -> big round abdomen -> pedicel
 # waist -> cephalothorax -> head front. The eight legs are swept hexagon tubes, each grown from its own 2-face
@@ -206,7 +207,15 @@ def stage2(k, body):
 
 PAL = {'brown': '#5a3d2e', 'orange': '#d4702e', 'eye': '#121012', 'claw': '#2a1b15'}   # s3 r2: brown a step lighter
 LEG_BANDS = ((0.17, 0.30), (0.46, 0.53), (0.72, 0.785))      # leg spans painted orange (borders on the section loops)
-ABD_BANDS = ((0.64, 0.722), (0.457, 0.553), (0.274, 0.362))    # poly pass 3: one station span each
+ABD_BANDS_Y = ((0.64, 0.722), (0.457, 0.553), (0.274, 0.362))    # poly pass 3: one station span each
+# stripes 2026-10-23: the bands are slabs across the abdomen's own band axis, which the sheet tilts tail-down
+# (rear view: arcs over a spinneret low on the rear; side: "/" stripes). The y-ruled bands were rings round the level
+# loft axis, seen end-on from behind as a disc. u = (c - centre) . axis / R, three orange slabs, brown cap round the apex.
+ABD_C = Vector((0.0, 0.47, 0.53))
+ABD_TILT = 50.0                     # deg below horizontal, tail-down
+ABD_AX = Vector((0.0, math.cos(math.radians(ABD_TILT)), -math.sin(math.radians(ABD_TILT))))
+ABD_R = 0.345
+ABD_BANDS = ((-0.71, -0.43), (-0.14, 0.14), (0.43, 0.71))
 
 
 _LP = None
@@ -240,8 +249,10 @@ def body_rule(c, n, i):
     if lg is not None:
         f = lg[1]
         return 'orange' if any(a < f < b for a, b in LEG_BANDS) else 'brown'
-    if c.y > 0.1 and any(a < c.y < b for a, b in ABD_BANDS):
-        return 'orange'
+    if c.y > 0.12:
+        u = (c - ABD_C).dot(ABD_AX) / ABD_R
+        if any(a < u < b for a, b in ABD_BANDS):
+            return 'orange'
     return 'brown'
 
 
@@ -273,8 +284,23 @@ def body_bvh(body):
     return t
 
 
+def abd_frame(body):
+    """stripes 10-23: the abdomen centre and radius measured on the stage-2 mesh (world), so the band slabs sit on it."""
+    global ABD_C, ABD_R
+    mw = body.matrix_world
+    vs = [mw @ v.co for v in body.data.vertices]
+    vs = [v for v in vs if v.y > 0.16 and abs(v.x) < 0.5]
+    lo = Vector((min(v.x for v in vs), min(v.y for v in vs), min(v.z for v in vs)))
+    hi = Vector((max(v.x for v in vs), max(v.y for v in vs), max(v.z for v in vs)))
+    ABD_C = Vector((0.0, (lo.y + hi.y) / 2, (lo.z + hi.z) / 2))
+    ABD_R = (hi.z - lo.z) / 2
+    print('SPIDER abd frame', tuple(round(x, 3) for x in lo), tuple(round(x, 3) for x in hi), 'R', round(ABD_R, 3))
+
+
 def stage3(k, body):
+    abd_frame(body)
     paint(body, PAL, body_rule)
+    smooth_borders(body, k=k, iters=8, despeckle=False)   # stripes 10-23: the tilted bands cross the quad grid -> anti-stair cuts + relax
     tree = body_bvh(body)
     bm = bmesh.new()
     # main eye in the socket, a small one above it nearer the midline (the ref's front eye row)
