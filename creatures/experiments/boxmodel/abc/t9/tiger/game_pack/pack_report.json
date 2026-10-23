@@ -1,0 +1,322 @@
+{
+ "name": "tiger",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\stage4\\tiger.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 6492,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 3246,
+   "tri_ratio": 0.5,
+   "iou_min": 0.9987,
+   "iou_mean": 0.9992,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 1642,
+   "tri_ratio": 0.253,
+   "iou_min": 0.9936,
+   "iou_mean": 0.9947,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 1002,
+   "tri_ratio": 0.154,
+   "iou_min": 0.9844,
+   "iou_mean": 0.9856,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.2199,
+   "h": 0.6396
+  },
+  {
+   "bone": "spine",
+   "r": 0.2409,
+   "h": 0.5381
+  },
+  {
+   "bone": "chest",
+   "r": 0.2231,
+   "h": 0.4463
+  },
+  {
+   "bone": "head",
+   "r": 0.1719,
+   "h": 0.4473
+  },
+  {
+   "bone": "ear.L",
+   "r": 0.0701,
+   "h": 0.2429
+  },
+  {
+   "bone": "ear.R",
+   "r": 0.0701,
+   "h": 0.2429
+  },
+  {
+   "bone": "upperarm.L",
+   "r": 0.135,
+   "h": 0.5201
+  },
+  {
+   "bone": "forearm.L",
+   "r": 0.0839,
+   "h": 0.2899
+  },
+  {
+   "bone": "paw.L",
+   "r": 0.0943,
+   "h": 0.3
+  },
+  {
+   "bone": "upperarm.R",
+   "r": 0.135,
+   "h": 0.5201
+  },
+  {
+   "bone": "forearm.R",
+   "r": 0.0839,
+   "h": 0.2899
+  },
+  {
+   "bone": "paw.R",
+   "r": 0.0943,
+   "h": 0.3
+  },
+  {
+   "bone": "tail0",
+   "r": 0.097,
+   "h": 0.4066
+  },
+  {
+   "bone": "tail1",
+   "r": 0.0734,
+   "h": 0.2828
+  },
+  {
+   "bone": "tail2",
+   "r": 0.0742,
+   "h": 0.3076
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.1339,
+   "h": 0.5015
+  },
+  {
+   "bone": "shin.L",
+   "r": 0.0752,
+   "h": 0.3081
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.0846,
+   "h": 0.2865
+  },
+  {
+   "bone": "toe.L",
+   "r": 0.0746,
+   "h": 0.2062
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.1339,
+   "h": 0.5015
+  },
+  {
+   "bone": "shin.R",
+   "r": 0.0752,
+   "h": 0.3081
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.0846,
+   "h": 0.2865
+  },
+  {
+   "bone": "toe.R",
+   "r": 0.0746,
+   "h": 0.2062
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 1.1356661319732666,
+  "feet": [
+   "paw.L",
+   "paw.R",
+   "toe.L",
+   "toe.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.462,
+    "planted_frames": 124,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.45,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 3.233,
+    "planted_frames": 44,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\tiger\\game_pack\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "tiger.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_tiger_root', 'UCX_tiger_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "tiger.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_tiger_root', 'UCX_tiger_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "tiger.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "24/24"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "23/23"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_tiger_root', 'UCX_tiger_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

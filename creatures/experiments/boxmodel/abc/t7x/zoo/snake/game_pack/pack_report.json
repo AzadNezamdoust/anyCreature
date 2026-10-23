@@ -1,0 +1,265 @@
+{
+ "name": "snake",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\snake.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 3712,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 1856,
+   "tri_ratio": 0.5,
+   "iou_min": 0.997,
+   "iou_mean": 0.9977,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 942,
+   "tri_ratio": 0.254,
+   "iou_min": 0.9868,
+   "iou_mean": 0.9909,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 584,
+   "tri_ratio": 0.157,
+   "iou_min": 0.9846,
+   "iou_mean": 0.9864,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "spine",
+   "r": 0.1265,
+   "h": 0.3289
+  },
+  {
+   "bone": "chest",
+   "r": 0.1148,
+   "h": 0.3413
+  },
+  {
+   "bone": "neck2",
+   "r": 0.1015,
+   "h": 0.2882
+  },
+  {
+   "bone": "neck1",
+   "r": 0.1175,
+   "h": 0.3394
+  },
+  {
+   "bone": "neck",
+   "r": 0.1047,
+   "h": 0.3353
+  },
+  {
+   "bone": "head",
+   "r": 0.0812,
+   "h": 0.2864
+  },
+  {
+   "bone": "tail0",
+   "r": 0.119,
+   "h": 0.301
+  },
+  {
+   "bone": "tail1",
+   "r": 0.1142,
+   "h": 0.2758
+  },
+  {
+   "bone": "tail2",
+   "r": 0.0996,
+   "h": 0.2783
+  },
+  {
+   "bone": "tail3",
+   "r": 0.0743,
+   "h": 0.1778
+  },
+  {
+   "bone": "tail4",
+   "r": 0.057,
+   "h": 0.1328
+  },
+  {
+   "bone": "tail5",
+   "r": 0.0449,
+   "h": 0.1016
+  },
+  {
+   "bone": "tail6",
+   "r": 0.0346,
+   "h": 0.2051
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 0.5058333873748779,
+  "feet": [],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 0,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.01,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 0,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 0.0,
+    "foot_slide_std_pctH": 0.0,
+    "planted_frames": 0,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\game_pack\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "snake.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_snake_root', 'UCX_snake_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "snake.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_snake_root', 'UCX_snake_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "snake.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "13/13"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_snake_root', 'UCX_snake_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

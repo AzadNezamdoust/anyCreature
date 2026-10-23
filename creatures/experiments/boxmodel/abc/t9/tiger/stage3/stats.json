@@ -1,0 +1,57 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "1fd14d29eebeeac0315f4563e808d3a462c56a0757d73e63e9348e18f594de8e",
+  "collapsed_edge_hash": "1fd14d29eebeeac0315f4563e808d3a462c56a0757d73e63e9348e18f594de8e",
+  "logged_ops": 3,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "claw",
+  "cream",
+  "fur",
+  "nose",
+  "stripe"
+ ],
+ "colour_count": 6,
+ "tris": 6492,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 0,
+   "cuts": 59,
+   "relaxed": 409,
+   "undone": 244,
+   "max_move": 0.02227,
+   "mean_move": 0.00247,
+   "before": {
+    "border_edges": 548,
+    "length": 19.3482,
+    "paths": 57,
+    "corners": 138,
+    "corner_quads": 79,
+    "corners_per_m": 7.1
+   },
+   "after": {
+    "border_edges": 489,
+    "length": 17.8795,
+    "paths": 50,
+    "corners": 78,
+    "corner_quads": 4,
+    "corners_per_m": 4.4
+   },
+   "despeckle": false,
+   "speck_kept": 0,
+   "cuts_blocked": 0
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_claws": 512,
+  "piece_nose": 44,
+  "piece_ruff": 176
+ }
+}

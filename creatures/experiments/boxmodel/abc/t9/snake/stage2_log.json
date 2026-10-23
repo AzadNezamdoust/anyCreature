@@ -1,0 +1,11 @@
+{
+ "ops": [
+  {
+   "op": 1,
+   "kind": "inset",
+   "reason": "eye socket: a loop inside the head-side face under the brow (vertices 4-5)",
+   "new_verts": 4,
+   "extra_base_edges": []
+  }
+ ]
+}

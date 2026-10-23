@@ -179,6 +179,7 @@ _HIND = [((0.29, -0.62, 0.40), 0.185, 0.276), ((0.27, -0.52, 0.27), 0.145, 0.172
         (J['hock'], 0.10, 0.105), ((0.26, -0.49, 0.11), 0.097, 0.106),
         ((0.26, -0.52, 0.07), 0.096, 0.11), ((0.26, -0.57, 0.035), 0.10, 0.13), ((0.26, -0.58, 0.0), 0.11, 0.15)]
 LEGX = 0.05
+FORE_WIN = ('M0', 3, 6, 4, 0.3, 0.02)   # jfix 10-23: (rear ring, spans, first face column, faces, transition t1, push m); None = the old 1-span C0 root
 LEGJ = ('shoulder', 'elbow', 'wrist', 'fpaw', 'ftoe', 'hipL', 'knee', 'hock', 'hpaw', 'htoe')
 # pass 7 (owner: legs too thick and heavy): explicit (rx, ry) per ring, the elbow/thigh rings kept, the forearm,
 # shin and ankle slimmed 10-20 % to a clear taper; below the wrist/hock the rings only widen into the paw (no pinch)
@@ -208,16 +209,28 @@ def role_pos(sec, u, s, corner=0.55):
     return (c[0] + u * rx, c[1] + s * ry * k, c[2] - u * dz)
 
 
-def grow(bm, faces, roles, secs, corner=0.55):
-    for sec in secs:
+def grow(bm, faces, roles, secs, corner=0.55, t1=None, push=0.0):
+    """jfix 10-23: t1 = a first transition ring t1 of the way from the window rim to secs[0] (each vertex keeps its
+    own rim position), pushed `push` m out along the window's mean normal (the broad blended shoulder of the
+    minotaur/tiger/t9 legs). Roles are kept as positions: a window's inner verts go along."""
+    plan = ([None] if t1 is not None else []) + list(secs)
+    nrm = Vector((0, 0, 0))
+    for f in faces:
+        nrm += f.normal * f.calc_area()
+    nrm = nrm.normalized() if nrm.length > 1e-9 else nrm
+    roles = [(v.co.copy(), us) for v, us in roles.items()]
+    for sec in plan:
         r = extrude(bm, faces)
-        new = {}
+        new = []
         for v in r['verts']:
-            ov = min(roles, key=lambda o: (o.co - v.co).length)
-            new[v] = roles[ov]
-        for v, (u, s) in new.items():
-            v.co = Vector(role_pos(sec, u, s, corner))
-        faces, roles = r['faces'], new
+            p0, us = min(roles, key=lambda o: (o[0] - v.co).length)
+            new.append((v, p0, us))
+        for v, p0, (u, s) in new:
+            if sec is None:
+                v.co = p0.lerp(Vector(role_pos(secs[0], u, s, corner)), t1) + nrm * push
+            else:
+                v.co = Vector(role_pos(sec, u, s, corner))
+        faces, roles = r['faces'], [(v.co.copy(), us) for v, _p, us in new]
     return faces, roles
 
 
@@ -243,7 +256,20 @@ def stage1(k):
         roles = {**{rf[5 + j]: (u, -1) for j, u in enumerate(us)}, **{rr[5 + j]: (u, 1) for j, u in enumerate(us)}}
         grow(bm, [spans[i][j] for j in range(5, 11)], roles, secs)
 
-    limb('C0', FORE)
+    if FORE_WIN:   # jfix 10-23: the upper arm rises out of a 3-span x 4-face chest window (M0b..C1b, ring points
+        # 6-10: its top edge is the chest's widest line, so the deltoid runs straight down the arm's outer wall; its
+        # front edge is the C1b chest front, so the chest front plane carries on into the arm front) through a
+        # transition ring (the 1-span C0 root fed a 0.45 m deep elbow ring: a tube butted on the chest, a vertical
+        # crease at the shoulder front)
+        nm_, A_, c0, B_, t1, push = FORE_WIN
+        i0 = idx[nm_]
+        faces = [spans[i0 + a][c0 + b] for a in range(A_) for b in range(B_)]
+        ys = [rings[i0 + a][c0 + B_ // 2].co.y for a in range(A_ + 1)]
+        yc, yh = (ys[0] + ys[-1]) / 2, (ys[0] - ys[-1]) / 2
+        roles = {rings[i0 + a][c0 + b]: (1 - 2 * b / B_, (ys[a] - yc) / yh) for a in range(A_ + 1) for b in range(B_ + 1)}
+        grow(bm, faces, roles, FORE, t1=t1, push=push)
+    else:
+        limb('C0', FORE)
     limb('R1', HIND)
     i = idx['H0']
     rr, rf = rings[i], rings[i + 1]
@@ -622,7 +648,7 @@ def detail_pass(body, tree):
         return ob
     # 1. belly scutes: stepped ventral plates under the belly (rear edge steps down), open on the belly seam
     bm = bmesh.new()
-    for y in (-1.16, -1.03, -0.90, -0.77, -0.64, -0.51):
+    for y in (-1.03, -0.90, -0.77, -0.64, -0.51):   # jfix 10-23: the -1.16 plate dropped (it crossed the broad arm root: techqa hit; 50 tris)
         sc = D.section_centre(tree, y)
         if sc is None:
             continue

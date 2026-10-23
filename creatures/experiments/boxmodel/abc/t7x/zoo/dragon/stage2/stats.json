@@ -1,9 +1,9 @@
 {
  "report": {
-  "verts": 1800,
-  "faces": 1826,
-  "tris": 3596,
-  "quads": 1770,
+  "verts": 1828,
+  "faces": 1854,
+  "tris": 3652,
+  "quads": 1798,
   "ngons": 0,
   "components": 1,
   "nonmanifold_edges": 0,
@@ -24,8 +24,8 @@
  },
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "f1117b83f49eeb12651b408c505f83e912a9cd2f324e825b870687cdefa93aff",
-  "collapsed_edge_hash": "f1117b83f49eeb12651b408c505f83e912a9cd2f324e825b870687cdefa93aff",
+  "lock_edge_hash": "f4565915c62f4993d83e81208e082bb8d0b2e34befdd376f66bbb03086d3712a",
+  "collapsed_edge_hash": "f4565915c62f4993d83e81208e082bb8d0b2e34befdd376f66bbb03086d3712a",
   "logged_ops": 4,
   "logged_new_verts": 46,
   "errors": []

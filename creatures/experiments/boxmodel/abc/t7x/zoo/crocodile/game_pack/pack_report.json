@@ -1,0 +1,312 @@
+{
+ "name": "crocodile",
+ "mode": "pack",
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\stage4\\crocodile.glb",
+ "lods": [
+  {
+   "lod": 0,
+   "tris": 5432,
+   "tri_ratio": 1.0,
+   "iou_min": 1.0,
+   "iou_mean": 1.0,
+   "gate": true
+  },
+  {
+   "lod": 1,
+   "tris": 2714,
+   "tri_ratio": 0.5,
+   "iou_min": 0.9932,
+   "iou_mean": 0.9957,
+   "gate": true
+  },
+  {
+   "lod": 2,
+   "tris": 1374,
+   "tri_ratio": 0.253,
+   "iou_min": 0.9786,
+   "iou_mean": 0.9833,
+   "gate": true
+  },
+  {
+   "lod": 3,
+   "tris": 846,
+   "tri_ratio": 0.156,
+   "iou_min": 0.9547,
+   "iou_mean": 0.9683,
+   "gate": true
+  }
+ ],
+ "hurtboxes": [
+  {
+   "bone": "hips",
+   "r": 0.2245,
+   "h": 0.6023
+  },
+  {
+   "bone": "spine",
+   "r": 0.2269,
+   "h": 0.4944
+  },
+  {
+   "bone": "chest",
+   "r": 0.218,
+   "h": 0.5211
+  },
+  {
+   "bone": "neck",
+   "r": 0.213,
+   "h": 0.4261
+  },
+  {
+   "bone": "head",
+   "r": 0.1105,
+   "h": 0.5431
+  },
+  {
+   "bone": "upperarm.L",
+   "r": 0.119,
+   "h": 0.4069
+  },
+  {
+   "bone": "forearm.L",
+   "r": 0.0901,
+   "h": 0.2133
+  },
+  {
+   "bone": "paw.L",
+   "r": 0.0848,
+   "h": 0.2962
+  },
+  {
+   "bone": "upperarm.R",
+   "r": 0.119,
+   "h": 0.4069
+  },
+  {
+   "bone": "forearm.R",
+   "r": 0.0901,
+   "h": 0.2133
+  },
+  {
+   "bone": "paw.R",
+   "r": 0.0848,
+   "h": 0.2962
+  },
+  {
+   "bone": "tail0",
+   "r": 0.1723,
+   "h": 0.5328
+  },
+  {
+   "bone": "tail1",
+   "r": 0.1017,
+   "h": 0.3017
+  },
+  {
+   "bone": "tail2",
+   "r": 0.0667,
+   "h": 0.1703
+  },
+  {
+   "bone": "tail3",
+   "r": 0.0426,
+   "h": 0.1712
+  },
+  {
+   "bone": "thigh.L",
+   "r": 0.1224,
+   "h": 0.4291
+  },
+  {
+   "bone": "shin.L",
+   "r": 0.0936,
+   "h": 0.2786
+  },
+  {
+   "bone": "foot.L",
+   "r": 0.0849,
+   "h": 0.3298
+  },
+  {
+   "bone": "thigh.R",
+   "r": 0.1224,
+   "h": 0.4291
+  },
+  {
+   "bone": "shin.R",
+   "r": 0.0936,
+   "h": 0.2786
+  },
+  {
+   "bone": "foot.R",
+   "r": 0.0849,
+   "h": 0.3298
+  }
+ ],
+ "sockets": [
+  "socket_mouth",
+  "socket_hand_L",
+  "socket_hand_R",
+  "socket_back"
+ ],
+ "clipqa": {
+  "H": 0.5423944592475891,
+  "feet": [
+   "paw.L",
+   "paw.R",
+   "foot.L",
+   "foot.R"
+  ],
+  "clips": {
+   "attack": {
+    "frames": 32,
+    "penetration_pctH": 0.01,
+    "foot_slide_std_pctH": 1.049,
+    "planted_frames": 124,
+    "loop_gap_pctH": 0.0
+   },
+   "idle": {
+    "frames": 48,
+    "penetration_pctH": 0.02,
+    "foot_slide_std_pctH": 0.003,
+    "planted_frames": 188,
+    "loop_gap_pctH": 0.0
+   },
+   "move": {
+    "frames": 25,
+    "penetration_pctH": 0.01,
+    "foot_slide_std_pctH": 0.255,
+    "planted_frames": 14,
+    "loop_gap_pctH": 0.0
+   }
+  }
+ },
+ "renders": {
+  "lod0_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod0_192.png",
+  "lod1_128": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod1_128.png",
+  "lod1_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod1_192.png",
+  "lod2_80": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod2_80.png",
+  "lod2_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod2_192.png",
+  "lod3_48": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod3_48.png",
+  "lod3_192": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\crocodile\\game_pack\\renders\\pack_lod3_192.png"
+ },
+ "roundtrip": {
+  "unity_glb": {
+   "file": "crocodile.glb",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_crocodile_root', 'UCX_crocodile_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unity_fbx": {
+   "file": "crocodile.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 1.0000 (expect 1.0000)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_crocodile_root', 'UCX_crocodile_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  },
+  "unreal_fbx": {
+   "file": "crocodile.fbx",
+   "checks": {
+    "bones": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "bind_pose": {
+     "ok": true,
+     "detail": "max head err 0.000% H, scale 0.0100 (expect 0.0100)"
+    },
+    "unit_scale": {
+     "ok": true,
+     "detail": "1.0000"
+    },
+    "clips": {
+     "ok": true,
+     "detail": "{'attack': 31, 'idle': 47, 'move': 24}"
+    },
+    "sockets": {
+     "ok": true,
+     "detail": "['socket_back', 'socket_hand_L', 'socket_hand_R', 'socket_mouth']"
+    },
+    "lods": {
+     "ok": true,
+     "detail": "['LOD0', 'LOD1', 'LOD2', 'LOD3', 'piece']"
+    },
+    "hurtboxes": {
+     "ok": true,
+     "detail": "21/21"
+    },
+    "collision": {
+     "ok": true,
+     "detail": "['CAP_crocodile_root', 'UCX_crocodile_00']"
+    }
+   },
+   "pass_core": true,
+   "pass_all": true
+  }
+ }
+}

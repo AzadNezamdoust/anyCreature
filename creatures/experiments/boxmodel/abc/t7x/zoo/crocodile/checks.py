@@ -2,10 +2,10 @@
     py -3.11 checks.py <glb> <outdir> [title]"""
 import sys, os, subprocess, glob
 from PIL import Image, ImageDraw
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', '..', 'kit'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'kit'))
 import run as R
 glb, out = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
-title = sys.argv[3] if len(sys.argv) > 3 else 'wolf'
+title = sys.argv[3] if len(sys.argv) > 3 else 'crocodile'
 here = os.path.dirname(os.path.abspath(__file__))
 p = subprocess.run([R.blender_exe(), '-b', '--factory-startup', '-P', os.path.join(here, 'checks_blender.py'), '--', glb, out],
                    capture_output=True, text=True, encoding='utf-8', errors='replace')
@@ -23,5 +23,5 @@ R.sheet([(os.path.join(ref, 'side.png'), 'REFERENCE side'), (os.path.join(out, '
          (os.path.join(ref, 'front.png'), 'REFERENCE front'), (os.path.join(out, 'h000.png'), 'model az0'),
          (os.path.join(ref, 'rear.png'), 'REFERENCE rear'), (os.path.join(out, 'h180.png'), 'model az180'),
          (os.path.join(ref, 'top.png'), 'REFERENCE top'), (os.path.join(out, 'top.png'), 'model top')],
-        os.path.join(here, 'side_by_side.jpg'), cols=4, tile=480, title=f'{title}: reference | model (EEVEE)')
+        os.path.join(here, 'side_by_side_sheet.jpg'), cols=4, tile=480, title=f'{title}: reference | model (EEVEE)')
 print('sheets:', os.path.join(out, 'orbit18_sheet.jpg'))

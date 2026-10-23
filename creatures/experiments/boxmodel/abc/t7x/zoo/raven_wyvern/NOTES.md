@@ -54,3 +54,11 @@ Triangles 1,532 -> 3,056: body 680 -> 2,204, details 852 -> 852 (the whole incre
 - Fix (no geometry, no clips.json): spliced the authored clips (from the old backup, hash-identical) onto the current mesh with `clip_gate.splice`, made it the before_clips backup (old one in before_clips_prev/), re-ran `--fix-clips` then `--clips`.
 - Result: clip gate PASS: move pen 0.000 slide 0.000 plant 3.969 (move may treadmill) loop 0; idle/attack 0; mesh/skin identity PASS (8858 verts). Detail gate PASS (10 groups; toes p10 34-36 mm, aspect <= 5.0). Geometry unchanged -> no A/B. Clip frames checked: feet flat on the floor.
 - Weakness kept: move stance only 6 of 25 frames per foot (authored walk; champion had the same).
+
+## Junction fix 2026-10-23 (triage: zoo/junction_triage.md; backup before_jfix/)
+- Critique (upperarm.L crop A, also C): a thin light slit along the wing-arm's leading edge beside the wrist claws (background through the wing/chest join).
+- Diagnosis: WSEC[1] (y -0.72) puts the wing slab's inner face at x 0.26 while the chest there is x 0.22-0.25: a 1-4 cm open gap.
+- Fix (stage 3 piece only): WSEC[1] x 0.285 -> 0.263 (WDX 0.022); the two wrist claws move in with it.
+- Result s4 r19: slit gone in A/C; upperarm gaps 75/58 -> 55/38 mm, wing knife 8 (1.17 r) + slit 1.9 % -> 0; techqa hit 0; detail PASS. Other FAILs pre-existing (thigh knife 2.74 r, tail0/wing gap flags, eye front 0.14, wing membrane p10 6.3 mm).
+- A/B fresh Opus seats: AB1 (A=champion) -> B, AB2 (A=variant) -> A: variant wins both orders: ADOPT. Images jfix_variants/raven_wyvern_AB1.jpg, AB2.jpg.
+- Post-fix --clips --fix-clips: clip gate PASS (mesh identity PASS 8743 v). Posed wing vs thigh.L clip in move@13 (9.2 %) is pre-existing: the champion GLB re-probed shows 5.5-6.0 % (from the 09:11 clip re-base), not from this edit.

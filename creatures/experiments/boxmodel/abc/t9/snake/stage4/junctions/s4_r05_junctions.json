@@ -1,0 +1,108 @@
+{
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\snake.glb",
+ "tag": "s4_r05",
+ "ok": true,
+ "size_m": 1.179,
+ "limits": {
+  "REGION_K": 2.0,
+  "EXPOSED": 2,
+  "WELD": 1e-05,
+  "KNIFE_DEG": 90.0,
+  "KNIFE_LEN_K": 1.0,
+  "STRIP_W": 0.4,
+  "STRIP_ASPECT": 3.0,
+  "STRIP_CREASE_DEG": 30.0,
+  "STRIP_LEN_K": 1.0,
+  "SLIT_K": 0.1,
+  "SLIT_PCT": 1.5,
+  "GAP_K": 1.0,
+  "PINCH_RAD": 2.2,
+  "CLIP_PCT": 1.0,
+  "EYE_VIS": {
+   "front": 0.15,
+   "threeq": 0.35,
+   "side": 0.4
+  },
+  "EYE_SIZE": [
+   0.06,
+   0.24
+  ],
+  "EYE_ROUND": 0.7,
+  "SEAT_LIFT": 0.004,
+  "SEAT_FAR": 0.05,
+  "SEAT_PCT": 10.0,
+  "MEMBRANE_ABS": 0.006,
+  "MEMBRANE_REL": 0.004,
+  "SHELF_DEG": 20.0,
+  "SHELF_AREA_K": 0.5,
+  "SHELF_W_K": 0.8
+ },
+ "body": {
+  "open_edges": 0,
+  "nonmanifold_edges": 0
+ },
+ "junctions": [],
+ "eyes": [
+  {
+   "side": "L",
+   "centre": [
+    0.092,
+    -0.427,
+    0.459
+   ],
+   "diam_mm": 22.1,
+   "round": 1.0,
+   "diam_head": 0.102,
+   "embed_mm": 6.5,
+   "proud_mm": 7.8,
+   "visible": {
+    "front": 0.4,
+    "threeq": 0.82,
+    "side": 0.7
+   },
+   "unoccluded": {
+    "front": 0.66,
+    "threeq": 0.86,
+    "side": 0.9
+   },
+   "fail": [],
+   "ok": true
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.102,
+    -0.407,
+    0.459
+   ],
+   "diam_mm": 22.2,
+   "round": 1.0,
+   "diam_head": 0.103,
+   "embed_mm": 6.5,
+   "proud_mm": 7.8,
+   "visible": {
+    "front": 0.23,
+    "threeq": 0.76,
+    "side": 0.77
+   },
+   "unoccluded": {
+    "front": 0.45,
+    "threeq": 0.85,
+    "side": 0.9
+   },
+   "fail": [],
+   "ok": true
+  }
+ ],
+ "membranes": [],
+ "seats": [],
+ "crops": [
+  "s4_r05_eyeL_front_beauty.png",
+  "s4_r05_eyeL_threeq_beauty.png",
+  "s4_r05_eyeL_side_beauty.png",
+  "s4_r05_eyeR_front_beauty.png",
+  "s4_r05_eyeR_threeq_beauty.png",
+  "s4_r05_eyeR_side_beauty.png"
+ ],
+ "views": {}
+}

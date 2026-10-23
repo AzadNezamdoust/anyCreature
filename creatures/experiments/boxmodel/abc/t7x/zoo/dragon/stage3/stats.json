@@ -1,8 +1,8 @@
 {
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "f1117b83f49eeb12651b408c505f83e912a9cd2f324e825b870687cdefa93aff",
-  "collapsed_edge_hash": "f1117b83f49eeb12651b408c505f83e912a9cd2f324e825b870687cdefa93aff",
+  "lock_edge_hash": "f4565915c62f4993d83e81208e082bb8d0b2e34befdd376f66bbb03086d3712a",
+  "collapsed_edge_hash": "f4565915c62f4993d83e81208e082bb8d0b2e34befdd376f66bbb03086d3712a",
   "logged_ops": 4,
   "logged_new_verts": 46,
   "errors": []
@@ -16,7 +16,7 @@
   "red"
  ],
  "colour_count": 6,
- "tris": 5980,
+ "tris": 5986,
  "attach": [],
  "borders": null,
  "pieces": {
@@ -24,7 +24,7 @@
   "piece_spikes": 140,
   "piece_wing": 1168,
   "piece_claws": 320,
-  "piece_scute": 300,
+  "piece_scute": 250,
   "piece_brow": 64,
   "piece_nostril": 64,
   "piece_mouth": 80,

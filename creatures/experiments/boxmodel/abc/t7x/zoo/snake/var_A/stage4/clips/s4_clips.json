@@ -1,0 +1,250 @@
+{
+ "src": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\snake.glb",
+ "H": 0.5058333772251444,
+ "feet": [],
+ "bones": 13,
+ "gait": null,
+ "clips": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    1
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.011,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    36
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    13
+   ],
+   "slide_foot": null,
+   "track": null
+  }
+ },
+ "sheet_after": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\after_move_75.png"
+ ],
+ "before": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 7.273,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck1",
+    16
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.011,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    36
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 2.533,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "tail4",
+    1
+   ],
+   "slide_foot": null,
+   "track": null
+  }
+ },
+ "fix": {
+  "attack": {
+   "feet": {},
+   "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
+   "worst_resid": [
+    1,
+    0.0,
+    "neck2",
+    0
+   ]
+  },
+  "idle": {
+   "feet": {},
+   "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
+   "worst_resid": [
+    45,
+    0.001,
+    "neck2",
+    0
+   ]
+  },
+  "move": {
+   "feet": {},
+   "cyclic": true,
+   "pelvis_drop_max_pctH": 0,
+   "roll_frames": {},
+   "replanned_feet": 0,
+   "dbg": {},
+   "chains": {},
+   "worst_resid": [
+    1,
+    0.0,
+    "tail4",
+    1
+   ]
+  }
+ },
+ "sheet_before": [
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_attack_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_attack_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_attack_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_attack_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_idle_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_idle_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_idle_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_idle_75.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_move_00.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_move_25.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_move_50.png",
+  "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\clips\\s4_frames\\before_move_75.png"
+ ],
+ "blender_roundtrip": {
+  "attack": {
+   "frames": 32,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    1
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "idle": {
+   "frames": 48,
+   "penetration_pctH": 0.011,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    36
+   ],
+   "slide_foot": null,
+   "track": null
+  },
+  "move": {
+   "frames": 25,
+   "penetration_pctH": 0.0,
+   "foot_slide_std_pctH": 0.0,
+   "foot_speed_planted_pctH": 0.0,
+   "planted_frames": 0,
+   "loop_gap_pctH": 0.0,
+   "nan_keys": 0,
+   "quat_flips": 0,
+   "deepest": [
+    "neck2",
+    13
+   ],
+   "slide_foot": null,
+   "track": null
+  }
+ },
+ "rest_drift": 0.0,
+ "mesh_identity": {
+  "ok": true,
+  "detail": "verts 10870, unmatched positions 0, max weight diff 0.0000"
+ },
+ "gate": {
+  "ok": true,
+  "lines": [
+   "BMK clip before move    pen 2.533  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before idle    pen 0.011  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip before attack  pen 7.273  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip attack  PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip idle    PASS  pen 0.011  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip move    PASS  pen 0.000  slide 0.000  plant 0.000  loop 0.000",
+   "BMK clip mesh/skin identity PASS: verts 10870, unmatched positions 0, max weight diff 0.0000",
+   "BMK clip gate PASS (feet [], gait None)"
+  ]
+ }
+}

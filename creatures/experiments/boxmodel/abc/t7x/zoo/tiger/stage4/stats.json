@@ -17,10 +17,10 @@
  "unweighted": 0,
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
-  "collapsed_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
+  "lock_edge_hash": "0ef3850e366f48b7990b9aeb9bb33372ee6f594338db07370afc814c724ac3e2",
+  "collapsed_edge_hash": "0ef3850e366f48b7990b9aeb9bb33372ee6f594338db07370afc814c724ac3e2",
   "logged_ops": 27,
-  "logged_new_verts": 254,
+  "logged_new_verts": 242,
   "errors": []
  }
 }

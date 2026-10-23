@@ -1,3 +1,23 @@
+# FAST PATH (owner 2026-10-24: "taking forever doing simple modeling") — this overrides the round counts below
+
+Time box: 45 min per creature for a build, 20 min for a fix. Stop at the box, log it, and move on.
+
+1. **S1 base:** up to 6 rounds.
+   - Iterate with clay renders only, using `--no-render` probes. Lock once it matches the sheet bulk (IoU vs sheet masks >= ~0.85).
+2. **S2 to S4:** build each stage once, straight through. No per-round A/B.
+3. **Gates:** run the full set ONCE at the end: kit, `--junctions`, `--details`, `--clips --fix-clips`, `--pack`.
+   - `--rom` is audit-only.
+   - Fix only gate FAILs that are visible in the crops or at 192 px. Borderline numbers are noise.
+4. **Fixes:** at most 2 rounds, one targeted edit each. No 2-variant rounds.
+5. **Judge:** ONE Opus A/B (both orders) at the very end, against the current champion. Skip it for gate-only fixes that don't change the look.
+6. **Process:**
+   - One agent per creature and one Blender process.
+   - Wait in the foreground. No background monitors or wait-loops left behind.
+   - Kill your own Blender processes when done.
+7. **Report:** at most 10 lines, plus one log row.
+
+Use the detailed sections below as reference, not as a checklist to run every round.
+
 # Zoo workflow v2: concept sheet to S4, junctions first (2026-10-18)
 
 This is the per-creature procedure for the zoo: the 20 new creatures and the rebuilds of the current 20.

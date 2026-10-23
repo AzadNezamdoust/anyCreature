@@ -1,0 +1,35 @@
+{
+ "frame": {
+  "centre": [
+   0.0,
+   -0.0020000000000000018,
+   1.0
+  ],
+  "size": [
+   2.328,
+   1.042,
+   2.0
+  ],
+  "ortho": 2.7935999999999996
+ },
+ "res": 640,
+ "files": {
+  "side": "ortho_side.png",
+  "front": "ortho_front.png",
+  "top": "ortho_top.png"
+ },
+ "axes": {
+  "side": [
+   "y",
+   "z"
+  ],
+  "front": [
+   "x",
+   "z"
+  ],
+  "top": [
+   "-x",
+   "-y"
+  ]
+ }
+}

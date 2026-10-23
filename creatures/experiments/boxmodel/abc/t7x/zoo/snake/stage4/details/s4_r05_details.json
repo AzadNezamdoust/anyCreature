@@ -1,20 +1,20 @@
 {
- "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\snake.glb",
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\snake.glb",
  "tag": "s4_r05",
- "ok": false,
+ "ok": true,
  "tier": 1,
- "tier_source": "auto",
+ "tier_source": "override",
  "tier_auto": 1,
- "mass_size_m": 0.427,
- "body_volume_m3": 0.0779,
- "H_m": 0.36,
- "S_m": 2.704,
+ "mass_size_m": 0.369,
+ "body_volume_m3": 0.0501,
+ "H_m": 0.506,
+ "S_m": 1.179,
  "size_m": [
-  0.831,
-  2.704,
-  0.36
+  0.576,
+  1.179,
+  0.506
  ],
- "floor_mm": 8.64,
+ "floor_mm": 12.14,
  "floor_px": 6.1,
  "limits": {
   "THICK_H": 0.012,
@@ -65,7 +65,7 @@
   "GAME_RES": 192
  },
  "count": {
-  "readable": 4,
+  "readable": 5,
   "min": 3,
   "max": 8,
   "ok": true,
@@ -100,18 +100,18 @@
    "group": "tongue",
    "items": 2,
    "gated": 2,
-   "passed": 0,
-   "readable": false,
+   "passed": 2,
+   "readable": true,
    "counted": true
   },
   {
-   "group": "paint:cream",
+   "group": "paint:tan",
    "items": 1,
    "gated": 0,
    "passed": 0,
    "readable": true,
    "counted": true,
-   "share": 0.395
+   "share": 0.391
   },
   {
    "group": "paint:brown",
@@ -120,7 +120,7 @@
    "passed": 0,
    "readable": true,
    "counted": true,
-   "share": 0.145
+   "share": 0.207
   }
  ],
  "warns": [],
@@ -131,102 +131,102 @@
    "cls": "limb",
    "shell": 0,
    "bone": "head",
-   "side": "R",
+   "side": "L",
    "tip": [
-    -0.341,
-    -1.311,
-    0.321
+    0.006,
+    -0.56,
+    0.448
    ],
    "centre": [
-    -0.078,
-    -0.398,
-    0.171
+    0.016,
+    -0.352,
+    0.309
    ],
-   "length_mm": 878.2,
-   "thick_mm": 119.5,
-   "meanw_mm": 165.2,
-   "thick_px": 85.0,
-   "meanw_px": 117.5,
-   "length_H": 2.44,
-   "thick_H": 0.3319,
-   "aspect": 7.4,
+   "length_mm": 481.0,
+   "thick_mm": 96.3,
+   "meanw_mm": 186.8,
+   "thick_px": 48.8,
+   "meanw_px": 94.5,
+   "length_H": 0.951,
+   "thick_H": 0.1904,
+   "aspect": 5.0,
    "blob": false,
    "rings": [
     [
      0.04,
-     156.3,
-     185.7
+     173.6,
+     202.2
     ],
     [
      0.11,
-     146.6,
-     176.2
+     168.1,
+     213.4
     ],
     [
      0.18,
-     135.2,
-     173.6
+     164.0,
+     223.5
     ],
     [
      0.25,
-     126.1,
-     159.1
+     158.4,
+     215.7
     ],
     [
      0.32,
-     120.1,
-     147.2
+     157.1,
+     199.6
     ],
     [
      0.39,
-     117.9,
-     141.1
+     155.6,
+     184.2
     ],
     [
      0.46,
-     124.8,
-     141.4
+     160.3,
+     174.2
     ],
     [
      0.54,
-     148.2,
-     156.7
+     161.9,
+     189.3
     ],
     [
      0.61,
-     158.4,
-     179.6
+     136.2,
+     183.5
     ],
     [
      0.68,
-     153.4,
-     182.7
+     107.0,
+     164.8
     ],
     [
      0.75,
-     135.3,
-     171.3
+     95.1,
+     146.4
     ],
     [
      0.82,
-     119.4,
-     156.1
+     82.9,
+     122.5
     ],
     [
      0.89,
-     103.3,
-     121.2
+     68.4,
+     92.8
     ],
     [
      0.96,
-     45.6,
-     69.0
+     36.6,
+     50.2
     ]
    ],
    "gated": true,
    "fail": [],
    "ok": true,
-   "margin": 13.83
+   "margin": 7.94
   },
   {
    "obj": "body",
@@ -234,102 +234,102 @@
    "cls": "blunt",
    "shell": 0,
    "bone": "tail6",
-   "side": "L",
+   "side": "R",
    "tip": [
-    0.386,
-    1.362,
-    0.021
+    -0.085,
+    0.45,
+    0.139
    ],
    "centre": [
-    0.197,
-    0.796,
-    0.076
+    0.093,
+    0.457,
+    0.082
    ],
-   "length_mm": 802.9,
-   "thick_mm": 68.7,
-   "meanw_mm": 118.5,
-   "thick_px": 48.9,
-   "meanw_px": 84.3,
-   "length_H": 2.23,
-   "thick_H": 0.1909,
-   "aspect": 11.7,
+   "length_mm": 403.1,
+   "thick_mm": 55.0,
+   "meanw_mm": 145.7,
+   "thick_px": 27.8,
+   "meanw_px": 73.8,
+   "length_H": 0.797,
+   "thick_H": 0.1088,
+   "aspect": 7.3,
    "blob": false,
    "rings": [
     [
      0.04,
-     144.4,
-     156.6
+     184.5,
+     207.2
     ],
     [
      0.11,
-     135.4,
-     147.2
+     176.1,
+     194.5
     ],
     [
      0.18,
-     128.5,
-     140.6
+     166.3,
+     184.1
     ],
     [
      0.25,
-     122.3,
-     133.2
+     164.1,
+     176.5
     ],
     [
      0.32,
-     116.4,
-     125.9
+     152.5,
+     166.2
     ],
     [
      0.39,
-     113.2,
-     122.4
+     140.9,
+     153.5
     ],
     [
      0.46,
-     104.1,
-     114.7
+     128.1,
+     138.0
     ],
     [
      0.54,
-     96.0,
-     106.4
+     115.6,
+     123.6
     ],
     [
      0.61,
-     87.6,
-     98.2
+     101.0,
+     107.7
     ],
     [
      0.68,
-     77.8,
-     88.6
+     75.7,
+     81.7
     ],
     [
      0.75,
-     67.7,
-     75.0
+     52.7,
+     57.6
     ],
     [
      0.82,
-     57.4,
-     63.5
+     40.5,
+     44.0
     ],
     [
      0.89,
-     47.0,
-     52.2
+     32.1,
+     216.0
     ],
     [
      0.96,
-     29.5,
-     35.4
+     25.5,
+     27.0
     ]
    ],
    "gated": true,
    "fail": [],
    "ok": true,
-   "margin": 7.96
+   "margin": 4.53
   },
   {
    "obj": "piece_eye",
@@ -355,104 +355,102 @@
    "cls": "blunt",
    "shell": 3,
    "bone": null,
-   "side": "R",
+   "side": "L",
    "tip": [
-    -0.301,
-    -1.341,
-    0.271
+    0.008,
+    -0.607,
+    0.4
    ],
    "centre": [
-    -0.305,
-    -1.304,
-    0.277
+    -0.005,
+    -0.562,
+    0.398
    ],
-   "length_mm": 60.0,
-   "thick_mm": 2.7,
-   "meanw_mm": 4.7,
-   "thick_px": 1.9,
-   "meanw_px": 3.4,
-   "length_H": 0.167,
-   "thick_H": 0.0074,
-   "aspect": 22.6,
+   "length_mm": 69.4,
+   "thick_mm": 13.2,
+   "meanw_mm": 17.8,
+   "thick_px": 6.7,
+   "meanw_px": 9.0,
+   "length_H": 0.137,
+   "thick_H": 0.026,
+   "aspect": 5.3,
    "blob": false,
    "rings": [
     [
      0.04,
-     3.5,
-     5.3
+     14.4,
+     18.3
     ],
     [
      0.11,
-     3.5,
-     5.2
+     14.4,
+     18.3
     ],
     [
      0.18,
-     3.4,
-     5.1
+     14.3,
+     18.3
     ],
     [
      0.25,
-     3.3,
-     5.0
+     14.3,
+     18.2
     ],
     [
      0.32,
-     3.3,
-     4.9
+     14.2,
+     18.1
     ],
     [
      0.39,
-     3.2,
-     4.8
+     14.2,
+     18.2
     ],
     [
      0.46,
-     3.1,
-     4.7
+     13.6,
+     17.6
     ],
     [
      0.54,
-     3.1,
-     4.6
+     13.3,
+     17.4
     ],
     [
      0.61,
-     3.0,
-     4.5
+     13.4,
+     17.5
     ],
     [
      0.68,
-     2.8,
-     4.1
+     13.2,
+     17.2
     ],
     [
      0.75,
-     2.6,
-     3.8
+     13.2,
+     17.1
     ],
     [
      0.82,
-     2.4,
-     3.5
+     12.2,
+     16.4
     ],
     [
      0.89,
-     2.3,
-     3.2
+     12.1,
+     16.2
     ],
     [
      0.96,
-     2.1,
-     2.9
+     12.2,
+     16.4
     ]
    ],
    "gated": true,
-   "fail": [
-    "thickness 2.7 mm (1.9 px) < 8.6 mm"
-   ],
-   "ok": false,
-   "margin": 0.31
+   "fail": [],
+   "ok": true,
+   "margin": 1.09
   },
   {
    "obj": "piece_tongue",
@@ -462,134 +460,122 @@
    "bone": null,
    "side": "R",
    "tip": [
-    -0.325,
-    -1.341,
-    0.271
+    -0.057,
+    -0.6,
+    0.4
    ],
    "centre": [
-    -0.319,
-    -1.296,
-    0.278
+    -0.035,
+    -0.559,
+    0.398
    ],
-   "length_mm": 60.0,
-   "thick_mm": 2.7,
-   "meanw_mm": 4.7,
-   "thick_px": 1.9,
-   "meanw_px": 3.4,
-   "length_H": 0.167,
-   "thick_H": 0.0074,
-   "aspect": 22.6,
+   "length_mm": 69.4,
+   "thick_mm": 13.2,
+   "meanw_mm": 17.8,
+   "thick_px": 6.7,
+   "meanw_px": 9.0,
+   "length_H": 0.137,
+   "thick_H": 0.026,
+   "aspect": 5.3,
    "blob": false,
    "rings": [
     [
      0.04,
-     3.5,
-     5.3
+     14.4,
+     18.3
     ],
     [
      0.11,
-     3.5,
-     5.2
+     14.4,
+     18.3
     ],
     [
      0.18,
-     3.4,
-     5.1
+     14.3,
+     18.3
     ],
     [
      0.25,
-     3.3,
-     5.0
+     14.3,
+     18.2
     ],
     [
      0.32,
-     3.3,
-     4.9
+     14.2,
+     18.1
     ],
     [
      0.39,
-     3.2,
-     4.8
+     14.2,
+     18.2
     ],
     [
      0.46,
-     3.1,
-     4.7
+     13.6,
+     17.6
     ],
     [
      0.54,
-     3.1,
-     4.6
+     13.3,
+     17.4
     ],
     [
      0.61,
-     3.0,
-     4.5
+     13.4,
+     17.5
     ],
     [
      0.68,
-     2.8,
-     4.1
+     13.2,
+     17.2
     ],
     [
      0.75,
-     2.6,
-     3.8
+     13.2,
+     17.1
     ],
     [
      0.82,
-     2.4,
-     3.5
+     12.2,
+     16.4
     ],
     [
      0.89,
-     2.3,
-     3.2
+     12.1,
+     16.2
     ],
     [
      0.96,
-     2.1,
-     2.9
+     12.2,
+     16.4
     ]
    ],
    "gated": true,
-   "fail": [
-    "thickness 2.7 mm (1.9 px) < 8.6 mm"
-   ],
-   "ok": false,
-   "margin": 0.31
+   "fail": [],
+   "ok": true,
+   "margin": 1.09
   }
  ],
  "renders": {
   "game": [
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g000.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g045.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g090.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g135.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g180.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g225.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g270.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g315.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g045h.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g135h.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g225h.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_game_g315h.png"
-  ],
-  "crops": [
-   [
-    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dcrop_0.png",
-    "piece_tongue/antenna R: thickness 2.7 mm (1.9 px) < 8.6 mm"
-   ],
-   [
-    "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dcrop_1.png",
-    "piece_tongue/antenna R: thickness 2.7 mm (1.9 px) < 8.6 mm"
-   ]
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g000.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g045.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g135.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g180.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g225.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g270.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g315.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g045h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g135h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g225h.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_game_g315h.png"
   ],
   "flags": [
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dflag_hero.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dflag_az090.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dflag_front34r.png",
-   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\details\\s4_r05_dflag_back34.png"
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_dflag_hero.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_dflag_az090.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_dflag_front34r.png",
+   "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\details\\s4_r05_dflag_back34.png"
   ]
  }
 }

@@ -3,6 +3,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.abspath(os.path.join(HERE, '..', '..', '..', '..', 'kit')))
 from bmkit import *
 from smooth_borders import smooth_borders
+import bmkit
 
 # Bengal tiger, t7 hand box-model: one spine loft of 6-vertex half rings (tail tip -> nose), legs extruded as
 # 2-face regions from the lower flank, ears as 1-face extrusions; stage 2 joint rings, eye socket, stripe loops;
@@ -153,6 +154,7 @@ def midsecs(secs, after):
 
 FORE = midsecs(FORE, (0, 2))           # pass 9: forearm and pastern stations (fore 7)
 HIND = midsecs(HIND, (0, 1, 3))        # pass 9: thigh, gaskin and ankle stations (hind 9)
+HIND_WIN = ('R0b', 3, 0.45)   # jfix 10-23: thigh window spans R0b..R2b (rear ring, spans, transition t1); None = the old 1-span root
 
 
 def role_pos(sec, u, s, corner=0.55):
@@ -162,16 +164,20 @@ def role_pos(sec, u, s, corner=0.55):
     return (c[0] + u * rx, c[1] + s * ry * k, c[2] - u * dz)
 
 
-def grow(bm, faces, roles, secs, corner=0.55):
-    for sec in secs:
+def grow(bm, faces, roles, secs, corner=0.55, t1=None):
+    """t1 (jfix 10-23): a first transition ring t1 of the way from the window rim to secs[0], each vertex keeping
+    its own rim position's direction (the broad blend the t9 fox and rhino legs use)."""
+    plan = ([None] if t1 else []) + list(secs)
+    roles = [(v.co.copy(), us) for v, us in roles.items()]     # positions, not verts: a window's inner verts go
+    for sec in plan:
         r = extrude(bm, faces)
-        new = {}
+        new = []
         for v in r['verts']:
-            ov = min(roles, key=lambda o: (o.co - v.co).length)
-            new[v] = roles[ov]
-        for v, (u, s) in new.items():
-            v.co = Vector(role_pos(sec, u, s, corner))
-        faces, roles = r['faces'], new
+            p0, us = min(roles, key=lambda o: (o[0] - v.co).length)
+            new.append((v, p0, us))
+        for v, p0, (u, s) in new:
+            v.co = p0.lerp(Vector(role_pos(secs[0], u, s, corner)), t1) if sec is None else Vector(role_pos(sec, u, s, corner))
+        faces, roles = r['faces'], [(v.co.copy(), us) for v, _p, us in new]
     return faces, roles
 
 
@@ -197,7 +203,16 @@ def stage1(k):
         grow(bm, [spans[i][4], spans[i][5], spans[i][6], spans[i][7]], roles, secs)
 
     limb('C0', [FSH] + FORE)
-    limb('R1', HIND)
+    if HIND_WIN:   # jfix 10-23: the thigh rises out of a 3-span x 4-face flank window through a 45 % transition ring
+        i0 = idx[HIND_WIN[0]]
+        A_, B_ = HIND_WIN[1], 4
+        faces = [spans[i0 + a][4 + b] for a in range(A_) for b in range(B_)]
+        ys = [rings[i0 + a][6].co.y for a in range(A_ + 1)]
+        yc, yh = (ys[0] + ys[-1]) / 2, (ys[0] - ys[-1]) / 2
+        roles = {rings[i0 + a][4 + b]: (1 - 2 * b / B_, (ys[a] - yc) / yh) for a in range(A_ + 1) for b in range(B_ + 1)}
+        grow(bm, faces, roles, HIND, t1=HIND_WIN[2])
+    else:
+        limb('R1', HIND)
     i = idx['H0']
     rr, rf = rings[i], rings[i + 1]
     grow(bm, [spans[i][2]], {rf[2]: (-1, -1), rf[3]: (1, -1), rr[2]: (-1, 1), rr[3]: (1, 1)}, EAR, corner=0.7)
@@ -215,6 +230,29 @@ STRIPE_SPANS = [('T3b', 'T4', 0.25, 0.5), ('T2b', 'T3', 0.25, 0.5), ('T1', 'T2',
                 ('R0', 'R0b', 0.25, 0.5), ('R2', 'R2b', 0.25, 0.5), ('W0b', 'M0', 0.25, 0.5),
                 ('M0b', 'C0', 0.25, 0.5), ('C1', 'C1b', 0.35, 0.45),
                 ('R0b', 'R1', 0.3, 0.4), ('R2b', 'W0', 0.3, 0.4), ('W0', 'W0b', 0.3, 0.4)]   # fix5: denser stripe rhythm
+
+
+def leg_rim_faces(bm, a, b):
+    """jfix 10-23: a stripe loop in a span over the thigh window runs over the rim face to the transition ring, instead of
+    running down the leg: the leg face under the rim edge a[4]-b[4] is the walk's stop."""
+    if not HIND_WIN:
+        return None
+    names = [q[0] for q in SECS]
+    i0 = names.index(HIND_WIN[0])
+    if a not in names[i0:i0 + HIND_WIN[1]]:
+        return None
+    va, vb = vert_near(bm, P(a)[4]), vert_near(bm, P(b)[4])
+    e = next((ed for ed in va.link_edges if ed.other_vert(va) == vb), None)
+    if e is None or (va.co - P(a)[4]).length > 1e-4:
+        return None
+    zm = (va.co.z + vb.co.z) / 2
+    leg = [f for f in e.link_faces if f.calc_center_median().z < zm - 1e-4]
+    if not leg or len(leg[0].verts) != 4:
+        return None
+    # the stripe runs on over the rim face down to the transition ring (a haunch stripe), then stops
+    opp = next(ed for ed in leg[0].edges if not (set(ed.verts) & set(e.verts)))
+    nxt = [f for f in opp.link_faces if f != leg[0]]
+    return set(nxt) or set(leg)
 
 
 def stage2(k, body):
@@ -236,8 +274,9 @@ def stage2(k, body):
         A, B_ = P(a)[0], P(b)[0]
         e = edge_near(bm, mid(A, B_))
         near = vert_near(bm, A)
+        stop = leg_rim_faces(bm, a, b)
         with topo(bm, k.log, 'loop', f'stripe loop A in {a}-{b}: colour border'):
-            va = loopcut(bm, e, t=t0, near=near)
+            va = bmkit._split(bm, edge_ring(e, near, stop), t0) if stop else loopcut(bm, e, t=t0, near=near)
         top = max(va, key=lambda v: v.co.z if abs(v.co.x) < 1e-6 else -9)
         top = min(va, key=lambda v: (v.co - (A.lerp(B_, t0))).length)
         e2 = edge_near(bm, mid(top.co, B_))

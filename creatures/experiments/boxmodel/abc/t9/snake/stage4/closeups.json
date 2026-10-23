@@ -1,0 +1,22 @@
+[
+ {
+  "name": "head",
+  "colour": "close_0_colour.png",
+  "wire": "close_0_wire.png"
+ },
+ {
+  "name": "neck",
+  "colour": "close_1_colour.png",
+  "wire": "close_1_wire.png"
+ },
+ {
+  "name": "arched loop",
+  "colour": "close_2_colour.png",
+  "wire": "close_2_wire.png"
+ },
+ {
+  "name": "tail curl",
+  "colour": "close_3_colour.png",
+  "wire": "close_3_wire.png"
+ }
+]

@@ -1,0 +1,252 @@
+{
+ "vertices": 6200,
+ "triangles": 8648,
+ "materials": [
+  "hide_body",
+  "hide_head",
+  "hide_jaw",
+  "hide_tail",
+  "hide_leg",
+  "scute",
+  "eye",
+  "pupil",
+  "highlight",
+  "nose",
+  "hide_foot",
+  "claw",
+  "tooth"
+ ],
+ "stats": {
+  "triangles": 8648,
+  "skinnedMeshes": 1,
+  "animations": [
+   "idle",
+   "move",
+   "attack"
+  ]
+ },
+ "parts": {
+  "hide_body": {
+   "size": [
+    0.722,
+    0.458,
+    1.307
+   ],
+   "span_ratio": 0.3751,
+   "height_ratio": 0.5661,
+   "share": {
+    "hero": 0.20024
+   }
+  },
+  "hide_head": {
+   "size": [
+    0.658,
+    0.3526,
+    1.454
+   ],
+   "span_ratio": 0.401,
+   "height_ratio": 0.4359,
+   "share": {
+    "hero": 0.29756
+   }
+  },
+  "hide_jaw": {
+   "size": [
+    0.372,
+    0.16,
+    1.252
+   ],
+   "span_ratio": 0.3281,
+   "height_ratio": 0.1978,
+   "share": {
+    "hero": 0.04194
+   }
+  },
+  "hide_tail": {
+   "size": [
+    0.4,
+    0.428,
+    1.437
+   ],
+   "span_ratio": 0.3747,
+   "height_ratio": 0.5291,
+   "share": {
+    "hero": 0.10453
+   }
+  },
+  "hide_leg": {
+   "size": [
+    0.916,
+    0.523,
+    0.939
+   ],
+   "span_ratio": 0.3296,
+   "height_ratio": 0.6465,
+   "share": {
+    "hero": 0.12324
+   }
+  },
+  "scute": {
+   "size": [
+    0.4371,
+    0.5621,
+    2.3486
+   ],
+   "span_ratio": 0.6002,
+   "height_ratio": 0.6948,
+   "share": {
+    "hero": 0.17088
+   }
+  },
+  "eye": {
+   "size": [
+    0.5603,
+    0.13,
+    0.13
+   ],
+   "span_ratio": 0.1445,
+   "height_ratio": 0.1607,
+   "share": {
+    "hero": 0.00312
+   }
+  },
+  "pupil": {
+   "size": [
+    0.561,
+    0.0766,
+    0.0614
+   ],
+   "span_ratio": 0.1418,
+   "height_ratio": 0.0946,
+   "share": {
+    "hero": 0.00043
+   }
+  },
+  "highlight": {
+   "size": [
+    0.5431,
+    0.0315,
+    0.0523
+   ],
+   "span_ratio": 0.1371,
+   "height_ratio": 0.039
+  },
+  "nose": {
+   "size": [
+    0.12,
+    0.064,
+    0.062
+   ],
+   "span_ratio": 0.0339,
+   "height_ratio": 0.0791,
+   "share": {
+    "hero": 0.00344
+   }
+  },
+  "hide_foot": {
+   "size": [
+    0.9756,
+    0.0673,
+    0.818
+   ],
+   "span_ratio": 0.3199,
+   "height_ratio": 0.0831,
+   "share": {
+    "hero": 0.03312
+   }
+  },
+  "claw": {
+   "size": [
+    0.95,
+    0.031,
+    0.684
+   ],
+   "span_ratio": 0.2941,
+   "height_ratio": 0.0383,
+   "share": {
+    "hero": 0.0043
+   }
+  },
+  "tooth": {
+   "size": [
+    0.472,
+    0.247,
+    0.877
+   ],
+   "span_ratio": 0.2502,
+   "height_ratio": 0.3053,
+   "share": {
+    "hero": 0.01721
+   }
+  }
+ },
+ "whole": {
+  "size": [
+   0.9756,
+   0.809,
+   3.859
+  ]
+ },
+ "facing": {
+  "forward": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "from": "head (+Z, head off-axis 0\u00b0)",
+  "head": "spec chain \"head\", joint HeadRoot"
+ },
+ "views": {
+  "hero": {
+   "W_over_H": 2.568,
+   "fill": 0.401,
+   "px": [
+    244,
+    95
+   ],
+   "thirds_cols": [
+    0.25,
+    0.45,
+    0.3
+   ],
+   "thirds_rows": [
+    0.33,
+    0.46,
+    0.21
+   ],
+   "protrusions": 1,
+   "thinnest_px48": 3.5,
+   "area_px": 9299,
+   "box_fill": 0.401,
+   "sq_fill": 0.156,
+   "extent": 2.568,
+   "convexity": 0.646,
+   "mirror_sym": 0.978,
+   "median_lum": 72.4,
+   "coloured_area": 0.9785,
+   "saturated_area": 0.3395,
+   "palette_source": "albedo",
+   "saturated_area_shipped": 0.8843,
+   "head_share": 0.3601,
+   "head_out": 0.777,
+   "head_px48": 13.1,
+   "head_distinct": true,
+   "share": {
+    "hide_body": 0.20024,
+    "hide_head": 0.29756,
+    "hide_jaw": 0.04194,
+    "hide_tail": 0.10453,
+    "hide_leg": 0.12324,
+    "scute": 0.17088,
+    "eye": 0.00312,
+    "pupil": 0.00043,
+    "nose": 0.00344,
+    "hide_foot": 0.03312,
+    "claw": 0.0043,
+    "tooth": 0.01721
+   }
+  }
+ },
+ "thinnest_px48": 3.5,
+ "seconds": 3.36
+}

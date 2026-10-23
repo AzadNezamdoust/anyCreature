@@ -1,0 +1,73 @@
+{
+ "spec": "pole_a.json",
+ "passed": true,
+ "checks": [
+  {
+   "name": "mesh_integrity",
+   "passed": true
+  },
+  {
+   "name": "root_containment",
+   "passed": true
+  },
+  {
+   "name": "part_attachment",
+   "passed": true
+  },
+  {
+   "name": "touch",
+   "passed": true
+  },
+  {
+   "name": "balance",
+   "passed": true
+  },
+  {
+   "name": "size",
+   "passed": true,
+   "warned": true
+  },
+  {
+   "name": "proportion",
+   "passed": true
+  },
+  {
+   "name": "limb_clearance",
+   "passed": true
+  },
+  {
+   "name": "anim_integrity",
+   "passed": true
+  },
+  {
+   "name": "attack_reach",
+   "passed": true
+  },
+  {
+   "name": "faceted_body",
+   "passed": true
+  },
+  {
+   "name": "mirror_distortion",
+   "passed": true
+  },
+  {
+   "name": "part_overlap",
+   "passed": true
+  },
+  {
+   "name": "part_seat",
+   "passed": true
+  },
+  {
+   "name": "open_end",
+   "passed": true
+  }
+ ],
+ "blocking": [],
+ "measures": [
+  "value_order: materials by lightness, brightest first — highlight 0.96 · tooth 0.93 · eye 0.82 · scute 0.75 · hide_foot 0.56 · hide_jaw 0.54 · hide_leg 0.51 · hide_body 0.49 · hide_head 0.49 · hide_tail 0.49 · nose 0.32 · claw 0.25 · pupil 0.15",
+  "value_order: \"highlight\" (L 0.96) is tied for brightest with \"tooth\" (0.93) — nothing owns the eye when two masses sit at the same value. Drop the one that is NOT the brief's dominant focal by at least 0.08 L, or accept that the eye will ping-pong.",
+  "contrast_adjacent: part \"front_foot\" (hide_foot, L 0.56) against its host \"LFrontLeg\" (hide_leg, L 0.51) — OKLab distance 0.050, under 0.10. They will read as one mass at thumbnail size. Move one of them in LIGHTNESS, which is what survives shrinking; hue alone does not."
+ ]
+}

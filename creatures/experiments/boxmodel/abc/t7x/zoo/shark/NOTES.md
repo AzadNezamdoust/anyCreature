@@ -55,3 +55,9 @@ Fix list, shape first: (1) pectorals and pelvics read as legs (both reviews); (2
 ## Weakfix 2026-10-23 (night, backup before_weakfix/)
 - s4 r12. Critique: the pectoral tips sat 3.5 cm off the floor (GLB min height 0.035 m); the old checks renders hid it by dropping the ground 0.15 m. Diagnosis: the loft was built on the floor trace. Fix: stage 4 lifts the rig object (body + pieces parented) SWIM 0.40 m; checks_blender.py now puts the ground at the real z 0.
 - Result: GLB min height 0.435 m. Kit gates PASS (clip warn 7 tris 0.01 %), detail PASS, clips PASS after --fix-clips; junction FAIL fin.L/R strip 2.6 r (geometry unchanged by this pass). A/B (2 fresh Opus seats): variant wins both orders: ADOPT.
+
+## Junction fix attempt 2026-10-23 (triage: zoo/junction_triage.md; backup before_jfix/) - REVERTED
+- Critique (crops A/B fin.L): the pectoral reads as a plank butted on the flank, a dark groove along its top.
+- Diagnosis: the root level sits on the one-face root window (M0-C0 face 8), so the first extrusion wall is a 1-2.5 cm strip.
+- s4 r13: root level -> fillet 45 % of the way from the root face rim to the blunted mid level (PEC_T1, stage 2): strip 2.6 -> 1.1 r but S2 IoU az180 0.897 FAIL. r14 (t 0.30): IoU 0.898 FAIL. r15 (top roles only): IoU 0.921 PASS but fin knife 2.23 r/159 deg + tail0 knife 1.5 r FAIL.
+- Result: in all three the visible groove stays (it is the blade's own crease at the pectoral root ring, not the body join); the fillet only whitens the root. No variant worth judging: REVERTED (shark.py, stage2-4 restored from before_jfix/). Residual for the owner packet: a broader pectoral needs an S1 2-face root window. Images jfix_variants/.

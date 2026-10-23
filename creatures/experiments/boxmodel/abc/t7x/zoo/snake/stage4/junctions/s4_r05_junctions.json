@@ -1,8 +1,8 @@
 {
- "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t7x\\zoo\\snake\\stage4\\snake.glb",
+ "glb": "D:\\Git\\anyCreature\\creatures\\experiments\\boxmodel\\abc\\t9\\snake\\stage4\\snake.glb",
  "tag": "s4_r05",
- "ok": false,
- "size_m": 2.704,
+ "ok": true,
+ "size_m": 1.179,
  "limits": {
   "REGION_K": 2.0,
   "EXPOSED": 2,
@@ -44,36 +44,62 @@
  "junctions": [],
  "eyes": [
   {
-   "side": "R",
+   "side": "L",
    "centre": [
-    -0.394,
-    -1.168,
-    0.324
+    0.092,
+    -0.427,
+    0.459
    ],
-   "diam_mm": 25.7,
-   "round": 0.83,
-   "diam_head": 0.074,
-   "embed_mm": 9.4,
-   "proud_mm": 5.9,
+   "diam_mm": 22.1,
+   "round": 1.0,
+   "diam_head": 0.102,
+   "embed_mm": 6.5,
+   "proud_mm": 7.8,
    "visible": {
-    "front": 0.05,
-    "threeq": 0.5,
-    "side": 0.67
+    "front": 0.4,
+    "threeq": 0.82,
+    "side": 0.7
    },
    "unoccluded": {
-    "front": 0.14,
-    "threeq": 0.93,
-    "side": 0.96
+    "front": 0.66,
+    "threeq": 0.86,
+    "side": 0.9
    },
-   "fail": [
-    "front view 0.05 < 0.15"
+   "fail": [],
+   "ok": true
+  },
+  {
+   "side": "R",
+   "centre": [
+    -0.102,
+    -0.407,
+    0.459
    ],
-   "ok": false
+   "diam_mm": 22.2,
+   "round": 1.0,
+   "diam_head": 0.103,
+   "embed_mm": 6.5,
+   "proud_mm": 7.8,
+   "visible": {
+    "front": 0.23,
+    "threeq": 0.76,
+    "side": 0.77
+   },
+   "unoccluded": {
+    "front": 0.45,
+    "threeq": 0.85,
+    "side": 0.9
+   },
+   "fail": [],
+   "ok": true
   }
  ],
  "membranes": [],
  "seats": [],
  "crops": [
+  "s4_r05_eyeL_front_beauty.png",
+  "s4_r05_eyeL_threeq_beauty.png",
+  "s4_r05_eyeL_side_beauty.png",
   "s4_r05_eyeR_front_beauty.png",
   "s4_r05_eyeR_threeq_beauty.png",
   "s4_r05_eyeR_side_beauty.png"

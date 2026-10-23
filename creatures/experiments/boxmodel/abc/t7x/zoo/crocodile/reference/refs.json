@@ -1,5 +1,5 @@
 {
- "source": "sheet_3_gutter.png",
+ "source": "sheet_1.png",
  "layout": "2x2",
  "views": [
   "side",
@@ -17,124 +17,124 @@
   254.0
  ],
  "thresh": 40.0,
- "height_m": 0.42,
+ "height_m": 0.55,
  "length_arg": null,
  "metres_per_pixel": {
-  "side": 0.002456,
-  "front": 0.002187,
-  "rear": 0.001875,
-  "top": 0.002456
+  "side": 0.002391,
+  "front": 0.002391,
+  "rear": 0.001667,
+  "top": 0.002391
  },
  "figure_px_w_h": {
   "side": [
-   1099,
-   171
+   1012,
+   230
   ],
   "front": [
-   376,
-   192
+   385,
+   235
   ],
   "rear": [
-   364,
-   224
+   455,
+   330
   ],
   "top": [
-   1051,
-   292
+   845,
+   317
   ]
  },
  "cells_rows_cols": {
   "side": [
-   173,
-   382,
-   9,
-   1125
+   153,
+   405,
+   22,
+   1051
   ],
   "front": [
-   173,
-   382,
-   1136,
-   1529
+   153,
+   405,
+   1078,
+   1480
   ],
   "rear": [
-   564,
+   520,
    870,
-   26,
-   407
+   75,
+   546
   ],
   "top": [
-   564,
+   520,
    870,
-   461,
-   1529
+   651,
+   1513
   ]
  },
  "traced": {
-  "side_points": 42,
-  "front_points": 30,
-  "top_points": 22,
-  "length_m": 2.699,
-  "width_m": 0.822,
-  "head_end_z": 0.246
+  "side_points": 48,
+  "front_points": 21,
+  "top_points": 28,
+  "length_m": 2.42,
+  "width_m": 0.918,
+  "head_end_z": 0.392
  },
  "crops": {
   "side": {
    "box_rows_cols": [
-    197,
-    368,
-    17,
-    1116
+    164,
+    394,
+    30,
+    1042
    ],
    "crop_origin": [
-    -50,
-    -334
+    -32,
+    -288
    ],
-   "crop_size": 1232
+   "crop_size": 1135
   },
   "front": {
    "box_rows_cols": [
-    181,
-    373,
-    1144,
-    1520
+    161,
+    396,
+    1086,
+    1471
    ],
    "crop_origin": [
-    1120,
-    66
+    1062,
+    62
    ],
-   "crop_size": 423
+   "crop_size": 433
   },
   "rear": {
    "box_rows_cols": [
-    614,
-    838,
-    34,
-    398
+    532,
+    862,
+    83,
+    538
    ],
    "crop_origin": [
-    12,
-    522
+    55,
+    442
    ],
-   "crop_size": 409
+   "crop_size": 511
   },
   "top": {
    "box_rows_cols": [
-    571,
-    863,
-    469,
-    1520
+    528,
+    845,
+    659,
+    1504
    ],
    "crop_origin": [
-    405,
-    128
+    608,
+    212
    ],
-   "crop_size": 1179,
+   "crop_size": 948,
    "rotated": "CW 90 (head up, left flank on the image left, as the kit top view)"
   }
  },
  "warnings": [
-  "front height is 1.12 x the side height: rescaled to the side height",
-  "rear height is 1.31 x the side height: rescaled to the side height",
-  "top-view width 0.72 m vs front width 0.82 m (0.88 x)"
+  "rear height is 1.43 x the side height: rescaled to the side height",
+  "top-view length 2.02 m vs side length 2.42 m (0.83 x)",
+  "top-view width 0.76 m vs front width 0.92 m (0.83 x)"
  ]
 }

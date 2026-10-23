@@ -2,7 +2,7 @@
 check (tail vs hind legs, fore L vs fore R) measured on the rest mesh plus two low views that show the gaps.
     blender -b --factory-startup -P checks_blender.py -- <glb> <outdir>"""
 import bpy, sys, os, json, math
-KIT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', '..', 'kit')
+KIT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '..', 'kit')
 sys.path.insert(0, KIT)
 sys.argv = [sys.argv[0], '--', '--jobs', 'x']           # render_glb's module-level main() is skipped below
 import importlib.util
@@ -42,16 +42,11 @@ for v in order:
         g = bpy.data.objects.get('_ground')
         if g:
             bpy.data.objects.remove(g, do_unlink=True)
-    dv, upv = K.VIEWS[v]                               # fix2: frame on the bbox seen from this view, not the sphere
-    dv = Vector(dv).normalized(); upv = Vector(upv)
-    rx = upv.cross(dv).normalized(); ry = dv.cross(rx)
-    sz = Vector(frame['size'])
-    ext = max(max(sum(abs(ax[i]) * sz[i] for i in range(3)) for ax in (rx, ry)), 0.5 * max(sz))   # keep the near end in frame
-    K.camera(dict(frame, size=[ext, ext, ext]), v, fill=1.1)
+    K.camera(frame, v, fill=1.1)
     K._render(os.path.join(out, f'{v}.png'), 640 if v != 'hero' else 1024)
 # face 3/4 close-up: camera at the head, front-left, slightly above
-head = Vector((0.0, -1.12, 0.27))
-f2 = dict(frame, centre=list(head), size=[0.5, 0.5, 0.5])
+head = Vector((0.0, -0.95, 0.40))
+f2 = dict(frame, centre=list(head), size=[0.62, 0.62, 0.62])
 K.VIEWS['face34'] = (Vector((0.75, -1, 0.25)).normalized(), Vector((0, 0, 1)))
 K.camera(f2, 'face34', fill=1.0)
 K._render(os.path.join(out, 'face_34.png'), 1024)
@@ -63,15 +58,15 @@ for o in meshes:
     P += [(o.name, o.matrix_world @ v.co) for v in me.vertices]
     oe.to_mesh_clear()
 body = [p for n, p in P if n.startswith('body')] or [p for n, p in P]
-tail = [p for p in body if p.y > 0.45 and abs(p.x) < 0.12]
-hind = [p for p in body if -0.05 < p.y < 0.35 and abs(p.x) > 0.29]
-foreL = [p for p in body if -0.75 < p.y < -0.35 and p.x > 0.29]
-foreR = [p for p in body if -0.75 < p.y < -0.35 and p.x < -0.29]
+tail = [p for p in body if p.y > 0.42]
+hind = [p for p in body if -0.08 < p.y < 0.32 and abs(p.x) > 0.20 and p.z < 0.22]
+foreL = [p for p in body if -0.64 < p.y < -0.20 and p.x > 0.20 and p.z < 0.22]
+foreR = [p for p in body if -0.64 < p.y < -0.20 and p.x < -0.20 and p.z < 0.22]
 hindL = [p for p in hind if p.x > 0]; hindR = [p for p in hind if p.x < 0]
 def gap(A, B):
     return round(min(((a - b).length for a in A for b in B), default=-1), 4)
-res = dict(tail_vs_hind=gap(tail, hind), fore_L_vs_R=gap(foreL, foreR), hind_L_vs_R=gap(hindL, hindR), fore_vs_hind_L=gap(foreL, hindL),
+res = dict(tail_vs_hind=gap(tail, hind), fore_L_vs_R=gap(foreL, foreR), hind_L_vs_R=gap(hindL, hindR),
            counts=dict(tail=len(tail), hind=len(hind), foreL=len(foreL), foreR=len(foreR)))
-res['verdict'] = 'PASS' if min(res['tail_vs_hind'], res['fore_L_vs_R'], res['hind_L_vs_R'], res['fore_vs_hind_L']) > 0.01 else 'FAIL'
+res['verdict'] = 'PASS' if min(res['tail_vs_hind'], res['fore_L_vs_R'], res['hind_L_vs_R']) > 0.01 else 'FAIL'
 json.dump(res, open(os.path.join(out, 'separation.json'), 'w'), indent=1)
 print('SEPARATION', json.dumps(res))

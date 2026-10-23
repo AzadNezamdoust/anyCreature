@@ -86,3 +86,8 @@ Not fixed: faint shade steps remain on the mid flank next to the stage-2 shoulde
   FAIL pre-existing (ears / upperarm strip / tail0 strip = the r22 numbers; thighs PASS).
 - A/B (fresh Opus seat per order, blind): after wins both orders (saddle stripe edge). ADOPT.
 - Kit note: _despeckle erases intentional one-face features (an n-gon disc ringed by one colour) -> needs a guard.
+
+## Junction fix attempt 2026-10-23 (triage: zoo/junction_triage.md; backup before_jfix/) - REVERTED (ties)
+- Critique (tail0 crops A/B/C): the rump's rear wall T3 -> R0 is one ring of long needle quads round the tail root, a starburst of streaks.
+- Fix (stage 2, two variants): a rump ring loopcut in the T3-R0 span, pushed back (domed rump). r25: t 0.5, +18 mm (tail0 strip 1.85 -> 0.92 r PASS); r26: t 0.3, +12 mm (strip 1.72 r). Kit gates, IoU (0.932), detail PASS both.
+- A/B fresh Opus seats, both orders each: r25 A,A (= champion, then variant) -> flip = TIE; r26 A,A -> flip = TIE. Judges saw the champion fan as faint and the new ring as a collar around the tail. Ties go to the champion: REVERTED (boar.py, stage2-4 from before_jfix/). Images jfix_variants/v25, v26.

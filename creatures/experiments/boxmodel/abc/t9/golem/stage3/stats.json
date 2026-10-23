@@ -1,0 +1,65 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "ce5c8cb92ee09d2ad511f315b250c244425583e85c28925ba5a7d994069a4437",
+  "collapsed_edge_hash": "ce5c8cb92ee09d2ad511f315b250c244425583e85c28925ba5a7d994069a4437",
+  "logged_ops": 2,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "glow",
+  "moss",
+  "plate",
+  "pupil",
+  "seam",
+  "stone"
+ ],
+ "colour_count": 6,
+ "tris": 5744,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 3,
+   "cuts": 4,
+   "relaxed": 8,
+   "undone": 0,
+   "max_move": 0.03798,
+   "mean_move": 0.02291,
+   "before": {
+    "border_edges": 18,
+    "length": 1.8663,
+    "paths": 1,
+    "corners": 11,
+    "corner_quads": 4,
+    "corners_per_m": 5.9
+   },
+   "after": {
+    "border_edges": 8,
+    "length": 0.9944,
+    "paths": 1,
+    "corners": 2,
+    "corner_quads": 0,
+    "corners_per_m": 2.0
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_brow": 80,
+  "piece_boulder": 288,
+  "piece_plate_chest": 192,
+  "piece_plate_back": 152,
+  "piece_plate_belly": 216,
+  "piece_plate_pelvis": 236,
+  "piece_plate_lowback": 256,
+  "piece_plate_rump": 236,
+  "piece_plate_forearm": 272,
+  "piece_plate_knee": 272,
+  "piece_plate_shin": 272,
+  "piece_crack": 196,
+  "piece_knuckle_plate": 264,
+  "piece_toe": 192
+ }
+}

@@ -5,17 +5,17 @@
   "wire": "close_0_wire.png"
  },
  {
-  "name": "neck and front coil",
+  "name": "neck",
   "colour": "close_1_colour.png",
   "wire": "close_1_wire.png"
  },
  {
-  "name": "tail tip",
+  "name": "arched loop",
   "colour": "close_2_colour.png",
   "wire": "close_2_wire.png"
  },
  {
-  "name": "belly band",
+  "name": "tail curl",
   "colour": "close_3_colour.png",
   "wire": "close_3_wire.png"
  }

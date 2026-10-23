@@ -1,0 +1,60 @@
+{
+ "lock_assert": {
+  "verdict": "PASS",
+  "lock_edge_hash": "f94cb01f5156501463d9c0f088c8edf023cf89c4daae4be5d6f7888fa20e991c",
+  "collapsed_edge_hash": "f94cb01f5156501463d9c0f088c8edf023cf89c4daae4be5d6f7888fa20e991c",
+  "logged_ops": 2,
+  "logged_new_verts": 4,
+  "errors": []
+ },
+ "colours": [
+  "amber",
+  "claw",
+  "cream",
+  "olive",
+  "pupil",
+  "scute",
+  "tooth"
+ ],
+ "colour_count": 7,
+ "tris": 5432,
+ "attach": [],
+ "borders": [
+  {
+   "tag": "borders",
+   "despeckled": 9,
+   "cuts": 17,
+   "relaxed": 43,
+   "undone": 16,
+   "max_move": 0.02357,
+   "mean_move": 0.00504,
+   "before": {
+    "border_edges": 100,
+    "length": 5.1199,
+    "paths": 10,
+    "corners": 46,
+    "corner_quads": 28,
+    "corners_per_m": 9.0
+   },
+   "after": {
+    "border_edges": 49,
+    "length": 2.6705,
+    "paths": 1,
+    "corners": 1,
+    "corner_quads": 0,
+    "corners_per_m": 0.4
+   }
+  }
+ ],
+ "pieces": {
+  "piece_eye": 64,
+  "piece_scutes": 704,
+  "piece_nostrils": 64,
+  "piece_teeth": 256,
+  "piece_toes": 144,
+  "piece_toes.001": 144,
+  "piece_toes.002": 144,
+  "piece_toes.003": 144,
+  "piece_claws": 512
+ }
+}

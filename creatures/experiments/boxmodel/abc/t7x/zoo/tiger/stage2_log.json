@@ -11,7 +11,7 @@
    "op": 2,
    "kind": "loop",
    "reason": "stifle ring: the bend",
-   "new_verts": 10,
+   "new_verts": 14,
    "extra_base_edges": []
   },
   {
@@ -81,14 +81,14 @@
    "op": 12,
    "kind": "loop",
    "reason": "stripe loop A in R2-R2b: colour border",
-   "new_verts": 10,
+   "new_verts": 6,
    "extra_base_edges": []
   },
   {
    "op": 13,
    "kind": "loop",
    "reason": "stripe loop B in R2-R2b: colour border",
-   "new_verts": 10,
+   "new_verts": 6,
    "extra_base_edges": []
   },
   {
@@ -137,14 +137,14 @@
    "op": 20,
    "kind": "loop",
    "reason": "stripe loop A in R0b-R1: colour border",
-   "new_verts": 10,
+   "new_verts": 6,
    "extra_base_edges": []
   },
   {
    "op": 21,
    "kind": "loop",
    "reason": "stripe loop B in R0b-R1: colour border",
-   "new_verts": 10,
+   "new_verts": 6,
    "extra_base_edges": []
   },
   {

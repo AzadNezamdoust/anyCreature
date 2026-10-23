@@ -1,0 +1,71 @@
+{
+ "spec": "crocodile.json",
+ "passed": true,
+ "checks": [
+  {
+   "name": "mesh_integrity",
+   "passed": true
+  },
+  {
+   "name": "root_containment",
+   "passed": true
+  },
+  {
+   "name": "part_attachment",
+   "passed": true
+  },
+  {
+   "name": "touch",
+   "passed": true
+  },
+  {
+   "name": "balance",
+   "passed": true
+  },
+  {
+   "name": "size",
+   "passed": true
+  },
+  {
+   "name": "proportion",
+   "passed": true
+  },
+  {
+   "name": "limb_clearance",
+   "passed": true
+  },
+  {
+   "name": "anim_integrity",
+   "passed": true
+  },
+  {
+   "name": "attack_reach",
+   "passed": true
+  },
+  {
+   "name": "faceted_body",
+   "passed": true
+  },
+  {
+   "name": "mirror_distortion",
+   "passed": true
+  },
+  {
+   "name": "part_overlap",
+   "passed": true
+  },
+  {
+   "name": "part_seat",
+   "passed": true
+  },
+  {
+   "name": "open_end",
+   "passed": true
+  }
+ ],
+ "blocking": [],
+ "measures": [
+  "value_order: materials by lightness, brightest first — highlight 0.98 · tooth 0.94 · paw 0.76 · eye 0.70 · skin_leg 0.55 · skin_head 0.55 · skin_body 0.53 · skin_tail 0.53 · scute 0.41 · claw 0.27 · pupil 0.20",
+  "value_order: \"highlight\" (L 0.98) is tied for brightest with \"tooth\" (0.94) — nothing owns the eye when two masses sit at the same value. Drop the one that is NOT the brief's dominant focal by at least 0.08 L, or accept that the eye will ping-pong."
+ ]
+}

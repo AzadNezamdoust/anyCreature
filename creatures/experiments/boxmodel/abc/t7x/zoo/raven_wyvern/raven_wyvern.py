@@ -337,8 +337,11 @@ def toe(bm, a, b, ra, rb, talon):
     return fs, cl
 
 
+# jfix 10-23 (junction triage: a light slit between the wing-arm's leading edge and the chest, crop A by the wrist
+# claws): the wing front section moves WDX in so its inner face meets the chest; the wrist claws follow it
+WDX = 0.022
 # the folded wing-arm (x >= 0 half): (y, z top, z bottom, x, thickness) from the shoulder root to the tip
-WSEC = [(-0.66, 0.85, 0.71, 0.17, 0.03), (-0.72, 0.89, 0.56, 0.285, 0.05), (-0.52, 0.84, 0.38, 0.295, 0.06),
+WSEC = [(-0.66, 0.85, 0.71, 0.17, 0.03), (-0.72, 0.89, 0.56, 0.285 - WDX, 0.05),   # jfix: WDX in to the chest (-0.52, 0.84, 0.38, 0.295, 0.06),
         (-0.27, 0.72, 0.31, 0.285, 0.055), (-0.02, 0.57, 0.28, 0.24, 0.045), (0.24, 0.43, 0.27, 0.20, 0.03),
         (0.47, 0.32, 0.27, 0.17, 0.014)]
 
@@ -381,7 +384,7 @@ def wing_bm():
     # weakfix 2026-10-23: the wing-arm's hand: two big hooked claws at the wrist (was one 14 mm spike), the wyvern read
     for a_, m_, b_, r_ in (((0.300, -0.69, 0.845), (0.322, -0.775, 0.85), (0.338, -0.835, 0.805), 0.026),
                            ((0.298, -0.70, 0.77), (0.318, -0.775, 0.765), (0.330, -0.815, 0.715), 0.021)):
-        tube(bm, [a_, m_, b_], [r_, r_ * 0.75, 0.0])
+        tube(bm, [(p_[0] - WDX, p_[1], p_[2]) for p_ in (a_, m_, b_)], [r_, r_ * 0.75, 0.0])
     bm.faces.index_update()
     return bm, nw, nf
 

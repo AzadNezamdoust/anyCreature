@@ -13,14 +13,14 @@
    25.0
   ]
  },
- "bones": 14,
+ "bones": 13,
  "unweighted": 0,
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "5e4de9c36c3515ec1780f4f40eef1a5dc24bf486271a8577dca1a817f461672c",
-  "collapsed_edge_hash": "5e4de9c36c3515ec1780f4f40eef1a5dc24bf486271a8577dca1a817f461672c",
-  "logged_ops": 2,
-  "logged_new_verts": 97,
+  "lock_edge_hash": "0b9df0d0249053164043414c46c82c7c83dc63d54750004ed97f57d232f4ed98",
+  "collapsed_edge_hash": "0b9df0d0249053164043414c46c82c7c83dc63d54750004ed97f57d232f4ed98",
+  "logged_ops": 3,
+  "logged_new_verts": 4,
   "errors": []
  }
 }

@@ -1,10 +1,10 @@
 {
  "lock_assert": {
   "verdict": "PASS",
-  "lock_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
-  "collapsed_edge_hash": "fff4278b69dafe351a972cdb15e7ee2da5b4487a46d88674492067adbc9f72e4",
+  "lock_edge_hash": "0ef3850e366f48b7990b9aeb9bb33372ee6f594338db07370afc814c724ac3e2",
+  "collapsed_edge_hash": "0ef3850e366f48b7990b9aeb9bb33372ee6f594338db07370afc814c724ac3e2",
   "logged_ops": 27,
-  "logged_new_verts": 254,
+  "logged_new_verts": 242,
   "errors": []
  },
  "colours": [
@@ -16,32 +16,32 @@
   "stripe"
  ],
  "colour_count": 6,
- "tris": 3116,
+ "tris": 3276,
  "attach": [],
  "borders": [
   {
    "tag": "borders",
-   "despeckled": 11,
+   "despeckled": 19,
    "cuts": 31,
-   "relaxed": 178,
-   "undone": 49,
-   "max_move": 0.01651,
-   "mean_move": 0.00283,
+   "relaxed": 168,
+   "undone": 50,
+   "max_move": 0.01709,
+   "mean_move": 0.00297,
    "before": {
-    "border_edges": 326,
-    "length": 17.8338,
-    "paths": 54,
-    "corners": 80,
-    "corner_quads": 40,
-    "corners_per_m": 4.5
+    "border_edges": 328,
+    "length": 18.1338,
+    "paths": 47,
+    "corners": 84,
+    "corner_quads": 42,
+    "corners_per_m": 4.6
    },
    "after": {
-    "border_edges": 270,
-    "length": 14.8723,
-    "paths": 52,
-    "corners": 32,
+    "border_edges": 256,
+    "length": 13.857,
+    "paths": 45,
+    "corners": 40,
     "corner_quads": 0,
-    "corners_per_m": 2.2
+    "corners_per_m": 2.9
    }
   }
  ],
